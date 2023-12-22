@@ -15,7 +15,7 @@ namespace Shopfloor.Hosts.ConfigurationHost
 
         public ConfigurationHost()
         {
-            IConfiguration _configuration = new ConfigurationBuilder()
+            _configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();

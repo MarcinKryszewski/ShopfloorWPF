@@ -21,14 +21,13 @@ namespace Shopfloor
         {
             ConfigurationHost configuration = new();
             _configurationHost = configuration.GetHost();
+            _configurationHost.Start();
             _databaseHost = DatabaseHost.GetHost(_configurationHost.Services);
+            _databaseHost.Start();
         }
 
         private void ApplicationStart(object sender, StartupEventArgs e)
         {
-            _configurationHost.Start();
-            _databaseHost.Start();
-
             using IDbConnection connection = _databaseHost.Services.GetRequiredService<DatabaseConnectionFactory>().Connect();
             DatabaseInitializerFactory initializer = new(_configurationHost.Services, connection);
             IDatabaseInitializer databaseInitializer = initializer.CreateInitializer();
