@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Data;
 using System.IO;
 using System.Windows;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PrzegladyRemonty.Database;
+using Shopfloor.Database;
+using Shopfloor.Database.Initializers;
+using Shopfloor.Hosts.ConfigurationHost;
+using Shopfloor.Hosts.DatabaseHost;
 
 namespace Shopfloor
 {
@@ -12,42 +16,23 @@ namespace Shopfloor
     {
         private readonly IHost _configurationHost;
         private readonly IHost _databaseHost;
-        private readonly IConfiguration _configuration;
 
         public App()
         {
-            _configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
-            _configurationHost = Host
-            .CreateDefaultBuilder()
-            .ConfigureServices((services) =>
-            {
-                services.AddSingleton(_configuration);
-            })
-            .Build();
-
-            _databaseHost = Host
-            .CreateDefaultBuilder()
-            .ConfigureServices((services) =>
-            {
-                services.AddSingleton(new DatabaseConnectionFactory(_configurationHost.Services));
-                ProvidersServices(services);
-            })
-            .Build();
-
-
+            ConfigurationHost configuration = new();
+            _configurationHost = configuration.GetHost();
+            _databaseHost = DatabaseHost.GetHost(_configurationHost.Services);
         }
 
         private void ApplicationStart(object sender, StartupEventArgs e)
         {
             _configurationHost.Start();
             _databaseHost.Start();
-        }
 
-        private static void ProvidersServices(IServiceCollection services)
-        {
+            using IDbConnection connection = _databaseHost.Services.GetRequiredService<DatabaseConnectionFactory>().Connect();
+            DatabaseInitializerFactory initializer = new(_configurationHost.Services, connection);
+            IDatabaseInitializer databaseInitializer = initializer.CreateInitializer();
+            databaseInitializer.Initialize();
         }
     }
 }

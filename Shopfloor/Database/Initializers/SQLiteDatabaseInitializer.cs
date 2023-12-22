@@ -1,8 +1,8 @@
 ﻿using Dapper;
-using PrzegladyRemonty.Database.SQLite;
+using Shopfloor.Database.SQLite;
 using System.Data;
 
-namespace PrzegladyRemonty.Database.Initializers
+namespace Shopfloor.Database.Initializers
 {
     public class SQLiteDatabaseInitializer : IDatabaseInitializer
     {

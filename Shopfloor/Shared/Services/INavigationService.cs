@@ -1,6 +1,6 @@
-﻿using PrzegladyRemonty.Shared.ViewModels;
+﻿using Shopfloor.Shared.ViewModels;
 
-namespace PrzegladyRemonty.Shared.Services
+namespace Shopfloor.Shared.Services
 {
     public interface INavigationService<TViewModel> where TViewModel : ViewModelBase
     {

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Data.Common;
 
-namespace PrzegladyRemonty.Database
+namespace Shopfloor.Database
 {
     public class DatabaseConnectionFactory : IDisposable
     {

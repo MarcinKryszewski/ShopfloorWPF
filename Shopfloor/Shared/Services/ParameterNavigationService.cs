@@ -1,7 +1,7 @@
-﻿using PrzegladyRemonty.Shared.Stores;
-using PrzegladyRemonty.Shared.ViewModels;
+﻿using Shopfloor.Shared.Stores;
+using Shopfloor.Shared.ViewModels;
 
-namespace PrzegladyRemonty.Shared.Services
+namespace Shopfloor.Shared.Services
 {
     public class ParameterNavigationService<TParameter, TViewModel>
         where TViewModel : ViewModelBase

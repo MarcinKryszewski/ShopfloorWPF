@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace PrzegladyRemonty.Shared.Commands
+namespace Shopfloor.Shared.Commands
 {
     public abstract class AsyncCommandBase : CommandBase
     {

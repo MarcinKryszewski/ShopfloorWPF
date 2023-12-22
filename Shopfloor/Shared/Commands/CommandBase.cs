@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace PrzegladyRemonty.Shared.Commands
+namespace Shopfloor.Shared.Commands
 {
     public abstract class CommandBase : ICommand
     {

@@ -1,20 +1,20 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Database.Configuration;
 using System;
 using System.Data;
 
-namespace PrzegladyRemonty.Database.Initializers
+namespace Shopfloor.Database.Initializers
 {
     public class DatabaseInitializerFactory
     {
-        private readonly IConfiguration _configuration;
         private readonly IDbConnection _connection;
         private readonly string? _databaseType;
 
-        public DatabaseInitializerFactory(IConfiguration configuration, IDbConnection connection)
+        public DatabaseInitializerFactory(IServiceProvider service, IDbConnection connection)
         {
-            _configuration = configuration;
             _connection = connection;
-            _databaseType = _configuration["DatabaseType"];
+            _databaseType = service.GetRequiredService<DatabaseConfiguration>().Type;
         }
 
         public IDatabaseInitializer CreateInitializer()

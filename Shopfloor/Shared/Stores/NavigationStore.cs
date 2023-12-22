@@ -1,7 +1,7 @@
-﻿using PrzegladyRemonty.Shared.ViewModels;
+﻿using Shopfloor.Shared.ViewModels;
 using System;
 
-namespace PrzegladyRemonty.Shared.Stores
+namespace Shopfloor.Shared.Stores
 {
     public class NavigationStore : INavigationStore
     {

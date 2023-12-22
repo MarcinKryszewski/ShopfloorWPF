@@ -1,7 +1,7 @@
-﻿using PrzegladyRemonty.Shared.Services;
-using PrzegladyRemonty.Shared.ViewModels;
+﻿using Shopfloor.Shared.Services;
+using Shopfloor.Shared.ViewModels;
 
-namespace PrzegladyRemonty.Shared.Commands
+namespace Shopfloor.Shared.Commands
 {
     public class NavigateCommand<TViewModel> : CommandBase
         where TViewModel : ViewModelBase

@@ -1,4 +1,4 @@
-﻿namespace PrzegladyRemonty.Database.Initializers
+﻿namespace Shopfloor.Database.Initializers
 {
     public interface IDatabaseInitializer
     {

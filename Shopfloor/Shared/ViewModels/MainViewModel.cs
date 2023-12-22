@@ -1,6 +1,6 @@
-﻿using PrzegladyRemonty.Shared.Stores;
+﻿using Shopfloor.Shared.Stores;
 
-namespace PrzegladyRemonty.Shared.ViewModels
+namespace Shopfloor.Shared.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {

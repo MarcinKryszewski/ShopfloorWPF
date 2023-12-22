@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace PrzegladyRemonty.Shared.ViewModels
+namespace Shopfloor.Shared.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

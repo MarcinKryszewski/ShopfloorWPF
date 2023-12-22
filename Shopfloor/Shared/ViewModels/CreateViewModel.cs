@@ -1,4 +1,4 @@
-﻿namespace PrzegladyRemonty.Shared.ViewModels
+﻿namespace Shopfloor.Shared.ViewModels
 {
     public delegate TViewModel CreateViewModel<TViewModel>() where TViewModel : ViewModelBase;
 

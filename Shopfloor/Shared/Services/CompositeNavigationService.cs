@@ -1,4 +1,4 @@
-﻿namespace PrzegladyRemonty.Shared.Services
+﻿namespace Shopfloor.Shared.Services
 {
     //public class CompositeNavigationService : INavigationService
     //{

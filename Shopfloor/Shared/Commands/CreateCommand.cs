@@ -1,7 +1,7 @@
-﻿using PrzegladyRemonty.Shared.ViewModels;
+﻿using Shopfloor.Shared.ViewModels;
 using System.Windows.Input;
 
-namespace PrzegladyRemonty.Shared.Commands
+namespace Shopfloor.Shared.Commands
 {
     public delegate ICommand CreateCommand<TViewModel>(TViewModel viewModel) where TViewModel : ViewModelBase;
 }

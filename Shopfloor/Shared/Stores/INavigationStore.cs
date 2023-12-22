@@ -1,6 +1,6 @@
-﻿using PrzegladyRemonty.Shared.ViewModels;
+﻿using Shopfloor.Shared.ViewModels;
 
-namespace PrzegladyRemonty.Shared.Stores
+namespace Shopfloor.Shared.Stores
 {
     public interface INavigationStore
     {

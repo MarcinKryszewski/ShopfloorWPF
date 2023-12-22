@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace PrzegladyRemonty.Database.SQLite
+namespace Shopfloor.Database.SQLite
 {
     public class SqliteInitCommands
     {

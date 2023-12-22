@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace PrzegladyRemonty.Shared.ViewModels
+namespace Shopfloor.Shared.ViewModels
 {
     public class ErrorsViewModel : ViewModelBase, INotifyDataErrorInfo
     {
