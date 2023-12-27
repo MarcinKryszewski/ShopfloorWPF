@@ -1,14 +1,12 @@
-﻿using System;
-using System.Data;
-using System.IO;
-using System.Windows;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
 using Shopfloor.Database.Initializers;
 using Shopfloor.Hosts.ConfigurationHost;
 using Shopfloor.Hosts.DatabaseHost;
+using Shopfloor.Layout.MainWindow;
+using System.Data;
+using System.Windows;
 
 namespace Shopfloor
 {
@@ -32,6 +30,13 @@ namespace Shopfloor
             DatabaseInitializerFactory initializer = new(_configurationHost.Services, connection);
             IDatabaseInitializer databaseInitializer = initializer.CreateInitializer();
             databaseInitializer.Initialize();
+
+            MainWindow = new MainWindow()
+            {
+                DataContext = new MainWindowViewModel()
+            };
+
+            MainWindow.Show();
         }
     }
 }

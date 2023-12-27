@@ -1,25 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kryszm02\\Downloads\\ShopfloorWPF\\Shopfloor\\Shopfloor.csproj": {}
+    "C:\\Users\\Marcin\\Source\\Repos\\MarcinKryszewski\\ShopfloorWPF\\Shopfloor\\Shopfloor.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kryszm02\\Downloads\\ShopfloorWPF\\Shopfloor\\Shopfloor.csproj": {
+    "C:\\Users\\Marcin\\Source\\Repos\\MarcinKryszewski\\ShopfloorWPF\\Shopfloor\\Shopfloor.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kryszm02\\Downloads\\ShopfloorWPF\\Shopfloor\\Shopfloor.csproj",
+        "projectUniqueName": "C:\\Users\\Marcin\\Source\\Repos\\MarcinKryszewski\\ShopfloorWPF\\Shopfloor\\Shopfloor.csproj",
         "projectName": "Shopfloor",
-        "projectPath": "C:\\Users\\kryszm02\\Downloads\\ShopfloorWPF\\Shopfloor\\Shopfloor.csproj",
-        "packagesPath": "C:\\Users\\kryszm02\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kryszm02\\Downloads\\ShopfloorWPF\\Shopfloor\\obj\\",
+        "projectPath": "C:\\Users\\Marcin\\Source\\Repos\\MarcinKryszewski\\ShopfloorWPF\\Shopfloor\\Shopfloor.csproj",
+        "packagesPath": "C:\\Users\\Marcin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Marcin\\Source\\Repos\\MarcinKryszewski\\ShopfloorWPF\\Shopfloor\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\kryszm02\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "F:\\AppData\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0-windows"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,6 +40,9 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "default"
         }
       },
       "frameworks": {
@@ -42,7 +53,7 @@
               "target": "Package",
               "version": "[2.1.24, )"
             },
-            "Microsoft.Data.Sqlite.Core": {
+            "Microsoft.Data.Sqlite": {
               "target": "Package",
               "version": "[8.0.0, )"
             },
@@ -94,6 +105,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.14, 7.0.14]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[7.0.14, 7.0.14]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.14, 7.0.14]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[7.0.14, 7.0.14]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -102,7 +131,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\kryszm02\\Downloads\\dotnet7\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

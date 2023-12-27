@@ -1,9 +1,8 @@
-﻿<Application x:Class="Shopfloor.App"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Shopfloor"
-             StartupUri="ApplicationStart">
-    <Application.Resources>
-         
-    </Application.Resources>
+﻿<Application
+    x:Class="Shopfloor.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Shopfloor"
+    Startup="ApplicationStart">
+    <Application.Resources />
 </Application>
