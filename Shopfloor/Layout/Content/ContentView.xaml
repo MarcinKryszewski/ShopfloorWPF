@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:topPanel="clr-namespace:Shopfloor.Layout.TopPanel"
+    xmlns:dashboard="clr-namespace:Shopfloor.Features.Dashboard"
     d:DataContext="{d:DesignInstance Type=content:ContentViewModel}"
     d:Height="1020"
     d:Width="1680"
@@ -17,22 +18,15 @@
         </Grid.RowDefinitions>
 
         <topPanel:TopPanelView Grid.Row="0" DataContext="{Binding TopPanelViewModel}" />
-        <StackPanel Grid.Row="1" Background="Green">
-            <Border Height="100" Background="CornflowerBlue" />
-            <Border
-                Height="300"
-                Margin="30,30,30,0"
-                Background="CornflowerBlue" />
-            <Border
-                Height="300"
-                Margin="30,30,30,0"
-                Background="CornflowerBlue" />
-            <Border
-                Height="300"
-                Margin="30,30,30,0"
-                Background="CornflowerBlue" />
-
-        </StackPanel>
+        <ContentControl
+                Grid.Row="1"
+                Content="{Binding Content}" >
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type dashboard:DashboardViewModel}">
+                    <dashboard:DashboardView />
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
 
     </Grid>
 </UserControl>

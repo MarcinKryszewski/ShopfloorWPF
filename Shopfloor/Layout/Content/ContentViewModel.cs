@@ -1,4 +1,7 @@
-﻿using Shopfloor.Layout.TopPanel;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Layout.TopPanel;
+using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Layout.Content
@@ -6,12 +9,22 @@ namespace Shopfloor.Layout.Content
     public class ContentViewModel : ViewModelBase
     {
         private readonly TopPanelViewModel _topPanelViewModel;
+        private readonly NavigationStore _navigationStore;
 
         public TopPanelViewModel TopPanelViewModel => _topPanelViewModel;
+        public ViewModelBase Content => _navigationStore.CurrentViewModel;
 
-        public ContentViewModel()
+        public ContentViewModel(IServiceProvider mainServices, NavigationStore navigationStore)
         {
-            _topPanelViewModel = new TopPanelViewModel();
+            _topPanelViewModel = mainServices.GetRequiredService<TopPanelViewModel>();
+
+            _navigationStore = mainServices.GetRequiredService<NavigationStore>();
+            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+        }
+
+        private void OnCurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(Content));
         }
     }
 }

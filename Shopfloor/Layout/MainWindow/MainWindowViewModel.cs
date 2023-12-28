@@ -14,10 +14,10 @@ namespace Shopfloor.Layout.MainWindow
         public SidePanelViewModel SidePanelViewModel => _sidePanelViewModel;
         public ContentViewModel ContentViewModel => _contentViewModel;
 
-        public MainWindowViewModel(IServiceProvider mainHost)
+        public MainWindowViewModel(IServiceProvider mainServices)
         {
-            _sidePanelViewModel = mainHost.GetRequiredService<SidePanelViewModel>();
-            _contentViewModel = new ContentViewModel();
+            _sidePanelViewModel = mainServices.GetRequiredService<SidePanelViewModel>();
+            _contentViewModel = mainServices.GetRequiredService<ContentViewModel>();
         }
     }
 }
