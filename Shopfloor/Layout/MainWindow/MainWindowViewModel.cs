@@ -1,4 +1,6 @@
-﻿using Shopfloor.Layout.Content;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Layout.Content;
 using Shopfloor.Layout.SidePanel;
 
 namespace Shopfloor.Layout.MainWindow
@@ -12,9 +14,9 @@ namespace Shopfloor.Layout.MainWindow
         public SidePanelViewModel SidePanelViewModel => _sidePanelViewModel;
         public ContentViewModel ContentViewModel => _contentViewModel;
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IServiceProvider mainHost)
         {
-            _sidePanelViewModel = new SidePanelViewModel();
+            _sidePanelViewModel = mainHost.GetRequiredService<SidePanelViewModel>();
             _contentViewModel = new ContentViewModel();
         }
     }

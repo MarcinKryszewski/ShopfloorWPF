@@ -4,6 +4,7 @@ using Shopfloor.Database;
 using Shopfloor.Database.Initializers;
 using Shopfloor.Hosts.ConfigurationHost;
 using Shopfloor.Hosts.DatabaseHost;
+using Shopfloor.Hosts.MainHost;
 using Shopfloor.Layout.MainWindow;
 using System.Data;
 using System.Windows;
@@ -14,6 +15,7 @@ namespace Shopfloor
     {
         private readonly IHost _configurationHost;
         private readonly IHost _databaseHost;
+        private readonly IHost _mainHost;
 
         public App()
         {
@@ -22,6 +24,8 @@ namespace Shopfloor
             _configurationHost.Start();
             _databaseHost = DatabaseHost.GetHost(_configurationHost.Services);
             _databaseHost.Start();
+            _mainHost = MainHost.GetHost();
+
         }
 
         private void ApplicationStart(object sender, StartupEventArgs e)
@@ -33,7 +37,7 @@ namespace Shopfloor
 
             MainWindow = new MainWindow()
             {
-                DataContext = new MainWindowViewModel()
+                DataContext = new MainWindowViewModel(_mainHost.Services)
             };
 
             MainWindow.Show();
