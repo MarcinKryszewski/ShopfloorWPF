@@ -4,13 +4,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:content="clr-namespace:Shopfloor.Layout.Content"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Shopfloor.Layout.MainWindow"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sidePanel="clr-namespace:Shopfloor.Layout.SidePanel"
-    xmlns:viewmodels="clr-namespace:Shopfloor.Shared.ViewModels"
     Title="MainWindow"
     Width="1920"
     Height="1040"
-    d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+    d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -19,6 +19,12 @@
         </Grid.ColumnDefinitions>
 
         <sidePanel:SidePanelView Grid.Column="0" DataContext="{Binding SidePanelViewModel}" />
-        <content:ContentView Grid.Column="1" DataContext="{Binding ContentViewModel}" />
+        <ScrollViewer
+            Grid.Column="1"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto">
+            <content:ContentView DataContext="{Binding ContentViewModel}" />
+        </ScrollViewer>
+
     </Grid>
 </Window>

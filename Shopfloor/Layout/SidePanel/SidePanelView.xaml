@@ -8,5 +8,15 @@
     d:Height="1020"
     d:Width="240"
     mc:Ignorable="d">
-    <Border Background="Blue" />
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="64" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="BlueViolet">
+            <Border Margin="20,0,20,0" Background="Aqua" />
+        </Border>
+        <Border Grid.Row="1" Background="Gainsboro" />
+    </Grid>
 </UserControl>

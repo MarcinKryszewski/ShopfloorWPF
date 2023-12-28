@@ -17,8 +17,22 @@
         </Grid.RowDefinitions>
 
         <topPanel:TopPanelView Grid.Row="0" DataContext="{Binding TopPanelViewModel}" />
-        <Border Grid.Row="1" Background="Green" />
+        <StackPanel Grid.Row="1" Background="Green">
+            <Border Height="100" Background="CornflowerBlue" />
+            <Border
+                Height="300"
+                Margin="30,30,30,0"
+                Background="CornflowerBlue" />
+            <Border
+                Height="300"
+                Margin="30,30,30,0"
+                Background="CornflowerBlue" />
+            <Border
+                Height="300"
+                Margin="30,30,30,0"
+                Background="CornflowerBlue" />
 
+        </StackPanel>
 
     </Grid>
 </UserControl>
