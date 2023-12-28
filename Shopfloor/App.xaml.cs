@@ -2,10 +2,12 @@
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
 using Shopfloor.Database.Initializers;
+using Shopfloor.Features.Dashboard;
 using Shopfloor.Hosts.ConfigurationHost;
 using Shopfloor.Hosts.DatabaseHost;
 using Shopfloor.Hosts.MainHost;
 using Shopfloor.Layout.MainWindow;
+using Shopfloor.Shared.Services;
 using System.Data;
 using System.Windows;
 
@@ -25,7 +27,10 @@ namespace Shopfloor
             _databaseHost = DatabaseHost.GetHost(_configurationHost.Services);
             _databaseHost.Start();
             _mainHost = MainHost.GetHost();
+            _mainHost.Start();
 
+            NavigationService<DashboardViewModel> navigationService = _mainHost.Services.GetRequiredService<NavigationService<DashboardViewModel>>();
+            navigationService.Navigate();
         }
 
         private void ApplicationStart(object sender, StartupEventArgs e)

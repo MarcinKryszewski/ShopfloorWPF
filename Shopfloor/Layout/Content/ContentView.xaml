@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:topPanel="clr-namespace:Shopfloor.Layout.TopPanel"
     xmlns:dashboard="clr-namespace:Shopfloor.Features.Dashboard"
+    xmlns:someFeature="clr-namespace:Shopfloor.Features.SomeFeature"
     d:DataContext="{d:DesignInstance Type=content:ContentViewModel}"
     d:Height="1020"
     d:Width="1680"
@@ -24,6 +25,9 @@
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type dashboard:DashboardViewModel}">
                     <dashboard:DashboardView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type someFeature:SomeFeatureViewModel}">
+                    <someFeature:SomeFeatureView />
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
