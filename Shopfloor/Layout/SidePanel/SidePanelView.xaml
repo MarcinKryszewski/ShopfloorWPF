@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Shopfloor.Layout.SidePanel"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=local:SidePanelViewModel}"
     d:Height="1020"
     d:Width="240"
     mc:Ignorable="d">
@@ -17,6 +18,101 @@
         <Border Grid.Row="0" Background="BlueViolet">
             <Border Margin="20,0,20,0" Background="Aqua" />
         </Border>
-        <Border Grid.Row="1" Background="Gainsboro" />
+        <ScrollViewer
+            Grid.Row="1"
+            Background="#272e38"
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock
+                    Height="40"
+                    Padding="20,22,20,6"
+                    FontFamily="Inter"
+                    FontSize="12"
+                    Foreground="#6d7a86"
+                    Text="Planista"
+                    Typography.Capitals="AllSmallCaps" />
+                <Button
+                    Height="40"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Center"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding Path=NavigateDashboardCommand}">
+                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
+                        <Border
+                            Width="24"
+                            Height="24"
+                            Margin="0,0,9,0"
+                            Background="Yellow" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Foreground="#f5f5f5"
+                            Text="Dashboard" />
+                    </StackPanel>
+                </Button>
+                <Button
+                    Height="40"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Center"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding Path=NavigateControlPanelCommand}">
+                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
+                        <Border
+                            Width="24"
+                            Height="24"
+                            Margin="0,0,9,0"
+                            Background="Yellow" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Foreground="#f5f5f5"
+                            Text="Panel kontrolny" />
+                    </StackPanel>
+                </Button>
+                <Button
+                    Height="40"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Center"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding Path=NavigateOrdersCommand}">
+                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
+                        <Border
+                            Width="24"
+                            Height="24"
+                            Margin="0,0,9,0"
+                            Background="Yellow" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Foreground="#f5f5f5"
+                            Text="Zamówienia" />
+                    </StackPanel>
+                </Button>
+                <Button
+                    Height="40"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Center"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding Path=NavigateDeploysCommand}">
+                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
+                        <Border
+                            Width="24"
+                            Height="24"
+                            Margin="0,0,9,0"
+                            Background="Yellow" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Foreground="#f5f5f5"
+                            Text="Pobrania" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

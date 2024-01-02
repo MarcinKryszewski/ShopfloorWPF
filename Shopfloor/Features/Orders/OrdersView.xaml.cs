@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,13 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Shopfloor.Features.SomeFeature
+namespace Shopfloor.Features.Orders
 {
-    public sealed partial class SomeFeatureView : UserControl
+    /// <summary>
+    /// Interaction logic for OrdersView.xaml
+    /// </summary>
+    public partial class OrdersView : UserControl
     {
-        public SomeFeatureView()
+        public OrdersView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }
