@@ -17,6 +17,29 @@
         <Border Grid.Row="0" Background="BlueViolet">
             <Border Margin="20,0,20,0" Background="Aqua" />
         </Border>
-        <Border Grid.Row="1" Background="Gainsboro" />
+        <ScrollViewer 
+            Grid.Row="1" 
+            HorizontalScrollBarVisibility="Disabled"
+            VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation = "Vertical">
+                <Button Height="40" Width="240">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <!-- Two columns in the Grid -->
+                        <Grid.ColumnDefinitions>
+                            <!-- First column with fixed width (e.g., 100 pixels) -->
+                            <ColumnDefinition Width="24"/>
+                            <!-- Second column stretches to take all available space -->
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Content for the first column -->
+                        <TextBlock Grid.Column="0" Text="Fixed Width" Background="Yellow" Height="40"/>
+
+                        <!-- Content for the second column -->
+                        <TextBlock Grid.Column="1" Text="Expands to Available Space" Background="Green" Width="190" Margin="10,0,0,0" Height="40"/>
+                    </Grid>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>
