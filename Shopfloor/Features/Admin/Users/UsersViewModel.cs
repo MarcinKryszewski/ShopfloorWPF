@@ -4,10 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.Plannist.Reports
+namespace Shopfloor.Features.Admin.Users
 {
-    public class ReportsViewModel : ViewModelBase
+    public class UsersViewModel : ViewModelBase
     {
+        public UsersViewModel()
+        {
 
+        }
     }
 }

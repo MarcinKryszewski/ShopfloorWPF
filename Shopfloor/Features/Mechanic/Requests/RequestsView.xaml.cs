@@ -13,11 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Shopfloor.Features.Mechanic.Orders
+namespace Shopfloor.Features.Mechanic.Requests
 {
-    public sealed partial class OrdersView : UserControl
+    public sealed partial class RequestsView : UserControl
     {
-        public OrdersView()
+        public RequestsView()
         {
             this.InitializeComponent();
         }

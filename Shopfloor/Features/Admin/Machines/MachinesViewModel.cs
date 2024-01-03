@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.Plannist.Reports
+namespace Shopfloor.Features.Admin.Machines
 {
-    public class ReportsViewModel : ViewModelBase
+    public class MachinesViewModel : ViewModelBase
     {
 
     }

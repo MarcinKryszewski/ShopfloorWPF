@@ -13,11 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Shopfloor.Features.Manager.Tasks
+namespace Shopfloor.Features.Plannist.Reservations
 {
-    public sealed partial class TasksView : UserControl
+    public sealed partial class ReservationsView : UserControl
     {
-        public TasksView()
+        public ReservationsView()
         {
             this.InitializeComponent();
         }

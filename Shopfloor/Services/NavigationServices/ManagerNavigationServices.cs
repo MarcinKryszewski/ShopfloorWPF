@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Shopfloor.Features.Mechanic.Orders
+namespace Shopfloor.Services.NavigationServices
 {
-    public class OrdersViewModel
+    public class ManagerNavigationServices
     {
-        
+
     }
 }
