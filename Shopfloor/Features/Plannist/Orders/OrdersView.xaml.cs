@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Shopfloor.Features.ControlPanel
+namespace Shopfloor.Features.Plannist.Orders
 {
     /// <summary>
-    /// Interaction logic for ControlPanelView.xaml
+    /// Interaction logic for OrdersView.xaml
     /// </summary>
-    public partial class ControlPanelView : UserControl
+    public partial class OrdersView : UserControl
     {
-        public ControlPanelView()
+        public OrdersView()
         {
             InitializeComponent();
         }

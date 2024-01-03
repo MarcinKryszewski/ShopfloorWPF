@@ -1,7 +1,7 @@
 ﻿using Shopfloor.Shared.ViewModels;
 using System;
 
-namespace Shopfloor.Features.Deploys
+namespace Shopfloor.Features.Plannist.Deploys
 {
     public class DeploysViewModel : ViewModelBase
     {

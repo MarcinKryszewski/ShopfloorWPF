@@ -1,7 +1,7 @@
 ﻿using Shopfloor.Shared.ViewModels;
 using System;
 
-namespace Shopfloor.Features.ControlPanel
+namespace Shopfloor.Features.Plannist.ControlPanel
 {
     public class ControlPanelViewModel : ViewModelBase
     {

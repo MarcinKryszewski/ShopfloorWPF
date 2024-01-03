@@ -1,7 +1,7 @@
 ﻿using Shopfloor.Shared.ViewModels;
 using System;
 
-namespace Shopfloor.Features.Orders
+namespace Shopfloor.Features.Plannist.Orders
 {
     public class OrdersViewModel : ViewModelBase
     {

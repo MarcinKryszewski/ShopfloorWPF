@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Shopfloor.Features.Deploys
+namespace Shopfloor.Features.Plannist.ControlPanel
 {
     /// <summary>
-    /// Interaction logic for DeploysView.xaml
+    /// Interaction logic for ControlPanelView.xaml
     /// </summary>
-    public partial class DeploysView : UserControl
+    public partial class ControlPanelView : UserControl
     {
-        public DeploysView()
+        public ControlPanelView()
         {
             InitializeComponent();
         }

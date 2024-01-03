@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.ControlPanel;
+using Shopfloor.Features.Plannist.ControlPanel;
 using Shopfloor.Features.Dashboard;
-using Shopfloor.Features.Deploys;
-using Shopfloor.Features.Orders;
+using Shopfloor.Features.Plannist.Deploys;
+using Shopfloor.Features.Plannist.Orders;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;

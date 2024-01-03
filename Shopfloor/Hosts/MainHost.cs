@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Shopfloor.Features.ControlPanel;
+using Shopfloor.Features.Plannist.ControlPanel;
 using Shopfloor.Features.Dashboard;
-using Shopfloor.Features.Deploys;
-using Shopfloor.Features.Orders;
+using Shopfloor.Features.Plannist.Deploys;
+using Shopfloor.Features.Plannist.Orders;
 using Shopfloor.Layout.Content;
 using Shopfloor.Layout.SidePanel;
 using Shopfloor.Layout.TopPanel;
@@ -71,7 +71,6 @@ namespace Shopfloor.Hosts.MainHost
                     );
                 });
                 #endregion
-
             })
             .Build();
         }
