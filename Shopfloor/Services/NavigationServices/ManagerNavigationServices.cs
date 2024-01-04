@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Shopfloor.Services.NavigationServices
 {
     public class ManagerNavigationServices
     {
+        public static void Get(IServiceCollection services)
+        {
 
+        }
     }
 }

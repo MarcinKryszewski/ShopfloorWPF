@@ -1,21 +1,21 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Plannist.ControlPanel;
+using Shopfloor.Features.Admin.Machines;
+using Shopfloor.Features.Admin.Parts;
+using Shopfloor.Features.Admin.Users;
 using Shopfloor.Features.Dashboard;
+using Shopfloor.Features.Mechanic.MinimalStates;
+using Shopfloor.Features.Mechanic.Requests;
+using Shopfloor.Features.Mechanic.Tasks;
+using Shopfloor.Features.Plannist.ControlPanel;
 using Shopfloor.Features.Plannist.Deploys;
 using Shopfloor.Features.Plannist.Orders;
+using Shopfloor.Features.Plannist.Reports;
+using Shopfloor.Features.Plannist.Reservations;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Windows.Input;
-using Shopfloor.Features.Mechanic.Tasks;
-using Shopfloor.Features.Mechanic.Requests;
-using Shopfloor.Features.Mechanic.MinimalStates;
-using Shopfloor.Features.Plannist.Reservations;
-using Shopfloor.Features.Plannist.Reports;
-using Shopfloor.Features.Admin.Users;
-using Shopfloor.Features.Admin.Machines;
-using Shopfloor.Features.Admin.Parts;
 
 namespace Shopfloor.Layout.SidePanel
 {

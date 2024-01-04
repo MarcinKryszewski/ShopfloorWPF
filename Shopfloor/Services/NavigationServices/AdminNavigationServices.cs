@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Machines;
 using Shopfloor.Features.Admin.Parts;
@@ -9,50 +5,65 @@ using Shopfloor.Features.Admin.Users;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
+using System;
 
 namespace Shopfloor.Services.NavigationServices
 {
     public class AdminNavigationServices
     {
-        public AdminNavigationServices(IServiceProvider services)
+        public static void Get(IServiceCollection services)
         {
-
-        }
-        public void GetUsersNavigation(IServiceCollection services)
-        {
-            NewMethod<UsersViewModel>(services, CreateUsersViewModel);
-        }
-        public void GetMachinesNavigation(IServiceCollection services)
-        {
-            NewMethod<MachinesViewModel>(services, CreateMachinesViewModel);
-        }
-        public void GetPartsNavigation(IServiceCollection services)
-        {
-            NewMethod<PartsViewModel>(services, CreatePartsViewModel);
+            GetUsersNavigation(services);
+            GetMachinesNavigation(services);
+            GetPartsNavigation(services);
         }
 
-        private void NewMethod<T>(IServiceCollection services, Func<IServiceProvider, ViewModelBase> createViewModel) where T : ViewModelBase
+        public static void GetUsersNavigation(IServiceCollection services)
         {
-            services.AddTransient((s) => createViewModel(s));
-            services.AddSingleton<CreateViewModel<T>>((s) => () => s.GetRequiredService<T>());
+            services.AddTransient((s) => CreateUsersViewModel(s));
+            services.AddSingleton<CreateViewModel<UsersViewModel>>((s) => () => s.GetRequiredService<UsersViewModel>());
             services.AddSingleton((s) =>
             {
-                return new NavigationService<T>(
+                return new NavigationService<UsersViewModel>(
                     s.GetRequiredService<NavigationStore>(),
-                    s.GetRequiredService<CreateViewModel<T>>()
+                    s.GetRequiredService<CreateViewModel<UsersViewModel>>()
+                );
+            });
+        }
+        public static void GetMachinesNavigation(IServiceCollection services)
+        {
+            services.AddTransient((s) => CreateMachinesViewModel(s));
+            services.AddSingleton<CreateViewModel<MachinesViewModel>>((s) => () => s.GetRequiredService<MachinesViewModel>());
+            services.AddSingleton((s) =>
+            {
+                return new NavigationService<MachinesViewModel>(
+                    s.GetRequiredService<NavigationStore>(),
+                    s.GetRequiredService<CreateViewModel<MachinesViewModel>>()
+                );
+            });
+        }
+        public static void GetPartsNavigation(IServiceCollection services)
+        {
+            services.AddTransient((s) => CreatePartsViewModel(s));
+            services.AddSingleton<CreateViewModel<PartsViewModel>>((s) => () => s.GetRequiredService<PartsViewModel>());
+            services.AddSingleton((s) =>
+            {
+                return new NavigationService<PartsViewModel>(
+                    s.GetRequiredService<NavigationStore>(),
+                    s.GetRequiredService<CreateViewModel<PartsViewModel>>()
                 );
             });
         }
 
-        private UsersViewModel CreateUsersViewModel(IServiceProvider services)
+        private static UsersViewModel CreateUsersViewModel(IServiceProvider services)
         {
             return new UsersViewModel();
         }
-        private MachinesViewModel CreateMachinesViewModel(IServiceProvider services)
+        private static MachinesViewModel CreateMachinesViewModel(IServiceProvider services)
         {
             return new MachinesViewModel();
         }
-        private PartsViewModel CreatePartsViewModel(IServiceProvider services)
+        private static PartsViewModel CreatePartsViewModel(IServiceProvider services)
         {
             return new PartsViewModel();
         }
