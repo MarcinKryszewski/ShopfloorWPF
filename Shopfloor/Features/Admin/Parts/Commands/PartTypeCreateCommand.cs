@@ -20,7 +20,7 @@ namespace Shopfloor.Features.Admin.Parts.Commands
         }
         public override async Task ExecuteAsync(object parameter)
         {
-            //PartType partType = (PartType)parameter;
+            //PartType partType = new((string)parameter);
             await _partType.Add(_provider);
         }
     }

@@ -10,7 +10,7 @@
         <StackPanel Width="400" >
         <TextBlock Text="Name" />
         <TextBox Text="{Binding Path=PartTypeName}" />
-        <Button Command="{Binding Path=PartTypeCreateCommand}" Content="STWÓRZ" />
+        <Button Command="{Binding Path=PartTypeCreateCommand}" Content="STWÓRZ" CommandParameter="{Binding Path=PartType}" />
         </StackPanel >
     </Grid>
 </UserControl> 

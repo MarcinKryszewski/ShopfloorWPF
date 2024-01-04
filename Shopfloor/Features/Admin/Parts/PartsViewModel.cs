@@ -22,6 +22,7 @@ namespace Shopfloor.Features.Admin.Parts
             set
             {
                 _partTypeName = value;
+                OnPropertyChanged(nameof(PartTypeName));
             }
         }
 
@@ -29,7 +30,7 @@ namespace Shopfloor.Features.Admin.Parts
 
         public PartsViewModel(IServiceProvider databaseServices)
         {
-            PartTypeCreateCommand = new PartTypeCreateCommand(databaseServices.GetRequiredService<PartTypeProvider>(), PartType, _partTypeName);
+            PartTypeCreateCommand = new PartTypeCreateCommand(databaseServices.GetRequiredService<PartTypeProvider>(), PartType);
         }
     }
 }
