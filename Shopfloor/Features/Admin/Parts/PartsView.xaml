@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        
+        <StackPanel Width="400" >
+        <TextBlock Text="Name" />
+        <TextBox Text="{Binding Path=PartTypeName}" />
+        <Button Command="{Binding Path=PartTypeCreateCommand}" Content="STWÓRZ" />
+        </StackPanel >
     </Grid>
 </UserControl> 

@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Layout.Content;
@@ -10,7 +11,7 @@ namespace Shopfloor.Hosts.MainHost
 {
     public class MainHost
     {
-        public static IHost GetHost()
+        public static IHost GetHost(IServiceProvider databaseServices)
         {
             return Host
             .CreateDefaultBuilder()
@@ -25,8 +26,7 @@ namespace Shopfloor.Hosts.MainHost
                 MechanicNavigationServices.Get(services);
                 PlannistNavigationServices.Get(services);
                 ManagerNavigationServices.Get(services);
-                AdminNavigationServices.Get(services);
-
+                AdminNavigationServices.Get(services, databaseServices);
             })
             .Build();
         }

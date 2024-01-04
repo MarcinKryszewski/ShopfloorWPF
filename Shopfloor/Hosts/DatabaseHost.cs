@@ -2,6 +2,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
+using Shopfloor.Services.Providers;
 
 namespace Shopfloor.Hosts.DatabaseHost
 {
@@ -21,6 +22,7 @@ namespace Shopfloor.Hosts.DatabaseHost
 
         private static void ProvidersServices(IServiceCollection services)
         {
+            services.AddSingleton<PartTypeProvider>();
         }
     }
 

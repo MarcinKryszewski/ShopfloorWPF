@@ -6,19 +6,18 @@ namespace Shopfloor.Database.SQLite
     {
         public List<string> InitCommands { get; }
 
-        private const string _lineSQLCommand = @"
-            CREATE TABLE IF NOT EXISTS line (
-                Id INTEGER,
-                Name TEXT,
-                Active INTEGER,
-                PRIMARY KEY(Id AUTOINCREMENT)
+        private const string _partsTypesSQLCommand = @"
+            CREATE TABLE IF NOT EXISTS parts_types (
+                id INTEGER,
+                part_type_name TEXT,
+                PRIMARY KEY(id AUTOINCREMENT)
             )";
 
         public SqliteInitCommands()
         {
             InitCommands = new List<string>
             {
-                _lineSQLCommand
+                _partsTypesSQLCommand
             };
         }
     }

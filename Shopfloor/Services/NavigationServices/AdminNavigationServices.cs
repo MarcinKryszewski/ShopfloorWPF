@@ -11,11 +11,11 @@ namespace Shopfloor.Services.NavigationServices
 {
     public class AdminNavigationServices
     {
-        public static void Get(IServiceCollection services)
+        public static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {
             GetUsersNavigation(services);
             GetMachinesNavigation(services);
-            GetPartsNavigation(services);
+            GetPartsNavigation(services, databaseServices);
         }
 
         public static void GetUsersNavigation(IServiceCollection services)
@@ -42,9 +42,9 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-        public static void GetPartsNavigation(IServiceCollection services)
+        public static void GetPartsNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreatePartsViewModel(s));
+            services.AddTransient((s) => CreatePartsViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<PartsViewModel>>((s) => () => s.GetRequiredService<PartsViewModel>());
             services.AddSingleton((s) =>
             {
@@ -63,9 +63,9 @@ namespace Shopfloor.Services.NavigationServices
         {
             return new MachinesViewModel();
         }
-        private static PartsViewModel CreatePartsViewModel(IServiceProvider services)
+        private static PartsViewModel CreatePartsViewModel(IServiceProvider services, IServiceProvider databaseServices)
         {
-            return new PartsViewModel();
+            return new PartsViewModel(databaseServices);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Shopfloor
             _configurationHost.Start();
             _databaseHost = DatabaseHost.GetHost(_configurationHost.Services);
             _databaseHost.Start();
-            _mainHost = MainHost.GetHost();
+            _mainHost = MainHost.GetHost(_databaseHost.Services);
             _mainHost.Start();
 
             NavigationService<DashboardViewModel> navigationService = _mainHost.Services.GetRequiredService<NavigationService<DashboardViewModel>>();
