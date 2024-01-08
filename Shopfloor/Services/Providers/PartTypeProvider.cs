@@ -1,12 +1,12 @@
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using Dapper;
 using Shopfloor.Database;
 using Shopfloor.Database.DTOs;
 using Shopfloor.Interfaces;
 using Shopfloor.Models;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Services.Providers
 {
@@ -16,14 +16,13 @@ namespace Shopfloor.Services.Providers
 
         #region SQLCommands
         private const string _createSQL = @"
-            INSERT INTO
-            parts_types (Name)
+            INSERT INTO parts_types (part_type_name)
             VALUES (@Name)
             ";
         private const string _getOneSQL = @"
             SELECT *
             FROM parts_types
-            WHERE Id = @Id
+            WHERE id = @Id
             ";
         private const string _getAllSQL = @"
             SELECT *
@@ -31,14 +30,13 @@ namespace Shopfloor.Services.Providers
             ";
         private const string _updateSQL = @"
             UPDATE parts_types
-            SET 
-                Name = @Name
-            WHERE Id = @Id
+            SET part_type_name = @Name
+            WHERE id = @Id
             ";
         private const string _deleteSQL = @"
             DELETE
             FROM parts_types
-            WHERE Id = @Id
+            WHERE id = @Id
             ";
         #endregion
 
@@ -53,7 +51,7 @@ namespace Shopfloor.Services.Providers
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                name = item.Name
+                Name = item.Name
             };
             await connection.ExecuteAsync(_createSQL, parameters);
         }
@@ -79,8 +77,8 @@ namespace Shopfloor.Services.Providers
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                id = item.Id,
-                name = item.Name
+                Id = item.Id,
+                Name = item.Name
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
@@ -89,7 +87,7 @@ namespace Shopfloor.Services.Providers
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                id = id
+                Id = id
             };
             await connection.ExecuteAsync(_deleteSQL, parameters);
         }

@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Parts.Commands;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.ViewModels;
+using System;
+using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Parts
 {
@@ -30,7 +27,7 @@ namespace Shopfloor.Features.Admin.Parts
 
         public PartsViewModel(IServiceProvider databaseServices)
         {
-            PartTypeCreateCommand = new PartTypeCreateCommand(databaseServices.GetRequiredService<PartTypeProvider>(), PartType);
+            PartTypeCreateCommand = new PartTypeCreateCommand(databaseServices.GetRequiredService<PartTypeProvider>(), this);
         }
     }
 }

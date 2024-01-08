@@ -1,27 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Features.Admin.Parts.Commands
 {
     public class PartTypeCreateCommand : AsyncCommandBase
     {
         private readonly PartTypeProvider _provider;
-        private readonly PartType _partType;
+        private readonly PartsViewModel _viewModel;
 
-        public PartTypeCreateCommand(PartTypeProvider provider, PartType partType)
+        public PartTypeCreateCommand(PartTypeProvider provider, PartsViewModel viewModel)
         {
             _provider = provider;
-            _partType = partType;
+            _viewModel = viewModel;
         }
         public override async Task ExecuteAsync(object parameter)
         {
-            //PartType partType = new((string)parameter);
-            await _partType.Add(_provider);
+            await _viewModel.PartType.Add(_provider);
         }
     }
 }
