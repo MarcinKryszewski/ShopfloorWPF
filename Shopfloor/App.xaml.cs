@@ -28,7 +28,7 @@ namespace Shopfloor
             _configurationHost.Start();
             _databaseHost = DatabaseHost.GetHost(_configurationHost.Services);
             _databaseHost.Start();
-            _userHost = UserHost.GetHost();
+            _userHost = UserHost.GetHost(_databaseHost.Services);
             _userHost.Start();
             _mainHost = MainHost.GetHost(_databaseHost.Services, _userHost.Services);
             _mainHost.Start();

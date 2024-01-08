@@ -1,49 +1,30 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Drawing;
+using Shopfloor.Models;
 
 namespace Shopfloor.Stores
 {
     public class UserStore
     {
-        private string _username;
-        private string _name;
-        private readonly string? _surname;
-        private readonly List<int> _permissions;
-        private readonly string _image;
-        private Boolean _isUserLoggedIn;
+        private User _user;
+        private bool _isUserLoggedIn;
 
-        public string Username
-        {
-            get => _username;
-        }
-        public string? Name => _name;
-        public string? Surname => _surname;
-        public string Image => _image;
-        public Boolean IsUserLoggedIn => _isUserLoggedIn;
+        public bool IsUserLoggedIn => _isUserLoggedIn;
+        public User User => _user;
 
         public UserStore()
         {
-            _username = "GOŚĆ";
-            _name = "";
-            _surname = "";
-            _permissions = new();
-            _image = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
+            _user = new("GOŚĆ");
             _isUserLoggedIn = false;
         }
 
-        public void AddPermission(int permissionValue)
+        public void Login(User user)
         {
-            _permissions.Add(permissionValue);
+            _user = user;
+            _isUserLoggedIn = true; 
         }
-
-        public bool HasUserPermission(int permissionValue)
+        public void Logout()
         {
-            return _permissions.Contains(permissionValue);
+            _user = new("GOŚĆ");
+            _isUserLoggedIn = false;
         }
-
-
     }
 }

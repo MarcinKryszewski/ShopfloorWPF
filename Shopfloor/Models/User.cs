@@ -7,21 +7,27 @@ namespace Shopfloor.Models
     public class User
     {
         private readonly HashSet<int> _permissions;
+        private readonly int _id;
+        private readonly string _username;
+        private string _image;
 
-        public int Id { get; }
-        public string Username { get; }
+        public int Id => _id;
+        public string Username => _username;
+        public string Image => _image;
 
         public User(int id, string name)
         {
-            Id = id;
-            Username = name;
+            _id = id;
+            _username = name;
             _permissions = new();
+            _image = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
         }
 
         public User(string name)
         {
-            Username = name;
+            _username = name;
             _permissions = new();
+            _image = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
         }
 
         public async Task Add(UserProvider provider)
@@ -43,6 +49,10 @@ namespace Shopfloor.Models
         public bool IsAuthorized(int permissionValue)
         {
             return _permissions.Contains(permissionValue);
+        }
+        public void SetImage(string path)
+        {
+            _image = path;
         }
     }
 }
