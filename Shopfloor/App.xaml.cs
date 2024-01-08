@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
 using Shopfloor.Database.Initializers;
 using Shopfloor.Features.Dashboard;
+using Shopfloor.Hosts;
 using Shopfloor.Hosts.ConfigurationHost;
 using Shopfloor.Hosts.DatabaseHost;
 using Shopfloor.Hosts.MainHost;
@@ -18,6 +19,7 @@ namespace Shopfloor
         private readonly IHost _configurationHost;
         private readonly IHost _databaseHost;
         private readonly IHost _mainHost;
+        private readonly IHost _userHost;
 
         public App()
         {
@@ -26,7 +28,9 @@ namespace Shopfloor
             _configurationHost.Start();
             _databaseHost = DatabaseHost.GetHost(_configurationHost.Services);
             _databaseHost.Start();
-            _mainHost = MainHost.GetHost(_databaseHost.Services);
+            _userHost = UserHost.GetHost();
+            _userHost.Start();
+            _mainHost = MainHost.GetHost(_databaseHost.Services, _userHost.Services);
             _mainHost.Start();
 
             NavigationService<DashboardViewModel> navigationService = _mainHost.Services.GetRequiredService<NavigationService<DashboardViewModel>>();
