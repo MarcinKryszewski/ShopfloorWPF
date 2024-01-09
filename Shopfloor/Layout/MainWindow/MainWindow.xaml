@@ -1,5 +1,4 @@
-﻿<Window
-    x:Class="Shopfloor.Layout.MainWindow.MainWindow"
+﻿<Window x:Class="Shopfloor.Layout.MainWindow.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:content="clr-namespace:Shopfloor.Layout.Content"
@@ -11,16 +10,18 @@
     Width="1920"
     Height="1040"
     d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel}"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    WindowStartupLocation="CenterScreen"
+    WindowState="Maximized">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="240" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <sidePanel:SidePanelView Grid.Column="0" DataContext="{Binding SidePanelViewModel}" />
-        <ScrollViewer
-            Grid.Column="1"
+        <sidePanel:SidePanelView Grid.Column="0"
+            DataContext="{Binding SidePanelViewModel}" />
+        <ScrollViewer Grid.Column="1"
             HorizontalScrollBarVisibility="Disabled"
             VerticalScrollBarVisibility="Auto">
             <content:ContentView DataContext="{Binding ContentViewModel}" />

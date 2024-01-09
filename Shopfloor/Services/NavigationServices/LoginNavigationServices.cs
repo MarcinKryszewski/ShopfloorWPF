@@ -16,7 +16,7 @@ namespace Shopfloor.Services.NavigationServices
 
         public static void GetLoginNavigation(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userProvider)
         {
-            services.AddTransient((s) => CreateLoginViewModel(databaseServices, userProvider));
+            services.AddTransient((s) => CreateLoginViewModel(s, databaseServices, userProvider));
             services.AddSingleton<CreateViewModel<LoginViewModel>>((s) => () => s.GetRequiredService<LoginViewModel>());
             services.AddSingleton((s) =>
             {
@@ -27,9 +27,9 @@ namespace Shopfloor.Services.NavigationServices
             });
         }
 
-        private static LoginViewModel CreateLoginViewModel(IServiceProvider databaseServices, IServiceProvider userProvider)
+        private static LoginViewModel CreateLoginViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userProvider)
         {
-            return new LoginViewModel(databaseServices, userProvider);
+            return new LoginViewModel(mainServices, databaseServices, userProvider);
         }
     }
 }

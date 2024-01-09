@@ -18,7 +18,7 @@ namespace Shopfloor.Layout.TopPanel
 
         public string UserImagePath => _userImagePath;
         public bool IsLoggedIn => _userStore.IsUserLoggedIn;
-        public string Username => _userStore.User.Username;
+        public string Username => IsLoggedIn ? $"Witaj {_userStore.User.Username}!" : "Zaloguj się!";
 
         public ICommand NavigateLoginCommand { get; }
         public ICommand LogoutCommand { get; }
@@ -29,7 +29,7 @@ namespace Shopfloor.Layout.TopPanel
             _userStore.PropertyChanged += OnUserAuthenticated;
             _userImagePath = _userStore.User.Image;
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(mainServices.GetRequiredService<NavigationService<LoginViewModel>>());
-            LogoutCommand = new LogoutCommand();
+            LogoutCommand = new LogoutCommand(_userStore);
         }
 
         private void OnUserAuthenticated(object? sender, PropertyChangedEventArgs e)

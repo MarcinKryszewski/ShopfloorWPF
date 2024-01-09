@@ -1,5 +1,4 @@
-﻿<UserControl
-    x:Class="Shopfloor.Layout.Content.ContentView"
+﻿<UserControl x:Class="Shopfloor.Layout.Content.ContentView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:content="clr-namespace:Shopfloor.Layout.Content"
@@ -29,53 +28,56 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <topPanel:TopPanelView Grid.Row="0" DataContext="{Binding TopPanelViewModel}" />
-        <ContentControl Grid.Row="1" Content="{Binding Content}">
-            <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type dashboard:DashboardViewModel}">
-                    <dashboard:DashboardView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type login:LoginViewModel}">
-                    <login:LoginView />
-                </DataTemplate>
+        <topPanel:TopPanelView Grid.Row="0"
+            DataContext="{Binding TopPanelViewModel}" />
+        <Border Grid.Row="1" Background="#192428">
+            <ContentControl 
+                Content="{Binding Content}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type dashboard:DashboardViewModel}">
+                        <dashboard:DashboardView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type login:LoginViewModel}">
+                        <login:LoginView />
+                    </DataTemplate>
 
-                <DataTemplate DataType="{x:Type tasks:TasksViewModel}">
-                    <tasks:TasksView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type requests:RequestsViewModel}">
-                    <requests:RequestsView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type minimalStates:MinimalStatesViewModel}">
-                    <minimalStates:MinimalStatesView />
-                </DataTemplate>
+                    <DataTemplate DataType="{x:Type tasks:TasksViewModel}">
+                        <tasks:TasksView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type requests:RequestsViewModel}">
+                        <requests:RequestsView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type minimalStates:MinimalStatesViewModel}">
+                        <minimalStates:MinimalStatesView />
+                    </DataTemplate>
 
-                <DataTemplate DataType="{x:Type controlPanel:ControlPanelViewModel}">
-                    <controlPanel:ControlPanelView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type orders:OrdersViewModel}">
-                    <orders:OrdersView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type deploys:DeploysViewModel}">
-                    <deploys:DeploysView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type reservations:ReservationsViewModel}">
-                    <reservations:ReservationsView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type reports:ReportsViewModel}">
-                    <reports:ReportsView />
-                </DataTemplate>
+                    <DataTemplate DataType="{x:Type controlPanel:ControlPanelViewModel}">
+                        <controlPanel:ControlPanelView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type orders:OrdersViewModel}">
+                        <orders:OrdersView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type deploys:DeploysViewModel}">
+                        <deploys:DeploysView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type reservations:ReservationsViewModel}">
+                        <reservations:ReservationsView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type reports:ReportsViewModel}">
+                        <reports:ReportsView />
+                    </DataTemplate>
 
-                <DataTemplate DataType="{x:Type users:UsersViewModel}">
-                    <users:UsersView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type machines:MachinesViewModel}">
-                    <machines:MachinesView />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type parts:PartsViewModel}">
-                    <parts:PartsView />
-                </DataTemplate>
-            </ContentControl.Resources>
-        </ContentControl>
-
+                    <DataTemplate DataType="{x:Type users:UsersViewModel}">
+                        <users:UsersView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type machines:MachinesViewModel}">
+                        <machines:MachinesView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type parts:PartsViewModel}">
+                        <parts:PartsView />
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+        </Border>
     </Grid>
 </UserControl>

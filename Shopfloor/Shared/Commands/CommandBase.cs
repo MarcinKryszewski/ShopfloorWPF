@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Windows.Input;
 
 namespace Shopfloor.Shared.Commands
@@ -20,5 +20,3 @@ namespace Shopfloor.Shared.Commands
         }
     }
 }
-
-
