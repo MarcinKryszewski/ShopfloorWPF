@@ -1,9 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Shopfloor.Stores;
+using System;
 
 namespace Shopfloor.Hosts
 {
@@ -11,13 +9,11 @@ namespace Shopfloor.Hosts
     {
         public static IHost GetHost(IServiceProvider databaseServices)
         {
-
-
             return Host
             .CreateDefaultBuilder()
             .ConfigureServices((services) =>
             {
-                services.AddSingleton<UserHost>();
+                services.AddSingleton<UserStore>();
             })
             .Build();
         }

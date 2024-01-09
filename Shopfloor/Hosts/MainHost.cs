@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Layout.Content;
@@ -7,6 +6,7 @@ using Shopfloor.Layout.TopPanel;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Stores;
+using System;
 
 namespace Shopfloor.Hosts.MainHost
 {
@@ -14,13 +14,11 @@ namespace Shopfloor.Hosts.MainHost
     {
         public static IHost GetHost(IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            UserStore userStore = new();
-
             return Host
             .CreateDefaultBuilder()
             .ConfigureServices((services) =>
             {
-                services.AddSingleton(userStore);
+                services.AddSingleton(userServices.GetRequiredService<UserStore>());
 
                 services.AddSingleton<SidePanelViewModel>();
                 services.AddSingleton<ContentViewModel>();
@@ -28,6 +26,7 @@ namespace Shopfloor.Hosts.MainHost
                 services.AddSingleton<NavigationStore>();
 
                 DashboardNavigationServices.Get(services);
+                LoginNavigationServices.Get(services, databaseServices, userServices);
                 MechanicNavigationServices.Get(services);
                 PlannistNavigationServices.Get(services);
                 ManagerNavigationServices.Get(services);

@@ -1,13 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using Dapper;
 using Shopfloor.Database;
 using Shopfloor.Database.DTOs;
 using Shopfloor.Interfaces;
 using Shopfloor.Models;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Services.Providers
 {
@@ -38,6 +37,11 @@ namespace Shopfloor.Services.Providers
             DELETE
             FROM users
             WHERE id = @Id
+            ";
+        private const string _getByUsername = @"
+            SELECT *
+            FROM users
+            WHERE username = @Username
             ";
         #endregion
 
@@ -72,6 +76,16 @@ namespace Shopfloor.Services.Providers
             UserDTO? userDTO = await connection.QuerySingleAsync<UserDTO>(_getOneSQL, parameters);
             return ToUser(userDTO);
 
+        }
+        public async Task<User> GetByUsername(string username)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                Username = username
+            };
+            UserDTO? userDTO = await connection.QuerySingleAsync<UserDTO>(_getByUsername, parameters);
+            return ToUser(userDTO);
         }
         public async Task Update(User item)
         {

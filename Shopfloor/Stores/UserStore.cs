@@ -1,13 +1,21 @@
 using Shopfloor.Models;
+using Shopfloor.Services.Providers;
+using System.ComponentModel;
 
 namespace Shopfloor.Stores
 {
-    public class UserStore
+    public class UserStore : INotifyPropertyChanged
     {
         private User _user;
         private bool _isUserLoggedIn;
 
-        public bool IsUserLoggedIn => _isUserLoggedIn;
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public bool IsUserLoggedIn
+        {
+            get => _isUserLoggedIn;
+        }
+
         public User User => _user;
 
         public UserStore()
@@ -16,10 +24,11 @@ namespace Shopfloor.Stores
             _isUserLoggedIn = false;
         }
 
-        public void Login(User user)
+        public void Login(string username, UserProvider provider)
         {
-            _user = user;
-            _isUserLoggedIn = true; 
+            _user = provider.GetByUsername(username).Result;
+            _isUserLoggedIn = true;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
         }
         public void Logout()
         {

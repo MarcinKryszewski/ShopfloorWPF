@@ -44,7 +44,7 @@ namespace Shopfloor.Services.NavigationServices
         }
         public static void GetPartsNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreatePartsViewModel(s, databaseServices));
+            services.AddTransient((s) => CreatePartsViewModel(databaseServices));
             services.AddSingleton<CreateViewModel<PartsViewModel>>((s) => () => s.GetRequiredService<PartsViewModel>());
             services.AddSingleton((s) =>
             {
@@ -63,7 +63,7 @@ namespace Shopfloor.Services.NavigationServices
         {
             return new MachinesViewModel();
         }
-        private static PartsViewModel CreatePartsViewModel(IServiceProvider services, IServiceProvider databaseServices)
+        private static PartsViewModel CreatePartsViewModel(IServiceProvider databaseServices)
         {
             return new PartsViewModel(databaseServices);
         }

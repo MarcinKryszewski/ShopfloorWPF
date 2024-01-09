@@ -12,12 +12,20 @@ namespace Shopfloor.Database.SQLite
                 part_type_name TEXT,
                 PRIMARY KEY(id AUTOINCREMENT)
             )";
+        private const string _userSQLCommand = @"
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER,
+                username TEXT,
+                PRIMARY KEY(id AUTOINCREMENT)
+            )";
+
 
         public SqliteInitCommands()
         {
             InitCommands = new List<string>
             {
-                _partsTypesSQLCommand
+                _partsTypesSQLCommand,
+                _userSQLCommand
             };
         }
     }
