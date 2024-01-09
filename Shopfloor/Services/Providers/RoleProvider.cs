@@ -10,74 +10,78 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Services.Providers
 {
-    public class PermissionProvider : IProvider<Permission>
+    public class RoleProvider : IProvider<Role>
     {
         private readonly DatabaseConnectionFactory _database;
 
         #region SQLCommands
         private const string _createSQL = @"
-            INSERT INTO permissions (part_type_name)
-            VALUES (@Value)
+            INSERT INTO roles (role_name, role_value)
+            VALUES (@Name, @Value)
             ";
         private const string _getOneSQL = @"
             SELECT *
-            FROM permissions
+            FROM roles
             WHERE id = @Id
             ";
         private const string _getAllSQL = @"
             SELECT *
-            FROM permissions
+            FROM roles
             ";
         private const string _updateSQL = @"
-            UPDATE permissions
-            SET part_type_name = @Value
+            UPDATE roles
+            SET 
+                role_name = @Name,
+                role_value = @Value
             WHERE id = @Id
             ";
         private const string _deleteSQL = @"
             DELETE
-            FROM permissions
+            FROM roles
             WHERE id = @Id
             ";
         #endregion
 
-        public PermissionProvider(DatabaseConnectionFactory database)
+        public RoleProvider(DatabaseConnectionFactory database)
         {
             _database = database;
         }
 
         #region CRUD
-        public async Task Create(Permission item)
+        public async Task Create(Role item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
+                Name = item.Name,
                 Value = item.Value
             };
             await connection.ExecuteAsync(_createSQL, parameters);
         }
-        public async Task<IEnumerable<Permission>> GetAll()
+        public async Task<IEnumerable<Role>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
-            IEnumerable<PermissionDTO> partTypeDTOs = await connection.QueryAsync<PermissionDTO>(_getAllSQL);
-            return partTypeDTOs.Select(ToPermission);
+            IEnumerable<RoleDTO> roleDTOs = await connection.QueryAsync<RoleDTO>(_getAllSQL);
+            return roleDTOs.Select(ToRole);
         }
-        public async Task<Permission> GetById(int id)
+        public async Task<Role> GetById(int id)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
                 Id = id
             };
-            PermissionDTO? partTypeDTO = await connection.QuerySingleAsync<PermissionDTO>(_getOneSQL, parameters);
-            return ToPermission(partTypeDTO);
+            RoleDTO? roleDTO = await connection.QuerySingleAsync<RoleDTO>(_getOneSQL, parameters);
+            return ToRole(roleDTO);
 
         }
-        public async Task Update(Permission item)
+        public async Task Update(Role item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
                 Id = item.Id,
+                Name = item.Name,
                 Value = item.Value
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
@@ -93,9 +97,9 @@ namespace Shopfloor.Services.Providers
         }
         #endregion
 
-        private static Permission ToPermission(PermissionDTO item)
+        private static Role ToRole(RoleDTO item)
         {
-            return new Permission(item.Id, item.Value);
+            return new Role(item.Id, item.Name, item.Value);
         }
     }
 }

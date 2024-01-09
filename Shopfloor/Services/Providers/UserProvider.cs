@@ -16,8 +16,8 @@ namespace Shopfloor.Services.Providers
 
         #region SQLCommands
         private const string _createSQL = @"
-            INSERT INTO users (username)
-            VALUES (@Username)
+            INSERT INTO users (username, user_name, user_surname, image_path)
+            VALUES (@Username, @Name, @Surname, @ImagePath)
             ";
         private const string _getOneSQL = @"
             SELECT *
@@ -30,7 +30,11 @@ namespace Shopfloor.Services.Providers
             ";
         private const string _updateSQL = @"
             UPDATE users
-            SET username = @Username
+            SET 
+                username = @Username,
+                user_name = @Name,
+                user_surname = @Surname,
+                image_path = @ImagePath,
             WHERE id = @Id
             ";
         private const string _deleteSQL = @"
@@ -56,7 +60,10 @@ namespace Shopfloor.Services.Providers
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Username = item.Username
+                Username = item.Username,
+                Name = item.Name,
+                Surname = item.Surname,
+                ImagePath = item.Image
             };
             await connection.ExecuteAsync(_createSQL, parameters);
         }
@@ -85,7 +92,6 @@ namespace Shopfloor.Services.Providers
                 Username = username
             };
             UserDTO? userDTO = await connection.QuerySingleAsync<UserDTO>(_getByUsername, parameters);
-            //if (userDTO == null) return null;
             return ToUser(userDTO);
         }
         public async Task Update(User item)
@@ -94,7 +100,10 @@ namespace Shopfloor.Services.Providers
             object parameters = new
             {
                 Id = item.Id,
-                Username = item.Username
+                Username = item.Username,
+                Name = item.Name,
+                Surname = item.Surname,
+                ImagePath = item.Image
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
@@ -111,7 +120,14 @@ namespace Shopfloor.Services.Providers
 
         private static User ToUser(UserDTO item)
         {
-            return new User(item.Id, item.Username);
+            return new User
+            (
+                item.Id,
+                item.Username,
+                item.Name,
+                item.Surname,
+                item.ImagePath
+            );
         }
     }
 }

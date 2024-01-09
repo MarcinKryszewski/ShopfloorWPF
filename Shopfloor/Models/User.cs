@@ -6,27 +6,36 @@ namespace Shopfloor.Models
 {
     public class User
     {
-        private readonly HashSet<int> _permissions;
+        private readonly HashSet<int> _roles;
         private readonly int _id;
         private readonly string _username;
+        private readonly string _name;
+        private readonly string _surname;
         private string _image;
 
         public int Id => _id;
         public string Username => _username;
         public string Image => _image;
+        public string Name => _name;
+        public string Surname => _surname;
+        public string FullName => $"{_name} {_surname}";
 
-        public User(int id, string name)
+        public User(int id, string username, string name, string surname, string imagePath)
         {
             _id = id;
-            _username = name;
-            _permissions = new();
-            _image = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
+            _username = username;
+            _name = name;
+            _surname = surname;
+            _roles = new();
+            _image = imagePath.Length > 0 ? imagePath : "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
         }
 
-        public User(string name)
+        public User(string username)
         {
-            _username = name;
-            _permissions = new();
+            _username = username;
+            _name = string.Empty;
+            _surname = string.Empty;
+            _roles = new();
             _image = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
         }
 
@@ -42,17 +51,13 @@ namespace Shopfloor.Models
         {
             await provider.Delete(Id);
         }
-        public void AddPermission(Permission permission)
+        public void AddRole(Role role)
         {
-            _permissions.Add(permission.Value);
+            _roles.Add(role.Value);
         }
-        public bool IsAuthorized(int permissionValue)
+        public bool IsAuthorized(int roleValue)
         {
-            return _permissions.Contains(permissionValue);
-        }
-        public void SetImage(string path)
-        {
-            _image = path;
+            return _roles.Contains(roleValue);
         }
     }
 }
