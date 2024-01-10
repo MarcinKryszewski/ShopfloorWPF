@@ -8,5 +8,42 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid />
+    <Grid >
+        <DataGrid AutoGenerateColumns="False"
+          ItemsSource="{Binding Path=Users}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Login" Binding="{Binding Path=Username}"/>
+                <DataGridTextColumn Header="Imię" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn Header="Nazwisko" Binding="{Binding Path=Surname}"/>
+                
+                <DataGridTemplateColumn Header="Awatar">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Path=Image}" MaxHeight="64" MaxWidth="64" Stretch="Uniform" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Aktywny">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="True" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Akcje">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="A"/>
+                                <Button Content="B" />
+                                <Button Content="C"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </UserControl> 

@@ -16,10 +16,6 @@ namespace Shopfloor.Services.Providers
         private readonly DatabaseConnectionFactory _database;
 
         #region SQLCommands
-        private const string _createSQL = @"
-            INSERT INTO roles (role_name, role_value)
-            VALUES (@Name, @Value)
-            ";
         private const string _getOneSQL = @"
             SELECT *
             FROM roles
@@ -28,18 +24,6 @@ namespace Shopfloor.Services.Providers
         private const string _getAllSQL = @"
             SELECT *
             FROM roles
-            ";
-        private const string _updateSQL = @"
-            UPDATE roles
-            SET 
-                role_name = @Name,
-                role_value = @Value
-            WHERE id = @Id
-            ";
-        private const string _deleteSQL = @"
-            DELETE
-            FROM roles
-            WHERE id = @Id
             ";
         #endregion
 

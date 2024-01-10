@@ -13,14 +13,14 @@ namespace Shopfloor.Services.NavigationServices
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {
-            GetUsersNavigation(services);
+            GetUsersNavigation(services, databaseServices);
             GetMachinesNavigation(services);
             GetPartsNavigation(services, databaseServices);
         }
 
-        public static void GetUsersNavigation(IServiceCollection services)
+        public static void GetUsersNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreateUsersViewModel(s));
+            services.AddTransient((s) => CreateUsersViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<UsersViewModel>>((s) => () => s.GetRequiredService<UsersViewModel>());
             services.AddSingleton((s) =>
             {
@@ -55,9 +55,9 @@ namespace Shopfloor.Services.NavigationServices
             });
         }
 
-        private static UsersViewModel CreateUsersViewModel(IServiceProvider services)
+        private static UsersViewModel CreateUsersViewModel(IServiceProvider services, IServiceProvider databaseServices)
         {
-            return new UsersViewModel();
+            return new UsersViewModel(databaseServices);
         }
         private static MachinesViewModel CreateMachinesViewModel(IServiceProvider services)
         {
