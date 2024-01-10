@@ -3,6 +3,7 @@ using Shopfloor.Database;
 using Shopfloor.Database.DTOs;
 using Shopfloor.Interfaces;
 using Shopfloor.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -48,15 +49,9 @@ namespace Shopfloor.Services.Providers
         }
 
         #region CRUD
-        public async Task Create(Role item)
+        public Task Create(Role item)
         {
-            using IDbConnection connection = _database.Connect();
-            object parameters = new
-            {
-                Name = item.Name,
-                Value = item.Value
-            };
-            await connection.ExecuteAsync(_createSQL, parameters);
+            throw new NotImplementedException();
         }
         public async Task<IEnumerable<Role>> GetAll()
         {
@@ -75,31 +70,19 @@ namespace Shopfloor.Services.Providers
             return ToRole(roleDTO);
 
         }
-        public async Task Update(Role item)
+        public Task Update(Role item)
         {
-            using IDbConnection connection = _database.Connect();
-            object parameters = new
-            {
-                Id = item.Id,
-                Name = item.Name,
-                Value = item.Value
-            };
-            await connection.ExecuteAsync(_updateSQL, parameters);
+            throw new NotImplementedException();
         }
-        public async Task Delete(int id)
+        public Task Delete(int id)
         {
-            using IDbConnection connection = _database.Connect();
-            object parameters = new
-            {
-                Id = id
-            };
-            await connection.ExecuteAsync(_deleteSQL, parameters);
+            throw new NotImplementedException();
         }
         #endregion
 
         private static Role ToRole(RoleDTO item)
         {
-            return new Role(item.Id, item.Name, item.Value);
+            return new Role(item.Id, item.Role_Name, item.Role_Value);
         }
     }
 }

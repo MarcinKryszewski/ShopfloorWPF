@@ -18,7 +18,7 @@ namespace Shopfloor.Layout.TopPanel
 
         public string UserImagePath => _userImagePath;
         public bool IsLoggedIn => _userStore.IsUserLoggedIn;
-        public string Username => IsLoggedIn ? $"Witaj {_userStore.User.Username}!" : "Zaloguj się!";
+        public string Username => IsLoggedIn ? $"Witaj {_userStore.User.Name}!" : "Zaloguj się!";
 
         public ICommand NavigateLoginCommand { get; }
         public ICommand LogoutCommand { get; }

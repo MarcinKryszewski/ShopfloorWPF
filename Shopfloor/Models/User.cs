@@ -1,17 +1,20 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Shopfloor.Services.Providers;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Models
 {
     public class User
     {
-        private readonly HashSet<int> _roles;
+        private readonly HashSet<Role> _roles;
         private readonly int _id;
         private readonly string _username;
         private readonly string _name;
         private readonly string _surname;
-        private string _image;
+        private readonly string _image;
+
+        private const string _defaultImagePath = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
 
         public int Id => _id;
         public string Username => _username;
@@ -27,7 +30,7 @@ namespace Shopfloor.Models
             _name = name;
             _surname = surname;
             _roles = new();
-            _image = imagePath.Length > 0 ? imagePath : "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
+            _image = imagePath.Length > 0 ? imagePath : _defaultImagePath;
         }
 
         public User(string username)
@@ -36,7 +39,7 @@ namespace Shopfloor.Models
             _name = string.Empty;
             _surname = string.Empty;
             _roles = new();
-            _image = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
+            _image = _defaultImagePath;
         }
 
         public async Task Add(UserProvider provider)
@@ -53,11 +56,11 @@ namespace Shopfloor.Models
         }
         public void AddRole(Role role)
         {
-            _roles.Add(role.Value);
+            _roles.Add(role);
         }
         public bool IsAuthorized(int roleValue)
         {
-            return _roles.Contains(roleValue);
+            return _roles.Any(role => role.Id == roleValue);
         }
     }
 }

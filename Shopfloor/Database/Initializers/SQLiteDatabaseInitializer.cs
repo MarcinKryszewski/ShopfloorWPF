@@ -1,24 +1,27 @@
 ﻿using Dapper;
 using Shopfloor.Database.SQLite;
 using System.Data;
+using System.IO;
 
 namespace Shopfloor.Database.Initializers
 {
     public class SQLiteDatabaseInitializer : IDatabaseInitializer
     {
         private readonly IDbConnection _connection;
+        private readonly string _databasePath;
 
-        public SQLiteDatabaseInitializer(IDbConnection connection)
+        public SQLiteDatabaseInitializer(IDbConnection connection, string databasePath)
         {
             _connection = connection;
+            _databasePath = databasePath;
         }
 
         public void Initialize()
         {
             using (_connection)
             {
+                if (!File.Exists(_databasePath)) CreateDatabase();
                 _connection.Open();
-                CreateDatabase();
             }
         }
         public void CreateDatabase()

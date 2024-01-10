@@ -124,9 +124,9 @@ namespace Shopfloor.Services.Providers
             (
                 item.Id,
                 item.Username,
-                item.Name,
-                item.Surname,
-                item.ImagePath
+                item.User_Name,
+                item.User_Surname,
+                item.Image_Path
             );
         }
     }

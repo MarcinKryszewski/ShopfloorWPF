@@ -1,0 +1,57 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="ColorDarkNeutral-100">#101214</Color>
+    <Color x:Key="ColorDarkNeutral0">#161A1D</Color>
+    <Color x:Key="ColorDarkNeutral100">#1D2125</Color>
+    <Color x:Key="ColorDarkNeutral200">#22272B</Color>
+    <Color x:Key="ColorDarkNeutral250">#282E33</Color>
+    <Color x:Key="ColorDarkNeutral300">#2C333A</Color>
+    <Color x:Key="ColorDarkNeutral350">#38414A</Color>
+    <Color x:Key="ColorDarkNeutral400">#454F59</Color>
+    <Color x:Key="ColorDarkNeutral500">#596773</Color>
+    <Color x:Key="ColorDarkNeutral600">#738496</Color>
+    <Color x:Key="ColorDarkNeutral700">#8C9BAB</Color>
+    <Color x:Key="ColorDarkNeutral800">#9FADBC</Color>
+    <Color x:Key="ColorDarkNeutral900">#B6C2CF</Color>
+    <Color x:Key="ColorDarkNeutral1000">#C7D1DB</Color>
+    <Color x:Key="ColorDarkNeutral1100">#DEE4EA</Color>
+
+    <SolidColorBrush x:Key="BrushDarkNeutral-100">#101214</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral0">#161A1D</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral100">#1D2125</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral200">#22272B</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral250">#282E33</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral300">#2C333A</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral350">#38414A</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral400">#454F59</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral500">#596773</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral600">#738496</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral700">#8C9BAB</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral800">#9FADBC</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral900">#B6C2CF</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral1000">#C7D1DB</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushDarkNeutral1100">#DEE4EA</SolidColorBrush>
+
+    <Color x:Key="ColorPurple100">#F3F0FF</Color>
+    <Color x:Key="ColorPurple200">#DFD8FD</Color>
+    <Color x:Key="ColorPurple300">#B8ACF6</Color>
+    <Color x:Key="ColorPurple400">#9F8FEF</Color>
+    <Color x:Key="ColorPurple500">#8F7EE7</Color>
+    <Color x:Key="ColorPurple600">#8270DB</Color>
+    <Color x:Key="ColorPurple700">#6E5DC6</Color>
+    <Color x:Key="ColorPurple800">#5E4DB2</Color>
+    <Color x:Key="ColorPurple900">#352C63</Color>
+    <Color x:Key="ColorPurple1000">#2B273F</Color>
+
+    <SolidColorBrush x:Key="BrushPurple100">#F3F0FF</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushPurple200">#DFD8FD</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushPurple300">#B8ACF6</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushPurple400">#9F8FEF</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushPurple500">#8F7EE7</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushPurple600">#8270DB</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushPurple700">#6E5DC6</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushPurple800">#5E4DB2</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushPurple900">#352C63</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushPurple1000">#2B273F</SolidColorBrush>
+
+</ResourceDictionary>

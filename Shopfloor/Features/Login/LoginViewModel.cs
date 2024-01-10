@@ -33,7 +33,7 @@ namespace Shopfloor.Features.Login
             get => _userStore.ErrorMassage;
         }
 
-        public Visibility ErrorVisibility
+        public Visibility HasErrorVisibility
         {
             get => _userStore.ErrorMassage.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -48,6 +48,8 @@ namespace Shopfloor.Features.Login
             _userStore.ResetError();
             LoginCommand = new LoginCommand(
                 databaseServices.GetRequiredService<UserProvider>(),
+                databaseServices.GetRequiredService<RoleProvider>(),
+                databaseServices.GetRequiredService<RoleUserProvider>(),
                 _userStore,
                 this,
                 NavigateDashboardCommand);
@@ -58,7 +60,7 @@ namespace Shopfloor.Features.Login
             if (e.PropertyName == nameof(_userStore.ErrorMassage))
             {
                 OnPropertyChanged(nameof(ErrorMassage));
-                OnPropertyChanged(nameof(ErrorVisibility));
+                OnPropertyChanged(nameof(HasErrorVisibility));
             }
         }
     }

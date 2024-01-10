@@ -1,4 +1,5 @@
-<UserControl x:Class="Shopfloor.Features.Login.LoginView"
+<UserControl
+    x:Class="Shopfloor.Features.Login.LoginView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -8,28 +9,38 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Border Margin="20"
-        Background="#2d383c"
+    <Border
+        Margin="20"
+        Background="{StaticResource BrushDarkNeutral250}"
         CornerRadius="10">
-        <Grid >
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <Border Grid.Row="0"
+            <Border
+                Grid.Row="0"
+                Grid.Column="1"
                 Width="300"
-                Margin="247,35,247,0"
+                Margin="0,35,0,0"
                 Background="#414c50"
                 CornerRadius="10">
                 <StackPanel Orientation="Vertical">
 
-                    <Image Width="100"
+                    <Image
+                        Width="100"
                         Height="100"
-                        Source="/Resources/icon1.png"
-                        Margin="0,20,0,0" />
+                        Margin="0,20,0,0"
+                        Source="/Resources/icon1.png" />
 
-                    <TextBlock Margin="25,35,0,5"
+                    <TextBlock
+                        Margin="25,35,0,5"
                         FontSize="12"
                         FontWeight="Medium"
                         Foreground="Black"
@@ -41,14 +52,16 @@
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="0"
+                        <TextBlock
+                            Grid.Column="0"
                             Margin="0,5,0,0"
                             FontFamily="Segoe MDL2 Assets"
                             FontSize="18"
                             FontWeight="Medium"
                             Text="&#xE77B;" />
 
-                        <TextBox x:Name="txtUser"
+                        <TextBox
+                            x:Name="txtUser"
                             Grid.Column="1"
                             Height="28"
                             Margin="0,5,0,0"
@@ -60,25 +73,19 @@
                             Text="{Binding Path=Username}">
                             <TextBox.Template>
                                 <ControlTemplate TargetType="TextBox">
-                                    <Border x:Name="border"
+                                    <Border
+                                        x:Name="border"
                                         Background="Transparent"
                                         BorderBrush="Black"
                                         BorderThickness="0,0,0,1">
-                                        <ScrollViewer x:Name="PART_ContentHost"
-                                            Focusable="false" />
+                                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" />
                                     </Border>
                                     <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver"
-                                            Value="true">
-                                            <Setter TargetName="border"
-                                                Property="BorderBrush"
-                                                Value="Red" />
+                                        <Trigger Property="IsMouseOver" Value="true">
+                                            <Setter TargetName="border" Property="BorderBrush" Value="Red" />
                                         </Trigger>
-                                        <Trigger Property="IsFocused"
-                                            Value="true">
-                                            <Setter TargetName="border"
-                                                Property="BorderBrush"
-                                                Value="Black" />
+                                        <Trigger Property="IsFocused" Value="true">
+                                            <Setter TargetName="border" Property="BorderBrush" Value="Black" />
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -86,7 +93,8 @@
                         </TextBox>
                     </Grid>
 
-                    <Button x:Name="btnLogin"
+                    <Button
+                        x:Name="btnLogin"
                         Grid.Column="2"
                         Width="150"
                         Height="40"
@@ -95,16 +103,17 @@
                         Content="ZALOGUJ SIĘ"
                         FontSize="12" />
 
-                    <TextBlock Text="{Binding Path=ErrorMassage}"
-                        Visibility="{Binding Path=ErrorVisibility}"
+                    <TextBlock
+                        Margin="10,0,10,10"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        TextAlignment="Center"
-                        Foreground="Red"
-                        FontWeight="Bold"
                         FontSize="16"
+                        FontWeight="Bold"
+                        Foreground="Red"
+                        Text="{Binding Path=ErrorMassage}"
+                        TextAlignment="Center"
                         TextWrapping="Wrap"
-                        Margin="10,0,10,10" />
+                        Visibility="{Binding Path=HasErrorVisibility}" />
                 </StackPanel>
             </Border>
         </Grid>

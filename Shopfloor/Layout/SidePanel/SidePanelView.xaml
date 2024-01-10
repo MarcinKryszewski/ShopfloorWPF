@@ -9,6 +9,35 @@
     d:Height="1020"
     d:Width="240"
     mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style x:Key="ButtonStackPanel" TargetType="StackPanel">
+            <Setter Property="Margin" Value="20,0,20,0" />
+            <Setter Property="Orientation" Value="Horizontal" />
+        </Style>
+        <Style x:Key="ButtonTextBlock" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="{StaticResource BrushDarkNeutral1100}" />
+        </Style>
+        <Style x:Key="TitleTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="Padding" Value="20,22,20,6" />
+            <Setter Property="FontFamily" Value="Inter" />
+            <Setter Property="Typography.Capitals" Value="AllSmallCaps" />
+            <Setter Property="Foreground" Value="{StaticResource BrushDarkNeutral600}" />
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="64" />
@@ -20,292 +49,152 @@
         </Border>
         <ScrollViewer
             Grid.Row="1"
-            Background="#272e38"
+            Background="{StaticResource BrushDarkNeutral250}"
             HorizontalScrollBarVisibility="Disabled"
             VerticalScrollBarVisibility="Auto">
-            <StackPanel Margin="0,15,0,0">
-<!--#region Dashboard-->
-                <Button
-                    Height="40"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding Path=NavigateDashboardCommand}">
-                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
+            <StackPanel Margin="0,15,0,0" Orientation="Vertical">
+                <!--#region Dashboard-->
+                <Button Command="{Binding Path=NavigateDashboardCommand}">
+                    <StackPanel Style="{StaticResource ButtonStackPanel}">
                         <Border
                             Width="24"
                             Height="24"
                             Margin="0,0,9,0"
                             Background="Yellow" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#f5f5f5"
-                            Text="Dashboard" />
+                        <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dashboard" />
                     </StackPanel>
                 </Button>
- <!--#endregion-->
-<!--#region Mechanik-->                
-                <TextBlock
-                    Height="40"
-                    Padding="20,22,20,6"
-                    FontFamily="Inter"
-                    FontSize="14"
-                    Foreground="#6d7a86"
-                    Text="Mechanik"
-                    Typography.Capitals="AllSmallCaps" />
-                <Button
-                    Height="40"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding Path=NavigateTasksCommand}">
-                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
-                        <Border
-                            Width="24"
-                            Height="24"
-                            Margin="0,0,9,0"
-                            Background="Yellow" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#f5f5f5"
-                            Text="Zadania" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    Height="40"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding Path=NavigateRequestsCommand}">
-                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
-                        <Border
-                            Width="24"
-                            Height="24"
-                            Margin="0,0,9,0"
-                            Background="Yellow" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#f5f5f5"
-                            Text="Zapotrzebowanie" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    Height="40"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding Path=NavigateMinimalStatesCommand}">
-                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
-                        <Border
-                            Width="24"
-                            Height="24"
-                            Margin="0,0,9,0"
-                            Background="Yellow" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#f5f5f5"
-                            Text="Stany minimalne" />
-                    </StackPanel>
-                </Button>
-<!--#endregion-->
-<!--#region Planista-->
-                <TextBlock
-                    Height="40"
-                    Padding="20,22,20,6"
-                    FontFamily="Inter"
-                    FontSize="14"
-                    Foreground="#6d7a86"
-                    Text="Planista"
-                    Typography.Capitals="AllSmallCaps" />
-                <Button
-                    Height="40"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding Path=NavigateControlPanelCommand}">
-                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
-                        <Border
-                            Width="24"
-                            Height="24"
-                            Margin="0,0,9,0"
-                            Background="Yellow" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#f5f5f5"
-                            Text="Panel kontrolny" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    Height="40"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding Path=NavigateOrdersCommand}">
-                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
-                        <Border
-                            Width="24"
-                            Height="24"
-                            Margin="0,0,9,0"
-                            Background="Yellow" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#f5f5f5"
-                            Text="Zamówienia" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    Height="40"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding Path=NavigateDeploysCommand}">
-                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
-                        <Border
-                            Width="24"
-                            Height="24"
-                            Margin="0,0,9,0"
-                            Background="Yellow" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#f5f5f5"
-                            Text="Pobrania" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    Height="40"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding Path=NavigateReservationsCommand}">
-                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
-                        <Border
-                            Width="24"
-                            Height="24"
-                            Margin="0,0,9,0"
-                            Background="Yellow" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#f5f5f5"
-                            Text="Rezerwacje" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    Height="40"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding Path=NavigateReportsCommand}">
-                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
-                        <Border
-                            Width="24"
-                            Height="24"
-                            Margin="0,0,9,0"
-                            Background="Yellow" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#f5f5f5"
-                            Text="Raporty" />
-                    </StackPanel>
-                </Button>
-<!--#endregion-->
-<!--#region Kierownik-->
-                <TextBlock
-                    Height="40"
-                    Padding="20,22,20,6"
-                    FontFamily="Inter"
-                    FontSize="14"
-                    Foreground="#6d7a86"
-                    Text="Kierownik"
-                    Typography.Capitals="AllSmallCaps" />
-<!--#endregion-->
-<!--#region Admin-->
-                <TextBlock
-                    Height="40"
-                    Padding="20,22,20,6"
-                    FontFamily="Inter"
-                    FontSize="14"
-                    Foreground="#6d7a86"
-                    Text="Admin"
-                    Typography.Capitals="AllSmallCaps" />
-                <Button
-                    Height="40"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding Path=NavigateUsersCommand}">
-                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
-                        <Border
-                            Width="24"
-                            Height="24"
-                            Margin="0,0,9,0"
-                            Background="Yellow" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#f5f5f5"
-                            Text="Użytkownicy" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    Height="40"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding Path=NavigateMachinesCommand}">
-                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
-                        <Border
-                            Width="24"
-                            Height="24"
-                            Margin="0,0,9,0"
-                            Background="Yellow" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#f5f5f5"
-                            Text="Maszyny" />
-                    </StackPanel>
-                </Button>
-                <Button
-                    Height="40"
-                    HorizontalContentAlignment="Stretch"
-                    VerticalContentAlignment="Center"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Command="{Binding Path=NavigatePartsCommand}">
-                    <StackPanel Margin="20,0,20,0" Orientation="Horizontal">
-                        <Border
-                            Width="24"
-                            Height="24"
-                            Margin="0,0,9,0"
-                            Background="Yellow" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="#f5f5f5"
-                            Text="Części" />
-                    </StackPanel>
-                </Button>
-<!--#endregion-->
+                <!--#endregion-->
+                <!--#region Mechanik-->
+                <StackPanel>
+                    <TextBlock Style="{StaticResource TitleTextBlock}" Text="Mechanik" />
+                    <Button Command="{Binding Path=NavigateTasksCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Yellow" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zadania" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding Path=NavigateRequestsCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Yellow" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zapotrzebowanie" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding Path=NavigateMinimalStatesCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Yellow" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Stany minimalne" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <!--#endregion-->
+                <!--#region Planista-->
+                <StackPanel>
+                    <TextBlock Style="{StaticResource TitleTextBlock}" Text="Planista" />
+                    <Button Command="{Binding Path=NavigateControlPanelCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Yellow" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Panel kontrolny" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding Path=NavigateOrdersCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Yellow" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zamówienia" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding Path=NavigateDeploysCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Yellow" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Pobrania" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding Path=NavigateReservationsCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Yellow" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Rezerwacje" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding Path=NavigateReportsCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Yellow" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Raporty" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <!--#endregion-->
+                <!--#region Kierownik-->
+                <StackPanel>
+                    <TextBlock Style="{StaticResource TitleTextBlock}" Text="Kierownik" />
+                </StackPanel>
+                <!--#endregion-->
+                <!--#region Admin-->
+                <StackPanel>
+                    <TextBlock Style="{StaticResource TitleTextBlock}" Text="Admin" />
+                    <Button Command="{Binding Path=NavigateUsersCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Yellow" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Użytkownicy" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding Path=NavigateMachinesCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Yellow" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Maszyny" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding Path=NavigatePartsCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Yellow" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Części" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+                <!--#endregion-->
             </StackPanel>
         </ScrollViewer>
     </Grid>

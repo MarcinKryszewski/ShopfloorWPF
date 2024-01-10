@@ -1,4 +1,5 @@
-﻿<UserControl x:Class="Shopfloor.Layout.Content.ContentView"
+﻿<UserControl
+    x:Class="Shopfloor.Layout.Content.ContentView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:content="clr-namespace:Shopfloor.Layout.Content"
@@ -28,11 +29,9 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <topPanel:TopPanelView Grid.Row="0"
-            DataContext="{Binding TopPanelViewModel}" />
-        <Border Grid.Row="1" Background="#192428">
-            <ContentControl 
-                Content="{Binding Content}">
+        <topPanel:TopPanelView Grid.Row="0" DataContext="{Binding TopPanelViewModel}" />
+        <Border Grid.Row="1" Background="{StaticResource BrushDarkNeutral100}">
+            <ContentControl Content="{Binding Content}">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type dashboard:DashboardViewModel}">
                         <dashboard:DashboardView />

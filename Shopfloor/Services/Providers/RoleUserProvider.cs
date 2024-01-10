@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using Dapper;
 using Shopfloor.Database;
 using Shopfloor.Database.DTOs;
 using Shopfloor.Interfaces;
 using Shopfloor.Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Services.Providers
 {
@@ -73,16 +73,24 @@ namespace Shopfloor.Services.Providers
             IEnumerable<RoleUserDTO> roleUserDTOs = await connection.QueryAsync<RoleUserDTO>(_getAllSQL);
             return roleUserDTOs.Select(ToRoleUser);
         }
-        public async Task<IEnumerable<RoleUser>> GetAllForUser()
+        public async Task<IEnumerable<RoleUser>> GetAllForUser(int userId)
         {
             using IDbConnection connection = _database.Connect();
-            IEnumerable<RoleUserDTO> roleUserDTOs = await connection.QueryAsync<RoleUserDTO>(_getAllForUser);
+            object parameters = new
+            {
+                UserId = userId
+            };
+            IEnumerable<RoleUserDTO> roleUserDTOs = await connection.QueryAsync<RoleUserDTO>(_getAllForUser, parameters);
             return roleUserDTOs.Select(ToRoleUser);
         }
-        public async Task<IEnumerable<RoleUser>> GetAllForRole()
+        public async Task<IEnumerable<RoleUser>> GetAllForRole(int roleId)
         {
             using IDbConnection connection = _database.Connect();
-            IEnumerable<RoleUserDTO> roleUserDTOs = await connection.QueryAsync<RoleUserDTO>(_getAllForRole);
+            object parameters = new
+            {
+                RoleId = roleId
+            };
+            IEnumerable<RoleUserDTO> roleUserDTOs = await connection.QueryAsync<RoleUserDTO>(_getAllForRole, parameters);
             return roleUserDTOs.Select(ToRoleUser);
         }
 
@@ -102,7 +110,7 @@ namespace Shopfloor.Services.Providers
 
         private static RoleUser ToRoleUser(RoleUserDTO item)
         {
-            return new RoleUser(item.RoleId, item.UserId);
+            return new RoleUser(item.Role, item.User);
         }
 
 

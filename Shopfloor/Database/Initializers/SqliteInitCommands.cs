@@ -39,6 +39,29 @@ namespace Shopfloor.Database.SQLite
                 FOREIGN KEY(role) REFERENCES roles(Id)
             )";
 
+        private const string _initAdminSQLCommand = @"
+            INSERT INTO users (username, user_name, user_surname, image_path)
+            VALUES ('@dm1n', 'Admin', 'Admin', '')
+            ";
+
+        private const string _initRolesSQLCommand = @"
+            BEGIN TRANSACTION;
+            INSERT INTO roles (role_name, role_value) VALUES ('admin', 777);
+            INSERT INTO roles (role_name, role_value) VALUES ('user', 568);
+            INSERT INTO roles (role_name, role_value) VALUES ('plannist', 460);
+            INSERT INTO roles (role_name, role_value) VALUES ('manager', 205);
+            COMMIT;
+            ";
+
+        private const string _initAdminRolesSQLCommand = @"
+            BEGIN TRANSACTION;
+            INSERT INTO roles_users (role, user) VALUES (1,1);
+            INSERT INTO roles_users (role, user) VALUES (2,1);
+            INSERT INTO roles_users (role, user) VALUES (3,1);
+            INSERT INTO roles_users (role, user) VALUES (4,1);
+            COMMIT;
+            ";
+
         public SqliteInitCommands()
         {
             InitCommands = new List<string>
@@ -46,7 +69,10 @@ namespace Shopfloor.Database.SQLite
                 _partsTypesSQLCommand,
                 _userSQLCommand,
                 _rolesSQLCommand,
-                _roleUserSQLCommand
+                _roleUserSQLCommand,
+                _initAdminSQLCommand,
+                _initRolesSQLCommand,
+                _initAdminRolesSQLCommand
             };
         }
     }

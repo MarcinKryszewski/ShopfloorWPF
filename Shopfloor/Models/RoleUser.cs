@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Shopfloor.Services.Providers;
 using System.Threading.Tasks;
 
 namespace Shopfloor.Models

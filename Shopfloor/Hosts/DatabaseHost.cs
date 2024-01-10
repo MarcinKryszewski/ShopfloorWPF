@@ -25,6 +25,7 @@ namespace Shopfloor.Hosts.DatabaseHost
             services.AddSingleton<PartTypeProvider>();
             services.AddSingleton<UserProvider>();
             services.AddSingleton<RoleProvider>();
+            services.AddSingleton<RoleUserProvider>();
         }
     }
 

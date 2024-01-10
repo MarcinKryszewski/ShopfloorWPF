@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Shopfloor.Services.Providers;
-
 namespace Shopfloor.Models
 {
     public class Role
@@ -23,19 +17,6 @@ namespace Shopfloor.Models
         {
             Name = name;
             Value = value;
-        }
-
-        public async Task Add(RoleProvider provider)
-        {
-            await provider.Create(this);
-        }
-        public async Task Edit(RoleProvider provider)
-        {
-            await provider.Update(this);
-        }
-        public async Task Delete(RoleProvider provider)
-        {
-            await provider.Delete(Id);
         }
     }
 }

@@ -1,0 +1,17 @@
+﻿function funct(className, childNumber) {
+    var elements = document.getElementsByClassName(className);
+
+	var children = elements[childNumber].children;
+	
+	for (var i = 0; i < children.length; i++) {
+            var rgbColor = getComputedStyle(children[i]).backgroundColor;
+            
+			
+			var button = children[i].querySelector('.css-bz7mgp');
+			var buttonText = button.textContent.trim();
+			console.log(buttonText + ' : ' + rgbColor);
+
+        }
+}
+
+https://atlassian.design/foundations/color-new/color-palette-new/
