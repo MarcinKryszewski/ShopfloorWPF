@@ -14,6 +14,7 @@ namespace Shopfloor.Models
         private readonly string _name;
         private readonly string _surname;
         private readonly string _image;
+        private readonly bool _isActive;
 
         private const string _defaultImagePath = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
 
@@ -23,8 +24,9 @@ namespace Shopfloor.Models
         public string Name => _name;
         public string Surname => _surname;
         public string FullName => $"{_name} {_surname}";
+        public bool IsActive => _isActive;
 
-        public User(int id, string username, string name, string surname, string imagePath)
+        public User(int id, string username, string name, string surname, string imagePath, bool isActive)
         {
             _id = id;
             _username = username;
@@ -32,6 +34,7 @@ namespace Shopfloor.Models
             _surname = surname;
             _roles = new();
             _image = imagePath.Length > 0 ? imagePath : _defaultImagePath;
+            _isActive = isActive;
         }
 
         public User(string username)
@@ -41,6 +44,7 @@ namespace Shopfloor.Models
             _surname = string.Empty;
             _roles = new();
             _image = _defaultImagePath;
+            _isActive = true;
         }
 
         public async Task Add(UserProvider provider)

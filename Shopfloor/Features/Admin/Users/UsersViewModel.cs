@@ -14,17 +14,29 @@ namespace Shopfloor.Features.Admin.Users
     {
         private IServiceProvider _database;
         private ObservableCollection<User> _users;
+        private User? _originalUser; //
+        private User? _selectedUser;
 
         //public IEnumerable<User> Users => _users;
         public ICollectionView Users { get; }
+        public User? SelectedUser
+        {
+            get => _selectedUser;
+            set
+            {
+                if (_selectedUser != value)
+                {
+                    _selectedUser = value;
+                    OnPropertyChanged(nameof(SelectedUser));
+                }
+            }
+        }
 
         public UsersViewModel(IServiceProvider databasServices)
         {
             _database = databasServices;
             _users = GetUsers();
-
             Users = CollectionViewSource.GetDefaultView(_users);
-
         }
 
         private ObservableCollection<User> GetUsers()

@@ -9,5 +9,6 @@ namespace Shopfloor.Database.DTOs
         public string User_Name { get; set; } = String.Empty;
         public string User_Surname { get; set; } = String.Empty;
         public string Image_Path { get; set; } = String.Empty;
+        public bool Active { get; set; }
     }
 }

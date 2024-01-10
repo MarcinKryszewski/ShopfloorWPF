@@ -19,6 +19,7 @@ namespace Shopfloor.Database.SQLite
                 user_name TEXT,
                 user_surname TEXT,
                 image_path TEXT,
+                active INTEGER DEFAULT 1,
                 PRIMARY KEY(id AUTOINCREMENT)
             )";
 

@@ -35,6 +35,7 @@ namespace Shopfloor.Services.Providers
                 user_name = @Name,
                 user_surname = @Surname,
                 image_path = @ImagePath,
+                active = @Active
             WHERE id = @Id
             ";
         private const string _deleteSQL = @"
@@ -103,7 +104,8 @@ namespace Shopfloor.Services.Providers
                 Username = item.Username,
                 Name = item.Name,
                 Surname = item.Surname,
-                ImagePath = item.Image
+                ImagePath = item.Image,
+                Active = item.IsActive
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
@@ -126,7 +128,8 @@ namespace Shopfloor.Services.Providers
                 item.Username,
                 item.User_Name,
                 item.User_Surname,
-                item.Image_Path
+                item.Image_Path,
+                item.Active
             );
         }
     }
