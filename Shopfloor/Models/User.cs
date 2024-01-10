@@ -1,4 +1,5 @@
 using Shopfloor.Services.Providers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -60,7 +61,7 @@ namespace Shopfloor.Models
         }
         public bool IsAuthorized(int roleValue)
         {
-            return _roles.Any(role => role.Id == roleValue);
+            return _roles.Any(role => role.Value == roleValue);
         }
     }
 }

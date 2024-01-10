@@ -11,6 +11,8 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
         <Style TargetType="Button">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -78,7 +80,7 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zadania" />
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding Path=NavigateRequestsCommand}">
+                    <Button Command="{Binding Path=NavigateRequestsCommand}"  Visibility="{Binding Path=HasUserRole}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border
                                 Width="24"
@@ -88,7 +90,7 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zapotrzebowanie" />
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding Path=NavigateMinimalStatesCommand}">
+                    <Button Command="{Binding Path=NavigateMinimalStatesCommand}" Visibility="{Binding Path=HasUserRole}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border
                                 Width="24"
@@ -101,7 +103,7 @@
                 </StackPanel>
                 <!--#endregion-->
                 <!--#region Planista-->
-                <StackPanel>
+                <StackPanel Visibility="{Binding Path=HasPlannistRole}">
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Planista" />
                     <Button Command="{Binding Path=NavigateControlPanelCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
@@ -156,12 +158,12 @@
                 </StackPanel>
                 <!--#endregion-->
                 <!--#region Kierownik-->
-                <StackPanel>
+                <StackPanel Visibility="{Binding Path=HasManagerRole}">
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Kierownik" />
                 </StackPanel>
                 <!--#endregion-->
                 <!--#region Admin-->
-                <StackPanel>
+                <StackPanel Visibility="{Binding Path=HasAdminRole}">
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Admin" />
                     <Button Command="{Binding Path=NavigateUsersCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">

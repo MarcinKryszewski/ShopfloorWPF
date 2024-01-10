@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Shopfloor.Services.Providers;
 using Shopfloor.Stores;
 using System;
 
@@ -13,6 +14,9 @@ namespace Shopfloor.Hosts
             .CreateDefaultBuilder()
             .ConfigureServices((services) =>
             {
+                services.AddSingleton(databaseServices.GetRequiredService<RoleProvider>());
+                services.AddSingleton(databaseServices.GetRequiredService<RoleUserProvider>());
+                services.AddSingleton(databaseServices.GetRequiredService<UserProvider>());
                 services.AddSingleton<UserStore>();
             })
             .Build();

@@ -14,13 +14,18 @@ using Shopfloor.Features.Plannist.Reservations;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
+using Shopfloor.Stores;
 using System;
+using System.ComponentModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Shopfloor.Layout.SidePanel
 {
     public class SidePanelViewModel : ViewModelBase
     {
+        private readonly UserStore _userStore;
+
         #region Commands
         #region Dashboard
         public ICommand NavigateDashboardCommand { get; }
@@ -44,7 +49,12 @@ namespace Shopfloor.Layout.SidePanel
         #endregion
         #endregion
 
-        public SidePanelViewModel(IServiceProvider mainServices)
+        public Visibility HasAdminRole => AdminRole();
+        public Visibility HasPlannistRole => PlannistRole();
+        public Visibility HasManagerRole => ManagerRole();
+        public Visibility HasUserRole => UserRole();
+
+        public SidePanelViewModel(IServiceProvider mainServices, IServiceProvider userServices)
         {
             NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(mainServices.GetRequiredService<NavigationService<DashboardViewModel>>());
 
@@ -61,6 +71,41 @@ namespace Shopfloor.Layout.SidePanel
             NavigateUsersCommand = new NavigateCommand<UsersViewModel>(mainServices.GetRequiredService<NavigationService<UsersViewModel>>());
             NavigateMachinesCommand = new NavigateCommand<MachinesViewModel>(mainServices.GetRequiredService<NavigationService<MachinesViewModel>>());
             NavigatePartsCommand = new NavigateCommand<PartsViewModel>(mainServices.GetRequiredService<NavigationService<PartsViewModel>>());
+
+            _userStore = userServices.GetRequiredService<UserStore>();
+            _userStore.PropertyChanged += OnUserAuthenticated;
+        }
+
+        private void OnUserAuthenticated(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_userStore.IsUserLoggedIn))
+            {
+                OnPropertyChanged(nameof(HasAdminRole));
+                OnPropertyChanged(nameof(HasManagerRole));
+                OnPropertyChanged(nameof(HasPlannistRole));
+                OnPropertyChanged(nameof(HasUserRole));
+            }
+        }
+
+        private Visibility AdminRole()
+        {
+            if (_userStore.User.IsAuthorized(777)) return Visibility.Visible;
+            return Visibility.Collapsed;
+        }
+        private Visibility PlannistRole()
+        {
+            if (_userStore.User.IsAuthorized(460)) return Visibility.Visible;
+            return Visibility.Collapsed;
+        }
+        private Visibility ManagerRole()
+        {
+            if (_userStore.User.IsAuthorized(205)) return Visibility.Visible;
+            return Visibility.Collapsed;
+        }
+        private Visibility UserRole()
+        {
+            if (_userStore.User.IsAuthorized(568)) return Visibility.Visible;
+            return Visibility.Collapsed;
         }
     }
 }

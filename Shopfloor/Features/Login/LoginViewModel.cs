@@ -48,8 +48,6 @@ namespace Shopfloor.Features.Login
             _userStore.ResetError();
             LoginCommand = new LoginCommand(
                 databaseServices.GetRequiredService<UserProvider>(),
-                databaseServices.GetRequiredService<RoleProvider>(),
-                databaseServices.GetRequiredService<RoleUserProvider>(),
                 _userStore,
                 this,
                 NavigateDashboardCommand);
