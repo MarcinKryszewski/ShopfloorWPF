@@ -18,7 +18,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
         private RoleUserProvider _roleUserProvider;
         private RoleProvider _roleProvider;
 
-        /*public UserAddCommand(UsersAddViewModel viewModel, RolesStore rolesStore, UserProvider userProvider, RoleUserProvider roleUserProvider, RoleProvider roleProvider)
+        public UserAddCommand(UsersAddViewModel viewModel, RolesStore rolesStore, UserProvider userProvider, RoleUserProvider roleUserProvider, RoleProvider roleProvider)
         {
             _viewModel = viewModel;
             _rolesStore = rolesStore;
@@ -26,7 +26,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
             _userProvider = userProvider;
             _roleUserProvider = roleUserProvider;
             _roleProvider = roleProvider;
-        }*/
+        }
 
         public override void Execute(object? parameter)
         {

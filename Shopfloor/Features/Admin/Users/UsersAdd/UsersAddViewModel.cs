@@ -63,7 +63,13 @@ namespace Shopfloor.Features.Admin.Users.Add
             SetRoles();
             _roles = _rolesValueStore.Roles;
             BackToListCommand = new NavigateCommand<UsersListViewModel>(mainServices.GetRequiredService<NavigationService<UsersListViewModel>>());
-            AddNewUserCommand = new UserAddCommand();
+            AddNewUserCommand = new UserAddCommand(
+                this,
+                _rolesValueStore,
+                databasServices.GetRequiredService<UserProvider>(),
+                databasServices.GetRequiredService<RoleUserProvider>(),
+                databasServices.GetRequiredService<RoleProvider>()
+            );
         }
 
         private void SetRoles()

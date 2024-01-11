@@ -9,28 +9,38 @@ namespace Shopfloor.Features.Admin.Users.Stores
 {
     public class RolesStore
     {
-        private Dictionary<Role, bool> _rolesAssign;
+        //private Dictionary<Role, bool> _rolesAssign;
         private ObservableCollection<RoleValue> _roles;
 
         public ObservableCollection<RoleValue> Roles => _roles;
 
         public RolesStore()
         {
-            _rolesAssign = new();
+            //_rolesAssign = new();
             _roles = new();
         }
 
         public void AddRole(Role role, bool assigned)
         {
-            _rolesAssign.Add(role, assigned);
+            //_rolesAssign.Add(role, assigned);
             _roles.Add(new RoleValue(role, assigned));
         }
 
         public ObservableCollection<Role> GetAllAssignedRoles()
         {
-            List<Role> assignedRoles = _rolesAssign
-            .Where(role => role.Value == true)
-            .Select(role => role.Key)
+            List<Role> assignedRoles = _roles
+            .Where(role => role.Value == true && role.Dirty == true)
+            .Select(role => role.Role)
+            .ToList();
+
+            return new ObservableCollection<Role>(assignedRoles);
+        }
+
+        public ObservableCollection<Role> GetAllRevokedRoles()
+        {
+            List<Role> assignedRoles = _roles
+            .Where(role => role.Value == false && role.Dirty == true)
+            .Select(role => role.Role)
             .ToList();
 
             return new ObservableCollection<Role>(assignedRoles);
@@ -39,16 +49,23 @@ namespace Shopfloor.Features.Admin.Users.Stores
 
     public class RoleValue
     {
-        private Role? _role;
+        private readonly Role _role;
         private bool _value;
+        private bool _dirty;
 
-        public Role? Role => _role;
+        public Role Role => _role;
+        public bool Dirty => _dirty;
         public bool Value
         {
             get => _value;
             set
             {
-                _value = value;
+                if (value != _value)
+                {
+                    _value = value;
+                    _dirty = true;
+                }
+
             }
         }
 
@@ -56,6 +73,7 @@ namespace Shopfloor.Features.Admin.Users.Stores
         {
             _role = role;
             _value = value;
+            _dirty = false;
         }
     }
 }
