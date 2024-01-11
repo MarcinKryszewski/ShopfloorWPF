@@ -20,13 +20,13 @@ namespace Shopfloor.Services.NavigationServices
 
         public static void GetUsersNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreateUsersViewModel(s, databaseServices));
-            services.AddSingleton<CreateViewModel<UsersViewModel>>((s) => () => s.GetRequiredService<UsersViewModel>());
+            services.AddTransient((s) => CreateUsersMainViewModel(s, databaseServices));
+            services.AddSingleton<CreateViewModel<UsersMainViewModel>>((s) => () => s.GetRequiredService<UsersMainViewModel>());
             services.AddSingleton((s) =>
             {
-                return new NavigationService<UsersViewModel>(
+                return new NavigationService<UsersMainViewModel>(
                     s.GetRequiredService<NavigationStore>(),
-                    s.GetRequiredService<CreateViewModel<UsersViewModel>>()
+                    s.GetRequiredService<CreateViewModel<UsersMainViewModel>>()
                 );
             });
         }
@@ -55,9 +55,9 @@ namespace Shopfloor.Services.NavigationServices
             });
         }
 
-        private static UsersViewModel CreateUsersViewModel(IServiceProvider services, IServiceProvider databaseServices)
+        private static UsersMainViewModel CreateUsersMainViewModel(IServiceProvider services, IServiceProvider databaseServices)
         {
-            return new UsersViewModel(databaseServices);
+            return new UsersMainViewModel(databaseServices);
         }
         private static MachinesViewModel CreateMachinesViewModel(IServiceProvider services)
         {

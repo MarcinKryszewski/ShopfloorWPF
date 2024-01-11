@@ -66,8 +66,8 @@
                         <reports:ReportsView />
                     </DataTemplate>
 
-                    <DataTemplate DataType="{x:Type users:UsersViewModel}">
-                        <users:UsersView />
+                    <DataTemplate DataType="{x:Type users:UsersMainViewModel}">
+                        <users:UsersMainView />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type machines:MachinesViewModel}">
                         <machines:MachinesView />

@@ -46,7 +46,7 @@ namespace Shopfloor.Services.Providers
         private const string _getByUsername = @"
             SELECT *
             FROM users
-            WHERE username = @Username
+            WHERE username = @Username AND active = 1
             ";
         #endregion
 
