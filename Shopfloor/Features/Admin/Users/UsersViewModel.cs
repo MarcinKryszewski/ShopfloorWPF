@@ -1,23 +1,21 @@
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Models;
+using Shopfloor.Services.Providers;
+using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
-using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Admin.Users
 {
     public class UsersViewModel : ViewModelBase
     {
-        private IServiceProvider _database;
-        private ObservableCollection<User> _users;
-        private User? _originalUser; //
+        private readonly IServiceProvider _database;
+        private readonly ObservableCollection<User> _users;
         private User? _selectedUser;
 
-        //public IEnumerable<User> Users => _users;
         public ICollectionView Users { get; }
         public User? SelectedUser
         {
@@ -46,13 +44,13 @@ namespace Shopfloor.Features.Admin.Users
 
         }
 
-        /*public void UpdateLines(IEnumerable<Line> lines)
+        public void UpdateUers(IEnumerable<User> users)
         {
-            _lines.Clear();
-            foreach (Line line in lines)
+            _users.Clear();
+            foreach (User user in users)
             {
-                _lines.Add(line);
+                _users.Add(user);
             }
-        }*/
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace Shopfloor.Layout.TopPanel
             _userStore.PropertyChanged += OnUserAuthenticated;
             _userImagePath = _userStore.User.Image;
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(mainServices.GetRequiredService<NavigationService<LoginViewModel>>());
-            LogoutCommand = new LogoutCommand(_userStore);
+            LogoutCommand = new LogoutCommand(_userStore, mainServices);
         }
 
         private void OnUserAuthenticated(object? sender, PropertyChangedEventArgs e)

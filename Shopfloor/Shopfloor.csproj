@@ -17,7 +17,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Themes\Controls\PlaceholderTextBox\Themes\**" />
+    <EmbeddedResource Remove="Themes\Controls\PlaceholderTextBox\Themes\**" />
+    <None Remove="Themes\Controls\PlaceholderTextBox\Themes\**" />
+    <Page Remove="Themes\Controls\PlaceholderTextBox\Themes\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.24" />
+    <PackageReference Include="GemBox.Spreadsheet" Version="49.0.1562" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="8.0.0" />
