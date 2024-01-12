@@ -1,28 +1,23 @@
-using System;
+using Shopfloor.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
-using Shopfloor.Models;
 
 namespace Shopfloor.Features.Admin.Users.Stores
 {
     public class RolesStore
     {
-        //private Dictionary<Role, bool> _rolesAssign;
-        private ObservableCollection<RoleValue> _roles;
+        private readonly ObservableCollection<RoleValue> _roles;
 
         public ObservableCollection<RoleValue> Roles => _roles;
 
         public RolesStore()
         {
-            //_rolesAssign = new();
             _roles = new();
         }
 
         public void AddRole(Role role, bool assigned)
         {
-            //_rolesAssign.Add(role, assigned);
             _roles.Add(new RoleValue(role, assigned));
         }
 
@@ -44,6 +39,11 @@ namespace Shopfloor.Features.Admin.Users.Stores
             .ToList();
 
             return new ObservableCollection<Role>(assignedRoles);
+        }
+
+        public void ClearRoles()
+        {
+            _roles.Clear();
         }
     }
 

@@ -46,7 +46,7 @@ namespace Shopfloor.Services.Providers
         }
 
         #region CRUD
-        public async Task Create(PartType item)
+        public async Task<int> Create(PartType item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
@@ -54,6 +54,8 @@ namespace Shopfloor.Services.Providers
                 Name = item.Name
             };
             await connection.ExecuteAsync(_createSQL, parameters);
+
+            return 0;
         }
         public async Task<IEnumerable<PartType>> GetAll()
         {

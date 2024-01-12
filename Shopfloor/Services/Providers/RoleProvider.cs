@@ -33,7 +33,7 @@ namespace Shopfloor.Services.Providers
         }
 
         #region CRUD
-        public Task Create(Role item)
+        public Task<int> Create(Role item)
         {
             throw new NotImplementedException();
         }

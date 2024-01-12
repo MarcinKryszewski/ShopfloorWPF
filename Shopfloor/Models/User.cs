@@ -1,6 +1,6 @@
 using Shopfloor.Services.Providers;
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +20,7 @@ namespace Shopfloor.Models
 
         public int Id => _id;
         public string Username => _username;
-        public string Image => _image;
+        public string Image => _image.Length > 0 ? _image : _defaultImagePath;
         public string Name => _name;
         public string Surname => _surname;
         public string FullName => $"{_name} {_surname}";
@@ -33,7 +33,17 @@ namespace Shopfloor.Models
             _name = name;
             _surname = surname;
             _roles = new();
-            _image = imagePath.Length > 0 ? imagePath : _defaultImagePath;
+            _image = imagePath;
+            _isActive = isActive;
+        }
+
+        public User(string username, string name, string surname, string imagePath, bool isActive)
+        {
+            _username = username;
+            _name = name;
+            _surname = surname;
+            _roles = new();
+            _image = imagePath;
             _isActive = isActive;
         }
 
@@ -43,13 +53,13 @@ namespace Shopfloor.Models
             _name = string.Empty;
             _surname = string.Empty;
             _roles = new();
-            _image = _defaultImagePath;
+            _image = string.Empty;
             _isActive = true;
         }
 
-        public async Task Add(UserProvider provider)
+        public async Task<int> Add(UserProvider provider)
         {
-            await provider.Create(this);
+            return await provider.Create(this);
         }
         public async Task Edit(UserProvider provider)
         {
@@ -62,6 +72,7 @@ namespace Shopfloor.Models
         public void AddRole(Role role)
         {
             _roles.Add(role);
+            Debug.WriteLine(role.Name);
         }
         public bool IsAuthorized(int roleValue)
         {

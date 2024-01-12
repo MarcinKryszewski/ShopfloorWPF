@@ -56,8 +56,11 @@ namespace Shopfloor.Services.Providers
         }
 
         #region CRUD
-        public async Task Create(User item)
+        public async Task<int> Create(User item)
         {
+            User? existingUser = await GetByUsername(item.Username);
+            if (existingUser is not null) return -1;
+
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
@@ -67,6 +70,14 @@ namespace Shopfloor.Services.Providers
                 ImagePath = item.Image
             };
             await connection.ExecuteAsync(_createSQL, parameters);
+
+            string lastIdSQL = _database.DatabaseType switch
+            {
+                "SQLite" => "SELECT last_insert_rowid()",
+                _ => "",
+            };
+
+            return connection.Query<int>(lastIdSQL).Single();
         }
         public async Task<IEnumerable<User>> GetAll()
         {
@@ -85,14 +96,15 @@ namespace Shopfloor.Services.Providers
             return ToUser(userDTO);
 
         }
-        public async Task<User> GetByUsername(string username)
+        public async Task<User?> GetByUsername(string username)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
                 Username = username
             };
-            UserDTO? userDTO = await connection.QuerySingleAsync<UserDTO>(_getByUsername, parameters);
+            UserDTO? userDTO = await connection.QuerySingleOrDefaultAsync<UserDTO>(_getByUsername, parameters);
+            if (userDTO is null) return null;
             return ToUser(userDTO);
         }
         public async Task Update(User item)

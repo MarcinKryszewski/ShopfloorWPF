@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Users.List;
 using Shopfloor.Features.Admin.Users.Stores;
@@ -11,6 +7,10 @@ using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Users.Add
 {
@@ -18,10 +18,12 @@ namespace Shopfloor.Features.Admin.Users.Add
     {
         private readonly IServiceProvider _database;
         private readonly RolesStore _rolesValueStore;
-        private readonly ObservableCollection<RoleValue> _roles;
         private string _username = string.Empty;
         private string _name = string.Empty;
         private string _surname = string.Empty;
+        private string _errorMassage = string.Empty;
+
+        private List<Role> _rolesStorage = new();
 
         public string Username
         {
@@ -50,8 +52,17 @@ namespace Shopfloor.Features.Admin.Users.Add
                 OnPropertyChanged(nameof(Surname));
             }
         }
+        public string ErrorMassage
+        {
+            get => _errorMassage.Length > 0 ? _errorMassage : "";
+            set
+            {
+                _errorMassage = value;
+                OnPropertyChanged(nameof(ErrorMassage));
+            }
+        }
 
-        public IEnumerable<RoleValue> Roles => _roles;
+        public ObservableCollection<RoleValue> Roles => _rolesValueStore.Roles;
 
         public ICommand BackToListCommand { get; }
         public ICommand AddNewUserCommand { get; }
@@ -61,24 +72,36 @@ namespace Shopfloor.Features.Admin.Users.Add
             _database = databasServices;
             _rolesValueStore = new();
             SetRoles();
-            _roles = _rolesValueStore.Roles;
             BackToListCommand = new NavigateCommand<UsersListViewModel>(mainServices.GetRequiredService<NavigationService<UsersListViewModel>>());
             AddNewUserCommand = new UserAddCommand(
                 this,
                 _rolesValueStore,
                 databasServices.GetRequiredService<UserProvider>(),
-                databasServices.GetRequiredService<RoleUserProvider>(),
-                databasServices.GetRequiredService<RoleProvider>()
+                databasServices.GetRequiredService<RoleUserProvider>()
             );
         }
 
         private void SetRoles()
         {
-            List<Role> roles = new(_database.GetRequiredService<RoleProvider>().GetAll().Result);
-            foreach (Role role in roles)
+            _rolesStorage = new(_database.GetRequiredService<RoleProvider>().GetAll().Result);
+            UpdateRoles();
+        }
+
+        public void UpdateRoles()
+        {
+            _rolesValueStore.ClearRoles();
+            foreach (Role role in _rolesStorage)
             {
                 _rolesValueStore.AddRole(role, false);
             }
+        }
+
+        public void CleanForm()
+        {
+            Username = "";
+            Name = "";
+            Surname = "";
+            UpdateRoles();
         }
     }
 }

@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Shopfloor.Stores
 {
@@ -56,7 +55,7 @@ namespace Shopfloor.Stores
                 _user = provider.GetByUsername(username).Result;
                 _isUserLoggedIn = true;
                 _errorMassage = string.Empty;
-                _ = SetUserRoles(_user);
+                SetUserRoles(_user);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
             }
             catch (AggregateException)
@@ -80,18 +79,16 @@ namespace Shopfloor.Stores
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ErrorMassage)));
         }
 
-        private async Task SetUserRoles(User user)
+        private void SetUserRoles(User user)
         {
             IEnumerable<Role> roles = GetRoles();
             IEnumerable<RoleUser> roleUsers = GetRoleUsers();
 
-            var roleTasks = roleUsers.Select(async roleUser =>
+            foreach (RoleUser roleUser in roleUsers)
             {
                 Role role = roles.First(r => r.Id == roleUser.RoleId);
-                await Task.Run(() => user.AddRole(role));
-            });
-
-            await Task.WhenAll(roleTasks);
+                user.AddRole(role);
+            }
         }
 
         private IEnumerable<RoleUser> GetRoleUsers()

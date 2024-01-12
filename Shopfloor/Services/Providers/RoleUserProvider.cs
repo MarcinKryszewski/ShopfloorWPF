@@ -47,7 +47,7 @@ namespace Shopfloor.Services.Providers
         }
 
         #region CRUD        
-        public async Task Create(RoleUser item)
+        public async Task<int> Create(RoleUser item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
@@ -56,6 +56,20 @@ namespace Shopfloor.Services.Providers
                 UserId = item.UserId
             };
             await connection.ExecuteAsync(_createSQL, parameters);
+
+            return 0;
+        }
+        public async Task<int> Create(int RoleId, int UserId)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                RoleId = RoleId,
+                UserId = UserId
+            };
+            await connection.ExecuteAsync(_createSQL, parameters);
+
+            return 0;
         }
         public async Task Delete(int roleId, int userId)
         {
