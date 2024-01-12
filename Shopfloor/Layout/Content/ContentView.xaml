@@ -69,8 +69,8 @@
                     <DataTemplate DataType="{x:Type users:UsersMainViewModel}">
                         <users:UsersMainView />
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type machines:MachinesViewModel}">
-                        <machines:MachinesView />
+                    <DataTemplate DataType="{x:Type machines:MachinesMainViewModel}">
+                        <machines:MachinesMainView />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type parts:PartsViewModel}">
                         <parts:PartsView />
