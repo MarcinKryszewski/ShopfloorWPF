@@ -6,7 +6,7 @@ using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Admin.Machines
 {
-    public class MachinesViewModel : ViewModelBase
+    public class MachinesMainViewModel : ViewModelBase
     {
 
     }
