@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Users.Add;
+using Shopfloor.Features.Admin.Users.Edit;
 using Shopfloor.Features.Admin.Users.List;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
@@ -14,6 +15,7 @@ namespace Shopfloor.Features.Admin.Users.Services
         {
             GetListNavigation(services, databaseServices);
             GetAddNavigation(services, databaseServices);
+            GetEditNavigation(services, databaseServices);
         }
 
         private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
@@ -40,6 +42,18 @@ namespace Shopfloor.Features.Admin.Users.Services
                 );
             });
         }
+        private static void GetEditNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        {
+            services.AddTransient((s) => CreateUsersEditViewModel(s, databaseServices));
+            services.AddSingleton<CreateViewModel<UsersEditViewModel>>((s) => () => s.GetRequiredService<UsersEditViewModel>());
+            services.AddSingleton((s) =>
+            {
+                return new NavigationService<UsersEditViewModel>(
+                    s.GetRequiredService<NavigationStore>(),
+                    s.GetRequiredService<CreateViewModel<UsersEditViewModel>>()
+                );
+            });
+        }
 
         private static UsersListViewModel CreateUsersListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
@@ -48,6 +62,10 @@ namespace Shopfloor.Features.Admin.Users.Services
         private static UsersAddViewModel CreateUsersAddViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             return new UsersAddViewModel(mainServices, databaseServices);
+        }
+        private static UsersEditViewModel CreateUsersEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        {
+            return new UsersEditViewModel(mainServices, databaseServices);
         }
     }
 }

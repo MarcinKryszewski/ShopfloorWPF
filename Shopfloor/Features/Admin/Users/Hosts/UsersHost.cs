@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Features.Admin.Users.Services;
+using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Shared.Stores;
 
 namespace Shopfloor.Features.Admin.Users.Hosts
@@ -18,6 +19,7 @@ namespace Shopfloor.Features.Admin.Users.Hosts
             .ConfigureServices((services) =>
             {
                 services.AddSingleton<NavigationStore>();
+                services.AddSingleton<SelectedUserStore>();
 
                 UsersNavigationService.Get(services, databaseServices);
             })

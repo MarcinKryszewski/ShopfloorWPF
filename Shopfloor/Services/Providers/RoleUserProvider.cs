@@ -27,7 +27,7 @@ namespace Shopfloor.Services.Providers
         private const string _deleteSQL = @"
             DELETE
             FROM roles_users
-            WHERE role = @RoleID AND user = @UserId
+            WHERE role = @RoleId AND user = @UserId
             ";
         private const string _getAllForUser = @"
             SELECT *

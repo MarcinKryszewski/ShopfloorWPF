@@ -48,6 +48,12 @@ namespace Shopfloor.Services.Providers
             FROM users
             WHERE username = @Username AND active = 1
             ";
+        private const string _setUserActive = @"
+            UPDATE users
+            SET                 
+                active = @Active
+            WHERE id = @Id
+        ";
         #endregion
 
         public UserProvider(DatabaseConnectionFactory database)
@@ -129,6 +135,16 @@ namespace Shopfloor.Services.Providers
                 Id = id
             };
             await connection.ExecuteAsync(_deleteSQL, parameters);
+        }
+        public async Task SetUserActive(int id, bool isActive)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                Id = id,
+                Active = isActive
+            };
+            await connection.ExecuteAsync(_setUserActive, parameters);
         }
         #endregion
 

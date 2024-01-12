@@ -10,7 +10,7 @@ namespace Shopfloor.Stores
 {
     public class UserStore : INotifyPropertyChanged
     {
-        private User _user;
+        private User? _user;
         private bool _isUserLoggedIn;
         private string _errorMassage = string.Empty;
         private readonly RoleProvider _roleProvider;
@@ -50,19 +50,20 @@ namespace Shopfloor.Stores
                 return;
             }
 
-            try
-            {
-                _user = provider.GetByUsername(username).Result;
-                _isUserLoggedIn = true;
-                _errorMassage = string.Empty;
-                SetUserRoles(_user);
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
-            }
-            catch (AggregateException)
+
+            _user = provider.GetByUsername(username).Result;
+
+            if (_user is null)
             {
                 _errorMassage = $"Nie znaleziono użytkownika" + Environment.NewLine + username;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ErrorMassage)));
+                return;
             }
+
+            _isUserLoggedIn = true;
+            _errorMassage = string.Empty;
+            SetUserRoles(_user);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
 
         }
 
@@ -93,7 +94,9 @@ namespace Shopfloor.Stores
 
         private IEnumerable<RoleUser> GetRoleUsers()
         {
-            return _roleUserProvider.GetAllForUser(User.Id).Result;
+            IEnumerable<RoleUser> roleUsers = Enumerable.Empty<RoleUser>();
+            roleUsers = _roleUserProvider.GetAllForUser(User.Id).Result;
+            return roleUsers;
         }
         private IEnumerable<Role> GetRoles()
         {

@@ -37,13 +37,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
                 _viewModel.ErrorMassage = $"Użytkownik o loginie {newUser.Username} istnieje";
                 return;
             }
-
-
-            Debug.WriteLine(DateTime.Now.ToString("O"));
-            //ObservableCollection<Role> roles = _rolesStore.GetAllAssignedRoles();
             CreateRoleUserTasks(newUserId, _rolesStore.GetAllAssignedRoles());
-            //Task.WaitAll(roleUserTasks.ToArray());
-            Debug.WriteLine(DateTime.Now.ToString("O"));
 
             _viewModel.ErrorMassage = "Utworzono nowego użytkownika!";
             _viewModel.CleanForm();

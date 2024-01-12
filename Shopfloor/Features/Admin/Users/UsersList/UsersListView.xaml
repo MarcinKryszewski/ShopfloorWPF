@@ -109,6 +109,7 @@
 
             </Button>
         </Grid>
+
         <DataGrid
             Grid.Row="1"
             AutoGenerateColumns="False"
@@ -155,13 +156,24 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button>
-                                    <TextBlock
-                                        FontFamily="Segoe MDL2 Assets"
-                                        FontSize="20"
-                                        Text="&#xE74D;" />
+                                <Button FontFamily="Segoe MDL2 Assets" FontSize="20">
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=IsActive}" Value="True">
+                                                    <Setter Property="Content" Value="&#xE74D;"/>
+                                                    <Setter Property="Command" Value="{Binding Path=DataContext.DeleteUserCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Path=IsActive}" Value="False">
+                                                    <Setter Property="Content" Value="&#xE72C;"/>
+                                                    <Setter Property="Command" Value="{Binding Path=DataContext.ActivateUserCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
                                 </Button>
-                                <Button Margin="5,0,0,0">
+
+                                <Button Margin="5,0,0,0" Command="{Binding Path=DataContext.EditUserCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
                                     <TextBlock
                                         FontFamily="Segoe MDL2 Assets"
                                         FontSize="20"

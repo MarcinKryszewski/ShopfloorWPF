@@ -26,7 +26,13 @@ namespace Shopfloor.Models
         public string FullName => $"{_name} {_surname}";
         public bool IsActive => _isActive;
 
-        public User(int id, string username, string name, string surname, string imagePath, bool isActive)
+        public User(
+            int id,
+            string username,
+            string name,
+            string surname,
+            string imagePath,
+            bool isActive)
         {
             _id = id;
             _username = username;
