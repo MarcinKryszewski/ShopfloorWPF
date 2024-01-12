@@ -25,6 +25,7 @@ namespace Shopfloor.Models
         public string Surname => _surname;
         public string FullName => $"{_name} {_surname}";
         public bool IsActive => _isActive;
+        public string? SearchValue => _username + _name + _surname;
 
         public User(
             int id,

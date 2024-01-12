@@ -63,6 +63,15 @@ namespace Shopfloor.Database.SQLite
             COMMIT;
             ";
 
+        private const string _machinesSQLCommand = @"
+            CREATE TABLE IF NOT EXISTS machines (
+                id INTEGER,
+                machine_name TEXT,
+                mchine_number TEXT,
+                parent INTEGER,
+                PRIMARY KEY(id)
+            )";
+
         public SqliteInitCommands()
         {
             InitCommands = new List<string>
@@ -73,7 +82,8 @@ namespace Shopfloor.Database.SQLite
                 _roleUserSQLCommand,
                 _initAdminSQLCommand,
                 _initRolesSQLCommand,
-                _initAdminRolesSQLCommand
+                _initAdminRolesSQLCommand,
+                _machinesSQLCommand
             };
         }
     }
