@@ -5,7 +5,7 @@ namespace Shopfloor.Shared.Commands
 {
     public abstract class AsyncCommandBase : CommandBase
     {
-        private readonly Action<Exception> _onException;
+        private readonly Action<Exception>? _onException;
 
         private bool _isExecuting;
         public bool IsExecuting
@@ -21,7 +21,7 @@ namespace Shopfloor.Shared.Commands
             }
         }
 
-        public AsyncCommandBase(Action<Exception> onException = null)
+        public AsyncCommandBase(Action<Exception>? onException = null)
         {
             _onException = onException;
         }
@@ -47,6 +47,6 @@ namespace Shopfloor.Shared.Commands
             IsExecuting = false;
         }
 
-        public abstract Task ExecuteAsync(object parameter);
+        public abstract Task ExecuteAsync(object? parameter);
     }
 }

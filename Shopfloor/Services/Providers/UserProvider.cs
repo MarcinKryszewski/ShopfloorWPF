@@ -110,7 +110,7 @@ namespace Shopfloor.Services.Providers
                 Username = username
             };
             UserDTO? userDTO = await connection.QuerySingleOrDefaultAsync<UserDTO>(_getByUsername, parameters);
-            if (userDTO is null) return null;
+            if (userDTO == null) return null;
             return ToUser(userDTO);
         }
         public async Task Update(User item)

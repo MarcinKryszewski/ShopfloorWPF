@@ -1,13 +1,14 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Shopfloor.Features.Admin.Users.Services;
-using Shopfloor.Features.Admin.Users.Stores;
+using Shopfloor.Features.Admin.Machines.Services;
+using Shopfloor.Features.Admin.Machines.Stores;
 using Shopfloor.Shared.Stores;
 using System;
 
-namespace Shopfloor.Features.Admin.Users.Hosts
+
+namespace Shopfloor.Features.Admin.Machines.Hosts
 {
-    public class UsersHost
+    public class MachinesHost
     {
         public static IHost GetHost(IServiceProvider databaseServices)
         {
@@ -16,9 +17,9 @@ namespace Shopfloor.Features.Admin.Users.Hosts
             .ConfigureServices((services) =>
             {
                 services.AddSingleton<NavigationStore>();
-                services.AddSingleton<SelectedUserStore>();
+                services.AddSingleton<SelectedMachineStore>();
 
-                UsersNavigationService.Get(services, databaseServices);
+                MachinesNavigationService.Get(services, databaseServices);
             })
             .Build();
         }

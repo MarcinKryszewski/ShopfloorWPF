@@ -14,7 +14,7 @@ namespace Shopfloor.Features.Admin.Parts.Commands
             _provider = provider;
             _viewModel = viewModel;
         }
-        public override async Task ExecuteAsync(object parameter)
+        public override async Task ExecuteAsync(object? parameter)
         {
             await _viewModel.PartType.Add(_provider);
         }

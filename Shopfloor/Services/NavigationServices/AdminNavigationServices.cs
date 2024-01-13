@@ -14,7 +14,7 @@ namespace Shopfloor.Services.NavigationServices
         public static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {
             GetUsersNavigation(services, databaseServices);
-            GetMachinesNavigation(services);
+            GetMachinesNavigation(services, databaseServices);
             GetPartsNavigation(services, databaseServices);
         }
 
@@ -30,9 +30,9 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-        public static void GetMachinesNavigation(IServiceCollection services)
+        public static void GetMachinesNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreateMachinesViewModel(s));
+            services.AddTransient((s) => CreateMachinesViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<MachinesMainViewModel>>((s) => () => s.GetRequiredService<MachinesMainViewModel>());
             services.AddSingleton((s) =>
             {
@@ -59,9 +59,9 @@ namespace Shopfloor.Services.NavigationServices
         {
             return new UsersMainViewModel(databaseServices);
         }
-        private static MachinesMainViewModel CreateMachinesViewModel(IServiceProvider services)
+        private static MachinesMainViewModel CreateMachinesViewModel(IServiceProvider services, IServiceProvider databaseServices)
         {
-            return new MachinesMainViewModel();
+            return new MachinesMainViewModel(databaseServices);
         }
         private static PartsViewModel CreatePartsViewModel(IServiceProvider databaseServices)
         {

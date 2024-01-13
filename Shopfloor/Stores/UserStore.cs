@@ -31,7 +31,7 @@ namespace Shopfloor.Stores
             }
         }
 
-        public User User => _user;
+        public User? User => _user;
 
         public UserStore(IServiceProvider databaseServices)
         {
@@ -51,7 +51,7 @@ namespace Shopfloor.Stores
             }
 
 
-            _user = provider.GetByUsername(username).Result;
+            _user = provider.GetByUsername(username).Result ?? null;
 
             if (_user is null)
             {
@@ -94,8 +94,8 @@ namespace Shopfloor.Stores
 
         private IEnumerable<RoleUser> GetRoleUsers()
         {
-            IEnumerable<RoleUser> roleUsers = Enumerable.Empty<RoleUser>();
-            roleUsers = _roleUserProvider.GetAllForUser(User.Id).Result;
+            if (User == null) return Enumerable.Empty<RoleUser>();
+            IEnumerable<RoleUser> roleUsers = _roleUserProvider.GetAllForUser(User.Id).Result;
             return roleUsers;
         }
         private IEnumerable<Role> GetRoles()

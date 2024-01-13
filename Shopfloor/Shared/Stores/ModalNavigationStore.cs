@@ -5,8 +5,8 @@ namespace Shopfloor.Shared.Stores
 {
     public class ModalNavigationStore : INavigationStore
     {
-        private ViewModelBase _currentViewModel;
-        public ViewModelBase CurrentViewModel
+        private ViewModelBase? _currentViewModel;
+        public ViewModelBase? CurrentViewModel
         {
             get => _currentViewModel;
             set
@@ -19,7 +19,7 @@ namespace Shopfloor.Shared.Stores
 
         public bool IsOpen => CurrentViewModel != null;
 
-        public event Action CurrentViewModelChanged;
+        public event Action? CurrentViewModelChanged;
 
         public void Close()
         {

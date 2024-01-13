@@ -16,7 +16,11 @@ namespace Shopfloor.Shared.ViewModels
 
         public IEnumerable GetErrors(string? propertyName)
         {
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
+#pragma warning disable CS8603 // Possible null reference return.
             return _propertyErrors.GetValueOrDefault(propertyName, null);
+#pragma warning restore CS8603 // Possible null reference return.
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
         }
 
         public void AddError(string propertyName, string errorMessage)

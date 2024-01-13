@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Features.Admin.Users.Hosts;
@@ -9,6 +5,7 @@ using Shopfloor.Features.Admin.Users.List;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
+using System;
 
 namespace Shopfloor.Features.Admin.Users
 {
@@ -17,7 +14,7 @@ namespace Shopfloor.Features.Admin.Users
         private readonly NavigationStore _navigationStore;
         private readonly IHost _usersServices;
 
-        public ViewModelBase Content => _navigationStore.CurrentViewModel;
+        public ViewModelBase? Content => _navigationStore.CurrentViewModel;
 
         public UsersMainViewModel(IServiceProvider databasServices)
         {

@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Shopfloor.Shared.Commands;
+using System;
 
 namespace Shopfloor.Features.Admin.Machines.Commands
 {

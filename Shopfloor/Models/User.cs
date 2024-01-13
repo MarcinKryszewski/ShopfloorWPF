@@ -14,7 +14,7 @@ namespace Shopfloor.Models
         private readonly string _name;
         private readonly string _surname;
         private readonly string _image;
-        private readonly bool _isActive;
+        private bool _isActive;
 
         private const string _defaultImagePath = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
 
@@ -62,6 +62,11 @@ namespace Shopfloor.Models
             _roles = new();
             _image = string.Empty;
             _isActive = true;
+        }
+
+        public void SetActive(bool isActive)
+        {
+            _isActive = isActive;
         }
 
         public async Task<int> Add(UserProvider provider)
