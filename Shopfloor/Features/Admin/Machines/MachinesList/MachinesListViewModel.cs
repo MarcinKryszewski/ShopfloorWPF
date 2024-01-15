@@ -57,7 +57,7 @@ namespace Shopfloor.Features.Admin.Machines.List
                 OnPropertyChanged(nameof(ParentId));
             }
         }
-        public Machine SelectedParent
+        public Machine? SelectedParent
         {
             get => _selectedParent;
             set
@@ -66,13 +66,13 @@ namespace Shopfloor.Features.Admin.Machines.List
                 OnPropertyChanged(nameof(SelectedParent));
             }
         }
-        public Machine SelectedParent
+        public Machine? SelectedMachine
         {
-            get => _selectedParent;
+            get => _selectedMachine;
             set
             {
-                _selectedParent = value;
-                OnPropertyChanged(nameof(SelectedParent));
+                _selectedMachine = value;
+                OnPropertyChanged(nameof(SelectedMachine));
             }
         }
 
@@ -155,6 +155,12 @@ namespace Shopfloor.Features.Admin.Machines.List
                 return machine.Path.Contains(_machineSearchText, StringComparison.InvariantCultureIgnoreCase);
             }
             return false;
+        }
+
+        public async Task? UpdateMachines()
+        {
+            await LoadMachines();
+            OnPropertyChanged(nameof(Machines));
         }
     }
 }

@@ -19,11 +19,15 @@ namespace Shopfloor.Features.Admin.Machines.Commands
 
         public override void Execute(object? parameter)
         {
+            int? parentId = _viewModel.SelectedParent?.Id;
+
             _ = _provider.Create(new Machine(
                 _viewModel.MachineName,
                 _viewModel.MachineNumber,
-                _viewModel.SelectedParent.Id
+                parentId
             ));
+
+            _ = _viewModel.UpdateMachines();
         }
     }
 }

@@ -28,6 +28,8 @@ namespace Shopfloor.Features.Admin.Machines.Commands
                 _viewModel.MachineNumber,
                 parentId
             ));
+
+            _ = _viewModel.UpdateMachines();
         }
     }
 }

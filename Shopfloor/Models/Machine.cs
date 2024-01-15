@@ -30,7 +30,7 @@ namespace Shopfloor.Models
             _path = Name;
         }
 
-        public Machine(string name, string number, int parent)
+        public Machine(string name, string number, int? parent)
         {
             Name = name;
             Number = number;
