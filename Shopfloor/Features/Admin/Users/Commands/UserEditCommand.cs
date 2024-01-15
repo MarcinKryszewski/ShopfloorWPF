@@ -36,9 +36,11 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
         }
         public override void Execute(object? parameter)
         {
-            //var watch = System.Diagnostics.Stopwatch.StartNew();
+            //var watch = System.Diagnostics.Stopwatch.StartNew();          
 
             EditUser();
+
+            if (_userId == 1) return;
             AddRoles();
             RemoveRoles();
 

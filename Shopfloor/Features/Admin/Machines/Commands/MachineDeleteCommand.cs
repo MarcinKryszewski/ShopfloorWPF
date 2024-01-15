@@ -7,7 +7,7 @@ namespace Shopfloor.Features.Admin.Machines.Commands
     {
         public override void Execute(object? parameter)
         {
-            throw new NotImplementedException();
+
         }
     }
 }
