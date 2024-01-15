@@ -17,7 +17,7 @@ namespace Shopfloor.Services.Providers
 
         #region SQLCommands
         private const string _createSQL = @"
-            INSERT INTO machines (machine_name, mchine_number, parent)
+            INSERT INTO machines (machine_name, machine_number, parent)
             VALUES (@Name, @Number, @Parent)
             ";
         private const string _getOneSQL = @"
@@ -33,7 +33,7 @@ namespace Shopfloor.Services.Providers
             UPDATE machines
             SET 
                 machine_name = @Name,
-                mchine_number = @Number,
+                machine_number = @Number,
                 parent = @Parent
             WHERE id = @Id
             ";
@@ -104,7 +104,7 @@ namespace Shopfloor.Services.Providers
 
         private static Machine ToMachine(MachineDTO item)
         {
-            return new Machine(item.Id, item.Name, item.Number, item.Parent);
+            return new Machine(item.Id, item.Machine_Name, item.Machine_Number, item.Parent);
         }
     }
 }

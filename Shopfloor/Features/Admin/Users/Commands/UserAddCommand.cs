@@ -43,7 +43,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
             _viewModel.CleanForm();
 
             //watch.Stop();
-            //Debug.WriteLine($"UserAdd execution Time: {watch.ElapsedMilliseconds} ms");
+            //System.Diagnostics.Debug.WriteLine($"UserAdd execution Time: {watch.ElapsedMilliseconds} ms");
         }
 
         private void CreateRoleUserTasks(int userId, ObservableCollection<Role> roles)

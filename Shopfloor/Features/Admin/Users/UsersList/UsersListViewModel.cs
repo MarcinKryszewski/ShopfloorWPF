@@ -40,49 +40,33 @@ namespace Shopfloor.Features.Admin.Users.List
 
         public ICommand AddNewUserCommand { get; }
         public ICommand SetActivityUserCommand { get; }
-        //public ICommand ActivateUserCommand { get; }
         public ICommand EditUserCommand { get; }
 
         public UsersListViewModel(IServiceProvider mainServices, IServiceProvider databasServices)
         {
             _database = databasServices;
-            //_users = GetUsers();
             _ = LoadUsers();
             _selectedUser = mainServices.GetRequiredService<SelectedUserStore>();
-            //Users = CollectionViewSource.GetDefaultView(_users);
 
             AddNewUserCommand = new NavigateCommand<UsersAddViewModel>(mainServices.GetRequiredService<NavigationService<UsersAddViewModel>>());
             EditUserCommand = new NavigateCommand<UsersEditViewModel>(mainServices.GetRequiredService<NavigationService<UsersEditViewModel>>());
 
             UserProvider userProvider = databasServices.GetRequiredService<UserProvider>();
             SetActivityUserCommand = new UserSetActivityCommand(this, userProvider);
-            //ActivateUserCommand = new UserActivateCommand(this, userProvider);
         }
 
         private async Task LoadUsers()
         {
             _users.Clear();
             IEnumerable<User> users = await _database.GetRequiredService<UserProvider>().GetAll();
-            foreach (var user in users)
+            foreach (User user in users)
             {
-                //await Task.Delay(TimeSpan.FromSeconds(2));
                 _users.Add(user);
             }
         }
 
-        private ObservableCollection<User> GetUsers()
-        {
-            IEnumerable<User> users = _database.GetRequiredService<UserProvider>().GetAll().Result;
-            return new ObservableCollection<User>(users);
-        }
-
         public Task? UpdateUsers()
         {
-            /*_users.Clear();
-            foreach (User user in GetUsers())
-            {
-                _users.Add(user);
-            }*/
             Users.Refresh();
             OnPropertyChanged(nameof(Users));
             return null;

@@ -67,7 +67,7 @@ namespace Shopfloor.Database.SQLite
             CREATE TABLE IF NOT EXISTS machines (
                 id INTEGER,
                 machine_name TEXT,
-                mchine_number TEXT,
+                machine_number TEXT,
                 parent INTEGER,
                 PRIMARY KEY(id)
             )";
