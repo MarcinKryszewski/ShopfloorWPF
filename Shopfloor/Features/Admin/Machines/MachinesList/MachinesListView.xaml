@@ -25,7 +25,7 @@
             <TextBlock
                 Grid.Row="0"
                 Margin="0,0,0,10"
-                Foreground="{StaticResource BrushPurple400}"
+                Foreground="{StaticResource ResourceKey=BrushPurple400}"
                 Text="Maszyny" />
             <TreeView
                 x:Name="MachinesTreeView"
@@ -45,17 +45,17 @@
                                 <ContextMenu>
                                     <ContextMenu.Resources />
                                     <MenuItem
-                                        Command="{Binding DataContext.MachineSetCurrentCommand, Source={x:Reference MachinesTreeView}}"
-                                        CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"
+                                        Command="{Binding Path=DataContext.MachineSetCurrentCommand, Source={x:Reference MachinesTreeView}}"
+                                        CommandParameter="{Binding Path=PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"
                                         Header="Edycja" />
                                     <MenuItem
-                                        Command="{Binding DataContext.MachineSetParentCommand, Source={x:Reference MachinesTreeView}}"
-                                        CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"
+                                        Command="{Binding Path=DataContext.MachineSetParentCommand, Source={x:Reference MachinesTreeView}}"
+                                        CommandParameter="{Binding Path=PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"
                                         Header="Ustaw jako maszyne nadrzędną" />
                                     <Separator />
                                     <MenuItem
-                                        Command="{Binding DataContext.MachineDeleteCommand, Source={x:Reference MachinesTreeView}}"
-                                        CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"
+                                        Command="{Binding Path=DataContext.MachineDeleteCommand, Source={x:Reference MachinesTreeView}}"
+                                        CommandParameter="{Binding Path=PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType={x:Type ContextMenu}}}"
                                         Header="Usuń" />
                                 </ContextMenu>
                             </StackPanel.ContextMenu>
@@ -69,14 +69,14 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Border Background="{StaticResource BrushDarkNeutral400}" CornerRadius="10">
+            <Border Background="{StaticResource ResourceKey=BrushDarkNeutral400}" CornerRadius="10">
                 <StackPanel>
                     <TextBlock
                         Margin="0,0,0,10"
                         HorizontalAlignment="Center"
                         FontSize="20"
                         FontWeight="SemiBold"
-                        Foreground="{StaticResource BrushPurple400}"
+                        Foreground="{StaticResource ResourceKey=BrushPurple400}"
                         Text="Formularz" />
                     <StackPanel
                         Grid.Column="1"
@@ -84,66 +84,35 @@
                         Margin="20,0,10,0"
                         Orientation="Vertical">
 
-                        <TextBlock Foreground="{StaticResource BrushPurple400}" Text="Nazwa maszyny" />
+                        <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Nazwa maszyny" />
                         <TextBox
                             Grid.Row="1"
                             Height="28"
                             Margin="0,0,0,20"
-                            VerticalContentAlignment="Center"
-                            FontSize="14"
-                            Text="{Binding Path=MachineName}">
-                            <TextBox.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="3" />
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
+                            Style="{StaticResource ResourceKey=TextBoxMain}"
+                            Text="{Binding Path=MachineName}" />
                         <TextBlock Foreground="{StaticResource BrushPurple400}" Text="Numer maszyny" />
                         <TextBox
                             Grid.Row="2"
                             Height="28"
                             Margin="0,0,0,20"
-                            VerticalContentAlignment="Center"
-                            FontSize="14"
-                            Text="{Binding Path=MachineNumber}">
-                            <TextBox.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="3" />
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
+                            Style="{StaticResource ResourceKey=TextBoxMain}"
+                            Text="{Binding Path=MachineNumber}" />
                         <TextBlock Foreground="{StaticResource BrushPurple400}" Text="Maszyna nadrzędna" />
                         <ComboBox
                             Grid.Row="3"
                             Height="28"
                             Margin="0,0,0,10"
                             VerticalContentAlignment="Center"
+                            Background="{StaticResource ResourceKey=BrushDarkNeutral1100}"
                             DisplayMemberPath="Path"
                             FontSize="14"
+                            Foreground="{StaticResource ResourceKey=BrushPurple800}"
                             IsEditable="True"
                             IsReadOnly="False"
-                            ItemsSource="{Binding Path=MachinesList}"
+                            ItemsSource="{Binding MachinesList}"
                             SelectedItem="{Binding SelectedParent, Mode=TwoWay}"
-                            Text="{Binding Path=MachineSearchText}">
-                            <ComboBox.Resources>
-                                <Style TargetType="{x:Type ComboBox}">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type ComboBox}">
-                                                <Border
-                                                    Name="roundedCornerComboBoxBorder"
-                                                    Background="White"
-                                                    BorderBrush="#CCCCCC"
-                                                    BorderThickness="1"
-                                                    ClipToBounds="True"
-                                                    CornerRadius="3" />
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ComboBox.Resources>
-
-                        </ComboBox>
+                            Text="{Binding MachineSearchText}" />
 
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>
@@ -161,45 +130,9 @@
                                 Grid.Column="1"
                                 Width="100"
                                 Height="40"
-                                Margin="5"
-                                Background="{StaticResource BrushDarkNeutral1100}"
-                                FontFamily="Segoe UI"
-                                FontSize="16"
-                                FontWeight="DemiBold"
-                                Foreground="{StaticResource BrushPurple800}">
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5" />
-                                    </Style>
-                                    <Style TargetType="{x:Type Button}">
-                                        <Setter Property="Background" Value="{StaticResource BrushPurple800}" />
-                                        <Setter Property="Foreground" Value="{StaticResource BrushDarkNeutral1100}" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Border
-                                                        Background="{TemplateBinding Background}"
-                                                        BorderBrush="Black"
-                                                        BorderThickness="0">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="{StaticResource BrushPurple600}" />
-                                                <Setter Property="Foreground" Value="{StaticResource BrushDarkNeutral1100}" />
-                                            </Trigger>
-                                            <Trigger Property="IsPressed" Value="True">
-                                                <Setter Property="Background" Value="{StaticResource BrushPurple900}" />
-                                                <Setter Property="Foreground" Value="{StaticResource BrushDarkNeutral1000}" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Resources>
+                                Margin="5">
                                 <Button.Style>
-                                    <Style TargetType="Button">
+                                    <Style BasedOn="{StaticResource ResourceKey=ButtonMain}" TargetType="Button">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Path=IsEdit}" Value="True">
                                                 <Setter Property="Content" Value="EDYTUJ" />
@@ -219,43 +152,9 @@
                                 Width="100"
                                 Height="40"
                                 Margin="10"
-                                Background="{StaticResource BrushDarkNeutral1100}"
                                 Command="{Binding Path=CleanCommand}"
                                 Content="ANULUJ"
-                                FontFamily="Segoe UI"
-                                FontSize="16"
-                                FontWeight="DemiBold"
-                                Foreground="{StaticResource BrushPurple800}">
-                                <Button.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="CornerRadius" Value="5" />
-                                    </Style>
-                                    <Style TargetType="{x:Type Button}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Border
-                                                        Background="{TemplateBinding Background}"
-                                                        BorderBrush="Black"
-                                                        BorderThickness="0">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="{StaticResource BrushDarkNeutral900}" />
-                                                <Setter Property="Foreground" Value="{StaticResource BrushPurple700}" />
-                                            </Trigger>
-                                            <Trigger Property="IsPressed" Value="True">
-                                                <Setter Property="Background" Value="{StaticResource BrushDarkNeutral700}" />
-                                                <Setter Property="Foreground" Value="{StaticResource BrushPurple600}" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Button.Resources>
-                            </Button>
+                                Style="{StaticResource ResourceKey=ButtonSide}" />
                             <TextBlock
                                 Grid.Row="1"
                                 Grid.Column="1"

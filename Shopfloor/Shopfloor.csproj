@@ -30,6 +30,8 @@
 
   <ItemGroup>
     <Watch Remove="Features\Admin\Machines\MachinesList\MachinesListView.xaml" />
+    <Watch Remove="Themes\Controls\ButtonThemes.xaml" />
+    <Watch Remove="Themes\Controls\TextBoxThemes.xaml" />
   </ItemGroup>
 
   <ItemGroup>

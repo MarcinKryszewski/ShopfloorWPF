@@ -9,6 +9,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/Colors.xaml" />
                 <ResourceDictionary Source="Themes/Controls/PlaceholderTextBox/PlaceholderTextBoxes.xaml" />
+                <ResourceDictionary Source="Themes/Controls/ButtonThemes.xaml" />
+                <ResourceDictionary Source="Themes/Controls/TextBoxThemes.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

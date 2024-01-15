@@ -24,7 +24,7 @@
         <Border
             Grid.Row="0"
             Grid.Column="1"
-            Background="{StaticResource BrushDarkNeutral400}"
+            Background="{StaticResource ResourceKey=BrushDarkNeutral400}"
             CornerRadius="10">
 
             <Grid>
@@ -41,7 +41,7 @@
                     VerticalAlignment="Center"
                     FontSize="20"
                     FontWeight="Bold"
-                    Foreground="{StaticResource BrushPurple400}"
+                    Foreground="{StaticResource ResourceKey=BrushPurple400}"
                     Text="Nowy użytkownik"
                     Typography.Capitals="AllSmallCaps" />
 
@@ -59,48 +59,27 @@
                         Margin="20,0,10,0"
                         Orientation="Vertical">
 
-                        <TextBlock Foreground="{StaticResource BrushPurple400}" Text="Login" />
+                        <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Login" />
                         <TextBox
                             Grid.Row="1"
                             Height="28"
                             Margin="0,0,0,20"
-                            VerticalContentAlignment="Center"
-                            FontSize="14"
-                            Text="{Binding Path=Username}">
-                            <TextBox.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="3" />
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
-                        <TextBlock Foreground="{StaticResource BrushPurple400}" Text="Imię" />
+                            Style="{StaticResource ResourceKey=TextBoxMain}"
+                            Text="{Binding Path=Username}" />
+                        <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Imię" />
                         <TextBox
                             Grid.Row="2"
                             Height="28"
                             Margin="0,0,0,20"
-                            VerticalContentAlignment="Center"
-                            FontSize="14"
-                            Text="{Binding Path=Name}">
-                            <TextBox.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="3" />
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
-                        <TextBlock Foreground="{StaticResource BrushPurple400}" Text="Nazwisko" />
+                            Style="{StaticResource ResourceKey=TextBoxMain}"
+                            Text="{Binding Path=Name}" />
+                        <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Nazwisko" />
                         <TextBox
                             Grid.Row="3"
                             Height="28"
                             Margin="0,0,0,0"
-                            VerticalContentAlignment="Center"
-                            FontSize="14"
-                            Text="{Binding Path=Surname}">
-                            <TextBox.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="3" />
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
+                            Style="{StaticResource ResourceKey=TextBoxMain}"
+                            Text="{Binding Path=Surname}" />
                     </StackPanel>
 
                     <Grid Grid.Column="2" Margin="10,0,20,0">
@@ -110,7 +89,7 @@
                         </Grid.RowDefinitions>
                         <TextBlock
                             Grid.Row="0"
-                            Foreground="{StaticResource BrushPurple400}"
+                            Foreground="{StaticResource ResourceKey=BrushPurple400}"
                             Text="Role" />
                         <ListBox
                             Grid.Row="1"
@@ -134,7 +113,6 @@
                             </ListBox.Resources>
                         </ListBox>
                     </Grid>
-
                 </Grid>
 
                 <Grid Grid.Row="2">
@@ -156,41 +134,7 @@
                         Margin="5"
                         Command="{Binding Path=AddNewUserCommand}"
                         Content="STWÓRZ"
-                        FontFamily="Segoe UI"
-                        FontSize="16"
-                        FontWeight="DemiBold">
-                        <Button.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="10" />
-                            </Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="{StaticResource BrushPurple800}" />
-                                <Setter Property="Foreground" Value="{StaticResource BrushDarkNeutral1100}" />
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border
-                                                Background="{TemplateBinding Background}"
-                                                BorderBrush="Black"
-                                                BorderThickness="0">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="{StaticResource BrushPurple600}" />
-                                        <Setter Property="Foreground" Value="{StaticResource BrushDarkNeutral1100}" />
-                                    </Trigger>
-                                    <Trigger Property="IsPressed" Value="True">
-                                        <Setter Property="Background" Value="{StaticResource BrushPurple900}" />
-                                        <Setter Property="Foreground" Value="{StaticResource BrushDarkNeutral1000}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Resources>
-                    </Button>
+                        Style="{StaticResource ResourceKey=ButtonMain}" />
                     <Button
                         Grid.Row="0"
                         Grid.Column="2"
@@ -199,41 +143,7 @@
                         Margin="10"
                         Command="{Binding Path=BackToListCommand}"
                         Content="WRÓĆ"
-                        FontFamily="Segoe UI"
-                        FontSize="16"
-                        FontWeight="DemiBold">
-                        <Button.Resources>
-                            <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="5" />
-                            </Style>
-                            <Style TargetType="{x:Type Button}">
-                                <Setter Property="Background" Value="{StaticResource BrushDarkNeutral1100}" />
-                                <Setter Property="Foreground" Value="{StaticResource BrushPurple800}" />
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type Button}">
-                                            <Border
-                                                Background="{TemplateBinding Background}"
-                                                BorderBrush="Black"
-                                                BorderThickness="0">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="{StaticResource BrushDarkNeutral900}" />
-                                        <Setter Property="Foreground" Value="{StaticResource BrushPurple700}" />
-                                    </Trigger>
-                                    <Trigger Property="IsPressed" Value="True">
-                                        <Setter Property="Background" Value="{StaticResource BrushDarkNeutral700}" />
-                                        <Setter Property="Foreground" Value="{StaticResource BrushPurple600}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Resources>
-                    </Button>
+                        Style="{StaticResource ResourceKey=ButtonSide}" />
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="1"

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Admin.Machines.Commands;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.ViewModels;
@@ -6,11 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Data;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Shopfloor.Features.Admin.Machines.Commands;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Machines.List
 {
@@ -25,11 +25,20 @@ namespace Shopfloor.Features.Admin.Machines.List
         private Machine? _selectedParent;
         private Machine? _selectedMachine;
         private string _machineSearchText = string.Empty;
+        private bool _isEdit;
 
         public IEnumerable<Machine> Machines => _machines;
         public ICollectionView MachinesList => CollectionViewSource.GetDefaultView(_machinesAll);
 
-        public bool IsEdit { get; set; }
+        public bool IsEdit
+        {
+            get => _isEdit;
+            set
+            {
+                _isEdit = value;
+                OnPropertyChanged(nameof(IsEdit));
+            }
+        }
         public string MachineName
         {
             get => _machineName;
@@ -82,7 +91,12 @@ namespace Shopfloor.Features.Admin.Machines.List
             set
             {
                 _machineSearchText = value;
-                MachinesList.Filter = FilterMachines;
+                if (value != null)
+                {
+                    MachinesList.Filter = FilterMachines;
+                }
+                else MachinesList.Filter = null;
+
                 OnPropertyChanged(nameof(MachineSearchText));
             }
         }
@@ -104,6 +118,7 @@ namespace Shopfloor.Features.Admin.Machines.List
             _machinesAll = new();
             _ = LoadMachines();
             IsEdit = false;
+            //MachinesList.Filter = null;
 
             MachineProvider provider = databaseServices.GetRequiredService<MachineProvider>();
 
@@ -112,7 +127,7 @@ namespace Shopfloor.Features.Admin.Machines.List
             MachineEditCommand = new MachineEditCommand(this, provider);
             MachineSetParentCommand = new MachineSetParentCommand();
             MachineSetCurrentCommand = new MachineSetCurrentCommand();
-            CleanCommand = new CleanFormCommand();
+            CleanCommand = new CleanFormCommand(this);
             MachineSelectedCommand = new MachineSelectedCommand();
         }
 
@@ -134,6 +149,7 @@ namespace Shopfloor.Features.Admin.Machines.List
 
                 AddChild(machine, _machinesAll);
             }
+            MachinesList.Refresh();
             //OnPropertyChanged(nameof(Machines));
         }
 
