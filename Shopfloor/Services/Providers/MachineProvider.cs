@@ -57,7 +57,7 @@ namespace Shopfloor.Services.Providers
             {
                 Name = item.Name,
                 Number = item.Number,
-                Parent = item.Parent
+                Parent = item.ParentId
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
@@ -87,7 +87,7 @@ namespace Shopfloor.Services.Providers
                 Id = item.Id,
                 Name = item.Name,
                 Number = item.Number,
-                Parent = item.Parent
+                Parent = item.ParentId
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }

@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Shopfloor.Features.Admin.Machines.List"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=local:MachinesListViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -23,10 +24,17 @@
             <TextBlock
                 Grid.Row="0"
                 Margin="0,0,0,10"
+                Foreground="{StaticResource BrushPurple400}"
                 Text="Maszyny" />
-            <TreeView Grid.Row="1" />
-
-
+            <TreeView Grid.Row="1" ItemsSource="{Binding Path=Machines}" MinHeight="274">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=Name}" />
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
         </Grid>
         <Grid Grid.Column="1" Margin="10">
             <Grid.RowDefinitions>
@@ -55,7 +63,7 @@
                             Margin="0,0,0,20"
                             VerticalContentAlignment="Center"
                             FontSize="14"
-                            Text="{Binding Path=Username}">
+                            Text="">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="3" />
@@ -69,7 +77,7 @@
                             Margin="0,0,0,20"
                             VerticalContentAlignment="Center"
                             FontSize="14"
-                            Text="{Binding Path=Name}">
+                            Text="">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="3" />
@@ -83,7 +91,7 @@
                             Margin="0,0,0,10"
                             VerticalContentAlignment="Center"
                             FontSize="14"
-                            Text="{Binding Path=Surname}">
+                            Text="">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="3" />
@@ -108,7 +116,7 @@
                                 Width="100"
                                 Height="40"
                                 Margin="5"
-                                Command="{Binding Path=AddNewUserCommand}"
+                                Command=""
                                 Content="STWÓRZ"
                                 FontFamily="Segoe UI"
                                 FontSize="16"
@@ -151,7 +159,7 @@
                                 Width="100"
                                 Height="40"
                                 Margin="10"
-                                Command="{Binding Path=BackToListCommand}"
+                                Command=""
                                 Content="WRÓĆ"
                                 FontFamily="Segoe UI"
                                 FontSize="16"
@@ -199,7 +207,7 @@
                                 FontSize="16"
                                 FontWeight="DemiBold"
                                 Foreground="Red"
-                                Text="{Binding Path=ErrorMassage}"
+                                Text=""
                                 TextAlignment="Center"
                                 TextWrapping="Wrap" />
                         </Grid>
