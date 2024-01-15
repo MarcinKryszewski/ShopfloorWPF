@@ -22,6 +22,7 @@ namespace Shopfloor.Features.Admin.Machines.List
         private string _machineName = string.Empty;
         private string _machineNumber = string.Empty;
         private int _parentId;
+        private Machine? _selectedParent;
         private Machine? _selectedMachine;
         private string _machineSearchText = string.Empty;
 
@@ -56,13 +57,22 @@ namespace Shopfloor.Features.Admin.Machines.List
                 OnPropertyChanged(nameof(ParentId));
             }
         }
-        public Machine SelectedMachine
+        public Machine SelectedParent
         {
-            get => _selectedMachine;
+            get => _selectedParent;
             set
             {
-                _selectedMachine = value;
-                OnPropertyChanged(nameof(SelectedMachine));
+                _selectedParent = value;
+                OnPropertyChanged(nameof(SelectedParent));
+            }
+        }
+        public Machine SelectedParent
+        {
+            get => _selectedParent;
+            set
+            {
+                _selectedParent = value;
+                OnPropertyChanged(nameof(SelectedParent));
             }
         }
 
@@ -93,10 +103,13 @@ namespace Shopfloor.Features.Admin.Machines.List
             _machines = new();
             _machinesAll = new();
             _ = LoadMachines();
+            IsEdit = false;
+
+            MachineProvider provider = databaseServices.GetRequiredService<MachineProvider>();
 
             MachineDeleteCommand = new MachineDeleteCommand();
-            MachineAddCommand = new MachineAddCommand();
-            MachineEditCommand = new MachineEditCommand();
+            MachineAddCommand = new MachineAddCommand(this, provider);
+            MachineEditCommand = new MachineEditCommand(this, provider);
             MachineSetParentCommand = new MachineSetParentCommand();
             MachineSetCurrentCommand = new MachineSetCurrentCommand();
             CleanCommand = new CleanFormCommand();
@@ -108,7 +121,6 @@ namespace Shopfloor.Features.Admin.Machines.List
             _machines.Clear();
             _machinesAll.Clear();
             IEnumerable<Machine> machines = await _database.GetRequiredService<MachineProvider>().GetAll();
-            //List<Machine> machinesList = new(_machinesAll);
 
             foreach (Machine machine in machines)
             {

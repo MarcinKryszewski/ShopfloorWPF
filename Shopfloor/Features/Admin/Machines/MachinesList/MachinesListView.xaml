@@ -125,7 +125,7 @@
                             IsReadOnly="False"
                             IsEditable="True"
                             ItemsSource="{Binding Path=MachinesList}"
-                            SelectedItem="{Binding SelectedMachine, Mode=TwoWay}"
+                            SelectedItem="{Binding SelectedParent, Mode=TwoWay}"
                             Text="{Binding Path=MachineSearchText}"
                             DisplayMemberPath="Path"
                             >
@@ -153,8 +153,6 @@
                                 Width="100"
                                 Height="40"
                                 Margin="5"
-                                Command="{Binding Path=MachineAddCommand}"
-                                Content="STWÓRZ"
                                 FontFamily="Segoe UI"
                                 FontSize="16"
                                 FontWeight="DemiBold">
@@ -198,6 +196,20 @@
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Resources>
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsEdit}" Value="True">
+                                                <Setter Property="Content" Value="EDYTUJ"/>
+                                                <Setter Property="Command" Value="{Binding Path=MachineEditCommand}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=IsEdit}" Value="False">
+                                                <Setter Property="Content" Value="STWÓRZ"/>
+                                                <Setter Property="Command" Value="{Binding Path=MachineAddCommand}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
                             </Button>
                             <Button Grid.Row="0"
                                 Grid.Column="2"
@@ -248,7 +260,7 @@
                                             </Trigger>
                                         </Style.Triggers>
                                     </Style>
-                                </Button.Resources>
+                                </Button.Resources>                                
                             </Button>
                             <TextBlock Grid.Row="1"
                                 Grid.Column="1"
