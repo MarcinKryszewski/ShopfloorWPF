@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Shopfloor.Features.Admin.Machines.Hosts;
 using Shopfloor.Features.Admin.Machines.List;
-using Shopfloor.Features.Admin.Users.Hosts;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
@@ -16,9 +16,9 @@ namespace Shopfloor.Features.Admin.Machines
 
         public ViewModelBase? Content => _navigationStore.CurrentViewModel;
 
-        public MachinesMainViewModel(IServiceProvider databasServices)
+        public MachinesMainViewModel(IServiceProvider databaseServices)
         {
-            _machinesServices = UsersHost.GetHost(databasServices);
+            _machinesServices = MachinesHost.GetHost(databaseServices);
             _machinesServices.Start();
 
             _navigationStore = _machinesServices.Services.GetRequiredService<NavigationStore>();

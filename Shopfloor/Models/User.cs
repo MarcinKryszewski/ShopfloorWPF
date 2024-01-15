@@ -1,6 +1,5 @@
 using Shopfloor.Services.Providers;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -84,7 +83,6 @@ namespace Shopfloor.Models
         public void AddRole(Role role)
         {
             _roles.Add(role);
-            Debug.WriteLine(role.Name);
         }
         public bool IsAuthorized(int roleValue)
         {

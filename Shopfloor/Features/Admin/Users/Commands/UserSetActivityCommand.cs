@@ -20,6 +20,8 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
         public override async Task ExecuteAsync(object? parameter)
         {
+            //var watch = System.Diagnostics.Stopwatch.StartNew();
+
             User? user = _viewModel.SelectedUser;
 
             if (user is null) return;
@@ -33,6 +35,9 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
             modifiedUser.SetActive(isActive);
             await _userProvider.SetUserActive(userId, isActive);
             _ = _viewModel.UpdateUsers();
+
+            //watch.Stop();
+            //Debug.WriteLine($"ActivitySet execution Time: {watch.ElapsedMilliseconds} ms");
         }
     }
 }

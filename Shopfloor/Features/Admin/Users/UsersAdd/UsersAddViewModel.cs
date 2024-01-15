@@ -69,6 +69,7 @@ namespace Shopfloor.Features.Admin.Users.Add
 
         public UsersAddViewModel(IServiceProvider mainServices, IServiceProvider databasServices)
         {
+
             _database = databasServices;
             _rolesValueStore = new();
             SetRoles();
@@ -79,6 +80,7 @@ namespace Shopfloor.Features.Admin.Users.Add
                 databasServices.GetRequiredService<UserProvider>(),
                 databasServices.GetRequiredService<RoleUserProvider>()
             );
+
         }
 
         private void SetRoles()

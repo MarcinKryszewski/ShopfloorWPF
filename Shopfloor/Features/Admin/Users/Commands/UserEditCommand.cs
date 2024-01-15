@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Shopfloor.Features.Admin.Users.Edit;
 using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
+using System.Collections.Generic;
 
 namespace Shopfloor.Features.Admin.UsersList.Commands
 {
@@ -39,14 +36,18 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
         }
         public override void Execute(object? parameter)
         {
+            //var watch = System.Diagnostics.Stopwatch.StartNew();
+
             EditUser();
             AddRoles();
             RemoveRoles();
+
+            //watch.Stop();
+            //Debug.WriteLine($"UserEdit execution Time: {watch.ElapsedMilliseconds} ms");
         }
 
         private void EditUser()
         {
-
             _ = _userProvider.Update(new User(
                 _userId,
                 _viewModel.Username,

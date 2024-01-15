@@ -3,10 +3,8 @@ using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Shopfloor.Features.Admin.UsersList.Commands
@@ -30,6 +28,8 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
         public override void Execute(object? parameter)
         {
+            //var watch = System.Diagnostics.Stopwatch.StartNew();
+
             User newUser = new(_viewModel.Username, _viewModel.Name, _viewModel.Surname, "", true);
             int newUserId = newUser.Add(_userProvider).Result;
             if (newUserId < 0)
@@ -41,6 +41,9 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
             _viewModel.ErrorMassage = "Utworzono nowego użytkownika!";
             _viewModel.CleanForm();
+
+            //watch.Stop();
+            //Debug.WriteLine($"UserAdd execution Time: {watch.ElapsedMilliseconds} ms");
         }
 
         private void CreateRoleUserTasks(int userId, ObservableCollection<Role> roles)

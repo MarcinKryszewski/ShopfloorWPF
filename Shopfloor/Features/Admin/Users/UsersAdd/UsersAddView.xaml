@@ -24,7 +24,7 @@
         <Border
             Grid.Row="0"
             Grid.Column="1"
-            Background="#414c50"
+            Background="{StaticResource BrushDarkNeutral400}"
             CornerRadius="10">
 
             <Grid>

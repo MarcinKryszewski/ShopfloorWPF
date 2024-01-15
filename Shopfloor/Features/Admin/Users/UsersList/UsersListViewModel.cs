@@ -76,7 +76,7 @@ namespace Shopfloor.Features.Admin.Users.List
             return new ObservableCollection<User>(users);
         }
 
-        public Task UpdateUsers()
+        public Task? UpdateUsers()
         {
             /*_users.Clear();
             foreach (User user in GetUsers())
