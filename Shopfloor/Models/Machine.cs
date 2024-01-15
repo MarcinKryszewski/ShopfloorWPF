@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using System.IO;
 
 namespace Shopfloor.Models
 {
     public class Machine
     {
-        private List<Machine> _children;
+        private readonly List<Machine> _children;
         private string _path;
         public int Id { get; }
         public string Name { get; }

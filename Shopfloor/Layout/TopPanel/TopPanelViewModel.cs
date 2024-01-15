@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Login;
 using Shopfloor.Layout.TopPanel.Commands;
+using Shopfloor.Models;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
@@ -13,12 +14,19 @@ namespace Shopfloor.Layout.TopPanel
 {
     public class TopPanelViewModel : ViewModelBase
     {
-        private readonly string _userImagePath;
         private readonly UserStore _userStore;
+        private User? User => _userStore.User;
 
-        public string UserImagePath => _userImagePath;
+        public string UserImagePath
+        {
+            get
+            {
+                if (User is null) return "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
+                return User.Image;
+            }
+        }
         public bool IsLoggedIn => _userStore.IsUserLoggedIn;
-        public string Username => IsLoggedIn ? $"Witaj {_userStore.User.Name}!" : "Zaloguj się!";
+        public string Username => IsLoggedIn ? $"Witaj {User?.Name}!" : "Zaloguj się!";
 
         public ICommand NavigateLoginCommand { get; }
         public ICommand LogoutCommand { get; }
@@ -27,7 +35,6 @@ namespace Shopfloor.Layout.TopPanel
         {
             _userStore = userServices.GetRequiredService<UserStore>();
             _userStore.PropertyChanged += OnUserAuthenticated;
-            _userImagePath = _userStore.User.Image;
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(mainServices.GetRequiredService<NavigationService<LoginViewModel>>());
             LogoutCommand = new LogoutCommand(_userStore, mainServices);
         }

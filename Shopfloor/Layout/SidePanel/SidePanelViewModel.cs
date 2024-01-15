@@ -11,6 +11,7 @@ using Shopfloor.Features.Plannist.Deploys;
 using Shopfloor.Features.Plannist.Orders;
 using Shopfloor.Features.Plannist.Reports;
 using Shopfloor.Features.Plannist.Reservations;
+using Shopfloor.Models;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
@@ -25,6 +26,7 @@ namespace Shopfloor.Layout.SidePanel
     public class SidePanelViewModel : ViewModelBase
     {
         private readonly UserStore _userStore;
+        private User? User => _userStore.User;
 
         #region Commands
         #region Dashboard
@@ -89,22 +91,26 @@ namespace Shopfloor.Layout.SidePanel
 
         private Visibility AdminRole()
         {
-            if (_userStore.User.IsAuthorized(777)) return Visibility.Visible;
+            if (User is null) return Visibility.Collapsed;
+            if (User.IsAuthorized(777)) return Visibility.Visible;
             return Visibility.Collapsed;
         }
         private Visibility PlannistRole()
         {
-            if (_userStore.User.IsAuthorized(460)) return Visibility.Visible;
+            if (User is null) return Visibility.Collapsed;
+            if (User.IsAuthorized(460)) return Visibility.Visible;
             return Visibility.Collapsed;
         }
         private Visibility ManagerRole()
         {
-            if (_userStore.User.IsAuthorized(205)) return Visibility.Visible;
+            if (User is null) return Visibility.Collapsed;
+            if (User.IsAuthorized(205)) return Visibility.Visible;
             return Visibility.Collapsed;
         }
         private Visibility UserRole()
         {
-            if (_userStore.User.IsAuthorized(568)) return Visibility.Visible;
+            if (User is null) return Visibility.Collapsed;
+            if (User.IsAuthorized(568)) return Visibility.Visible;
             return Visibility.Collapsed;
         }
     }

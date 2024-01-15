@@ -7,8 +7,8 @@ namespace Shopfloor.Shared.ViewModels
         private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
 
-        public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
-        public ViewModelBase CurrentModalViewModel => _modalNavigationStore.CurrentViewModel;
+        public ViewModelBase? CurrentViewModel => _navigationStore.CurrentViewModel;
+        public ViewModelBase? CurrentModalViewModel => _modalNavigationStore.CurrentViewModel;
         public bool IsOpen => _modalNavigationStore.IsOpen;
 
         public MainViewModel(NavigationStore navigationStore, ModalNavigationStore modalNavigationStore)
