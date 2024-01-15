@@ -135,6 +135,7 @@ namespace Shopfloor.Features.Admin.Machines.List
         {
             _machines.Clear();
             _machinesAll.Clear();
+
             IEnumerable<Machine> machines = await _database.GetRequiredService<MachineProvider>().GetAll();
 
             foreach (Machine machine in machines)
