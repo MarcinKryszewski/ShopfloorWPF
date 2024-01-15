@@ -23,6 +23,7 @@ namespace Shopfloor.Features.Admin.Users.List
         private readonly IServiceProvider _database;
         private readonly ObservableCollection<User> _users = new();
         private readonly SelectedUserStore _selectedUser;
+        private string _searchText = string.Empty;
 
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
         public User? SelectedUser
@@ -35,6 +36,16 @@ namespace Shopfloor.Features.Admin.Users.List
                     _selectedUser.SelectedUser = value;
                     OnPropertyChanged(nameof(SelectedUser));
                 }
+            }
+        }
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                Users.Filter = FilterUsers;
+                OnPropertyChanged(nameof(SearchText));
             }
         }
 
@@ -70,6 +81,15 @@ namespace Shopfloor.Features.Admin.Users.List
             Users.Refresh();
             OnPropertyChanged(nameof(Users));
             return null;
+        }
+
+        private bool FilterUsers(object obj)
+        {
+            if (obj is User user)
+            {
+                return user.SearchValue.Contains(_searchText, StringComparison.InvariantCultureIgnoreCase);
+            }
+            return false;
         }
     }
 }

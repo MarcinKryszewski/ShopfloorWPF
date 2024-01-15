@@ -48,7 +48,8 @@
                         Foreground="{StaticResource BrushPurple900}"
                         Placeholder="Szukaj"
                         PlaceholderColor="{StaticResource BrushPurple900}"
-                        Style="{StaticResource DefaultPlaceholderTextBox}" />
+                        Style="{StaticResource DefaultPlaceholderTextBox}"
+                        Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
             </Border>
 
