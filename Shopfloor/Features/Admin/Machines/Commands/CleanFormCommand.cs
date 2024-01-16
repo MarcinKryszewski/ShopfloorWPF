@@ -14,7 +14,7 @@ namespace Shopfloor.Features.Admin.Machines.Commands
 
         public override void Execute(object? parameter)
         {
-            _viewModel.IsEdit = !_viewModel.IsEdit;
+            _viewModel.CleanForm();
         }
     }
 }

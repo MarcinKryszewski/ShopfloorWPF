@@ -8,7 +8,9 @@ using Shopfloor.Hosts.ConfigurationHost;
 using Shopfloor.Hosts.DatabaseHost;
 using Shopfloor.Hosts.MainHost;
 using Shopfloor.Layout.MainWindow;
+using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Services;
+using Shopfloor.Stores;
 using System.Data;
 using System.Windows;
 
@@ -46,6 +48,11 @@ namespace Shopfloor
             DatabaseInitializerFactory initializer = new(_configurationHost.Services, connection);
             IDatabaseInitializer databaseInitializer = initializer.CreateInitializer();
             databaseInitializer.Initialize();
+
+            _userHost.Services.GetRequiredService<UserStore>().Login(
+                "kryszm02",
+                _databaseHost.Services.GetRequiredService<UserProvider>()
+            );
 
             MainWindow = new MainWindow()
             {

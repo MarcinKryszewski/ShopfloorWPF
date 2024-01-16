@@ -69,6 +69,7 @@ namespace Shopfloor.Database.SQLite
                 machine_name TEXT,
                 machine_number TEXT,
                 parent INTEGER,
+                active INTEGER DEFAULT 1,
                 PRIMARY KEY(id)
             )";
 

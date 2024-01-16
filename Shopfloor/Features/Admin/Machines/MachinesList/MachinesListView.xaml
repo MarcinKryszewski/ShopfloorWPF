@@ -40,7 +40,17 @@
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Path=Name}" />
+                            <TextBlock Text="{Binding Path=Name}" >
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsActive}" Value="False">
+                                                <Setter Property="Foreground" Value="Red" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
                             <StackPanel.ContextMenu>
                                 <ContextMenu>
                                     <ContextMenu.Resources />
@@ -91,6 +101,7 @@
                             Margin="0,0,0,20"
                             Style="{StaticResource ResourceKey=TextBoxMain}"
                             Text="{Binding Path=MachineName}" />
+
                         <TextBlock Foreground="{StaticResource BrushPurple400}" Text="Numer maszyny" />
                         <TextBox
                             Grid.Row="2"
@@ -99,6 +110,7 @@
                             Style="{StaticResource ResourceKey=TextBoxMain}"
                             Text="{Binding Path=MachineNumber}" />
                         <TextBlock Foreground="{StaticResource BrushPurple400}" Text="Maszyna nadrzędna" />
+
                         <ComboBox
                             Grid.Row="3"
                             Height="28"

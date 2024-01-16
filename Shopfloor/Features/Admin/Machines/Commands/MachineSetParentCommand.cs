@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Linq;
 using Shopfloor.Features.Admin.Machines.List;
 using Shopfloor.Models;
 using Shopfloor.Shared.Commands;
@@ -21,6 +19,7 @@ namespace Shopfloor.Features.Admin.Machines.Commands
             if (parameter is not Machine) return;
             Machine machine = (Machine)parameter;
 
+            _viewModel.MachinesList.Filter = null;
             _viewModel.SelectedParent = machine;
         }
     }

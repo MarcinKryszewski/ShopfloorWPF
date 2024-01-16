@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Shopfloor.Features.Admin.Machines.List;
@@ -23,8 +22,10 @@ namespace Shopfloor.Features.Admin.Machines.Commands
             Machine machine = (Machine)parameter;
             _viewModel.SelectedMachine = machine;
 
+            _viewModel.MachinesList.Filter = null;
             if (machine.ParentId == null)
             {
+                _viewModel.MachinesList.Filter = null;
                 _viewModel.SelectedParent = null;
                 return;
             }

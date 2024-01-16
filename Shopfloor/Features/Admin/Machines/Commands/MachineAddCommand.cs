@@ -2,7 +2,6 @@ using Shopfloor.Features.Admin.Machines.List;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
-using System;
 
 namespace Shopfloor.Features.Admin.Machines.Commands
 {
@@ -24,7 +23,8 @@ namespace Shopfloor.Features.Admin.Machines.Commands
             _ = _provider.Create(new Machine(
                 _viewModel.MachineName,
                 _viewModel.MachineNumber,
-                parentId
+                parentId,
+                true
             ));
 
             _ = _viewModel.UpdateMachines();

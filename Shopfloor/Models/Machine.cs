@@ -9,6 +9,7 @@ namespace Shopfloor.Models
         public int Id { get; }
         public string Name { get; }
         public string Number { get; }
+        public bool IsActive { get; }
         public int? ParentId { get; }
         public IList<Machine> Children
         {
@@ -19,7 +20,7 @@ namespace Shopfloor.Models
         }
         public string Path => _path;
 
-        public Machine(int id, string name, string number, int? parent)
+        public Machine(int id, string name, string number, int? parent, bool isActive)
         {
             Id = id;
             Name = name;
@@ -27,15 +28,17 @@ namespace Shopfloor.Models
             ParentId = parent;
             _children = new();
             _path = Name;
+            IsActive = isActive;
         }
 
-        public Machine(string name, string number, int? parent)
+        public Machine(string name, string number, int? parent, bool isActive)
         {
             Name = name;
             Number = number;
             ParentId = parent;
             _children = new();
             _path = Name;
+            IsActive = isActive;
         }
 
         public void AddChild(Machine machine)
@@ -46,7 +49,7 @@ namespace Shopfloor.Models
 
         public void SetParent(Machine machine)
         {
-            _path = $@"{machine.Name}\{_path}";
+            _path = $@"{machine.Path}\{_path}";
         }
     }
 }

@@ -8,7 +8,6 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 namespace Shopfloor.Services.Providers
 {
     public class MachineProvider : IProvider<Machine>
@@ -34,7 +33,8 @@ namespace Shopfloor.Services.Providers
             SET 
                 machine_name = @Name,
                 machine_number = @Number,
-                parent = @Parent
+                parent = @Parent,
+                active = @Active
             WHERE id = @Id
             ";
         private const string _deleteSQL = @"
@@ -87,7 +87,8 @@ namespace Shopfloor.Services.Providers
                 Id = item.Id,
                 Name = item.Name,
                 Number = item.Number,
-                Parent = item.ParentId
+                Parent = item.ParentId,
+                Active = item.IsActive
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
@@ -104,7 +105,7 @@ namespace Shopfloor.Services.Providers
 
         private static Machine ToMachine(MachineDTO item)
         {
-            return new Machine(item.Id, item.Machine_Name, item.Machine_Number, item.Parent);
+            return new Machine(item.Id, item.Machine_Name, item.Machine_Number, item.Parent, item.Active);
         }
     }
 }

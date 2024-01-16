@@ -31,6 +31,9 @@ namespace Shopfloor.Features.Login.Commands
 
         public override void Execute(object? parameter)
         {
+            //if (_viewModel is null) return;
+            //if (_naviagateCommand is null) return;
+
             _store.Login(_viewModel.Username, _userProvider);
             if (_store.IsUserLoggedIn)
             {

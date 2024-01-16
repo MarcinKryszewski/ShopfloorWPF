@@ -71,7 +71,7 @@ namespace Shopfloor.Features.Admin.Machines.List
             get => _selectedParent;
             set
             {
-                MachinesList.Filter = null;
+                //MachinesList.Filter = null;
                 _selectedParent = value;
                 OnPropertyChanged(nameof(SelectedParent));
             }
@@ -85,10 +85,13 @@ namespace Shopfloor.Features.Admin.Machines.List
                 MachinesList.Filter = null;
                 _machineName = value.Name;
                 _machineNumber = value.Number;
-                //_selectedMachine = value;
+
+                _isEdit = true;
+
                 OnPropertyChanged(nameof(SelectedMachine));
                 OnPropertyChanged(nameof(MachineName));
                 OnPropertyChanged(nameof(MachineNumber));
+                OnPropertyChanged(nameof(IsEdit));
             }
         }
 
@@ -185,6 +188,21 @@ namespace Shopfloor.Features.Admin.Machines.List
         {
             await LoadMachines();
             OnPropertyChanged(nameof(Machines));
+        }
+
+        public void CleanForm()
+        {
+            _selectedMachine = null;
+            _selectedParent = null;
+            _machineName = string.Empty;
+            _machineNumber = string.Empty;
+            _isEdit = false;
+
+            OnPropertyChanged(nameof(SelectedMachine));
+            OnPropertyChanged(nameof(MachineName));
+            OnPropertyChanged(nameof(MachineNumber));
+            OnPropertyChanged(nameof(IsEdit));
+            OnPropertyChanged(nameof(SelectedParent));
         }
     }
 }
