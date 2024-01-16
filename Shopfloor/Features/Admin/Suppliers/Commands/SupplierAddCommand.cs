@@ -25,12 +25,14 @@ namespace Shopfloor.Features.Admin.Suppliers.Commands
             List<Supplier> suppliers = new(_viewModel.Suppliers);
             Supplier supplier = new(_viewModel.Name, true);
 
-            if (suppliers.FirstOrDefault(s => s.Name == supplier.Name) is null)
+            if (suppliers.FirstOrDefault(s => s.Name == supplier.Name) is not null)
             {
-                _viewModel.CleanForm();
-                _ = _provider.Create(supplier);
-                _ = _viewModel.UpdateData();
+
             }
+
+            _viewModel.CleanForm();
+            _ = _provider.Create(supplier);
+            _ = _viewModel.UpdateData();
 
         }
     }
