@@ -71,6 +71,7 @@ namespace Shopfloor.Features.Admin.Machines.List
             get => _selectedParent;
             set
             {
+                MachinesList.Filter = null;
                 _selectedParent = value;
                 OnPropertyChanged(nameof(SelectedParent));
             }
@@ -80,8 +81,14 @@ namespace Shopfloor.Features.Admin.Machines.List
             get => _selectedMachine;
             set
             {
-                _selectedMachine = value;
+                if (value is null) return;
+                MachinesList.Filter = null;
+                _machineName = value.Name;
+                _machineNumber = value.Number;
+                //_selectedMachine = value;
                 OnPropertyChanged(nameof(SelectedMachine));
+                OnPropertyChanged(nameof(MachineName));
+                OnPropertyChanged(nameof(MachineNumber));
             }
         }
 
@@ -125,8 +132,8 @@ namespace Shopfloor.Features.Admin.Machines.List
             MachineDeleteCommand = new MachineDeleteCommand();
             MachineAddCommand = new MachineAddCommand(this, provider);
             MachineEditCommand = new MachineEditCommand(this, provider);
-            MachineSetParentCommand = new MachineSetParentCommand();
-            MachineSetCurrentCommand = new MachineSetCurrentCommand();
+            MachineSetParentCommand = new MachineSetParentCommand(this);
+            MachineSetCurrentCommand = new MachineSetCurrentCommand(this);
             CleanCommand = new CleanFormCommand(this);
             MachineSelectedCommand = new MachineSelectedCommand();
         }
