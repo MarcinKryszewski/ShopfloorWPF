@@ -109,8 +109,8 @@
                             Margin="0,0,0,20"
                             Style="{StaticResource ResourceKey=TextBoxMain}"
                             Text="{Binding Path=MachineNumber}" />
-                        <TextBlock Foreground="{StaticResource BrushPurple400}" Text="Maszyna nadrzędna" />
 
+                        <TextBlock Foreground="{StaticResource BrushPurple400}" Text="Maszyna nadrzędna" />
                         <ComboBox
                             Grid.Row="3"
                             Height="28"

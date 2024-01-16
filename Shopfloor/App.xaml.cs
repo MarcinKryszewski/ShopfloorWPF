@@ -11,6 +11,7 @@ using Shopfloor.Layout.MainWindow;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Services;
 using Shopfloor.Stores;
+using System;
 using System.Data;
 using System.Windows;
 
@@ -49,8 +50,9 @@ namespace Shopfloor
             IDatabaseInitializer databaseInitializer = initializer.CreateInitializer();
             databaseInitializer.Initialize();
 
+            //tries to login user automatically
             _userHost.Services.GetRequiredService<UserStore>().Login(
-                "kryszm02",
+                Environment.UserName,
                 _databaseHost.Services.GetRequiredService<UserProvider>()
             );
 

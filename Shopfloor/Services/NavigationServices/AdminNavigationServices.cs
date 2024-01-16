@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Machines;
 using Shopfloor.Features.Admin.Parts;
+using Shopfloor.Features.Admin.Suppliers;
 using Shopfloor.Features.Admin.Users;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
@@ -16,6 +17,7 @@ namespace Shopfloor.Services.NavigationServices
             GetUsersNavigation(services, databaseServices);
             GetMachinesNavigation(services, databaseServices);
             GetPartsNavigation(services, databaseServices);
+            GetSuppliersNavigation(services, databaseServices);
         }
 
         public static void GetUsersNavigation(IServiceCollection services, IServiceProvider databaseServices)
@@ -54,6 +56,18 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
+        public static void GetSuppliersNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        {
+            services.AddTransient((s) => CreateSuppliersViewModel(databaseServices));
+            services.AddSingleton<CreateViewModel<SuppliersMainViewModel>>((s) => () => s.GetRequiredService<SuppliersMainViewModel>());
+            services.AddSingleton((s) =>
+            {
+                return new NavigationService<SuppliersMainViewModel>(
+                    s.GetRequiredService<NavigationStore>(),
+                    s.GetRequiredService<CreateViewModel<SuppliersMainViewModel>>()
+                );
+            });
+        }
 
         private static UsersMainViewModel CreateUsersMainViewModel(IServiceProvider services, IServiceProvider databaseServices)
         {
@@ -66,6 +80,10 @@ namespace Shopfloor.Services.NavigationServices
         private static PartsViewModel CreatePartsViewModel(IServiceProvider databaseServices)
         {
             return new PartsViewModel(databaseServices);
+        }
+        private static SuppliersMainViewModel CreateSuppliersViewModel(IServiceProvider databaseServices)
+        {
+            return new SuppliersMainViewModel(databaseServices);
         }
     }
 }

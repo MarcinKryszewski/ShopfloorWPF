@@ -19,6 +19,7 @@
     xmlns:tasks="clr-namespace:Shopfloor.Features.Mechanic.Tasks"
     xmlns:topPanel="clr-namespace:Shopfloor.Layout.TopPanel"
     xmlns:users="clr-namespace:Shopfloor.Features.Admin.Users"
+    xmlns:suppliers="clr-namespace:Shopfloor.Features.Admin.Suppliers"
     d:DataContext="{d:DesignInstance Type=content:ContentViewModel}"
     d:Height="1020"
     d:Width="1680"
@@ -74,6 +75,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type parts:PartsViewModel}">
                         <parts:PartsView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type suppliers:SuppliersMainViewModel}">
+                        <suppliers:SuppliersMainView />
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>

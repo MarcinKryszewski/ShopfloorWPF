@@ -5,6 +5,9 @@ namespace Shopfloor.Models
     public class Machine
     {
         private readonly List<Machine> _children;
+        private readonly List<MachinePart> _parts;
+        private Machine? _parent;
+
         private string _path;
         public int Id { get; }
         public string Name { get; }
@@ -18,6 +21,7 @@ namespace Shopfloor.Models
                 return _children.AsReadOnly();
             }
         }
+        public IList<MachinePart> Parts => _parts;
         public string Path => _path;
 
         public Machine(int id, string name, string number, int? parent, bool isActive)
@@ -27,6 +31,7 @@ namespace Shopfloor.Models
             Number = number;
             ParentId = parent;
             _children = new();
+            _parts = new();
             _path = Name;
             IsActive = isActive;
         }
@@ -37,6 +42,7 @@ namespace Shopfloor.Models
             Number = number;
             ParentId = parent;
             _children = new();
+            _parts = new();
             _path = Name;
             IsActive = isActive;
         }
@@ -50,6 +56,7 @@ namespace Shopfloor.Models
         public void SetParent(Machine machine)
         {
             _path = $@"{machine.Path}\{_path}";
+            _parent = machine;
         }
     }
 }
