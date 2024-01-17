@@ -69,7 +69,7 @@ namespace Shopfloor.Database.SQLite
         private const string _parts_typesSQLCommand = @"
             CREATE TABLE IF NOT EXISTS parts_types (
                 id INTEGER,
-                part_type_name TEXT
+                part_type_name TEXT,
                 PRIMARY KEY(id)
             )";
         private const string _suppliersSQLCommand = @"

@@ -1,3 +1,4 @@
+using Shopfloor.Interfaces;
 using Shopfloor.Services.Providers;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models
 {
-    public class User
+    public class User : ISearchableModel
     {
         private readonly HashSet<Role> _roles;
         private readonly int _id;

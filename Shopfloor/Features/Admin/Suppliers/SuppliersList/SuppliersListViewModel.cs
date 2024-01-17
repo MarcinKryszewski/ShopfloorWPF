@@ -1,15 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Suppliers.Commands;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Suppliers.List
 {
@@ -21,6 +23,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
         private bool _isEdit;
         private readonly IServiceProvider _databaseServices;
         private string _errorMassage = string.Empty;
+        private string _searchText = string.Empty;
 
         public string Name
         {
@@ -37,10 +40,21 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             set
             {
                 _selectedSupplier = value;
+                if (value is null)
+                {
+                    IsEdit = false;
+                    Name = string.Empty;
+                }
+                else
+                {
+                    Name = value.Name;
+                    IsEdit = true;
+                }
+
                 OnPropertyChanged(nameof(SelectedSupplier));
             }
         }
-        public IEnumerable<Supplier> Suppliers => _suppliers;
+        public ICollectionView Suppliers => CollectionViewSource.GetDefaultView(_suppliers);
         public bool IsEdit
         {
             get => _isEdit;
@@ -60,6 +74,16 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                 OnPropertyChanged(nameof(HasErrorVisibility));
             }
         }
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                Suppliers.Filter = FilterList;
+                OnPropertyChanged(nameof(SearchText));
+            }
+        }
 
         public Visibility HasErrorVisibility
         {
@@ -69,6 +93,8 @@ namespace Shopfloor.Features.Admin.Suppliers.List
         public ICommand SupplierAddCommand { get; }
         public ICommand SupplierEditCommand { get; }
         public ICommand SupplierDeleteCommand { get; }
+        public ICommand CleanFormCommand { get; }
+        public ICommand SupplierSelectCommand { get; }
 
         public SuppliersListViewModel(IServiceProvider databaseServices)
         {
@@ -78,42 +104,80 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             SupplierAddCommand = new SupplierAddCommand(this, provider);
             SupplierEditCommand = new SupplierEditCommand(this, provider);
             SupplierDeleteCommand = new SupplierDeleteCommand(this, provider);
+            CleanFormCommand = new CleanFormCommand(this);
+            SupplierSelectCommand = new SupplierSelectCommand(this);
 
-            _ = LoadData(provider);
+            Task.Run(() =>
+            {
+                _ = LoadData(provider);
+            });
         }
 
-        private async Task LoadData(SupplierProvider provider)
+        public async Task LoadData(SupplierProvider provider)
         {
             _suppliers.Clear();
             IEnumerable<Supplier> suppliers = await provider.GetAll();
             foreach (Supplier supplier in suppliers)
             {
-                _suppliers.Add(supplier);
+                //await Task.Delay(350);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    _suppliers.Add(supplier);
+                    OnPropertyChanged(nameof(Suppliers));
+                });
             }
-            OnPropertyChanged(nameof(Suppliers));
         }
 
+        //Updates the list if value didn't exist, ie. after add
         public async Task UpdateData()
         {
+            //await Task.Delay(5000);
             SupplierProvider provider = _databaseServices.GetRequiredService<SupplierProvider>();
             IEnumerable<Supplier> suppliers = await provider.GetAll();
             foreach (Supplier supplier in suppliers)
             {
-                if (_suppliers.FirstOrDefault(s => s.Id == supplier.Id) is null) _suppliers.Add(supplier);
+                if (_suppliers.FirstOrDefault(s => s.Id == supplier.Id) is null)
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        _suppliers.Add(supplier);
+                        OnPropertyChanged(nameof(Suppliers));
+                    });
+                }
             }
-            OnPropertyChanged(nameof(Suppliers));
+        }
+        //Updates the list if value existed, ie. after edit
+        public async Task UpdateData(Supplier supplierToRemove)
+        {
+            //await Task.Delay(5000);
+            SupplierProvider provider = _databaseServices.GetRequiredService<SupplierProvider>();
+            Supplier supplierToAdd = await provider.GetById(supplierToRemove.Id);
+            if (_suppliers.FirstOrDefault(s => s.Id == supplierToRemove.Id) is not null)
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    _suppliers.Remove(supplierToRemove);
+                    _suppliers.Add(supplierToAdd);
+                    OnPropertyChanged(nameof(Suppliers));
+                });
+            }
         }
 
         public void CleanForm()
         {
-            _name = string.Empty;
-            _isEdit = false;
-            _errorMassage = string.Empty;
+            Name = string.Empty;
+            IsEdit = false;
+            ErrorMassage = string.Empty;
+            SelectedSupplier = null;
+        }
 
-            OnPropertyChanged(nameof(Name));
-            OnPropertyChanged(nameof(IsEdit));
-            OnPropertyChanged(nameof(ErrorMassage));
-            OnPropertyChanged(nameof(HasErrorVisibility));
+        private bool FilterList(object obj)
+        {
+            if (obj is Supplier supplier)
+            {
+                return supplier.SearchValue.Contains(_searchText, StringComparison.InvariantCultureIgnoreCase);
+            }
+            return false;
         }
     }
 }

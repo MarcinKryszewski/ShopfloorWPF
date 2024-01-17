@@ -37,7 +37,7 @@ namespace Shopfloor.Services.Providers
             UPDATE suppliers
             SET 
                 name = @Name,
-                actove = @Active
+                active = @Active
             WHERE id = @Id
             ";
         private const string _deleteSQL = @"

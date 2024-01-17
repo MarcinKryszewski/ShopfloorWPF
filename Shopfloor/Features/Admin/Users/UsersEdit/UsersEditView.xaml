@@ -155,14 +155,8 @@
                         Grid.ColumnSpan="2"
                         MaxWidth="260"
                         Margin="0,0,0,10"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        FontSize="16"
-                        FontWeight="DemiBold"
-                        Foreground="Red"
-                        Text="{Binding Path=ErrorMassage}"
-                        TextAlignment="Center"
-                        TextWrapping="Wrap" />
+                        Style="{StaticResource ResourceKey=ErrorTextBlock}"
+                        Text="{Binding Path=ErrorMassage}" />
                 </Grid>
             </Grid>
         </Border>

@@ -28,8 +28,6 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
         public override void Execute(object? parameter)
         {
-            //var watch = System.Diagnostics.Stopwatch.StartNew();
-
             User newUser = new(_viewModel.Username, _viewModel.Name, _viewModel.Surname, "", true);
             int newUserId = newUser.Add(_userProvider).Result;
             if (newUserId < 0)
@@ -41,9 +39,6 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
             _viewModel.ErrorMassage = "Utworzono nowego użytkownika!";
             _viewModel.CleanForm();
-
-            //watch.Stop();
-            //System.Diagnostics.Debug.WriteLine($"UserAdd execution Time: {watch.ElapsedMilliseconds} ms");
         }
 
         private void CreateRoleUserTasks(int userId, ObservableCollection<Role> roles)

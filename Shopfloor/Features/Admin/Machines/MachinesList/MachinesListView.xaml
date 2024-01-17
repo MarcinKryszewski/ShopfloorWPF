@@ -40,7 +40,7 @@
                 <TreeView.ItemTemplate>
                     <HierarchicalDataTemplate ItemsSource="{Binding Path=Children}">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Path=Name}" >
+                            <TextBlock Text="{Binding Path=Name}">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Style.Triggers>

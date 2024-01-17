@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
@@ -56,23 +57,32 @@ namespace Shopfloor.Features.Admin.Users.List
         public UsersListViewModel(IServiceProvider mainServices, IServiceProvider databasServices)
         {
             _database = databasServices;
-            _ = LoadUsers();
+            UserProvider userProvider = databasServices.GetRequiredService<UserProvider>();
+
+            Task.Run(() =>
+            {
+                _ = LoadData(userProvider);
+            });
+
             _selectedUser = mainServices.GetRequiredService<SelectedUserStore>();
 
             AddNewUserCommand = new NavigateCommand<UsersAddViewModel>(mainServices.GetRequiredService<NavigationService<UsersAddViewModel>>());
             EditUserCommand = new NavigateCommand<UsersEditViewModel>(mainServices.GetRequiredService<NavigationService<UsersEditViewModel>>());
-
-            UserProvider userProvider = databasServices.GetRequiredService<UserProvider>();
             SetActivityUserCommand = new UserSetActivityCommand(this, userProvider);
         }
 
-        private async Task LoadUsers()
+        public async Task LoadData(UserProvider provider)
         {
             _users.Clear();
             IEnumerable<User> users = await _database.GetRequiredService<UserProvider>().GetAll();
             foreach (User user in users)
             {
-                _users.Add(user);
+                //await Task.Delay(350);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    _users.Add(user);
+                    OnPropertyChanged(nameof(Users));
+                });
             }
         }
 

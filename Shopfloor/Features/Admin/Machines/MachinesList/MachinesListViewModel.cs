@@ -85,7 +85,7 @@ namespace Shopfloor.Features.Admin.Machines.List
                 MachinesList.Filter = null;
                 _machineName = value.Name;
                 _machineNumber = value.Number;
-
+                _selectedMachine = value;
                 _isEdit = true;
 
                 OnPropertyChanged(nameof(SelectedMachine));
@@ -101,11 +101,12 @@ namespace Shopfloor.Features.Admin.Machines.List
             set
             {
                 _machineSearchText = value;
-                if (value != null)
+
+                if (value.Length == 0 || value == null)
                 {
-                    MachinesList.Filter = FilterMachines;
+                    MachinesList.Filter = null;
                 }
-                else MachinesList.Filter = null;
+                else MachinesList.Filter = FilterMachines;
 
                 OnPropertyChanged(nameof(MachineSearchText));
             }
@@ -179,7 +180,7 @@ namespace Shopfloor.Features.Admin.Machines.List
         {
             if (obj is Machine machine)
             {
-                return machine.Path.Contains(_machineSearchText, StringComparison.InvariantCultureIgnoreCase);
+                return machine.SearchValue.Contains(_machineSearchText, StringComparison.InvariantCultureIgnoreCase);
             }
             return false;
         }
@@ -192,17 +193,17 @@ namespace Shopfloor.Features.Admin.Machines.List
 
         public void CleanForm()
         {
-            _selectedMachine = null;
-            _selectedParent = null;
-            _machineName = string.Empty;
-            _machineNumber = string.Empty;
-            _isEdit = false;
+            SelectedMachine = null;
+            SelectedParent = null;
+            MachineName = string.Empty;
+            MachineNumber = string.Empty;
+            IsEdit = false;
 
-            OnPropertyChanged(nameof(SelectedMachine));
+            /*OnPropertyChanged(nameof(SelectedMachine));
             OnPropertyChanged(nameof(MachineName));
             OnPropertyChanged(nameof(MachineNumber));
             OnPropertyChanged(nameof(IsEdit));
-            OnPropertyChanged(nameof(SelectedParent));
+            OnPropertyChanged(nameof(SelectedParent));*/
         }
     }
 }

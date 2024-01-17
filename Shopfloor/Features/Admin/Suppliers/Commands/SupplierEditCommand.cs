@@ -1,7 +1,8 @@
-using System;
 using Shopfloor.Features.Admin.Suppliers.List;
+using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
+using System.Threading.Tasks;
 
 
 namespace Shopfloor.Features.Admin.Suppliers.Commands
@@ -19,7 +20,22 @@ namespace Shopfloor.Features.Admin.Suppliers.Commands
 
         public override void Execute(object? parameter)
         {
-            throw new NotImplementedException();
+            if (_viewModel.SelectedSupplier is null) return;
+            Supplier selectedSupplier = _viewModel.SelectedSupplier;
+
+            Supplier supplier = new(
+                selectedSupplier.Id,
+                _viewModel.Name,
+                selectedSupplier.IsActive);
+
+            _ = _provider.Update(supplier);
+
+            Task.Run(() =>
+            {
+                _ = _viewModel.UpdateData(selectedSupplier);
+            });
+
+            _viewModel.CleanForm();
         }
     }
 }

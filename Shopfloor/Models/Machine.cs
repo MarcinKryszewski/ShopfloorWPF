@@ -1,8 +1,9 @@
+using Shopfloor.Interfaces;
 using System.Collections.Generic;
 
 namespace Shopfloor.Models
 {
-    public class Machine
+    public class Machine : ISearchableModel
     {
         private readonly List<Machine> _children;
         private readonly List<MachinePart> _parts;
@@ -23,6 +24,7 @@ namespace Shopfloor.Models
         }
         public IList<MachinePart> Parts => _parts;
         public string Path => _path;
+        public string SearchValue => _path.Replace(@"\", "");
 
         public Machine(int id, string name, string number, int? parent, bool isActive)
         {

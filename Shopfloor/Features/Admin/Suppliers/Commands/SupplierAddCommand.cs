@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Shopfloor.Features.Admin.Suppliers.List;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
+using System.Threading.Tasks;
 
 
 namespace Shopfloor.Features.Admin.Suppliers.Commands
@@ -22,18 +20,15 @@ namespace Shopfloor.Features.Admin.Suppliers.Commands
 
         public override void Execute(object? parameter)
         {
-            List<Supplier> suppliers = new(_viewModel.Suppliers);
             Supplier supplier = new(_viewModel.Name, true);
 
-            if (suppliers.FirstOrDefault(s => s.Name == supplier.Name) is not null)
-            {
-
-            }
-
             _viewModel.CleanForm();
-            _ = _provider.Create(supplier);
-            _ = _viewModel.UpdateData();
 
+            Task.Run(async () =>
+            {
+                await _provider.Create(supplier);
+                _ = _viewModel.UpdateData();
+            });
         }
     }
 }
