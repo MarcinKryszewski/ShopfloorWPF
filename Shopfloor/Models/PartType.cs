@@ -1,25 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Shopfloor.Services.Providers;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Models
 {
     public class PartType
     {
-        public int Id { get; }
-        public string Name { get; }
+        private readonly int _id;
+        private string _name;
+
+        public int Id => _id;
+        public string Name => _name;
 
         public PartType(int id, string name)
         {
-            Id = id;
-            Name = name;
+            _id = id;
+            _name = name;
         }
 
         public PartType(string name)
         {
-            Name = name;
+            _name = name;
         }
 
         public async Task Add(PartTypeProvider provider)

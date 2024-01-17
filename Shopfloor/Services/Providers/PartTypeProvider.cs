@@ -97,7 +97,7 @@ namespace Shopfloor.Services.Providers
 
         private static PartType ToPartType(PartTypeDTO item)
         {
-            return new PartType(item.Id, item.Name);
+            return new PartType(item.Id, item.Part_Type_Name);
         }
     }
 }

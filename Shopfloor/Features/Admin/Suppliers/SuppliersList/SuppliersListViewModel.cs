@@ -164,6 +164,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                 });
             }
         }
+
         public void CleanForm()
         {
             Name = string.Empty;
@@ -171,6 +172,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             ErrorMassage = string.Empty;
             SelectedSupplier = null;
         }
+
         private bool FilterList(object obj)
         {
             if (obj is Supplier supplier)
@@ -179,6 +181,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             }
             return false;
         }
+
         public bool IsValidateData(Supplier? supplier)
         {
             if (supplier is null)
