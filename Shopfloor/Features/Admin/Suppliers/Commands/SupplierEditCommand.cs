@@ -28,6 +28,8 @@ namespace Shopfloor.Features.Admin.Suppliers.Commands
                 _viewModel.Name,
                 selectedSupplier.IsActive);
 
+
+
             _ = _provider.Update(supplier);
 
             Task.Run(() =>

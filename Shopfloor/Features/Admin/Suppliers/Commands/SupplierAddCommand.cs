@@ -21,6 +21,7 @@ namespace Shopfloor.Features.Admin.Suppliers.Commands
         public override void Execute(object? parameter)
         {
             Supplier supplier = new(_viewModel.Name, true);
+            if (!_viewModel.IsValidateData(supplier)) return;
 
             _viewModel.CleanForm();
 

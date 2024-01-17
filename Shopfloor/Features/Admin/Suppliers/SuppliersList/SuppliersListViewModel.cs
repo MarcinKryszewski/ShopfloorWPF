@@ -49,6 +49,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                 {
                     Name = value.Name;
                     IsEdit = true;
+                    ErrorMassage = string.Empty;
                 }
 
                 OnPropertyChanged(nameof(SelectedSupplier));
@@ -94,7 +95,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
         public ICommand SupplierEditCommand { get; }
         public ICommand SupplierDeleteCommand { get; }
         public ICommand CleanFormCommand { get; }
-        public ICommand SupplierSelectCommand { get; }
+        //public ICommand SupplierSelectCommand { get; }
 
         public SuppliersListViewModel(IServiceProvider databaseServices)
         {
@@ -105,7 +106,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             SupplierEditCommand = new SupplierEditCommand(this, provider);
             SupplierDeleteCommand = new SupplierDeleteCommand(this, provider);
             CleanFormCommand = new CleanFormCommand(this);
-            SupplierSelectCommand = new SupplierSelectCommand(this);
+            //SupplierSelectCommand = new SupplierSelectCommand(this);
 
             Task.Run(() =>
             {
@@ -162,7 +163,6 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                 });
             }
         }
-
         public void CleanForm()
         {
             Name = string.Empty;
@@ -170,7 +170,6 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             ErrorMassage = string.Empty;
             SelectedSupplier = null;
         }
-
         private bool FilterList(object obj)
         {
             if (obj is Supplier supplier)
@@ -178,6 +177,29 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                 return supplier.SearchValue.Contains(_searchText, StringComparison.InvariantCultureIgnoreCase);
             }
             return false;
+        }
+        public bool IsValidateData(Supplier? supplier)
+        {
+            if (supplier is null)
+            {
+                ErrorMassage = "Podaj dostawcę";
+                return false;
+            }
+
+            if (supplier.Name.Length == 0)
+            {
+                ErrorMassage = "Wpisz nazwę dostawcy";
+                return false;
+            }
+
+            if (_suppliers.FirstOrDefault(s => string.Equals(s.Name, supplier.Name, StringComparison.CurrentCultureIgnoreCase)) is not null)
+            {
+                ErrorMassage = "Dostawca istnieje";
+                return false;
+            }
+
+            ErrorMassage = string.Empty;
+            return true;
         }
     }
 }
