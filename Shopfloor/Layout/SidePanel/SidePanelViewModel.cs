@@ -74,7 +74,7 @@ namespace Shopfloor.Layout.SidePanel
 
             NavigateUsersCommand = new NavigateCommand<UsersMainViewModel>(mainServices.GetRequiredService<NavigationService<UsersMainViewModel>>());
             NavigateMachinesCommand = new NavigateCommand<MachinesMainViewModel>(mainServices.GetRequiredService<NavigationService<MachinesMainViewModel>>());
-            NavigatePartsCommand = new NavigateCommand<PartsViewModel>(mainServices.GetRequiredService<NavigationService<PartsViewModel>>());
+            NavigatePartsCommand = new NavigateCommand<PartsMainViewModel>(mainServices.GetRequiredService<NavigationService<PartsMainViewModel>>());
             NavigateSuppliersCommand = new NavigateCommand<SuppliersMainViewModel>(mainServices.GetRequiredService<NavigationService<SuppliersMainViewModel>>());
 
             _userStore = userServices.GetRequiredService<UserStore>();

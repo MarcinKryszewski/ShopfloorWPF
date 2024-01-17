@@ -8,26 +8,28 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Parts
 {
-    public class PartsViewModel : ViewModelBase
+    public class PartsMainViewModel : ViewModelBase
     {
-        private string _partTypeName = "";
-        public PartType PartType => new(_partTypeName);
+        private readonly NavigationStore _navigationStore;
+        private readonly IHost _partsServices;
 
-        public string PartTypeName
+        public ViewModelBase? Content => _navigationStore.CurrentViewModel;
+
+        public PartsMainViewModel(IServiceProvider databaseServices)
         {
-            get => _partTypeName;
-            set
-            {
-                _partTypeName = value;
-                OnPropertyChanged(nameof(PartTypeName));
-            }
+            _partsServices = PartsHost.GetHost(databaseServices);
+            _partsServices.Start();
+
+            _navigationStore = _partsServices.Services.GetRequiredService<NavigationStore>();
+            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+
+            NavigationService<PartsListViewModel> navigationService = _partsServices.Services.GetRequiredService<NavigationService<PartsListViewModel>>();
+            navigationService.Navigate();
         }
 
-        public ICommand PartTypeCreateCommand { get; }
-
-        public PartsViewModel(IServiceProvider databaseServices)
+        private void OnCurrentViewModelChanged()
         {
-            PartTypeCreateCommand = new PartTypeCreateCommand(databaseServices.GetRequiredService<PartTypeProvider>(), this);
+            OnPropertyChanged(nameof(Content));
         }
     }
 }

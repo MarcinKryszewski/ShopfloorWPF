@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 namespace Shopfloor.Features.Admin.Parts
 {
-    public sealed partial class PartsView : UserControl
+    public sealed partial class PartsMainView : UserControl
     {
         public PartsView()
         {
