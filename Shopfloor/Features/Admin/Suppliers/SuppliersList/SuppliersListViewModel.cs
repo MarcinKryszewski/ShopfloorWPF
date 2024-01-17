@@ -110,13 +110,14 @@ namespace Shopfloor.Features.Admin.Suppliers.List
 
             Task.Run(() =>
             {
-                _ = LoadData(provider);
+                _ = LoadData(_databaseServices);
             });
         }
 
-        public async Task LoadData(SupplierProvider provider)
+        public async Task LoadData(IServiceProvider databaseServices)
         {
             _suppliers.Clear();
+            SupplierProvider provider = _databaseServices.GetRequiredService<SupplierProvider>();
             IEnumerable<Supplier> suppliers = await provider.GetAll();
             foreach (Supplier supplier in suppliers)
             {

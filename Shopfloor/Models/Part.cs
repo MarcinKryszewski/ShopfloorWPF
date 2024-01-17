@@ -1,6 +1,9 @@
+using System;
+using Shopfloor.Interfaces;
+
 namespace Shopfloor.Models
 {
-    public class Part
+    public class Part : IEquatable<Part>, ISearchableModel
     {
         private readonly int _id;
         private string? _namePl;
@@ -22,7 +25,17 @@ namespace Shopfloor.Models
         public Supplier? Producer => _producer;
         public Supplier? Supplier => _supplier;
 
-        public Part(string? namePl, string? nameOriginal, PartType? type, int? index, string? number, string? details, Supplier? producer, Supplier? supplier)
+        public string SearchValue => SetSearchValue();
+
+        public Part(
+            string? namePl,
+            string? nameOriginal,
+            PartType? type,
+            int? index,
+            string? number,
+            string? details,
+            Supplier? producer,
+            Supplier? supplier)
         {
             _namePl = namePl;
             _nameOriginal = nameOriginal;
@@ -34,7 +47,17 @@ namespace Shopfloor.Models
             _supplier = supplier;
         }
 
-        public Part(int id, string? namePl, string? nameOriginal, PartType? type, int? index, string? number, string? details, Supplier? producer, Supplier? supplier)
+        public Part(
+            int id,
+            string?
+            namePl,
+            string? nameOriginal,
+            PartType? type,
+            int? index,
+            string? number,
+            string? details,
+            Supplier? producer,
+            Supplier? supplier)
         {
             _id = id;
             _namePl = namePl;
@@ -47,6 +70,23 @@ namespace Shopfloor.Models
             _supplier = supplier;
         }
 
+        private string SetSearchValue()
+        {
+            return (
+                _namePl ?? string.Empty +
+                _nameOriginal ?? string.Empty +
+                _type?.Name ?? string.Empty +
+                _index ?? string.Empty +
+                _details ?? string.Empty +
+                _producer?.Name ?? string.Empty +
+                _supplier?.Name ?? string.Empty
+            );
+        }
 
+        public bool Equals(Part? other)
+        {
+            if (other == null) return false;
+            return _id == other.Id;
+        }
     }
 }

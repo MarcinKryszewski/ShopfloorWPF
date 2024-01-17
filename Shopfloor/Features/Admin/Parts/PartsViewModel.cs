@@ -1,10 +1,12 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Parts.Commands;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+using Microsoft.Extensions.Hosting;
+using Shopfloor.Features.Admin.Parts.Hosts;
+using Shopfloor.Features.Admin.Parts.List;
+using Shopfloor.Interfaces;
+using Shopfloor.Shared.Services;
+using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
 using System;
-using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Parts
 {

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Features.Admin.Suppliers.Hosts;
 using Shopfloor.Features.Admin.Suppliers.List;
+using Shopfloor.Interfaces;
 
 
 namespace Shopfloor.Features.Admin.Suppliers
