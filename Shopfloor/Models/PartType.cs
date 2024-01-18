@@ -1,9 +1,10 @@
 using Shopfloor.Services.Providers;
+using System;
 using System.Threading.Tasks;
 
 namespace Shopfloor.Models
 {
-    public class PartType
+    public class PartType : IEquatable<PartType>
     {
         private readonly int _id;
         private string _name;
@@ -33,6 +34,12 @@ namespace Shopfloor.Models
         public async Task Delete(PartTypeProvider provider)
         {
             await provider.Delete(Id);
+        }
+
+        public bool Equals(PartType? other)
+        {
+            if (other == null) return false;
+            return _id == other.Id;
         }
     }
 }

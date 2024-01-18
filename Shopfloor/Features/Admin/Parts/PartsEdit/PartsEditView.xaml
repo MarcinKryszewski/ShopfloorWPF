@@ -8,38 +8,112 @@
         d:DesignHeight="450" d:DesignWidth="800">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
     
-            <Grid Grid.Column="1" Margin="10">
+            <Grid Grid.Column="1"
+                Margin="10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Border Background="{StaticResource ResourceKey=BrushDarkNeutral400}" CornerRadius="10">
+                <Border Background="{StaticResource ResourceKey=BrushDarkNeutral400}"
+                    CornerRadius="10">
                     <StackPanel>
-                        <TextBlock
-                            Margin="0,10,0,10"
+                        <TextBlock Margin="0,0,0,10"
                             HorizontalAlignment="Center"
                             FontSize="20"
                             FontWeight="SemiBold"
                             Foreground="{StaticResource ResourceKey=BrushPurple400}"
-                            Text="Edytuj część" />
-                        <StackPanel
-                            Grid.Column="1"
+                            Text="Nowa część" />
+                        <StackPanel Grid.Column="1"
                             MinWidth="150"
                             Margin="20,0,10,0"
                             Orientation="Vertical">
     
-                            <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Nazwa części" />
-                            <TextBox
-                                Grid.Row="1"
+                            <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}"
+                                Text="Nazwa części PL" />
+                            <TextBox Grid.Row="1"
                                 Height="28"
                                 Margin="0,0,0,20"
                                 Style="{StaticResource ResourceKey=TextBoxMain}"
-                                Text="{Binding Path=Name}" />
+                                Text="{Binding Path=NamePl}" />
+    
+                            <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}"
+                                Text="Nazwa części producenta" />
+                            <TextBox Grid.Row="1"
+                                Height="28"
+                                Margin="0,0,0,20"
+                                Style="{StaticResource ResourceKey=TextBoxMain}"
+                                Text="{Binding Path=NameOriginal}" />
+    
+                            <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}"
+                                Text="Rodzaj części" />
+                            <ComboBox Grid.Row="1"
+                                Height="28"
+                                Margin="0,0,0,20"
+                                ItemsSource="{Binding Path=PartTypes}"
+                                SelectedItem="{Binding Path=PartType, Mode=TwoWay}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+    
+                            <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}"
+                                Text="Indeks SAP" />
+                            <TextBox Grid.Row="1"
+                                Height="28"
+                                Margin="0,0,0,20"
+                                Style="{StaticResource ResourceKey=TextBoxMain}"
+                                Text="{Binding Path=Index}" />
+    
+                            <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}"
+                                Text="Numer producenta" />
+                            <TextBox Grid.Row="1"
+                                Height="28"
+                                Margin="0,0,0,20"
+                                Style="{StaticResource ResourceKey=TextBoxMain}"
+                                Text="{Binding Path=Number}" />
+    
+                            <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}"
+                                Text="Producent" />
+                            <ComboBox Grid.Row="1"
+                                Height="28"
+                                Margin="0,0,0,20"
+                                ItemsSource="{Binding Path=Producers}"
+                                SelectedItem="{Binding Path=Producer, Mode=TwoWay}" >
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+    
+                            <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}"
+                                Text="Dostawca" />
+                            <ComboBox Grid.Row="1"
+                                Height="28"
+                                Margin="0,0,0,20"
+                                ItemsSource="{Binding Path=Suppliers}"
+                                SelectedItem="{Binding Path=Supplier, Mode=TwoWay}" >
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+    
+                            <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}"
+                                Text="Szczegóły" />
+                            <TextBox Grid.Row="1"
+                                Height="28"
+                                Margin="0,0,0,20"
+                                Style="{StaticResource ResourceKey=TextBoxMain}"
+                                Text="{Binding Path=Details}" />
     
                             <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
@@ -53,17 +127,15 @@
                                     <RowDefinition Height="auto" />
                                     <RowDefinition Height="auto" />
                                 </Grid.RowDefinitions>
-                                <Button
-                                    Grid.Row="0"
+                                <Button Grid.Row="0"
                                     Grid.Column="1"
                                     Width="100"
                                     Height="40"
                                     Margin="10"
-                                    Command="{Binding Path=AddPartCommand}"
-                                    Content="ZMIEŃ"
-                                    Style="{StaticResource ResourceKey=ButtonSide}" />
-                                <Button
-                                    Grid.Row="0"
+                                    Command="{Binding Path=EditPartCommand}"
+                                    Content="ZAPISZ"
+                                    Style="{StaticResource ResourceKey=ButtonMain}" />
+                                <Button Grid.Row="0"
                                     Grid.Column="2"
                                     Width="100"
                                     Height="40"
@@ -71,17 +143,15 @@
                                     Command="{Binding Path=CleanFormCommand}"
                                     Content="WYCZYŚĆ"
                                     Style="{StaticResource ResourceKey=ButtonSide}" />
-                                <Button
-                                    Grid.Row="0"
+                                <Button Grid.Row="0"
                                     Grid.Column="3"
                                     Width="100"
                                     Height="40"
                                     Margin="10"
                                     Command="{Binding Path=ReturnCommand}"
-                                    Content="ANULUJ"
+                                    Content="WRÓĆ"
                                     Style="{StaticResource ResourceKey=ButtonSide}" />
-                                <TextBlock
-                                    Grid.Row="1"
+                                <TextBlock Grid.Row="1"
                                     Grid.Column="1"
                                     Grid.ColumnSpan="3"
                                     MaxWidth="260"
@@ -90,7 +160,6 @@
                                     Text="{Binding Path=ErrorMassage}"
                                     Visibility="{Binding Path=HasErrorVisibility}" />
                             </Grid>
-    
                         </StackPanel>
                     </StackPanel>
                 </Border>
