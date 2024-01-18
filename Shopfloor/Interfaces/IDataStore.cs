@@ -7,7 +7,7 @@ namespace Shopfloor.Interfaces
 {
     public interface IDataStore<T>
     {
-        public IEnumerable<T>? Data { get; set; }
+        public IEnumerable<T> Data { get; set; }
         public bool IsLoaded { get; }
     }
 }

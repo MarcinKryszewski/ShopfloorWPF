@@ -22,6 +22,7 @@ namespace Shopfloor.Features.Admin.Parts.List
     public class PartsListViewModel : ViewModelBase
     {
         private readonly IServiceProvider _databaseServices;
+        private readonly IServiceProvider _mainServices;
         private string _searchText = string.Empty;
         private readonly ObservableCollection<Part> _parts;
         private SelectedPartStore _selectedPart;
@@ -58,8 +59,9 @@ namespace Shopfloor.Features.Admin.Parts.List
         public PartsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
+            _mainServices = mainServices;
             _parts = new();
-            _selectedPart = mainServices.GetRequiredService<SelectedPartStore>();
+            _selectedPart = _mainServices.GetRequiredService<SelectedPartStore>();
 
             AddPartCommand = new NavigateCommand<PartsAddViewModel>(mainServices.GetRequiredService<NavigationService<PartsAddViewModel>>());
             EditPartCommand = new NavigateCommand<PartsEditViewModel>(mainServices.GetRequiredService<NavigationService<PartsEditViewModel>>());
@@ -72,19 +74,11 @@ namespace Shopfloor.Features.Admin.Parts.List
 
         public async Task LoadData()
         {
-            PartProvider partProvider = _databaseServices.GetRequiredService<PartProvider>();
-            SupplierProvider supplierProvider = _databaseServices.GetRequiredService<SupplierProvider>();
-            PartTypeProvider partTypeProvider = _databaseServices.GetRequiredService<PartTypeProvider>();
+            await Task.WhenAll(LoadParts(), LoadSuppliers(), LoadPartTypes());
 
-            Task<IEnumerable<Part>> partsTask = partProvider.GetAll();
-            Task<IEnumerable<Supplier>> suppliersTask = supplierProvider.GetAll();
-            Task<IEnumerable<PartType>> partTypesTask = partTypeProvider.GetAll();
-
-            await Task.WhenAll(partsTask, suppliersTask, partTypesTask);
-
-            IEnumerable<Part> parts = await partsTask;
-            IEnumerable<Supplier> suppliers = await suppliersTask;
-            IEnumerable<PartType> partTypes = await partTypesTask;
+            IEnumerable<Part> parts = _mainServices.GetRequiredService<PartsStore>().Data;
+            IEnumerable<Supplier> suppliers = _mainServices.GetRequiredService<SuppliersStore>().Data;
+            IEnumerable<PartType> partTypes = _mainServices.GetRequiredService<PartTypesStore>().Data;
 
             foreach (Part part in parts)
             {
@@ -142,6 +136,25 @@ namespace Shopfloor.Features.Admin.Parts.List
 
             //stopwatch.Stop();
             //System.Diagnostics.Debug.WriteLine($"LoadDataOneByOne Execution Time: {stopwatch.ElapsedTicks} ms");
+        }
+
+        public Task LoadParts()
+        {
+            PartProvider partProvider = _databaseServices.GetRequiredService<PartProvider>();
+            _mainServices.GetRequiredService<PartsStore>().Data = partProvider.GetAll().Result;
+            return Task.CompletedTask;
+        }
+        public Task LoadPartTypes()
+        {
+            PartTypeProvider partTypeProvider = _databaseServices.GetRequiredService<PartTypeProvider>();
+            _mainServices.GetRequiredService<PartTypesStore>().Data = partTypeProvider.GetAll().Result;
+            return Task.CompletedTask;
+        }
+        public Task LoadSuppliers()
+        {
+            SupplierProvider supplierProvider = _databaseServices.GetRequiredService<SupplierProvider>();
+            _mainServices.GetRequiredService<SuppliersStore>().Data = supplierProvider.GetAll().Result;
+            return Task.CompletedTask;
         }
 
         private bool FilterParts(object obj)

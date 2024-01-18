@@ -17,6 +17,9 @@ namespace Shopfloor.Features.Admin.Parts.Hosts
             {
                 services.AddSingleton<NavigationStore>();
                 services.AddSingleton<SelectedPartStore>();
+                services.AddSingleton<PartsStore>();
+                services.AddSingleton<PartTypesStore>();
+                services.AddSingleton<SuppliersStore>();
 
                 PartsNavigationServices.Get(services, databaseServices);
             })
