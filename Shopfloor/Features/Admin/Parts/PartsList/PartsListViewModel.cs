@@ -112,9 +112,9 @@ namespace Shopfloor.Features.Admin.Parts.List
 
             foreach (Part part in parts)
             {
-                Task<Supplier> supplierTask = supplierProvider.GetById(part.SupplierId);
-                Task<Supplier> producerTask = supplierProvider.GetById(part.ProducerId);
-                Task<PartType> partTypeTask = partTypeProvider.GetById(part.TypeId);
+                Task<Supplier> supplierTask = supplierProvider.GetById(part.SupplierId ?? 0);
+                Task<Supplier> producerTask = supplierProvider.GetById(part.ProducerId ?? 0);
+                Task<PartType> partTypeTask = partTypeProvider.GetById(part.TypeId ?? 0);
 
                 await Task.WhenAll(supplierTask, producerTask, partTypeTask);
 

@@ -7,13 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Parts.Commands;
 using Shopfloor.Features.Admin.Parts.Interfaces;
 using Shopfloor.Features.Admin.Parts.List;
+using Shopfloor.Models;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Admin.Parts.Edit
 {
-    public class PartsEditViewModel : ViewModelBase, IPartForm
+    public class PartsEditViewModel : ViewModelBase, IInputForm<Part>
     {
         public ICommand ReturnCommand { get; }
         public ICommand CleanFormCommand { get; }
@@ -29,6 +30,11 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         public void CleanForm()
         {
 
+        }
+
+        public bool IsDataValidate(Part inputValue)
+        {
+            return true;
         }
     }
 }

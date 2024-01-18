@@ -55,7 +55,8 @@
                         <ComboBox Grid.Row="1"
                             Height="28"
                             Margin="0,0,0,20"
-                            ItemsSource="{Binding Path=PartTypes}" >
+                            ItemsSource="{Binding Path=PartTypes}"
+                            SelectedItem="{Binding Path=Type, Mode=TwoWay}" >
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}" />
@@ -84,7 +85,8 @@
                         <ComboBox Grid.Row="1"
                             Height="28"
                             Margin="0,0,0,20"
-                            ItemsSource="{Binding Path=Producers}" >
+                            ItemsSource="{Binding Path=Producers}"
+                            SelectedItem="{Binding Path=Producer, Mode=TwoWay}" >
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}" />
@@ -97,7 +99,8 @@
                         <ComboBox Grid.Row="1"
                             Height="28"
                             Margin="0,0,0,20"
-                            ItemsSource="{Binding Path=Suppliers}" >
+                            ItemsSource="{Binding Path=Suppliers}"
+                            SelectedItem="{Binding Path=Supplier, Mode=TwoWay}" >
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Name}" />
@@ -147,7 +150,7 @@
                                 Height="40"
                                 Margin="10"
                                 Command="{Binding Path=ReturnCommand}"
-                                Content="ANULUJ"
+                                Content="WRÓĆ"
                                 Style="{StaticResource ResourceKey=ButtonSide}" />
                             <TextBlock Grid.Row="1"
                                 Grid.Column="1"
@@ -158,7 +161,6 @@
                                 Text="{Binding Path=ErrorMassage}"
                                 Visibility="{Binding Path=HasErrorVisibility}" />
                         </Grid>
-
                     </StackPanel>
                 </StackPanel>
             </Border>

@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Features.Admin.Parts.Interfaces
 {
-    public interface IPartForm
+    public interface IInputForm<T>
     {
         public void CleanForm();
+        public bool IsDataValidate(T inputValue);
     }
 }

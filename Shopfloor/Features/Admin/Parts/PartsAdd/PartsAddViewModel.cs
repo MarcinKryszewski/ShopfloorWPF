@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -16,11 +17,13 @@ using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Admin.Parts.Add
 {
-    public class PartsAddViewModel : ViewModelBase, IPartForm
+    public class PartsAddViewModel : ViewModelBase, IInputForm<Part>
     {
         private readonly ObservableCollection<PartType> _partTypes = new();
         private readonly ObservableCollection<Supplier> _suppliers = new();
         private string _errorMassage = string.Empty;
+        private readonly IServiceProvider _mainServices;
+
         #region modelFields
         private string _namePl = string.Empty;
         private string _nameOriginal = string.Empty;
@@ -75,6 +78,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 OnPropertyChanged(nameof(Type));
             }
         }
+        public int? TypeId => Type?.Id;
         public int? Index
         {
             get => _index;
@@ -131,12 +135,14 @@ namespace Shopfloor.Features.Admin.Parts.Add
 
         public PartsAddViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
-            ReturnCommand = new NavigateCommand<PartsListViewModel>(mainServices.GetRequiredService<NavigationService<PartsListViewModel>>());
-            CleanFormCommand = new PartCleanFormCommand(this);
-            AddPartCommand = new PartAddCommand(this, mainServices);
+            _mainServices = mainServices;
 
-            _partTypes = new(mainServices.GetRequiredService<PartTypesStore>().Data);
-            _suppliers = new(mainServices.GetRequiredService<SuppliersStore>().Data);
+            ReturnCommand = new NavigateCommand<PartsListViewModel>(_mainServices.GetRequiredService<NavigationService<PartsListViewModel>>());
+            CleanFormCommand = new PartCleanFormCommand(this);
+            AddPartCommand = new PartAddCommand(this, databaseServices);
+
+            _partTypes = new(_mainServices.GetRequiredService<PartTypesStore>().Data);
+            _suppliers = new(_mainServices.GetRequiredService<SuppliersStore>().Data);
 
             PartTypes = CollectionViewSource.GetDefaultView(_partTypes);
             Suppliers = CollectionViewSource.GetDefaultView(_suppliers);
@@ -153,6 +159,23 @@ namespace Shopfloor.Features.Admin.Parts.Add
             Details = string.Empty;
             Producer = null;
             Supplier = null;
+            ErrorMassage = string.Empty;
+        }
+
+        public bool IsDataValidate(Part inputValue)
+        {
+            if (inputValue.RequiredInputValue.Length == 0)
+            {
+                ErrorMassage = "Wprowadź nazwę, nazwę producenta lub indeks";
+                return false;
+            };
+            Part? part = _mainServices.GetRequiredService<PartsStore>().Data.FirstOrDefault(p => p.Index == inputValue.Index);
+            if (part is not null)
+            {
+                ErrorMassage = "Część o podanym indeksie już istnieje";
+                return false;
+            }
+            return true;
         }
     }
 }
