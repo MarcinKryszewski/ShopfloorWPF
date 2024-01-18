@@ -28,11 +28,11 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
         public override void Execute(object? parameter)
         {
-            User newUser = new(_viewModel.Username, _viewModel.Name, _viewModel.Surname, "", true);
+            User newUser = new(_viewModel.Username.ToLower(), _viewModel.Name, _viewModel.Surname, "", true);
             int newUserId = newUser.Add(_userProvider).Result;
             if (newUserId < 0)
             {
-                _viewModel.ErrorMassage = $"Użytkownik o loginie {newUser.Username} istnieje";
+                _viewModel.ErrorMassage = $"Użytkownik o loginie {_viewModel.Username} istnieje";
                 return;
             }
             CreateRoleUserTasks(newUserId, _rolesStore.GetAllAssignedRoles());

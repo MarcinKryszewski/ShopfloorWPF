@@ -52,7 +52,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
         {
             _ = _userProvider.Update(new User(
                 _userId,
-                _viewModel.Username,
+                _viewModel.Username.ToLower(),
                 _viewModel.Name,
                 _viewModel.Surname,
                 _imagePath,

@@ -51,7 +51,7 @@ namespace Shopfloor.Stores
             }
 
 
-            _user = provider.GetByUsername(username).Result ?? null;
+            _user = provider.GetByUsername(username.ToLower()).Result ?? null;
 
             if (_user is null)
             {
