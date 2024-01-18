@@ -36,28 +36,24 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
         }
         public override void Execute(object? parameter)
         {
-            //var watch = System.Diagnostics.Stopwatch.StartNew();          
-
             EditUser();
-
-            if (_userId == 1) return;
-            AddRoles();
-            RemoveRoles();
-
-            //watch.Stop();
-            //System.Diagnostics.Debug.WriteLine($"UserEdit execution Time: {watch.ElapsedMilliseconds} ms");
         }
 
         private void EditUser()
         {
-            _ = _userProvider.Update(new User(
+            User user = new(
                 _userId,
                 _viewModel.Username.ToLower(),
                 _viewModel.Name,
                 _viewModel.Surname,
                 _imagePath,
                 _isActive
-            ));
+            );
+            if (!_viewModel.IsDataValidate(user)) return;
+            _ = _userProvider.Update(user);
+            _viewModel.CleanForm();
+            AddRoles();
+            RemoveRoles();
         }
         private void AddRoles()
         {

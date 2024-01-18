@@ -156,7 +156,8 @@
                         MaxWidth="260"
                         Margin="0,0,0,10"
                         Style="{StaticResource ResourceKey=ErrorTextBlock}"
-                        Text="{Binding Path=ErrorMassage}" />
+                        Text="{Binding Path=ErrorMassage}"
+                        Visibility="{Binding Path=HasErrorVisibility}" />
                 </Grid>
             </Grid>
         </Border>

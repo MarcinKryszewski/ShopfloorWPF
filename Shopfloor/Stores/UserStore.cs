@@ -24,7 +24,7 @@ namespace Shopfloor.Stores
         }
         public string ErrorMassage
         {
-            get => _errorMassage;
+            get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
             set
             {
                 _errorMassage = value;

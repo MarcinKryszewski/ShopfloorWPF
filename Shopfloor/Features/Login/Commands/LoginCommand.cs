@@ -1,10 +1,6 @@
-﻿using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+﻿using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Stores;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Shopfloor.Features.Login.Commands
@@ -31,9 +27,6 @@ namespace Shopfloor.Features.Login.Commands
 
         public override void Execute(object? parameter)
         {
-            //if (_viewModel is null) return;
-            //if (_naviagateCommand is null) return;
-
             _store.Login(_viewModel.Username, _userProvider);
             if (_store.IsUserLoggedIn)
             {

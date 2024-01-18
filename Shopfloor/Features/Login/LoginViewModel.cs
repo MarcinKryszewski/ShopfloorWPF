@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Dashboard;
 using Shopfloor.Features.Login.Commands;
+using Shopfloor.Interfaces;
+using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
@@ -13,7 +15,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Login
 {
-    public class LoginViewModel : ViewModelBase
+    public class LoginViewModel : ViewModelBase, IInputForm<User>
     {
         private string _username = "";
         private readonly UserStore _userStore;
@@ -30,13 +32,15 @@ namespace Shopfloor.Features.Login
 
         public string ErrorMassage
         {
-            get => _userStore.ErrorMassage;
+            get => string.IsNullOrEmpty(_userStore.ErrorMassage) ? string.Empty : _userStore.ErrorMassage;
+            set
+            {
+                _userStore.ErrorMassage = value;
+                OnPropertyChanged(nameof(ErrorMassage));
+                OnPropertyChanged(nameof(HasErrorVisibility));
+            }
         }
-
-        public Visibility HasErrorVisibility
-        {
-            get => _userStore.ErrorMassage.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
-        }
+        public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
 
         public ICommand LoginCommand { get; }
 
@@ -60,6 +64,16 @@ namespace Shopfloor.Features.Login
                 OnPropertyChanged(nameof(ErrorMassage));
                 OnPropertyChanged(nameof(HasErrorVisibility));
             }
+        }
+
+        public void CleanForm()
+        {
+
+        }
+
+        public bool IsDataValidate(User inputValue)
+        {
+            return true;
         }
     }
 }

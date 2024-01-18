@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Users.List;
 using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Features.Admin.UsersList.Commands;
+using Shopfloor.Interfaces;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
@@ -10,11 +11,12 @@ using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Users.Add
 {
-    public class UsersAddViewModel : ViewModelBase
+    public class UsersAddViewModel : ViewModelBase, IInputForm<User>
     {
         private readonly IServiceProvider _database;
         private readonly RolesStore _rolesValueStore;
@@ -54,13 +56,15 @@ namespace Shopfloor.Features.Admin.Users.Add
         }
         public string ErrorMassage
         {
-            get => _errorMassage.Length > 0 ? _errorMassage : "";
+            get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
             set
             {
                 _errorMassage = value;
                 OnPropertyChanged(nameof(ErrorMassage));
+                OnPropertyChanged(nameof(HasErrorVisibility));
             }
         }
+        public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
 
         public ObservableCollection<RoleValue> Roles => _rolesValueStore.Roles;
 
@@ -104,6 +108,11 @@ namespace Shopfloor.Features.Admin.Users.Add
             Name = "";
             Surname = "";
             UpdateRoles();
+        }
+
+        public bool IsDataValidate(User inputValue)
+        {
+            return true;
         }
     }
 }

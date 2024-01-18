@@ -1,20 +1,19 @@
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Admin.Parts.Commands;
+using Shopfloor.Features.Admin.Parts.List;
+using Shopfloor.Features.Admin.Parts.Stores;
+using Shopfloor.Interfaces;
+using Shopfloor.Models;
+using Shopfloor.Shared.Commands;
+using Shopfloor.Shared.Services;
+using Shopfloor.Shared.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Parts.Commands;
-using Shopfloor.Features.Admin.Parts.Interfaces;
-using Shopfloor.Features.Admin.Parts.List;
-using Shopfloor.Features.Admin.Parts.Stores;
-using Shopfloor.Models;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
-using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Admin.Parts.Edit
 {
@@ -41,7 +40,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         public ICollectionView Producers { get; }
         public string ErrorMassage
         {
-            get => _errorMassage.Length > 0 ? _errorMassage : "";
+            get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
             set
             {
                 _errorMassage = value;
@@ -49,7 +48,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
                 OnPropertyChanged(nameof(HasErrorVisibility));
             }
         }
-        public Visibility HasErrorVisibility => ErrorMassage.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
 
         #region model properties
         public string NamePl

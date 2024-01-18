@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Suppliers.Commands;
+using Shopfloor.Interfaces;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.ViewModels;
@@ -15,7 +16,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Suppliers.List
 {
-    public class SuppliersListViewModel : ViewModelBase
+    public class SuppliersListViewModel : ViewModelBase, IInputForm<Supplier>
     {
         private string _name = string.Empty;
         private Supplier? _selectedSupplier;
@@ -67,7 +68,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
         }
         public string ErrorMassage
         {
-            get => _errorMassage;
+            get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
             set
             {
                 _errorMassage = value;
@@ -86,16 +87,11 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             }
         }
 
-        public Visibility HasErrorVisibility
-        {
-            get => _errorMassage.Length > 0 ? Visibility.Visible : Visibility.Collapsed;
-        }
+        public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
 
         public ICommand SupplierAddCommand { get; }
         public ICommand SupplierEditCommand { get; }
-        public ICommand SupplierDeleteCommand { get; }
         public ICommand CleanFormCommand { get; }
-        //public ICommand SupplierSelectCommand { get; }
 
         public SuppliersListViewModel(IServiceProvider databaseServices)
         {
@@ -104,9 +100,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
 
             SupplierAddCommand = new SupplierAddCommand(this, provider);
             SupplierEditCommand = new SupplierEditCommand(this, provider);
-            SupplierDeleteCommand = new SupplierDeleteCommand(this, provider);
             CleanFormCommand = new CleanFormCommand(this);
-            //SupplierSelectCommand = new SupplierSelectCommand(this);
 
             Task.Run(() =>
             {
@@ -182,7 +176,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             return false;
         }
 
-        public bool IsValidateData(Supplier? supplier)
+        public bool IsDataValidate(Supplier? supplier)
         {
             if (supplier is null)
             {

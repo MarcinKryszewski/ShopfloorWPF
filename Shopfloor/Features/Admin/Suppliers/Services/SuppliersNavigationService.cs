@@ -1,10 +1,9 @@
-using System;
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Admin.Suppliers.List;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Suppliers.List;
-
+using System;
 
 namespace Shopfloor.Features.Admin.Suppliers.Services
 {
