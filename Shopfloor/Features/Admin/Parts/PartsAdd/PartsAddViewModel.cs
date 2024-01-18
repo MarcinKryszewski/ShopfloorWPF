@@ -175,6 +175,11 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 ErrorMassage = "Część o podanym indeksie już istnieje";
                 return false;
             }
+            if (inputValue.Index is not null && inputValue.Index?.ToString().Length != 8)
+            {
+                ErrorMassage = "Indeks powinien być liczbą o długości 8 znaków";
+                return false;
+            }
             return true;
         }
     }
