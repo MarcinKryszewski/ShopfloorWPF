@@ -78,15 +78,14 @@ namespace Shopfloor.Models
 
         private string SetSearchValue()
         {
-            return (
-                _namePl +
+            string searchValue = _namePl +
                 _nameOriginal +
-                _type?.Name ?? string.Empty +
+                (_type?.Name ?? string.Empty) +
                 _index +
                 _details +
-                _producer?.Name ?? string.Empty +
-                _supplier?.Name ?? string.Empty
-            );
+                (_producer?.Name ?? string.Empty) +
+                (_supplier?.Name ?? string.Empty);
+            return searchValue;
         }
 
         public bool Equals(Part? other)

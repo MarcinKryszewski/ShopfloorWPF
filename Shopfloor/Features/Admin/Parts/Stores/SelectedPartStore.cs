@@ -8,6 +8,6 @@ namespace Shopfloor.Features.Admin.Parts.Stores
 {
     public class SelectedPartStore
     {
-        Part? SelectedPart { get; set; }
+        public Part? Part { get; set; }
     }
 }
