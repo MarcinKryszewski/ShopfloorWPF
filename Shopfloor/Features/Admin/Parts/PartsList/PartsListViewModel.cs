@@ -72,9 +72,6 @@ namespace Shopfloor.Features.Admin.Parts.List
 
         public async Task LoadData()
         {
-            //Stopwatch stopwatch = Stopwatch.StartNew();
-
-            //_parts.Clear();
             PartProvider partProvider = _databaseServices.GetRequiredService<PartProvider>();
             SupplierProvider supplierProvider = _databaseServices.GetRequiredService<SupplierProvider>();
             PartTypeProvider partTypeProvider = _databaseServices.GetRequiredService<PartTypeProvider>();
@@ -91,7 +88,6 @@ namespace Shopfloor.Features.Admin.Parts.List
 
             foreach (Part part in parts)
             {
-                //await Task.Delay(200);
                 PartType? partType = partTypes.FirstOrDefault(pt => pt.Id == part.TypeId);
                 if (partType is not null) part.SetType(partType);
 
@@ -107,9 +103,6 @@ namespace Shopfloor.Features.Admin.Parts.List
                     OnPropertyChanged(nameof(Parts));
                 });
             }
-
-            //stopwatch.Stop();
-            //System.Diagnostics.Debug.WriteLine($"LoadDataGetAll Execution Time: {stopwatch.ElapsedTicks} ms");
         }
         //Loading all and then asigning is faster
         public async Task LoadDataOneByOne()
