@@ -10,7 +10,7 @@ namespace Shopfloor.Models
         private Machine? _parent;
 
         private string _path;
-        public int Id { get; }
+        public int? Id { get; }
         public string Name { get; }
         public string Number { get; }
         public bool IsActive { get; }

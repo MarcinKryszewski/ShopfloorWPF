@@ -95,7 +95,8 @@ namespace Shopfloor.Stores
         private IEnumerable<RoleUser> GetRoleUsers()
         {
             if (User == null) return Enumerable.Empty<RoleUser>();
-            IEnumerable<RoleUser> roleUsers = _roleUserProvider.GetAllForUser(User.Id).Result;
+            if (User.Id is null) return Enumerable.Empty<RoleUser>();
+            IEnumerable<RoleUser> roleUsers = _roleUserProvider.GetAllForUser((int)User.Id).Result;
             return roleUsers;
         }
         private IEnumerable<Role> GetRoles()

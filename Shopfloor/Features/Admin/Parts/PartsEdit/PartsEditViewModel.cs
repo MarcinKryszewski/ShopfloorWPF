@@ -25,6 +25,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         private string _errorMassage = string.Empty;
         private readonly IServiceProvider _mainServices;
         private readonly IServiceProvider _databaseServices;
+        private readonly Part? _selectedPart;
 
         #region modelFields
         private string _namePl = string.Empty;
@@ -40,6 +41,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         public ICollectionView PartTypes { get; }
         public ICollectionView Suppliers { get; }
         public ICollectionView Producers { get; }
+        public Part? SelectedPart => _selectedPart;
         public string ErrorMassage
         {
             get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
@@ -53,6 +55,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
 
         #region model properties
+        public int? Id => _selectedPart?.Id;
         public string NamePl
         {
             get => _namePl;
@@ -139,6 +142,8 @@ namespace Shopfloor.Features.Admin.Parts.Edit
             _mainServices = mainServices;
             _databaseServices = databaseServices;
 
+            _selectedPart = _mainServices.GetRequiredService<SelectedPartStore>().Part;
+
             ReturnCommand = new NavigateCommand<PartsListViewModel>(_mainServices.GetRequiredService<NavigationService<PartsListViewModel>>());
             CleanFormCommand = new PartCleanFormCommand(this);
             EditPartCommand = new PartEditCommand(this, _databaseServices);
@@ -161,17 +166,17 @@ namespace Shopfloor.Features.Admin.Parts.Edit
 
         public void SetupForm()
         {
-            Part? selectedPart = _mainServices.GetRequiredService<SelectedPartStore>().Part;
-            if (selectedPart is null) return;
+            //Part? selectedPart = _mainServices.GetRequiredService<SelectedPartStore>().Part;
+            if (_selectedPart is null) return;
 
-            NamePl = selectedPart.NamePl;
-            NameOriginal = selectedPart.NameOriginal;
-            Index = selectedPart.Index;
-            Number = selectedPart.Number;
-            Details = selectedPart.Details;
-            PartType = selectedPart.Type;
-            Producer = selectedPart.Producer;
-            Supplier = selectedPart.Supplier;
+            NamePl = _selectedPart.NamePl;
+            NameOriginal = _selectedPart.NameOriginal;
+            Index = _selectedPart.Index;
+            Number = _selectedPart.Number;
+            Details = _selectedPart.Details;
+            PartType = _selectedPart.Type;
+            Producer = _selectedPart.Producer;
+            Supplier = _selectedPart.Supplier;
         }
 
         public bool IsDataValidate(Part inputValue)
@@ -182,17 +187,16 @@ namespace Shopfloor.Features.Admin.Parts.Edit
                 return false;
             };
             Part? part = _databaseServices.GetRequiredService<PartsStore>().Data.FirstOrDefault(p => p.Index == inputValue.Index);
-            if (part is not null)
-            {
-                ErrorMassage = "Część o podanym indeksie już istnieje";
-                return false;
-            }
             if (inputValue.Index is not null && inputValue.Index?.ToString().Length != 8)
             {
                 ErrorMassage = "Indeks powinien być liczbą o długości 8 znaków";
                 return false;
             }
             return true;
+        }
+        public void ReloadData()
+        {
+            _databaseServices.GetRequiredService<PartsStore>().Load();
         }
     }
 }

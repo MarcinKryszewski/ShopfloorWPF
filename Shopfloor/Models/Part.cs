@@ -5,7 +5,7 @@ namespace Shopfloor.Models
 {
     public class Part : IEquatable<Part>, ISearchableModel
     {
-        private readonly int _id;
+        private readonly int? _id;
         private string _namePl = string.Empty;
         private string _nameOriginal = string.Empty;
         private int? _typeId;
@@ -18,7 +18,7 @@ namespace Shopfloor.Models
         private int? _supplierId;
         private Supplier? _supplier;
 
-        public int Id => _id;
+        public int? Id => _id;
         public string NamePl => _namePl;
         public string NameOriginal => _nameOriginal;
         public int? TypeId => _typeId;
@@ -56,7 +56,7 @@ namespace Shopfloor.Models
         }
 
         public Part(
-            int id,
+            int? id,
             string? namePl,
             string? nameOriginal,
             int? typeId,

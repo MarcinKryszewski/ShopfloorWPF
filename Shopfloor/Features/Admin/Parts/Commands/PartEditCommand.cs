@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Parts.Edit;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
+using System;
 
 namespace Shopfloor.Features.Admin.Parts.Commands
 {
@@ -23,7 +20,9 @@ namespace Shopfloor.Features.Admin.Parts.Commands
 
         public override void Execute(object? parameter)
         {
+
             Part part = new(
+                _viewModel.Id,
                 _viewModel.NamePl,
                 _viewModel.NameOriginal,
                 _viewModel.TypeId,
@@ -36,7 +35,7 @@ namespace Shopfloor.Features.Admin.Parts.Commands
             if (!_viewModel.IsDataValidate(part)) return;
 
             _ = _databaseServices.GetRequiredService<PartProvider>().Update(part);
-
+            _viewModel.ReloadData();
             _viewModel.CleanForm();
         }
     }

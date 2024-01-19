@@ -29,7 +29,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
             if (parameter is null) return;
 
             bool isActive = bool.Parse((string)parameter);
-            int userId = user.Id;
+            int userId = user.Id == null ? 0 : (int)user.Id;
 
             User modifiedUser = _viewModel.Users.SourceCollection.OfType<User>().First(p => p.Id == userId);
             modifiedUser.SetActive(isActive);

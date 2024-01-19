@@ -20,12 +20,13 @@ namespace Shopfloor.Features.Admin.Machines.Commands
         {
             Machine? selectedMachine = _viewModel.SelectedMachine;
             if (selectedMachine == null) return;
+            if (selectedMachine.Id == null) return;
             int? parentId = _viewModel.SelectedParent?.Id;
 
 
 
             Machine machine = new(
-                selectedMachine.Id,
+                (int)selectedMachine.Id,
                 _viewModel.MachineName,
                 _viewModel.MachineNumber,
                 parentId,

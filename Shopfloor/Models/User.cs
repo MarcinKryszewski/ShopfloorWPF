@@ -9,7 +9,7 @@ namespace Shopfloor.Models
     public class User : ISearchableModel
     {
         private readonly HashSet<Role> _roles;
-        private readonly int _id;
+        private readonly int? _id;
         private readonly string _username;
         private readonly string _name;
         private readonly string _surname;
@@ -18,7 +18,7 @@ namespace Shopfloor.Models
 
         private const string _defaultImagePath = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
 
-        public int Id => _id;
+        public int? Id => _id;
         public string Username => _username;
         public string Image => _image.Length > 0 ? _image : _defaultImagePath;
         public string Name => _name;
@@ -79,7 +79,8 @@ namespace Shopfloor.Models
         }
         public async Task Delete(UserProvider provider)
         {
-            await provider.Delete(Id);
+            if (Id is null) return;
+            await provider.Delete((int)Id);
         }
         public void AddRole(Role role)
         {

@@ -171,7 +171,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 ErrorMassage = "Wprowadź nazwę, nazwę producenta lub indeks";
                 return false;
             };
-            Part? part = _mainServices.GetRequiredService<PartsStore>().Data.FirstOrDefault(p => p.Index == inputValue.Index);
+            Part? part = _databaseServices.GetRequiredService<PartsStore>().Data.FirstOrDefault(p => p.Index == inputValue.Index);
             if (part is not null)
             {
                 ErrorMassage = "Część o podanym indeksie już istnieje";
@@ -183,6 +183,11 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 return false;
             }
             return true;
+        }
+
+        public void ReloadData()
+        {
+            _databaseServices.GetRequiredService<PartsStore>().Load();
         }
     }
 }

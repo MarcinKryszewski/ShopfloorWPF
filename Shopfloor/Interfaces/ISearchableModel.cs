@@ -2,7 +2,7 @@
 {
     interface ISearchableModel
     {
-        int Id { get; }
+        int? Id { get; }
         string SearchValue { get; }
     }
 }

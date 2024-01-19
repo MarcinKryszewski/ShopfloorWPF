@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Parts.Add;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
+using System;
 
 namespace Shopfloor.Features.Admin.Parts.Commands
 {
@@ -37,6 +34,7 @@ namespace Shopfloor.Features.Admin.Parts.Commands
 
             _ = _databaseServices.GetRequiredService<PartProvider>().Create(part);
 
+            _viewModel.ReloadData();
             _viewModel.CleanForm();
         }
     }

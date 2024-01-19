@@ -69,7 +69,7 @@ namespace Shopfloor.Features.Admin.Users.Edit
         {
             _database = databasServices;
             _selectedUser = mainServices.GetRequiredService<SelectedUserStore>();
-            _selectedUserId = _selectedUser.SelectedUser is null ? 0 : _selectedUser.SelectedUser.Id;
+            _selectedUserId = _selectedUser.SelectedUser?.Id == null ? 0 : (int)_selectedUser.SelectedUser.Id;
             _rolesValueStore = new();
 
             FillForm();
