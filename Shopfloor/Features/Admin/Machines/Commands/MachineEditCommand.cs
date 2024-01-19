@@ -18,18 +18,21 @@ namespace Shopfloor.Features.Admin.Machines.Commands
 
         public override void Execute(object? parameter)
         {
-            if (_viewModel.SelectedMachine == null) return;
+            Machine? selectedMachine = _viewModel.SelectedMachine;
+            if (selectedMachine == null) return;
             int? parentId = _viewModel.SelectedParent?.Id;
 
-            _ = _provider.Update(new Machine(
-                _viewModel.SelectedMachine.Id,
+
+
+            Machine machine = new(
+                selectedMachine.Id,
                 _viewModel.MachineName,
                 _viewModel.MachineNumber,
                 parentId,
-                _viewModel.SelectedMachine.IsActive
-            ));
+                selectedMachine.IsActive
+            );
 
-            _ = _viewModel.UpdateMachines();
+            _ = _provider.Update(machine);
         }
     }
 }

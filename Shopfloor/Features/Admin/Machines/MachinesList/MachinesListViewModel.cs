@@ -3,6 +3,7 @@ using Shopfloor.Features.Admin.Machines.Commands;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.ViewModels;
+using Shopfloor.Stores.DatabaseDataStores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,9 +17,10 @@ namespace Shopfloor.Features.Admin.Machines.List
 {
     public class MachinesListViewModel : ViewModelBase
     {
-        private readonly ObservableCollection<Machine> _machines;
-        private readonly ObservableCollection<Machine> _machinesAll;
-        private readonly IServiceProvider _database;
+        //treeview needs separate collection, which has only root nodes in it
+        private readonly ObservableCollection<Machine> _machines; //this one is for treeview
+        private readonly ObservableCollection<Machine> _machinesAll; //this one is for combobox
+        private readonly IServiceProvider _databaseServices;
         private string _machineName = string.Empty;
         private string _machineNumber = string.Empty;
         private int _parentId;
@@ -26,6 +28,8 @@ namespace Shopfloor.Features.Admin.Machines.List
         private Machine? _selectedMachine;
         private string _machineSearchText = string.Empty;
         private bool _isEdit;
+
+        private MachineStore _machineStore;
 
         public IEnumerable<Machine> Machines => _machines;
         public ICollectionView MachinesList => CollectionViewSource.GetDefaultView(_machinesAll);
@@ -71,7 +75,6 @@ namespace Shopfloor.Features.Admin.Machines.List
             get => _selectedParent;
             set
             {
-                //MachinesList.Filter = null;
                 _selectedParent = value;
                 OnPropertyChanged(nameof(SelectedParent));
             }
@@ -123,13 +126,15 @@ namespace Shopfloor.Features.Admin.Machines.List
 
         public MachinesListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
-            _database = databaseServices;
+            _databaseServices = databaseServices;
 
             _machines = new();
             _machinesAll = new();
-            _ = LoadMachines();
+
             IsEdit = false;
-            //MachinesList.Filter = null;
+
+            _machineStore = _databaseServices.GetRequiredService<MachineStore>();
+            Task.Run(() => LoadData());
 
             MachineProvider provider = databaseServices.GetRequiredService<MachineProvider>();
 
@@ -142,12 +147,16 @@ namespace Shopfloor.Features.Admin.Machines.List
             MachineSelectedCommand = new MachineSelectedCommand();
         }
 
-        private async Task LoadMachines()
+        private async Task LoadData()
         {
             _machines.Clear();
             _machinesAll.Clear();
 
-            IEnumerable<Machine> machines = await _database.GetRequiredService<MachineProvider>().GetAll();
+            List<Task> tasks = new();
+            if (!_machineStore.IsLoaded) tasks.Add(LoadMachines());
+            if (tasks.Count > 0) await Task.WhenAll(tasks);
+
+            IEnumerable<Machine> machines = _machineStore.Data;
 
             foreach (Machine machine in machines)
             {
@@ -162,8 +171,13 @@ namespace Shopfloor.Features.Admin.Machines.List
                 AddChild(machine, _machinesAll);
             }
             MachinesList.Refresh();
-            //OnPropertyChanged(nameof(Machines));
         }
+        public Task LoadMachines()
+        {
+            _machineStore.Load();
+            return Task.CompletedTask;
+        }
+
 
         private void AddRoot(Machine machine)
         {
@@ -183,12 +197,6 @@ namespace Shopfloor.Features.Admin.Machines.List
                 return machine.SearchValue.Contains(_machineSearchText, StringComparison.InvariantCultureIgnoreCase);
             }
             return false;
-        }
-
-        public async Task? UpdateMachines()
-        {
-            await LoadMachines();
-            OnPropertyChanged(nameof(Machines));
         }
 
         public void CleanForm()

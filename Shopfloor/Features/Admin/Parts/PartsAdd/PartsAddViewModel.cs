@@ -1,12 +1,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Parts.Commands;
 using Shopfloor.Features.Admin.Parts.List;
-using Shopfloor.Features.Admin.Parts.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
+using Shopfloor.Stores.DatabaseDataStores;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -23,6 +23,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
         private readonly ObservableCollection<Supplier> _suppliers = new();
         private string _errorMassage = string.Empty;
         private readonly IServiceProvider _mainServices;
+        private readonly IServiceProvider _databaseServices;
 
         #region modelFields
         private string _namePl = string.Empty;
@@ -136,13 +137,14 @@ namespace Shopfloor.Features.Admin.Parts.Add
         public PartsAddViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             _mainServices = mainServices;
+            _databaseServices = databaseServices;
 
             ReturnCommand = new NavigateCommand<PartsListViewModel>(_mainServices.GetRequiredService<NavigationService<PartsListViewModel>>());
             CleanFormCommand = new PartCleanFormCommand(this);
-            AddPartCommand = new PartAddCommand(this, databaseServices);
+            AddPartCommand = new PartAddCommand(this, _databaseServices);
 
-            _partTypes = new(_mainServices.GetRequiredService<PartTypesStore>().Data);
-            _suppliers = new(_mainServices.GetRequiredService<SuppliersStore>().Data);
+            _partTypes = new(_databaseServices.GetRequiredService<PartTypesStore>().Data);
+            _suppliers = new(_databaseServices.GetRequiredService<SuppliersStore>().Data);
 
             PartTypes = CollectionViewSource.GetDefaultView(_partTypes);
             Suppliers = CollectionViewSource.GetDefaultView(_suppliers);

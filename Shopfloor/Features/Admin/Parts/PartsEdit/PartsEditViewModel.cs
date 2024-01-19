@@ -7,6 +7,7 @@ using Shopfloor.Models;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
+using Shopfloor.Stores.DatabaseDataStores;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -23,6 +24,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         private readonly ObservableCollection<Supplier> _suppliers = new();
         private string _errorMassage = string.Empty;
         private readonly IServiceProvider _mainServices;
+        private readonly IServiceProvider _databaseServices;
 
         #region modelFields
         private string _namePl = string.Empty;
@@ -135,13 +137,14 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         public PartsEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             _mainServices = mainServices;
+            _databaseServices = databaseServices;
 
             ReturnCommand = new NavigateCommand<PartsListViewModel>(_mainServices.GetRequiredService<NavigationService<PartsListViewModel>>());
             CleanFormCommand = new PartCleanFormCommand(this);
-            EditPartCommand = new PartEditCommand(this, databaseServices);
+            EditPartCommand = new PartEditCommand(this, _databaseServices);
 
-            _partTypes = new(_mainServices.GetRequiredService<PartTypesStore>().Data);
-            _suppliers = new(_mainServices.GetRequiredService<SuppliersStore>().Data);
+            _partTypes = new(_databaseServices.GetRequiredService<PartTypesStore>().Data);
+            _suppliers = new(_databaseServices.GetRequiredService<SuppliersStore>().Data);
 
             Suppliers = CollectionViewSource.GetDefaultView(_suppliers);
             Producers = CollectionViewSource.GetDefaultView(_suppliers);
@@ -178,7 +181,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
                 ErrorMassage = "Wprowadź nazwę, nazwę producenta lub indeks";
                 return false;
             };
-            Part? part = _mainServices.GetRequiredService<PartsStore>().Data.FirstOrDefault(p => p.Index == inputValue.Index);
+            Part? part = _databaseServices.GetRequiredService<PartsStore>().Data.FirstOrDefault(p => p.Index == inputValue.Index);
             if (part is not null)
             {
                 ErrorMassage = "Część o podanym indeksie już istnieje";

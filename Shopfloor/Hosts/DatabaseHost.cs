@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
 using Shopfloor.Services.Providers;
+using Shopfloor.Stores.DatabaseDataStores;
 using System;
 
 namespace Shopfloor.Hosts.DatabaseHost
@@ -29,6 +30,11 @@ namespace Shopfloor.Hosts.DatabaseHost
             services.AddSingleton<MachineProvider>();
             services.AddSingleton<SupplierProvider>();
             services.AddSingleton<PartProvider>();
+
+            services.AddSingleton<PartTypesStore>();
+            services.AddSingleton<PartsStore>();
+            services.AddSingleton<SuppliersStore>();
+            services.AddSingleton<MachineStore>();
         }
     }
 

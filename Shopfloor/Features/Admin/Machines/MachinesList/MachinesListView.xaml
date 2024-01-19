@@ -123,8 +123,7 @@
                             IsEditable="True"
                             IsReadOnly="False"
                             ItemsSource="{Binding MachinesList}"
-                            SelectedItem="{Binding SelectedParent, Mode=TwoWay}"
-                            Text="{Binding MachineSearchText}" />
+                            SelectedItem="{Binding SelectedParent, Mode=TwoWay}" />
 
                         <Grid Grid.Row="2">
                             <Grid.ColumnDefinitions>

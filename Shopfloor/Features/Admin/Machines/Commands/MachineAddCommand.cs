@@ -20,14 +20,13 @@ namespace Shopfloor.Features.Admin.Machines.Commands
         {
             int? parentId = _viewModel.SelectedParent?.Id;
 
-            _ = _provider.Create(new Machine(
+            Machine machine = new(
                 _viewModel.MachineName,
                 _viewModel.MachineNumber,
                 parentId,
-                true
-            ));
+                true);
 
-            _ = _viewModel.UpdateMachines();
+            _ = _provider.Create(machine);
         }
     }
 }

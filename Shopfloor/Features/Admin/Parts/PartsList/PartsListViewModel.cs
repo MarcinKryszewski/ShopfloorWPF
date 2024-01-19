@@ -3,10 +3,10 @@ using Shopfloor.Features.Admin.Parts.Add;
 using Shopfloor.Features.Admin.Parts.Edit;
 using Shopfloor.Features.Admin.Parts.Stores;
 using Shopfloor.Models;
-using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
+using Shopfloor.Stores.DatabaseDataStores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,7 +25,11 @@ namespace Shopfloor.Features.Admin.Parts.List
         private readonly IServiceProvider _mainServices;
         private string _searchText = string.Empty;
         private readonly ObservableCollection<Part> _parts;
-        private SelectedPartStore _selectedPart;
+        private readonly SelectedPartStore _selectedPart;
+
+        private readonly PartsStore _partsStore;
+        private readonly SuppliersStore _suppliersStore;
+        private readonly PartTypesStore _partTypesStore;
 
         public Visibility IsSelected => SelectedPart is null ? Visibility.Collapsed : Visibility.Visible;
         public ICollectionView Parts { get; }
@@ -68,17 +72,29 @@ namespace Shopfloor.Features.Admin.Parts.List
 
             Parts = CollectionViewSource.GetDefaultView(_parts);
 
+            _partsStore = _databaseServices.GetRequiredService<PartsStore>();
+            _suppliersStore = _databaseServices.GetRequiredService<SuppliersStore>();
+            _partTypesStore = _databaseServices.GetRequiredService<PartTypesStore>();
+
             Task.Run(() => LoadData());
             Parts.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Part.TypeName)));
         }
 
         public async Task LoadData()
         {
-            await Task.WhenAll(LoadParts(), LoadSuppliers(), LoadPartTypes());
+            //Stopwatch stopwatch = Stopwatch.StartNew();
 
-            IEnumerable<Part> parts = _mainServices.GetRequiredService<PartsStore>().Data;
-            IEnumerable<Supplier> suppliers = _mainServices.GetRequiredService<SuppliersStore>().Data;
-            IEnumerable<PartType> partTypes = _mainServices.GetRequiredService<PartTypesStore>().Data;
+            List<Task> tasks = new();
+
+            if (!_partsStore.IsLoaded) tasks.Add(LoadParts());
+            if (!_suppliersStore.IsLoaded) tasks.Add(LoadSuppliers());
+            if (!_partTypesStore.IsLoaded) tasks.Add(LoadPartTypes());
+
+            if (tasks.Count > 0) await Task.WhenAll(tasks);
+
+            IEnumerable<Part> parts = _partsStore.Data;
+            IEnumerable<Supplier> suppliers = _suppliersStore.Data;
+            IEnumerable<PartType> partTypes = _partTypesStore.Data;
 
             foreach (Part part in parts)
             {
@@ -97,63 +113,24 @@ namespace Shopfloor.Features.Admin.Parts.List
                     OnPropertyChanged(nameof(Parts));
                 });
             }
-        }
-        //Loading all and then asigning is faster
-        public async Task LoadDataOneByOne()
-        {
-            //Stopwatch stopwatch = Stopwatch.StartNew();
-
-            _parts.Clear();
-            PartProvider partProvider = _databaseServices.GetRequiredService<PartProvider>();
-            SupplierProvider supplierProvider = _databaseServices.GetRequiredService<SupplierProvider>();
-            PartTypeProvider partTypeProvider = _databaseServices.GetRequiredService<PartTypeProvider>();
-
-            IEnumerable<Part> parts = await partProvider.GetAll();
-
-            foreach (Part part in parts)
-            {
-                Task<Supplier> supplierTask = supplierProvider.GetById(part.SupplierId ?? 0);
-                Task<Supplier> producerTask = supplierProvider.GetById(part.ProducerId ?? 0);
-                Task<PartType> partTypeTask = partTypeProvider.GetById(part.TypeId ?? 0);
-
-                await Task.WhenAll(supplierTask, producerTask, partTypeTask);
-
-                PartType? partType = await partTypeTask;
-                if (partType is not null) part.SetType(partType);
-
-                Supplier? producer = await producerTask;
-                if (producer is not null) part.SetProducer(producer);
-
-                Supplier? supplier = await supplierTask;
-                if (supplier is not null) part.SetSupplier(supplier);
-
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    _parts.Add(part);
-                    OnPropertyChanged(nameof(Parts));
-                });
-            }
 
             //stopwatch.Stop();
-            //System.Diagnostics.Debug.WriteLine($"LoadDataOneByOne Execution Time: {stopwatch.ElapsedTicks} ms");
+            //Debug.WriteLine(stopwatch.ElapsedTicks);
         }
 
         public Task LoadParts()
         {
-            PartProvider partProvider = _databaseServices.GetRequiredService<PartProvider>();
-            _mainServices.GetRequiredService<PartsStore>().Data = partProvider.GetAll().Result;
+            _partsStore.Load();
             return Task.CompletedTask;
         }
         public Task LoadPartTypes()
         {
-            PartTypeProvider partTypeProvider = _databaseServices.GetRequiredService<PartTypeProvider>();
-            _mainServices.GetRequiredService<PartTypesStore>().Data = partTypeProvider.GetAll().Result;
+            _partTypesStore.Load();
             return Task.CompletedTask;
         }
         public Task LoadSuppliers()
         {
-            SupplierProvider supplierProvider = _databaseServices.GetRequiredService<SupplierProvider>();
-            _mainServices.GetRequiredService<SuppliersStore>().Data = supplierProvider.GetAll().Result;
+            _suppliersStore.Load();
             return Task.CompletedTask;
         }
 
