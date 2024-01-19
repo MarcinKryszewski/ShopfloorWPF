@@ -6,7 +6,7 @@ using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Mechanic.Tasks
 {
-    public class TasksViewModel : ViewModelBase
+    public class TasksMainViewModel : ViewModelBase
     {
 
     }

@@ -15,9 +15,9 @@ using System.Windows.Shapes;
 
 namespace Shopfloor.Features.Mechanic.Tasks
 {
-    public sealed partial class TasksView : UserControl
+    public sealed partial class TasksMainView : UserControl
     {
-        public TasksView()
+        public TasksMainView()
         {
             this.InitializeComponent();
         }

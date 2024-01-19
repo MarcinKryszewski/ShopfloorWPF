@@ -42,8 +42,8 @@
                         <login:LoginView />
                     </DataTemplate>
 
-                    <DataTemplate DataType="{x:Type tasks:TasksViewModel}">
-                        <tasks:TasksView />
+                    <DataTemplate DataType="{x:Type tasks:TasksMainViewModel}">
+                        <tasks:TasksMainView />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type requests:RequestsViewModel}">
                         <requests:RequestsView />

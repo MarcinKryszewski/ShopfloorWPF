@@ -47,12 +47,12 @@ namespace Shopfloor.Services.NavigationServices
         private static void GetTasksNavigation(IServiceCollection services)
         {
             services.AddTransient((s) => CreatTasksViewModel(s));
-            services.AddSingleton<CreateViewModel<TasksViewModel>>((s) => () => s.GetRequiredService<TasksViewModel>());
+            services.AddSingleton<CreateViewModel<TasksMainViewModel>>((s) => () => s.GetRequiredService<TasksMainViewModel>());
             services.AddSingleton((s) =>
             {
-                return new NavigationService<TasksViewModel>(
+                return new NavigationService<TasksMainViewModel>(
                     s.GetRequiredService<NavigationStore>(),
-                    s.GetRequiredService<CreateViewModel<TasksViewModel>>()
+                    s.GetRequiredService<CreateViewModel<TasksMainViewModel>>()
                 );
             });
         }
@@ -65,9 +65,9 @@ namespace Shopfloor.Services.NavigationServices
         {
             return new RequestsViewModel();
         }
-        private static TasksViewModel CreatTasksViewModel(IServiceProvider services)
+        private static TasksMainViewModel CreatTasksViewModel(IServiceProvider services)
         {
-            return new TasksViewModel();
+            return new TasksMainViewModel();
         }
     }
 }

@@ -64,7 +64,7 @@ namespace Shopfloor.Layout.SidePanel
         {
             NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(mainServices.GetRequiredService<NavigationService<DashboardViewModel>>());
 
-            NavigateTasksCommand = new NavigateCommand<TasksViewModel>(mainServices.GetRequiredService<NavigationService<TasksViewModel>>());
+            NavigateTasksCommand = new NavigateCommand<TasksMainViewModel>(mainServices.GetRequiredService<NavigationService<TasksMainViewModel>>());
             NavigateRequestsCommand = new NavigateCommand<RequestsViewModel>(mainServices.GetRequiredService<NavigationService<RequestsViewModel>>());
             NavigateMinimalStatesCommand = new NavigateCommand<MinimalStatesViewModel>(mainServices.GetRequiredService<NavigationService<MinimalStatesViewModel>>());
 
