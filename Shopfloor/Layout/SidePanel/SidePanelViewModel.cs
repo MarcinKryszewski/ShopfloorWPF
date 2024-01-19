@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Machines;
 using Shopfloor.Features.Admin.Parts;
+using Shopfloor.Features.Admin.PartTypes;
 using Shopfloor.Features.Admin.Suppliers;
 using Shopfloor.Features.Admin.Users;
 using Shopfloor.Features.Dashboard;
@@ -50,6 +51,7 @@ namespace Shopfloor.Layout.SidePanel
         public ICommand NavigateMachinesCommand { get; }
         public ICommand NavigatePartsCommand { get; }
         public ICommand NavigateSuppliersCommand { get; }
+        public ICommand NavigatePartTypesCommand { get; }
         #endregion
         #endregion
 
@@ -76,6 +78,7 @@ namespace Shopfloor.Layout.SidePanel
             NavigateMachinesCommand = new NavigateCommand<MachinesMainViewModel>(mainServices.GetRequiredService<NavigationService<MachinesMainViewModel>>());
             NavigatePartsCommand = new NavigateCommand<PartsMainViewModel>(mainServices.GetRequiredService<NavigationService<PartsMainViewModel>>());
             NavigateSuppliersCommand = new NavigateCommand<SuppliersMainViewModel>(mainServices.GetRequiredService<NavigationService<SuppliersMainViewModel>>());
+            NavigatePartTypesCommand = new NavigateCommand<PartTypesMainViewModel>(mainServices.GetRequiredService<NavigationService<PartTypesMainViewModel>>());
 
             _userStore = userServices.GetRequiredService<UserStore>();
             _userStore.PropertyChanged += OnUserAuthenticated;

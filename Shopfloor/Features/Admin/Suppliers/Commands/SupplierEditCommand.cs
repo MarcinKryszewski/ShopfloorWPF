@@ -22,9 +22,10 @@ namespace Shopfloor.Features.Admin.Suppliers.Commands
         {
             if (_viewModel.SelectedSupplier is null) return;
             Supplier selectedSupplier = _viewModel.SelectedSupplier;
+            if (selectedSupplier.Id is null) return;
 
             Supplier supplier = new(
-                selectedSupplier.Id,
+                (int)selectedSupplier.Id,
                 _viewModel.Name,
                 selectedSupplier.IsActive);
 

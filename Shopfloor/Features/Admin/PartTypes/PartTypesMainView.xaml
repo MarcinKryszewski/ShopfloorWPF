@@ -10,7 +10,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Margin="30">
         <ContentControl Content="{Binding Path=Content}">
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type list:PartTypesListViewModel}">

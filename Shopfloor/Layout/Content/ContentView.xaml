@@ -13,6 +13,7 @@
     xmlns:minimalStates="clr-namespace:Shopfloor.Features.Mechanic.MinimalStates"
     xmlns:orders="clr-namespace:Shopfloor.Features.Plannist.Orders"
     xmlns:parts="clr-namespace:Shopfloor.Features.Admin.Parts"
+    xmlns:partTypes="clr-namespace:Shopfloor.Features.Admin.PartTypes"
     xmlns:reports="clr-namespace:Shopfloor.Features.Plannist.Reports"
     xmlns:requests="clr-namespace:Shopfloor.Features.Mechanic.Requests"
     xmlns:reservations="clr-namespace:Shopfloor.Features.Plannist.Reservations"
@@ -78,6 +79,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type suppliers:SuppliersMainViewModel}">
                         <suppliers:SuppliersMainView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type partTypes:PartTypesMainViewModel}">
+                        <partTypes:PartTypesMainView />
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>

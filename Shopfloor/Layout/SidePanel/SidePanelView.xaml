@@ -205,6 +205,16 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dostawcy" />
                         </StackPanel>
                     </Button>
+                    <Button Command="{Binding Path=NavigatePartTypesCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Yellow" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Części - rodzaje" />
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
                 <!--#endregion-->
             </StackPanel>

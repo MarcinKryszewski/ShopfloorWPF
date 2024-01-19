@@ -179,9 +179,7 @@
                         Text="NOWA CZĘŚĆ" />
                 </StackPanel>
 
-            </Button>
-        
-        
+            </Button>       
         </Grid>
 
         <ListView

@@ -1,16 +1,18 @@
+using Shopfloor.Interfaces;
 using Shopfloor.Services.Providers;
 using System;
 using System.Threading.Tasks;
 
 namespace Shopfloor.Models
 {
-    public class PartType : IEquatable<PartType>
+    public class PartType : IEquatable<PartType>, ISearchableModel
     {
-        private readonly int _id;
+        private readonly int? _id;
         private string _name;
 
-        public int Id => _id;
+        public int? Id => _id;
         public string Name => _name;
+        public string SearchValue => _name ?? string.Empty;
 
         public PartType(int id, string name)
         {
@@ -21,19 +23,6 @@ namespace Shopfloor.Models
         public PartType(string name)
         {
             _name = name;
-        }
-
-        public async Task Add(PartTypeProvider provider)
-        {
-            await provider.Create(this);
-        }
-        public async Task Edit(PartTypeProvider provider)
-        {
-            await provider.Update(this);
-        }
-        public async Task Delete(PartTypeProvider provider)
-        {
-            await provider.Delete(Id);
         }
 
         public bool Equals(PartType? other)

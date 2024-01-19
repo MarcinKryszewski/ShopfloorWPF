@@ -4,6 +4,7 @@ using Shopfloor.Interfaces;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.ViewModels;
+using Shopfloor.Stores.DatabaseDataStores;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +26,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
         private readonly IServiceProvider _databaseServices;
         private string _errorMassage = string.Empty;
         private string _searchText = string.Empty;
+        private readonly SuppliersStore _suppliersStore;
 
         public string Name
         {
@@ -76,6 +78,8 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                 OnPropertyChanged(nameof(HasErrorVisibility));
             }
         }
+        public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
+
         public string SearchText
         {
             get => _searchText;
@@ -87,7 +91,6 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             }
         }
 
-        public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
 
         public ICommand SupplierAddCommand { get; }
         public ICommand SupplierEditCommand { get; }
@@ -102,23 +105,32 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             SupplierEditCommand = new SupplierEditCommand(this, provider);
             CleanFormCommand = new CleanFormCommand(this);
 
+            _suppliersStore = _databaseServices.GetRequiredService<SuppliersStore>();
             Task.Run(() => LoadData(_databaseServices));
         }
 
         public async Task LoadData(IServiceProvider databaseServices)
         {
-            _suppliers.Clear();
-            SupplierProvider provider = _databaseServices.GetRequiredService<SupplierProvider>();
-            IEnumerable<Supplier> suppliers = await provider.GetAll();
+            List<Task> tasks = new();
+            Application.Current.Dispatcher.Invoke(_suppliers.Clear);
+            if (!_suppliersStore.IsLoaded) tasks.Add(LoadSuppliers());
+
+            if (tasks.Count > 0) await Task.WhenAll(tasks);
+
+            IEnumerable<Supplier> suppliers = _suppliersStore.Data;
             foreach (Supplier supplier in suppliers)
             {
-                //await Task.Delay(350);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     _suppliers.Add(supplier);
                     OnPropertyChanged(nameof(Suppliers));
                 });
             }
+        }
+        public Task LoadSuppliers()
+        {
+            _suppliersStore.Load();
+            return Task.CompletedTask;
         }
 
         //Updates the list if value didn't exist, ie. after add
@@ -142,9 +154,9 @@ namespace Shopfloor.Features.Admin.Suppliers.List
         //Updates the list if value existed, ie. after edit
         public async Task UpdateData(Supplier supplierToRemove)
         {
-            //await Task.Delay(5000);
+            if (supplierToRemove.Id is null) return;
             SupplierProvider provider = _databaseServices.GetRequiredService<SupplierProvider>();
-            Supplier supplierToAdd = await provider.GetById(supplierToRemove.Id);
+            Supplier supplierToAdd = await provider.GetById((int)supplierToRemove.Id);
             if (_suppliers.FirstOrDefault(s => s.Id == supplierToRemove.Id) is not null)
             {
                 Application.Current.Dispatcher.Invoke(() =>
@@ -199,7 +211,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
 
         public void ReloadData()
         {
-            throw new NotImplementedException();
+            _databaseServices.GetRequiredService<SuppliersStore>().Load();
         }
     }
 }

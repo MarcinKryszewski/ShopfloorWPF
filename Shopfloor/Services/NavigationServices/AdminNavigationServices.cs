@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Machines;
 using Shopfloor.Features.Admin.Parts;
+using Shopfloor.Features.Admin.PartTypes;
 using Shopfloor.Features.Admin.Suppliers;
 using Shopfloor.Features.Admin.Users;
 using Shopfloor.Shared.Services;
@@ -18,6 +19,7 @@ namespace Shopfloor.Services.NavigationServices
             GetMachinesNavigation(services, databaseServices);
             GetPartsNavigation(services, databaseServices);
             GetSuppliersNavigation(services, databaseServices);
+            GetPartTypesNavigation(services, databaseServices);
         }
 
         public static void GetUsersNavigation(IServiceCollection services, IServiceProvider databaseServices)
@@ -68,6 +70,18 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
+        public static void GetPartTypesNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        {
+            services.AddTransient((s) => CreatePartTypesViewModel(databaseServices));
+            services.AddSingleton<CreateViewModel<PartTypesMainViewModel>>((s) => () => s.GetRequiredService<PartTypesMainViewModel>());
+            services.AddSingleton((s) =>
+            {
+                return new NavigationService<PartTypesMainViewModel>(
+                    s.GetRequiredService<NavigationStore>(),
+                    s.GetRequiredService<CreateViewModel<PartTypesMainViewModel>>()
+                );
+            });
+        }
 
         private static UsersMainViewModel CreateUsersMainViewModel(IServiceProvider services, IServiceProvider databaseServices)
         {
@@ -84,6 +98,10 @@ namespace Shopfloor.Services.NavigationServices
         private static SuppliersMainViewModel CreateSuppliersViewModel(IServiceProvider databaseServices)
         {
             return new SuppliersMainViewModel(databaseServices);
+        }
+        private static PartTypesMainViewModel CreatePartTypesViewModel(IServiceProvider databaseServices)
+        {
+            return new PartTypesMainViewModel(databaseServices);
         }
     }
 }

@@ -21,7 +21,6 @@ namespace Shopfloor.Stores.DatabaseDataStores
             _databaseServices = databaseServices;
         }
 
-
         public Task Load()
         {
             IProvider<Supplier> provider = _databaseServices.GetRequiredService<SupplierProvider>();

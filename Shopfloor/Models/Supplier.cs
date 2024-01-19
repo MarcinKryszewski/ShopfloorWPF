@@ -1,14 +1,15 @@
 using System;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models
 {
-    public class Supplier : IEquatable<Supplier>
+    public class Supplier : IEquatable<Supplier>, ISearchableModel
     {
-        private readonly int _id;
+        private readonly int? _id;
         private readonly string? _name;
         private readonly bool _isActive;
 
-        public int Id => _id;
+        public int? Id => _id;
         public string Name => _name ?? string.Empty;
         public bool IsActive => _isActive;
         public string SearchValue => _name ?? string.Empty;
