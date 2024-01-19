@@ -1,4 +1,5 @@
 using Shopfloor.Features.Admin.Machines.List;
+using Shopfloor.Interfaces;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
@@ -26,7 +27,13 @@ namespace Shopfloor.Features.Admin.Machines.Commands
                 parentId,
                 true);
 
+            if (!_viewModel.IsDataValidate(machine)) return;
+
             _ = _provider.Create(machine);
+            _viewModel.ReloadData();
+            _viewModel.CleanForm();
+            _viewModel.AddToList(machine);
+            //_viewModel.MachinesList.Refresh();
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Shopfloor.Interfaces
         public string ErrorMassage { get; set; }
         public Visibility HasErrorVisibility { get; }
         public void CleanForm();
+        public void ReloadData();
         public bool IsDataValidate(T inputValue);
     }
 }

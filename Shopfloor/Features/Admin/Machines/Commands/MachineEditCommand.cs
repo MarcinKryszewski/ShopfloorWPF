@@ -20,20 +20,23 @@ namespace Shopfloor.Features.Admin.Machines.Commands
         {
             Machine? selectedMachine = _viewModel.SelectedMachine;
             if (selectedMachine == null) return;
-            if (selectedMachine.Id == null) return;
+            if (_viewModel.Id == null) return;
             int? parentId = _viewModel.SelectedParent?.Id;
 
-
-
             Machine machine = new(
-                (int)selectedMachine.Id,
+                (int)_viewModel.Id,
                 _viewModel.MachineName,
                 _viewModel.MachineNumber,
                 parentId,
                 selectedMachine.IsActive
             );
 
+            if (!_viewModel.IsDataValidate(machine)) return;
+
             _ = _provider.Update(machine);
+            _viewModel.ReloadData();
+            _viewModel.CleanForm();
+            _viewModel.UpdateList(machine);
         }
     }
 }

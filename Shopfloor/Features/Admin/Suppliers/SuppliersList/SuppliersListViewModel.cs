@@ -102,10 +102,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             SupplierEditCommand = new SupplierEditCommand(this, provider);
             CleanFormCommand = new CleanFormCommand(this);
 
-            Task.Run(() =>
-            {
-                _ = LoadData(_databaseServices);
-            });
+            Task.Run(() => LoadData(_databaseServices));
         }
 
         public async Task LoadData(IServiceProvider databaseServices)
@@ -198,6 +195,11 @@ namespace Shopfloor.Features.Admin.Suppliers.List
 
             ErrorMassage = string.Empty;
             return true;
+        }
+
+        public void ReloadData()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -124,5 +124,10 @@ namespace Shopfloor.Features.Admin.Users.Edit
             if (SelectedUser?.Id == 1) return false;
             return true;
         }
+
+        public void ReloadData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

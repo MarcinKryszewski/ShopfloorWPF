@@ -75,5 +75,10 @@ namespace Shopfloor.Features.Login
         {
             return true;
         }
+
+        public void ReloadData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

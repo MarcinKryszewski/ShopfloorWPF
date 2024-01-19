@@ -1,16 +1,18 @@
 using Shopfloor.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace Shopfloor.Models
 {
-    public class Machine : ISearchableModel
+    public class Machine : ISearchableModel, IEquatable<Machine>
     {
         private readonly List<Machine> _children;
         private readonly List<MachinePart> _parts;
         private Machine? _parent;
+        private readonly int? _id;
 
         private string _path;
-        public int? Id { get; }
+        public int? Id => _id;
         public string Name { get; }
         public string Number { get; }
         public bool IsActive { get; }
@@ -28,7 +30,7 @@ namespace Shopfloor.Models
 
         public Machine(int id, string name, string number, int? parent, bool isActive)
         {
-            Id = id;
+            _id = id;
             Name = name;
             Number = number;
             ParentId = parent;
@@ -59,6 +61,12 @@ namespace Shopfloor.Models
         {
             _path = $@"{machine.Path}\{_path}";
             _parent = machine;
+        }
+
+        public bool Equals(Machine? other)
+        {
+            if (other == null) return false;
+            return _id == other.Id;
         }
     }
 }

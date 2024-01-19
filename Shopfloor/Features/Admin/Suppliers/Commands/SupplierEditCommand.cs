@@ -32,10 +32,7 @@ namespace Shopfloor.Features.Admin.Suppliers.Commands
 
             _ = _provider.Update(supplier);
 
-            Task.Run(() =>
-            {
-                _ = _viewModel.UpdateData(selectedSupplier);
-            });
+            Task.Run(() => _viewModel.UpdateData(selectedSupplier));
 
             _viewModel.CleanForm();
         }

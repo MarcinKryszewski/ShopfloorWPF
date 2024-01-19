@@ -41,5 +41,10 @@ namespace Shopfloor.Features.Admin.PartTypes.List
         {
             throw new System.NotImplementedException();
         }
+
+        public void ReloadData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

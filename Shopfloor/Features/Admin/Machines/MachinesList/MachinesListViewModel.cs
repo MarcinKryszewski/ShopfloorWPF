@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Machines.Commands;
+using Shopfloor.Interfaces;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.ViewModels;
@@ -10,17 +11,19 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Machines.List
 {
-    public class MachinesListViewModel : ViewModelBase
+    public class MachinesListViewModel : ViewModelBase, IInputForm<Machine>
     {
         //treeview needs separate collection, which has only root nodes in it
         private readonly ObservableCollection<Machine> _machines; //this one is for treeview
-        private readonly ObservableCollection<Machine> _machinesAll; //this one is for combobox
+        private readonly List<Machine> _machinesAll; //this one is for combobox
         private readonly IServiceProvider _databaseServices;
+        private int? _id;
         private string _machineName = string.Empty;
         private string _machineNumber = string.Empty;
         private int _parentId;
@@ -28,11 +31,24 @@ namespace Shopfloor.Features.Admin.Machines.List
         private Machine? _selectedMachine;
         private string _machineSearchText = string.Empty;
         private bool _isEdit;
+        private string _errorMassage = string.Empty;
 
         private MachineStore _machineStore;
 
-        public IEnumerable<Machine> Machines => _machines;
+        public ObservableCollection<Machine> Machines => _machines;
         public ICollectionView MachinesList => CollectionViewSource.GetDefaultView(_machinesAll);
+        public string ErrorMassage
+        {
+            get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
+            set
+            {
+                _errorMassage = value;
+                OnPropertyChanged(nameof(ErrorMassage));
+                OnPropertyChanged(nameof(HasErrorVisibility));
+            }
+        }
+        public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
+
 
         public bool IsEdit
         {
@@ -43,6 +59,7 @@ namespace Shopfloor.Features.Admin.Machines.List
                 OnPropertyChanged(nameof(IsEdit));
             }
         }
+        public int? Id => _id;
         public string MachineName
         {
             get => _machineName;
@@ -86,6 +103,7 @@ namespace Shopfloor.Features.Admin.Machines.List
             {
                 if (value is null) return;
                 MachinesList.Filter = null;
+                _id = value.Id;
                 _machineName = value.Name;
                 _machineNumber = value.Number;
                 _selectedMachine = value;
@@ -134,7 +152,7 @@ namespace Shopfloor.Features.Admin.Machines.List
             IsEdit = false;
 
             _machineStore = _databaseServices.GetRequiredService<MachineStore>();
-            Task.Run(() => LoadData());
+            Task.Run(LoadData);
 
             MachineProvider provider = databaseServices.GetRequiredService<MachineProvider>();
 
@@ -149,8 +167,12 @@ namespace Shopfloor.Features.Admin.Machines.List
 
         private async Task LoadData()
         {
-            _machines.Clear();
-            _machinesAll.Clear();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _machines.Clear();
+                _machinesAll.Clear();
+            });
+
 
             List<Task> tasks = new();
             if (!_machineStore.IsLoaded) tasks.Add(LoadMachines());
@@ -167,7 +189,6 @@ namespace Shopfloor.Features.Admin.Machines.List
                     AddRoot(machine);
                     continue;
                 }
-
                 AddChild(machine, _machinesAll);
             }
             MachinesList.Refresh();
@@ -178,16 +199,23 @@ namespace Shopfloor.Features.Admin.Machines.List
             return Task.CompletedTask;
         }
 
-
         private void AddRoot(Machine machine)
         {
-            _machines.Add(machine);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _machines.Add(machine);
+            });
+
         }
-        private static void AddChild(Machine machine, ObservableCollection<Machine> machinesList)
+        private static void AddChild(Machine machine, List<Machine> machinesList)
         {
             Machine? machineParent = machinesList.FirstOrDefault(m => m.Id == machine.ParentId);
             if (machineParent is null) return;
-            machineParent.AddChild(machine);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                machineParent.AddChild(machine);
+            });
+
         }
 
         private bool FilterMachines(object obj)
@@ -212,6 +240,40 @@ namespace Shopfloor.Features.Admin.Machines.List
             OnPropertyChanged(nameof(MachineNumber));
             OnPropertyChanged(nameof(IsEdit));
             OnPropertyChanged(nameof(SelectedParent));*/
+        }
+        public void ReloadData()
+        {
+            _databaseServices.GetRequiredService<MachineStore>().Load();
+        }
+        public void AddToList(Machine machine)
+        {
+            _machinesAll.Add(machine);
+            MachinesList.Refresh();
+
+            if (machine.ParentId is null)
+            {
+                AddRoot(machine);
+                return;
+            }
+            AddChild(machine, _machinesAll);
+
+            _machines.Clear();
+            foreach (Machine item in _machinesAll)
+            {
+                if (item.ParentId is null) AddRoot(item);
+            }
+            //OnPropertyChanged(nameof(Machines));
+
+        }
+        public void UpdateList(Machine updatedMachine)
+        {
+            //_ = LoadData();
+            Task.Run(LoadData);
+        }
+
+        public bool IsDataValidate(Machine inputValue)
+        {
+            return true;
         }
     }
 }

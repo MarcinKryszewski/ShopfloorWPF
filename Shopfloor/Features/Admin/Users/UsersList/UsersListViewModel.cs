@@ -59,10 +59,7 @@ namespace Shopfloor.Features.Admin.Users.List
             _database = databasServices;
             UserProvider userProvider = databasServices.GetRequiredService<UserProvider>();
 
-            Task.Run(() =>
-            {
-                _ = LoadData(userProvider);
-            });
+            Task.Run(() => LoadData(userProvider));
 
             _selectedUser = mainServices.GetRequiredService<SelectedUserStore>();
 

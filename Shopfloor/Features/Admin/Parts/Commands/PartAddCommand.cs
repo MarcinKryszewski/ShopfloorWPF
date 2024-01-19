@@ -10,12 +10,12 @@ namespace Shopfloor.Features.Admin.Parts.Commands
     public class PartAddCommand : CommandBase
     {
         private PartsAddViewModel _viewModel;
-        private IServiceProvider _databaseServices;
+        private PartProvider _partProvider;
 
         public PartAddCommand(PartsAddViewModel partsAddViewModel, IServiceProvider databaseServices)
         {
             _viewModel = partsAddViewModel;
-            _databaseServices = databaseServices;
+            _partProvider = databaseServices.GetRequiredService<PartProvider>();
         }
 
         public override void Execute(object? parameter)
@@ -32,7 +32,7 @@ namespace Shopfloor.Features.Admin.Parts.Commands
             );
             if (!_viewModel.IsDataValidate(part)) return;
 
-            _ = _databaseServices.GetRequiredService<PartProvider>().Create(part);
+            _ = _partProvider.Create(part);
 
             _viewModel.ReloadData();
             _viewModel.CleanForm();

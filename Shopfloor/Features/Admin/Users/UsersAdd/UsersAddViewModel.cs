@@ -114,5 +114,10 @@ namespace Shopfloor.Features.Admin.Users.Add
         {
             return true;
         }
+
+        public void ReloadData()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

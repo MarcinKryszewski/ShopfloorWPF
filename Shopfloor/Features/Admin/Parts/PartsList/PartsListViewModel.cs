@@ -76,7 +76,7 @@ namespace Shopfloor.Features.Admin.Parts.List
             _suppliersStore = _databaseServices.GetRequiredService<SuppliersStore>();
             _partTypesStore = _databaseServices.GetRequiredService<PartTypesStore>();
 
-            Task.Run(() => LoadData());
+            Task.Run(LoadData);
             Parts.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Part.TypeName)));
         }
 

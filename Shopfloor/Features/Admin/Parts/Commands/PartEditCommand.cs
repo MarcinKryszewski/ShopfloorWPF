@@ -36,7 +36,7 @@ namespace Shopfloor.Features.Admin.Parts.Commands
 
             _ = _databaseServices.GetRequiredService<PartProvider>().Update(part);
             _viewModel.ReloadData();
-            _viewModel.CleanForm();
+            //_viewModel.CleanForm();
         }
     }
 }
