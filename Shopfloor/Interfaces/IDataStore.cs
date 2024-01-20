@@ -7,6 +7,7 @@ namespace Shopfloor.Interfaces
     {
         public IEnumerable<T> Data { get; }
         public bool IsLoaded { get; }
+
         public Task Load();
     }
 }

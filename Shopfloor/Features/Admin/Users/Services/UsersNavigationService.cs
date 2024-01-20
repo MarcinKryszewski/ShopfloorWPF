@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Users.Add;
 using Shopfloor.Features.Admin.Users.Edit;
@@ -6,6 +5,7 @@ using Shopfloor.Features.Admin.Users.List;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
+using System;
 
 namespace Shopfloor.Features.Admin.Users.Services
 {
@@ -30,6 +30,7 @@ namespace Shopfloor.Features.Admin.Users.Services
                 );
             });
         }
+
         private static void GetAddNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreateUsersAddViewModel(s, databaseServices));
@@ -42,6 +43,7 @@ namespace Shopfloor.Features.Admin.Users.Services
                 );
             });
         }
+
         private static void GetEditNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreateUsersEditViewModel(s, databaseServices));
@@ -59,10 +61,12 @@ namespace Shopfloor.Features.Admin.Users.Services
         {
             return new UsersListViewModel(mainServices, databaseServices);
         }
+
         private static UsersAddViewModel CreateUsersAddViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             return new UsersAddViewModel(mainServices, databaseServices);
         }
+
         private static UsersEditViewModel CreateUsersEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             return new UsersEditViewModel(mainServices, databaseServices);

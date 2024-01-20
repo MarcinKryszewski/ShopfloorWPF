@@ -1,10 +1,11 @@
-<UserControl x:Class="Shopfloor.Features.Admin.Suppliers.List.SuppliersListView"
+<UserControl
+    x:Class="Shopfloor.Features.Admin.Suppliers.List.SuppliersListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:custom="clr-namespace:Shopfloor.Controls.PlaceholderTextBox"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Shopfloor.Features.Admin.Suppliers.List"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:custom="clr-namespace:Shopfloor.Controls.PlaceholderTextBox"
     d:DataContext="{d:DesignInstance Type=local:SuppliersListViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -15,34 +16,35 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0"
-            Margin="10">
+        <Grid Grid.Column="0" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0"
+            <TextBlock
+                Grid.Row="0"
                 Margin="0,0,0,10"
                 Foreground="{StaticResource ResourceKey=BrushPurple400}"
                 Text="Dostawcy" />
 
-            <Grid Grid.Row="1"
-                Margin="0,0,0,20">
+            <Grid Grid.Row="1" Margin="0,0,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="auto" />
                 </Grid.ColumnDefinitions>
-                <Border Background="White"
-                    CornerRadius="5"
-                    Grid.Column="0">
+                <Border
+                    Grid.Column="0"
+                    Background="White"
+                    CornerRadius="5">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0"
+                        <TextBlock
+                            Grid.Column="0"
                             Margin="10,0,10,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
@@ -51,7 +53,8 @@
                             FontWeight="Bold"
                             Foreground="{StaticResource BrushPurple900}"
                             Text="&#xE71E;" />
-                        <custom:PlaceholderTextBoxControl Grid.Column="1"
+                        <custom:PlaceholderTextBoxControl
+                            Grid.Column="1"
                             HorizontalContentAlignment="Left"
                             VerticalContentAlignment="Center"
                             Background="Transparent"
@@ -66,7 +69,8 @@
                 </Border>
             </Grid>
 
-            <ListView x:Name="SuppliersList"
+            <ListView
+                x:Name="SuppliersList"
                 Grid.Row="2"
                 MinHeight="274"
                 ItemsSource="{Binding Suppliers}"
@@ -75,7 +79,8 @@
 
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Width="120"
+                        <GridViewColumn
+                            Width="120"
                             DisplayMemberBinding="{Binding Name}"
                             Header="Nazwa" />
                     </GridView>
@@ -83,29 +88,29 @@
             </ListView>
         </Grid>
 
-        <Grid Grid.Column="1"
-            Margin="10">
+        <Grid Grid.Column="1" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Border Background="{StaticResource ResourceKey=BrushDarkNeutral400}"
-                CornerRadius="10">
+            <Border Background="{StaticResource ResourceKey=BrushDarkNeutral400}" CornerRadius="10">
                 <StackPanel>
-                    <TextBlock Margin="0,10,0,10"
+                    <TextBlock
+                        Margin="0,10,0,10"
                         HorizontalAlignment="Center"
                         FontSize="20"
                         FontWeight="SemiBold"
                         Foreground="{StaticResource ResourceKey=BrushPurple400}"
                         Text="Formularz" />
-                    <StackPanel Grid.Column="1"
+                    <StackPanel
+                        Grid.Column="1"
                         MinWidth="150"
                         Margin="20,0,10,0"
                         Orientation="Vertical">
 
-                        <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}"
-                            Text="Nazwa dostawcy" />
-                        <TextBox Grid.Row="1"
+                        <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Nazwa dostawcy" />
+                        <TextBox
+                            Grid.Row="1"
                             Height="28"
                             Margin="0,0,0,20"
                             Style="{StaticResource ResourceKey=TextBoxMain}"
@@ -122,34 +127,29 @@
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
-                            <Button Grid.Row="0"
+                            <Button
+                                Grid.Row="0"
                                 Grid.Column="1"
                                 Width="100"
                                 Height="40"
                                 Margin="5">
                                 <Button.Style>
-                                    <Style BasedOn="{StaticResource ResourceKey=ButtonMain}"
-                                        TargetType="Button">
+                                    <Style BasedOn="{StaticResource ResourceKey=ButtonMain}" TargetType="Button">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=IsEdit}"
-                                                Value="True">
-                                                <Setter Property="Content"
-                                                    Value="EDYTUJ" />
-                                                <Setter Property="Command"
-                                                    Value="{Binding Path=SupplierEditCommand}" />
+                                            <DataTrigger Binding="{Binding Path=IsEdit}" Value="True">
+                                                <Setter Property="Content" Value="EDYTUJ" />
+                                                <Setter Property="Command" Value="{Binding Path=SupplierEditCommand}" />
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=IsEdit}"
-                                                Value="False">
-                                                <Setter Property="Content"
-                                                    Value="STWÓRZ" />
-                                                <Setter Property="Command"
-                                                    Value="{Binding Path=SupplierAddCommand}" />
+                                            <DataTrigger Binding="{Binding Path=IsEdit}" Value="False">
+                                                <Setter Property="Content" Value="STWÓRZ" />
+                                                <Setter Property="Command" Value="{Binding Path=SupplierAddCommand}" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Button.Style>
                             </Button>
-                            <Button Grid.Row="0"
+                            <Button
+                                Grid.Row="0"
                                 Grid.Column="2"
                                 Width="100"
                                 Height="40"
@@ -157,7 +157,8 @@
                                 Command="{Binding Path=CleanFormCommand}"
                                 Content="ANULUJ"
                                 Style="{StaticResource ResourceKey=ButtonSide}" />
-                            <TextBlock Grid.Row="1"
+                            <TextBlock
+                                Grid.Row="1"
                                 Grid.Column="1"
                                 Grid.ColumnSpan="2"
                                 MaxWidth="260"
@@ -166,7 +167,6 @@
                                 Text="{Binding Path=ErrorMassage}"
                                 Visibility="{Binding Path=HasErrorVisibility}" />
                         </Grid>
-
                     </StackPanel>
                 </StackPanel>
             </Border>

@@ -22,6 +22,7 @@ namespace Shopfloor.Hosts.ConfigurationHost
             _databaseType = _configuration["DatabaseType"] ?? string.Empty;
             _databasePath = _configuration["DatabasePath"] ?? string.Empty;
         }
+
         public IHost GetHost()
         {
             DatabaseConfiguration databaseConfiguration = new()
@@ -50,6 +51,4 @@ namespace Shopfloor.Hosts.ConfigurationHost
             };
         }
     }
-
-
 }

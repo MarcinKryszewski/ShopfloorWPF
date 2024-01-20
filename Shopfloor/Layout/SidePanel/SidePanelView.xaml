@@ -80,7 +80,7 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zadania" />
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding Path=NavigateRequestsCommand}"  Visibility="{Binding Path=HasUserRole}">
+                    <Button Command="{Binding Path=NavigateRequestsCommand}" Visibility="{Binding Path=HasUserRole}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border
                                 Width="24"

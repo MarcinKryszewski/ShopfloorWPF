@@ -37,6 +37,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                 OnPropertyChanged(nameof(Name));
             }
         }
+
         public Supplier? SelectedSupplier
         {
             get => _selectedSupplier;
@@ -58,7 +59,9 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                 OnPropertyChanged(nameof(SelectedSupplier));
             }
         }
+
         public ICollectionView Suppliers => CollectionViewSource.GetDefaultView(_suppliers);
+
         public bool IsEdit
         {
             get => _isEdit;
@@ -68,6 +71,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                 OnPropertyChanged(nameof(IsEdit));
             }
         }
+
         public string ErrorMassage
         {
             get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
@@ -78,6 +82,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                 OnPropertyChanged(nameof(HasErrorVisibility));
             }
         }
+
         public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
 
         public string SearchText
@@ -90,7 +95,6 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                 OnPropertyChanged(nameof(SearchText));
             }
         }
-
 
         public ICommand SupplierAddCommand { get; }
         public ICommand SupplierEditCommand { get; }
@@ -127,6 +131,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                 });
             }
         }
+
         public Task LoadSuppliers()
         {
             _suppliersStore.Load();
@@ -151,6 +156,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                 }
             }
         }
+
         //Updates the list if value existed, ie. after edit
         public async Task UpdateData(Supplier supplierToRemove)
         {

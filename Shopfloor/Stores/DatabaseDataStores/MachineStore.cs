@@ -29,6 +29,7 @@ namespace Shopfloor.Stores.DatabaseDataStores
             IsLoaded = true;
             return Task.CompletedTask;
         }
+
         public async Task Reload()
         {
             IProvider<Machine> provider = _databaseServices.GetRequiredService<MachineProvider>();

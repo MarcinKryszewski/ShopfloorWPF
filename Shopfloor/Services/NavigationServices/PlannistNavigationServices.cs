@@ -34,6 +34,7 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
+
         private static void GetDeploysNavigation(IServiceCollection services)
         {
             services.AddTransient((s) => CreateDeploysViewModel(s));
@@ -46,6 +47,7 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
+
         private static void GetOrdersNavigation(IServiceCollection services)
         {
             services.AddTransient((s) => CreateOrdersViewModel(s));
@@ -58,6 +60,7 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
+
         private static void GetReportsNavigation(IServiceCollection services)
         {
             services.AddTransient((s) => CreateReportsViewModel(s));
@@ -70,6 +73,7 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
+
         private static void GetReservationsNavigation(IServiceCollection services)
         {
             services.AddTransient((s) => CreateReservationsViewModel(s));
@@ -87,18 +91,22 @@ namespace Shopfloor.Services.NavigationServices
         {
             return new ControlPanelViewModel(services);
         }
+
         private static DeploysViewModel CreateDeploysViewModel(IServiceProvider services)
         {
             return new DeploysViewModel(services);
         }
+
         private static OrdersViewModel CreateOrdersViewModel(IServiceProvider services)
         {
             return new OrdersViewModel(services);
         }
+
         private static ReportsViewModel CreateReportsViewModel(IServiceProvider services)
         {
             return new ReportsViewModel();
         }
+
         private static ReservationsViewModel CreateReservationsViewModel(IServiceProvider services)
         {
             return new ReservationsViewModel();

@@ -7,10 +7,9 @@ namespace Shopfloor.Controls.PlaceholderTextBox
 {
     public class PlaceholderTextBoxControl : TextBox
     {
-
-
         public static readonly DependencyProperty PlaceholderProperty =
             DependencyProperty.Register("Placeholder", typeof(string), typeof(PlaceholderTextBoxControl), new PropertyMetadata(string.Empty));
+
         public string Placeholder
         {
             get { return (string)GetValue(PlaceholderProperty); }

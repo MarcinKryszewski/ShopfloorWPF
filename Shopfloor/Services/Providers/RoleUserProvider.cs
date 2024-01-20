@@ -16,37 +16,44 @@ namespace Shopfloor.Services.Providers
         private readonly DatabaseConnectionFactory _database;
 
         #region SQLCommands
+
         private const string _createSQL = @"
             INSERT INTO roles_users (role, user)
             VALUES (@RoleId, @UserId)
             ";
+
         private const string _getAllSQL = @"
             SELECT *
             FROM roles_users
             ";
+
         private const string _deleteSQL = @"
             DELETE
             FROM roles_users
             WHERE role = @RoleId AND user = @UserId
             ";
+
         private const string _getAllForUser = @"
             SELECT *
             FROM roles_users
             WHERE user = @UserId
             ";
+
         private const string _getAllForRole = @"
             SELECT *
             FROM roles_users
             WHERE role = @RoleId
             ";
-        #endregion
+
+        #endregion SQLCommands
 
         public RoleUserProvider(DatabaseConnectionFactory database)
         {
             _database = database;
         }
 
-        #region CRUD        
+        #region CRUD
+
         public async Task<int> Create(RoleUser item)
         {
             using IDbConnection connection = _database.Connect();
@@ -59,6 +66,7 @@ namespace Shopfloor.Services.Providers
 
             return 0;
         }
+
         public async Task<int> Create(int RoleId, int UserId)
         {
             using IDbConnection connection = _database.Connect();
@@ -71,6 +79,7 @@ namespace Shopfloor.Services.Providers
 
             return 0;
         }
+
         public async Task Delete(int roleId, int userId)
         {
             using IDbConnection connection = _database.Connect();
@@ -81,12 +90,14 @@ namespace Shopfloor.Services.Providers
             };
             await connection.ExecuteAsync(_deleteSQL, parameters);
         }
+
         public async Task<IEnumerable<RoleUser>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
             IEnumerable<RoleUserDTO> roleUserDTOs = await connection.QueryAsync<RoleUserDTO>(_getAllSQL);
             return roleUserDTOs.Select(ToRoleUser);
         }
+
         public async Task<IEnumerable<RoleUser>> GetAllForUser(int userId)
         {
             using IDbConnection connection = _database.Connect();
@@ -97,6 +108,7 @@ namespace Shopfloor.Services.Providers
             IEnumerable<RoleUserDTO> roleUserDTOs = await connection.QueryAsync<RoleUserDTO>(_getAllForUser, parameters);
             return roleUserDTOs.Select(ToRoleUser);
         }
+
         public async Task<IEnumerable<RoleUser>> GetAllForRole(int roleId)
         {
             using IDbConnection connection = _database.Connect();
@@ -112,21 +124,22 @@ namespace Shopfloor.Services.Providers
         {
             throw new NotImplementedException();
         }
+
         public Task Update(RoleUser item)
         {
             throw new NotImplementedException();
         }
+
         public Task Delete(int id)
         {
             throw new NotImplementedException();
         }
-        #endregion
+
+        #endregion CRUD
 
         private static RoleUser ToRoleUser(RoleUserDTO item)
         {
             return new RoleUser(item.Role, item.User);
         }
-
-
     }
 }

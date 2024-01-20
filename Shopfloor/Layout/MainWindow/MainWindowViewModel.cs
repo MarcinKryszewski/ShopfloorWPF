@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Layout.Content;
 using Shopfloor.Layout.SidePanel;
+using System;
 
 namespace Shopfloor.Layout.MainWindow
 {
-
     public class MainWindowViewModel
     {
         private readonly SidePanelViewModel _sidePanelViewModel;

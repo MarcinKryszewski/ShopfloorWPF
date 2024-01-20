@@ -15,37 +15,44 @@ namespace Shopfloor.Services.Providers
         private readonly DatabaseConnectionFactory _database;
 
         #region SQLCommands
+
         private const string _createSQL = @"
             INSERT INTO suppliers (name)
             VALUES (@Name)
             ";
+
         private const string _getOneSQL = @"
             SELECT *
             FROM suppliers
             WHERE id = @Id
             ";
+
         private const string _getAllSQL = @"
             SELECT *
             FROM suppliers
             ";
+
         private const string _getAllActiveSQL = @"
             SELECT *
             FROM suppliers
             WHERE active = TRUE
             ";
+
         private const string _updateSQL = @"
             UPDATE suppliers
-            SET 
+            SET
                 name = @Name,
                 active = @Active
             WHERE id = @Id
             ";
+
         private const string _deleteSQL = @"
             DELETE
             FROM suppliers
             WHERE id = @Id
             ";
-        #endregion
+
+        #endregion SQLCommands
 
         public SupplierProvider(DatabaseConnectionFactory database)
         {
@@ -53,6 +60,7 @@ namespace Shopfloor.Services.Providers
         }
 
         #region CRUD
+
         public async Task<int> Create(Supplier item)
         {
             using IDbConnection connection = _database.Connect();
@@ -64,18 +72,21 @@ namespace Shopfloor.Services.Providers
 
             return 0;
         }
+
         public async Task<IEnumerable<Supplier>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
             IEnumerable<SupplierDTO> supplierDTOs = await connection.QueryAsync<SupplierDTO>(_getAllSQL);
             return supplierDTOs.Select(ToSupplier);
         }
+
         public async Task<IEnumerable<Supplier>> GetAllActive()
         {
             using IDbConnection connection = _database.Connect();
             IEnumerable<SupplierDTO> supplierDTOs = await connection.QueryAsync<SupplierDTO>(_getAllActiveSQL);
             return supplierDTOs.Select(ToSupplier);
         }
+
         public async Task<Supplier> GetById(int id)
         {
             using IDbConnection connection = _database.Connect();
@@ -86,6 +97,7 @@ namespace Shopfloor.Services.Providers
             SupplierDTO? supplierDTO = await connection.QuerySingleAsync<SupplierDTO>(_getOneSQL, parameters);
             return ToSupplier(supplierDTO);
         }
+
         public async Task Update(Supplier item)
         {
             using IDbConnection connection = _database.Connect();
@@ -97,6 +109,7 @@ namespace Shopfloor.Services.Providers
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
+
         public async Task Delete(int id)
         {
             using IDbConnection connection = _database.Connect();
@@ -106,7 +119,8 @@ namespace Shopfloor.Services.Providers
             };
             await connection.ExecuteAsync(_deleteSQL, parameters);
         }
-        #endregion
+
+        #endregion CRUD
 
         private static Supplier ToSupplier(SupplierDTO item)
         {

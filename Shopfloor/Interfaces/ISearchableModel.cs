@@ -1,6 +1,6 @@
 ﻿namespace Shopfloor.Interfaces
 {
-    interface ISearchableModel
+    internal interface ISearchableModel
     {
         int? Id { get; }
         string SearchValue { get; }

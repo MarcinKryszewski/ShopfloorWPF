@@ -108,7 +108,6 @@
                         Style="{StaticResource ResourceKey=ErrorTextBlock}"
                         Text="{Binding Path=ErrorMassage}"
                         Visibility="{Binding Path=HasErrorVisibility}" />
-
                 </StackPanel>
             </Border>
         </Grid>

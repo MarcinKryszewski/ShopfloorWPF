@@ -4,7 +4,6 @@ using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
 using System.Threading.Tasks;
 
-
 namespace Shopfloor.Features.Admin.Suppliers.Commands
 {
     public class SupplierEditCommand : CommandBase
@@ -28,8 +27,6 @@ namespace Shopfloor.Features.Admin.Suppliers.Commands
                 (int)selectedSupplier.Id,
                 _viewModel.Name,
                 selectedSupplier.IsActive);
-
-
 
             _ = _provider.Update(supplier);
 

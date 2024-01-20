@@ -8,6 +8,7 @@ namespace Shopfloor.Shared.Commands
         private readonly Action<Exception>? _onException;
 
         private bool _isExecuting;
+
         public bool IsExecuting
         {
             get

@@ -9,21 +9,31 @@ namespace Shopfloor.Database
     public class DatabaseConnectionFactory : IDisposable
     {
         #region Fields
+
         private readonly string _databaseType;
         private readonly IConfiguration _configuration;
         private DbConnection? _connection;
-        #endregion
+
+        #endregion Fields
+
         #region Properties
+
         public string DatabaseType => _databaseType;
-        #endregion
+
+        #endregion Properties
+
         #region Constructors
+
         public DatabaseConnectionFactory(IServiceProvider configurationServices)
         {
             _configuration = configurationServices.GetRequiredService<IConfiguration>();
             _databaseType = _configuration["DatabaseType"] ?? "";
         }
-        #endregion 
-        #region Methods        
+
+        #endregion Constructors
+
+        #region Methods
+
         public DbConnection Connect()
         {
             string connectionString;
@@ -40,6 +50,7 @@ namespace Shopfloor.Database
             }
             return _connection;
         }
+
         public void Dispose()
         {
             if (_connection != null)
@@ -48,6 +59,7 @@ namespace Shopfloor.Database
                 GC.SuppressFinalize(this);
             }
         }
-        #endregion
+
+        #endregion Methods
     }
 }

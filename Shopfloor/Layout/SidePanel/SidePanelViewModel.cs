@@ -31,29 +31,42 @@ namespace Shopfloor.Layout.SidePanel
         private User? User => _userStore.User;
 
         #region Commands
+
         #region Dashboard
+
         public ICommand NavigateDashboardCommand { get; }
-        #endregion
+
+        #endregion Dashboard
+
         #region Mechanic
+
         public ICommand NavigateTasksCommand { get; }
         public ICommand NavigateRequestsCommand { get; }
         public ICommand NavigateMinimalStatesCommand { get; }
-        #endregion
+
+        #endregion Mechanic
+
         #region Plannist
+
         public ICommand NavigateControlPanelCommand { get; }
         public ICommand NavigateOrdersCommand { get; }
         public ICommand NavigateDeploysCommand { get; }
         public ICommand NavigateReservationsCommand { get; }
         public ICommand NavigateReportsCommand { get; }
-        #endregion
+
+        #endregion Plannist
+
         #region Admin
+
         public ICommand NavigateUsersCommand { get; }
         public ICommand NavigateMachinesCommand { get; }
         public ICommand NavigatePartsCommand { get; }
         public ICommand NavigateSuppliersCommand { get; }
         public ICommand NavigatePartTypesCommand { get; }
-        #endregion
-        #endregion
+
+        #endregion Admin
+
+        #endregion Commands
 
         public Visibility HasAdminRole => AdminRole();
         public Visibility HasPlannistRole => PlannistRole();
@@ -101,18 +114,21 @@ namespace Shopfloor.Layout.SidePanel
             if (User.IsAuthorized(777)) return Visibility.Visible;
             return Visibility.Collapsed;
         }
+
         private Visibility PlannistRole()
         {
             if (User is null) return Visibility.Collapsed;
             if (User.IsAuthorized(460)) return Visibility.Visible;
             return Visibility.Collapsed;
         }
+
         private Visibility ManagerRole()
         {
             if (User is null) return Visibility.Collapsed;
             if (User.IsAuthorized(205)) return Visibility.Visible;
             return Visibility.Collapsed;
         }
+
         private Visibility UserRole()
         {
             if (User is null) return Visibility.Collapsed;

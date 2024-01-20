@@ -7,7 +7,6 @@ namespace Shopfloor.Features.Plannist.Deploys
     {
         public DeploysViewModel(IServiceProvider mainServices)
         {
-
         }
     }
 }

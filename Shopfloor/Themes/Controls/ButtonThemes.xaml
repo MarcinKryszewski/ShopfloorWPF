@@ -34,7 +34,6 @@
         </Style.Triggers>
     </Style>
 
-
     <Style
         x:Key="ButtonSide"
         BasedOn="{StaticResource {x:Type Button}}"
@@ -68,5 +67,4 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-
 </ResourceDictionary>

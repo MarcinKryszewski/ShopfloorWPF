@@ -47,14 +47,11 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
         {
             List<Task<int>> tasks = new();
 
-
             foreach (Role role in roles)
             {
                 tasks.Add(Task.Run(() => _roleUserProvider.Create(role.Id, userId)));
             }
             Task.WaitAll(tasks.ToArray());
         }
-
-
     }
 }

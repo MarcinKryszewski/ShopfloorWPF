@@ -27,6 +27,5 @@
             VerticalScrollBarVisibility="Auto">
             <content:ContentView DataContext="{Binding ContentViewModel}" />
         </ScrollViewer>
-
     </Grid>
 </Window>

@@ -7,7 +7,6 @@ namespace Shopfloor.Features.Plannist.Orders
     {
         public OrdersViewModel(IServiceProvider mainServices)
         {
-
         }
     }
 }

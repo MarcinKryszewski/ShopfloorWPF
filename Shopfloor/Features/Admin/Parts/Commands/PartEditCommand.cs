@@ -20,7 +20,6 @@ namespace Shopfloor.Features.Admin.Parts.Commands
 
         public override void Execute(object? parameter)
         {
-
             Part part = new(
                 _viewModel.Id,
                 _viewModel.NamePl,

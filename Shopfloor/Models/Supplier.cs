@@ -1,5 +1,5 @@
-using System;
 using Shopfloor.Interfaces;
+using System;
 
 namespace Shopfloor.Models
 {
@@ -20,6 +20,7 @@ namespace Shopfloor.Models
             _name = name;
             _isActive = isActive;
         }
+
         public Supplier(string? name, bool isActive)
         {
             _name = name;

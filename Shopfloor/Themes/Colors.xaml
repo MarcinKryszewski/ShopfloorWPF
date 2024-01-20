@@ -53,5 +53,4 @@
     <SolidColorBrush x:Key="BrushPurple800">#5E4DB2</SolidColorBrush>
     <SolidColorBrush x:Key="BrushPurple900">#352C63</SolidColorBrush>
     <SolidColorBrush x:Key="BrushPurple1000">#2B273F</SolidColorBrush>
-
 </ResourceDictionary>

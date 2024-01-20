@@ -1,14 +1,12 @@
 using Shopfloor.Interfaces;
-using Shopfloor.Services.Providers;
 using System;
-using System.Threading.Tasks;
 
 namespace Shopfloor.Models
 {
     public class PartType : IEquatable<PartType>, ISearchableModel
     {
         private readonly int? _id;
-        private string _name;
+        private readonly string _name;
 
         public int? Id => _id;
         public string Name => _name;
@@ -28,7 +26,21 @@ namespace Shopfloor.Models
         public bool Equals(PartType? other)
         {
             if (other == null) return false;
+            if (_id == null && other._id == null) return _name == other.Name;
             return _id == other.Id;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is not PartType) return false;
+            if (obj is null) return false;
+            return Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            if (_id != null) return _id.GetHashCode();
+            return _name.GetHashCode();
         }
     }
 }

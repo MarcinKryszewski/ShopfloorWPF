@@ -34,6 +34,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
             _imagePath = imagePath;
             _isActive = isActive;
         }
+
         public override void Execute(object? parameter)
         {
             EditUser();
@@ -55,6 +56,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
             AddRoles();
             RemoveRoles();
         }
+
         private void AddRoles()
         {
             ICollection<Role> roles = _rolesStore.GetAllAssignedRoles();
@@ -64,6 +66,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
                 _ = _roleUserProvider.Create(role.Id, _userId);
             }
         }
+
         private void RemoveRoles()
         {
             ICollection<Role> roles = _rolesStore.GetAllRevokedRoles();

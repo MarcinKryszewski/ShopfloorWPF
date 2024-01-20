@@ -33,6 +33,7 @@ namespace Shopfloor.Features.Admin.Parts.List
 
         public Visibility IsSelected => SelectedPart is null ? Visibility.Collapsed : Visibility.Visible;
         public ICollectionView Parts { get; }
+
         public Part? SelectedPart
         {
             get => _selectedPart.Part;
@@ -46,6 +47,7 @@ namespace Shopfloor.Features.Admin.Parts.List
                 OnPropertyChanged(nameof(SelectedPart));
             }
         }
+
         public string SearchText
         {
             get => _searchText;
@@ -123,11 +125,13 @@ namespace Shopfloor.Features.Admin.Parts.List
             _partsStore.Load();
             return Task.CompletedTask;
         }
+
         public Task LoadPartTypes()
         {
             _partTypesStore.Load();
             return Task.CompletedTask;
         }
+
         public Task LoadSuppliers()
         {
             _suppliersStore.Load();

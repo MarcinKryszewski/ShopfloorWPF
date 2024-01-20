@@ -18,10 +18,12 @@ namespace Shopfloor.Models
         {
             await provider.Create(this);
         }
+
         public async Task Edit(RoleUserProvider provider)
         {
             await provider.Update(this);
         }
+
         public async Task Delete(RoleUserProvider provider)
         {
             await provider.Delete(RoleId, UserId);

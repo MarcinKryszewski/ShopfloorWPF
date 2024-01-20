@@ -15,22 +15,26 @@ namespace Shopfloor.Services.Providers
         private readonly DatabaseConnectionFactory _database;
 
         #region SQLCommands
+
         private const string _createSQL = @"
             INSERT INTO users (username, user_name, user_surname, image_path)
             VALUES (@Username, @Name, @Surname, @ImagePath)
             ";
+
         private const string _getOneSQL = @"
             SELECT *
             FROM users
             WHERE id = @Id
             ";
+
         private const string _getAllSQL = @"
             SELECT *
             FROM users
             ";
+
         private const string _updateSQL = @"
             UPDATE users
-            SET 
+            SET
                 username = @Username,
                 user_name = @Name,
                 user_surname = @Surname,
@@ -38,23 +42,27 @@ namespace Shopfloor.Services.Providers
                 active = @Active
             WHERE id = @Id
             ";
+
         private const string _deleteSQL = @"
             DELETE
             FROM users
             WHERE id = @Id
             ";
+
         private const string _getByUsername = @"
             SELECT *
             FROM users
             WHERE username = @Username AND active = 1
             ";
+
         private const string _setUserActive = @"
             UPDATE users
-            SET                 
+            SET
                 active = @Active
             WHERE id = @Id
         ";
-        #endregion
+
+        #endregion SQLCommands
 
         public UserProvider(DatabaseConnectionFactory database)
         {
@@ -62,6 +70,7 @@ namespace Shopfloor.Services.Providers
         }
 
         #region CRUD
+
         public async Task<int> Create(User item)
         {
             User? existingUser = await GetByUsername(item.Username);
@@ -85,12 +94,14 @@ namespace Shopfloor.Services.Providers
 
             return connection.Query<int>(lastIdSQL).Single();
         }
+
         public async Task<IEnumerable<User>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
             IEnumerable<UserDTO> userDTOs = await connection.QueryAsync<UserDTO>(_getAllSQL);
             return userDTOs.Select(ToUser);
         }
+
         public async Task<User> GetById(int id)
         {
             using IDbConnection connection = _database.Connect();
@@ -100,8 +111,8 @@ namespace Shopfloor.Services.Providers
             };
             UserDTO? userDTO = await connection.QuerySingleAsync<UserDTO>(_getOneSQL, parameters);
             return ToUser(userDTO);
-
         }
+
         public async Task<User?> GetByUsername(string username)
         {
             using IDbConnection connection = _database.Connect();
@@ -113,6 +124,7 @@ namespace Shopfloor.Services.Providers
             if (userDTO == null) return null;
             return ToUser(userDTO);
         }
+
         public async Task Update(User item)
         {
             using IDbConnection connection = _database.Connect();
@@ -127,6 +139,7 @@ namespace Shopfloor.Services.Providers
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
+
         public async Task Delete(int id)
         {
             using IDbConnection connection = _database.Connect();
@@ -136,6 +149,7 @@ namespace Shopfloor.Services.Providers
             };
             await connection.ExecuteAsync(_deleteSQL, parameters);
         }
+
         public async Task SetUserActive(int id, bool isActive)
         {
             using IDbConnection connection = _database.Connect();
@@ -146,7 +160,8 @@ namespace Shopfloor.Services.Providers
             };
             await connection.ExecuteAsync(_setUserActive, parameters);
         }
-        #endregion
+
+        #endregion CRUD
 
         private static User ToUser(UserDTO item)
         {

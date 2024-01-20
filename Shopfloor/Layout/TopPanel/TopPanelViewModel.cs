@@ -25,6 +25,7 @@ namespace Shopfloor.Layout.TopPanel
                 return User.Image;
             }
         }
+
         public bool IsLoggedIn => _userStore.IsUserLoggedIn;
         public string Username => IsLoggedIn ? $"Witaj {User?.Name}!" : "Zaloguj się!";
 

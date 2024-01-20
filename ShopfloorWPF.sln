@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopfloor", "Shopfloor\Shopfloor.csproj", "{57A6193F-93D0-40A7-A483-CC221D277997}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopfloor.Tests", "Shopfloor.Tests\Shopfloor.Tests.csproj", "{849C5C7F-5789-4140-B66B-A6A90A576FAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{57A6193F-93D0-40A7-A483-CC221D277997}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57A6193F-93D0-40A7-A483-CC221D277997}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57A6193F-93D0-40A7-A483-CC221D277997}.Release|Any CPU.Build.0 = Release|Any CPU
+		{849C5C7F-5789-4140-B66B-A6A90A576FAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{849C5C7F-5789-4140-B66B-A6A90A576FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{849C5C7F-5789-4140-B66B-A6A90A576FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{849C5C7F-5789-4140-B66B-A6A90A576FAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

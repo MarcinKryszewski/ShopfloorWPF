@@ -107,7 +107,6 @@
                         Background="Transparent"
                         Text="NOWY UŻYTKOWNIK" />
                 </StackPanel>
-
             </Button>
         </Grid>
 
@@ -189,5 +188,4 @@
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
-
 </UserControl> 

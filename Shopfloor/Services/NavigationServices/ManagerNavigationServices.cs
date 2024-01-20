@@ -6,7 +6,6 @@ namespace Shopfloor.Services.NavigationServices
     {
         public static void Get(IServiceCollection services)
         {
-
         }
     }
 }

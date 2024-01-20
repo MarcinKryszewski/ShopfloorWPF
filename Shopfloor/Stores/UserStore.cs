@@ -22,6 +22,7 @@ namespace Shopfloor.Stores
         {
             get => _isUserLoggedIn;
         }
+
         public string ErrorMassage
         {
             get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
@@ -50,7 +51,6 @@ namespace Shopfloor.Stores
                 return;
             }
 
-
             _user = provider.GetByUsername(username.ToLower()).Result ?? null;
 
             if (_user is null)
@@ -64,7 +64,6 @@ namespace Shopfloor.Stores
             _errorMassage = string.Empty;
             SetUserRoles(_user);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
-
         }
 
         public void Logout()
@@ -99,6 +98,7 @@ namespace Shopfloor.Stores
             IEnumerable<RoleUser> roleUsers = _roleUserProvider.GetAllForUser((int)User.Id).Result;
             return roleUsers;
         }
+
         private IEnumerable<Role> GetRoles()
         {
             return _roleProvider.GetAll().Result;

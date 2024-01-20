@@ -7,7 +7,6 @@ namespace Shopfloor.Features.Dashboard
     {
         public DashboardViewModel(IServiceProvider mainServices)
         {
-
         }
     }
 }

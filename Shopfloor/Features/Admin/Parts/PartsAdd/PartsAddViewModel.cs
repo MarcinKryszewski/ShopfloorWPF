@@ -26,6 +26,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
         private readonly IServiceProvider _databaseServices;
 
         #region modelFields
+
         private string _namePl = string.Empty;
         private string _nameOriginal = string.Empty;
         private PartType? _type;
@@ -34,11 +35,13 @@ namespace Shopfloor.Features.Admin.Parts.Add
         private string _details = string.Empty;
         private Supplier? _producer;
         private Supplier? _supplier;
-        #endregion
+
+        #endregion modelFields
 
         public ICollectionView PartTypes { get; }
         public ICollectionView Suppliers { get; }
         public ICollectionView Producers { get; }
+
         public string ErrorMassage
         {
             get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
@@ -49,9 +52,11 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 OnPropertyChanged(nameof(HasErrorVisibility));
             }
         }
+
         public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
 
         #region model properties
+
         public string NamePl
         {
             get => _namePl;
@@ -61,6 +66,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 OnPropertyChanged(nameof(NamePl));
             }
         }
+
         public string NameOriginal
         {
             get => _nameOriginal;
@@ -70,6 +76,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 OnPropertyChanged(nameof(NameOriginal));
             }
         }
+
         public PartType? Type
         {
             get => _type;
@@ -79,7 +86,9 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 OnPropertyChanged(nameof(Type));
             }
         }
+
         public int? TypeId => Type?.Id;
+
         public int? Index
         {
             get => _index;
@@ -89,6 +98,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 OnPropertyChanged(nameof(Index));
             }
         }
+
         public string Number
         {
             get => _number;
@@ -98,6 +108,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 OnPropertyChanged(nameof(Number));
             }
         }
+
         public string Details
         {
             get => _details;
@@ -107,6 +118,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 OnPropertyChanged(nameof(Details));
             }
         }
+
         public Supplier? Producer
         {
             get => _producer;
@@ -116,7 +128,9 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 OnPropertyChanged(nameof(Producer));
             }
         }
+
         public int? ProducerId => Producer?.Id;
+
         public Supplier? Supplier
         {
             get => _supplier;
@@ -126,13 +140,14 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 OnPropertyChanged(nameof(Supplier));
             }
         }
+
         public int? SupplierId => Supplier?.Id;
-        #endregion
+
+        #endregion model properties
 
         public ICommand ReturnCommand { get; }
         public ICommand CleanFormCommand { get; }
         public ICommand AddPartCommand { get; }
-
 
         public PartsAddViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {

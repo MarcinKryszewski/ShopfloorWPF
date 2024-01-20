@@ -30,6 +30,7 @@ namespace Shopfloor.Features.Admin.Parts.Services
                 );
             });
         }
+
         private static void GetAddNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreatePartsAddViewModel(s, databaseServices));
@@ -42,6 +43,7 @@ namespace Shopfloor.Features.Admin.Parts.Services
                 );
             });
         }
+
         private static void GetEditNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreatePartsEditViewModel(s, databaseServices));
@@ -59,10 +61,12 @@ namespace Shopfloor.Features.Admin.Parts.Services
         {
             return new PartsListViewModel(mainServices, databaseServices);
         }
+
         private static PartsAddViewModel CreatePartsAddViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             return new PartsAddViewModel(mainServices, databaseServices);
         }
+
         private static PartsEditViewModel CreatePartsEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             return new PartsEditViewModel(mainServices, databaseServices);

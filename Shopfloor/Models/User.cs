@@ -73,19 +73,23 @@ namespace Shopfloor.Models
         {
             return await provider.Create(this);
         }
+
         public async Task Edit(UserProvider provider)
         {
             await provider.Update(this);
         }
+
         public async Task Delete(UserProvider provider)
         {
             if (Id is null) return;
             await provider.Delete((int)Id);
         }
+
         public void AddRole(Role role)
         {
             _roles.Add(role);
         }
+
         public bool IsAuthorized(int roleValue)
         {
             return _roles.Any(role => role.Value == roleValue);

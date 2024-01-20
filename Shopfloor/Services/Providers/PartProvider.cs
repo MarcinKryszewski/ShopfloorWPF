@@ -15,27 +15,32 @@ namespace Shopfloor.Services.Providers
         private readonly DatabaseConnectionFactory _database;
 
         #region SQLCommands
+
         private const string _createSQL = @"
             INSERT INTO parts (name_pl, name_original, type, indeks, number, details, producer, supplier)
             VALUES (@NamePl, @NameOriginal, @TypeId, @Indeks, @Number, @Details, @ProducerId, @SupplierId)
             ";
+
         private const string _getOneSQL = @"
             SELECT *
             FROM parts
             WHERE id = @Id
             ";
+
         private const string _getAllSQL = @"
             SELECT *
             FROM parts
             ";
+
         private const string _getAllActiveSQL = @"
             SELECT *
             FROM parts
             WHERE active = TRUE
             ";
+
         private const string _updateSQL = @"
             UPDATE parts
-            SET 
+            SET
                 name_pl = @NamePl,
                 name_original = @NameOriginal,
                 type = @TypeId,
@@ -46,12 +51,14 @@ namespace Shopfloor.Services.Providers
                 supplier = @SupplierId
             WHERE id = @Id
             ";
+
         private const string _deleteSQL = @"
             DELETE
             FROM parts
             WHERE id = @Id
             ";
-        #endregion
+
+        #endregion SQLCommands
 
         public PartProvider(DatabaseConnectionFactory database)
         {
@@ -59,6 +66,7 @@ namespace Shopfloor.Services.Providers
         }
 
         #region CRUD
+
         public async Task<int> Create(Part item)
         {
             using IDbConnection connection = _database.Connect();
@@ -77,18 +85,21 @@ namespace Shopfloor.Services.Providers
 
             return 0;
         }
+
         public async Task<IEnumerable<Part>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
             IEnumerable<PartDTO> partDTOs = await connection.QueryAsync<PartDTO>(_getAllSQL);
             return partDTOs.Select(ToPart);
         }
+
         public async Task<IEnumerable<Part>> GetAllActive()
         {
             using IDbConnection connection = _database.Connect();
             IEnumerable<PartDTO> partDTOs = await connection.QueryAsync<PartDTO>(_getAllActiveSQL);
             return partDTOs.Select(ToPart);
         }
+
         public async Task<Part> GetById(int id)
         {
             using IDbConnection connection = _database.Connect();
@@ -99,6 +110,7 @@ namespace Shopfloor.Services.Providers
             PartDTO? partDTO = await connection.QuerySingleAsync<PartDTO>(_getOneSQL, parameters);
             return ToPart(partDTO);
         }
+
         public async Task Update(Part item)
         {
             using IDbConnection connection = _database.Connect();
@@ -116,6 +128,7 @@ namespace Shopfloor.Services.Providers
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
+
         public async Task Delete(int id)
         {
             using IDbConnection connection = _database.Connect();
@@ -125,7 +138,8 @@ namespace Shopfloor.Services.Providers
             };
             await connection.ExecuteAsync(_deleteSQL, parameters);
         }
-        #endregion
+
+        #endregion CRUD
 
         private static Part ToPart(PartDTO item)
         {

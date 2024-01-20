@@ -7,7 +7,6 @@ namespace Shopfloor.Features.Plannist.ControlPanel
     {
         public ControlPanelViewModel(IServiceProvider mainServices)
         {
-
         }
     }
 }

@@ -6,6 +6,7 @@ namespace Shopfloor.Shared.Stores
     public class NavigationStore : INavigationStore
     {
         private ViewModelBase? _currentViewModel;
+
         public ViewModelBase? CurrentViewModel
         {
             get => _currentViewModel;
@@ -25,4 +26,3 @@ namespace Shopfloor.Shared.Stores
         }
     }
 }
-

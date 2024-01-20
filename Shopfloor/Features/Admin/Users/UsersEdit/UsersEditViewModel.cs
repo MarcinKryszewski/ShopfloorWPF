@@ -29,6 +29,7 @@ namespace Shopfloor.Features.Admin.Users.Edit
         private readonly int _selectedUserId;
 
         public string Username => _username ?? string.Empty;
+
         public string Name
         {
             get => _name;
@@ -38,6 +39,7 @@ namespace Shopfloor.Features.Admin.Users.Edit
                 OnPropertyChanged(nameof(Name));
             }
         }
+
         public string Surname
         {
             get => _surname;
@@ -47,7 +49,9 @@ namespace Shopfloor.Features.Admin.Users.Edit
                 OnPropertyChanged(nameof(Surname));
             }
         }
+
         public User? SelectedUser => _selectedUser.SelectedUser;
+
         public string ErrorMassage
         {
             get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
@@ -58,6 +62,7 @@ namespace Shopfloor.Features.Admin.Users.Edit
                 OnPropertyChanged(nameof(HasErrorVisibility));
             }
         }
+
         public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
 
         public ObservableCollection<RoleValue> Roles => _rolesValueStore.Roles;

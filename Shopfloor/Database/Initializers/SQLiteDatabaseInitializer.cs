@@ -24,6 +24,7 @@ namespace Shopfloor.Database.Initializers
                 _connection.Open();
             }
         }
+
         public void CreateDatabase()
         {
             foreach (string command in new SqliteInitCommands().InitCommands)

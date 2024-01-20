@@ -12,6 +12,7 @@ namespace Shopfloor.Database.SQLite
                 part_type_name TEXT,
                 PRIMARY KEY(id AUTOINCREMENT)
             )";
+
         private const string _userSQLCommand = @"
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER,
@@ -22,6 +23,7 @@ namespace Shopfloor.Database.SQLite
                 active INTEGER DEFAULT 1,
                 PRIMARY KEY(id AUTOINCREMENT)
             )";
+
         private const string _rolesSQLCommand = @"
             CREATE TABLE IF NOT EXISTS roles (
                 id INTEGER,
@@ -29,18 +31,21 @@ namespace Shopfloor.Database.SQLite
                 role_value INTEGER,
                 PRIMARY KEY(id AUTOINCREMENT)
             )";
+
         private const string _roleUserSQLCommand = @"
             CREATE TABLE IF NOT EXISTS roles_users (
                 role INTEGER,
-                user INTEGER,                
+                user INTEGER,
                 PRIMARY KEY(role, user),
                 FOREIGN KEY(user) REFERENCES users(Id),
                 FOREIGN KEY(role) REFERENCES roles(Id)
             )";
+
         private const string _initAdminSQLCommand = @"
             INSERT INTO users (username, user_name, user_surname, image_path)
             VALUES ('@dm1n', 'Admin', 'Admin', '')
             ";
+
         private const string _initRolesSQLCommand = @"
             BEGIN TRANSACTION;
             INSERT INTO roles (role_name, role_value) VALUES ('admin', 777);
@@ -49,6 +54,7 @@ namespace Shopfloor.Database.SQLite
             INSERT INTO roles (role_name, role_value) VALUES ('manager', 205);
             COMMIT;
             ";
+
         private const string _initAdminRolesSQLCommand = @"
             BEGIN TRANSACTION;
             INSERT INTO roles_users (role, user) VALUES (1,1);
@@ -57,6 +63,7 @@ namespace Shopfloor.Database.SQLite
             INSERT INTO roles_users (role, user) VALUES (4,1);
             COMMIT;
             ";
+
         private const string _machinesSQLCommand = @"
             CREATE TABLE IF NOT EXISTS machines (
                 id INTEGER,
@@ -66,12 +73,14 @@ namespace Shopfloor.Database.SQLite
                 active INTEGER DEFAULT 1,
                 PRIMARY KEY(id)
             )";
+
         private const string _parts_typesSQLCommand = @"
             CREATE TABLE IF NOT EXISTS parts_types (
                 id INTEGER,
                 part_type_name TEXT,
                 PRIMARY KEY(id)
             )";
+
         private const string _suppliersSQLCommand = @"
             CREATE TABLE IF NOT EXISTS suppliers (
                 id INTEGER,
@@ -79,6 +88,7 @@ namespace Shopfloor.Database.SQLite
                 active INTEGER DEFAULT 1,
                 PRIMARY KEY(id)
             )";
+
         private const string _partsSQLCommand = @"
             CREATE TABLE parts (
                 id INTEGER,
@@ -95,13 +105,14 @@ namespace Shopfloor.Database.SQLite
                 FOREIGN KEY(supplier) REFERENCES suppliers(id),
                 FOREIGN KEY(producer) REFERENCES suppliers(id)
             )";
+
         private const string _machines_partsSQLCommand = @"
             CREATE TABLE machines_parts (
                 machine INTEGER,
                 part INTEGER,
                 amount REAL,
-                unit TEXT,                
-                FOREIGN KEY(machine) REFERENCES machines(id),                
+                unit TEXT,
+                FOREIGN KEY(machine) REFERENCES machines(id),
                 FOREIGN KEY(part) REFERENCES parts,
                 PRIMARY KEY(machine,part)
             )";

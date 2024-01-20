@@ -61,10 +61,12 @@ namespace Shopfloor.Services.NavigationServices
         {
             return new MinimalStatesViewModel();
         }
+
         private static RequestsViewModel CreatRequestsViewModel(IServiceProvider services)
         {
             return new RequestsViewModel();
         }
+
         private static TasksMainViewModel CreatTasksViewModel(IServiceProvider services)
         {
             return new TasksMainViewModel();

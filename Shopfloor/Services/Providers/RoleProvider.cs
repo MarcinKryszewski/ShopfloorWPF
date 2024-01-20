@@ -16,16 +16,19 @@ namespace Shopfloor.Services.Providers
         private readonly DatabaseConnectionFactory _database;
 
         #region SQLCommands
+
         private const string _getOneSQL = @"
             SELECT *
             FROM roles
             WHERE id = @Id
             ";
+
         private const string _getAllSQL = @"
             SELECT *
             FROM roles
             ";
-        #endregion
+
+        #endregion SQLCommands
 
         public RoleProvider(DatabaseConnectionFactory database)
         {
@@ -33,16 +36,19 @@ namespace Shopfloor.Services.Providers
         }
 
         #region CRUD
+
         public Task<int> Create(Role item)
         {
             throw new NotImplementedException();
         }
+
         public async Task<IEnumerable<Role>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
             IEnumerable<RoleDTO> roleDTOs = await connection.QueryAsync<RoleDTO>(_getAllSQL);
             return roleDTOs.Select(ToRole);
         }
+
         public async Task<Role> GetById(int id)
         {
             using IDbConnection connection = _database.Connect();
@@ -52,17 +58,19 @@ namespace Shopfloor.Services.Providers
             };
             RoleDTO? roleDTO = await connection.QuerySingleAsync<RoleDTO>(_getOneSQL, parameters);
             return ToRole(roleDTO);
-
         }
+
         public Task Update(Role item)
         {
             throw new NotImplementedException();
         }
+
         public Task Delete(int id)
         {
             throw new NotImplementedException();
         }
-        #endregion
+
+        #endregion CRUD
 
         private static Role ToRole(RoleDTO item)
         {

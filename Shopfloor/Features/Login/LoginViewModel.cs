@@ -40,6 +40,7 @@ namespace Shopfloor.Features.Login
                 OnPropertyChanged(nameof(HasErrorVisibility));
             }
         }
+
         public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
 
         public ICommand LoginCommand { get; }
@@ -68,7 +69,6 @@ namespace Shopfloor.Features.Login
 
         public void CleanForm()
         {
-
         }
 
         public bool IsDataValidate(User inputValue)

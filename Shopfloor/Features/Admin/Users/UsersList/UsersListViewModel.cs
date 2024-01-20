@@ -27,6 +27,7 @@ namespace Shopfloor.Features.Admin.Users.List
         private string _searchText = string.Empty;
 
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
+
         public User? SelectedUser
         {
             get => _selectedUser.SelectedUser;
@@ -39,6 +40,7 @@ namespace Shopfloor.Features.Admin.Users.List
                 }
             }
         }
+
         public string SearchText
         {
             get => _searchText;

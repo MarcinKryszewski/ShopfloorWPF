@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Shopfloor.Models;
 
 namespace Shopfloor.Features.Admin.Users.Stores
@@ -14,6 +10,7 @@ namespace Shopfloor.Features.Admin.Users.Stores
 
         public Role Role => _role;
         public bool Dirty => _dirty;
+
         public bool Value
         {
             get => _value;
@@ -24,7 +21,6 @@ namespace Shopfloor.Features.Admin.Users.Stores
                     _value = value;
                     _dirty = true;
                 }
-
             }
         }
 

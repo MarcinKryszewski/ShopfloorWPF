@@ -6,6 +6,7 @@ namespace Shopfloor.Shared.Stores
     public class ModalNavigationStore : INavigationStore
     {
         private ViewModelBase? _currentViewModel;
+
         public ViewModelBase? CurrentViewModel
         {
             get => _currentViewModel;

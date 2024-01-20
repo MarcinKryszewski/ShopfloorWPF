@@ -17,6 +17,7 @@ namespace Shopfloor.Layout.TopPanel.Commands
             _userStore = userStore;
             _mainServices = mainServices;
         }
+
         public override void Execute(object? parameter)
         {
             _userStore.Logout();

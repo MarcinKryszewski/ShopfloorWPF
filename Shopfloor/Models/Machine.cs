@@ -17,6 +17,7 @@ namespace Shopfloor.Models
         public string Number { get; }
         public bool IsActive { get; }
         public int? ParentId { get; }
+
         public IList<Machine> Children
         {
             get
@@ -24,6 +25,7 @@ namespace Shopfloor.Models
                 return _children.AsReadOnly();
             }
         }
+
         public IList<MachinePart> Parts => _parts;
         public string Path => _path;
         public string SearchValue => _path.Replace(@"\", "");

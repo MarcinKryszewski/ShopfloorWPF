@@ -36,6 +36,7 @@ namespace Shopfloor.Features.Admin.Users.Add
                 OnPropertyChanged(nameof(Username));
             }
         }
+
         public string Name
         {
             get => _name;
@@ -45,6 +46,7 @@ namespace Shopfloor.Features.Admin.Users.Add
                 OnPropertyChanged(nameof(Name));
             }
         }
+
         public string Surname
         {
             get => _surname;
@@ -54,6 +56,7 @@ namespace Shopfloor.Features.Admin.Users.Add
                 OnPropertyChanged(nameof(Surname));
             }
         }
+
         public string ErrorMassage
         {
             get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
@@ -64,6 +67,7 @@ namespace Shopfloor.Features.Admin.Users.Add
                 OnPropertyChanged(nameof(HasErrorVisibility));
             }
         }
+
         public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
 
         public ObservableCollection<RoleValue> Roles => _rolesValueStore.Roles;
@@ -73,7 +77,6 @@ namespace Shopfloor.Features.Admin.Users.Add
 
         public UsersAddViewModel(IServiceProvider mainServices, IServiceProvider databasServices)
         {
-
             _database = databasServices;
             _rolesValueStore = new();
             SetRoles();
@@ -84,7 +87,6 @@ namespace Shopfloor.Features.Admin.Users.Add
                 databasServices.GetRequiredService<UserProvider>(),
                 databasServices.GetRequiredService<RoleUserProvider>()
             );
-
         }
 
         private void SetRoles()

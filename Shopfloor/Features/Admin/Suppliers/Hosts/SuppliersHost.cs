@@ -1,8 +1,8 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Features.Admin.Suppliers.Services;
 using Shopfloor.Shared.Stores;
+using System;
 
 namespace Shopfloor.Features.Admin.Suppliers.Hosts
 {

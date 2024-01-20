@@ -37,5 +37,4 @@ namespace Shopfloor.Hosts.DatabaseHost
             services.AddSingleton<MachineStore>();
         }
     }
-
 }

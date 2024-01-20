@@ -88,6 +88,7 @@ namespace Shopfloor.Models
                 (_supplier?.Name ?? string.Empty);
             return searchValue;
         }
+
         private string SetInputValue()
         {
             string searchValue = _namePl +
@@ -108,12 +109,14 @@ namespace Shopfloor.Models
             _type = type;
             _typeId = type.Id;
         }
+
         public void SetProducer(Supplier producer)
         {
             if (producer is null) return;
             _producer = producer;
             _producerId = producer.Id;
         }
+
         public void SetSupplier(Supplier supplier)
         {
             if (supplier is null) return;

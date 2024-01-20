@@ -1,6 +1,5 @@
 ﻿using Shopfloor.Features.Admin.PartTypes.List;
 using Shopfloor.Shared.Commands;
-using System;
 
 namespace Shopfloor.Features.Admin.PartTypes.Commands
 {
@@ -12,6 +11,7 @@ namespace Shopfloor.Features.Admin.PartTypes.Commands
         {
             _viewModel = viewModel;
         }
+
         public override void Execute(object? parameter)
         {
             _viewModel.CleanForm();

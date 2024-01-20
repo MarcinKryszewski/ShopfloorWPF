@@ -1,4 +1,6 @@
-﻿using Shopfloor.Interfaces;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Admin.PartTypes.Commands;
+using Shopfloor.Interfaces;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
 using Shopfloor.Shared.ViewModels;
@@ -12,8 +14,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.PartTypes.Commands;
 
 namespace Shopfloor.Features.Admin.PartTypes.List
 {
@@ -37,6 +37,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
                 OnPropertyChanged(nameof(Name));
             }
         }
+
         public PartType? SelectedPartType
         {
             get => _selectedPartType;
@@ -58,7 +59,9 @@ namespace Shopfloor.Features.Admin.PartTypes.List
                 OnPropertyChanged(nameof(SelectedPartType));
             }
         }
+
         public ICollectionView PartTypes => CollectionViewSource.GetDefaultView(_partTypes);
+
         public bool IsEdit
         {
             get => _isEdit;
@@ -68,6 +71,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
                 OnPropertyChanged(nameof(IsEdit));
             }
         }
+
         public string ErrorMassage
         {
             get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
@@ -78,6 +82,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
                 OnPropertyChanged(nameof(HasErrorVisibility));
             }
         }
+
         public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
 
         public string SearchText
@@ -126,6 +131,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
                 });
             }
         }
+
         public Task LoadPartTypes()
         {
             _partTypesStore.Load();
@@ -150,6 +156,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
                 }
             }
         }
+
         //Updates the list if value existed, ie. after edit
         public async Task UpdateData(PartType partTypeToRemove)
         {

@@ -4,7 +4,6 @@ using Shopfloor.Services.Providers;
 using Shopfloor.Shared.Commands;
 using System.Threading.Tasks;
 
-
 namespace Shopfloor.Features.Admin.Suppliers.Commands
 {
     public class SupplierAddCommand : CommandBase
