@@ -6,69 +6,73 @@ namespace Shopfloor.Models
 {
     public class Machine : ISearchableModel, IEquatable<Machine>
     {
-        private readonly List<Machine> _children;
-        private readonly List<MachinePart> _parts;
+        private readonly List<Machine> _children = [];
+        private readonly List<MachinePart> _parts = [];
         private Machine? _parent;
         private readonly int? _id;
-
         private string _path;
+        private readonly string _name;
+        private readonly string _number;
+        private readonly bool _isActive;
+        private int? _parentId;
         public int? Id => _id;
-        public string Name { get; }
-        public string Number { get; }
-        public bool IsActive { get; }
-        public int? ParentId { get; }
-
-        public IList<Machine> Children
-        {
-            get
-            {
-                return _children.AsReadOnly();
-            }
-        }
-
+        public string Name => _name;
+        public string Number => _number;
+        public bool IsActive => _isActive;
+        public int? ParentId => _parentId;
+        public IList<Machine> Children => _children.AsReadOnly();
         public IList<MachinePart> Parts => _parts;
         public string Path => _path;
         public string SearchValue => _path.Replace(@"\", "");
-
         public Machine(int id, string name, string number, int? parent, bool isActive)
         {
             _id = id;
-            Name = name;
-            Number = number;
-            ParentId = parent;
-            _children = [];
-            _parts = [];
+            _name = name;
+            _number = number;
+            _parentId = parent;
             _path = Name;
-            IsActive = isActive;
+            _isActive = isActive;
         }
-
         public Machine(string name, string number, int? parent, bool isActive)
         {
-            Name = name;
-            Number = number;
-            ParentId = parent;
-            _children = [];
-            _parts = [];
+            _name = name;
+            _name = name;
+            _number = number;
+            _parentId = parent;
             _path = Name;
-            IsActive = isActive;
+            _isActive = isActive;
         }
-
         public void AddChild(Machine machine)
         {
             _children.Add(machine);
             machine.SetParent(this);
         }
-
-        public void SetParent(Machine machine)
+        public void SetParent(Machine parent)
         {
-            _path = $@"{machine.Path}\{_path}";
-            _parent = machine;
+            _path = $@"{parent.Path}\{_path}";
+            _parent = parent;
+            _parentId = parent.Id;
         }
-
         public bool Equals(Machine? other)
         {
             if (other == null) return false;
+            if (_id == null && other._id == null)
+            {
+                return _name == other.Name && _number == other.Number;
+            }
+
             return _id == other.Id;
+        }
+        public override bool Equals(object? obj)
+        {
+            if (obj is null) return false;
+            if (obj is not PartType) return false;
+            return Equals(obj);
+        }
+        public override int GetHashCode()
+        {
+            if (_id != null) return _id.GetHashCode();
+            return _name.GetHashCode();
         }
     }
 }
