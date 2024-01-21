@@ -12,6 +12,6 @@ namespace Shopfloor.Interfaces
 
         public void ClearErrors(string propertyName);
 
-        public bool IsDataValidate();
+        public bool IsDataValidate { get; }
     }
 }

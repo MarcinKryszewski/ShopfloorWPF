@@ -9,8 +9,8 @@ namespace Shopfloor.Features.Admin.Parts.Commands
 {
     public class PartAddCommand : CommandBase
     {
-        private PartsAddViewModel _viewModel;
-        private PartProvider _partProvider;
+        private readonly PartsAddViewModel _viewModel;
+        private readonly PartProvider _partProvider;
 
         public PartAddCommand(PartsAddViewModel partsAddViewModel, IServiceProvider databaseServices)
         {
@@ -30,7 +30,7 @@ namespace Shopfloor.Features.Admin.Parts.Commands
                 _viewModel.ProducerId,
                 _viewModel.SupplierId
             );
-            if (!_viewModel.IsDataValidate()) return;
+            if (!_viewModel.IsDataValidate) return;
 
             _ = _partProvider.Create(part);
 

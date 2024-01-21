@@ -37,9 +37,7 @@ namespace Shopfloor.Features.Admin.Machines.List
         private int _parentId;
         private Machine? _selectedMachine;
         private Machine? _selectedParent;
-        #region VALIDATORS
         private readonly MachineValidation _machineValidation;
-        #endregion VALIDATORS
         public MachinesListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
@@ -67,7 +65,6 @@ namespace Shopfloor.Features.Admin.Machines.List
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public ICommand CleanCommand { get; }
         public bool HasErrors => _propertyErrors.Count != 0;
-        #region model properties
         public int? Id => _id;
         public string MachineName
         {
@@ -98,7 +95,6 @@ namespace Shopfloor.Features.Admin.Machines.List
                 OnPropertyChanged(nameof(ParentId));
             }
         }
-        #endregion model properties
         public bool IsEdit
         {
             get => _isEdit;
@@ -119,7 +115,7 @@ namespace Shopfloor.Features.Admin.Machines.List
             {
                 _machineSearchText = value;
 
-                if (value.Length == 0 || value == null)
+                if (string.IsNullOrEmpty(value))
                 {
                     MachinesList.Filter = null;
                 }
@@ -138,17 +134,15 @@ namespace Shopfloor.Features.Admin.Machines.List
             set
             {
                 if (value is null) return;
-                MachinesList.Filter = null;
+                if (MachinesList.Filter is not null) MachinesList.Filter = null;
                 _id = value.Id;
-                _machineName = value.Name;
-                _machineNumber = value.Number;
+                MachineName = value.Name;
+                MachineNumber = value.Number;
                 _selectedMachine = value;
-                _isEdit = true;
+                IsEdit = true;
 
+                OnPropertyChanged(nameof(MachineSearchText));
                 OnPropertyChanged(nameof(SelectedMachine));
-                OnPropertyChanged(nameof(MachineName));
-                OnPropertyChanged(nameof(MachineNumber));
-                OnPropertyChanged(nameof(IsEdit));
             }
         }
         public Machine? SelectedParent
@@ -156,17 +150,27 @@ namespace Shopfloor.Features.Admin.Machines.List
             get => _selectedParent;
             set
             {
+                string myName = nameof(SelectedParent);
                 _selectedParent = value;
-                OnPropertyChanged(nameof(SelectedParent));
+                if (_selectedParent != null) _machineValidation.ValidateParent(_selectedParent.Id, myName, Id);
+                OnPropertyChanged(nameof(MachineSearchText));
+                OnPropertyChanged(myName);
             }
         }
         public void AddError(string propertyName, string errorMassage)
         {
-            if (!_propertyErrors.ContainsKey(propertyName))
+            if (!_propertyErrors.TryGetValue(propertyName, out List<string>? value))
+            {
+                value = [];
+                _propertyErrors.Add(propertyName, value);
+            }
+            value?.Add(errorMassage);
+
+            /*if (!_propertyErrors.ContainsKey(propertyName))
             {
                 _propertyErrors.Add(propertyName, []);
             }
-            _propertyErrors[propertyName]?.Add(errorMassage);
+            _propertyErrors[propertyName]?.Add(errorMassage);*/
             OnErrorsChanged(propertyName);
         }
         public void AddToList(Machine machine)
@@ -189,21 +193,28 @@ namespace Shopfloor.Features.Admin.Machines.List
         }
         public void CleanForm()
         {
+            _propertyErrors.Clear();
+            _id = null;
             SelectedMachine = null;
             SelectedParent = null;
             MachineName = string.Empty;
             MachineNumber = string.Empty;
             IsEdit = false;
+
+            OnPropertyChanged(nameof(IsDataValidate));
         }
         public void ClearErrors(string propertyName)
         {
-            _propertyErrors.Remove(propertyName);
+            if (_propertyErrors.Remove(propertyName))
+            {
+                OnErrorsChanged(propertyName);
+            }
         }
         public IEnumerable GetErrors(string? propertyName)
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
         }
-        public bool IsDataValidate() => !HasErrors;
+        public bool IsDataValidate => !HasErrors;
         public Task LoadMachines()
         {
             _machineStore.Load();

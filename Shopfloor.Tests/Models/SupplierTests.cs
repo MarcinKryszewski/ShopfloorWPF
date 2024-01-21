@@ -3,7 +3,7 @@ using Shopfloor.Models;
 
 namespace Shopfloor.Tests.Models
 {
-    public class PartTypeTests
+    public class SupplierTests
     {
         [Theory]
         [InlineData(1, "Test")]
@@ -12,10 +12,10 @@ namespace Shopfloor.Tests.Models
         public void GetHashCode_ConstructorWithId_HashCodeOfId(int id, string name)
         {
             //Arrange
-            PartType partType = new(id, name);
+            Supplier supplier = new(id, name, true);
 
             //Act
-            int hashCode = partType.GetHashCode();
+            int hashCode = supplier.GetHashCode();
 
             //Assert
             hashCode.Should().Be(id.GetHashCode());
@@ -29,10 +29,10 @@ namespace Shopfloor.Tests.Models
         public void GetHashCode_ConstructorWithoutId_HashCodeOfName(int id, string name)
         {
             //Arrange
-            PartType partType = new(name);
+            Supplier supplier = new(name, true);
 
             //Act
-            int hashCode = partType.GetHashCode();
+            int hashCode = supplier.GetHashCode();
 
             //Assert
             hashCode.Should().Be(name.GetHashCode());
@@ -46,12 +46,12 @@ namespace Shopfloor.Tests.Models
         public void Equals_ObjectWithSameId_ReturnTrue(int id, string name1, string name2)
         {
             //Arrange
-            PartType partType = new(id, name1);
-            PartType partTypeCompared = new(id, name2);
+            Supplier supplier = new(id, name1, true);
+            Supplier supplierCompared = new(id, name2, true);
 
             //Act
-            bool result = partType.Equals(partTypeCompared);
-            bool resultReverser = partTypeCompared.Equals(partType);
+            bool result = supplier.Equals(supplierCompared);
+            bool resultReverser = supplierCompared.Equals(supplier);
 
             //Assert
             result.Should().BeTrue();
@@ -64,12 +64,12 @@ namespace Shopfloor.Tests.Models
         public void Equals_OneObjectWithoutId_ReturnFalse(int id, string name1, string name2)
         {
             //Arrange
-            PartType partType = new(name1);
-            PartType partTypeCompared = new(id, name2);
+            Supplier supplier = new(name1, true);
+            Supplier supplierCompared = new(id, name2, true);
 
             //Act
-            bool result = partType.Equals(partTypeCompared);
-            bool resultReverser = partTypeCompared.Equals(partType);
+            bool result = supplier.Equals(supplierCompared);
+            bool resultReverser = supplierCompared.Equals(supplier);
 
             //Assert
             result.Should().BeFalse();
@@ -82,12 +82,12 @@ namespace Shopfloor.Tests.Models
         public void Equals_BothObjectsWithoutIdsSameProperties_ReturnTrue(string name)
         {
             //Arrange
-            PartType partType = new(name);
-            PartType partTypeCompared = new(name);
+            Supplier supplier = new(name, true);
+            Supplier supplierCompared = new(name, true);
 
             //Act
-            bool result = partType.Equals(partTypeCompared);
-            bool resultReverser = partTypeCompared.Equals(partType);
+            bool result = supplier.Equals(supplierCompared);
+            bool resultReverser = supplierCompared.Equals(supplier);
 
             //Assert
             result.Should().BeTrue();
@@ -100,12 +100,12 @@ namespace Shopfloor.Tests.Models
         public void Equals_BothWithoutIdsDifferentProperties_ReturnFalse(string name1, string name2)
         {
             //Arrange
-            PartType partType = new(name1);
-            PartType partTypeCompared = new(name2);
+            Supplier supplier = new(name1, true);
+            Supplier supplierCompared = new(name2, true);
 
             //Act
-            bool result = partType.Equals(partTypeCompared);
-            bool resultReverser = partTypeCompared.Equals(partType);
+            bool result = supplier.Equals(supplierCompared);
+            bool resultReverser = supplierCompared.Equals(supplier);
 
             //Assert
             result.Should().BeFalse();
@@ -116,10 +116,10 @@ namespace Shopfloor.Tests.Models
         public void Equals_NullObject_ReturnsFalse()
         {
             // Arrange
-            PartType partType = new("Test");
+            Supplier supplier = new("Test", true);
 
             // Act
-            bool result = partType.Equals(null);
+            bool result = supplier.Equals(null);
 
             // Assert
             result.Should().BeFalse();
@@ -129,24 +129,24 @@ namespace Shopfloor.Tests.Models
         public void Equals_ObjectWithDifferentType_ReturnsFalse()
         {
             // Arrange
-            PartType partType = new("Test");
+            Supplier supplier = new("Test", true);
 
             // Act
-            bool result = partType.Equals("not a PartType");
+            bool result = supplier.Equals("not a Supplier");
 
             // Assert
             result.Should().BeFalse();
         }
 
         [Theory]
-        [InlineData("PartType")]
+        [InlineData("Supplier")]
         public void SearchValue_WithName_ReturnsName(string name)
         {
             // Arrange
-            PartType partType = new(1, name);
+            Supplier supplier = new(1, name, true);
 
             // Act
-            string result = partType.SearchValue;
+            string result = supplier.SearchValue;
 
             // Assert
             result.Should().Be(name);
@@ -156,14 +156,30 @@ namespace Shopfloor.Tests.Models
         public void SearchValue_WithEmptyName_ReturnsEmptyString()
         {
             // Arrange
-            PartType partType = new(string.Empty);
+            Supplier supplier = new(string.Empty, true);
 
             // Act
-            string result = partType.SearchValue;
+            string result = supplier.SearchValue;
 
             // Assert
             result.Should().Be(string.Empty);
             result.Should().HaveLength(0);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void IsActive_ShouldReturnValue_Boolean(bool value)
+        {
+            // Arrange
+            Supplier supplier = new("Test", value);
+
+            // Act
+            bool result = supplier.IsActive;
+
+            // Assert
+            result.Should().Be(value);
+            result.Should().NotBe(!value);
         }
     }
 }

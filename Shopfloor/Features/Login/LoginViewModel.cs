@@ -49,7 +49,6 @@ namespace Shopfloor.Features.Login
             ICommand NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(mainServices.GetRequiredService<NavigationService<DashboardViewModel>>());
             _userStore = userProvider.GetRequiredService<UserStore>();
             _userStore.PropertyChanged += OnUserLogin;
-            _userStore.ResetError();
             LoginCommand = new LoginCommand(
                 databaseServices.GetRequiredService<UserProvider>(),
                 _userStore,
@@ -78,9 +77,13 @@ namespace Shopfloor.Features.Login
         }
         public void ClearErrors(string propertyName)
         {
-            _propertyErrors.Remove(propertyName);
+            if (_propertyErrors.Remove(propertyName))
+            {
+                OnErrorsChanged(propertyName);
+            }
             _propertyErrors.Remove("LoginError");
             OnPropertyChanged(nameof(LoginError));
+            OnPropertyChanged(nameof(IsDataValidate));
         }
         public IEnumerable GetErrors(string? propertyName)
         {
@@ -88,17 +91,24 @@ namespace Shopfloor.Features.Login
         }
         public void AddError(string propertyName, string errorMassage)
         {
-            if (!_propertyErrors.ContainsKey(propertyName))
+            if (!_propertyErrors.TryGetValue(propertyName, out List<string>? value))
+            {
+                value = [];
+                _propertyErrors.Add(propertyName, value);
+            }
+            value?.Add(errorMassage);
+
+            /*if (!_propertyErrors.ContainsKey(propertyName))
             {
                 _propertyErrors.Add(propertyName, []);
             }
-            _propertyErrors[propertyName]?.Add(errorMassage);
+            _propertyErrors[propertyName]?.Add(errorMassage);*/
             OnErrorsChanged(propertyName);
             if (propertyName == nameof(LoginError)) OnPropertyChanged(nameof(LoginError));
         }
         public bool HasErrors => _propertyErrors.Count != 0;
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
-        public bool IsDataValidate() => !HasErrors;
+        public bool IsDataValidate => !HasErrors;
     }
 }

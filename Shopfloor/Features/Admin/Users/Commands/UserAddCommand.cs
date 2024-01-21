@@ -29,7 +29,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
         public override void Execute(object? parameter)
         {
             User newUser = new(_viewModel.Username.ToLower(), _viewModel.Name, _viewModel.Surname, "", true);
-            if (!_viewModel.IsDataValidate()) return;
+            if (!_viewModel.IsDataValidate) return;
             //TODO: To move to validation on _viewModel
             int newUserId = newUser.Add(_userProvider).Result;
             if (newUserId < 0)
@@ -45,11 +45,12 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
         private void CreateRoleUserTasks(int userId, ObservableCollection<Role> roles)
         {
-            List<Task<int>> tasks = new();
+            List<Task<int>> tasks = [];
 
             foreach (Role role in roles)
             {
-                tasks.Add(Task.Run(() => _roleUserProvider.Create(role.Id, userId)));
+                if (role.Id == null) continue;
+                tasks.Add(Task.Run(() => _roleUserProvider.Create((int)role.Id, userId)));
             }
             Task.WaitAll(tasks.ToArray());
         }

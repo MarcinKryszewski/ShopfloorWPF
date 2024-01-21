@@ -95,7 +95,7 @@ namespace Shopfloor.Features.Admin.Users.Add
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
         }
-        public bool IsDataValidate() => !HasErrors;
+        public bool IsDataValidate => !HasErrors;
         public void ReloadData()
         {
             throw new NotImplementedException();

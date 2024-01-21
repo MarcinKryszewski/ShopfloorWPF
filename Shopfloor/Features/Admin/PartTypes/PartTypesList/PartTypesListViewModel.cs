@@ -117,7 +117,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
         }
-        public bool IsDataValidate() => !HasErrors;
+        public bool IsDataValidate => !HasErrors;
         public async Task LoadData(IServiceProvider databaseServices)
         {
             List<Task> tasks = [];

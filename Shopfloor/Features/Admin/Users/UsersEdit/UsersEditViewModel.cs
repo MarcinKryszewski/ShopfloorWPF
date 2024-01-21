@@ -54,6 +54,7 @@ namespace Shopfloor.Features.Admin.Users.Edit
         public ICommand BackToListCommand { get; }
         public ICommand EditUserCommand { get; }
         public bool HasErrors => _propertyErrors.Count != 0;
+        public bool IsDataValidate => !HasErrors;
         public string Name
         {
             get => _name;
@@ -110,7 +111,6 @@ namespace Shopfloor.Features.Admin.Users.Edit
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
         }
-        public bool IsDataValidate() => !HasErrors;
         public void ReloadData()
         {
             throw new NotImplementedException();

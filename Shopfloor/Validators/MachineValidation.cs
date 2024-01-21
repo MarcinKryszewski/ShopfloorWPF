@@ -26,5 +26,18 @@ namespace Shopfloor.Validators
             if (value == null) _inputForm.AddError(propertyName, "Wprowadź nazwę maszyny");
         }
         #endregion NAME
+        #region PARENT
+        public void ValidateParent(int? value, string propertyName, int? machineId)
+        {
+            _inputForm?.ClearErrors(propertyName);
+            Parent_CheckTheSame(value, propertyName, machineId);
+        }
+        private void Parent_CheckTheSame(int? value, string propertyName, int? machineId)
+        {
+            if (value == null) return;
+            if (machineId == null) return;
+            if (value == machineId) _inputForm.AddError(propertyName, "Maszyna nie może być swoją maszyną nadrzędną");
+        }
+        #endregion
     }
 }

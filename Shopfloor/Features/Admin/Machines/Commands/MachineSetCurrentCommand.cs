@@ -22,7 +22,7 @@ namespace Shopfloor.Features.Admin.Machines.Commands
             Machine machine = (Machine)parameter;
             _viewModel.SelectedMachine = machine;
 
-            _viewModel.MachinesList.Filter = null;
+            //_viewModel.MachinesList.Filter = null;
             if (machine.ParentId == null)
             {
                 _viewModel.MachinesList.Filter = null;
@@ -31,6 +31,7 @@ namespace Shopfloor.Features.Admin.Machines.Commands
             }
             IEnumerable<Machine> source = _viewModel.MachinesList.SourceCollection.OfType<Machine>();
             _viewModel.SelectedParent = source.FirstOrDefault(m => m.Id == machine.ParentId);
+            //_viewModel.MachinesList.Filter = null;
         }
     }
 }

@@ -128,6 +128,7 @@
                         Margin="0,30,0,0"
                         Command="{Binding Path=LoginCommand}"
                         Content="ZALOGUJ SIĘ"
+                        IsEnabled="{Binding Path=IsDataValidate}"
                         Style="{StaticResource ButtonMain}" />
                     <TextBlock
                         MinHeight="0"

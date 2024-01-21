@@ -164,7 +164,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
         }
-        public bool IsDataValidate() => !HasErrors;
+        public bool IsDataValidate => !HasErrors;
         public void ReloadData()
         {
             _databaseServices.GetRequiredService<PartsStore>().Load();

@@ -50,7 +50,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
                 _imagePath,
                 _isActive
             );
-            if (!_viewModel.IsDataValidate()) return;
+            if (!_viewModel.IsDataValidate) return;
             _ = _userProvider.Update(user);
             _viewModel.CleanForm();
             AddRoles();
@@ -63,7 +63,8 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
             foreach (Role role in roles)
             {
-                _ = _roleUserProvider.Create(role.Id, _userId);
+                if (role.Id is null) continue;
+                _ = _roleUserProvider.Create((int)role.Id, _userId);
             }
         }
 
@@ -73,7 +74,8 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
             foreach (Role role in roles)
             {
-                _ = _roleUserProvider.Delete(role.Id, _userId);
+                if (role.Id is null) continue;
+                _ = _roleUserProvider.Delete((int)role.Id, _userId);
             }
         }
     }

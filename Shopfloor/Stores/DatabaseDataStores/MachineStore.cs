@@ -11,31 +11,25 @@ namespace Shopfloor.Stores.DatabaseDataStores
 {
     public class MachineStore : IDataStore<Machine>
     {
-        private IEnumerable<Machine> _data = Enumerable.Empty<Machine>();
         private readonly IServiceProvider _databaseServices;
-
-        public IEnumerable<Machine> Data => _data;
-        public bool IsLoaded { get; private set; }
-
+        private IEnumerable<Machine> _data = Enumerable.Empty<Machine>();
         public MachineStore(IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
         }
-
+        public IEnumerable<Machine> Data => _data;
+        public bool IsLoaded { get; private set; }
         public Task Load()
         {
-            IProvider<Machine> provider = _databaseServices.GetRequiredService<MachineProvider>();
+            MachineProvider provider = _databaseServices.GetRequiredService<MachineProvider>();
             _data = provider.GetAll().Result;
             IsLoaded = true;
             return Task.CompletedTask;
         }
-
         public async Task Reload()
         {
-            IProvider<Machine> provider = _databaseServices.GetRequiredService<MachineProvider>();
+            MachineProvider provider = _databaseServices.GetRequiredService<MachineProvider>();
             _data = await provider.GetAll();
-            //IsLoaded = true;
-            //return Task.CompletedTask;
         }
     }
 }

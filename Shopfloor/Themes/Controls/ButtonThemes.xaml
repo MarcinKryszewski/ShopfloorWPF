@@ -31,6 +31,10 @@
                 <Setter Property="Background" Value="{StaticResource BrushPurple900}" />
                 <Setter Property="Foreground" Value="{StaticResource BrushDarkNeutral1000}" />
             </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{StaticResource BrushDarkNeutral300}" />
+                <Setter Property="Foreground" Value="{StaticResource BrushDarkNeutral1000}" />
+            </Trigger>
         </Style.Triggers>
     </Style>
 

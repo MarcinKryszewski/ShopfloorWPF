@@ -36,8 +36,8 @@ namespace Shopfloor.Models
             Name = name;
             Number = number;
             ParentId = parent;
-            _children = new();
-            _parts = new();
+            _children = [];
+            _parts = [];
             _path = Name;
             IsActive = isActive;
         }
@@ -47,8 +47,8 @@ namespace Shopfloor.Models
             Name = name;
             Number = number;
             ParentId = parent;
-            _children = new();
-            _parts = new();
+            _children = [];
+            _parts = [];
             _path = Name;
             IsActive = isActive;
         }

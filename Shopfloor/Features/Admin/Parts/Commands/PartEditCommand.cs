@@ -9,8 +9,8 @@ namespace Shopfloor.Features.Admin.Parts.Commands
 {
     public class PartEditCommand : CommandBase
     {
-        private PartsEditViewModel _viewModel;
-        private IServiceProvider _databaseServices;
+        private readonly PartsEditViewModel _viewModel;
+        private readonly IServiceProvider _databaseServices;
 
         public PartEditCommand(PartsEditViewModel partsEditViewModel, IServiceProvider databaseServices)
         {
@@ -31,7 +31,7 @@ namespace Shopfloor.Features.Admin.Parts.Commands
                 _viewModel.ProducerId,
                 _viewModel.SupplierId
             );
-            if (!_viewModel.IsDataValidate()) return;
+            if (!_viewModel.IsDataValidate) return;
 
             _ = _databaseServices.GetRequiredService<PartProvider>().Update(part);
             _viewModel.ReloadData();

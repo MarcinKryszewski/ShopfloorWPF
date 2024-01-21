@@ -21,7 +21,6 @@ namespace Shopfloor.Layout.TopPanel.Commands
         public override void Execute(object? parameter)
         {
             _userStore.Logout();
-            _userStore.ResetError();
 
             NavigationService<DashboardViewModel> navigationService = _mainServices.GetRequiredService<NavigationService<DashboardViewModel>>();
             navigationService.Navigate();
