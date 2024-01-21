@@ -31,7 +31,7 @@ namespace Shopfloor.Features.Admin.Parts.Commands
                 _viewModel.ProducerId,
                 _viewModel.SupplierId
             );
-            if (!_viewModel.IsDataValidate(part)) return;
+            if (!_viewModel.IsDataValidate()) return;
 
             _ = _databaseServices.GetRequiredService<PartProvider>().Update(part);
             _viewModel.ReloadData();

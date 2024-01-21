@@ -8,9 +8,11 @@ using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
+using Shopfloor.Validators;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Input;
 
 namespace Shopfloor.Features.Login
@@ -19,32 +21,29 @@ namespace Shopfloor.Features.Login
     {
         private string _username = "";
         private readonly UserStore _userStore;
-
+        private readonly UserValidation _userValidation;
         public string Username
         {
             get => _username;
             set
             {
+                string myName = nameof(Username);
+                _userValidation.ValidateName(value, myName);
                 _username = value;
-                OnPropertyChanged(nameof(Username));
+                OnPropertyChanged(myName);
             }
         }
-
-        public string ErrorMassage
+        public string LoginError
         {
-            get => string.IsNullOrEmpty(_userStore.ErrorMassage) ? string.Empty : _userStore.ErrorMassage;
-            set
+            get
             {
-                _userStore.ErrorMassage = value;
-                OnPropertyChanged(nameof(ErrorMassage));
-                OnPropertyChanged(nameof(HasErrorVisibility));
+                string myName = nameof(LoginError);
+                if (!_propertyErrors.ContainsKey(myName)) return string.Empty;
+                return _propertyErrors["LoginError"]?[0] ?? string.Empty;
             }
         }
-
-        public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
 
         public ICommand LoginCommand { get; }
-
         public LoginViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userProvider)
         {
             ICommand NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(mainServices.GetRequiredService<NavigationService<DashboardViewModel>>());
@@ -56,29 +55,50 @@ namespace Shopfloor.Features.Login
                 _userStore,
                 this,
                 NavigateDashboardCommand);
+            _userValidation = new(this);
         }
-
         private void OnUserLogin(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(_userStore.ErrorMassage))
+            /*if (e.PropertyName == nameof(_userStore.ErrorMassage))
             {
-                OnPropertyChanged(nameof(ErrorMassage));
-                OnPropertyChanged(nameof(HasErrorVisibility));
-            }
+                //OnPropertyChanged(nameof(ErrorMassage));
+            }*/
         }
-
         public void CleanForm()
         {
         }
-
-        public bool IsDataValidate(User inputValue)
-        {
-            return true;
-        }
-
         public void ReloadData()
         {
             throw new NotImplementedException();
         }
+        private void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            OnPropertyChanged(nameof(IsDataValidate));
+        }
+        public void ClearErrors(string propertyName)
+        {
+            _propertyErrors.Remove(propertyName);
+            _propertyErrors.Remove("LoginError");
+            OnPropertyChanged(nameof(LoginError));
+        }
+        public IEnumerable GetErrors(string? propertyName)
+        {
+            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+        }
+        public void AddError(string propertyName, string errorMassage)
+        {
+            if (!_propertyErrors.ContainsKey(propertyName))
+            {
+                _propertyErrors.Add(propertyName, []);
+            }
+            _propertyErrors[propertyName]?.Add(errorMassage);
+            OnErrorsChanged(propertyName);
+            if (propertyName == nameof(LoginError)) OnPropertyChanged(nameof(LoginError));
+        }
+        public bool HasErrors => _propertyErrors.Count != 0;
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+        private readonly Dictionary<string, List<string>?> _propertyErrors = [];
+        public bool IsDataValidate() => !HasErrors;
     }
 }

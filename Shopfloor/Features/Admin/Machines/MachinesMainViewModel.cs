@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Features.Admin.Machines.Hosts;
 using Shopfloor.Features.Admin.Machines.List;
-using Shopfloor.Interfaces;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;

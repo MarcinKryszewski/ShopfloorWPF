@@ -5,7 +5,6 @@ using Shopfloor.Features.Admin.Machines.Stores;
 using Shopfloor.Shared.Stores;
 using System;
 
-
 namespace Shopfloor.Features.Admin.Machines.Hosts
 {
     public class MachinesHost

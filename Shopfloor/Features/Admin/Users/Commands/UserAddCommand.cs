@@ -29,17 +29,17 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
         public override void Execute(object? parameter)
         {
             User newUser = new(_viewModel.Username.ToLower(), _viewModel.Name, _viewModel.Surname, "", true);
-            if (!_viewModel.IsDataValidate(newUser)) return;
+            if (!_viewModel.IsDataValidate()) return;
             //TODO: To move to validation on _viewModel
             int newUserId = newUser.Add(_userProvider).Result;
             if (newUserId < 0)
             {
-                _viewModel.ErrorMassage = $"Użytkownik o loginie {_viewModel.Username} istnieje";
+                //_viewModel.ErrorMassage = $"Użytkownik o loginie {_viewModel.Username} istnieje";
                 return;
             }
             CreateRoleUserTasks(newUserId, _rolesStore.GetAllAssignedRoles());
 
-            _viewModel.ErrorMassage = "Utworzono nowego użytkownika!";
+            //_viewModel.ErrorMassage = "Utworzono nowego użytkownika!";
             _viewModel.CleanForm();
         }
 

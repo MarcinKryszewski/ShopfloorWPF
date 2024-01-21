@@ -1,13 +1,17 @@
-using System.Windows;
+using System.ComponentModel;
 
 namespace Shopfloor.Interfaces
 {
-    public interface IInputForm<T>
+    public interface IInputForm<T> : INotifyDataErrorInfo
     {
-        public string ErrorMassage { get; set; }
-        public Visibility HasErrorVisibility { get; }
         public void CleanForm();
+
         public void ReloadData();
-        public bool IsDataValidate(T inputValue);
+
+        public void AddError(string propertyName, string errorMassage);
+
+        public void ClearErrors(string propertyName);
+
+        public bool IsDataValidate();
     }
 }

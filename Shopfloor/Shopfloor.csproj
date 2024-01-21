@@ -66,4 +66,8 @@
     <Folder Include="Features\Dashboard\Commands\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
 </Project>

@@ -1,38 +1,37 @@
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Interfaces;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
+using Shopfloor.Validators;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
 namespace Shopfloor.Stores
 {
-    public class UserStore : INotifyPropertyChanged
+    public class UserStore : INotifyPropertyChanged, INotifyDataErrorInfo
     {
         private User? _user;
         private bool _isUserLoggedIn;
-        private string _errorMassage = string.Empty;
+        //private string _errorMassage = string.Empty;
         private readonly RoleProvider _roleProvider;
         private readonly RoleUserProvider _roleUserProvider;
+        private readonly UserValidation _userValidation;
+        private readonly Dictionary<string, List<string>?> _propertyErrors = [];
 
         public event PropertyChangedEventHandler? PropertyChanged;
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
         public bool IsUserLoggedIn
         {
             get => _isUserLoggedIn;
         }
 
-        public string ErrorMassage
-        {
-            get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
-            set
-            {
-                _errorMassage = value;
-            }
-        }
-
         public User? User => _user;
+
+        public bool HasErrors => _propertyErrors.Count != 0;
 
         public UserStore(IServiceProvider databaseServices)
         {
@@ -40,28 +39,34 @@ namespace Shopfloor.Stores
             _isUserLoggedIn = false;
             _roleProvider = databaseServices.GetRequiredService<RoleProvider>();
             _roleUserProvider = databaseServices.GetRequiredService<RoleUserProvider>();
+            _userValidation = new(this);
         }
-
-        public void Login(string username, UserProvider provider)
+        public void AutoLogin(string username, UserProvider provider)
         {
-            if (username.Length == 0)
-            {
-                _errorMassage = @$"Podaj nazwę użytkownika";
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ErrorMassage)));
-                return;
-            }
-
             _user = provider.GetByUsername(username.ToLower()).Result ?? null;
-
-            if (_user is null)
+            _userValidation.ValidateAutoLogin(_user, _propertyErrors);
+            if (HasErrors)
             {
-                _errorMassage = $"Nie znaleziono użytkownika" + Environment.NewLine + username;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ErrorMassage)));
+                _propertyErrors.Remove("LoginFailed");
                 return;
             }
 
             _isUserLoggedIn = true;
-            _errorMassage = string.Empty;
+            SetUserRoles(_user!);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
+        }
+        public void Login(string username, UserProvider provider, IInputForm<User> inputForm)
+        {
+            _user = provider.GetByUsername(username.ToLower()).Result ?? null;
+            _userValidation.ValidateLogin(_user, inputForm);
+            if (inputForm.HasErrors)
+            {
+                //_propertyErrors.Remove("LoginError");
+                return;
+            }
+
+            _isUserLoggedIn = true;
+            //_errorMassage = string.Empty;
             SetUserRoles(_user);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
         }
@@ -75,8 +80,8 @@ namespace Shopfloor.Stores
 
         public void ResetError()
         {
-            _errorMassage = string.Empty;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ErrorMassage)));
+            //_errorMassage = string.Empty;
+            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ErrorMassage)));
         }
 
         private void SetUserRoles(User user)
@@ -102,6 +107,11 @@ namespace Shopfloor.Stores
         private IEnumerable<Role> GetRoles()
         {
             return _roleProvider.GetAll().Result;
+        }
+
+        public IEnumerable GetErrors(string? propertyName)
+        {
+            throw new NotImplementedException();
         }
     }
 }

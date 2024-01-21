@@ -50,7 +50,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
                 _imagePath,
                 _isActive
             );
-            if (!_viewModel.IsDataValidate(user)) return;
+            if (!_viewModel.IsDataValidate()) return;
             _ = _userProvider.Update(user);
             _viewModel.CleanForm();
             AddRoles();

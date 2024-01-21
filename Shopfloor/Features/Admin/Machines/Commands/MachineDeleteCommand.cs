@@ -1,5 +1,4 @@
 using Shopfloor.Shared.Commands;
-using System;
 
 namespace Shopfloor.Features.Admin.Machines.Commands
 {
@@ -7,7 +6,6 @@ namespace Shopfloor.Features.Admin.Machines.Commands
     {
         public override void Execute(object? parameter)
         {
-
         }
     }
 }

@@ -16,6 +16,15 @@
     <Color x:Key="ColorDarkNeutral1000">#C7D1DB</Color>
     <Color x:Key="ColorDarkNeutral1100">#DEE4EA</Color>
 
+    <Color x:Key="ColorAccentPink100">#FF859A</Color>
+    <Color x:Key="ColorAccentPink200">#FF90A4</Color>
+    <Color x:Key="ColorAccentPink300">#FF9AAE</Color>
+    <Color x:Key="ColorAccentPink400">#FFA5B7</Color>
+    <Color x:Key="ColorAccentPink500">#FFB0C1</Color>
+    <Color x:Key="ColorAccentPink600">#FFC0CB</Color>
+    <Color x:Key="ColorAccentPink700">#FFD1DC</Color>
+    <Color x:Key="ColorAccentPink800">#FFDCE6</Color>
+
     <SolidColorBrush x:Key="BrushDarkNeutral-100">#101214</SolidColorBrush>
     <SolidColorBrush x:Key="BrushDarkNeutral0">#161A1D</SolidColorBrush>
     <SolidColorBrush x:Key="BrushDarkNeutral100">#1D2125</SolidColorBrush>
@@ -53,4 +62,13 @@
     <SolidColorBrush x:Key="BrushPurple800">#5E4DB2</SolidColorBrush>
     <SolidColorBrush x:Key="BrushPurple900">#352C63</SolidColorBrush>
     <SolidColorBrush x:Key="BrushPurple1000">#2B273F</SolidColorBrush>
+
+    <SolidColorBrush x:Key="BrushAccentPink100">#FF859A</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushAccentPink200">#FF90A4</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushAccentPink300">#FF9AAE</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushAccentPink400">#FFA5B7</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushAccentPink500">#FFB0C1</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushAccentPink600">#FFC0CB</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushAccentPink700">#FFD1DC</SolidColorBrush>
+    <SolidColorBrush x:Key="BrushAccentPink800">#FFDCE6</SolidColorBrush>
 </ResourceDictionary>

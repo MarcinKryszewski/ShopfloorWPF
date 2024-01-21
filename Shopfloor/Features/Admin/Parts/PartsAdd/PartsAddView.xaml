@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Shopfloor.Features.Admin.Parts.Add"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=local:PartsAddViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -38,7 +39,7 @@
                         <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Nazwa części PL" />
                         <TextBox
                             Grid.Row="1"
-                            Height="28"
+                            MinHeight="28"
                             Margin="0,0,0,20"
                             Style="{StaticResource ResourceKey=TextBoxMain}"
                             Text="{Binding Path=NamePl}" />
@@ -46,7 +47,7 @@
                         <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Nazwa części producenta" />
                         <TextBox
                             Grid.Row="1"
-                            Height="28"
+                            MinHeight="28"
                             Margin="0,0,0,20"
                             Style="{StaticResource ResourceKey=TextBoxMain}"
                             Text="{Binding Path=NameOriginal}" />
@@ -68,7 +69,7 @@
                         <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Indeks SAP" />
                         <TextBox
                             Grid.Row="1"
-                            Height="28"
+                            MinHeight="28"
                             Margin="0,0,0,20"
                             Style="{StaticResource ResourceKey=TextBoxMain}"
                             Text="{Binding Path=Index}" />
@@ -76,7 +77,7 @@
                         <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Numer producenta" />
                         <TextBox
                             Grid.Row="1"
-                            Height="28"
+                            MinHeight="28"
                             Margin="0,0,0,20"
                             Style="{StaticResource ResourceKey=TextBoxMain}"
                             Text="{Binding Path=Number}" />
@@ -112,7 +113,7 @@
                         <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Szczegóły" />
                         <TextBox
                             Grid.Row="1"
-                            Height="28"
+                            MinHeight="28"
                             Margin="0,0,0,20"
                             Style="{StaticResource ResourceKey=TextBoxMain}"
                             Text="{Binding Path=Details}" />
@@ -125,12 +126,7 @@
                                 <ColumnDefinition Width="auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                            </Grid.RowDefinitions>
                             <Button
-                                Grid.Row="0"
                                 Grid.Column="1"
                                 Width="100"
                                 Height="40"
@@ -139,7 +135,6 @@
                                 Content="DODAJ"
                                 Style="{StaticResource ResourceKey=ButtonMain}" />
                             <Button
-                                Grid.Row="0"
                                 Grid.Column="2"
                                 Width="100"
                                 Height="40"
@@ -148,7 +143,6 @@
                                 Content="WYCZYŚĆ"
                                 Style="{StaticResource ResourceKey=ButtonSide}" />
                             <Button
-                                Grid.Row="0"
                                 Grid.Column="3"
                                 Width="100"
                                 Height="40"
@@ -156,15 +150,6 @@
                                 Command="{Binding Path=ReturnCommand}"
                                 Content="WRÓĆ"
                                 Style="{StaticResource ResourceKey=ButtonSide}" />
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                Grid.ColumnSpan="3"
-                                MaxWidth="260"
-                                Margin="0,0,0,10"
-                                Style="{StaticResource ResourceKey=ErrorTextBlock}"
-                                Text="{Binding Path=ErrorMassage}"
-                                Visibility="{Binding Path=HasErrorVisibility}" />
                         </Grid>
                     </StackPanel>
                 </StackPanel>

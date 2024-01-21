@@ -73,14 +73,14 @@
                         <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Imię" />
                         <TextBox
                             Grid.Row="2"
-                            Height="28"
+                            MinHeight="28"
                             Margin="0,0,0,20"
                             Style="{StaticResource ResourceKey=TextBoxMain}"
                             Text="{Binding Path=Name}" />
                         <TextBlock Foreground="{StaticResource BrushPurple400}" Text="Nazwisko" />
                         <TextBox
                             Grid.Row="3"
-                            Height="28"
+                            MinHeight="28"
                             Margin="0,0,0,0"
                             Style="{StaticResource ResourceKey=TextBoxMain}"
                             Text="{Binding Path=Surname}" />
@@ -126,10 +126,6 @@
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
                     <Button
                         Grid.Row="0"
                         Grid.Column="1"
@@ -148,15 +144,6 @@
                         Command="{Binding Path=BackToListCommand}"
                         Content="WRÓĆ"
                         Style="{StaticResource ResourceKey=ButtonSide}" />
-                    <TextBlock
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        Grid.ColumnSpan="2"
-                        MaxWidth="260"
-                        Margin="0,0,0,10"
-                        Style="{StaticResource ResourceKey=ErrorTextBlock}"
-                        Text="{Binding Path=ErrorMassage}"
-                        Visibility="{Binding Path=HasErrorVisibility}" />
                 </Grid>
             </Grid>
         </Border>

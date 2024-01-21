@@ -31,12 +31,12 @@ namespace Shopfloor.Features.Admin.Machines.Commands
                 selectedMachine.IsActive
             );
 
-            if (!_viewModel.IsDataValidate(machine)) return;
+            if (_viewModel.HasErrors) return;
 
             _ = _provider.Update(machine);
             _viewModel.ReloadData();
             _viewModel.CleanForm();
-            _viewModel.UpdateList(machine);
+            _viewModel.UpdateList();
         }
     }
 }

@@ -8,10 +8,6 @@ namespace Shopfloor.Models
         private readonly int? _id;
         private readonly string _name;
 
-        public int? Id => _id;
-        public string Name => _name;
-        public string SearchValue => _name ?? string.Empty;
-
         public PartType(int id, string name)
         {
             _id = id;
@@ -22,6 +18,10 @@ namespace Shopfloor.Models
         {
             _name = name;
         }
+
+        public int? Id => _id;
+        public string Name => _name;
+        public string SearchValue => _name ?? string.Empty;
 
         public bool Equals(PartType? other)
         {

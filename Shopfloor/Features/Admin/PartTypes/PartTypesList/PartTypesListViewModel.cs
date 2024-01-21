@@ -6,6 +6,7 @@ using Shopfloor.Services.Providers;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores.DatabaseDataStores;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -19,15 +20,40 @@ namespace Shopfloor.Features.Admin.PartTypes.List
 {
     public class PartTypesListViewModel : ViewModelBase, IInputForm<PartType>
     {
-        private string _name = string.Empty;
-        private PartType? _selectedPartType;
-        private readonly ObservableCollection<PartType> _partTypes = new();
-        private bool _isEdit;
         private readonly IServiceProvider _databaseServices;
-        private string _errorMassage = string.Empty;
-        private string _searchText = string.Empty;
+        private readonly ObservableCollection<PartType> _partTypes = [];
         private readonly PartTypesStore _partTypesStore;
+        private readonly Dictionary<string, List<string>?> _propertyErrors = [];
+        private bool _isEdit;
+        private string _name = string.Empty;
+        private string _searchText = string.Empty;
+        private PartType? _selectedPartType;
+        public PartTypesListViewModel(IServiceProvider databaseServices)
+        {
+            _databaseServices = databaseServices;
+            PartTypeProvider provider = _databaseServices.GetRequiredService<PartTypeProvider>();
 
+            AddCommand = new PartTypeAddCommand(this, provider);
+            EditCommand = new PartTypeEditCommand(this, provider);
+            CleanFormCommand = new CleanFormCommand(this);
+
+            _partTypesStore = _databaseServices.GetRequiredService<PartTypesStore>();
+            Task.Run(() => LoadData(_databaseServices));
+        }
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+        public ICommand AddCommand { get; }
+        public ICommand CleanFormCommand { get; }
+        public ICommand EditCommand { get; }
+        public bool HasErrors => _propertyErrors.Count != 0;
+        public bool IsEdit
+        {
+            get => _isEdit;
+            set
+            {
+                _isEdit = value;
+                OnPropertyChanged(nameof(IsEdit));
+            }
+        }
         public string Name
         {
             get => _name;
@@ -37,7 +63,17 @@ namespace Shopfloor.Features.Admin.PartTypes.List
                 OnPropertyChanged(nameof(Name));
             }
         }
-
+        public ICollectionView PartTypes => CollectionViewSource.GetDefaultView(_partTypes);
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                PartTypes.Filter = FilterList;
+                OnPropertyChanged(nameof(SearchText));
+            }
+        }
         public PartType? SelectedPartType
         {
             get => _selectedPartType;
@@ -53,69 +89,38 @@ namespace Shopfloor.Features.Admin.PartTypes.List
                 {
                     Name = value.Name;
                     IsEdit = true;
-                    ErrorMassage = string.Empty;
                 }
 
                 OnPropertyChanged(nameof(SelectedPartType));
             }
         }
-
-        public ICollectionView PartTypes => CollectionViewSource.GetDefaultView(_partTypes);
-
-        public bool IsEdit
+        public void AddError(string propertyName, string errorMassage)
         {
-            get => _isEdit;
-            set
+            if (!_propertyErrors.ContainsKey(propertyName))
             {
-                _isEdit = value;
-                OnPropertyChanged(nameof(IsEdit));
+                _propertyErrors.Add(propertyName, []);
             }
+            _propertyErrors[propertyName]?.Add(errorMassage);
+            OnErrorsChanged(propertyName);
         }
-
-        public string ErrorMassage
+        public void CleanForm()
         {
-            get => string.IsNullOrEmpty(_errorMassage) ? string.Empty : _errorMassage;
-            set
-            {
-                _errorMassage = value;
-                OnPropertyChanged(nameof(ErrorMassage));
-                OnPropertyChanged(nameof(HasErrorVisibility));
-            }
+            Name = string.Empty;
+            IsEdit = false;
+            SelectedPartType = null;
         }
-
-        public Visibility HasErrorVisibility => string.IsNullOrEmpty(ErrorMassage) ? Visibility.Collapsed : Visibility.Visible;
-
-        public string SearchText
+        public void ClearErrors(string propertyName)
         {
-            get => _searchText;
-            set
-            {
-                _searchText = value;
-                PartTypes.Filter = FilterList;
-                OnPropertyChanged(nameof(SearchText));
-            }
+            _propertyErrors.Remove(propertyName);
         }
-
-        public ICommand AddCommand { get; }
-        public ICommand EditCommand { get; }
-        public ICommand CleanFormCommand { get; }
-
-        public PartTypesListViewModel(IServiceProvider databaseServices)
+        public IEnumerable GetErrors(string? propertyName)
         {
-            _databaseServices = databaseServices;
-            PartTypeProvider provider = _databaseServices.GetRequiredService<PartTypeProvider>();
-
-            AddCommand = new PartTypeAddCommand(this, provider);
-            EditCommand = new PartTypeEditCommand(this, provider);
-            CleanFormCommand = new CleanFormCommand(this);
-
-            _partTypesStore = _databaseServices.GetRequiredService<PartTypesStore>();
-            Task.Run(() => LoadData(_databaseServices));
+            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
         }
-
+        public bool IsDataValidate() => !HasErrors;
         public async Task LoadData(IServiceProvider databaseServices)
         {
-            List<Task> tasks = new();
+            List<Task> tasks = [];
             Application.Current.Dispatcher.Invoke(_partTypes.Clear);
             if (!_partTypesStore.IsLoaded) tasks.Add(LoadPartTypes());
 
@@ -131,13 +136,15 @@ namespace Shopfloor.Features.Admin.PartTypes.List
                 });
             }
         }
-
         public Task LoadPartTypes()
         {
             _partTypesStore.Load();
             return Task.CompletedTask;
         }
-
+        public void ReloadData()
+        {
+            _databaseServices.GetRequiredService<PartTypesStore>().Load();
+        }
         //Updates the list if value didn't exist, ie. after add
         public async Task UpdateData()
         {
@@ -156,7 +163,6 @@ namespace Shopfloor.Features.Admin.PartTypes.List
                 }
             }
         }
-
         //Updates the list if value existed, ie. after edit
         public async Task UpdateData(PartType partTypeToRemove)
         {
@@ -173,15 +179,6 @@ namespace Shopfloor.Features.Admin.PartTypes.List
                 });
             }
         }
-
-        public void CleanForm()
-        {
-            Name = string.Empty;
-            IsEdit = false;
-            ErrorMassage = string.Empty;
-            SelectedPartType = null;
-        }
-
         private bool FilterList(object obj)
         {
             if (obj is PartType partType)
@@ -190,8 +187,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
             }
             return false;
         }
-
-        public bool IsDataValidate(PartType? partType)
+        /*public bool IsDataValidate(PartType? partType)
         {
             if (partType is null)
             {
@@ -213,11 +209,11 @@ namespace Shopfloor.Features.Admin.PartTypes.List
 
             ErrorMassage = string.Empty;
             return true;
-        }
-
-        public void ReloadData()
+        }*/
+        private void OnErrorsChanged(string propertyName)
         {
-            _databaseServices.GetRequiredService<PartTypesStore>().Load();
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            OnPropertyChanged(nameof(IsDataValidate));
         }
     }
 }

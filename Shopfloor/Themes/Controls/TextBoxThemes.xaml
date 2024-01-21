@@ -6,13 +6,46 @@
         TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="{StaticResource BrushDarkNeutral1100}" />
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="2,0,0,0" />
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="{StaticResource BrushPurple800}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Style.Resources>
-            <Style TargetType="{x:Type Border}">
-                <Setter Property="CornerRadius" Value="3" />
-            </Style>
-        </Style.Resources>
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <AdornedElementPlaceholder />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <StackPanel>
+                        <Border
+                            MinHeight="{TemplateBinding MinHeight}"
+                            Padding="{TemplateBinding Padding}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                        <ItemsControl
+                            Margin="0,5,0,0"
+                            FontFamily="Arial"
+                            FontSize="12"
+                            ItemsSource="{TemplateBinding Validation.Errors}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Foreground="{StaticResource ResourceKey=BrushAccentPink500}" Text="{Binding ErrorContent}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

@@ -51,7 +51,7 @@ namespace Shopfloor
             databaseInitializer.Initialize();
 
             //tries to login user automatically
-            _userHost.Services.GetRequiredService<UserStore>().Login(
+            _userHost.Services.GetRequiredService<UserStore>().AutoLogin(
                 Environment.UserName,
                 _databaseHost.Services.GetRequiredService<UserProvider>()
             );

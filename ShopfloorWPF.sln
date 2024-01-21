@@ -5,7 +5,12 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopfloor", "Shopfloor\Shopfloor.csproj", "{57A6193F-93D0-40A7-A483-CC221D277997}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopfloor.Tests", "Shopfloor.Tests\Shopfloor.Tests.csproj", "{849C5C7F-5789-4140-B66B-A6A90A576FAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopfloor.Tests", "Shopfloor.Tests\Shopfloor.Tests.csproj", "{849C5C7F-5789-4140-B66B-A6A90A576FAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{14967000-DFFB-451F-B94F-A7511DCD2646}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
