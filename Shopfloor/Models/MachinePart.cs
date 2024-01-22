@@ -2,19 +2,19 @@ namespace Shopfloor.Models
 {
     public class MachinePart
     {
-        private Part _part;
-        private double _amount;
-        private string _unit;
-
+        public const string DefaultUnit = "szt.";
+        private readonly Part _part;
+        private readonly double _amount;
+        private readonly string _unit;
         public Part Part => _part;
         public double Amount => _amount;
         public string Unit => _unit;
-
-        public MachinePart(Part part, double amount = 1, string unit = "szt.")
+        public MachinePart(Part part, double? amount = 1, string? unit = DefaultUnit)
         {
             _part = part;
-            _amount = amount;
-            _unit = unit;
+            _amount = amount ?? 1;
+            if (unit is null || unit.Trim().Length == 0) _unit = DefaultUnit;
+            else _unit = unit.Trim();
         }
     }
 }
