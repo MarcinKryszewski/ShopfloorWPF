@@ -7,7 +7,7 @@ using Shopfloor.Models;
 
 namespace Shopfloor.Tests.Models
 {
-    public class UserTests
+    public sealed class UserTests
     {
         [Fact]
         public void Id_WhenIdNotProvided_ShouldReturnNull()

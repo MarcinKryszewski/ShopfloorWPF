@@ -1,6 +1,6 @@
 ﻿namespace Shopfloor.Tests.Models
 {
-    public class MachineTests
+    internal sealed class MachineTests
     {
     }
 }

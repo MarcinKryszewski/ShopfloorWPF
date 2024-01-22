@@ -7,7 +7,7 @@ using Shopfloor.Models;
 
 namespace Shopfloor.Tests.Models
 {
-    public class RoleUserTests
+    public sealed class RoleUserTests
     {
         [Theory]
         [InlineData(0)]

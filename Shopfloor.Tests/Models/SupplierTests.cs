@@ -3,7 +3,7 @@ using Shopfloor.Models;
 
 namespace Shopfloor.Tests.Models
 {
-    public class SupplierTests
+    public sealed class SupplierTests
     {
         [Theory]
         [InlineData(1, "Test")]

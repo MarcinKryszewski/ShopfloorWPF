@@ -3,9 +3,9 @@ using Shopfloor.Models;
 
 namespace Shopfloor.Tests.Models
 {
-    public class RoleTests
+    public sealed class RoleTests
     {
-        public class TestDataWithoutId : TheoryData<Role>
+        internal sealed class TestDataWithoutId : TheoryData<Role>
         {
             public TestDataWithoutId()
             {
@@ -14,7 +14,7 @@ namespace Shopfloor.Tests.Models
                 Add(new Role("; Drop Database", -1));
             }
         }
-        public class TestDataWithId : TheoryData<Role>
+        internal sealed class TestDataWithId : TheoryData<Role>
         {
             public TestDataWithId()
             {

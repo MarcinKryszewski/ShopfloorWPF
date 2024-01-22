@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Shopfloor.Models;
 
 namespace Shopfloor.Tests.Models
 {
-    public class MachinePartTests
+    public sealed class MachinePartTests
     {
         [Theory]
         [InlineData(double.MinValue)]
