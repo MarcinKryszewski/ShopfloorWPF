@@ -13,20 +13,5 @@ namespace Shopfloor.Models
             RoleId = roleId;
             UserId = userId;
         }
-
-        public async Task Add(RoleUserProvider provider)
-        {
-            await provider.Create(this);
-        }
-
-        public async Task Edit(RoleUserProvider provider)
-        {
-            await provider.Update(this);
-        }
-
-        public async Task Delete(RoleUserProvider provider)
-        {
-            await provider.Delete(RoleId, UserId);
-        }
     }
 }
