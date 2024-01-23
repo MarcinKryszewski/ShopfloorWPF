@@ -12,10 +12,8 @@ namespace Shopfloor.Tests.Converters
             // Arrange
             BooleanReverseConverter converter = new();
             bool input = false;
-
             // Act
-            object result = converter.Convert(input, typeof(object), null, CultureInfo.InvariantCulture);
-
+            object result = converter.Convert(input, typeof(object), new object(), CultureInfo.InvariantCulture);
             // Assert
             result.Should().Be(true);
         }
@@ -24,11 +22,9 @@ namespace Shopfloor.Tests.Converters
         {
             // Arrange
             BooleanReverseConverter converter = new();
-            object input = "someValue"; // Not a bool
-
+            object input = "someValue";
             // Act
-            object result = converter.Convert(input, typeof(object), null, CultureInfo.InvariantCulture);
-
+            object result = converter.Convert(input, typeof(object), new object(), CultureInfo.InvariantCulture);
             // Assert
             result.Should().Be(input);
         }
@@ -39,7 +35,7 @@ namespace Shopfloor.Tests.Converters
             BooleanReverseConverter converter = new();
             bool input = true;
             // Act
-            object result = converter.Convert(input, typeof(object), null, CultureInfo.InvariantCulture);
+            object result = converter.Convert(input, typeof(object), new object(), CultureInfo.InvariantCulture);
             // Assert
             result.Should().Be(false);
         }
@@ -48,10 +44,10 @@ namespace Shopfloor.Tests.Converters
         {
             // Arrange
             BooleanReverseConverter converter = new();
-
-            // Act and Assert
-            FluentActions.Invoking(() => converter.ConvertBack(null, null, null, null))
-                .Should().Throw<NotImplementedException>();
+            // Act
+            Action result = () => converter.ConvertBack(new object(), typeof(object), new object(), CultureInfo.InvariantCulture);
+            // Assert
+            result.Should().Throw<NotImplementedException>();
         }
     }
 }
