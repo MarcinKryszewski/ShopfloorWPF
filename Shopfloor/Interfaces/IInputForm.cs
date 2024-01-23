@@ -1,3 +1,4 @@
+using System.Collections;
 using System.ComponentModel;
 
 namespace Shopfloor.Interfaces

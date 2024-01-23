@@ -19,7 +19,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Machines.List
 {
-    public class MachinesListViewModel : ViewModelBase, IInputForm<Machine>
+    public sealed partial class MachinesListViewModel
     {
         private readonly IServiceProvider _databaseServices;
         //treeview needs separate collection, which has only root nodes in it
@@ -27,7 +27,7 @@ namespace Shopfloor.Features.Admin.Machines.List
         private readonly ObservableCollection<Machine> _machines;
         //this one is for treeview
         private readonly List<Machine> _machinesAll;
-        private readonly Dictionary<string, List<string>?> _propertyErrors = [];
+
         private int? _id;
         private bool _isEdit;
         private string _machineName = string.Empty;
@@ -63,9 +63,7 @@ namespace Shopfloor.Features.Admin.Machines.List
 
             _machineValidation = new(this);
         }
-        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public ICommand CleanCommand { get; }
-        public bool HasErrors => _propertyErrors.Count != 0;
         public int? Id => _id;
         public string MachineName
         {
@@ -168,22 +166,6 @@ namespace Shopfloor.Features.Admin.Machines.List
                 OnPropertyChanged(myName);
             }
         }
-        public void AddError(string propertyName, string errorMassage)
-        {
-            if (!_propertyErrors.TryGetValue(propertyName, out List<string>? value))
-            {
-                value = [];
-                _propertyErrors.Add(propertyName, value);
-            }
-            value?.Add(errorMassage);
-
-            /*if (!_propertyErrors.ContainsKey(propertyName))
-            {
-                _propertyErrors.Add(propertyName, []);
-            }
-            _propertyErrors[propertyName]?.Add(errorMassage);*/
-            OnErrorsChanged(propertyName);
-        }
         public void AddToList(Machine machine)
         {
             _machinesAll.Add(machine);
@@ -202,39 +184,10 @@ namespace Shopfloor.Features.Admin.Machines.List
                 if (item.ParentId is null) AddRoot(item);
             }
         }
-        public void CleanForm()
-        {
-            _propertyErrors.Clear();
-            _id = null;
-            SelectedMachine = null;
-            SelectedParent = null;
-            MachineName = string.Empty;
-            MachineNumber = string.Empty;
-            SapNumber = string.Empty;
-            IsEdit = false;
-
-            OnPropertyChanged(nameof(IsDataValidate));
-        }
-        public void ClearErrors(string propertyName)
-        {
-            if (_propertyErrors.Remove(propertyName))
-            {
-                OnErrorsChanged(propertyName);
-            }
-        }
-        public IEnumerable GetErrors(string? propertyName)
-        {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
-        }
-        public bool IsDataValidate => !HasErrors;
         public Task LoadMachines()
         {
             _machineStore.Load();
             return Task.CompletedTask;
-        }
-        public void ReloadData()
-        {
-            _databaseServices.GetRequiredService<MachineStore>().Load();
         }
         public void UpdateList()
         {
@@ -291,10 +244,63 @@ namespace Shopfloor.Features.Admin.Machines.List
             }
             MachinesList.Refresh();
         }
+
+    }
+    public sealed partial class MachinesListViewModel : ViewModelBase
+    {
+
+    }
+    public sealed partial class MachinesListViewModel
+    {
+        public void CleanForm()
+        {
+            _propertyErrors.Clear();
+            _id = null;
+            SelectedMachine = null;
+            SelectedParent = null;
+            MachineName = string.Empty;
+            MachineNumber = string.Empty;
+            SapNumber = string.Empty;
+            IsEdit = false;
+
+            OnPropertyChanged(nameof(IsDataValidate));
+        }
+        public void ReloadData()
+        {
+            _databaseServices.GetRequiredService<MachineStore>().Load();
+        }
+    }
+    public sealed partial class MachinesListViewModel : IInputForm<Machine>
+    {
+        private readonly Dictionary<string, List<string>?> _propertyErrors = [];
+        public void AddError(string propertyName, string errorMassage)
+        {
+            if (!_propertyErrors.TryGetValue(propertyName, out List<string>? value))
+            {
+                value = [];
+                _propertyErrors.Add(propertyName, value);
+            }
+            value?.Add(errorMassage);
+            OnErrorsChanged(propertyName);
+        }
+        public void ClearErrors(string propertyName)
+        {
+            if (_propertyErrors.Remove(propertyName))
+            {
+                OnErrorsChanged(propertyName);
+            }
+        }
+        public IEnumerable GetErrors(string? propertyName)
+        {
+            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+        }
+        public bool IsDataValidate => !HasErrors;
         private void OnErrorsChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
             OnPropertyChanged(nameof(IsDataValidate));
         }
+        public bool HasErrors => _propertyErrors.Count != 0;
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
     }
 }
