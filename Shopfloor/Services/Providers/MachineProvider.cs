@@ -117,7 +117,7 @@ namespace Shopfloor.Services.Providers
 
         private static Machine ToMachine(MachineDTO item)
         {
-            return new Machine(item.Id, item.Machine_Name, item.Machine_Number, item.Parent, item.Active);
+            return new Machine(item.Id, item.Machine_Name, item.Machine_Number, item.Sap_Number, item.Parent, item.Active);
         }
     }
 }
