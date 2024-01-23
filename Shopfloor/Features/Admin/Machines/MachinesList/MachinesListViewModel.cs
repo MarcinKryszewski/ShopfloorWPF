@@ -32,6 +32,7 @@ namespace Shopfloor.Features.Admin.Machines.List
         private bool _isEdit;
         private string _machineName = string.Empty;
         private string _machineNumber = string.Empty;
+        private string _sapNumber = string.Empty;
         private string _machineSearchText = string.Empty;
         private readonly MachineStore _machineStore;
         private int _parentId;
@@ -86,6 +87,15 @@ namespace Shopfloor.Features.Admin.Machines.List
                 OnPropertyChanged(nameof(MachineNumber));
             }
         }
+        public string SapNumber
+        {
+            get => _sapNumber;
+            set
+            {
+                _sapNumber = value;
+                OnPropertyChanged(nameof(SapNumber));
+            }
+        }
         public int ParentId
         {
             get => _parentId;
@@ -138,6 +148,7 @@ namespace Shopfloor.Features.Admin.Machines.List
                 _id = value.Id;
                 MachineName = value.Name;
                 MachineNumber = value.Number;
+                SapNumber = value.SapNumber;
                 _selectedMachine = value;
                 IsEdit = true;
 
@@ -199,6 +210,7 @@ namespace Shopfloor.Features.Admin.Machines.List
             SelectedParent = null;
             MachineName = string.Empty;
             MachineNumber = string.Empty;
+            SapNumber = string.Empty;
             IsEdit = false;
 
             OnPropertyChanged(nameof(IsDataValidate));

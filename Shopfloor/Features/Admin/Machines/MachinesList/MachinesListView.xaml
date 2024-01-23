@@ -110,6 +110,14 @@
                             Style="{StaticResource ResourceKey=TextBoxMain}"
                             Text="{Binding Path=MachineNumber, UpdateSourceTrigger=PropertyChanged}" />
 
+                        <TextBlock Foreground="{StaticResource BrushPurple400}" Text="Numer maszyny w SAP" />
+                        <TextBox
+                            Grid.Row="2"
+                            MinHeight="28"
+                            Margin="0,0,0,10"
+                            Style="{StaticResource ResourceKey=TextBoxMain}"
+                            Text="{Binding Path=SapNumber, UpdateSourceTrigger=PropertyChanged}" />
+
                         <TextBlock Foreground="{StaticResource BrushPurple400}" Text="Maszyna nadrzędna" />
                         <ComboBox
                             Grid.Row="3"

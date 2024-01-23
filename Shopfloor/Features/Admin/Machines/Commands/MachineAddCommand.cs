@@ -23,6 +23,7 @@ namespace Shopfloor.Features.Admin.Machines.Commands
             Machine machine = new(
                 _viewModel.MachineName,
                 _viewModel.MachineNumber,
+                _viewModel.SapNumber,
                 parentId,
                 true);
 

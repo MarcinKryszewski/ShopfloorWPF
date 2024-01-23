@@ -27,6 +27,7 @@ namespace Shopfloor.Features.Admin.Machines.Commands
                 (int)_viewModel.Id,
                 _viewModel.MachineName,
                 _viewModel.MachineNumber,
+                _viewModel.SapNumber,
                 parentId,
                 selectedMachine.IsActive
             );

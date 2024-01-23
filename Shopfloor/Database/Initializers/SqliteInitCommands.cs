@@ -39,23 +39,34 @@ namespace Shopfloor.Database.SQLite
                 FOREIGN KEY(role) REFERENCES roles(Id)
             )";
         private const string _initAdminSQLCommand = @"
-            INSERT INTO users (username, user_name, user_surname, image_path)
-            VALUES ('@dm1n', 'Admin', 'Admin', '')
+            BEGIN TRANSACTION;
+                INSERT INTO users (username, user_name, user_surname, image_path) VALUES ('@dm1n', 'Admin', 'Admin', '');
+                INSERT INTO users (username, user_name, user_surname, image_path) VALUES ('marcin', 'Marcin', 'Kry', '');
+                INSERT INTO users (username, user_name, user_surname, image_path) VALUES ('kryszm02', 'Marcin', 'Kry', '');
+            COMMIT;
             ";
         private const string _initRolesSQLCommand = @"
             BEGIN TRANSACTION;
-            INSERT INTO roles (role_name, role_value) VALUES ('admin', 777);
-            INSERT INTO roles (role_name, role_value) VALUES ('user', 568);
-            INSERT INTO roles (role_name, role_value) VALUES ('plannist', 460);
-            INSERT INTO roles (role_name, role_value) VALUES ('manager', 205);
+                INSERT INTO roles (role_name, role_value) VALUES ('admin', 777);
+                INSERT INTO roles (role_name, role_value) VALUES ('user', 568);
+                INSERT INTO roles (role_name, role_value) VALUES ('plannist', 460);
+                INSERT INTO roles (role_name, role_value) VALUES ('manager', 205);
             COMMIT;
             ";
         private const string _initAdminRolesSQLCommand = @"
             BEGIN TRANSACTION;
-            INSERT INTO roles_users (role, user) VALUES (1,1);
-            INSERT INTO roles_users (role, user) VALUES (2,1);
-            INSERT INTO roles_users (role, user) VALUES (3,1);
-            INSERT INTO roles_users (role, user) VALUES (4,1);
+                INSERT INTO roles_users (role, user) VALUES (1,1);
+                INSERT INTO roles_users (role, user) VALUES (2,1);
+                INSERT INTO roles_users (role, user) VALUES (3,1);
+                INSERT INTO roles_users (role, user) VALUES (4,1);
+                INSERT INTO roles_users (role, user) VALUES (1,2);
+                INSERT INTO roles_users (role, user) VALUES (2,2);
+                INSERT INTO roles_users (role, user) VALUES (3,2);
+                INSERT INTO roles_users (role, user) VALUES (4,2);
+                INSERT INTO roles_users (role, user) VALUES (1,3);
+                INSERT INTO roles_users (role, user) VALUES (2,3);
+                INSERT INTO roles_users (role, user) VALUES (3,3);
+                INSERT INTO roles_users (role, user) VALUES (4,3);
             COMMIT;
             ";
         private const string _machinesSQLCommand = @"
@@ -63,6 +74,7 @@ namespace Shopfloor.Database.SQLite
                 id INTEGER,
                 machine_name TEXT,
                 machine_number TEXT,
+                sap_number TEXT,
                 parent INTEGER,
                 active INTEGER DEFAULT 1,
                 PRIMARY KEY(id)
@@ -110,8 +122,18 @@ namespace Shopfloor.Database.SQLite
             CREATE TABLE task_types (
                 id INTEGER,
                 name TEXT,
+                description TEXT,
                 PRIMARY KEY(id)
             )";
+        private const string _initPart_typesSQLCommand = @"
+            BEGIN TRANSACTION;
+                INSERT INTO task_types (name, description) VALUES ('Awaria', 'Zadania związane z awariami na liniach');
+                INSERT INTO task_types (name, description) VALUES ('CILT', 'Cykliczne zadania związane z utrzymaniem maszyn');
+                INSERT INTO task_types (name, description) VALUES ('DCS', 'Zadania zaplanowane do wykonania wynikające np. z TAGów czy spotkań DCS');
+                INSERT INTO task_types (name, description) VALUES ('Remont', 'Zadania do wykonania podczas corocznych remontów');
+                INSERT INTO task_types (name, description) VALUES ('Warsztat', 'Zadania związane z działaniem warsztatu, np. narzędzia, śruby czy materiały eksploatacyjne na warsztacie');
+            COMMIT;
+            ";
         public SqliteInitCommands()
         {
             InitCommands =
@@ -128,7 +150,8 @@ namespace Shopfloor.Database.SQLite
                 _suppliersSQLCommand,
                 _partsSQLCommand,
                 _machines_partsSQLCommand,
-                _part_typesSQLCommand
+                _part_typesSQLCommand,
+                _initPart_typesSQLCommand
             ];
         }
     }

@@ -8,28 +8,32 @@ namespace Shopfloor.Models
     {
         private readonly int? _id;
         private readonly string _name;
-        private readonly string _number;
+        private readonly string? _number;
         private readonly bool _isActive;
         private int? _parentId;
+        private string? _sapNumber;
         public int? Id => _id;
         public string Name => _name;
-        public string Number => _number;
+        public string Number => _number ?? string.Empty;
+        public string SapNumber => _sapNumber ?? string.Empty;
         public bool IsActive => _isActive;
         public int? ParentId => _parentId;
-        public Machine(int id, string name, string number, int? parent, bool isActive)
+        public Machine(int id, string name, string? number, string? sapNumber, int? parent, bool isActive)
         {
             _id = id;
             _name = name;
             _number = number;
+            _sapNumber = sapNumber;
             _parentId = parent;
             _path = Name;
             _isActive = isActive;
         }
-        public Machine(string name, string number, int? parent, bool isActive)
+        public Machine(string name, string number, string? sapNumber, int? parent, bool isActive)
         {
             _name = name;
             _name = name;
             _number = number;
+            _sapNumber = sapNumber;
             _parentId = parent;
             _path = Name;
             _isActive = isActive;
