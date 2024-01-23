@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Shopfloor.Utilities
 {
-    internal static class ConstantVariablesCounter
+    public static class ConstantVariablesCounter
     {
         public static int CountConstantVariablesOfClass<T>()
         {
