@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Interfaces;
 using Shopfloor.Models;
 using Shopfloor.Services.Providers;
@@ -8,26 +8,26 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Stores.DatabaseDataStores
 {
-    public class MachineStore : IDataStore<Machine>
+    public class TaskTypeStore : IDataStore<TaskType>
     {
         private readonly IServiceProvider _databaseServices;
-        private IEnumerable<Machine> _data = [];
-        public MachineStore(IServiceProvider databaseServices)
+        private IEnumerable<TaskType> _data = [];
+        public TaskTypeStore(IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
         }
-        public IEnumerable<Machine> Data => _data;
-        public bool IsLoaded { get; private set; }
+        public IEnumerable<TaskType> Data => _data;
+        public bool IsLoaded { get; private set; } = false;
         public Task Load()
         {
-            MachineProvider provider = _databaseServices.GetRequiredService<MachineProvider>();
+            TaskTypeProvider provider = _databaseServices.GetRequiredService<TaskTypeProvider>();
             _data = provider.GetAll().Result;
             IsLoaded = true;
             return Task.CompletedTask;
         }
         public async Task Reload()
         {
-            MachineProvider provider = _databaseServices.GetRequiredService<MachineProvider>();
+            TaskTypeProvider provider = _databaseServices.GetRequiredService<TaskTypeProvider>();
             _data = await provider.GetAll();
         }
     }

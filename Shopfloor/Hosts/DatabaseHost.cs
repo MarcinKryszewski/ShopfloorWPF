@@ -30,11 +30,13 @@ namespace Shopfloor.Hosts.DatabaseHost
             services.AddSingleton<MachineProvider>();
             services.AddSingleton<SupplierProvider>();
             services.AddSingleton<PartProvider>();
+            services.AddSingleton<TaskTypeProvider>();
 
             services.AddSingleton<PartTypesStore>();
             services.AddSingleton<PartsStore>();
             services.AddSingleton<SuppliersStore>();
             services.AddSingleton<MachineStore>();
+            services.AddSingleton<TaskTypeStore>();
         }
     }
 }
