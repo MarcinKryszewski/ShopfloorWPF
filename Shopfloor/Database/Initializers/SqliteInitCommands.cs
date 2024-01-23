@@ -7,13 +7,13 @@ namespace Shopfloor.Database.SQLite
     public sealed class SqliteInitCommands
     {
         public List<string> InitCommands { get; }
-        private const string _partsTypesSQLCommand = @"
+        private const string _parts_types_SQLCommand = @"
             CREATE TABLE IF NOT EXISTS parts_types (
                 id INTEGER,
                 part_type_name TEXT,
                 PRIMARY KEY(id AUTOINCREMENT)
             )";
-        private const string _userSQLCommand = @"
+        private const string _user_SQLCommand = @"
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER,
                 username TEXT,
@@ -23,14 +23,14 @@ namespace Shopfloor.Database.SQLite
                 active INTEGER DEFAULT 1,
                 PRIMARY KEY(id AUTOINCREMENT)
             )";
-        private const string _rolesSQLCommand = @"
+        private const string _roles_SQLCommand = @"
             CREATE TABLE IF NOT EXISTS roles (
                 id INTEGER,
                 role_name TEXT,
                 role_value INTEGER,
                 PRIMARY KEY(id AUTOINCREMENT)
             )";
-        private const string _roleUserSQLCommand = @"
+        private const string _roles_users_SQLCommand = @"
             CREATE TABLE IF NOT EXISTS roles_users (
                 role INTEGER,
                 user INTEGER,
@@ -38,14 +38,14 @@ namespace Shopfloor.Database.SQLite
                 FOREIGN KEY(user) REFERENCES users(Id),
                 FOREIGN KEY(role) REFERENCES roles(Id)
             )";
-        private const string _initAdminSQLCommand = @"
+        private const string _initAdmin_SQLCommand = @"
             BEGIN TRANSACTION;
                 INSERT INTO users (username, user_name, user_surname, image_path) VALUES ('@dm1n', 'Admin', 'Admin', '');
                 INSERT INTO users (username, user_name, user_surname, image_path) VALUES ('marcin', 'Marcin', 'Kry', '');
                 INSERT INTO users (username, user_name, user_surname, image_path) VALUES ('kryszm02', 'Marcin', 'Kry', '');
             COMMIT;
             ";
-        private const string _initRolesSQLCommand = @"
+        private const string _initRoles_SQLCommand = @"
             BEGIN TRANSACTION;
                 INSERT INTO roles (role_name, role_value) VALUES ('admin', 777);
                 INSERT INTO roles (role_name, role_value) VALUES ('user', 568);
@@ -53,7 +53,7 @@ namespace Shopfloor.Database.SQLite
                 INSERT INTO roles (role_name, role_value) VALUES ('manager', 205);
             COMMIT;
             ";
-        private const string _initAdminRolesSQLCommand = @"
+        private const string _initAdminRoles_SQLCommand = @"
             BEGIN TRANSACTION;
                 INSERT INTO roles_users (role, user) VALUES (1,1);
                 INSERT INTO roles_users (role, user) VALUES (2,1);
@@ -69,7 +69,7 @@ namespace Shopfloor.Database.SQLite
                 INSERT INTO roles_users (role, user) VALUES (4,3);
             COMMIT;
             ";
-        private const string _machinesSQLCommand = @"
+        private const string _machines_SQLCommand = @"
             CREATE TABLE IF NOT EXISTS machines (
                 id INTEGER,
                 machine_name TEXT,
@@ -79,20 +79,14 @@ namespace Shopfloor.Database.SQLite
                 active INTEGER DEFAULT 1,
                 PRIMARY KEY(id)
             )";
-        private const string _parts_typesSQLCommand = @"
-            CREATE TABLE IF NOT EXISTS parts_types (
-                id INTEGER,
-                part_type_name TEXT,
-                PRIMARY KEY(id)
-            )";
-        private const string _suppliersSQLCommand = @"
+        private const string _suppliers_SQLCommand = @"
             CREATE TABLE IF NOT EXISTS suppliers (
                 id INTEGER,
                 name TEXT,
                 active INTEGER DEFAULT 1,
                 PRIMARY KEY(id)
             )";
-        private const string _partsSQLCommand = @"
+        private const string _parts_SQLCommand = @"
             CREATE TABLE parts (
                 id INTEGER,
                 name_pl TEXT,
@@ -108,7 +102,7 @@ namespace Shopfloor.Database.SQLite
                 FOREIGN KEY(supplier) REFERENCES suppliers(id),
                 FOREIGN KEY(producer) REFERENCES suppliers(id)
             )";
-        private const string _machines_partsSQLCommand = @"
+        private const string _machines_parts_SQLCommand = @"
             CREATE TABLE machines_parts (
                 machine INTEGER,
                 part INTEGER,
@@ -118,14 +112,14 @@ namespace Shopfloor.Database.SQLite
                 FOREIGN KEY(part) REFERENCES parts,
                 PRIMARY KEY(machine,part)
             )";
-        private const string _part_typesSQLCommand = @"
+        private const string _tasks_types_SQLCommand = @"
             CREATE TABLE task_types (
                 id INTEGER,
                 name TEXT,
                 description TEXT,
                 PRIMARY KEY(id)
             )";
-        private const string _initPart_typesSQLCommand = @"
+        private const string _initPart_types_SQLCommand = @"
             BEGIN TRANSACTION;
                 INSERT INTO task_types (name, description) VALUES ('Awaria', 'Zadania związane z awariami na liniach');
                 INSERT INTO task_types (name, description) VALUES ('CILT', 'Cykliczne zadania związane z utrzymaniem maszyn');
@@ -134,24 +128,60 @@ namespace Shopfloor.Database.SQLite
                 INSERT INTO task_types (name, description) VALUES ('Warsztat', 'Zadania związane z działaniem warsztatu, np. narzędzia, śruby czy materiały eksploatacyjne na warsztacie');
             COMMIT;
             ";
+        private const string _tasks_SQLCommand = @"
+            CREATE TABLE tasks (
+                id INTEGER,
+                created TEXT,
+                createdBy INTEGER,
+                owner INTEGER,
+                priority TEXT,
+                machine INTEGER,
+                task_type INTEGER,
+                description TEXT,
+                task_status INTEGER,
+                sap_number TEXT,
+                expected_date TEXT,
+                FOREIGN KEY(machine) REFERENCES machines(id),
+                FOREIGN KEY(task_type) REFERENCES task_types(id),
+                FOREIGN KEY(createdBy) REFERENCES users(id),
+                PRIMARY KEY(id)
+            )";
+        private const string _parts_tasks_SQLCommand = @"
+        CREATE TABLE parts_tasks (
+            part INTEGER,
+            task INTEGER,
+            amount INTEGER,
+            FOREIGN KEY(task) REFERENCES tasks(id),
+            FOREIGN KEY(part) REFERENCES parts(id)
+        )";
+        private const string _task_statuses_SQLCommand = @"
+        CREATE TABLE task_statuses (
+            id INTEGER,
+            description TEXT,
+            PRIMARY KEY(id)
+        )";
         public SqliteInitCommands()
         {
             InitCommands =
             [
-                _partsTypesSQLCommand,
-                _userSQLCommand,
-                _rolesSQLCommand,
-                _roleUserSQLCommand,
-                _initAdminSQLCommand,
-                _initRolesSQLCommand,
-                _initAdminRolesSQLCommand,
-                _machinesSQLCommand,
-                _parts_typesSQLCommand,
-                _suppliersSQLCommand,
-                _partsSQLCommand,
-                _machines_partsSQLCommand,
-                _part_typesSQLCommand,
-                _initPart_typesSQLCommand
+                _parts_types_SQLCommand,
+                _user_SQLCommand,
+                _roles_SQLCommand,
+                _roles_users_SQLCommand,
+                _machines_SQLCommand,
+                _suppliers_SQLCommand,
+                _parts_SQLCommand,
+                _machines_parts_SQLCommand,
+                _tasks_types_SQLCommand,
+
+                _tasks_SQLCommand, //TODO
+                _parts_tasks_SQLCommand, //TODO
+                _task_statuses_SQLCommand, //TODO
+
+                _initAdmin_SQLCommand,
+                _initRoles_SQLCommand,
+                _initAdminRoles_SQLCommand,
+                _initPart_types_SQLCommand
             ];
         }
     }
