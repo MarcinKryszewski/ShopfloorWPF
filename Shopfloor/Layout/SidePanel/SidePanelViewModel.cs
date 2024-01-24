@@ -13,7 +13,7 @@ using Shopfloor.Features.Plannist.Deploys;
 using Shopfloor.Features.Plannist.Orders;
 using Shopfloor.Features.Plannist.Reports;
 using Shopfloor.Features.Plannist.Reservations;
-using Shopfloor.Models;
+using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
@@ -27,7 +27,7 @@ namespace Shopfloor.Layout.SidePanel
 {
     public class SidePanelViewModel : ViewModelBase
     {
-        private readonly UserStore _userStore;
+        private readonly CurrentUserStore _userStore;
         private User? User => _userStore.User;
 
         #region Commands
@@ -93,7 +93,7 @@ namespace Shopfloor.Layout.SidePanel
             NavigateSuppliersCommand = new NavigateCommand<SuppliersMainViewModel>(mainServices.GetRequiredService<NavigationService<SuppliersMainViewModel>>());
             NavigatePartTypesCommand = new NavigateCommand<PartTypesMainViewModel>(mainServices.GetRequiredService<NavigationService<PartTypesMainViewModel>>());
 
-            _userStore = userServices.GetRequiredService<UserStore>();
+            _userStore = userServices.GetRequiredService<CurrentUserStore>();
             _userStore.PropertyChanged += OnUserAuthenticated;
         }
 

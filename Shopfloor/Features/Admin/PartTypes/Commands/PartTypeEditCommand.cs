@@ -1,6 +1,5 @@
 ﻿using Shopfloor.Features.Admin.PartTypes.List;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Shared.Commands;
 using System.Threading.Tasks;
 

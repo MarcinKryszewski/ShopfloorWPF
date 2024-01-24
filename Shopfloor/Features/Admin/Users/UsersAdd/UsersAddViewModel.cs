@@ -3,8 +3,9 @@ using Shopfloor.Features.Admin.Users.List;
 using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Features.Admin.UsersList.Commands;
 using Shopfloor.Interfaces;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+using Shopfloor.Models.RoleModel;
+using Shopfloor.Models.RoleUserModel;
+using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
@@ -82,9 +83,9 @@ namespace Shopfloor.Features.Admin.Users.Add
         }
         public void CleanForm()
         {
-            Username = "";
-            Name = "";
-            Surname = "";
+            Username = string.Empty;
+            Name = string.Empty;
+            Surname = string.Empty;
             UpdateRoles();
         }
         public void ClearErrors(string propertyName)
@@ -93,7 +94,7 @@ namespace Shopfloor.Features.Admin.Users.Add
         }
         public IEnumerable GetErrors(string? propertyName)
         {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public bool IsDataValidate => !HasErrors;
         public void ReloadData()

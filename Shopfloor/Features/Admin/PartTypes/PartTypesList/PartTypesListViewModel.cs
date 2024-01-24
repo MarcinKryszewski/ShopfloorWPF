@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.PartTypes.Commands;
 using Shopfloor.Interfaces;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Shared.ViewModels;
-using Shopfloor.Stores.DatabaseDataStores;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -115,7 +114,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
         }
         public IEnumerable GetErrors(string? propertyName)
         {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public bool IsDataValidate => !HasErrors;
         public async Task LoadData(IServiceProvider databaseServices)

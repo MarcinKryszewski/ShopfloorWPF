@@ -1,7 +1,10 @@
 ﻿using Shopfloor.Features.Admin.Users.Add;
 using Shopfloor.Features.Admin.Users.Stores;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+
+using Shopfloor.Models.RoleModel;
+using Shopfloor.Models.RoleUserModel;
+using Shopfloor.Models.UserModel;
+
 using Shopfloor.Shared.Commands;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,7 +31,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
         public override void Execute(object? parameter)
         {
-            User newUser = new(_viewModel.Username.ToLower(), _viewModel.Name, _viewModel.Surname, "", true);
+            User newUser = new(_viewModel.Username.ToLower(), _viewModel.Name, _viewModel.Surname, string.Empty, true);
             if (!_viewModel.IsDataValidate) return;
             //TODO: To move to validation on _viewModel
             int newUserId = _userProvider.Create(newUser).Result;

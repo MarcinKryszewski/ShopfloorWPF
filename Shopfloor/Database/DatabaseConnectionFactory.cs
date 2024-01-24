@@ -27,7 +27,7 @@ namespace Shopfloor.Database
         public DatabaseConnectionFactory(IServiceProvider configurationServices)
         {
             _configuration = configurationServices.GetRequiredService<IConfiguration>();
-            _databaseType = _configuration["DatabaseType"] ?? "";
+            _databaseType = _configuration["DatabaseType"] ?? string.Empty;
         }
 
         #endregion Constructors
@@ -41,7 +41,7 @@ namespace Shopfloor.Database
             switch (_databaseType)
             {
                 case "SQLite":
-                    connectionString = _configuration.GetConnectionString("SQLiteConnection") ?? "";
+                    connectionString = _configuration.GetConnectionString("SQLiteConnection") ?? string.Empty;
                     _connection = new SqliteConnection(connectionString);
                     break;
 

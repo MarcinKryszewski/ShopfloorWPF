@@ -1,4 +1,6 @@
-using Shopfloor.Models;
+
+
+using Shopfloor.Models.PartModel;
 
 namespace Shopfloor.Features.Admin.Parts.Stores
 {

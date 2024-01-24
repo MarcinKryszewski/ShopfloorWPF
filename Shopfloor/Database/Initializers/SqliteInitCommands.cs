@@ -32,11 +32,11 @@ namespace Shopfloor.Database.SQLite
             )";
         private const string _roles_users_SQLCommand = @"
             CREATE TABLE IF NOT EXISTS roles_users (
-                role INTEGER,
-                user INTEGER,
-                PRIMARY KEY(role, user),
-                FOREIGN KEY(user) REFERENCES users(Id),
-                FOREIGN KEY(role) REFERENCES roles(Id)
+                role_id INTEGER,
+                user_id INTEGER,
+                PRIMARY KEY(role_id, user_id),
+                FOREIGN KEY(user_id) REFERENCES users(Id),
+                FOREIGN KEY(role_id) REFERENCES roles(Id)
             )";
         private const string _initAdmin_SQLCommand = @"
             BEGIN TRANSACTION;
@@ -55,18 +55,18 @@ namespace Shopfloor.Database.SQLite
             ";
         private const string _initAdminRoles_SQLCommand = @"
             BEGIN TRANSACTION;
-                INSERT INTO roles_users (role, user) VALUES (1,1);
-                INSERT INTO roles_users (role, user) VALUES (2,1);
-                INSERT INTO roles_users (role, user) VALUES (3,1);
-                INSERT INTO roles_users (role, user) VALUES (4,1);
-                INSERT INTO roles_users (role, user) VALUES (1,2);
-                INSERT INTO roles_users (role, user) VALUES (2,2);
-                INSERT INTO roles_users (role, user) VALUES (3,2);
-                INSERT INTO roles_users (role, user) VALUES (4,2);
-                INSERT INTO roles_users (role, user) VALUES (1,3);
-                INSERT INTO roles_users (role, user) VALUES (2,3);
-                INSERT INTO roles_users (role, user) VALUES (3,3);
-                INSERT INTO roles_users (role, user) VALUES (4,3);
+                INSERT INTO roles_users (role_id, user_id) VALUES (1,1);
+                INSERT INTO roles_users (role_id, user_id) VALUES (2,1);
+                INSERT INTO roles_users (role_id, user_id) VALUES (3,1);
+                INSERT INTO roles_users (role_id, user_id) VALUES (4,1);
+                INSERT INTO roles_users (role_id, user_id) VALUES (1,2);
+                INSERT INTO roles_users (role_id, user_id) VALUES (2,2);
+                INSERT INTO roles_users (role_id, user_id) VALUES (3,2);
+                INSERT INTO roles_users (role_id, user_id) VALUES (4,2);
+                INSERT INTO roles_users (role_id, user_id) VALUES (1,3);
+                INSERT INTO roles_users (role_id, user_id) VALUES (2,3);
+                INSERT INTO roles_users (role_id, user_id) VALUES (3,3);
+                INSERT INTO roles_users (role_id, user_id) VALUES (4,3);
             COMMIT;
             ";
         private const string _machines_SQLCommand = @"
@@ -91,26 +91,26 @@ namespace Shopfloor.Database.SQLite
                 id INTEGER,
                 name_pl TEXT,
                 name_original TEXT,
-                type INTEGER,
+                type_id INTEGER,
                 indeks INTEGER,
                 number TEXT,
                 details TEXT,
-                producer INTEGER,
-                supplier INTEGER,
+                producer_id INTEGER,
+                supplier_id INTEGER,
                 PRIMARY KEY(id),
-                FOREIGN KEY(type) REFERENCES parts_types(id),
-                FOREIGN KEY(supplier) REFERENCES suppliers(id),
-                FOREIGN KEY(producer) REFERENCES suppliers(id)
+                FOREIGN KEY(type_id) REFERENCES parts_types(id),
+                FOREIGN KEY(supplier_id) REFERENCES suppliers(id),
+                FOREIGN KEY(producer_id) REFERENCES suppliers(id)
             )";
         private const string _machines_parts_SQLCommand = @"
             CREATE TABLE machines_parts (
-                machine INTEGER,
-                part INTEGER,
+                machine_id INTEGER,
+                part_id INTEGER,
                 amount REAL,
                 unit TEXT,
-                FOREIGN KEY(machine) REFERENCES machines(id),
-                FOREIGN KEY(part) REFERENCES parts,
-                PRIMARY KEY(machine,part)
+                FOREIGN KEY(machine_id) REFERENCES machines(id),
+                FOREIGN KEY(part_id) REFERENCES parts,
+                PRIMARY KEY(machine_id,part_id)
             )";
         private const string _tasks_types_SQLCommand = @"
             CREATE TABLE task_types (
@@ -128,37 +128,46 @@ namespace Shopfloor.Database.SQLite
                 INSERT INTO task_types (name, description) VALUES ('Warsztat', 'Zadania związane z działaniem warsztatu, np. narzędzia, śruby czy materiały eksploatacyjne na warsztacie');
             COMMIT;
             ";
-        private const string _tasks_SQLCommand = @"
-            CREATE TABLE tasks (
-                id INTEGER,
-                created TEXT,
-                createdBy INTEGER,
-                owner INTEGER,
-                priority TEXT,
-                machine INTEGER,
-                task_type INTEGER,
-                description TEXT,
-                task_status INTEGER,
-                sap_number TEXT,
-                expected_date TEXT,
-                FOREIGN KEY(machine) REFERENCES machines(id),
-                FOREIGN KEY(task_type) REFERENCES task_types(id),
-                FOREIGN KEY(createdBy) REFERENCES users(id),
-                PRIMARY KEY(id)
-            )";
-        private const string _parts_tasks_SQLCommand = @"
-        CREATE TABLE parts_tasks (
-            part INTEGER,
-            task INTEGER,
-            amount INTEGER,
-            FOREIGN KEY(task) REFERENCES tasks(id),
-            FOREIGN KEY(part) REFERENCES parts(id)
-        )";
         private const string _task_statuses_SQLCommand = @"
         CREATE TABLE task_statuses (
             id INTEGER,
             description TEXT,
             PRIMARY KEY(id)
+        )";
+        private const string _tasks_SQLCommand = @"
+            CREATE TABLE tasks (
+                id INTEGER,
+                created_date TEXT,
+                created_by_id INTEGER,
+                owner_id INTEGER,
+                priority TEXT,
+                machine_id INTEGER,
+                task_type_id INTEGER,
+                description TEXT,
+                sap_number TEXT,
+                expected_date TEXT,
+                FOREIGN KEY(machine_id) REFERENCES machines(id),
+                FOREIGN KEY(task_type_id) REFERENCES task_types(id),
+                FOREIGN KEY(created_by_id) REFERENCES users(id)
+                PRIMARY KEY(id)
+            )";
+        private const string _tasks_task_statusesSQLCommand = @"
+            CREATE TABLE tasks_task_statuses (
+                task_id INTEGER,
+                task_status_id INTEGER,
+                set_date TEXT,
+                set_by_id INTEGER,
+                PRIMARY KEY(task_id, task_status_id),
+                FOREIGN KEY(task_id) REFERENCES tasks(id),
+                FOREIGN KEY(task_status_id) REFERENCES task_statuses(id)
+            )";
+        private const string _parts_tasks_SQLCommand = @"
+        CREATE TABLE parts_tasks (
+            part_id INTEGER,
+            task_id INTEGER,
+            amount INTEGER,
+            FOREIGN KEY(task_id) REFERENCES tasks(id),
+            FOREIGN KEY(part_id) REFERENCES parts(id)
         )";
         public SqliteInitCommands()
         {
@@ -174,9 +183,11 @@ namespace Shopfloor.Database.SQLite
                 _machines_parts_SQLCommand,
                 _tasks_types_SQLCommand,
 
-                _tasks_SQLCommand, //TODO
-                _parts_tasks_SQLCommand, //TODO
-                _task_statuses_SQLCommand, //TODO
+                _task_statuses_SQLCommand,
+                _tasks_SQLCommand,
+                _tasks_task_statusesSQLCommand,
+                _parts_tasks_SQLCommand,
+
 
                 _initAdmin_SQLCommand,
                 _initRoles_SQLCommand,

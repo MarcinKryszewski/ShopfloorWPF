@@ -1,5 +1,5 @@
 using Shopfloor.Interfaces;
-using Shopfloor.Models;
+using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.Commands;
 
 namespace Shopfloor.Features.Admin.Parts.Commands

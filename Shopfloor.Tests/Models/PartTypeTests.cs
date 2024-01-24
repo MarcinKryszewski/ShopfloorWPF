@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Shopfloor.Models;
+using Shopfloor.Models.PartTypeModel;
 
 namespace Shopfloor.Tests.Models
 {

@@ -1,5 +1,5 @@
 ﻿using Shopfloor.Interfaces;
-using Shopfloor.Models;
+using Shopfloor.Models.MachineModel;
 
 namespace Shopfloor.Validators
 {

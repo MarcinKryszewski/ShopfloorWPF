@@ -8,7 +8,7 @@ using Shopfloor.Hosts.ConfigurationHost;
 using Shopfloor.Hosts.DatabaseHost;
 using Shopfloor.Hosts.MainHost;
 using Shopfloor.Layout.MainWindow;
-using Shopfloor.Services.Providers;
+using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Services;
 using Shopfloor.Stores;
 using System;
@@ -51,7 +51,7 @@ namespace Shopfloor
             databaseInitializer.Initialize();
 
             //tries to login user automatically
-            _userHost.Services.GetRequiredService<UserStore>().AutoLogin(
+            _userHost.Services.GetRequiredService<CurrentUserStore>().AutoLogin(
                 Environment.UserName,
                 _databaseHost.Services.GetRequiredService<UserProvider>()
             );

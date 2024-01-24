@@ -46,7 +46,7 @@ namespace Shopfloor.Hosts.ConfigurationHost
         {
             return _databaseType switch
             {
-                "SQLite" => _configuration.GetConnectionString("SQLiteConnection") ?? "",
+                "SQLite" => _configuration.GetConnectionString("SQLiteConnection") ?? string.Empty,
                 _ => throw new InvalidOperationException("Invalid or unsupported database type."),
             };
         }

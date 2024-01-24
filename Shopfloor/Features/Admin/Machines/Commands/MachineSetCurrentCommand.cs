@@ -1,5 +1,5 @@
 using Shopfloor.Features.Admin.Machines.List;
-using Shopfloor.Models;
+using Shopfloor.Models.MachineModel;
 using Shopfloor.Shared.Commands;
 using System.Collections.Generic;
 using System.Linq;

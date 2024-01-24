@@ -1,6 +1,5 @@
 using Shopfloor.Features.Admin.Suppliers.List;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+using Shopfloor.Models.SupplierModel;
 using Shopfloor.Shared.Commands;
 using System.Threading.Tasks;
 

@@ -18,7 +18,7 @@ namespace Shopfloor.Hosts.MainHost
             .CreateDefaultBuilder()
             .ConfigureServices((services) =>
             {
-                services.AddSingleton(userServices.GetRequiredService<UserStore>());
+                services.AddSingleton(userServices.GetRequiredService<CurrentUserStore>());
 
                 services.AddSingleton<SidePanelViewModel>();
                 services.AddSingleton<ContentViewModel>();
@@ -27,7 +27,7 @@ namespace Shopfloor.Hosts.MainHost
 
                 DashboardNavigationServices.Get(services);
                 LoginNavigationServices.Get(services, databaseServices, userServices);
-                MechanicNavigationServices.Get(services);
+                MechanicNavigationServices.Get(services, databaseServices);
                 PlannistNavigationServices.Get(services);
                 ManagerNavigationServices.Get(services);
                 AdminNavigationServices.Get(services, databaseServices);

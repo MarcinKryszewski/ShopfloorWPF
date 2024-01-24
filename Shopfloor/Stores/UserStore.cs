@@ -1,7 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Interfaces;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+
+using Shopfloor.Models.RoleModel;
+using Shopfloor.Models.RoleUserModel;
+using Shopfloor.Models.UserModel;
+
 using Shopfloor.Validators;
 using System;
 using System.Collections;
@@ -11,7 +14,7 @@ using System.Linq;
 
 namespace Shopfloor.Stores
 {
-    public partial class UserStore
+    public partial class CurrentUserStore
     {
         private readonly IServiceProvider _databaseServices;
         private readonly RoleProvider _roleProvider;
@@ -19,7 +22,7 @@ namespace Shopfloor.Stores
         private readonly UserValidation _userValidation;
         private bool _isUserLoggedIn;
         private User? _user;
-        public UserStore(IServiceProvider databaseServices)
+        public CurrentUserStore(IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
             _user = new("GOŚĆ");
@@ -81,7 +84,7 @@ namespace Shopfloor.Stores
             }
         }
     }
-    public partial class UserStore
+    public partial class CurrentUserStore
     {
         public void AutoLogin(string username, UserProvider provider)
         {
@@ -98,17 +101,17 @@ namespace Shopfloor.Stores
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
         }
     }
-    public partial class UserStore : INotifyDataErrorInfo
+    public partial class CurrentUserStore : INotifyDataErrorInfo
     {
         private readonly Dictionary<string, List<string>?> _propertyErrors;
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public bool HasErrors => _propertyErrors.Count != 0;
         public IEnumerable GetErrors(string? propertyName)
         {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
     }
-    public partial class UserStore : INotifyPropertyChanged
+    public partial class CurrentUserStore : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
     }

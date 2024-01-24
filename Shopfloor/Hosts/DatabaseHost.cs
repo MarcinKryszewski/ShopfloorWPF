@@ -1,8 +1,15 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
-using Shopfloor.Services.Providers;
-using Shopfloor.Stores.DatabaseDataStores;
+using Shopfloor.Models.MachineModel;
+using Shopfloor.Models.MachinePartModel;
+using Shopfloor.Models.PartModel;
+using Shopfloor.Models.PartTypeModel;
+using Shopfloor.Models.RoleModel;
+using Shopfloor.Models.RoleUserModel;
+using Shopfloor.Models.SupplierModel;
+using Shopfloor.Models.TaskTypeModel;
+using Shopfloor.Models.UserModel;
 using System;
 
 namespace Shopfloor.Hosts.DatabaseHost
@@ -23,20 +30,29 @@ namespace Shopfloor.Hosts.DatabaseHost
 
         private static void ProvidersServices(IServiceCollection services)
         {
-            services.AddSingleton<PartTypeProvider>();
-            services.AddSingleton<UserProvider>();
-            services.AddSingleton<RoleProvider>();
-            services.AddSingleton<RoleUserProvider>();
-            services.AddSingleton<MachineProvider>();
-            services.AddSingleton<SupplierProvider>();
-            services.AddSingleton<PartProvider>();
-            services.AddSingleton<TaskTypeProvider>();
+            MachinePartServices.GetServices(services);
+            MachineServices.GetServices(services);
 
-            services.AddSingleton<PartTypesStore>();
+            services.AddSingleton<PartProvider>();
             services.AddSingleton<PartsStore>();
+
+            services.AddSingleton<PartTypeProvider>();
+            services.AddSingleton<PartTypesStore>();
+
+            services.AddSingleton<RoleProvider>();
+            //services.AddSingleton<RoleStore>();
+
+            services.AddSingleton<RoleUserProvider>();
+            //services.AddSingleton<RoleUserStore>();
+
+            services.AddSingleton<SupplierProvider>();
             services.AddSingleton<SuppliersStore>();
-            services.AddSingleton<MachineStore>();
+
+            services.AddSingleton<TaskTypeProvider>();
             services.AddSingleton<TaskTypeStore>();
+
+            services.AddSingleton<UserProvider>();
+            //services.AddSingleton<UserStore>();
         }
     }
 }

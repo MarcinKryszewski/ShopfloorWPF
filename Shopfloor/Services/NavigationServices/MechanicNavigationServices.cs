@@ -11,9 +11,9 @@ namespace Shopfloor.Services.NavigationServices
 {
     public class MechanicNavigationServices
     {
-        public static void Get(IServiceCollection services)
+        public static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {
-            GetTasksNavigation(services);
+            GetTasksNavigation(services, databaseServices);
             GetRequestsNavigation(services);
             GetMinimalStatesNavigation(services);
         }
@@ -44,9 +44,9 @@ namespace Shopfloor.Services.NavigationServices
             });
         }
 
-        private static void GetTasksNavigation(IServiceCollection services)
+        private static void GetTasksNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreatTasksViewModel(s));
+            services.AddTransient((s) => CreatTasksViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<TasksMainViewModel>>((s) => () => s.GetRequiredService<TasksMainViewModel>());
             services.AddSingleton((s) =>
             {
@@ -67,9 +67,9 @@ namespace Shopfloor.Services.NavigationServices
             return new RequestsViewModel();
         }
 
-        private static TasksMainViewModel CreatTasksViewModel(IServiceProvider services)
+        private static TasksMainViewModel CreatTasksViewModel(IServiceProvider services, IServiceProvider databaseServices)
         {
-            return new TasksMainViewModel();
+            return new TasksMainViewModel(databaseServices);
         }
     }
 }

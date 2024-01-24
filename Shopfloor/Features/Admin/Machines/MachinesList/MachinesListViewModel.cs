@@ -1,10 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Machines.Commands;
 using Shopfloor.Interfaces;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+using Shopfloor.Models.MachineModel;
 using Shopfloor.Shared.ViewModels;
-using Shopfloor.Stores.DatabaseDataStores;
 using Shopfloor.Validators;
 using System;
 using System.Collections;
@@ -27,7 +25,6 @@ namespace Shopfloor.Features.Admin.Machines.List
         private readonly ObservableCollection<Machine> _machines;
         //this one is for treeview
         private readonly List<Machine> _machinesAll;
-
         private int? _id;
         private bool _isEdit;
         private string _machineName = string.Empty;
@@ -292,7 +289,7 @@ namespace Shopfloor.Features.Admin.Machines.List
         }
         public IEnumerable GetErrors(string? propertyName)
         {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public bool IsDataValidate => !HasErrors;
         private void OnErrorsChanged(string propertyName)

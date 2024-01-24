@@ -1,5 +1,5 @@
 ﻿using Shopfloor.Interfaces;
-using Shopfloor.Models;
+using Shopfloor.Models.UserModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 

@@ -3,11 +3,13 @@ using Shopfloor.Features.Admin.Parts.Commands;
 using Shopfloor.Features.Admin.Parts.List;
 using Shopfloor.Features.Admin.Parts.Stores;
 using Shopfloor.Interfaces;
-using Shopfloor.Models;
+
+using Shopfloor.Models.PartModel;
+using Shopfloor.Models.PartTypeModel;
+using Shopfloor.Models.SupplierModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
-using Shopfloor.Stores.DatabaseDataStores;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -162,7 +164,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         }
         public IEnumerable GetErrors(string? propertyName)
         {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public bool IsDataValidate => !HasErrors;
         public void ReloadData()

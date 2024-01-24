@@ -2,8 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Dashboard;
 using Shopfloor.Features.Login.Commands;
 using Shopfloor.Interfaces;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
@@ -19,8 +18,8 @@ namespace Shopfloor.Features.Login
 {
     public class LoginViewModel : ViewModelBase, IInputForm<User>
     {
-        private string _username = "";
-        private readonly UserStore _userStore;
+        private string _username = string.Empty;
+        private readonly CurrentUserStore _userStore;
         private readonly UserValidation _userValidation;
         public string Username
         {
@@ -47,7 +46,7 @@ namespace Shopfloor.Features.Login
         public LoginViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userProvider)
         {
             ICommand NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(mainServices.GetRequiredService<NavigationService<DashboardViewModel>>());
-            _userStore = userProvider.GetRequiredService<UserStore>();
+            _userStore = userProvider.GetRequiredService<CurrentUserStore>();
             _userStore.PropertyChanged += OnUserLogin;
             LoginCommand = new LoginCommand(
                 databaseServices.GetRequiredService<UserProvider>(),
@@ -87,7 +86,7 @@ namespace Shopfloor.Features.Login
         }
         public IEnumerable GetErrors(string? propertyName)
         {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public void AddError(string propertyName, string errorMassage)
         {

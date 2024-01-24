@@ -1,4 +1,5 @@
-﻿using Shopfloor.Services.Providers;
+﻿
+using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Stores;
 using System.Windows.Input;
@@ -8,13 +9,13 @@ namespace Shopfloor.Features.Login.Commands
     internal class LoginCommand : CommandBase
     {
         private readonly UserProvider _userProvider;
-        private readonly UserStore _store;
+        private readonly CurrentUserStore _store;
         private readonly LoginViewModel _viewModel;
         private readonly ICommand _naviagateCommand;
 
         public LoginCommand(
             UserProvider userProvider,
-            UserStore store,
+            CurrentUserStore store,
             LoginViewModel viewModel,
             ICommand naviagateCommand
             )
