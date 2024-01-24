@@ -1,5 +1,7 @@
 using FluentAssertions;
-using Shopfloor.Models;
+using Shopfloor.Models.MachineModel;
+using Shopfloor.Models.MachinePartModel;
+using Shopfloor.Models.PartModel;
 
 namespace Shopfloor.Tests.Models
 {
@@ -15,8 +17,9 @@ namespace Shopfloor.Tests.Models
         public void Amount_WhenPassedInConstructor_ShouldReturnValue(double amount)
         {
             // Arrange
-            Part part = new("test", null, null, null, null, null, null, null);
-            MachinePart machinePart = new(part, amount);
+            int partId = 5;
+            int machineId = 3;
+            MachinePart machinePart = new(partId, machineId, amount);
             // Act
             double? result = machinePart.Amount;
             // Assert
@@ -26,8 +29,9 @@ namespace Shopfloor.Tests.Models
         public void Amount_WhenNotPassedInConstructor_ShouldReturnDefaultValue()
         {
             // Arrange
-            Part part = new("test", null, null, null, null, null, null, null);
-            MachinePart machinePart = new(part, unit: "test");
+            int partId = 5;
+            int machineId = 3;
+            MachinePart machinePart = new(partId, machineId, unit: "test");
             // Act
             double? result = machinePart.Amount;
             // Assert
@@ -37,8 +41,9 @@ namespace Shopfloor.Tests.Models
         public void Amount_WhenNull_ShouldReturnDefaultValue()
         {
             // Arrange
-            Part part = new("test", null, null, null, null, null, null, null);
-            MachinePart machinePart = new(part, null, "test");
+            int partId = 5;
+            int machineId = 3;
+            MachinePart machinePart = new(partId, machineId, null, "test");
             // Act
             double? result = machinePart.Amount;
             // Assert
@@ -54,8 +59,9 @@ namespace Shopfloor.Tests.Models
         public void Unit_WhenPassedInConstructor_ShouldReturnValue(string unit)
         {
             // Arrange
-            Part part = new("test", null, null, null, null, null, null, null);
-            MachinePart machinePart = new(part, unit: unit);
+            int partId = 5;
+            int machineId = 3;
+            MachinePart machinePart = new(partId, machineId, unit: unit);
             // Act
             string? result = machinePart.Unit;
             // Assert
@@ -74,8 +80,10 @@ namespace Shopfloor.Tests.Models
         public void Unit_WhenPassedNullOrEmpty_ShouldReturnDefaultValue(string unit)
         {
             // Arrange
+            int partId = 5;
+            int machineId = 3;
             Part part = new("test", null, null, null, null, null, null, null);
-            MachinePart machinePart = new(part, unit: unit);
+            MachinePart machinePart = new(partId, machineId, unit: unit);
             // Act
             string? result = machinePart.Unit;
             // Assert
@@ -86,8 +94,9 @@ namespace Shopfloor.Tests.Models
         public void Unit_WhenNotPassedInConstructor_ShouldReturnDefaultValue()
         {
             // Arrange
-            Part part = new("test", null, null, null, null, null, null, null);
-            MachinePart machinePart = new(part);
+            int partId = 5;
+            int machineId = 3;
+            MachinePart machinePart = new(partId, machineId);
             // Act
             string? result = machinePart.Unit;
 
@@ -100,8 +109,9 @@ namespace Shopfloor.Tests.Models
         public void Part_WhenUsed_ShouldReturnPartType()
         {
             // Arrange
-            Part part = new("test", null, null, null, null, null, null, null);
-            MachinePart machinePart = new(part);
+            int partId = 5;
+            int machineId = 3;
+            MachinePart machinePart = new(partId, machineId);
             // Act
             Part? result = machinePart.Part;
             // Assert
@@ -112,7 +122,8 @@ namespace Shopfloor.Tests.Models
         {
             // Arrange
             Part part = new("test", null, null, null, null, null, null, null);
-            MachinePart machinePart = new(part);
+            Machine machine = new("test", "sdf435", null, null, true);
+            MachinePart machinePart = new(part, machine);
             // Act
             Part? result = machinePart.Part;
             // Assert
@@ -123,11 +134,38 @@ namespace Shopfloor.Tests.Models
         {
             // Arrange
             Part part = new("test", null, null, null, null, null, null, null);
-            MachinePart machinePart = new(part);
+            Machine machine = new("test", "sdf435", null, null, true);
+            MachinePart machinePart = new(part, machine);
             // Act
-            bool result = machinePart.Part.Equals(part);
+            bool? result = machinePart.Part?.Equals(part);
             // Assert
             result.Should().BeTrue();
+            result.Should().NotBeNull();
+        }
+        [Fact]
+        public void Machine_WhenUsed_ShouldNotBeNull()
+        {
+            // Arrange
+            Part part = new("test", null, null, null, null, null, null, null);
+            Machine machine = new("test", "sdf435", null, null, true);
+            MachinePart machinePart = new(part, machine);
+            // Act
+            Machine? result = machinePart.Machine;
+            // Assert
+            result.Should().NotBeNull();
+        }
+        [Fact]
+        public void Machine_WhenUsed_ShouldBeEqualToPart()
+        {
+            // Arrange
+            Part part = new("test", null, null, null, null, null, null, null);
+            Machine machine = new("test", "sdf435", null, null, true);
+            MachinePart machinePart = new(part, machine);
+            // Act
+            bool? result = machinePart.Machine?.Equals(part);
+            // Assert
+            result.Should().BeTrue();
+            result.Should().NotBeNull();
         }
     }
 }

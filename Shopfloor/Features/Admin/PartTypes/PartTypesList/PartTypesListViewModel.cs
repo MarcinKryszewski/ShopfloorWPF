@@ -1,10 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.PartTypes.Commands;
 using Shopfloor.Interfaces;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Shared.ViewModels;
-using Shopfloor.Stores.DatabaseDataStores;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Shopfloor.Models;
 
 namespace Shopfloor.Tests.Models
 {

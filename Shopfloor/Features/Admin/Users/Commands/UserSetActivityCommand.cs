@@ -1,6 +1,5 @@
 using Shopfloor.Features.Admin.Users.List;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using System.Linq;
 using System.Threading.Tasks;

@@ -18,7 +18,7 @@ namespace Shopfloor.Hosts.MainHost
             .CreateDefaultBuilder()
             .ConfigureServices((services) =>
             {
-                services.AddSingleton(userServices.GetRequiredService<UserStore>());
+                services.AddSingleton(userServices.GetRequiredService<CurrentUserStore>());
 
                 services.AddSingleton<SidePanelViewModel>();
                 services.AddSingleton<ContentViewModel>();

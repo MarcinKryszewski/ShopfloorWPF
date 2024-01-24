@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Parts.Edit;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.Commands;
 using System;
 

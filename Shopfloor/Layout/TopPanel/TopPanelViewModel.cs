@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Login;
 using Shopfloor.Layout.TopPanel.Commands;
-using Shopfloor.Models;
+using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
@@ -14,7 +14,7 @@ namespace Shopfloor.Layout.TopPanel
 {
     public class TopPanelViewModel : ViewModelBase
     {
-        private readonly UserStore _userStore;
+        private readonly CurrentUserStore _userStore;
         private User? User => _userStore.User;
 
         public string UserImagePath
@@ -34,7 +34,7 @@ namespace Shopfloor.Layout.TopPanel
 
         public TopPanelViewModel(IServiceProvider userServices, IServiceProvider mainServices)
         {
-            _userStore = userServices.GetRequiredService<UserStore>();
+            _userStore = userServices.GetRequiredService<CurrentUserStore>();
             _userStore.PropertyChanged += OnUserAuthenticated;
             NavigateLoginCommand = new NavigateCommand<LoginViewModel>(mainServices.GetRequiredService<NavigationService<LoginViewModel>>());
             LogoutCommand = new LogoutCommand(_userStore, mainServices);

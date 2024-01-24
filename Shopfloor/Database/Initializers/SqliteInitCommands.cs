@@ -34,7 +34,7 @@ namespace Shopfloor.Database.SQLite
             CREATE TABLE IF NOT EXISTS roles_users (
                 role_id INTEGER,
                 user_id INTEGER,
-                PRIMARY KEY(role, user),
+                PRIMARY KEY(role_id, user_id),
                 FOREIGN KEY(user_id) REFERENCES users(Id),
                 FOREIGN KEY(role_id) REFERENCES roles(Id)
             )";

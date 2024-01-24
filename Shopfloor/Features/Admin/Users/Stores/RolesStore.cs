@@ -1,7 +1,8 @@
-using Shopfloor.Models;
+
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using Shopfloor.Models.RoleModel;
 
 namespace Shopfloor.Features.Admin.Users.Stores
 {

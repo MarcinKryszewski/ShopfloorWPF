@@ -1,7 +1,10 @@
 ﻿using Shopfloor.Features.Admin.Users.Add;
 using Shopfloor.Features.Admin.Users.Stores;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+
+using Shopfloor.Models.RoleModel;
+using Shopfloor.Models.RoleUserModel;
+using Shopfloor.Models.UserModel;
+
 using Shopfloor.Shared.Commands;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -1,10 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Machines.Commands;
 using Shopfloor.Interfaces;
-using Shopfloor.Models;
-using Shopfloor.Services.Providers;
+using Shopfloor.Models.MachineModel;
 using Shopfloor.Shared.ViewModels;
-using Shopfloor.Stores.DatabaseDataStores;
 using Shopfloor.Validators;
 using System;
 using System.Collections;

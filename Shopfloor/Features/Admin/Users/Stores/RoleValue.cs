@@ -1,4 +1,6 @@
-using Shopfloor.Models;
+
+
+using Shopfloor.Models.RoleModel;
 
 namespace Shopfloor.Features.Admin.Users.Stores
 {

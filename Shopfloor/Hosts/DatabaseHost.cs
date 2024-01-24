@@ -1,8 +1,15 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
-using Shopfloor.Services.Providers;
-using Shopfloor.Stores.DatabaseDataStores;
+using Shopfloor.Models.MachineModel;
+using Shopfloor.Models.MachinePartModel;
+using Shopfloor.Models.PartModel;
+using Shopfloor.Models.PartTypeModel;
+using Shopfloor.Models.RoleModel;
+using Shopfloor.Models.RoleUserModel;
+using Shopfloor.Models.SupplierModel;
+using Shopfloor.Models.TaskTypeModel;
+using Shopfloor.Models.UserModel;
 using System;
 
 namespace Shopfloor.Hosts.DatabaseHost
@@ -26,8 +33,7 @@ namespace Shopfloor.Hosts.DatabaseHost
             services.AddSingleton<MachinePartProvider>();
             services.AddSingleton<MachinePartStore>();
 
-            services.AddSingleton<MachineProvider>();
-            services.AddSingleton<MachineStore>();
+            MachineServices.GetServices(services);
 
             services.AddSingleton<PartProvider>();
             services.AddSingleton<PartsStore>();
