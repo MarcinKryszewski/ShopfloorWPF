@@ -108,7 +108,7 @@ namespace Shopfloor.Stores
         public bool HasErrors => _propertyErrors.Count != 0;
         public IEnumerable GetErrors(string? propertyName)
         {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
     }
     public partial class CurrentUserStore : INotifyPropertyChanged

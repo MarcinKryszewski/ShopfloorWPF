@@ -114,7 +114,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
         }
         public IEnumerable GetErrors(string? propertyName)
         {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public bool IsDataValidate => !HasErrors;
         public async Task LoadData(IServiceProvider databaseServices)

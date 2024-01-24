@@ -65,7 +65,7 @@ namespace Shopfloor.Models.MachineModel
     {
         private string _path;
         public string Path => _path;
-        public string SearchValue => _path.Replace(@"\", "");
+        public string SearchValue => _path.Replace(@"\", string.Empty);
     }
     public partial class Machine : IEquatable<Machine>
     {

@@ -110,7 +110,7 @@ namespace Shopfloor.Features.Admin.Users.Edit
         }
         public IEnumerable GetErrors(string? propertyName)
         {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public void ReloadData()
         {

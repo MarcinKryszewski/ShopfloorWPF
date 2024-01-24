@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Shopfloor.Models.RoleModel;
 
 namespace Shopfloor.Tests.Models
 {
@@ -9,7 +10,7 @@ namespace Shopfloor.Tests.Models
             public TestDataWithoutId()
             {
                 Add(new Role("test", 1));
-                Add(new Role("", 0));
+                Add(new Role(string.Empty, 0));
                 Add(new Role("; Drop Database", -1));
             }
         }
@@ -18,7 +19,7 @@ namespace Shopfloor.Tests.Models
             public TestDataWithId()
             {
                 Add(new Role(1, "test", 1));
-                Add(new Role(0, "", 0));
+                Add(new Role(0, string.Empty, 0));
                 Add(new Role(-1, "; Drop Database", -1));
             }
         }
@@ -74,7 +75,7 @@ namespace Shopfloor.Tests.Models
         public void Id_ConstructorWithId_ShouldNotBeNull()
         {
             // Arrange
-            Role role = new(5, "", 5);
+            Role role = new(5, string.Empty, 5);
             // Act
             int? result = role.Id;
             // Assert

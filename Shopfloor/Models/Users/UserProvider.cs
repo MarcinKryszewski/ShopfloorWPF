@@ -89,7 +89,7 @@ namespace Shopfloor.Models.UserModel
             string lastIdSQL = _database.DatabaseType switch
             {
                 "SQLite" => "SELECT last_insert_rowid()",
-                _ => "",
+                _ => string.Empty,
             };
 
             return connection.Query<int>(lastIdSQL).Single();

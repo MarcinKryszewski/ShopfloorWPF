@@ -83,9 +83,9 @@ namespace Shopfloor.Features.Admin.Users.Add
         }
         public void CleanForm()
         {
-            Username = "";
-            Name = "";
-            Surname = "";
+            Username = string.Empty;
+            Name = string.Empty;
+            Surname = string.Empty;
             UpdateRoles();
         }
         public void ClearErrors(string propertyName)
@@ -94,7 +94,7 @@ namespace Shopfloor.Features.Admin.Users.Add
         }
         public IEnumerable GetErrors(string? propertyName)
         {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public bool IsDataValidate => !HasErrors;
         public void ReloadData()

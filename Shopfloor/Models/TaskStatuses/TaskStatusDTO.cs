@@ -8,6 +8,6 @@ namespace Shopfloor.Models.TaskStatusModel
     public class TaskStatusDTO
     {
         public int Id { get; set; }
-        public string Description { get; set; } = "";
+        public string Description { get; set; } = string.Empty;
     }
 }

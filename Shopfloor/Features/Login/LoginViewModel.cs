@@ -18,7 +18,7 @@ namespace Shopfloor.Features.Login
 {
     public class LoginViewModel : ViewModelBase, IInputForm<User>
     {
-        private string _username = "";
+        private string _username = string.Empty;
         private readonly CurrentUserStore _userStore;
         private readonly UserValidation _userValidation;
         public string Username
@@ -86,7 +86,7 @@ namespace Shopfloor.Features.Login
         }
         public IEnumerable GetErrors(string? propertyName)
         {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public void AddError(string propertyName, string errorMassage)
         {

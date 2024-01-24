@@ -30,9 +30,7 @@ namespace Shopfloor.Hosts.DatabaseHost
 
         private static void ProvidersServices(IServiceCollection services)
         {
-            services.AddSingleton<MachinePartProvider>();
-            services.AddSingleton<MachinePartStore>();
-
+            MachinePartServices.GetServices(services);
             MachineServices.GetServices(services);
 
             services.AddSingleton<PartProvider>();

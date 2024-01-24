@@ -164,7 +164,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         }
         public IEnumerable GetErrors(string? propertyName)
         {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? "", null) ?? [];
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public bool IsDataValidate => !HasErrors;
         public void ReloadData()

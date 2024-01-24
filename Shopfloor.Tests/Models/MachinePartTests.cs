@@ -109,9 +109,9 @@ namespace Shopfloor.Tests.Models
         public void Part_WhenUsed_ShouldReturnPartType()
         {
             // Arrange
-            int partId = 5;
-            int machineId = 3;
-            MachinePart machinePart = new(partId, machineId);
+            Part part = new("test", null, null, null, null, null, null, null);
+            Machine machine = new("test", "sdf435", null, null, true);
+            MachinePart machinePart = new(part, machine);
             // Act
             Part? result = machinePart.Part;
             // Assert
@@ -162,7 +162,7 @@ namespace Shopfloor.Tests.Models
             Machine machine = new("test", "sdf435", null, null, true);
             MachinePart machinePart = new(part, machine);
             // Act
-            bool? result = machinePart.Machine?.Equals(part);
+            bool? result = machinePart.Machine?.Equals(machine);
             // Assert
             result.Should().BeTrue();
             result.Should().NotBeNull();
