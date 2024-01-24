@@ -2,7 +2,7 @@ namespace Shopfloor.Database.DTOs
 {
     public class RoleUserDTO
     {
-        public int Role { get; set; }
-        public int User { get; set; }
+        public int Role_Id { get; set; }
+        public int User_Id { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Shopfloor.Services.Providers
         #region SQLCommands
 
         private const string _createSQL = @"
-            INSERT INTO parts (name_pl, name_original, type, indeks, number, details, producer, supplier)
+            INSERT INTO parts (name_pl, name_original, type_id, indeks, number, details, producer_id, supplier_id)
             VALUES (@NamePl, @NameOriginal, @TypeId, @Indeks, @Number, @Details, @ProducerId, @SupplierId)
             ";
 
@@ -43,12 +43,12 @@ namespace Shopfloor.Services.Providers
             SET
                 name_pl = @NamePl,
                 name_original = @NameOriginal,
-                type = @TypeId,
+                type_id = @TypeId,
                 indeks = @Indeks,
                 number = @Number,
                 details = @Details,
-                producer = @ProducerId,
-                supplier = @SupplierId
+                producer_id = @ProducerId,
+                supplier_id = @SupplierId
             WHERE id = @Id
             ";
 
@@ -147,12 +147,12 @@ namespace Shopfloor.Services.Providers
                 item.Id,
                 item.Name_Pl,
                 item.Name_Original,
-                item.Type,
+                item.Type_Id,
                 item.Indeks,
                 item.Number,
                 item.Details,
-                item.Producer,
-                item.Supplier);
+                item.Producer_Id,
+                item.Supplier_Id);
         }
     }
 }

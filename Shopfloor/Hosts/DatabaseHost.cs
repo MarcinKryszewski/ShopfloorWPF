@@ -23,20 +23,32 @@ namespace Shopfloor.Hosts.DatabaseHost
 
         private static void ProvidersServices(IServiceCollection services)
         {
-            services.AddSingleton<PartTypeProvider>();
-            services.AddSingleton<UserProvider>();
-            services.AddSingleton<RoleProvider>();
-            services.AddSingleton<RoleUserProvider>();
-            services.AddSingleton<MachineProvider>();
-            services.AddSingleton<SupplierProvider>();
-            services.AddSingleton<PartProvider>();
-            services.AddSingleton<TaskTypeProvider>();
+            services.AddSingleton<MachinePartProvider>();
+            services.AddSingleton<MachinePartStore>();
 
-            services.AddSingleton<PartTypesStore>();
-            services.AddSingleton<PartsStore>();
-            services.AddSingleton<SuppliersStore>();
+            services.AddSingleton<MachineProvider>();
             services.AddSingleton<MachineStore>();
+
+            services.AddSingleton<PartProvider>();
+            services.AddSingleton<PartsStore>();
+
+            services.AddSingleton<PartTypeProvider>();
+            services.AddSingleton<PartTypesStore>();
+
+            services.AddSingleton<RoleProvider>();
+            //services.AddSingleton<RoleStore>();
+
+            services.AddSingleton<RoleUserProvider>();
+            //services.AddSingleton<RoleUserStore>();
+
+            services.AddSingleton<SupplierProvider>();
+            services.AddSingleton<SuppliersStore>();
+
+            services.AddSingleton<TaskTypeProvider>();
             services.AddSingleton<TaskTypeStore>();
+
+            services.AddSingleton<UserProvider>();
+            //services.AddSingleton<UserStore>();
         }
     }
 }

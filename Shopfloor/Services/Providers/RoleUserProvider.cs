@@ -18,7 +18,7 @@ namespace Shopfloor.Services.Providers
         #region SQLCommands
 
         private const string _createSQL = @"
-            INSERT INTO roles_users (role, user)
+            INSERT INTO roles_users (role_id, user_id)
             VALUES (@RoleId, @UserId)
             ";
 
@@ -30,19 +30,19 @@ namespace Shopfloor.Services.Providers
         private const string _deleteSQL = @"
             DELETE
             FROM roles_users
-            WHERE role = @RoleId AND user = @UserId
+            WHERE role_id = @RoleId AND user_id = @UserId
             ";
 
         private const string _getAllForUser = @"
             SELECT *
             FROM roles_users
-            WHERE user = @UserId
+            WHERE user_id = @UserId
             ";
 
         private const string _getAllForRole = @"
             SELECT *
             FROM roles_users
-            WHERE role = @RoleId
+            WHERE role_id = @RoleId
             ";
 
         #endregion SQLCommands
@@ -139,7 +139,7 @@ namespace Shopfloor.Services.Providers
 
         private static RoleUser ToRoleUser(RoleUserDTO item)
         {
-            return new RoleUser(item.Role, item.User);
+            return new RoleUser(item.Role_Id, item.User_Id);
         }
     }
 }

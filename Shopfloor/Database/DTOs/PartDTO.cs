@@ -5,11 +5,11 @@
         public int Id { get; set; }
         public string Name_Pl { get; set; } = string.Empty;
         public string Name_Original { get; set; } = string.Empty;
-        public int Type { get; set; }
+        public int Type_Id { get; set; }
         public int Indeks { get; set; }
         public string Number { get; set; } = string.Empty;
         public string Details { get; set; } = string.Empty;
-        public int Producer { get; set; }
-        public int Supplier { get; set; }
+        public int Producer_Id { get; set; }
+        public int Supplier_Id { get; set; }
     }
 }
