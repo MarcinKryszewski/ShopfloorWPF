@@ -33,6 +33,8 @@
     <Watch Remove="Features\Admin\Machines\MachinesList\MachinesListView.xaml" />
     <Watch Remove="Features\Admin\PartTypes\PartTypesList\PartTypesListView.xaml" />
     <Watch Remove="Features\Admin\PartTypes\PartTypesMainView.xaml" />
+    <Watch Remove="Features\Mechanic\Tasks\TasksList\TasksListView.xaml" />
+    <Watch Remove="Features\Mechanic\Tasks\TasksMainView.xaml" />
     <Watch Remove="Themes\Controls\ButtonThemes.xaml" />
     <Watch Remove="Themes\Controls\TextBlockThemes.xaml" />
     <Watch Remove="Themes\Controls\TextBoxThemes.xaml" />
