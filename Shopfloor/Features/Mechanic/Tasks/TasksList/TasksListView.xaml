@@ -47,6 +47,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            
         </Style>
         <Style x:Key="topButton" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="Transparent" />
