@@ -9,7 +9,7 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid >
-        <Border Margin="10,10,0,0" Background="{StaticResource ResourceKey=BrushDarkNeutral400}">
+        <Border Background="{StaticResource ResourceKey=BrushDarkNeutral400}">
             <ContentControl Content="{Binding Content}">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type list:TasksListViewModel}">
