@@ -1,7 +1,7 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using Shopfloor.Models.UserModel;
 
-namespace Shopfloor.Tests.Models
+namespace Shopfloor.Tests.Models.Users
 {
     public sealed class UserTests
     {

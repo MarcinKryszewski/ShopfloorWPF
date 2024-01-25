@@ -1,9 +1,9 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.MachinePartModel;
 using Shopfloor.Models.PartModel;
 
-namespace Shopfloor.Tests.Models
+namespace Shopfloor.Tests.Models.MachinesParts
 {
     public sealed class MachinePartTests
     {

@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Shopfloor.Models.RoleModel;
 
-namespace Shopfloor.Tests.Models
+namespace Shopfloor.Tests.Models.Roles
 {
     public sealed class RoleTests
     {

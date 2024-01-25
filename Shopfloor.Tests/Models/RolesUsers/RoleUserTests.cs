@@ -1,9 +1,9 @@
-using FluentAssertions;
+﻿using FluentAssertions;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
 
-namespace Shopfloor.Tests.Models
+namespace Shopfloor.Tests.Models.RolesUsers
 {
     public sealed class RoleUserTests
     {

@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Shopfloor.Models.PartTypeModel;
 
-namespace Shopfloor.Tests.Models
+namespace Shopfloor.Tests.Models.PartTypes
 {
     public sealed class PartTypeTests
     {
@@ -21,7 +21,6 @@ namespace Shopfloor.Tests.Models
             hashCode.Should().Be(id.GetHashCode());
             hashCode.Should().NotBe(name.GetHashCode());
         }
-
         [Theory]
         [InlineData(1, "Test")]
         [InlineData(999, "999")]
@@ -39,7 +38,6 @@ namespace Shopfloor.Tests.Models
             hashCode.Should().NotBe(id.GetHashCode());
             hashCode.Should().NotBe(0.GetHashCode());
         }
-
         [Theory]
         [InlineData(1, "Test", "Test2")]
         [InlineData(1, "Test", "Test")]
@@ -57,7 +55,6 @@ namespace Shopfloor.Tests.Models
             result.Should().BeTrue();
             resultReverser.Should().BeTrue();
         }
-
         [Theory]
         [InlineData(1, "Test", "Test2")]
         [InlineData(1, "Test", "Test")]
@@ -75,7 +72,6 @@ namespace Shopfloor.Tests.Models
             result.Should().BeFalse();
             resultReverser.Should().BeFalse();
         }
-
         [Theory]
         [InlineData("Test")]
         [InlineData("")]
@@ -93,7 +89,6 @@ namespace Shopfloor.Tests.Models
             result.Should().BeTrue();
             resultReverser.Should().BeTrue();
         }
-
         [Theory]
         [InlineData("Test", "Test2")]
         [InlineData("Test", "")]
@@ -111,7 +106,6 @@ namespace Shopfloor.Tests.Models
             result.Should().BeFalse();
             resultReverser.Should().BeFalse();
         }
-
         [Fact]
         public void Equals_NullObject_ReturnsFalse()
         {
@@ -124,7 +118,6 @@ namespace Shopfloor.Tests.Models
             // Assert
             result.Should().BeFalse();
         }
-
         [Fact]
         public void Equals_ObjectWithDifferentType_ReturnsFalse()
         {
@@ -137,7 +130,6 @@ namespace Shopfloor.Tests.Models
             // Assert
             result.Should().BeFalse();
         }
-
         [Theory]
         [InlineData("PartType")]
         public void SearchValue_WithName_ReturnsName(string name)
@@ -151,7 +143,6 @@ namespace Shopfloor.Tests.Models
             // Assert
             result.Should().Be(name);
         }
-
         [Fact]
         public void SearchValue_WithEmptyName_ReturnsEmptyString()
         {

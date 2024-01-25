@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using Shopfloor.Models.SupplierModel;
 
-namespace Shopfloor.Tests.Models
+namespace Shopfloor.Tests.Models.Suppliers
 {
     public sealed class SupplierTests
     {
