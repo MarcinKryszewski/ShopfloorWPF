@@ -82,13 +82,13 @@ namespace Shopfloor.Models.MachineModel
         public override bool Equals(object? obj)
         {
             if (obj is null) return false;
-            if (obj is not PartType) return false;
+            if (obj is not Machine) return false;
             return Equals(obj);
         }
         public override int GetHashCode()
         {
             if (_id != null) return _id.GetHashCode();
-            return _name.GetHashCode();
+            return _path.GetHashCode();
         }
     }
 }

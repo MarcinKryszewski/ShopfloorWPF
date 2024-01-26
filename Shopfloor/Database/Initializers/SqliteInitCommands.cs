@@ -112,8 +112,8 @@ namespace Shopfloor.Database.SQLite
                 FOREIGN KEY(part_id) REFERENCES parts,
                 PRIMARY KEY(machine_id,part_id)
             )";
-        private const string _tasks_types_SQLCommand = @"
-            CREATE TABLE task_types (
+        private const string _errands_types_SQLCommand = @"
+            CREATE TABLE errand_types (
                 id INTEGER,
                 name TEXT,
                 description TEXT,
@@ -121,53 +121,53 @@ namespace Shopfloor.Database.SQLite
             )";
         private const string _initPart_types_SQLCommand = @"
             BEGIN TRANSACTION;
-                INSERT INTO task_types (name, description) VALUES ('Awaria', 'Zadania związane z awariami na liniach');
-                INSERT INTO task_types (name, description) VALUES ('CILT', 'Cykliczne zadania związane z utrzymaniem maszyn');
-                INSERT INTO task_types (name, description) VALUES ('DCS', 'Zadania zaplanowane do wykonania wynikające np. z TAGów czy spotkań DCS');
-                INSERT INTO task_types (name, description) VALUES ('Remont', 'Zadania do wykonania podczas corocznych remontów');
-                INSERT INTO task_types (name, description) VALUES ('Warsztat', 'Zadania związane z działaniem warsztatu, np. narzędzia, śruby czy materiały eksploatacyjne na warsztacie');
+                INSERT INTO errand_types (name, description) VALUES ('Awaria', 'Zadania związane z awariami na liniach');
+                INSERT INTO errand_types (name, description) VALUES ('CILT', 'Cykliczne zadania związane z utrzymaniem maszyn');
+                INSERT INTO errand_types (name, description) VALUES ('DCS', 'Zadania zaplanowane do wykonania wynikające np. z TAGów czy spotkań DCS');
+                INSERT INTO errand_types (name, description) VALUES ('Remont', 'Zadania do wykonania podczas corocznych remontów');
+                INSERT INTO errand_types (name, description) VALUES ('Warsztat', 'Zadania związane z działaniem warsztatu, np. narzędzia, śruby czy materiały eksploatacyjne na warsztacie');
             COMMIT;
             ";
-        private const string _task_statuses_SQLCommand = @"
-        CREATE TABLE task_statuses (
+        private const string _errand_statuses_SQLCommand = @"
+        CREATE TABLE errand_statuses (
             id INTEGER,
             description TEXT,
             PRIMARY KEY(id)
         )";
-        private const string _tasks_SQLCommand = @"
-            CREATE TABLE tasks (
+        private const string _errands_SQLCommand = @"
+            CREATE TABLE errands (
                 id INTEGER,
                 created_date TEXT,
                 created_by_id INTEGER,
                 owner_id INTEGER,
                 priority TEXT,
                 machine_id INTEGER,
-                task_type_id INTEGER,
+                errand_type_id INTEGER,
                 description TEXT,
                 sap_number TEXT,
                 expected_date TEXT,
                 FOREIGN KEY(machine_id) REFERENCES machines(id),
-                FOREIGN KEY(task_type_id) REFERENCES task_types(id),
+                FOREIGN KEY(errand_type_id) REFERENCES errand_types(id),
                 FOREIGN KEY(created_by_id) REFERENCES users(id)
                 PRIMARY KEY(id)
             )";
-        private const string _tasks_task_statusesSQLCommand = @"
-            CREATE TABLE tasks_task_statuses (
-                task_id INTEGER,
-                task_status_id INTEGER,
+        private const string _errands_errand_statusesSQLCommand = @"
+            CREATE TABLE errands_errand_statuses (
+                errand_id INTEGER,
+                errand_status_id INTEGER,
                 set_date TEXT,
                 set_by_id INTEGER,
-                PRIMARY KEY(task_id, task_status_id),
-                FOREIGN KEY(task_id) REFERENCES tasks(id),
-                FOREIGN KEY(task_status_id) REFERENCES task_statuses(id)
+                PRIMARY KEY(errand_id, errand_status_id),
+                FOREIGN KEY(errand_id) REFERENCES errands(id),
+                FOREIGN KEY(errand_status_id) REFERENCES errand_statuses(id)
             )";
-        private const string _parts_tasks_SQLCommand = @"
-        CREATE TABLE parts_tasks (
+        private const string _parts_errands_SQLCommand = @"
+        CREATE TABLE parts_errands (
             part_id INTEGER,
-            task_id INTEGER,
+            errand_id INTEGER,
             amount INTEGER,
             status TEXT,
-            FOREIGN KEY(task_id) REFERENCES tasks(id),
+            FOREIGN KEY(errand_id) REFERENCES errands(id),
             FOREIGN KEY(part_id) REFERENCES parts(id)
         )";
         public SqliteInitCommands()
@@ -182,12 +182,12 @@ namespace Shopfloor.Database.SQLite
                 _suppliers_SQLCommand,
                 _parts_SQLCommand,
                 _machines_parts_SQLCommand,
-                _tasks_types_SQLCommand,
+                _errands_types_SQLCommand,
 
-                _task_statuses_SQLCommand,
-                _tasks_SQLCommand,
-                _tasks_task_statusesSQLCommand,
-                _parts_tasks_SQLCommand,
+                _errand_statuses_SQLCommand,
+                _errands_SQLCommand,
+                _errands_errand_statusesSQLCommand,
+                _parts_errands_SQLCommand,
 
 
                 _initAdmin_SQLCommand,
