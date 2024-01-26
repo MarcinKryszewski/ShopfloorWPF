@@ -4,11 +4,11 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace Shopfloor.Features.Mechanic.Tasks.TasksList
+namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
 {
-    public sealed partial class TasksListView : UserControl
+    public sealed partial class ErrandsListView : UserControl
     {
-        public TasksListView()
+        public ErrandsListView()
         {
             this.InitializeComponent();
 

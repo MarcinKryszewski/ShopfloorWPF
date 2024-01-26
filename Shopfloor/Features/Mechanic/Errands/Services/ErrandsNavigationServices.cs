@@ -1,13 +1,13 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Mechanic.Tasks.TasksList;
+using Shopfloor.Features.Mechanic.Errands.ErrandsList;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.Mechanic.Tasks.Services
+namespace Shopfloor.Features.Mechanic.Errands.Services
 {
-    public class TasksNavigationServices
+    public class ErrandsNavigationServices
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {
@@ -18,18 +18,18 @@ namespace Shopfloor.Features.Mechanic.Tasks.Services
         private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreateTasksListViewModel(s, databaseServices));
-            services.AddSingleton<CreateViewModel<TasksListViewModel>>((s) => () => s.GetRequiredService<TasksListViewModel>());
+            services.AddSingleton<CreateViewModel<ErrandsListViewModel>>((s) => () => s.GetRequiredService<ErrandsListViewModel>());
             services.AddSingleton((s) =>
             {
-                return new NavigationService<TasksListViewModel>(
+                return new NavigationService<ErrandsListViewModel>(
                     s.GetRequiredService<NavigationStore>(),
-                    s.GetRequiredService<CreateViewModel<TasksListViewModel>>()
+                    s.GetRequiredService<CreateViewModel<ErrandsListViewModel>>()
                 );
             });
         }
-        private static TasksListViewModel CreateTasksListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        private static ErrandsListViewModel CreateTasksListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
-            return new TasksListViewModel(mainServices, databaseServices);
+            return new ErrandsListViewModel(mainServices, databaseServices);
         }
     }
 }

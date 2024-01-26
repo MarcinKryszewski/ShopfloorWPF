@@ -1,16 +1,16 @@
-namespace Shopfloor.Models.TaskTypeModel
+namespace Shopfloor.Models.ErrandTypeModel
 {
-    public class TaskType
+    public class ErrandType
     {
         private readonly int? _id;
         private readonly string _name;
         private readonly string? _description;
-        public TaskType(string name, string? description)
+        public ErrandType(string name, string? description)
         {
             _name = name;
             _description = description;
         }
-        public TaskType(int id, string name, string? description)
+        public ErrandType(int id, string name, string? description)
         {
             _id = id;
             _name = name;

@@ -4,28 +4,28 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Interfaces;
 
-namespace Shopfloor.Models.TaskTypeModel
+namespace Shopfloor.Models.ErrandTypeModel
 {
-    public class TaskTypeStore : IDataStore<TaskType>
+    public class ErrandTypeStore : IDataStore<ErrandType>
     {
         private readonly IServiceProvider _databaseServices;
-        private IEnumerable<TaskType> _data = [];
-        public TaskTypeStore(IServiceProvider databaseServices)
+        private IEnumerable<ErrandType> _data = [];
+        public ErrandTypeStore(IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
         }
-        public IEnumerable<TaskType> Data => _data;
+        public IEnumerable<ErrandType> Data => _data;
         public bool IsLoaded { get; private set; } = false;
         public Task Load()
         {
-            TaskTypeProvider provider = _databaseServices.GetRequiredService<TaskTypeProvider>();
+            ErrandTypeProvider provider = _databaseServices.GetRequiredService<ErrandTypeProvider>();
             _data = provider.GetAll().Result;
             IsLoaded = true;
             return Task.CompletedTask;
         }
         public async Task Reload()
         {
-            TaskTypeProvider provider = _databaseServices.GetRequiredService<TaskTypeProvider>();
+            ErrandTypeProvider provider = _databaseServices.GetRequiredService<ErrandTypeProvider>();
             _data = await provider.GetAll();
         }
     }

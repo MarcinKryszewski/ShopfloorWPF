@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Features.Admin.Users.Stores;
-using Shopfloor.Features.Mechanic.Tasks.Services;
+using Shopfloor.Features.Mechanic.Errands.Services;
 using Shopfloor.Shared.Stores;
 
-namespace Shopfloor.Features.Mechanic.Tasks.Hosts
+namespace Shopfloor.Features.Mechanic.Errands.Hosts
 {
-    public class TasksHost
+    public class ErrandsHost
     {
         public static IHost GetHost(IServiceProvider databaseServices)
         {
@@ -21,7 +21,7 @@ namespace Shopfloor.Features.Mechanic.Tasks.Hosts
                 services.AddSingleton<NavigationStore>();
                 services.AddSingleton<SelectedUserStore>();
 
-                TasksNavigationServices.Get(services, databaseServices);
+                ErrandsNavigationServices.Get(services, databaseServices);
             })
             .Build();
         }

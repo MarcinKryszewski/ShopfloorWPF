@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.MinimalStates;
 using Shopfloor.Features.Mechanic.Requests;
-using Shopfloor.Features.Mechanic.Tasks;
+using Shopfloor.Features.Mechanic.Errands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
@@ -47,12 +47,12 @@ namespace Shopfloor.Services.NavigationServices
         private static void GetTasksNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreatTasksViewModel(s, databaseServices));
-            services.AddSingleton<CreateViewModel<TasksMainViewModel>>((s) => () => s.GetRequiredService<TasksMainViewModel>());
+            services.AddSingleton<CreateViewModel<ErrandsMainViewModel>>((s) => () => s.GetRequiredService<ErrandsMainViewModel>());
             services.AddSingleton((s) =>
             {
-                return new NavigationService<TasksMainViewModel>(
+                return new NavigationService<ErrandsMainViewModel>(
                     s.GetRequiredService<NavigationStore>(),
-                    s.GetRequiredService<CreateViewModel<TasksMainViewModel>>()
+                    s.GetRequiredService<CreateViewModel<ErrandsMainViewModel>>()
                 );
             });
         }
@@ -67,9 +67,9 @@ namespace Shopfloor.Services.NavigationServices
             return new RequestsViewModel();
         }
 
-        private static TasksMainViewModel CreatTasksViewModel(IServiceProvider services, IServiceProvider databaseServices)
+        private static ErrandsMainViewModel CreatTasksViewModel(IServiceProvider services, IServiceProvider databaseServices)
         {
-            return new TasksMainViewModel(databaseServices);
+            return new ErrandsMainViewModel(databaseServices);
         }
     }
 }

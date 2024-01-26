@@ -166,6 +166,7 @@ namespace Shopfloor.Database.SQLite
             part_id INTEGER,
             task_id INTEGER,
             amount INTEGER,
+            status TEXT,
             FOREIGN KEY(task_id) REFERENCES tasks(id),
             FOREIGN KEY(part_id) REFERENCES parts(id)
         )";

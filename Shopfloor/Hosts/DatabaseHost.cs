@@ -8,7 +8,7 @@ using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.SupplierModel;
-using Shopfloor.Models.TaskTypeModel;
+using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.UserModel;
 using System;
 
@@ -48,8 +48,8 @@ namespace Shopfloor.Hosts.DatabaseHost
             services.AddSingleton<SupplierProvider>();
             services.AddSingleton<SuppliersStore>();
 
-            services.AddSingleton<TaskTypeProvider>();
-            services.AddSingleton<TaskTypeStore>();
+            services.AddSingleton<ErrandTypeProvider>();
+            services.AddSingleton<ErrandTypeStore>();
 
             services.AddSingleton<UserProvider>();
             //services.AddSingleton<UserStore>();

@@ -18,7 +18,7 @@
     xmlns:requests="clr-namespace:Shopfloor.Features.Mechanic.Requests"
     xmlns:reservations="clr-namespace:Shopfloor.Features.Plannist.Reservations"
     xmlns:suppliers="clr-namespace:Shopfloor.Features.Admin.Suppliers"
-    xmlns:tasks="clr-namespace:Shopfloor.Features.Mechanic.Tasks"
+    xmlns:errands="clr-namespace:Shopfloor.Features.Mechanic.Errands"
     xmlns:topPanel="clr-namespace:Shopfloor.Layout.TopPanel"
     xmlns:users="clr-namespace:Shopfloor.Features.Admin.Users"
     d:DataContext="{d:DesignInstance Type=content:ContentViewModel}"
@@ -42,8 +42,8 @@
                         <login:LoginView />
                     </DataTemplate>
 
-                    <DataTemplate DataType="{x:Type tasks:TasksMainViewModel}">
-                        <tasks:TasksMainView />
+                    <DataTemplate DataType="{x:Type errands:ErrandsMainViewModel}">
+                        <errands:ErrandsMainView />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type requests:RequestsViewModel}">
                         <requests:RequestsView />

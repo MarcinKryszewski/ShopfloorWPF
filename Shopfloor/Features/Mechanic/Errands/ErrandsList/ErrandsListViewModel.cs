@@ -1,17 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.Mechanic.Tasks.TasksList
+namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
 {
-    public class TasksListViewModel : ViewModelBase
+    public class ErrandsListViewModel : ViewModelBase
     {
         private readonly IServiceProvider _mainServices;
         private readonly IServiceProvider _databaseServices;
 
-        public TasksListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public ErrandsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             _mainServices = mainServices;
             _databaseServices = databaseServices;

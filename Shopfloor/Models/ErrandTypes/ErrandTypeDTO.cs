@@ -1,6 +1,6 @@
-namespace Shopfloor.Models.TaskTypeModel
+namespace Shopfloor.Models.ErrandTypeModel
 {
-    public sealed class TaskTypeDTO
+    public sealed class ErrandTypeDTO
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

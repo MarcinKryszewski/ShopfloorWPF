@@ -7,7 +7,7 @@ using Shopfloor.Features.Admin.Users;
 using Shopfloor.Features.Dashboard;
 using Shopfloor.Features.Mechanic.MinimalStates;
 using Shopfloor.Features.Mechanic.Requests;
-using Shopfloor.Features.Mechanic.Tasks;
+using Shopfloor.Features.Mechanic.Errands;
 using Shopfloor.Features.Plannist.ControlPanel;
 using Shopfloor.Features.Plannist.Deploys;
 using Shopfloor.Features.Plannist.Orders;
@@ -77,7 +77,7 @@ namespace Shopfloor.Layout.SidePanel
         {
             NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(mainServices.GetRequiredService<NavigationService<DashboardViewModel>>());
 
-            NavigateTasksCommand = new NavigateCommand<TasksMainViewModel>(mainServices.GetRequiredService<NavigationService<TasksMainViewModel>>());
+            NavigateTasksCommand = new NavigateCommand<ErrandsMainViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsMainViewModel>>());
             NavigateRequestsCommand = new NavigateCommand<RequestsViewModel>(mainServices.GetRequiredService<NavigationService<RequestsViewModel>>());
             NavigateMinimalStatesCommand = new NavigateCommand<MinimalStatesViewModel>(mainServices.GetRequiredService<NavigationService<MinimalStatesViewModel>>());
 
