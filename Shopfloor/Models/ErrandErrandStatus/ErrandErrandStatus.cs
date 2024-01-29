@@ -1,9 +1,8 @@
 ﻿using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandStatusModel;
-using Shopfloor.Models.UserModel;
 using System;
 
-namespace Shopfloor.Models.ErrandsErrandStatuses
+namespace Shopfloor.Models.ErrandErrandStatusesModel
 {
     internal sealed class ErrandErrandStatus
     {
@@ -21,7 +20,5 @@ namespace Shopfloor.Models.ErrandsErrandStatuses
         public int ErrandStatusId { get; set; }
         public ErrandStatus ErrandStatus { get; set; }
         public DateTime SetDate { get; set; }
-        public int SetById { get; set; }
-        public User user { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace Shopfloor.Models.ErrandErrandStatusModel
+namespace Shopfloor.Models.ErrandErrandStatusesModel
 {
     public class ErrandErrandStatusDTO
     {
