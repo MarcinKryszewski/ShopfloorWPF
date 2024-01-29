@@ -737,7 +737,7 @@
             Text="DCS zadania" />
 
         <!--  Add Button  -->
-        <Button Style="{StaticResource addButton}">
+        <Button Style="{StaticResource addButton}" Command="{Binding Path=ErrandsAddNavigateCommand}">
             <StackPanel Orientation="Horizontal">
                 <!--  AddTo  -->
                 <TextBlock

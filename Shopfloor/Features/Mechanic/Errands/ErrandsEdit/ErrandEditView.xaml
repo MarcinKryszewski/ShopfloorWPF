@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Shopfloor.Features.Mechanic.Errands.ErrandsEdit"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <Grid Background="Red">
+            <TextBlock Text="EDIT"/>
     </Grid>
 </UserControl>

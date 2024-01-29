@@ -10,6 +10,11 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using Shopfloor.Models.ErrandErrandStatusesModel;
+using System.Windows.Input;
+using Shopfloor.Features.Mechanic.Errands.ErrandsNew;
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Shared.Commands;
+using Shopfloor.Shared.Services;
 
 namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
 {
@@ -19,12 +24,13 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
         private readonly IServiceProvider _databaseServices;
         private readonly ObservableCollection<Errand> _errands = [];
         public ICollectionView Errands => CollectionViewSource.GetDefaultView(_errands);
-
+        public ICommand ErrandsAddNavigateCommand { get; }
         public ErrandsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             _mainServices = mainServices;
             _databaseServices = databaseServices;
             Task.Run(() => LoadDataTest());
+            ErrandsAddNavigateCommand = new NavigateCommand<ErrandsNewViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsNewViewModel>>());
             //Task.Run(() => LoadData());
         }
         // TEST DATA

@@ -12,7 +12,7 @@ namespace Shopfloor.Models.ErrandModel
         public int Id { get; set; }
         public int Machine_Id { get; set; }
         public int Owner_Id { get; set; }
-        public string Priority { get; set; } = ErrandModel.Errand.DefaultPriority;
+        public string Priority { get; set; } = Errand.DefaultPriority;
         public string Sap_Number { get; set; } = string.Empty;
     }
 }
