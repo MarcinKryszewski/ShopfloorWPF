@@ -1,5 +1,5 @@
 ﻿using Shopfloor.Interfaces;
-using Shopfloor.Models.ErrandsErrandStatuses;
+using Shopfloor.Models.ErrandErrandStatusesModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.UserModel;

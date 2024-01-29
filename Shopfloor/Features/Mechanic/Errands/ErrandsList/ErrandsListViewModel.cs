@@ -1,5 +1,4 @@
 using Shopfloor.Models.ErrandModel;
-using Shopfloor.Models.ErrandsErrandStatuses;
 using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
@@ -10,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using Shopfloor.Models.ErrandErrandStatusesModel;
 
 namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
 {
@@ -44,12 +44,12 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
             _errands.Add(errand5);
 
             ErrandStatus errandStatus1 = new(1, "W trakcie");
-            ErrandStatus errandStatus2 = new(1, "Zamówiony");
+            ErrandStatus errandStatus2 = new(1, "ZamÃ³wiony");
             ErrandStatus errandStatus3 = new(1, "Anulowany");
 
-            ErrandErrandStatus errandErrandStatus1 = new(1, errand1, 1, errandStatus1, DateTime.Now.AddDays(-1));
-            ErrandErrandStatus errandErrandStatus2 = new(1, errand1, 1, errandStatus2, DateTime.Now.AddDays(-0));
-            ErrandErrandStatus errandErrandStatus3 = new(1, errand1, 1, errandStatus3, DateTime.Now.AddDays(1));
+            ErrandErrandStatus errandErrandStatus1 = new(1, 1, DateTime.Now.AddDays(-1));
+            ErrandErrandStatus errandErrandStatus2 = new(1, 2, DateTime.Now.AddDays(-0));
+            ErrandErrandStatus errandErrandStatus3 = new(1, 3, DateTime.Now.AddDays(1));
 
             Machine machine1 = new(1, "Monoblok", null, null, null, true);
             Machine machine2 = new(2, "RB1", null, null, null, true);

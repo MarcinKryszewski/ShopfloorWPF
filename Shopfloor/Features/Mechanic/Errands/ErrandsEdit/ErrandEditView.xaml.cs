@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Shopfloor.Features.Mechanic.Errands.ErrandEdit
+namespace Shopfloor.Features.Mechanic.Errands.ErrandsEdit
 {
     /// <summary>
     /// Interaction logic for ErrandEditView.xaml
     /// </summary>
-    public partial class ErrandEditView : UserControl
+    public partial class ErrandsEditView : UserControl
     {
-        public ErrandEditView()
+        public ErrandsEditView()
         {
             InitializeComponent();
         }
