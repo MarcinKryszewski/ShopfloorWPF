@@ -55,7 +55,7 @@ namespace Shopfloor.Hosts.DatabaseHost
             services.AddSingleton<ErrandTypeStore>();
 
             services.AddSingleton<UserProvider>();
-            //services.AddSingleton<UserStore>();
+            services.AddSingleton<UserStore>();
 
             services.AddSingleton<ErrandProvider>();
             services.AddSingleton<ErrandStore>();

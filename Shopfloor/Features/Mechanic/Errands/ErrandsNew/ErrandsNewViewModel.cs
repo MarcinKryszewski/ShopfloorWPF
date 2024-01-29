@@ -41,7 +41,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
             });
 
             MachineStore machineStore = _databaseServices.GetRequiredService<MachineStore>();
-            UserStore userStore = _databaseServices.GetRequiredService<UserDataTaskStore>();
+            UserStore userStore = _databaseServices.GetRequiredService<UserStore>();
             ErrandTypeStore errandTypeStore = _databaseServices.GetRequiredService<ErrandTypeStore>();
 
             List<Task> tasks = [];

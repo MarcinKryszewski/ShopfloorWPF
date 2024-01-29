@@ -18,7 +18,7 @@ namespace Shopfloor.Models.ErrandTypeModel
         }
         private const string _getAllSQL = @"
             SELECT *
-            FROM task_types
+            FROM errand_types
             ";
         public async Task<IEnumerable<ErrandType>> GetAll()
         {
