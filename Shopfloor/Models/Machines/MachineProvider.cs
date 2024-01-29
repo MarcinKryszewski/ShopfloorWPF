@@ -11,25 +11,20 @@ namespace Shopfloor.Models.MachineModel
     public class MachineProvider : IProvider<Machine>
     {
         private readonly DatabaseConnectionFactory _database;
-
         #region SQLCommands
-
         private const string _createSQL = @"
             INSERT INTO machines (machine_name, machine_number, parent)
             VALUES (@Name, @Number, @Parent)
             ";
-
         private const string _getOneSQL = @"
             SELECT *
             FROM machines
             WHERE id = @Id
             ";
-
         private const string _getAllSQL = @"
             SELECT *
             FROM machines
             ";
-
         private const string _updateSQL = @"
             UPDATE machines
             SET
@@ -39,22 +34,17 @@ namespace Shopfloor.Models.MachineModel
                 active = @Active
             WHERE id = @Id
             ";
-
         private const string _deleteSQL = @"
             DELETE
             FROM machines
             WHERE id = @Id
             ";
-
         #endregion SQLCommands
-
         public MachineProvider(DatabaseConnectionFactory database)
         {
             _database = database;
         }
-
         #region CRUD
-
         public async Task<int> Create(Machine item)
         {
             using IDbConnection connection = _database.Connect();
@@ -68,14 +58,12 @@ namespace Shopfloor.Models.MachineModel
 
             return 0;
         }
-
         public async Task<IEnumerable<Machine>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
             IEnumerable<MachineDTO> machineDTOs = await connection.QueryAsync<MachineDTO>(_getAllSQL);
             return machineDTOs.Select(ToMachine);
         }
-
         public async Task<Machine> GetById(int id)
         {
             using IDbConnection connection = _database.Connect();
@@ -86,7 +74,6 @@ namespace Shopfloor.Models.MachineModel
             MachineDTO? machineDTO = await connection.QuerySingleAsync<MachineDTO>(_getOneSQL, parameters);
             return ToMachine(machineDTO);
         }
-
         public async Task Update(Machine item)
         {
             using IDbConnection connection = _database.Connect();
@@ -100,7 +87,6 @@ namespace Shopfloor.Models.MachineModel
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
-
         public async Task Delete(int id)
         {
             using IDbConnection connection = _database.Connect();
@@ -110,9 +96,7 @@ namespace Shopfloor.Models.MachineModel
             };
             await connection.ExecuteAsync(_deleteSQL, parameters);
         }
-
         #endregion CRUD
-
         private static Machine ToMachine(MachineDTO item)
         {
             return new Machine(item.Id, item.Machine_Name, item.Machine_Number, item.Sap_Number, item.Parent, item.Active);

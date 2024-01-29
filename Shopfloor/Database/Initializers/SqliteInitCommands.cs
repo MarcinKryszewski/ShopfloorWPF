@@ -156,7 +156,6 @@ namespace Shopfloor.Database.SQLite
                 errand_id INTEGER,
                 errand_status_id INTEGER,
                 set_date TEXT,
-                set_by_id INTEGER,
                 PRIMARY KEY(errand_id, errand_status_id),
                 FOREIGN KEY(errand_id) REFERENCES errands(id),
                 FOREIGN KEY(errand_status_id) REFERENCES errand_statuses(id)

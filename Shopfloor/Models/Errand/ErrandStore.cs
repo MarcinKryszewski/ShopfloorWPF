@@ -1,31 +1,31 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Interfaces;
 
-namespace Shopfloor.Models.MachineModel
+namespace Shopfloor.Models.ErrandModel
 {
-    internal sealed class MachineStore : IDataStore<Machine>
+    internal sealed class ErrandStore : IDataStore<Errand>
     {
         private readonly IServiceProvider _databaseServices;
-        private IEnumerable<Machine> _data = [];
-        public MachineStore(IServiceProvider databaseServices)
+        private IEnumerable<Errand> _data = [];
+        public ErrandStore(IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
         }
-        public IEnumerable<Machine> Data => _data;
+        public IEnumerable<Errand> Data => _data;
         public bool IsLoaded { get; private set; }
         public Task Load()
         {
-            MachineProvider provider = _databaseServices.GetRequiredService<MachineProvider>();
+            ErrandProvider provider = _databaseServices.GetRequiredService<ErrandProvider>();
             _data = provider.GetAll().Result;
             IsLoaded = true;
             return Task.CompletedTask;
         }
         public async Task Reload()
         {
-            MachineProvider provider = _databaseServices.GetRequiredService<MachineProvider>();
+            ErrandProvider provider = _databaseServices.GetRequiredService<ErrandProvider>();
             _data = await provider.GetAll();
         }
     }
