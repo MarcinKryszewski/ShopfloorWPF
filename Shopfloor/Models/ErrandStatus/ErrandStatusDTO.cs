@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ErrandStatusModel
 {
-    public class ErrandTaskStatusDTO
+    public class ErrandStatusDTO
     {
         public int Id { get; set; }
         public string Description { get; set; } = string.Empty;
