@@ -107,29 +107,6 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             IsEdit = false;
             SelectedSupplier = null;
         }
-        /*public bool IsDataValidate(Supplier? supplier)
-        {
-            if (supplier is null)
-            {
-                ErrorMassage = "Podaj dostawcę";
-                return false;
-            }
-
-            if (supplier.Name.Length == 0)
-            {
-                ErrorMassage = "Wpisz nazwę dostawcy";
-                return false;
-            }
-
-            if (_suppliers.FirstOrDefault(s => string.Equals(s.Name, supplier.Name, StringComparison.CurrentCultureIgnoreCase)) is not null)
-            {
-                ErrorMassage = "Dostawca istnieje";
-                return false;
-            }
-
-            ErrorMassage = string.Empty;
-            return true;
-        }*/
         public void ClearErrors(string propertyName)
         {
             _propertyErrors.Remove(propertyName);

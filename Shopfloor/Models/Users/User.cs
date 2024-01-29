@@ -28,8 +28,8 @@ namespace Shopfloor.Models.UserModel
             string username,
             string name,
             string surname,
-            string imagePath,
-            bool isActive)
+            string imagePath = _defaultImagePath,
+            bool isActive = true)
         {
             _id = id;
             _username = username;

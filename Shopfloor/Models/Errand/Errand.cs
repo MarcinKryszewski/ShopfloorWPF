@@ -1,30 +1,32 @@
-using System;
-using System.ComponentModel;
-using Microsoft.VisualBasic.ApplicationServices;
-using Shopfloor.Interfaces;
+﻿using Shopfloor.Interfaces;
+using Shopfloor.Models.ErrandsErrandStatuses;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
+using Shopfloor.Models.UserModel;
+using System;
+using System.Collections.Generic;
 
-namespace Shopfloor.Models.Errand
+namespace Shopfloor.Models.ErrandModel
 {
-    public partial class Errand
+    internal sealed partial class Errand
     {
         public const string DefaultPriority = "C";
-        private int? _id;
-        private DateTime _createdDate;
-        private int _createdById;
+        private readonly int _createdById;
+        private readonly DateTime _createdDate;
+        private readonly ErrandDisplay _display;
+        private readonly List<ErrandErrandStatus> _errandStatuses = [];
+        private readonly int? _id;
         private User? _createdByUser;
-        private int? _ownerId; //
-        private User? _ownerUser;
-        private string _priority; //
-        private int _machineId; //
-        private Machine? _machine;
-        private int _errandTypeId; //
+        private string _description;
         private ErrandType? _errandType;
-        private string _description; //
+        private int _errandTypeId;
+        private DateTime? _expectedDate;
+        private Machine? _machine;
+        private int _machineId;
+        private int? _ownerId;
+        private User? _ownerUser;
+        private string _priority;
         private string? _sapNumber = string.Empty;
-        private DateTime? _expectedDate; //
-
         public Errand(int id, DateTime createdDate, int createdById, int machineId, int errandTypeId, string description, string? sapNumber, DateTime? expectedDate, int? ownerId, string? priority = DefaultPriority)
         {
             _id = id;
@@ -37,6 +39,7 @@ namespace Shopfloor.Models.Errand
             _description = description;
             _sapNumber = sapNumber;
             _expectedDate = expectedDate;
+            _display = new(this);
         }
         public Errand(DateTime createdDate, int createdById, int machineId, int errandTypeId, string description, string? priority = DefaultPriority)
         {
@@ -46,24 +49,86 @@ namespace Shopfloor.Models.Errand
             _errandTypeId = errandTypeId;
             _description = description;
             _priority = priority ?? DefaultPriority;
+            _display = new(this);
         }
-
-        public int? Id => _id; //
-        public DateTime CreatedDate => _createdDate;
         public int? CreatedById => _createdById;
-        public User? CreatedByUser => _createdByUser;
-        public int? OwnerId => _ownerId;
-        public User? OwnerUser => _ownerUser;
-        public string Priority => _priority; //
-        public int MachineId => _machineId;
-        public Machine? Machine => _machine; //
+        public User? CreatedByUser
+        {
+            get => _createdByUser;
+            set
+            {
+                if (value == null) return;
+                if (value.Id == _id) _createdByUser = value;
+            }
+        }
+        public DateTime CreatedDate => _createdDate;
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                if (value == null) return;
+                _description = value;
+            }
+        }
+        public ErrandDisplay Display => _display;
+        public List<ErrandErrandStatus> ErrandStatuses => _errandStatuses;
         public int ErrandTypeId => _errandTypeId;
-        public ErrandType? ErrandType => _errandType;
-        public string Description => _description = string.Empty; //
-        public string SapNumber => _sapNumber = string.Empty;
-        public DateTime? ExpectedDate => _expectedDate;  //
+        public DateTime? ExpectedDate
+        {
+            get => _expectedDate;
+            set
+            {
+                if (value == null) return;
+                _expectedDate = value;
+            }
+        }
+        public int? Id => _id;
+        public Machine? Machine
+        {
+            get => _machine;
+            set
+            {
+                if (value?.Id is not null) _machineId = (int)value.Id;
+                _machine = value;
+            }
+        }
+        public int MachineId => _machineId;
+        public int? OwnerId => _ownerId;
+        public string Priority
+        {
+            get => _priority;
+            set => _priority = value;
+        }
+        public User? Responsible
+        {
+            get => _ownerUser;
+            set
+            {
+                if (value?.Id is not null) _ownerId = value.Id;
+                _ownerUser = value;
+            }
+        }
+        public string SapNumber
+        {
+            get => _sapNumber = string.Empty;
+            set => _sapNumber = value;
+        }
+        public ErrandType? Type
+        {
+            get => _errandType;
+            set
+            {
+                if (value?.Id is not null) _errandTypeId = (int)value.Id;
+                _errandType = value;
+            }
+        }
+        public void AddStatus(ErrandErrandStatus status)
+        {
+            _errandStatuses.Add(status);
+        }
     }
-    public partial class Errand : ISearchableModel
+    internal sealed partial class Errand : ISearchableModel
     {
         public string SearchValue
         {
@@ -73,7 +138,7 @@ namespace Shopfloor.Models.Errand
             }
         }
     }
-    public partial class Errand : IEquatable<Errand>
+    internal sealed partial class Errand : IEquatable<Errand>
     {
         public bool Equals(Errand? other)
         {
@@ -85,12 +150,12 @@ namespace Shopfloor.Models.Errand
 
             return _id == other.Id;
         }
-        public override bool Equals(object? obj)
+        /*public override bool Equals(object? obj)
         {
             if (obj is null) return false;
             if (obj is not Errand) return false;
             return Equals(obj);
-        }
+    }*/
         public override int GetHashCode()
         {
             if (_id != null) return _id.GetHashCode();
