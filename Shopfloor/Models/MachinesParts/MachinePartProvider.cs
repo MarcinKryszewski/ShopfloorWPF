@@ -1,6 +1,5 @@
 using Dapper;
 using Shopfloor.Database;
-
 using Shopfloor.Interfaces;
 using System.Collections.Generic;
 using System.Data;
