@@ -12,7 +12,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Hosts
 {
     public class ErrandsHost
     {
-        public static IHost GetHost(IServiceProvider databaseServices)
+        public static IHost GetHost(IServiceProvider databaseServices, IServiceProvider userServices)
         {
             return Host
             .CreateDefaultBuilder()
@@ -21,7 +21,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Hosts
                 services.AddSingleton<NavigationStore>();
                 services.AddSingleton<SelectedUserStore>();
 
-                ErrandsNavigationServices.Get(services, databaseServices);
+                ErrandsNavigationServices.Get(services, databaseServices, userServices);
             })
             .Build();
         }

@@ -86,7 +86,8 @@ namespace Shopfloor.Models.ErrandModel
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
-            return 0;
+            string lastIdSQL = "SELECT last_insert_rowid()";
+            return connection.Query<int>(lastIdSQL).Single();
         }
         public async Task<IEnumerable<Errand>> GetAll()
         {

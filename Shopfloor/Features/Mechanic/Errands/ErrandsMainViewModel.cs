@@ -14,9 +14,9 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly NavigationStore _navigationStore;
         private readonly IHost _errandsServices;
         public ViewModelBase? Content => _navigationStore.CurrentViewModel;
-        public ErrandsMainViewModel(IServiceProvider databaseServices)
+        public ErrandsMainViewModel(IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            _errandsServices = ErrandsHost.GetHost(databaseServices);
+            _errandsServices = ErrandsHost.GetHost(databaseServices, userServices);
             _errandsServices.Start();
 
             _navigationStore = _errandsServices.Services.GetRequiredService<NavigationStore>();

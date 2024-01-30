@@ -27,7 +27,7 @@ namespace Shopfloor.Hosts.MainHost
 
                 DashboardNavigationServices.Get(services);
                 LoginNavigationServices.Get(services, databaseServices, userServices);
-                MechanicNavigationServices.Get(services, databaseServices);
+                MechanicNavigationServices.Get(services, databaseServices, userServices);
                 PlannistNavigationServices.Get(services);
                 ManagerNavigationServices.Get(services);
                 AdminNavigationServices.Get(services, databaseServices);

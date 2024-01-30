@@ -10,11 +10,16 @@ using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.ViewModels;
-using System.Linq;
+using Shopfloor.Interfaces;
+using Shopfloor.Models.ErrandModel;
+using System.Collections;
+using System.Windows.Input;
+using Shopfloor.Features.Mechanic.Errands.Commands;
+using Shopfloor.Stores;
 
 namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
 {
-    sealed internal class ErrandsNewViewModel : ViewModelBase
+    internal sealed partial class ErrandsNewViewModel : ViewModelBase
     {
         private readonly IServiceProvider _mainServices;
         private readonly IServiceProvider _databaseServices;
@@ -94,10 +99,12 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
         private readonly ObservableCollection<Machine> _machines = [];
         public ICollectionView Machines => CollectionViewSource.GetDefaultView(_machines);
-        public ErrandsNewViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public ErrandsNewViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             _mainServices = mainServices;
             _databaseServices = databaseServices;
+
+            NewErrandCommand = new ErrandNewCommand(this, _databaseServices, userServices.GetRequiredService<CurrentUserStore>().User?.Id);
 
             Task.Run(LoadData);
         }
@@ -181,6 +188,33 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
         {
             errandTypeStore.Load();
             return Task.CompletedTask;
+        }
+        public ICommand NewErrandCommand { get; }
+    }
+    internal sealed partial class ErrandsNewViewModel : IInputForm<Errand>
+    {
+        public bool IsDataValidate => !HasErrors;
+        public bool HasErrors => false;
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+        public void AddError(string propertyName, string errorMassage)
+        {
+            throw new NotImplementedException();
+        }
+        public void CleanForm()
+        {
+            throw new NotImplementedException();
+        }
+        public void ClearErrors(string propertyName)
+        {
+            throw new NotImplementedException();
+        }
+        public IEnumerable GetErrors(string? propertyName)
+        {
+            throw new NotImplementedException();
+        }
+        public void ReloadData()
+        {
+            throw new NotImplementedException();
         }
     }
 }

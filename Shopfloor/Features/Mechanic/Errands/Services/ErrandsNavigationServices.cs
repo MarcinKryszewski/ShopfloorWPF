@@ -11,10 +11,10 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
 {
     public class ErrandsNavigationServices
     {
-        public static void Get(IServiceCollection services, IServiceProvider databaseServices)
+        public static void Get(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             GetListNavigation(services, databaseServices);
-            GetAddNavigation(services, databaseServices);
+            GetAddNavigation(services, databaseServices, userServices);
             GetEditNavigation(services, databaseServices);
         }
         private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
@@ -29,9 +29,9 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
                 );
             });
         }
-        private static void GetAddNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        private static void GetAddNavigation(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            services.AddTransient((s) => CreateAddViewModel(s, databaseServices));
+            services.AddTransient((s) => CreateAddViewModel(s, databaseServices, userServices));
             services.AddSingleton<CreateViewModel<ErrandsNewViewModel>>((s) => () => s.GetRequiredService<ErrandsNewViewModel>());
             services.AddSingleton((s) =>
             {
@@ -61,9 +61,9 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
         {
             return new ErrandsEditViewModel(mainServices, databaseServices);
         }
-        private static ErrandsNewViewModel CreateAddViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        private static ErrandsNewViewModel CreateAddViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            return new ErrandsNewViewModel(mainServices, databaseServices);
+            return new ErrandsNewViewModel(mainServices, databaseServices, userServices);
         }
     }
 }

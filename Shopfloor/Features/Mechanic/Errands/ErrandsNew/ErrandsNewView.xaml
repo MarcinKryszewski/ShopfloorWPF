@@ -171,6 +171,7 @@
                     Height="50"
                     Margin="5,0"
                     Content="STWÓRZ"
+                    Command="{Binding Path=NewErrandCommand}"
                     Style="{StaticResource ResourceKey=ButtonMain}" />
                 <Button Grid.Row="0"
                     Grid.Column="2"
