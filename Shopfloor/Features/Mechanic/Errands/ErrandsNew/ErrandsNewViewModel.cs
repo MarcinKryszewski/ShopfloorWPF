@@ -10,7 +10,7 @@ using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.ViewModels;
-using Windows.ApplicationModel.UserDataTasks;
+using System.Linq;
 
 namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
 {
@@ -21,6 +21,76 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
         private readonly ObservableCollection<ErrandType> _errandTypes = [];
         public ICollectionView ErrandTypes => CollectionViewSource.GetDefaultView(_errandTypes);
         private readonly ObservableCollection<User> _users = [];
+        private ErrandType? _selectedType;
+        private Machine? _selectedMachine;
+        private DateTime? _selectedDate;
+        private string _sapNumber = string.Empty;
+        private User? _selectedResponsible;
+        private string _selectedPriority = string.Empty;
+        private string _taskDescription = string.Empty;
+        public ErrandType? SelectedType
+        {
+            get => _selectedType;
+            set
+            {
+                _selectedType = value;
+                OnPropertyChanged(nameof(SelectedType));
+            }
+        }
+        public Machine? SelectedMachine
+        {
+            get => _selectedMachine;
+            set
+            {
+                _selectedMachine = value;
+                OnPropertyChanged(nameof(SelectedMachine));
+            }
+        }
+        public DateTime? SelectedDate
+        {
+            get => _selectedDate;
+            set
+            {
+                _selectedDate = value;
+                OnPropertyChanged(nameof(SelectedDate));
+            }
+        }
+        public string SapNumber
+        {
+            get => _sapNumber;
+            set
+            {
+                _sapNumber = value;
+                OnPropertyChanged(nameof(SapNumber));
+            }
+        }
+        public User? SelectedResponsible
+        {
+            get => _selectedResponsible;
+            set
+            {
+                _selectedResponsible = value;
+                OnPropertyChanged(nameof(SelectedResponsible));
+            }
+        }
+        public string SelectedPriority
+        {
+            get => _selectedPriority;
+            set
+            {
+                _selectedPriority = value;
+                OnPropertyChanged(nameof(SelectedPriority));
+            }
+        }
+        public string TaskDescription
+        {
+            get => _taskDescription;
+            set
+            {
+                _taskDescription = value;
+                OnPropertyChanged(nameof(TaskDescription));
+            }
+        }
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
         private readonly ObservableCollection<Machine> _machines = [];
         public ICollectionView Machines => CollectionViewSource.GetDefaultView(_machines);
@@ -56,32 +126,45 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
             tasks.Add(FillUsersList(userStore));
             tasks.Add(FillTypesList(errandTypeStore));
             await Task.WhenAll(tasks);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Machines.Refresh();
+                Users.Refresh();
+                ErrandTypes.Refresh();
+            });
+
         }
         private Task FillMachinesList(MachineStore machineStore)
         {
-            foreach (Machine machine in machineStore.Data)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                _machines.Add(machine);
-            }
-            Machines.Refresh();
+                foreach (Machine machine in machineStore.Data)
+                {
+                    _machines.Add(machine);
+                }
+            });
             return Task.CompletedTask;
         }
         private Task FillUsersList(UserStore userStore)
         {
-            foreach (User user in userStore.Data)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                _users.Add(user);
-            }
-            Users.Refresh();
+                foreach (User user in userStore.Data)
+                {
+                    _users.Add(user);
+                }
+            });
             return Task.CompletedTask;
         }
         private Task FillTypesList(ErrandTypeStore errandTypeStore)
         {
-            foreach (ErrandType type in errandTypeStore.Data)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                _errandTypes.Add(type);
-            }
-            ErrandTypes.Refresh();
+                foreach (ErrandType type in errandTypeStore.Data)
+                {
+                    _errandTypes.Add(type);
+                }
+            });
             return Task.CompletedTask;
         }
         private Task LoadMachines(MachineStore machineStore)

@@ -79,12 +79,12 @@ namespace Shopfloor.Models.MachineModel
 
             return _id == other.Id;
         }
-        public override bool Equals(object? obj)
+        /*public override bool Equals(object? obj)
         {
             if (obj is null) return false;
             if (obj is not Machine) return false;
             return Equals(obj);
-        }
+        }*/
         public override int GetHashCode()
         {
             if (_id != null) return _id.GetHashCode();

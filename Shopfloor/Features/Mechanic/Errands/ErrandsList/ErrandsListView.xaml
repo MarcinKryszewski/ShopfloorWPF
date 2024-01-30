@@ -828,12 +828,12 @@
             <DataGrid.RowStyle>
                 <Style BasedOn="{StaticResource DataGridRowStyle1}" TargetType="DataGridRow">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Priority}" Value="B">
-                            <Setter Property="BorderBrush" Value="#d3d32f" />
-                        </DataTrigger>
                         <DataTrigger Binding="{Binding Priority}" Value="A">
                             <Setter Property="BorderBrush" Value="#D32F2F" />
                         </DataTrigger>
+                        <DataTrigger Binding="{Binding Priority}" Value="B">
+                            <Setter Property="BorderBrush" Value="#d3d32f" />
+                        </DataTrigger>                        
                         <DataTrigger Binding="{Binding Priority}" Value="C">
                             <Setter Property="BorderBrush" Value="#2fd353" />
                         </DataTrigger>

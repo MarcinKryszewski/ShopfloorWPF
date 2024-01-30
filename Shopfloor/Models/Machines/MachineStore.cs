@@ -2,6 +2,7 @@
 using Shopfloor.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Shopfloor.Models.MachineModel
@@ -19,7 +20,16 @@ namespace Shopfloor.Models.MachineModel
         public Task Load()
         {
             MachineProvider provider = _databaseServices.GetRequiredService<MachineProvider>();
-            _data = provider.GetAll().Result;
+            List<Machine> machines = new(provider.GetAll().Result);
+            foreach (Machine machine in machines)
+            {
+                if (machine.ParentId is not null)
+                {
+                    Machine? parent = machines.FirstOrDefault(m => m.Id == machine.ParentId);
+                    if (parent is not null) machine.SetParent(parent);
+                }
+            }
+            _data = machines;
             IsLoaded = true;
             return Task.CompletedTask;
         }
