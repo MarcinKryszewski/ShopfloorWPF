@@ -11,7 +11,7 @@ namespace Shopfloor.Models.ErrandModel
     internal sealed partial class Errand
     {
         public const string DefaultPriority = "C";
-        private readonly int _createdById;
+        private readonly int? _createdById;
         private readonly DateTime _createdDate;
         private readonly ErrandDisplay _display;
         private readonly List<ErrandErrandStatus> _errandStatuses = [];
@@ -19,15 +19,15 @@ namespace Shopfloor.Models.ErrandModel
         private User? _createdByUser;
         private string _description;
         private ErrandType? _errandType;
-        private int _errandTypeId;
+        private int? _errandTypeId;
         private DateTime? _expectedDate;
         private Machine? _machine;
-        private int _machineId;
+        private int? _machineId;
         private int? _ownerId;
         private User? _ownerUser;
         private string _priority;
         private string? _sapNumber = string.Empty;
-        public Errand(int id, DateTime createdDate, int createdById, int machineId, int errandTypeId, string description, string? sapNumber, DateTime? expectedDate, int? ownerId, string? priority = DefaultPriority)
+        public Errand(int id, DateTime createdDate, int? createdById, int? machineId, int? errandTypeId, string description, string? sapNumber, DateTime? expectedDate, int? ownerId, string? priority = DefaultPriority)
         {
             _id = id;
             _createdDate = createdDate;
@@ -41,7 +41,7 @@ namespace Shopfloor.Models.ErrandModel
             _expectedDate = expectedDate;
             _display = new(this);
         }
-        public Errand(DateTime createdDate, int createdById, int machineId, int errandTypeId, string description, string? priority = DefaultPriority)
+        public Errand(DateTime createdDate, int? createdById, int? machineId, int? errandTypeId, string description, string? priority = DefaultPriority)
         {
             _createdDate = createdDate;
             _createdById = createdById;
@@ -73,7 +73,7 @@ namespace Shopfloor.Models.ErrandModel
         }
         public ErrandDisplay Display => _display;
         public List<ErrandErrandStatus> ErrandStatuses => _errandStatuses;
-        public int ErrandTypeId => _errandTypeId;
+        public int? ErrandTypeId => _errandTypeId;
         public DateTime? ExpectedDate
         {
             get => _expectedDate;
@@ -93,7 +93,7 @@ namespace Shopfloor.Models.ErrandModel
                 _machine = value;
             }
         }
-        public int MachineId => _machineId;
+        public int? MachineId => _machineId;
         public int? OwnerId => _ownerId;
         public string Priority
         {

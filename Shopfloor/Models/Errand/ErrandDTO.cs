@@ -1,3 +1,6 @@
+using Shopfloor.Models.ErrandTypeModel;
+using Shopfloor.Models.MachineModel;
+using Shopfloor.Models.UserModel;
 using System;
 
 namespace Shopfloor.Models.ErrandModel
@@ -8,11 +11,14 @@ namespace Shopfloor.Models.ErrandModel
         public DateTime Created_Date { get; set; }
         public string Description { get; set; } = string.Empty;
         public int Errand_Type_Id { get; set; }
-        public DateTime Expected_Date { get; set; }
+        public DateTime? Expected_Date { get; set; }
         public int Id { get; set; }
         public int Machine_Id { get; set; }
         public int Owner_Id { get; set; }
         public string Priority { get; set; } = Errand.DefaultPriority;
         public string Sap_Number { get; set; } = string.Empty;
+        public ErrandType? ErrandType { get; set; }
+        public Machine? Machine { get; set; }
+        public User? Responsible { get; set; }
     }
 }
