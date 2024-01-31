@@ -42,19 +42,19 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
         public ICommand NewErrandCommand { get; }
         public string SapNumber
         {
-            get => _errandDTO.Sap_Number;
+            get => _errandDTO.SapNumber;
             set
             {
-                _errandDTO.Sap_Number = value;
+                _errandDTO.SapNumber = value;
                 OnPropertyChanged(nameof(SapNumber));
             }
         }
         public DateTime? SelectedDate
         {
-            get => _errandDTO.Expected_Date;
+            get => _errandDTO.ExpectedDate;
             set
             {
-                _errandDTO.Expected_Date = value;
+                _errandDTO.ExpectedDate = value;
                 OnPropertyChanged(nameof(SelectedDate));
             }
         }

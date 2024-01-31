@@ -34,9 +34,9 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
                     errandDTO.Description,
                     errandDTO.Priority)
                 {
-                    ExpectedDate = errandDTO.Expected_Date,
+                    ExpectedDate = errandDTO.ExpectedDate,
                     Responsible = errandDTO.Responsible,
-                    SapNumber = errandDTO.Sap_Number
+                    SapNumber = errandDTO.SapNumber
                 };
 
                 int errandId = _errandProvider.Create(errand).Result;

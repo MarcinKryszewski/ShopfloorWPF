@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -36,12 +37,32 @@ namespace Shopfloor.Models.ErrandModel
                 @ExpectedDate
             )";
         private const string _getOneSQL = @"
-            SELECT *
+            SELECT 
+                id AS Id,
+                created_date AS CreatedDate,
+                created_by_id AS CreatedById,
+                owner_id AS OwnerId,
+                priority AS Priority,
+                machine_id AS MachineId,
+                errand_type_id AS ErrandTypeId,
+                description AS Description,
+                sap_number AS SapNumber,
+                expected_date AS ExpectedDate
             FROM errands
             WHERE id = @Id
             ";
         private const string _getAllSQL = @"
-            SELECT *
+            SELECT 
+                id AS Id,
+                created_date AS CreatedDate,
+                created_by_id AS CreatedById,
+                owner_id AS OwnerId,
+                priority AS Priority,
+                machine_id AS MachineId,
+                errand_type_id AS ErrandTypeId,
+                description AS Description,
+                sap_number AS SapNumber,
+                expected_date AS ExpectedDate
             FROM errands
             ";
         private const string _updateSQL = @"
@@ -71,10 +92,11 @@ namespace Shopfloor.Models.ErrandModel
         #region CRUD
         public async Task<int> Create(Errand item)
         {
+            CultureInfo culture = new("en-GB");
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                CeatedDate = item.CreatedDate,
+                CeatedDate = item.CreatedDate.ToString(culture),
                 CreatedById = item.CreatedById,
                 OwnerId = item.OwnerId,
                 Priority = item.Priority,
@@ -82,7 +104,7 @@ namespace Shopfloor.Models.ErrandModel
                 ErrandTypeId = item.ErrandTypeId,
                 Description = item.Description,
                 SapNumber = item.SapNumber,
-                ExpectedDate = item.ExpectedDate
+                ExpectedDate = item.ExpectedDate?.ToString("d", culture)
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
@@ -137,14 +159,14 @@ namespace Shopfloor.Models.ErrandModel
         {
             return new Errand(
                 item.Id,
-                item.Created_Date,
-                item.Created_By_Id,
-                item.Machine_Id,
-                item.Errand_Type_Id,
+                item.CreatedDate,
+                item.CreatedById,
+                item.MachineId,
+                item.ErrandTypeId,
                 item.Description,
-                item.Sap_Number,
-                item.Expected_Date,
-                item.Owner_Id,
+                item.SapNumber,
+                item.ExpectedDate,
+                item.OwnerId,
                 item.Priority
             );
         }
