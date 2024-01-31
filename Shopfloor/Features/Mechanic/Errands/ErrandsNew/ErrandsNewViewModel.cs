@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Errands.Commands;
 using Shopfloor.Features.Mechanic.Errands.ErrandsList;
+using Shopfloor.Features.Mechanic.Errands.Interfaces;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandTypeModel;
@@ -37,6 +38,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
 
             NewErrandCommand = new ErrandNewCommand(this, _databaseServices, userServices.GetRequiredService<CurrentUserStore>());
             ReturnCommand = new NavigateCommand<ErrandsListViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsListViewModel>>());
+            PrioritySetCommand = new PrioritySetCommand(this);
 
             Task.Run(LoadData);
         }
@@ -72,15 +74,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
                 OnPropertyChanged(nameof(SelectedMachine));
             }
         }
-        public string SelectedPriority
-        {
-            get => _errandDTO.Priority;
-            set
-            {
-                _errandDTO.Priority = value;
-                OnPropertyChanged(nameof(SelectedPriority));
-            }
-        }
+
         public User? SelectedResponsible
         {
             get => _errandDTO.Responsible;
@@ -215,5 +209,18 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
         {
             throw new NotImplementedException();
         }
+    }
+    internal sealed partial class ErrandsNewViewModel : IErrandPriority
+    {
+        public string SelectedPriority
+        {
+            get => _errandDTO.Priority;
+            set
+            {
+                _errandDTO.Priority = value;
+                OnPropertyChanged(nameof(SelectedPriority));
+            }
+        }
+        public ICommand PrioritySetCommand { get; }
     }
 }
