@@ -1,10 +1,13 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Errands.Commands;
+using Shopfloor.Features.Mechanic.Errands.ErrandsList;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Shared.Commands;
+using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System;
@@ -33,6 +36,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
             _databaseServices = databaseServices;
 
             NewErrandCommand = new ErrandNewCommand(this, _databaseServices, userServices.GetRequiredService<CurrentUserStore>());
+            ReturnCommand = new NavigateCommand<ErrandsListViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsListViewModel>>());
 
             Task.Run(LoadData);
         }
@@ -40,6 +44,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
         public ICollectionView ErrandTypes => CollectionViewSource.GetDefaultView(_errandTypes);
         public ICollectionView Machines => CollectionViewSource.GetDefaultView(_machines);
         public ICommand NewErrandCommand { get; }
+        public ICommand ReturnCommand { get; }
         public string SapNumber
         {
             get => _errandDTO.SapNumber;
