@@ -39,7 +39,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
                     SapNumber = errandDTO.SapNumber
                 };
 
-                int errandId = _errandProvider.Create(errand).Result;
+                int newErrandId = _errandProvider.Create(errand).Result;
             }
         }
     }

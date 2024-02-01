@@ -39,6 +39,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
             NewErrandCommand = new ErrandNewCommand(this, _databaseServices, userServices.GetRequiredService<CurrentUserStore>());
             ReturnCommand = new NavigateCommand<ErrandsListViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsListViewModel>>());
             PrioritySetCommand = new PrioritySetCommand(this);
+            ShowPartsListCommand = new ErrandsShowPartsList(this, mainServices);
 
             Task.Run(LoadData);
         }
@@ -222,5 +223,19 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
             }
         }
         public ICommand PrioritySetCommand { get; }
+    }
+    internal sealed partial class ErrandsNewViewModel : IPartsList
+    {
+        public ViewModelBase? PartsList
+        {
+            get => _partsList;
+            set
+            {
+                _partsList = value;
+                OnPropertyChanged(nameof(PartsList));
+            }
+        }
+        private ViewModelBase? _partsList;
+        public ICommand ShowPartsListCommand { get; }
     }
 }

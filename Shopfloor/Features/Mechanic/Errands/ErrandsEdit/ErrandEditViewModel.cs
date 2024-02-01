@@ -10,8 +10,8 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsEdit
 
         public ErrandsEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
-            this._mainServices = mainServices;
-            this._databaseServices = databaseServices;
+            _mainServices = mainServices;
+            _databaseServices = databaseServices;
         }
     }
 }

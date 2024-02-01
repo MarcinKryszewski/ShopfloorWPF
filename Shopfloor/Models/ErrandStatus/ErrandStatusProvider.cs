@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Dapper;
 using Shopfloor.Database;
 using Shopfloor.Interfaces;
-using Shopfloor.Models.ErrandModel;
 
 namespace Shopfloor.Models.ErrandStatusModel
 {

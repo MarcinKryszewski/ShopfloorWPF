@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Mechanic.Errands.ErrandPartsList;
 using Shopfloor.Features.Mechanic.Errands.ErrandsEdit;
 using Shopfloor.Features.Mechanic.Errands.ErrandsList;
 using Shopfloor.Features.Mechanic.Errands.ErrandsNew;
@@ -16,6 +17,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
             GetListNavigation(services, databaseServices);
             GetAddNavigation(services, databaseServices, userServices);
             GetEditNavigation(services, databaseServices);
+            GetPartsListNavigation(services, databaseServices);
         }
         private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
@@ -53,6 +55,18 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
                 );
             });
         }
+        private static void GetPartsListNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        {
+            services.AddTransient((s) => CreateartsListViewModel(s, databaseServices));
+            services.AddSingleton<CreateViewModel<ErrandPartsListViewModel>>((s) => () => s.GetRequiredService<ErrandPartsListViewModel>());
+            services.AddSingleton((s) =>
+            {
+                return new NavigationService<ErrandPartsListViewModel>(
+                    s.GetRequiredService<NavigationStore>(),
+                    s.GetRequiredService<CreateViewModel<ErrandPartsListViewModel>>()
+                );
+            });
+        }
         private static ErrandsListViewModel CreateListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             return new ErrandsListViewModel(mainServices, databaseServices);
@@ -64,6 +78,10 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
         private static ErrandsNewViewModel CreateAddViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             return new ErrandsNewViewModel(mainServices, databaseServices, userServices);
+        }
+        private static ErrandPartsListViewModel CreateartsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        {
+            return new ErrandPartsListViewModel(mainServices, databaseServices);
         }
     }
 }

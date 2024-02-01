@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Features.Mechanic.Errands.Services;
+using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Shared.Stores;
 
 namespace Shopfloor.Features.Mechanic.Errands.Hosts
@@ -20,6 +18,8 @@ namespace Shopfloor.Features.Mechanic.Errands.Hosts
             {
                 services.AddSingleton<NavigationStore>();
                 services.AddSingleton<SelectedUserStore>();
+
+                services.AddSingleton(new SelectedErrandStore());
 
                 ErrandsNavigationServices.Get(services, databaseServices, userServices);
             })
