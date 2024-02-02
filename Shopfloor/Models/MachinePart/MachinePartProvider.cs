@@ -16,8 +16,8 @@ namespace Shopfloor.Models.MachinePartModel
             _database = database;
         }
         private const string _createSQL = @"
-            INSERT INTO machines_parts (machine_id, part_id, amount, unit)
-            VALUES (@Machine, @Part, @Amount, @Unit)
+            INSERT INTO machines_parts (machine_id, part_id, amount)
+            VALUES (@Machine, @Part, @Amount)
         ";
         private const string _deleteSQL = @"
             DELETE
@@ -44,8 +44,7 @@ namespace Shopfloor.Models.MachinePartModel
             {
                 Machine = item.MachineId,
                 Part = item.PartId,
-                Amount = item.Amount,
-                Unit = item.Unit
+                Amount = item.Amount
             };
             await connection.ExecuteAsync(_createSQL, parameters);
             return 0;
@@ -82,7 +81,7 @@ namespace Shopfloor.Models.MachinePartModel
         public Task Delete(int id) => throw new System.NotImplementedException();
         private static MachinePart ToModel(MachinePartDTO item)
         {
-            return new(item.Part_Id, item.Machine_Id, item.Amount, item.Unit);
+            return new(item.Part_Id, item.Machine_Id, item.Amount);
         }
     }
 }

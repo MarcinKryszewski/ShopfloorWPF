@@ -6,7 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Mechanic.Errands.Commands;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
@@ -18,16 +20,20 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
     public class ErrandPartsListViewModel : ViewModelBase
     {
         private List<Part> _parts = [];
-        private List<ErrandPart> _errandParts = [];
         private readonly IServiceProvider _databaseServices;
         private readonly SelectedErrandStore _errandStore;
         public ICollectionView PartsAll => CollectionViewSource.GetDefaultView(_parts);
         public ICollectionView PartsMachine => CollectionViewSource.GetDefaultView(_parts);
-        public ICollectionView ErrandParts => CollectionViewSource.GetDefaultView(_errandParts);
+        public ICollectionView ErrandParts => CollectionViewSource.GetDefaultView(_errandStore.ErrandParts);
+        public ICommand AddPartToListCommand { get; }
+        public ICommand RemovePartFromListCommand { get; }
+        public Part? SelectedPart { get; set; }
         public ErrandPartsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
             _errandStore = mainServices.GetRequiredService<SelectedErrandStore>();
+            AddPartToListCommand = new ErrandAddPartCommand(this, _errandStore);
+            RemovePartFromListCommand = new ErrandRemovePartCommand(this, _errandStore);
             Task.Run(LoadData);
         }
         private async Task LoadData()
@@ -36,7 +42,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
             (() =>
             {
                 _parts.Clear();
-                _errandParts.Clear();
+                _errandStore.ErrandParts.Clear();
             });
 
             PartsStore partsStore = _databaseServices.GetRequiredService<PartsStore>();
@@ -83,14 +89,15 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
         {
             foreach (ErrandPart errandPart in errandPartStore.Data)
             {
-                if (errandPart.ErrandId == _errandStore.ErrandId) _errandParts.Add(errandPart);
+                if (errandPart.ErrandId == _errandStore.ErrandId) _errandStore.ErrandParts.Add(errandPart);
             }
 
             ErrandPart errandPart1 = new(2, 1)
             {
                 Part = new Part(1, "Łożysko", null, null, null, null, null, null, null)
             };
-            _errandParts.Add(errandPart1);
+            _errandStore.ErrandParts.Add(errandPart1);
+            _errandStore.ErrandParts.Add(errandPart1);
 
             return Task.CompletedTask;
         }

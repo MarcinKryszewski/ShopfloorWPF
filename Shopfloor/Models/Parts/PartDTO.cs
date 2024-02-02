@@ -11,5 +11,6 @@
         public string Details { get; set; } = string.Empty;
         public int Producer_Id { get; set; }
         public int Supplier_Id { get; set; }
+        public string Unit { get; set; } = "SZT";
     }
 }

@@ -66,6 +66,19 @@
                             </ComboBox.ItemTemplate>
                         </ComboBox>
 
+                        <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Jednostka" />
+                        <ComboBox
+                            Grid.Row="1"
+                            Height="28"
+                            Margin="0,0,0,20"
+                            SelectedValue="{Binding Path=Unit, Mode=TwoWay}"
+                            SelectedValuePath="Content"
+                            SelectedIndex="0">
+                            <ComboBoxItem Content="SZT"/>
+                            <ComboBoxItem Content="M"/>
+                            <ComboBoxItem Content="L"/>
+                        </ComboBox>
+
                         <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Indeks SAP" />
                         <TextBox
                             Grid.Row="1"

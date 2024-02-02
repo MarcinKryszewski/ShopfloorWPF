@@ -97,6 +97,7 @@ namespace Shopfloor.Database.SQLite
                 details TEXT,
                 producer_id INTEGER,
                 supplier_id INTEGER,
+                unit TEXT,
                 PRIMARY KEY(id),
                 FOREIGN KEY(type_id) REFERENCES parts_types(id),
                 FOREIGN KEY(supplier_id) REFERENCES suppliers(id),
@@ -107,7 +108,6 @@ namespace Shopfloor.Database.SQLite
                 machine_id INTEGER,
                 part_id INTEGER,
                 amount REAL,
-                unit TEXT,
                 FOREIGN KEY(machine_id) REFERENCES machines(id),
                 FOREIGN KEY(part_id) REFERENCES parts,
                 PRIMARY KEY(machine_id,part_id)
@@ -166,7 +166,6 @@ namespace Shopfloor.Database.SQLite
                 errand_id INTEGER,
                 amount INTEGER,
                 status TEXT,
-                unit TEXT,
                 FOREIGN KEY(errand_id) REFERENCES errands(id),
                 FOREIGN KEY(part_id) REFERENCES parts(id)
             )";

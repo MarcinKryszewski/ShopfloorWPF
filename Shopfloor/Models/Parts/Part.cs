@@ -7,6 +7,7 @@ namespace Shopfloor.Models.PartModel
 {
     public class Part : IEquatable<Part>, ISearchableModel
     {
+        private const string _defaultUnit = "SZT";
         private readonly int? _id;
         private string _namePl = string.Empty;
         private string _nameOriginal = string.Empty;
@@ -19,7 +20,7 @@ namespace Shopfloor.Models.PartModel
         private Supplier? _producer;
         private int? _supplierId;
         private Supplier? _supplier;
-
+        private string _unit = _defaultUnit;
         public int? Id => _id;
         public string NamePl => _namePl;
         public string NameOriginal => _nameOriginal;
@@ -33,7 +34,7 @@ namespace Shopfloor.Models.PartModel
         public Supplier? Producer => _producer;
         public int? SupplierId => _supplierId;
         public Supplier? Supplier => _supplier;
-
+        public string Unit => _unit;
         public string SearchValue => SetSearchValue();
         public string RequiredInputValue => SetInputValue();
 
@@ -45,7 +46,8 @@ namespace Shopfloor.Models.PartModel
             string? number,
             string? details,
             int? producerId,
-            int? supplierId)
+            int? supplierId,
+            string unit = _defaultUnit)
         {
             _namePl = namePl ?? string.Empty;
             _nameOriginal = nameOriginal ?? string.Empty;
@@ -55,6 +57,7 @@ namespace Shopfloor.Models.PartModel
             _details = details ?? string.Empty;
             _producerId = producerId;
             _supplierId = supplierId;
+            _unit = unit;
         }
 
         public Part(
@@ -66,7 +69,8 @@ namespace Shopfloor.Models.PartModel
             string? number,
             string? details,
             int? producerId,
-            int? supplierId)
+            int? supplierId,
+            string unit = _defaultUnit)
         {
             _id = id;
             _namePl = namePl ?? string.Empty;
@@ -77,6 +81,7 @@ namespace Shopfloor.Models.PartModel
             _details = details ?? string.Empty;
             _producerId = producerId;
             _supplierId = supplierId;
+            _unit = unit;
         }
 
         private string SetSearchValue()

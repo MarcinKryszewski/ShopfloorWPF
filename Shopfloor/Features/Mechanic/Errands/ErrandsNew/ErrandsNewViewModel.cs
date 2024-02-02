@@ -2,6 +2,7 @@
 using Shopfloor.Features.Mechanic.Errands.Commands;
 using Shopfloor.Features.Mechanic.Errands.ErrandsList;
 using Shopfloor.Features.Mechanic.Errands.Interfaces;
+using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandTypeModel;
@@ -31,12 +32,15 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
         private readonly ObservableCollection<Machine> _machines = [];
         private readonly IServiceProvider _mainServices;
         private readonly ObservableCollection<User> _users = [];
+        private readonly SelectedErrandStore _selectedErrand;
         public ErrandsNewViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             _mainServices = mainServices;
             _databaseServices = databaseServices;
 
-            NewErrandCommand = new ErrandNewCommand(this, _databaseServices, userServices.GetRequiredService<CurrentUserStore>());
+            _selectedErrand = mainServices.GetRequiredService<SelectedErrandStore>();
+
+            NewErrandCommand = new ErrandNewCommand(this, _databaseServices, userServices.GetRequiredService<CurrentUserStore>(), _selectedErrand);
             ReturnCommand = new NavigateCommand<ErrandsListViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsListViewModel>>());
             PrioritySetCommand = new PrioritySetCommand(this);
             ShowPartsListCommand = new ErrandsShowPartsList(this, mainServices);
@@ -71,7 +75,9 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
             get => _errandDTO.Machine;
             set
             {
+                if (value?.Id is null) return;
                 _errandDTO.Machine = value;
+                _selectedErrand.MachineId = (int)value.Id;
                 OnPropertyChanged(nameof(SelectedMachine));
             }
         }
@@ -141,6 +147,10 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
+                _selectedErrand.ErrandParts.Clear();
+                _selectedErrand.ErrandId = null;
+                _selectedErrand.MachineId = null;
+
                 _errandTypes.Clear();
                 _users.Clear();
                 _machines.Clear();

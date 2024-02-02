@@ -213,6 +213,10 @@
                         Width="120"
                         DisplayMemberBinding="{Binding Path=Supplier.Name}"
                         Header="Dostawca" />
+                    <GridViewColumn
+                        Width="120"
+                        DisplayMemberBinding="{Binding Path=Unit}"
+                        Header="Jednostka" />
                 </GridView>
             </ListView.View>
         </ListView>

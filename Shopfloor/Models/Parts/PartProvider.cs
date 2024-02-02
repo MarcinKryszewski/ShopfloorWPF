@@ -152,7 +152,8 @@ namespace Shopfloor.Models.PartModel
                 item.Number,
                 item.Details,
                 item.Producer_Id,
-                item.Supplier_Id);
+                item.Supplier_Id,
+                item.Unit);
         }
     }
 }

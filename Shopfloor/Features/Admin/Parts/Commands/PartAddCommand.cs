@@ -27,7 +27,8 @@ namespace Shopfloor.Features.Admin.Parts.Commands
                 _viewModel.Number,
                 _viewModel.Details,
                 _viewModel.ProducerId,
-                _viewModel.SupplierId
+                _viewModel.SupplierId,
+                _viewModel.Unit
             );
             if (!_viewModel.IsDataValidate) return;
 

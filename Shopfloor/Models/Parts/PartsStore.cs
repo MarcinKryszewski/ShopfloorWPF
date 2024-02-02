@@ -11,7 +11,7 @@ namespace Shopfloor.Models.PartModel
 {
     public class PartsStore : IDataStore<Part>
     {
-        private IEnumerable<Part> _data = Enumerable.Empty<Part>();
+        private IEnumerable<Part> _data = [];
         private readonly IServiceProvider _databaseServices;
 
         public IEnumerable<Part> Data => _data;
@@ -24,7 +24,7 @@ namespace Shopfloor.Models.PartModel
 
         public Task Load()
         {
-            IProvider<Part> provider = _databaseServices.GetRequiredService<PartProvider>();
+            PartProvider provider = _databaseServices.GetRequiredService<PartProvider>();
             _data = provider.GetAll().Result;
             IsLoaded = true;
             return Task.CompletedTask;

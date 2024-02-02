@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Parts.Commands;
 using Shopfloor.Features.Admin.Parts.List;
 using Shopfloor.Interfaces;
-
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
@@ -36,6 +35,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
         private Supplier? _producer;
         private Supplier? _supplier;
         private PartType? _type;
+        private string _unit = "SZT";
         #endregion modelFields
         public PartsAddViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
@@ -70,6 +70,15 @@ namespace Shopfloor.Features.Admin.Parts.Add
             {
                 _details = value;
                 OnPropertyChanged(nameof(Details));
+            }
+        }
+        public string Unit
+        {
+            get => _unit;
+            set
+            {
+                _unit = value;
+                OnPropertyChanged(nameof(Unit));
             }
         }
         public int? Index
@@ -158,6 +167,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
             Details = string.Empty;
             Producer = null;
             Supplier = null;
+            Unit = "SZT";
         }
         /*public bool IsDataValidate(Part inputValue)
         {

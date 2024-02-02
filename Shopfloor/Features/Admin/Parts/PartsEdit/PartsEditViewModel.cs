@@ -37,6 +37,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         private Supplier? _producer;
         private Supplier? _supplier;
         private PartType? _type;
+        private string _unit = "SZT";
         #endregion modelFields
         public PartsEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
@@ -75,6 +76,15 @@ namespace Shopfloor.Features.Admin.Parts.Edit
             {
                 _details = value;
                 OnPropertyChanged(nameof(Details));
+            }
+        }
+        public string Unit
+        {
+            get => _unit;
+            set
+            {
+                _unit = value;
+                OnPropertyChanged(nameof(Unit));
             }
         }
         public int? Id => _selectedPart?.Id;
@@ -184,6 +194,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
             PartType = _selectedPart.Type;
             Producer = _selectedPart.Producer;
             Supplier = _selectedPart.Supplier;
+            Unit = _selectedPart.Unit;
         }
         /*public bool IsDataValidate(Part inputValue)
         {

@@ -17,23 +17,20 @@ namespace Shopfloor.Models.ErrandPartModel
                 errand_id,
                 part_id,
                 amount,
-                status,
-                unit
+                status
             )
             VALUES (
                 @ErrandId,
                 @PartId,
                 @Amount,
-                @Status,
-                @Unit
+                @Status
             )";
         private const string _getOneSQL = @"
             SELECT 
                 errand_id AS ErrandId,
                 part_id AS PartId,
                 amount AS Amount,
-                status AS Status,
-                unit as Unit
+                status AS Status
             FROM errands_parts
             WHERE id = @Id
             ";
@@ -42,8 +39,7 @@ namespace Shopfloor.Models.ErrandPartModel
                 errand_id AS ErrandId,
                 part_id AS PartId,
                 amount AS Amount,
-                status AS Status,
-                unit as Unit
+                status AS Status
             FROM errands_parts
             ";
         private const string _updateSQL = @"
@@ -52,8 +48,7 @@ namespace Shopfloor.Models.ErrandPartModel
                 errand_id = @ErrandId,
                 part_id = @PartId,
                 amount = @Amount,
-                status = @Status,
-                unit as Unit
+                status = @Status
             WHERE errand_id = @ErrandId AND part_id = @PartId
             ";
         private const string _deleteSQL = @"
@@ -75,8 +70,7 @@ namespace Shopfloor.Models.ErrandPartModel
                 ErrandId = item.ErrandId,
                 PartId = item.PartId,
                 Amount = item.Amount,
-                Status = item.Status,
-                Unit = item.Unit
+                Status = item.Status
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
@@ -107,8 +101,7 @@ namespace Shopfloor.Models.ErrandPartModel
                 ErrandId = item.ErrandId,
                 PartId = item.PartId,
                 Amount = item.Amount,
-                Status = item.Status,
-                Unit = item.Unit
+                Status = item.Status
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
@@ -128,8 +121,7 @@ namespace Shopfloor.Models.ErrandPartModel
                 item.ErrandId,
                 item.PartId,
                 item.Amount,
-                item.Status,
-                item.Unit
+                item.Status
             );
         }
     }
