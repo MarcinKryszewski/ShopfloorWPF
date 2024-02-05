@@ -11,6 +11,9 @@
                 <ResourceDictionary Source="Themes/Controls/ButtonThemes.xaml" />
                 <ResourceDictionary Source="Themes/Controls/TextBoxThemes.xaml" />
                 <ResourceDictionary Source="Themes/Controls/TextBlockThemes.xaml" />
+                <ResourceDictionary Source="Themes/Controls/ComboBoxThemes.xaml" />
+                <ResourceDictionary Source="Themes/Controls/DatePickerThemes.xaml" />
+                <ResourceDictionary Source="Themes/Controls/RadioButtonThemes.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -8,24 +8,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:partsList="clr-namespace:Shopfloor.Features.Mechanic.Errands.ErrandPartsList"
     d:DataContext="{d:DesignInstance Type=local:ErrandsNewViewModel}"
-    d:DesignHeight="450"
+    d:DesignHeight="800"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <Style
-            x:Key="TooltipText"
-            BasedOn="{StaticResource {x:Type TextBlock}}"
-            TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{StaticResource ResourceKey=BrushPurple300}" />
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Height" Value="18" />
-            <Setter Property="Margin" Value="0,0,0,4" />
-        </Style>
         <Style x:Key="GridCell" TargetType="StackPanel">
-            <Setter Property="Margin" Value="10,10,10,10" />
+            <Setter Property="Margin" Value="10,10,10,5" />
         </Style>
     </UserControl.Resources>
     <Grid Margin="30,20,20,20">
@@ -63,146 +51,42 @@
                 Grid.Row="0"
                 Grid.Column="1"
                 Style="{StaticResource GridCell}">
-                <TextBlock Style="{StaticResource TooltipText}" Text="Rodzaj" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TooltipText}" Text="Rodzaj" />
+                    <TextBlock
+                        FontSize="14"
+                        Foreground="Red"
+                        Text=" *" />
+                </StackPanel>
                 <ComboBox
                     Height="40"
                     DisplayMemberPath="Name"
-                    FontSize="16"
                     IsEditable="true"
                     IsReadOnly="false"
                     ItemsSource="{Binding Path=ErrandTypes}"
-                    SelectedItem="{Binding Path=SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    <ComboBox.Style>
-                        <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="VerticalContentAlignment" Value="Center" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ComboBox}">
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition MaxWidth="36" />
-                                            </Grid.ColumnDefinitions>
-                                            <TextBox
-                                                Name="PART_EditableTextBox"
-                                                Height="{TemplateBinding Height}"
-                                                Padding="8,0,0,0"
-                                                VerticalContentAlignment="Center">
-                                                <TextBox.Style>
-                                                    <Style TargetType="{x:Type TextBox}">
-                                                        <Setter Property="Template">
-                                                            <Setter.Value>
-                                                                <ControlTemplate TargetType="{x:Type TextBox}">
-                                                                    <Grid>
-                                                                        <Border
-                                                                            Background="{TemplateBinding Background}"
-                                                                            BorderBrush="Yellow"
-                                                                            BorderThickness="0"
-                                                                            CornerRadius="8,0,0,8">
-                                                                            <ScrollViewer x:Name="PART_ContentHost" />
-                                                                        </Border>
-                                                                    </Grid>
-                                                                </ControlTemplate>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </Style>
-                                                </TextBox.Style>
-                                            </TextBox>
-                                            <ToggleButton
-                                                x:Name="toggleButton"
-                                                Grid.Column="1"
-                                                Height="{TemplateBinding Height}"
-                                                Margin="0"
-                                                ClickMode="Press"
-                                                Focusable="False"
-                                                IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
-                                                <ToggleButton.Style>
-                                                    <Style TargetType="{x:Type ToggleButton}">
-                                                        <Setter Property="Template">
-                                                            <Setter.Value>
-                                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                                    <Border
-                                                                        x:Name="border"
-                                                                        Background="White"
-                                                                        BorderBrush="Yellow"
-                                                                        BorderThickness="0"
-                                                                        CornerRadius="0,8,8,0">
-                                                                        <Grid>
-                                                                            <ContentPresenter />
-                                                                            <Path
-                                                                                x:Name="arrow"
-                                                                                Grid.Column="1"
-                                                                                HorizontalAlignment="Center"
-                                                                                VerticalAlignment="Center"
-                                                                                Data="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
-                                                                                Stroke="{StaticResource BrushPurple600}"
-                                                                                StrokeThickness="2" />
-                                                                        </Grid>
-                                                                    </Border>
-                                                                    <ControlTemplate.Triggers>
-                                                                        <Trigger Property="IsMouseOver" Value="True">
-                                                                            <Setter TargetName="border" Property="Background" Value="{StaticResource BrushPurple600}" />
-                                                                            <Setter TargetName="arrow" Property="Stroke" Value="White" />
-                                                                        </Trigger>
-                                                                    </ControlTemplate.Triggers>
-                                                                </ControlTemplate>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </Style>
-                                                </ToggleButton.Style>
-
-                                            </ToggleButton>
-                                            <ContentPresenter
-                                                Name="ContentSite"
-                                                Margin="5,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Center"
-                                                Content="{TemplateBinding SelectionBoxItem}"
-                                                ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                                ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" />
-                                            <Popup
-                                                Name="Popup"
-                                                AllowsTransparency="True"
-                                                Focusable="False"
-                                                IsOpen="{TemplateBinding IsDropDownOpen}"
-                                                Placement="Bottom"
-                                                PopupAnimation="Slide">
-                                                <Grid
-                                                    Name="DropDown"
-                                                    MinWidth="{TemplateBinding ActualWidth}"
-                                                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
-                                                    SnapsToDevicePixels="True">
-                                                    <Border
-                                                        x:Name="DropDownBorder"
-                                                        Background="{StaticResource BrushDarkNeutral1100}"
-                                                        BorderBrush="Black"
-                                                        BorderThickness="1"
-                                                        CornerRadius="5" />
-                                                    <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
-                                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
-                                                    </ScrollViewer>
-                                                </Grid>
-                                            </Popup>
-                                        </Grid>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ComboBox.Style>
-                </ComboBox>
+                    SelectedItem="{Binding Path=SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource ComboBoxMain}" />
             </StackPanel>
 
             <StackPanel
                 Grid.Row="0"
                 Grid.Column="3"
                 Style="{StaticResource GridCell}">
-                <TextBlock Style="{StaticResource TooltipText}" Text="Maszyna" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TooltipText}" Text="Maszyna" />
+                    <TextBlock
+                        FontSize="14"
+                        Foreground="Red"
+                        Text=" *" />
+                </StackPanel>
                 <ComboBox
+                    Height="40"
                     DisplayMemberPath="Path"
                     IsEditable="true"
                     IsReadOnly="false"
                     ItemsSource="{Binding Path=Machines}"
-                    SelectedItem="{Binding Path=SelectedMachine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    SelectedItem="{Binding Path=SelectedMachine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource ComboBoxMain}" />
             </StackPanel>
 
             <StackPanel
@@ -211,10 +95,12 @@
                 Style="{StaticResource GridCell}">
                 <TextBlock Style="{StaticResource TooltipText}" Text="Data wykonania" />
                 <DatePicker
+                    Height="40"
                     FirstDayOfWeek="Monday"
                     Language="Pl"
                     SelectedDate="{Binding SelectedDate, Mode=TwoWay}"
-                    SelectedDateFormat="Long" />
+                    SelectedDateFormat="Long"
+                    Style="{DynamicResource DatePickerMain}" />
             </StackPanel>
 
             <StackPanel
@@ -253,59 +139,79 @@
             <StackPanel
                 Grid.Row="2"
                 Grid.Column="1"
+                Margin="10,10,10,0"
                 Style="{StaticResource GridCell}">
                 <TextBlock Style="{StaticResource TooltipText}" Text="Odpowiedzialny" />
                 <ComboBox
+                    Height="40"
                     DisplayMemberPath="FullName"
                     IsEditable="true"
                     IsReadOnly="false"
                     ItemsSource="{Binding Path=Users}"
-                    SelectedItem="{Binding Path=SelectedResponsible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    SelectedItem="{Binding Path=SelectedResponsible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource ResourceKey=ComboBoxMain}" />
             </StackPanel>
 
-            <StackPanel
+            <Border
                 Grid.Row="2"
                 Grid.Column="3"
-                Style="{StaticResource GridCell}">
-                <TextBlock Style="{StaticResource TooltipText}" Text="Priorytet" />
+                Margin="10,10,10,0"
+                Padding="8,8,8,8"
+                BorderBrush="{StaticResource BrushPurple600}"
+                BorderThickness="2"
+                CornerRadius="8">
                 <StackPanel>
-                    <RadioButton
-                        Name="A"
-                        Command="{Binding Path=PrioritySetCommand}"
-                        CommandParameter="A"
-                        Content="A"
-                        FontSize="16"
-                        FontWeight="SemiBold"
-                        Foreground="#D32F2F"
-                        GroupName="Priority" />
-                    <RadioButton
-                        Name="B"
-                        Command="{Binding Path=PrioritySetCommand}"
-                        CommandParameter="B"
-                        Content="B"
-                        FontSize="16"
-                        FontWeight="SemiBold"
-                        Foreground="#d3d32f"
-                        GroupName="Priority" />
-                    <RadioButton
-                        Name="C"
-                        Command="{Binding Path=PrioritySetCommand}"
-                        CommandParameter="C"
-                        Content="C"
-                        FontSize="16"
-                        FontWeight="SemiBold"
-                        Foreground="#2fd353"
-                        GroupName="Priority"
-                        IsChecked="True" />
+                    <TextBlock Style="{StaticResource TooltipText}" Text="Priorytet" />
+                    <StackPanel>
+                        <RadioButton
+                            Name="A"
+                            Margin="0,0,0,2"
+                            Command="{Binding Path=PrioritySetCommand}"
+                            CommandParameter="A"
+                            Content="A"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Foreground="#D32F2F"
+                            GroupName="Priority"
+                            Style="{DynamicResource RadioButtonMain}" />
+                        <RadioButton
+                            Name="B"
+                            Margin="0,0,0,2"
+                            Command="{Binding Path=PrioritySetCommand}"
+                            CommandParameter="B"
+                            Content="B"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Foreground="#d3d32f"
+                            GroupName="Priority"
+                            Style="{StaticResource RadioButtonMain}" />
+                        <RadioButton
+                            Name="C"
+                            Command="{Binding Path=PrioritySetCommand}"
+                            CommandParameter="C"
+                            Content="C"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Foreground="#2fd353"
+                            GroupName="Priority"
+                            IsChecked="True"
+                            Style="{StaticResource RadioButtonMain}" />
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </Border>
 
             <StackPanel
                 Grid.Row="3"
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
-                Style="{StaticResource GridCell}">
-                <TextBlock Style="{StaticResource TooltipText}" Text="Opis" />
+                Margin="10,-10,10,5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource TooltipText}" Text="Opis" />
+                    <TextBlock
+                        FontSize="14"
+                        Foreground="Red"
+                        Text=" *" />
+                </StackPanel>
                 <TextBox
                     MaxWidth="730"
                     Padding="8,8"

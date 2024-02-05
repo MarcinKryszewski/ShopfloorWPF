@@ -38,6 +38,9 @@
     <Watch Remove="Features\Mechanic\Tasks\TasksList\TasksListView.xaml" />
     <Watch Remove="Features\Mechanic\Tasks\TasksMainView.xaml" />
     <Watch Remove="Themes\Controls\ButtonThemes.xaml" />
+    <Watch Remove="Themes\Controls\ComboBoxThemes.xaml" />
+    <Watch Remove="Themes\Controls\DatePickerThemes.xaml" />
+    <Watch Remove="Themes\Controls\RadioButtonThemes.xaml" />
     <Watch Remove="Themes\Controls\TextBlockThemes.xaml" />
     <Watch Remove="Themes\Controls\TextBoxThemes.xaml" />
   </ItemGroup>

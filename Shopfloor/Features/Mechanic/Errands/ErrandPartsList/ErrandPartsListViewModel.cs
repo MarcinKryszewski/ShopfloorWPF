@@ -1,3 +1,9 @@
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Mechanic.Errands.Commands;
+using Shopfloor.Features.Mechanic.Errands.Stores;
+using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.PartModel;
+using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -5,12 +11,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Mechanic.Errands.Commands;
-using Shopfloor.Features.Mechanic.Errands.Stores;
-using Shopfloor.Models.ErrandPartModel;
-using Shopfloor.Models.PartModel;
-using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
 {
@@ -38,6 +38,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
             }
             return false;
         }
+        public int PartsAmount => _errandStore.ErrandParts.Count;
         public ICollectionView PartsAll => CollectionViewSource.GetDefaultView(_parts);
         public ICollectionView PartsMachine => CollectionViewSource.GetDefaultView(_parts);
         public ICollectionView ErrandParts => CollectionViewSource.GetDefaultView(_errandStore.ErrandParts);
