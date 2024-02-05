@@ -228,6 +228,7 @@
                 FontWeight="SemiBold"
                 Foreground="{StaticResource BrushPurple300}"
                 Text="2. Podaj ilości" />
+
             <ItemsControl
                 Name="itemsControl"
                 HorizontalAlignment="Left"
