@@ -1,5 +1,5 @@
 ﻿using Shopfloor.Interfaces;
-using Shopfloor.Models.ErrandErrandStatusesModel;
+using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.UserModel;
@@ -14,7 +14,7 @@ namespace Shopfloor.Models.ErrandModel
         private readonly int? _createdById;
         private readonly DateTime _createdDate;
         private readonly ErrandDisplay _display;
-        private readonly List<ErrandErrandStatus> _errandStatuses = [];
+        private readonly List<ErrandStatus> _errandStatuses = [];
         private readonly int? _id;
         private User? _createdByUser;
         private string _description;
@@ -72,7 +72,7 @@ namespace Shopfloor.Models.ErrandModel
             }
         }
         public ErrandDisplay Display => _display;
-        public List<ErrandErrandStatus> ErrandStatuses => _errandStatuses;
+        public List<ErrandStatus> ErrandStatuses => _errandStatuses;
         public int? ErrandTypeId => _errandTypeId;
         public DateTime? ExpectedDate
         {
@@ -123,7 +123,7 @@ namespace Shopfloor.Models.ErrandModel
                 _errandType = value;
             }
         }
-        public void AddStatus(ErrandErrandStatus status)
+        public void AddStatus(ErrandStatus status)
         {
             _errandStatuses.Add(status);
         }

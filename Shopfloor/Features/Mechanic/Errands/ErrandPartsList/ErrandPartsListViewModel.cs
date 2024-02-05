@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -10,7 +8,6 @@ using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Errands.Commands;
 using Shopfloor.Features.Mechanic.Errands.Stores;
-using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.ViewModels;
@@ -19,9 +16,28 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
 {
     public class ErrandPartsListViewModel : ViewModelBase
     {
-        private List<Part> _parts = [];
+        private readonly List<Part> _parts = [];
         private readonly IServiceProvider _databaseServices;
         private readonly SelectedErrandStore _errandStore;
+        private string _searchText = string.Empty;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                PartsAll.Filter = FilterParts;
+                OnPropertyChanged(nameof(SearchText));
+            }
+        }
+        private bool FilterParts(object obj)
+        {
+            if (obj is Part part)
+            {
+                return part.SearchValue.Contains(_searchText, StringComparison.InvariantCultureIgnoreCase);
+            }
+            return false;
+        }
         public ICollectionView PartsAll => CollectionViewSource.GetDefaultView(_parts);
         public ICollectionView PartsMachine => CollectionViewSource.GetDefaultView(_parts);
         public ICollectionView ErrandParts => CollectionViewSource.GetDefaultView(_errandStore.ErrandParts);
@@ -91,14 +107,6 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
             {
                 if (errandPart.ErrandId == _errandStore.ErrandId) _errandStore.ErrandParts.Add(errandPart);
             }
-
-            ErrandPart errandPart1 = new(2, 1)
-            {
-                Part = new Part(1, "Łożysko", null, null, null, null, null, null, null)
-            };
-            _errandStore.ErrandParts.Add(errandPart1);
-            _errandStore.ErrandParts.Add(errandPart1);
-
             return Task.CompletedTask;
         }
     }

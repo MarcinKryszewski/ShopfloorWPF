@@ -10,19 +10,20 @@ namespace Shopfloor.Models.ErrandModel
         private const string _ownerNotAssigned = "Nieprzypisane";
         private const string _typeNotAssigned = "Nie ustalono";
         private const string _statusNotSet = "Nowy";
+        private const int _maxDescriptionLength = 120;
         private readonly Errand _errand;
 
         public ErrandDisplay(Errand errand)
         {
             _errand = errand;
         }
-        private ErrandStatus? LastStatus => _errand.ErrandStatuses.OrderByDescending(es => es.CreateDate).FirstOrDefault()?.ErrandStatus;
+        private ErrandStatus? LastStatus => _errand.ErrandStatuses.OrderByDescending(es => es.SetDate).FirstOrDefault();
 
         public string MachineText => _errand.Machine?.Path ?? _machineNotAssigned;
         public string OwnerText => _errand.Responsible?.FullName ?? _ownerNotAssigned;
-        public string LastStatusName => LastStatus?.Description ?? _statusNotSet;
+        public string LastStatusName => LastStatus?.StatusName ?? _statusNotSet;
         public string ExpectedDateShortString => _errand.ExpectedDate?.Date.ToString("d") ?? _expectedDateNotAssigned;
-        public string DescriptionShort => _errand.Description.Length > 120 ? _errand.Description[..120] + "..." : _errand.Description;
+        public string DescriptionShort => _errand.Description.Length > _maxDescriptionLength ? _errand.Description[.._maxDescriptionLength] + "..." : _errand.Description;
         public string CreatedDateShortString => _errand.CreatedDate.Date.ToString("d");
         public string ErrandTypeName => _errand.Type?.Name ?? _typeNotAssigned;
     }

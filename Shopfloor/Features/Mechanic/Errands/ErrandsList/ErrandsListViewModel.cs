@@ -9,7 +9,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using Shopfloor.Models.ErrandErrandStatusesModel;
 using System.Windows.Input;
 using Shopfloor.Features.Mechanic.Errands.ErrandsNew;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,12 +28,12 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
         {
             _mainServices = mainServices;
             _databaseServices = databaseServices;
-            Task.Run(() => LoadDataTest());
+            Task.Run(() => LoadData());
             ErrandsAddNavigateCommand = new NavigateCommand<ErrandsNewViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsNewViewModel>>());
             //Task.Run(() => LoadData());
         }
         // TEST DATA
-        private Task LoadDataTest()
+        /*private Task LoadDataTest()
         {
             Errand errand1 = new(1, DateTime.Now.AddDays(-5), 101, 201, 301, "Fix critical issueFix critical issueFix critical issueFix critical issueFix critical issueFix critical issueFix critical issueFix critical issueFix critical issue", "SAP123", DateTime.Now.AddDays(3), 401, "A");
             Errand errand2 = new(2, DateTime.Now.AddDays(-10), 102, 202, 302, "Update software", "SAP456", DateTime.Now.AddDays(5), 402);
@@ -53,9 +52,9 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
             ErrandStatus errandStatus2 = new(1, "Zamówiony");
             ErrandStatus errandStatus3 = new(1, "Anulowany");
 
-            ErrandErrandStatus errandErrandStatus1 = new(1, 1, DateTime.Now.AddDays(-1));
-            ErrandErrandStatus errandErrandStatus2 = new(1, 2, DateTime.Now.AddDays(-0));
-            ErrandErrandStatus errandErrandStatus3 = new(1, 3, DateTime.Now.AddDays(1));
+            ErrandStatus errandErrandStatus1 = new(1, 1, DateTime.Now.AddDays(-1));
+            ErrandStatus errandErrandStatus2 = new(1, 2, DateTime.Now.AddDays(-0));
+            ErrandStatus errandErrandStatus3 = new(1, 3, DateTime.Now.AddDays(1));
 
             Machine machine1 = new(1, "Monoblok", null, null, null, true);
             Machine machine2 = new(2, "RB1", null, null, null, true);
@@ -73,7 +72,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
             errand1.Responsible = user;
 
             return Task.CompletedTask;
-        }
+        }*/
         private Task LoadData()
         {
             return Task.CompletedTask;

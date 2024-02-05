@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Collections.Generic;
 
 namespace Shopfloor.Database.SQLite
 {
@@ -38,14 +36,14 @@ namespace Shopfloor.Database.SQLite
                 FOREIGN KEY(user_id) REFERENCES users(Id),
                 FOREIGN KEY(role_id) REFERENCES roles(Id)
             )";
-        private const string _initAdmin_SQLCommand = @"
+        private const string _init_admin_SQLCommand = @"
             BEGIN TRANSACTION;
                 INSERT INTO users (username, user_name, user_surname, image_path) VALUES ('@dm1n', 'Admin', 'Admin', '');
                 INSERT INTO users (username, user_name, user_surname, image_path) VALUES ('marcin', 'Marcin', 'Kry', '');
                 INSERT INTO users (username, user_name, user_surname, image_path) VALUES ('kryszm02', 'Marcin', 'Kry', '');
             COMMIT;
             ";
-        private const string _initRoles_SQLCommand = @"
+        private const string _init_roles_SQLCommand = @"
             BEGIN TRANSACTION;
                 INSERT INTO roles (role_name, role_value) VALUES ('admin', 777);
                 INSERT INTO roles (role_name, role_value) VALUES ('user', 568);
@@ -53,7 +51,7 @@ namespace Shopfloor.Database.SQLite
                 INSERT INTO roles (role_name, role_value) VALUES ('manager', 205);
             COMMIT;
             ";
-        private const string _initAdminRoles_SQLCommand = @"
+        private const string _init_adminRoles_SQLCommand = @"
             BEGIN TRANSACTION;
                 INSERT INTO roles_users (role_id, user_id) VALUES (1,1);
                 INSERT INTO roles_users (role_id, user_id) VALUES (2,1);
@@ -119,7 +117,7 @@ namespace Shopfloor.Database.SQLite
                 description TEXT,
                 PRIMARY KEY(id)
             )";
-        private const string _initPart_types_SQLCommand = @"
+        private const string _init_part_types_SQLCommand = @"
             BEGIN TRANSACTION;
                 INSERT INTO errand_types (name, description) VALUES ('Awaria', 'Zadania związane z awariami na liniach');
                 INSERT INTO errand_types (name, description) VALUES ('CILT', 'Cykliczne zadania związane z utrzymaniem maszyn');
@@ -128,12 +126,6 @@ namespace Shopfloor.Database.SQLite
                 INSERT INTO errand_types (name, description) VALUES ('Warsztat', 'Zadania związane z działaniem warsztatu, np. narzędzia, śruby czy materiały eksploatacyjne na warsztacie');
             COMMIT;
             ";
-        private const string _errand_statuses_SQLCommand = @"
-        CREATE TABLE errand_statuses (
-            id INTEGER,
-            description TEXT,
-            PRIMARY KEY(id)
-        )";
         private const string _errands_SQLCommand = @"
             CREATE TABLE errands (
                 id INTEGER,
@@ -151,14 +143,16 @@ namespace Shopfloor.Database.SQLite
                 FOREIGN KEY(created_by_id) REFERENCES users(id)
                 PRIMARY KEY(id)
             )";
-        private const string _errands_errand_statusesSQLCommand = @"
-            CREATE TABLE errands_errand_statuses (
+        private const string _errand_statuses_SQLCommand = @"
+            CREATE TABLE errand_statuses (
+                id INTEGER,
                 errand_id INTEGER,
-                errand_status_id INTEGER,
+                errand_status_name TEXT,
                 set_date TEXT,
-                PRIMARY KEY(errand_id, errand_status_id),
-                FOREIGN KEY(errand_id) REFERENCES errands(id),
-                FOREIGN KEY(errand_status_id) REFERENCES errand_statuses(id)
+                comment TEXT,
+                reason TEXT,
+                PRIMARY KEY(id),
+                FOREIGN KEY(errand_id) REFERENCES errands(id)
             )";
         private const string _errands_parts_SQLCommand = @"
             CREATE TABLE errands_parts (
@@ -183,15 +177,14 @@ namespace Shopfloor.Database.SQLite
                 _machines_parts_SQLCommand,
                 _errands_types_SQLCommand,
 
-                _errand_statuses_SQLCommand,
                 _errands_SQLCommand,
-                _errands_errand_statusesSQLCommand,
+                _errand_statuses_SQLCommand,
                 _errands_parts_SQLCommand,
 
-                _initAdmin_SQLCommand,
-                _initRoles_SQLCommand,
-                _initAdminRoles_SQLCommand,
-                _initPart_types_SQLCommand
+                _init_admin_SQLCommand,
+                _init_roles_SQLCommand,
+                _init_adminRoles_SQLCommand,
+                _init_part_types_SQLCommand,
             ];
         }
     }
