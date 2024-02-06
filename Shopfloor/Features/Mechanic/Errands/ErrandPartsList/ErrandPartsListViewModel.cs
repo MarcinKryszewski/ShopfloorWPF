@@ -41,7 +41,15 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
         public int PartsAmount => _errandStore.ErrandParts.Count;
         public ICollectionView PartsAll => CollectionViewSource.GetDefaultView(_parts);
         public ICollectionView PartsMachine => CollectionViewSource.GetDefaultView(_parts);
-        public ICollectionView ErrandParts => CollectionViewSource.GetDefaultView(_errandStore.ErrandParts);
+        public ICollectionView ErrandParts
+        {
+            get
+            {
+                OnPropertyChanged(nameof(PartsAmount));
+                return CollectionViewSource.GetDefaultView(_errandStore.ErrandParts);
+            }
+        }
+
         public ICommand AddPartToListCommand { get; }
         public ICommand RemovePartFromListCommand { get; }
         public Part? SelectedPart { get; set; }

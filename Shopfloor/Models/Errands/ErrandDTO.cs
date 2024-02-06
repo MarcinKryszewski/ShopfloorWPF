@@ -14,9 +14,9 @@ namespace Shopfloor.Models.ErrandModel
         public DateTime? ExpectedDate { get; set; }
         public int Id { get; set; }
         public int MachineId { get; set; }
-        public int OwnerId { get; set; }
+        public int? OwnerId { get; set; }
         public string Priority { get; set; } = Errand.DefaultPriority;
-        public string SapNumber { get; set; } = string.Empty;
+        public string? SapNumber { get; set; }
         public ErrandType? ErrandType { get; set; }
         public Machine? Machine { get; set; }
         public User? Responsible { get; set; }

@@ -26,11 +26,11 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
 {
     internal sealed partial class ErrandsNewViewModel : ViewModelBase
     {
+        private readonly IServiceProvider _mainServices;
         private readonly IServiceProvider _databaseServices;
         private readonly ErrandDTO _errandDTO = new();
         private readonly ObservableCollection<ErrandType> _errandTypes = [];
         private readonly ObservableCollection<Machine> _machines = [];
-        private readonly IServiceProvider _mainServices;
         private readonly ObservableCollection<User> _users = [];
         private readonly SelectedErrandStore _selectedErrand;
         public ErrandsNewViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
@@ -41,9 +41,9 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
             _selectedErrand = mainServices.GetRequiredService<SelectedErrandStore>();
 
             NewErrandCommand = new ErrandNewCommand(this, _databaseServices, userServices.GetRequiredService<CurrentUserStore>(), _selectedErrand);
-            ReturnCommand = new NavigateCommand<ErrandsListViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsListViewModel>>());
+            ReturnCommand = new NavigateCommand<ErrandsListViewModel>(_mainServices.GetRequiredService<NavigationService<ErrandsListViewModel>>());
             PrioritySetCommand = new PrioritySetCommand(this);
-            ShowPartsListCommand = new ErrandsShowPartsList(this, mainServices);
+            ShowPartsListCommand = new ErrandsShowPartsList(this, _mainServices);
 
             Task.Run(LoadData);
         }
@@ -81,7 +81,6 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
                 OnPropertyChanged(nameof(SelectedMachine));
             }
         }
-
         public User? SelectedResponsible
         {
             get => _errandDTO.Responsible;
@@ -243,8 +242,10 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
             {
                 _partsList = value;
                 OnPropertyChanged(nameof(PartsList));
+                OnPropertyChanged(nameof(IsPartsListVisible));
             }
         }
+        public Visibility IsPartsListVisible => PartsList == null ? Visibility.Visible : Visibility.Collapsed;
         private ViewModelBase? _partsList;
         public ICommand ShowPartsListCommand { get; }
     }

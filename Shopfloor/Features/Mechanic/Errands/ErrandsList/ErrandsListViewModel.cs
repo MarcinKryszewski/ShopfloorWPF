@@ -1,8 +1,4 @@
 using Shopfloor.Models.ErrandModel;
-using Shopfloor.Models.ErrandStatusModel;
-using Shopfloor.Models.ErrandTypeModel;
-using Shopfloor.Models.MachineModel;
-using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.ObjectModel;
@@ -14,6 +10,8 @@ using Shopfloor.Features.Mechanic.Errands.ErrandsNew;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
+using System.Collections.Generic;
+using System.Windows;
 
 namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
 {
@@ -28,8 +26,8 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
         {
             _mainServices = mainServices;
             _databaseServices = databaseServices;
-            Task.Run(() => LoadData());
-            ErrandsAddNavigateCommand = new NavigateCommand<ErrandsNewViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsNewViewModel>>());
+            Task.Run(LoadData);
+            ErrandsAddNavigateCommand = new NavigateCommand<ErrandsNewViewModel>(_mainServices.GetRequiredService<NavigationService<ErrandsNewViewModel>>());
             //Task.Run(() => LoadData());
         }
         // TEST DATA
@@ -73,8 +71,43 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
 
             return Task.CompletedTask;
         }*/
-        private Task LoadData()
+        private async Task LoadData()
         {
+            Application.Current.Dispatcher.Invoke
+            (() =>
+            {
+                _errands.Clear();
+            });
+
+            ErrandStore errandStore = _databaseServices.GetRequiredService<ErrandStore>();
+
+            List<Task> tasks = [];
+            if (!errandStore.IsLoaded) tasks.Add(LoadErrands(errandStore));
+            if (tasks.Count > 0) await Task.WhenAll(tasks);
+
+            tasks.Clear();
+
+            tasks.Add(FillErrandList(errandStore));
+
+            if (tasks.Count > 0) await Task.WhenAll(tasks);
+
+            Application.Current.Dispatcher.Invoke
+            (() =>
+            {
+                Errands.Refresh();
+            });
+        }
+        private Task LoadErrands(ErrandStore errandStore)
+        {
+            errandStore.Load();
+            return Task.CompletedTask;
+        }
+        private Task FillErrandList(ErrandStore errandStore)
+        {
+            foreach (Errand errand in errandStore.Data)
+            {
+                _errands.Add(errand);
+            }
             return Task.CompletedTask;
         }
     }

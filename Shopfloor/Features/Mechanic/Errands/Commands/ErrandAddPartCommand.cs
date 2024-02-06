@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Shopfloor.Features.Mechanic.Errands.ErrandPartsList;
 using Shopfloor.Features.Mechanic.Errands.Stores;
@@ -22,7 +23,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         public override void Execute(object? parameter)
         {
             Part? selectedPart = _viewModel.SelectedPart;
-            List<ErrandPart> errandParts = _errandStore.ErrandParts;
+            ObservableCollection<ErrandPart> errandParts = _errandStore.ErrandParts;
 
             if (selectedPart is null) return;
             if (selectedPart.Id is null) return;
