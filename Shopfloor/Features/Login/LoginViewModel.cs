@@ -7,7 +7,6 @@ using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
-using Shopfloor.Validators;
 using System;
 using System.Collections;
 using System.Collections.Generic;

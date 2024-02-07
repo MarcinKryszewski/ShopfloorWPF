@@ -1,9 +1,8 @@
 ﻿using Shopfloor.Interfaces;
-using Shopfloor.Models.UserModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Shopfloor.Validators
+namespace Shopfloor.Models.UserModel
 {
     public class UserValidation
     {

@@ -11,6 +11,7 @@ namespace Shopfloor.Models.ErrandStatusModel
     internal sealed class ErrandStatusProvider : IProvider<ErrandStatus>
     {
         private readonly DatabaseConnectionFactory _database;
+        private const string dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
         private const string _updateSQL = @"
             UPDATE errand_statuses
             SET
@@ -68,7 +69,7 @@ namespace Shopfloor.Models.ErrandStatusModel
             {
                 ErrandId = item.ErrandId,
                 StatusName = item.StatusName,
-                SetDate = item.SetDate,
+                SetDate = item.SetDate.ToString(dateTimeFormat),
                 Comment = item.Comment,
                 Reason = item.Reason
             };
@@ -103,7 +104,7 @@ namespace Shopfloor.Models.ErrandStatusModel
                 Id = item.Id,
                 ErrandId = item.ErrandId,
                 StatusName = item.StatusName,
-                SetDate = item.SetDate,
+                SetDate = item.SetDate.ToString(dateTimeFormat),
                 Comment = item.Comment,
                 Reason = item.Reason
             };

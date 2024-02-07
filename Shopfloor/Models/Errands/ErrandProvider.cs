@@ -1,6 +1,7 @@
 using Dapper;
 using Shopfloor.Database;
 using Shopfloor.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace Shopfloor.Models.ErrandModel
     internal sealed class ErrandProvider : IProvider<Errand>
     {
         private readonly DatabaseConnectionFactory _database;
-        private string dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-        private string dateFormat = "yyyy-MM-dd";
+        private const string dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+        private const string dateFormat = "yyyy-MM-dd";
         #region SQLCommands
         private const string _createSQL = @"
             INSERT INTO errands (
@@ -134,7 +135,7 @@ namespace Shopfloor.Models.ErrandModel
             object parameters = new
             {
                 Id = item.Id,
-                CeatedDate = item.CreatedDate,
+                CeatedDate = item.CreatedDate.ToString(dateTimeFormat),
                 CreatedById = item.CreatedById,
                 OwnerId = item.OwnerId,
                 Priority = item.Priority,
@@ -142,7 +143,7 @@ namespace Shopfloor.Models.ErrandModel
                 ErrandTypeId = item.ErrandTypeId,
                 Description = item.Description,
                 SapNumber = item.SapNumber,
-                ExpectedDate = item.ExpectedDate
+                ExpectedDate = item.ExpectedDate?.ToString(dateFormat)
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
@@ -159,12 +160,12 @@ namespace Shopfloor.Models.ErrandModel
         private static Errand ToErrand(ErrandDTO item)
         {
             return new Errand(
-                item.Id,
-                item.CreatedDate,
+                (int)item.Id!,
+                (DateTime)item.CreatedDate!,
                 item.CreatedById,
                 item.MachineId,
                 item.ErrandTypeId,
-                item.Description,
+                item.Description!,
                 item.SapNumber,
                 item.ExpectedDate,
                 item.OwnerId,

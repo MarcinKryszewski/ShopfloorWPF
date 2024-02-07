@@ -19,7 +19,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
     {
         private readonly IServiceProvider _mainServices;
         private readonly IServiceProvider _databaseServices;
-        private readonly ObservableCollection<Errand> _errands = [];
+        private readonly List<Errand> _errands = [];
         public ICollectionView Errands => CollectionViewSource.GetDefaultView(_errands);
         public ICommand ErrandsAddNavigateCommand { get; }
         public ErrandsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)

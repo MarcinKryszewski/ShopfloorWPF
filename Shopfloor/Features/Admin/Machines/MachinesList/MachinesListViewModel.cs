@@ -3,7 +3,6 @@ using Shopfloor.Features.Admin.Machines.Commands;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Shared.ViewModels;
-using Shopfloor.Validators;
 using System;
 using System.Collections;
 using System.Collections.Generic;

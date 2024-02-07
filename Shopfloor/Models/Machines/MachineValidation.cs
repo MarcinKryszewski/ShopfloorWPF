@@ -1,7 +1,7 @@
 ﻿using Shopfloor.Interfaces;
 using Shopfloor.Models.MachineModel;
 
-namespace Shopfloor.Validators
+namespace Shopfloor.Models.MachineModel
 {
     public class MachineValidation
     {

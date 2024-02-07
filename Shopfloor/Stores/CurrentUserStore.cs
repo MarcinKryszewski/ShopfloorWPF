@@ -1,11 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Interfaces;
-
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
-
-using Shopfloor.Validators;
 using System;
 using System.Collections;
 using System.Collections.Generic;
