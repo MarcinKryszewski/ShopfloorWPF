@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Mechanic.Errands.ErrandPartsList;
 using Shopfloor.Features.Mechanic.Errands.ErrandsNew;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Models.ErrandModel;
@@ -33,39 +34,40 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         public override void Execute(object? parameter)
         {
             bool partsOrdered = false;
-            if (_viewModel.IsDataValidate)
+            if (!_viewModel.IsDataValidate) return;
+            if (!_viewModel.PartsList?.IsDataValidate ?? true) return;
+
+            ErrandDTO errandDTO = _viewModel.ErrandDTO;
+
+            Errand errand = new(DateTime.Now, _currentUser.User?.Id, errandDTO.Machine?.Id, errandDTO.ErrandType?.Id, errandDTO.Description ?? "BRAK OPISU", errandDTO.Priority)
             {
-                ErrandDTO errandDTO = _viewModel.ErrandDTO;
+                ExpectedDate = errandDTO.ExpectedDate,
+                Responsible = errandDTO.Responsible,
+                SapNumber = errandDTO.SapNumber
+            };
 
-                Errand errand = new(DateTime.Now, _currentUser.User?.Id, errandDTO.Machine?.Id, errandDTO.ErrandType?.Id, errandDTO.Description ?? "BRAK OPISU", errandDTO.Priority)
-                {
-                    ExpectedDate = errandDTO.ExpectedDate,
-                    Responsible = errandDTO.Responsible,
-                    SapNumber = errandDTO.SapNumber
-                };
+            _currentErrand.ErrandId = _errandProvider.Create(errand).Result;
 
-                _currentErrand.ErrandId = _errandProvider.Create(errand).Result;
+            _ = _errandStatus.Create(new ErrandStatus(
+                (int)_currentErrand.ErrandId,
+                ErrandStatusList.NoPartsList,
+                DateTime.Now
 
-                foreach (ErrandPart errandPart in _currentErrand.ErrandParts)
-                {
-                    _ = _errandPartProvider.Create(new ErrandPart((int)_currentErrand.ErrandId, errandPart.PartId, errandPart.Amount));
-                    partsOrdered = true;
-                }
-                _ = _errandStatus.Create(new ErrandStatus(
-                    (int)_currentErrand.ErrandId,
-                    ErrandStatusList.NoPartsList,
-                    DateTime.Now
-                ));
+            ));
 
-                if (partsOrdered)
-                {
-                    ErrandStatus errandStatus = new((int)_currentErrand.ErrandId, ErrandStatusList.PartsListCompleted, DateTime.Now);
-                    _ = _errandStatus.Create(errandStatus);
-                }
-
-                _viewModel.ReloadData();
-                _viewModel.CleanForm();
+            foreach (ErrandPart errandPart in _currentErrand.ErrandParts)
+            {
+                _ = _errandPartProvider.Create(new ErrandPart((int)_currentErrand.ErrandId, errandPart.PartId, errandPart.Amount));
+                partsOrdered = true;
             }
+            if (partsOrdered)
+            {
+                ErrandStatus errandStatus = new((int)_currentErrand.ErrandId, ErrandStatusList.PartsListCompleted, DateTime.Now);
+                _ = _errandStatus.Create(errandStatus);
+            }
+
+            _viewModel.ReloadData();
+            _viewModel.CleanForm();
         }
     }
 }

@@ -1,10 +1,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Errands.Commands;
 using Shopfloor.Features.Mechanic.Errands.Stores;
+using Shopfloor.Interfaces;
+using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.ViewModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -14,11 +17,12 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
 {
-    public class ErrandPartsListViewModel : ViewModelBase
+    internal sealed partial class ErrandPartsListViewModel : ViewModelBase
     {
         private readonly List<Part> _parts = [];
         private readonly IServiceProvider _databaseServices;
         private readonly SelectedErrandStore _errandStore;
+
         private string _searchText = string.Empty;
         public string SearchText
         {
@@ -59,6 +63,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
             _errandStore = mainServices.GetRequiredService<SelectedErrandStore>();
             AddPartToListCommand = new ErrandAddPartCommand(this, _errandStore);
             RemovePartFromListCommand = new ErrandRemovePartCommand(this, _errandStore);
+            _errandPartValidation = new(this);
             Task.Run(LoadData);
         }
         private async Task LoadData()
@@ -117,6 +122,65 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
                 if (errandPart.ErrandId == _errandStore.ErrandId) _errandStore.ErrandParts.Add(errandPart);
             }
             return Task.CompletedTask;
+        }
+    }
+    internal sealed partial class ErrandPartsListViewModel : IInputForm<ErrandPart>
+    {
+        private ErrandPartValidation _errandPartValidation;
+        private readonly Dictionary<string, List<string>?> _propertyErrors = [];
+        public bool IsDataValidate
+        {
+            get
+            {
+                foreach (ErrandPart errandPart in _errandStore.ErrandParts)
+                {
+                    _errandPartValidation.ValidateAmount(nameof(ErrandParts), errandPart.Amount);
+                }
+
+                return !HasErrors;
+            }
+        }
+
+        public bool HasErrors => _propertyErrors.Count != 0;
+
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+
+        public void AddError(string propertyName, string errorMassage)
+        {
+            if (!_propertyErrors.TryGetValue(propertyName, out List<string>? value))
+            {
+                value = [];
+                _propertyErrors.Add(propertyName, value);
+            }
+            value?.Add(errorMassage);
+            OnErrorsChanged(propertyName);
+        }
+        private void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            OnPropertyChanged(nameof(IsDataValidate));
+        }
+        public void CleanForm()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ClearErrors(string propertyName)
+        {
+            if (_propertyErrors.Remove(propertyName))
+            {
+                OnErrorsChanged(propertyName);
+            }
+        }
+
+        public IEnumerable GetErrors(string? propertyName)
+        {
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
+        }
+
+        public void ReloadData()
+        {
+            throw new NotImplementedException();
         }
     }
 }

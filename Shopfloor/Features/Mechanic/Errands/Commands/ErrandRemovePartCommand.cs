@@ -6,7 +6,7 @@ using Shopfloor.Shared.Commands;
 
 namespace Shopfloor.Features.Mechanic.Errands.Commands
 {
-    public class ErrandRemovePartCommand : CommandBase
+    internal sealed class ErrandRemovePartCommand : CommandBase
     {
         private readonly ErrandPartsListViewModel _viewModel;
         private readonly SelectedErrandStore _errandStore;

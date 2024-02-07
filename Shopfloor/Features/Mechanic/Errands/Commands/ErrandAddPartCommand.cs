@@ -9,7 +9,7 @@ using Shopfloor.Shared.Commands;
 
 namespace Shopfloor.Features.Mechanic.Errands.Commands
 {
-    public class ErrandAddPartCommand : CommandBase
+    internal sealed class ErrandAddPartCommand : CommandBase
     {
         private readonly ErrandPartsListViewModel _viewModel;
         private readonly SelectedErrandStore _errandStore;

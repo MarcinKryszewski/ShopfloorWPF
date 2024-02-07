@@ -7,7 +7,7 @@ using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Mechanic.Errands.Interfaces
 {
-    public interface IPartsList
+    internal interface IPartsList
     {
         public ErrandPartsListViewModel? PartsList { get; set; }
     }
