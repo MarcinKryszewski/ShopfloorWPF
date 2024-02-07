@@ -56,7 +56,7 @@ namespace Shopfloor.Models.ErrandStatusModel
                 @SetDate,
                 @Comment,
                 @Reason
-            ;)";
+            );";
         public ErrandStatusProvider(DatabaseConnectionFactory database)
         {
             _database = database;

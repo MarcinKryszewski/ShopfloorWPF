@@ -52,7 +52,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
         public ICollectionView Machines => CollectionViewSource.GetDefaultView(_machines);
         public ICommand NewErrandCommand { get; }
         public ICommand ReturnCommand { get; }
-        public string SapNumber
+        public string? SapNumber
         {
             get => _errandDTO.SapNumber;
             set

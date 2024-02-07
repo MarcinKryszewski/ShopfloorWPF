@@ -37,13 +37,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
             {
                 ErrandDTO errandDTO = _viewModel.ErrandDTO;
 
-                Errand errand = new(
-                    DateTime.Now,
-                    _currentUser.User?.Id,
-                    errandDTO.Machine?.Id,
-                    errandDTO.ErrandType?.Id,
-                    errandDTO.Description,
-                    errandDTO.Priority)
+                Errand errand = new(DateTime.Now, _currentUser.User?.Id, errandDTO.Machine?.Id, errandDTO.ErrandType?.Id, errandDTO.Description, errandDTO.Priority)
                 {
                     ExpectedDate = errandDTO.ExpectedDate,
                     Responsible = errandDTO.Responsible,
@@ -57,7 +51,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
                     _ = _errandPartProvider.Create(new ErrandPart((int)_currentErrand.ErrandId, errandPart.PartId, errandPart.Amount));
                     partsOrdered = true;
                 }
-                _ = _errandStatus.Create(new ErrandStatus(
+                var res = _errandStatus.Create(new ErrandStatus(
                     (int)_currentErrand.ErrandId,
                     ErrandStatusList.NoPartsList,
                     DateTime.Now
@@ -65,11 +59,8 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
 
                 if (partsOrdered)
                 {
-                    _ = _errandStatus.Create(new ErrandStatus(
-                                        (int)_currentErrand.ErrandId,
-                                        ErrandStatusList.PartsListCompleted,
-                                        DateTime.Now
-                                    ));
+                    ErrandStatus errandStatus = new((int)_currentErrand.ErrandId, ErrandStatusList.PartsListCompleted, DateTime.Now);
+                    _ = _errandStatus.Create(errandStatus);
                 }
             }
         }

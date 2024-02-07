@@ -1,17 +1,18 @@
-using System.Collections.Generic;
-using System.Data;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using Dapper;
 using Shopfloor.Database;
 using Shopfloor.Interfaces;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ErrandModel
 {
     internal sealed class ErrandProvider : IProvider<Errand>
     {
         private readonly DatabaseConnectionFactory _database;
+        private string dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+        private string dateFormat = "yyyy-MM-dd";
         #region SQLCommands
         private const string _createSQL = @"
             INSERT INTO errands (
@@ -35,9 +36,9 @@ namespace Shopfloor.Models.ErrandModel
                 @Description,
                 @SapNumber,
                 @ExpectedDate
-            )";
+            );";
         private const string _getOneSQL = @"
-            SELECT 
+            SELECT
                 id AS Id,
                 created_date AS CreatedDate,
                 created_by_id AS CreatedById,
@@ -52,7 +53,7 @@ namespace Shopfloor.Models.ErrandModel
             WHERE id = @Id
             ";
         private const string _getAllSQL = @"
-            SELECT 
+            SELECT
                 id AS Id,
                 created_date AS CreatedDate,
                 created_by_id AS CreatedById,
@@ -92,11 +93,11 @@ namespace Shopfloor.Models.ErrandModel
         #region CRUD
         public async Task<int> Create(Errand item)
         {
-            CultureInfo culture = new("en-GB");
+
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                CeatedDate = item.CreatedDate.ToString(culture),
+                CeatedDate = item.CreatedDate.ToString(dateTimeFormat),
                 CreatedById = item.CreatedById,
                 OwnerId = item.OwnerId,
                 Priority = item.Priority,
@@ -104,7 +105,7 @@ namespace Shopfloor.Models.ErrandModel
                 ErrandTypeId = item.ErrandTypeId,
                 Description = item.Description,
                 SapNumber = item.SapNumber,
-                ExpectedDate = item.ExpectedDate?.ToString("d", culture)
+                ExpectedDate = item.ExpectedDate?.ToString(dateFormat)
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 

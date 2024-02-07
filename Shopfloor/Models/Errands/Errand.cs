@@ -26,7 +26,7 @@ namespace Shopfloor.Models.ErrandModel
         private int? _ownerId;
         private User? _ownerUser;
         private string _priority;
-        private string? _sapNumber = string.Empty;
+        private string? _sapNumber;
         public Errand(int id, DateTime createdDate, int? createdById, int? machineId, int? errandTypeId, string description, string? sapNumber, DateTime? expectedDate, int? ownerId, string? priority = DefaultPriority)
         {
             _id = id;
@@ -109,9 +109,9 @@ namespace Shopfloor.Models.ErrandModel
                 _ownerUser = value;
             }
         }
-        public string SapNumber
+        public string? SapNumber
         {
-            get => _sapNumber = string.Empty;
+            get => _sapNumber;
             set => _sapNumber = value;
         }
         public ErrandType? Type
