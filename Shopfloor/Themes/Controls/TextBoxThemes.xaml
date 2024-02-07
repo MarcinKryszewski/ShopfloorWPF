@@ -48,6 +48,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
     <Style
         x:Key="TooltipText"
         BasedOn="{StaticResource {x:Type TextBlock}}"

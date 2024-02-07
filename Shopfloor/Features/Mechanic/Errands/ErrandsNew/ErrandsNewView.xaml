@@ -63,7 +63,7 @@
                         Foreground="Red"
                         Text=" *" />
                 </StackPanel>
-                <ComboBox Height="40"
+                <ComboBox MinHeight="40"
                     DisplayMemberPath="Name"
                     IsEditable="true"
                     IsReadOnly="false"
@@ -82,7 +82,7 @@
                         Foreground="Red"
                         Text=" *" />
                 </StackPanel>
-                <ComboBox Height="40"
+                <ComboBox MinHeight="40"
                     DisplayMemberPath="Path"
                     IsEditable="true"
                     IsReadOnly="false"
@@ -109,31 +109,12 @@
                 Style="{StaticResource GridCell}">
                 <TextBlock Style="{StaticResource TooltipText}"
                     Text="Numer SAP" />
-                <TextBox Height="40"
+                <TextBox MinHeight="40"
                     Padding="5,0"
                     VerticalContentAlignment="Center"
                     FontSize="16"
-                    Text="{Binding Path=SapNumber}">
-                    <TextBox.Style>
-                        <Style BasedOn="{StaticResource {x:Type TextBox}}"
-                            TargetType="TextBox">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="TextBox">
-                                        <Border Margin="{TemplateBinding Margin}"
-                                            Padding="{TemplateBinding Padding}"
-                                            Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            CornerRadius="8">
-                                            <ScrollViewer x:Name="PART_ContentHost" />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
+                    Text="{Binding Path=SapNumber}"
+                    Style="{StaticResource TextBoxMain}"/>
             </StackPanel>
 
             <StackPanel Grid.Row="2"
@@ -142,7 +123,7 @@
                 Style="{StaticResource GridCell}">
                 <TextBlock Style="{StaticResource TooltipText}"
                     Text="Odpowiedzialny" />
-                <ComboBox Height="40"
+                <ComboBox MinHeight="40"
                     DisplayMemberPath="FullName"
                     IsEditable="true"
                     IsReadOnly="false"
@@ -211,28 +192,10 @@
                     Padding="8,8"
                     FontSize="16"
                     MinLines="3"
-                    Text="{Binding Path=TaskDescription}"
-                    TextWrapping="Wrap">
-                    <TextBox.Style>
-                        <Style BasedOn="{StaticResource {x:Type TextBox}}"
-                            TargetType="TextBox">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="TextBox">
-                                        <Border Margin="{TemplateBinding Margin}"
-                                            Padding="{TemplateBinding Padding}"
-                                            Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            CornerRadius="10">
-                                            <ScrollViewer x:Name="PART_ContentHost" />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
+                    Text="{Binding Path=TaskDescription, UpdateSourceTrigger=PropertyChanged}"
+                    TextWrapping="Wrap"
+                    VerticalContentAlignment="Top"
+                    Style="{StaticResource TextBoxMain}"/>
             </StackPanel>
         </Grid>
 

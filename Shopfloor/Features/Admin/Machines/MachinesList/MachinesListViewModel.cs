@@ -290,11 +290,19 @@ namespace Shopfloor.Features.Admin.Machines.List
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
-        public bool IsDataValidate => !HasErrors;
+        public bool IsDataValidate
+        {
+            get
+            {
+                _machineValidation.ValidateName(MachineName, nameof(MachineName));
+                _machineValidation.ValidateParent(SelectedParent?.Id, nameof(SelectedParent), Id);
+                return !HasErrors;
+            }
+        }
         private void OnErrorsChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-            OnPropertyChanged(nameof(IsDataValidate));
+            OnPropertyChanged(nameof(HasErrors));
         }
         public bool HasErrors => _propertyErrors.Count != 0;
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;

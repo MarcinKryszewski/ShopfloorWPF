@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Errands.Commands;
+using Shopfloor.Features.Mechanic.Errands.ErrandPartsList;
 using Shopfloor.Features.Mechanic.Errands.ErrandsList;
 using Shopfloor.Features.Mechanic.Errands.Interfaces;
 using Shopfloor.Features.Mechanic.Errands.Stores;
@@ -33,6 +34,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
         private readonly ObservableCollection<Machine> _machines = [];
         private readonly ObservableCollection<User> _users = [];
         private readonly SelectedErrandStore _selectedErrand;
+        private readonly ErrandValidation _errandValidation;
         public ErrandsNewViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             _mainServices = mainServices;
@@ -44,6 +46,8 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
             ReturnCommand = new NavigateCommand<ErrandsListViewModel>(_mainServices.GetRequiredService<NavigationService<ErrandsListViewModel>>());
             PrioritySetCommand = new PrioritySetCommand(this);
             ShowPartsListCommand = new ErrandsShowPartsList(this, _mainServices);
+
+            _errandValidation = new(this);
 
             Task.Run(LoadData);
         }
@@ -90,10 +94,11 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
             get => _errandDTO.Machine;
             set
             {
-                if (value?.Id is null) return;
+                string myName = nameof(SelectedMachine);
+                _errandValidation.ValidateMachine(myName, value);
                 _errandDTO.Machine = value;
-                _selectedErrand.MachineId = (int)value.Id;
-                OnPropertyChanged(nameof(SelectedMachine));
+                if (value != null) _selectedErrand.MachineId = value.Id;
+                OnPropertyChanged(myName);
             }
         }
         public User? SelectedResponsible
@@ -110,8 +115,10 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
             get => _errandDTO.ErrandType;
             set
             {
+                string myName = nameof(SelectedType);
+                _errandValidation.ValidateType(myName, value);
                 _errandDTO.ErrandType = value;
-                OnPropertyChanged(nameof(SelectedType));
+                OnPropertyChanged(myName);
             }
         }
         public string? TaskDescription
@@ -119,8 +126,10 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
             get => _errandDTO.Description;
             set
             {
+                string myName = nameof(TaskDescription);
+                _errandValidation.ValidateDescription(myName, value);
                 _errandDTO.Description = value;
-                OnPropertyChanged(nameof(TaskDescription));
+                OnPropertyChanged(myName);
             }
         }
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
@@ -233,8 +242,17 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
     {
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
-        public bool HasErrors => false;
-        public bool IsDataValidate => !HasErrors;
+        public bool HasErrors => _propertyErrors.Count != 0;
+        public bool IsDataValidate
+        {
+            get
+            {
+                _errandValidation.ValidateMachine(nameof(SelectedMachine), SelectedMachine);
+                _errandValidation.ValidateType(nameof(SelectedType), SelectedType);
+                _errandValidation.ValidateDescription(nameof(TaskDescription), TaskDescription);
+                return !HasErrors;
+            }
+        }
         public void AddError(string propertyName, string errorMassage)
         {
             if (!_propertyErrors.TryGetValue(propertyName, out List<string>? value))
@@ -287,7 +305,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
     }
     internal sealed partial class ErrandsNewViewModel : IPartsList
     {
-        public ViewModelBase? PartsList
+        public ErrandPartsListViewModel? PartsList
         {
             get => _partsList;
             set
@@ -298,7 +316,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
             }
         }
         public Visibility IsPartsListVisible => PartsList == null ? Visibility.Visible : Visibility.Collapsed;
-        private ViewModelBase? _partsList;
+        private ErrandPartsListViewModel? _partsList;
         public ICommand ShowPartsListCommand { get; }
     }
 }

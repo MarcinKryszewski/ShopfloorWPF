@@ -1,8 +1,5 @@
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Errands.ErrandPartsList;
 using Shopfloor.Features.Mechanic.Errands.ErrandsNew;
@@ -13,8 +10,8 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
 {
     internal sealed class ErrandsShowPartsList : CommandBase
     {
-        private IPartsList _viewModel;
-        private IServiceProvider _mainServices;
+        private readonly IPartsList _viewModel;
+        private readonly IServiceProvider _mainServices;
 
         public ErrandsShowPartsList(ErrandsNewViewModel errandsNewViewModel, IServiceProvider mainServices)
         {

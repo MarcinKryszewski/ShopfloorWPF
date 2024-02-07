@@ -259,7 +259,7 @@
                                 <DatePickerTextBox.Template>
                                     <ControlTemplate TargetType="DatePickerTextBox">
                                         <Border
-                                            Background="{TemplateBinding Background}"
+                                            Background="{StaticResource BrushDarkNeutral1100}"
                                             BorderBrush="{TemplateBinding BorderBrush}"
                                             BorderThickness="{TemplateBinding BorderThickness}"
                                             CornerRadius="8 0 0 8">
