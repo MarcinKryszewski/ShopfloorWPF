@@ -13,9 +13,9 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         private readonly IPartsList _viewModel;
         private readonly IServiceProvider _mainServices;
 
-        public ErrandsShowPartsList(ErrandsNewViewModel errandsNewViewModel, IServiceProvider mainServices)
+        public ErrandsShowPartsList(IPartsList viewModel, IServiceProvider mainServices)
         {
-            _viewModel = errandsNewViewModel;
+            _viewModel = viewModel;
             _mainServices = mainServices;
         }
 

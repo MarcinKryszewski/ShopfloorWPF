@@ -950,27 +950,25 @@
                 </DataGridTextColumn>
                 <DataGridTemplateColumn
                     Width="auto"
-                    Header="Operations"
+                    Header="Akcje"
                     IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button Style="{StaticResource gridInfoButton}">
-                                    <!--  E74D  -->
                                     <TextBlock
                                         FontFamily="Segoe MDL2 Assets"
                                         Style="{StaticResource gridButtonIcon}"
                                         Text="&#xE7B3;" />
                                 </Button>
                                 <Button Margin="5,0,0,0" Style="{StaticResource gridEditButton}">
-                                    <!--  Edit  -->
                                     <TextBlock
+                                    Command="{Binding Path=DataContext.EditUserCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                         FontFamily="Segoe MDL2 Assets"
                                         Style="{StaticResource gridButtonIcon}"
                                         Text="&#xE70F;" />
                                 </Button>
                                 <Button Margin="5,0,0,0" Style="{StaticResource gridRemoveButton}">
-                                    <!--  E74D  -->
                                     <TextBlock
                                         FontFamily="Segoe MDL2 Assets"
                                         Style="{StaticResource gridButtonIcon}"
