@@ -9,13 +9,12 @@ namespace Shopfloor.Models.ErrandPartModel
 {
     internal sealed partial class ErrandPart
     {
-        private const string _defaultStatus = "NOWY";
         private readonly int _errandId;
         private readonly int _partId;
         private Errand? _errand;
         private Part? _part;
         private double? _amount;
-        private string _status = _defaultStatus;
+        private string _status = PartStatuses[0];
         public ErrandPart(int errandId, int partId)
         {
             _errandId = errandId;
@@ -26,7 +25,7 @@ namespace Shopfloor.Models.ErrandPartModel
             _errandId = errandId;
             _partId = partId;
             _amount = amount;
-            _status = status ?? _defaultStatus;
+            _status = status ?? PartStatuses[0];
         }
         public int ErrandId => _errandId;
         public int PartId => _partId;
@@ -87,5 +86,18 @@ namespace Shopfloor.Models.ErrandPartModel
                 OnErrorsChanged(propertyName);
             }
         }
+    }
+    internal sealed partial class ErrandPart
+    {
+        public static Dictionary<int, string> PartStatuses = new()
+        {
+            [0] = "ZATWIERDZANIE",
+            [1] = "OFERTOWANIE",
+            [2] = "ZAMAWIANIE",
+            [3] = "DOSTARCZANIE",
+            [4] = "POBIERANIE",
+            [5] = "ZAKOŃCZONE",
+            [6] = "ANULOWANE"
+        };
     }
 }

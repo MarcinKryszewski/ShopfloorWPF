@@ -918,7 +918,7 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn
                     Width="*"
-                    Binding="{Binding Display.LastStatusName}"
+                    Binding="{Binding Display.PartsStatus}"
                     Header="Części"
                     IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>

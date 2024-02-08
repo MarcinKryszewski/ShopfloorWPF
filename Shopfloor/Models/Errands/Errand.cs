@@ -1,4 +1,5 @@
 ﻿using Shopfloor.Interfaces;
+using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
@@ -15,6 +16,7 @@ namespace Shopfloor.Models.ErrandModel
         private readonly DateTime _createdDate;
         private readonly ErrandDisplay _display;
         private readonly List<ErrandStatus> _errandStatuses = [];
+        private readonly List<ErrandPart> _parts = [];
         private readonly int? _id;
         private User? _createdByUser;
         private string _description;
@@ -58,7 +60,7 @@ namespace Shopfloor.Models.ErrandModel
             set
             {
                 if (value == null) return;
-                if (value.Id == _id) _createdByUser = value;
+                if (value.Id == _createdById) _createdByUser = value;
             }
         }
         public DateTime CreatedDate => _createdDate;
@@ -73,6 +75,7 @@ namespace Shopfloor.Models.ErrandModel
         }
         public ErrandDisplay Display => _display;
         public List<ErrandStatus> ErrandStatuses => _errandStatuses;
+        public List<ErrandPart> Parts => _parts;
         public int? ErrandTypeId => _errandTypeId;
         public DateTime? ExpectedDate
         {
@@ -150,12 +153,7 @@ namespace Shopfloor.Models.ErrandModel
 
             return _id == other.Id;
         }
-        /*public override bool Equals(object? obj)
-        {
-            if (obj is null) return false;
-            if (obj is not Errand) return false;
-            return Equals(obj);
-    }*/
+        public override bool Equals(object? obj) => obj is Errand objErrand && Equals(objErrand);
         public override int GetHashCode()
         {
             if (_id != null) return _id.GetHashCode();

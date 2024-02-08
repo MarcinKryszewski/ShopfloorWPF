@@ -35,7 +35,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         {
             bool partsOrdered = false;
             if (!_viewModel.IsDataValidate) return;
-            if (!_viewModel.PartsList?.IsDataValidate ?? true) return;
+            if (!_viewModel.PartsList?.IsDataValidate ?? false) return;
 
             ErrandDTO errandDTO = _viewModel.ErrandDTO;
 
