@@ -1,4 +1,3 @@
-using System;
 using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandPartModel
@@ -16,6 +15,14 @@ namespace Shopfloor.Models.ErrandPartModel
             Amount_CheckNull(propertyName, value);
             Amount_CheckZero(propertyName, value);
             Amount_CheckNegative(propertyName, value);
+        }
+        public void ValidateObjectAmount(ErrandPart errandPart, double? value)
+        {
+            string amountName = nameof(errandPart.Amount);
+            errandPart.ClearErrors(amountName);
+            if (value == 0) errandPart.AddError(amountName, "Podaj ilość");
+            if (value is null) errandPart.AddError(amountName, "Podaj ilość");
+            if (value < 0) errandPart.AddError(amountName, "Ilość nie może być ujemna");
         }
         private void Amount_CheckZero(string propertyName, double? value)
         {

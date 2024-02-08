@@ -240,17 +240,14 @@ namespace Shopfloor.Features.Admin.Machines.List
             }
             MachinesList.Refresh();
         }
-
     }
     public sealed partial class MachinesListViewModel : ViewModelBase
     {
-
     }
     public sealed partial class MachinesListViewModel
     {
         public void CleanForm()
         {
-            _propertyErrors.Clear();
             _id = null;
             SelectedMachine = null;
             SelectedParent = null;
@@ -259,7 +256,11 @@ namespace Shopfloor.Features.Admin.Machines.List
             SapNumber = string.Empty;
             IsEdit = false;
 
-            OnPropertyChanged(nameof(IsDataValidate));
+            _propertyErrors.Clear();
+            OnErrorsChanged(nameof(MachineName));
+            OnErrorsChanged(nameof(SelectedParent));
+
+            //OnPropertyChanged(nameof(IsDataValidate));
         }
         public void ReloadData()
         {

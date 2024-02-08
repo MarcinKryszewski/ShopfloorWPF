@@ -26,7 +26,7 @@ namespace Shopfloor.Features.Admin.Machines.Commands
                 parentId,
                 true);
 
-            if (_viewModel.IsDataValidate) return;
+            if (!_viewModel.IsDataValidate) return;
 
             _ = _provider.Create(machine);
             _viewModel.ReloadData();

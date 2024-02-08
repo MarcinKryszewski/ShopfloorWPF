@@ -1,4 +1,3 @@
-using System.Collections;
 using System.ComponentModel;
 
 namespace Shopfloor.Interfaces
@@ -11,7 +10,7 @@ namespace Shopfloor.Interfaces
 
         public void AddError(string propertyName, string errorMassage);
 
-        public void ClearErrors(string propertyName);
+        public void ClearErrors(string? propertyName);
 
         public bool IsDataValidate { get; }
     }

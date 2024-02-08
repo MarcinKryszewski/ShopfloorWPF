@@ -1,14 +1,14 @@
+using Dapper;
+using Shopfloor.Database;
+using Shopfloor.Interfaces;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
-using Shopfloor.Database;
-using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandPartModel
 {
-    public class ErrandPartProvider : IProvider<ErrandPart>
+    internal sealed class ErrandPartProvider : IProvider<ErrandPart>
     {
         private readonly DatabaseConnectionFactory _database;
         #region SQLCommands
@@ -26,7 +26,7 @@ namespace Shopfloor.Models.ErrandPartModel
                 @Status
             )";
         private const string _getOneSQL = @"
-            SELECT 
+            SELECT
                 errand_id AS ErrandId,
                 part_id AS PartId,
                 amount AS Amount,
@@ -35,7 +35,7 @@ namespace Shopfloor.Models.ErrandPartModel
             WHERE id = @Id
             ";
         private const string _getAllSQL = @"
-            SELECT 
+            SELECT
                 errand_id AS ErrandId,
                 part_id AS PartId,
                 amount AS Amount,

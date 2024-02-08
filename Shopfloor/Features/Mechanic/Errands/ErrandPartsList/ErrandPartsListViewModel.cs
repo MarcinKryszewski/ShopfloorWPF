@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Errands.Commands;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Interfaces;
-using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.ViewModels;
@@ -126,7 +125,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
     }
     internal sealed partial class ErrandPartsListViewModel : IInputForm<ErrandPart>
     {
-        private ErrandPartValidation _errandPartValidation;
+        private readonly ErrandPartValidation _errandPartValidation;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         public bool IsDataValidate
         {
@@ -134,17 +133,14 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
             {
                 foreach (ErrandPart errandPart in _errandStore.ErrandParts)
                 {
-                    _errandPartValidation.ValidateAmount(nameof(ErrandParts), errandPart.Amount);
+                    _errandPartValidation.ValidateAmount(nameof(errandPart.Amount), errandPart.Amount);
+                    _errandPartValidation.ValidateObjectAmount(errandPart, errandPart.Amount);
                 }
-
                 return !HasErrors;
             }
         }
-
         public bool HasErrors => _propertyErrors.Count != 0;
-
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
-
         public void AddError(string propertyName, string errorMassage)
         {
             if (!_propertyErrors.TryGetValue(propertyName, out List<string>? value))
@@ -165,19 +161,22 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
             throw new NotImplementedException();
         }
 
-        public void ClearErrors(string propertyName)
+        public void ClearErrors(string? propertyName)
         {
+            if (propertyName is null)
+            {
+                _propertyErrors.Clear();
+                return;
+            }
             if (_propertyErrors.Remove(propertyName))
             {
                 OnErrorsChanged(propertyName);
             }
         }
-
         public IEnumerable GetErrors(string? propertyName)
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
-
         public void ReloadData()
         {
             throw new NotImplementedException();

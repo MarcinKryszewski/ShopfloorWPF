@@ -1,12 +1,12 @@
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandPartModel
 {
-    public class ErrandPartStore : IDataStore<ErrandPart>
+    internal sealed class ErrandPartStore : IDataStore<ErrandPart>
     {
         private readonly IServiceProvider _databaseServices;
         private IEnumerable<ErrandPart> _data = [];

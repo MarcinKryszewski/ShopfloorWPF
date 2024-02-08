@@ -268,23 +268,14 @@
                                     Foreground="{StaticResource BrushPurple400}"
                                     Text="{Binding Part.NamePl}" />
                                 <TextBox
+                                    x:Name="ErrandPartTextBox"
                                     Height="25"
                                     MinWidth="50"
                                     Margin="0,0,5,0"
                                     VerticalAlignment="Center"
                                     Style="{StaticResource InputTextBox}"
-                                    Text="{Binding Path=Amount}"
-                                    TextAlignment="Center" >
-                                <TextBox.Resources>
-                                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type InputTextBox}}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Validation.HasErrors}" Value="True"> <!-- change all text to red -->
-                                                <Setter Property="Foreground" Value="Red"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Resources>
-                                </TextBox>
+                                    Text="{Binding Path=Amount, UpdateSourceTrigger=PropertyChanged, Delay=1000, PresentationTraceSources.TraceLevel=None}"
+                                    TextAlignment="Center" />
                                 <TextBlock
                                     Height="25"
                                     VerticalAlignment="Center"
@@ -292,9 +283,20 @@
                                     Foreground="{StaticResource BrushPurple400}"
                                     Text="{Binding Path=Part.Unit}" />
                             </StackPanel>
-                            
-                    </StackPanel>
-                    
+                            <ItemsControl
+                                Margin="0,5,0,0"
+                                FontFamily="Arial"
+                                FontSize="12"
+                                ItemsSource="{Binding Path=(Validation.Errors), ElementName=ErrandPartTextBox}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Foreground="{StaticResource ResourceKey=BrushAccentPink500}" Text="{Binding ErrorContent}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
