@@ -68,6 +68,9 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsEdit
                 OnPropertyChanged(nameof(SapNumber));
             }
         }
+        public bool PrioA {get;set;}
+        public bool PrioB {get;set;}
+        public bool PrioC {get;set;}
         public ICollectionView ErrandTypes => CollectionViewSource.GetDefaultView(_errandTypes);
         public ICollectionView Machines => CollectionViewSource.GetDefaultView(_machines);
         public ICommand ReturnCommand { get; }
@@ -205,15 +208,39 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsEdit
             await FillLists(machineStore, userStore, errandTypeStore);
 
             RefreshLists();
-            SetupForm(errandTypeStore);
+            SetupForm(errandTypeStore, machineStore, userStore);
         }
 
-        private void SetupForm(ErrandTypeStore errandTypeStore)
+        private void SetupForm(ErrandTypeStore errandTypeStore, MachineStore machineStore, UserStore userStore)
         {
             Errand? errand = _selectedErrand.SelectedErrand;
             if (errand == null) return;
 
             SelectedType = errandTypeStore.Data.First((t) => t.Id == errand.ErrandTypeId);
+            SelectedMachine = machineStore.Data.First((m) => m.Id == errand.MachineId);
+            SelectedDate = errand.ExpectedDate;
+            SapNumber = errand.SapNumber;
+            SelectedResponsible = errand.Responsible;
+            SelectedPriority = errand.Priority;
+            TaskDescription = errand.Description;
+
+            switch (errand.Priority)
+            {
+                case "A":
+                    PrioA = true;
+                    break;
+                case "B":
+                    PrioB = true;
+                    break;
+                case "C":
+                default: 
+                    PrioC = true;
+                    break;              
+            }
+            OnPropertyChanged(nameof(PrioA));
+            OnPropertyChanged(nameof(PrioB));
+            OnPropertyChanged(nameof(PrioC));
+
             return;
         }
 
@@ -279,8 +306,9 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsEdit
         {
             ErrandDTO = new();
         }
-        public void ClearErrors(string propertyName)
+        public void ClearErrors(string? propertyName)
         {
+            if (propertyName is null) return;
             if (_propertyErrors.Remove(propertyName))
             {
                 OnErrorsChanged(propertyName);
