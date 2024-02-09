@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Errands.ErrandPartsList;
 using Shopfloor.Features.Mechanic.Errands.ErrandsEdit;
@@ -7,6 +6,7 @@ using Shopfloor.Features.Mechanic.Errands.ErrandsNew;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
+using System;
 
 namespace Shopfloor.Features.Mechanic.Errands.Services
 {
@@ -16,7 +16,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
         {
             GetListNavigation(services, databaseServices);
             GetAddNavigation(services, databaseServices, userServices);
-            GetEditNavigation(services, databaseServices);
+            GetEditNavigation(services, databaseServices, userServices);
             GetPartsListNavigation(services, databaseServices);
         }
         private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
@@ -43,9 +43,9 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
                 );
             });
         }
-        private static void GetEditNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        private static void GetEditNavigation(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            services.AddTransient((s) => CreateEditViewModel(s, databaseServices));
+            services.AddTransient((s) => CreateEditViewModel(s, databaseServices, userServices));
             services.AddSingleton<CreateViewModel<ErrandsEditViewModel>>((s) => () => s.GetRequiredService<ErrandsEditViewModel>());
             services.AddSingleton((s) =>
             {
@@ -71,9 +71,9 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
         {
             return new ErrandsListViewModel(mainServices, databaseServices);
         }
-        private static ErrandsEditViewModel CreateEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        private static ErrandsEditViewModel CreateEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            return new ErrandsEditViewModel(mainServices, databaseServices);
+            return new ErrandsEditViewModel(mainServices, databaseServices, userServices);
         }
         private static ErrandsNewViewModel CreateAddViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
         {

@@ -1,23 +1,23 @@
-using Shopfloor.Models.ErrandModel;
-using Shopfloor.Shared.ViewModels;
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Input;
-using Shopfloor.Features.Mechanic.Errands.ErrandsNew;
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Mechanic.Errands.Commands;
+using Shopfloor.Features.Mechanic.Errands.ErrandsNew;
+using Shopfloor.Models.ErrandModel;
+using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.ErrandStatusModel;
+using Shopfloor.Models.ErrandTypeModel;
+using Shopfloor.Models.MachineModel;
+using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
+using Shopfloor.Shared.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.Windows;
-using Shopfloor.Models.UserModel;
+using System.ComponentModel;
 using System.Linq;
-using Shopfloor.Models.MachineModel;
-using Shopfloor.Models.ErrandTypeModel;
-using Shopfloor.Models.ErrandStatusModel;
-using Shopfloor.Models.ErrandPartModel;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
 {
@@ -28,12 +28,15 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
         private readonly List<Errand> _errands = [];
         public ICollectionView Errands => CollectionViewSource.GetDefaultView(_errands);
         public ICommand ErrandsAddNavigateCommand { get; }
+        public Errand? SelectedErrand { get; set; }
+        public ICommand EditErrandCommand { get; }
         public ErrandsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             _mainServices = mainServices;
             _databaseServices = databaseServices;
             Task.Run(LoadData);
             ErrandsAddNavigateCommand = new NavigateCommand<ErrandsNewViewModel>(_mainServices.GetRequiredService<NavigationService<ErrandsNewViewModel>>());
+            EditErrandCommand = new ErrandSetCommand(this, _mainServices);
         }
         private async Task LoadData()
         {

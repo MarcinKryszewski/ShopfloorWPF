@@ -74,11 +74,6 @@
             <Setter Property="Padding" Value="15,10" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Margin" Value="0,10" />
-            <!--<Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect BlurRadius="2" Opacity="0.1" ShadowDepth="1" />
-                </Setter.Value>
-            </Setter>-->
 
             <Setter Property="Template">
                 <Setter.Value>
@@ -327,7 +322,7 @@
         </Style>
 
         <Style x:Key="DataGridStyle1" TargetType="{x:Type DataGrid}">
-            <Setter Property="CanUserResizeColumns " Value="False"/>
+            <Setter Property="CanUserResizeColumns" Value="False" />
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="Foreground" Value="#222528" />
             <Setter Property="BorderThickness" Value="0" />
@@ -738,7 +733,7 @@
             Text="DCS zadania" />
 
         <!--  Add Button  -->
-        <Button Style="{StaticResource addButton}" Command="{Binding Path=ErrandsAddNavigateCommand}">
+        <Button Command="{Binding Path=ErrandsAddNavigateCommand}" Style="{StaticResource addButton}">
             <StackPanel Orientation="Horizontal">
                 <!--  AddTo  -->
                 <TextBlock
@@ -825,6 +820,7 @@
             CellStyle="{DynamicResource DataGridCellStyle1}"
             ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
             ItemsSource="{Binding Path=Errands}"
+            SelectedItem="{Binding Path=SelectedErrand, Mode=TwoWay}"
             Style="{DynamicResource DataGridStyle1}">
             <DataGrid.RowStyle>
                 <Style BasedOn="{StaticResource DataGridRowStyle1}" TargetType="DataGridRow">
@@ -834,7 +830,7 @@
                         </DataTrigger>
                         <DataTrigger Binding="{Binding Priority}" Value="B">
                             <Setter Property="BorderBrush" Value="#d3d32f" />
-                        </DataTrigger>                        
+                        </DataTrigger>
                         <DataTrigger Binding="{Binding Priority}" Value="C">
                             <Setter Property="BorderBrush" Value="#2fd353" />
                         </DataTrigger>
@@ -961,9 +957,11 @@
                                         Style="{StaticResource gridButtonIcon}"
                                         Text="&#xE7B3;" />
                                 </Button>
-                                <Button Margin="5,0,0,0" Style="{StaticResource gridEditButton}">
+                                <Button
+                                    Margin="5,0,0,0"
+                                    Command="{Binding Path=DataContext.EditErrandCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    Style="{StaticResource gridEditButton}">
                                     <TextBlock
-                                    Command="{Binding Path=DataContext.EditUserCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                         FontFamily="Segoe MDL2 Assets"
                                         Style="{StaticResource gridButtonIcon}"
                                         Text="&#xE70F;" />

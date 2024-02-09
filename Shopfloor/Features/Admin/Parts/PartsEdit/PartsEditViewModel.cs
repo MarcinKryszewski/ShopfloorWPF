@@ -196,21 +196,6 @@ namespace Shopfloor.Features.Admin.Parts.Edit
             Supplier = _selectedPart.Supplier;
             Unit = _selectedPart.Unit;
         }
-        /*public bool IsDataValidate(Part inputValue)
-        {
-            if (inputValue.RequiredInputValue.Length == 0)
-            {
-                ErrorMassage = "Wprowadź nazwę, nazwę producenta lub indeks";
-                return false;
-            };
-            Part? part = _databaseServices.GetRequiredService<PartsStore>().Data.FirstOrDefault(p => p.Index == inputValue.Index);
-            if (inputValue.Index is not null && inputValue.Index?.ToString().Length != 8)
-            {
-                ErrorMassage = "Indeks powinien być liczbą o długości 8 znaków";
-                return false;
-            }
-            return true;
-        }*/
         private void OnErrorsChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));

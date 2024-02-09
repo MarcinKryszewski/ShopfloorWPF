@@ -1,6 +1,8 @@
+using System;
+
 namespace Shopfloor.Models.ErrandTypeModel
 {
-    public class ErrandType
+    internal sealed partial class ErrandType
     {
         private readonly int? _id;
         private readonly string _name;
@@ -19,5 +21,19 @@ namespace Shopfloor.Models.ErrandTypeModel
         public int? Id => _id;
         public string Name => _name;
         public string? Description => _description;
+    }
+    internal sealed partial class ErrandType : IEquatable<ErrandType>
+    {
+        public bool Equals(ErrandType? other)
+        {
+            if (other == null) return false;
+            return _id == other.Id;
+        }
+        public override bool Equals(object? obj) => obj is ErrandType objErrandType && Equals(objErrandType);
+        public override int GetHashCode()
+        {
+            if (_id != null) return _id.GetHashCode();
+            return _name.GetHashCode();
+        }
     }
 }

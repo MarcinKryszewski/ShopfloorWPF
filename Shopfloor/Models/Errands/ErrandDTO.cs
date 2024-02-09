@@ -5,7 +5,7 @@ using System;
 
 namespace Shopfloor.Models.ErrandModel
 {
-    public class ErrandDTO
+    internal class ErrandDTO
     {
         public int? CreatedById { get; set; }
         public DateTime? CreatedDate { get; set; }

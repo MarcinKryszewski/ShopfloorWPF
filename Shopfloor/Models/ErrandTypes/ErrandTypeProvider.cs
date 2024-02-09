@@ -1,15 +1,15 @@
+using Dapper;
+using Shopfloor.Database;
+using Shopfloor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
-using Shopfloor.Database;
-using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandTypeModel
 {
-    public sealed class ErrandTypeProvider : IProvider<ErrandType>
+    internal sealed class ErrandTypeProvider : IProvider<ErrandType>
     {
         private readonly DatabaseConnectionFactory _database;
         public ErrandTypeProvider(DatabaseConnectionFactory database)
@@ -36,6 +36,6 @@ namespace Shopfloor.Models.ErrandTypeModel
 
         public Task<ErrandType> GetById(int id) => throw new NotImplementedException();
         public Task Update(ErrandType item) => Task.CompletedTask;
-        #endregion NOT_IMPLEMENTED        
+        #endregion NOT_IMPLEMENTED
     }
 }
