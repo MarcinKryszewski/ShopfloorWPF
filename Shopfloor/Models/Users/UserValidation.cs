@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Shopfloor.Models.UserModel
 {
-    public class UserValidation
+    internal sealed class UserValidation
     {
         #region AUTOLOGIN HANDLE
         private readonly INotifyDataErrorInfo? _caller;

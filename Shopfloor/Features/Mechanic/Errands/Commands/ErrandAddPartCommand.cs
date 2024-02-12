@@ -28,9 +28,11 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
             if (selectedPart is null) return;
             if (selectedPart.Id is null) return;
 
+            //_currentErrand.SelectedErrand?.Id
+
             if (errandParts.FirstOrDefault((p) => p.PartId == selectedPart.Id) == null)
             {
-                ErrandPart errandPart = new(0, (int)selectedPart.Id)
+                ErrandPart errandPart = new(_errandStore.SelectedErrand?.Id ?? 0, (int)selectedPart.Id)
                 {
                     Part = selectedPart
                 };

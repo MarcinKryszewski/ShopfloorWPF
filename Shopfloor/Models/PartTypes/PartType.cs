@@ -26,12 +26,7 @@ namespace Shopfloor.Models.PartTypeModel
             if (_id == null && other._id == null) return _name == other.Name;
             return _id == other.Id;
         }
-        public override bool Equals(object? obj)
-        {
-            if (obj is null) return false;
-            if (obj is not PartType) return false;
-            return Equals(obj);
-        }
+        public override bool Equals(object? obj) => obj is PartType objPartType && Equals(objPartType);
         public override int GetHashCode()
         {
             if (_id != null) return _id.GetHashCode();

@@ -19,7 +19,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Users.Edit
 {
-    public class UsersEditViewModel : ViewModelBase, IInputForm<User>
+    internal sealed class UsersEditViewModel : ViewModelBase, IInputForm<User>
     {
         private readonly IServiceProvider _database;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
@@ -92,8 +92,9 @@ namespace Shopfloor.Features.Admin.Users.Edit
             Surname = SelectedUser?.Surname ?? string.Empty;
             SetRoles();
         }
-        public void ClearErrors(string propertyName)
+        public void ClearErrors(string? propertyName)
         {
+            if (propertyName is null) return;
             _propertyErrors.Remove(propertyName);
         }
         public void FillForm()

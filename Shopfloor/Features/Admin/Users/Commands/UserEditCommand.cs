@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Shopfloor.Features.Admin.UsersList.Commands
 {
-    public class UserEditCommand : CommandBase
+    internal sealed class UserEditCommand : CommandBase
     {
         private readonly UserProvider _userProvider;
         private readonly RoleUserProvider _roleUserProvider;

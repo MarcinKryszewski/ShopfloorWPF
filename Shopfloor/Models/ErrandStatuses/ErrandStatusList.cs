@@ -1,4 +1,4 @@
-namespace Shopfloor.Models.ErrandStatuses
+namespace Shopfloor.Models.ErrandStatusModel
 {
     public static class ErrandStatusList
     {

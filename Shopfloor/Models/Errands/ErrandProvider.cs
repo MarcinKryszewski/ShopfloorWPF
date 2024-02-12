@@ -69,9 +69,7 @@ namespace Shopfloor.Models.ErrandModel
             ";
         private const string _updateSQL = @"
             UPDATE errands
-            SET
-                created_date = @CeatedDate,
-                created_by_id = @CreatedById,
+            SET               
                 owner_id = @OwnerId,
                 priority = @Priority,
                 machine_id = @MachineId,
@@ -135,8 +133,6 @@ namespace Shopfloor.Models.ErrandModel
             object parameters = new
             {
                 Id = item.Id,
-                CeatedDate = item.CreatedDate.ToString(dateTimeFormat),
-                CreatedById = item.CreatedById,
                 OwnerId = item.OwnerId,
                 Priority = item.Priority,
                 MachineId = item.MachineId,

@@ -1,11 +1,12 @@
 using Shopfloor.Interfaces;
 using Shopfloor.Models.RoleModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Shopfloor.Models.UserModel
 {
-    public class User : ISearchableModel
+    internal sealed partial class User : ISearchableModel
     {
         private readonly HashSet<Role> _roles = [];
         private readonly int? _id;
@@ -61,6 +62,25 @@ namespace Shopfloor.Models.UserModel
         public bool IsAuthorized(int roleValue)
         {
             return _roles.Any(role => role.Value == roleValue);
+        }
+    }
+    internal sealed partial class User : IEquatable<User>
+    {
+        public bool Equals(User? other)
+        {
+            if (other == null) return false;
+            if (_id == null && other._id == null)
+            {
+                return FullName == other.FullName;
+            }
+
+            return _id == other.Id;
+        }
+        public override bool Equals(object? obj) => obj is User objUser && Equals(objUser);
+        public override int GetHashCode()
+        {
+            if (_id != null) return _id.GetHashCode();
+            return FullName.GetHashCode();
         }
     }
 }

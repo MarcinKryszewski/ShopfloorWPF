@@ -6,7 +6,7 @@ using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.UserModel
 {
-    public class UserStore : IDataStore<User>
+    internal sealed class UserStore : IDataStore<User>
     {
         private readonly IServiceProvider _databaseServices;
         private IEnumerable<User> _data = [];

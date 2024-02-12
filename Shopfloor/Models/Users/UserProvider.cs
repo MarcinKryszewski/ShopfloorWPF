@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.UserModel
 {
-    public class UserProvider : IProvider<User>
+    internal sealed class UserProvider : IProvider<User>
     {
         private readonly DatabaseConnectionFactory _database;
 

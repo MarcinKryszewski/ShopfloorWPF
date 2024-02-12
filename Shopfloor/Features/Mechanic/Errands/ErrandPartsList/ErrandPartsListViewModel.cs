@@ -9,6 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -52,7 +53,6 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
                 return CollectionViewSource.GetDefaultView(_errandStore.ErrandParts);
             }
         }
-
         public ICommand AddPartToListCommand { get; }
         public ICommand RemovePartFromListCommand { get; }
         public Part? SelectedPart { get; set; }
@@ -85,7 +85,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
             tasks.Clear();
 
             tasks.Add(FillPartsList(partsStore));
-            tasks.Add(FillErrandPartsList(errandPartStore));
+            tasks.Add(FillErrandPartsList(errandPartStore, partsStore));
             if (tasks.Count > 0) await Task.WhenAll(tasks);
 
             Application.Current.Dispatcher.Invoke
@@ -114,11 +114,16 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
             }
             return Task.CompletedTask;
         }
-        private Task FillErrandPartsList(ErrandPartStore errandPartStore)
+        private Task FillErrandPartsList(ErrandPartStore errandPartStore, PartsStore partsStore)
         {
             foreach (ErrandPart errandPart in errandPartStore.Data)
             {
-                if (errandPart.ErrandId == _errandStore.ErrandId) _errandStore.ErrandParts.Add(errandPart);
+                if (errandPart.Status == ErrandPart.PartStatuses[6]) continue;
+                if (errandPart.ErrandId == _errandStore.SelectedErrand?.Id)
+                {
+                    errandPart.Part = partsStore.Data.First(p => p.Id == errandPart.PartId);
+                    _errandStore.ErrandParts.Add(errandPart);
+                }
             }
             return Task.CompletedTask;
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Features.Admin.UsersList.Commands
 {
-    public class UserSetActivityCommand : AsyncCommandBase
+    internal sealed class UserSetActivityCommand : AsyncCommandBase
     {
         private readonly UsersListViewModel _viewModel;
         private readonly UserProvider _userProvider;

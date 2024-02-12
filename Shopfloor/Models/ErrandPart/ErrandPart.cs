@@ -100,4 +100,17 @@ namespace Shopfloor.Models.ErrandPartModel
             [6] = "ANULOWANE"
         };
     }
+    internal sealed partial class ErrandPart : IEquatable<ErrandPart>
+    {
+        public bool Equals(ErrandPart? other)
+        {
+            if (other == null) return false;
+            return _errandId == other.ErrandId && _partId == other.PartId;
+        }
+        public override bool Equals(object? obj) => obj is ErrandPart objErrandPart && Equals(objErrandPart);
+        public override int GetHashCode()
+        {
+            return _errandId.GetHashCode() & _partId.GetHashCode();
+        }
+    }
 }

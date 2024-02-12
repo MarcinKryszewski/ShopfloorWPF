@@ -19,7 +19,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Hosts
                 services.AddSingleton<NavigationStore>();
                 services.AddSingleton<SelectedUserStore>();
 
-                services.AddSingleton(new SelectedErrandStore());
+                services.AddSingleton<SelectedErrandStore>();
 
                 ErrandsNavigationServices.Get(services, databaseServices, userServices);
             })

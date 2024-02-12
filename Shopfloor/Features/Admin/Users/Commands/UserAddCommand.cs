@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Features.Admin.UsersList.Commands
 {
-    public class UserAddCommand : CommandBase
+    internal sealed class UserAddCommand : CommandBase
     {
         private readonly UsersAddViewModel _viewModel;
         private readonly RolesStore _rolesStore;

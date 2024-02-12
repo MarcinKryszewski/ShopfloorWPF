@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Shopfloor.Stores
 {
-    public partial class CurrentUserStore
+    internal sealed partial class CurrentUserStore
     {
         private readonly IServiceProvider _databaseServices;
         private readonly RoleProvider _roleProvider;
@@ -81,7 +81,7 @@ namespace Shopfloor.Stores
             }
         }
     }
-    public partial class CurrentUserStore
+    internal sealed partial class CurrentUserStore
     {
         public void AutoLogin(string username, UserProvider provider)
         {
@@ -98,7 +98,7 @@ namespace Shopfloor.Stores
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
         }
     }
-    public partial class CurrentUserStore : INotifyDataErrorInfo
+    internal sealed partial class CurrentUserStore : INotifyDataErrorInfo
     {
         private readonly Dictionary<string, List<string>?> _propertyErrors;
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
@@ -108,7 +108,7 @@ namespace Shopfloor.Stores
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
     }
-    public partial class CurrentUserStore : INotifyPropertyChanged
+    internal sealed partial class CurrentUserStore : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
     }

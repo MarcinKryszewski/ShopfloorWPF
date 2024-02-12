@@ -1,6 +1,7 @@
 using Dapper;
 using Shopfloor.Database;
 using Shopfloor.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -34,6 +35,15 @@ namespace Shopfloor.Models.ErrandPartModel
             FROM errands_parts
             WHERE id = @Id
             ";
+        private const string _getForErrandSQL = @"
+            SELECT
+                errand_id AS ErrandId,
+                part_id AS PartId,
+                amount AS Amount,
+                status AS Status
+            FROM errands_parts
+            WHERE errand_id = @ErrandId
+            ";
         private const string _getAllSQL = @"
             SELECT
                 errand_id AS ErrandId,
@@ -45,16 +55,14 @@ namespace Shopfloor.Models.ErrandPartModel
         private const string _updateSQL = @"
             UPDATE errands_parts
             SET
-                errand_id = @ErrandId,
-                part_id = @PartId,
                 amount = @Amount,
                 status = @Status
             WHERE errand_id = @ErrandId AND part_id = @PartId
             ";
         private const string _deleteSQL = @"
-            DELETE
-            FROM errands_parts
-            WHERE id = @Id
+            UPDATE errands_parts
+            SET status = @Status
+            WHERE errand_id = @ErrandId AND part_id = @PartId
             ";
         #endregion SQLCommands
         public ErrandPartProvider(DatabaseConnectionFactory database)
@@ -83,16 +91,17 @@ namespace Shopfloor.Models.ErrandPartModel
             IEnumerable<ErrandPartDTO> errandPartDTOs = await connection.QueryAsync<ErrandPartDTO>(_getAllSQL);
             return errandPartDTOs.Select(ToErrandPart);
         }
-        public async Task<ErrandPart> GetById(int id)
+        public async Task<IEnumerable<ErrandPart>> GetByErrandId(int errandId)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Id = id
+                ErrandId = errandId
             };
-            ErrandPartDTO? errandPartDTO = await connection.QuerySingleAsync<ErrandPartDTO>(_getOneSQL, parameters);
-            return ToErrandPart(errandPartDTO);
+            IEnumerable<ErrandPartDTO> errandPartDTOs = await connection.QueryAsync<ErrandPartDTO>(_getForErrandSQL, parameters);
+            return errandPartDTOs.Select(ToErrandPart);
         }
+        public Task<ErrandPart> GetById(int id) => throw new NotImplementedException();
         public async Task Update(ErrandPart item)
         {
             using IDbConnection connection = _database.Connect();
@@ -105,12 +114,15 @@ namespace Shopfloor.Models.ErrandPartModel
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
-        public async Task Delete(int id)
+        public Task Delete(int id) => throw new NotImplementedException();
+        public async Task Delete(int errandId, int partId)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Id = id
+                ErrandId = errandId,
+                PartId = partId,
+                Status = ErrandPart.PartStatuses[6]
             };
             await connection.ExecuteAsync(_deleteSQL, parameters);
         }

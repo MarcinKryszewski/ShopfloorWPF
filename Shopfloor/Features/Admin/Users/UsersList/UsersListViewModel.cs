@@ -18,7 +18,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Users.List
 {
-    public class UsersListViewModel : ViewModelBase
+    internal sealed class UsersListViewModel : ViewModelBase
     {
         private readonly IServiceProvider _database;
         private readonly ObservableCollection<User> _users = new();

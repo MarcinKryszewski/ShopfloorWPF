@@ -6,8 +6,10 @@ using Shopfloor.Features.Mechanic.Errands.Interfaces;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
+using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
+using Shopfloor.Models.PartModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
@@ -68,9 +70,9 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsEdit
                 OnPropertyChanged(nameof(SapNumber));
             }
         }
-        public bool PrioA {get;set;}
-        public bool PrioB {get;set;}
-        public bool PrioC {get;set;}
+        public bool PrioA { get; set; }
+        public bool PrioB { get; set; }
+        public bool PrioC { get; set; }
         public ICollectionView ErrandTypes => CollectionViewSource.GetDefaultView(_errandTypes);
         public ICollectionView Machines => CollectionViewSource.GetDefaultView(_machines);
         public ICommand ReturnCommand { get; }
@@ -155,13 +157,30 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsEdit
                 _machines.Clear();
             });
         }
-        private async Task FillLists(MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore)
+        private async Task FillLists(MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore, ErrandPartStore errandPartStore, PartsStore partsStore)
         {
             List<Task> tasks = [];
             tasks.Add(FillMachinesList(machineStore));
             tasks.Add(FillUsersList(userStore));
             tasks.Add(FillTypesList(errandTypeStore));
+            tasks.Add(FillPartsList(errandPartStore, partsStore));
             await Task.WhenAll(tasks);
+        }
+        private Task FillPartsList(ErrandPartStore errandPartStore, PartsStore partsStore)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _selectedErrand.ErrandParts.Clear();
+                foreach (ErrandPart part in errandPartStore.Data)
+                {
+                    if (part.ErrandId == _selectedErrand.SelectedErrand?.Id)
+                    {
+                        part.Part = partsStore.Data.First(p => p.Id == part.PartId);
+                        _selectedErrand.ErrandParts.Add(part);
+                    }
+                }
+            });
+            return Task.CompletedTask;
         }
         private Task FillMachinesList(MachineStore machineStore)
         {
@@ -203,15 +222,17 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsEdit
             MachineStore machineStore = _databaseServices.GetRequiredService<MachineStore>();
             UserStore userStore = _databaseServices.GetRequiredService<UserStore>();
             ErrandTypeStore errandTypeStore = _databaseServices.GetRequiredService<ErrandTypeStore>();
+            ErrandPartStore errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
+            PartsStore partsStore = _databaseServices.GetRequiredService<PartsStore>();
 
-            await LoadStoresData(machineStore, userStore, errandTypeStore);
-            await FillLists(machineStore, userStore, errandTypeStore);
+            await LoadStoresData(machineStore, userStore, errandTypeStore, errandPartStore, partsStore);
+            await FillLists(machineStore, userStore, errandTypeStore, errandPartStore, partsStore);
 
             RefreshLists();
-            SetupForm(errandTypeStore, machineStore, userStore);
+            SetupForm(errandTypeStore, machineStore, userStore, errandPartStore);
         }
 
-        private void SetupForm(ErrandTypeStore errandTypeStore, MachineStore machineStore, UserStore userStore)
+        private void SetupForm(ErrandTypeStore errandTypeStore, MachineStore machineStore, UserStore userStore, ErrandPartStore errandPartStore)
         {
             Errand? errand = _selectedErrand.SelectedErrand;
             if (errand == null) return;
@@ -223,25 +244,32 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsEdit
             SelectedResponsible = errand.Responsible;
             SelectedPriority = errand.Priority;
             TaskDescription = errand.Description;
+            SetupPriority(errand);
+            SetupParts(errandPartStore);
 
+        }
+        public void SetupParts(ErrandPartStore errandPartStore)
+        {
+            if (_selectedErrand.ErrandParts.Count > 0) PartsList = _mainServices.GetRequiredService<ErrandPartsListViewModel>();
+        }
+        private void SetupPriority(Errand errand)
+        {
             switch (errand.Priority)
             {
                 case "A":
                     PrioA = true;
+                    OnPropertyChanged(nameof(PrioA));
                     break;
                 case "B":
                     PrioB = true;
+                    OnPropertyChanged(nameof(PrioB));
                     break;
                 case "C":
-                default: 
+                default:
                     PrioC = true;
-                    break;              
+                    OnPropertyChanged(nameof(PrioC));
+                    break;
             }
-            OnPropertyChanged(nameof(PrioA));
-            OnPropertyChanged(nameof(PrioB));
-            OnPropertyChanged(nameof(PrioC));
-
-            return;
         }
 
         private Task LoadErrandTypes(ErrandTypeStore errandTypeStore)
@@ -254,17 +282,29 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsEdit
             machineStore.Load();
             return Task.CompletedTask;
         }
-        private async Task LoadStoresData(MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore)
+        private async Task LoadStoresData(MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore, ErrandPartStore errandPartStore, PartsStore partsStore)
         {
             List<Task> tasks = [];
             if (!machineStore.IsLoaded) tasks.Add(LoadMachines(machineStore));
             if (!userStore.IsLoaded) tasks.Add(LoadUsers(userStore));
             if (!errandTypeStore.IsLoaded) tasks.Add(LoadErrandTypes(errandTypeStore));
+            if (!errandPartStore.IsLoaded) tasks.Add(LoadErrandParts(errandPartStore));
+            if (!partsStore.IsLoaded) tasks.Add(LoadParts(partsStore));
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
         private Task LoadUsers(UserStore userStore)
         {
             userStore.Load();
+            return Task.CompletedTask;
+        }
+        private Task LoadErrandParts(ErrandPartStore store)
+        {
+            store.Load();
+            return Task.CompletedTask;
+        }
+        private Task LoadParts(PartsStore store)
+        {
+            store.Load();
             return Task.CompletedTask;
         }
         private void RefreshLists()

@@ -4,7 +4,7 @@ using Shopfloor.Models.UserModel;
 
 namespace Shopfloor.Features.Admin.Users.Stores
 {
-    public class SelectedUserStore
+    internal sealed class SelectedUserStore
     {
         public User? SelectedUser { get; set; }
     }
