@@ -12,8 +12,8 @@ namespace Shopfloor.Models.ErrandModel
     internal sealed class ErrandProvider : IProvider<Errand>
     {
         private readonly DatabaseConnectionFactory _database;
-        private const string dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-        private const string dateFormat = "yyyy-MM-dd";
+        private const string _dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+        private const string _dateFormat = "yyyy-MM-dd";
         #region SQLCommands
         private const string _createSQL = @"
             INSERT INTO errands (
@@ -69,7 +69,7 @@ namespace Shopfloor.Models.ErrandModel
             ";
         private const string _updateSQL = @"
             UPDATE errands
-            SET               
+            SET
                 owner_id = @OwnerId,
                 priority = @Priority,
                 machine_id = @MachineId,
@@ -92,11 +92,10 @@ namespace Shopfloor.Models.ErrandModel
         #region CRUD
         public async Task<int> Create(Errand item)
         {
-
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                CeatedDate = item.CreatedDate.ToString(dateTimeFormat),
+                CeatedDate = item.CreatedDate.ToString(_dateTimeFormat),
                 CreatedById = item.CreatedById,
                 OwnerId = item.OwnerId,
                 Priority = item.Priority,
@@ -104,7 +103,7 @@ namespace Shopfloor.Models.ErrandModel
                 ErrandTypeId = item.ErrandTypeId,
                 Description = item.Description,
                 SapNumber = item.SapNumber,
-                ExpectedDate = item.ExpectedDate?.ToString(dateFormat)
+                ExpectedDate = item.ExpectedDate?.ToString(_dateFormat)
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
@@ -139,7 +138,7 @@ namespace Shopfloor.Models.ErrandModel
                 ErrandTypeId = item.ErrandTypeId,
                 Description = item.Description,
                 SapNumber = item.SapNumber,
-                ExpectedDate = item.ExpectedDate?.ToString(dateFormat)
+                ExpectedDate = item.ExpectedDate?.ToString(_dateFormat)
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }

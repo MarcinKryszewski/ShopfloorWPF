@@ -1,5 +1,4 @@
 ﻿using Shopfloor.Interfaces;
-using Shopfloor.Models.MachineModel;
 
 namespace Shopfloor.Models.MachineModel
 {

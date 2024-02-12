@@ -8,8 +8,8 @@ namespace Shopfloor.Models.ErrandModel
     internal class ErrandDTO
     {
         public int? CreatedById { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public string? Description { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string Description { get; set; } = string.Empty;
         public int? ErrandTypeId { get; set; }
         public DateTime? ExpectedDate { get; set; }
         public int? Id { get; set; }

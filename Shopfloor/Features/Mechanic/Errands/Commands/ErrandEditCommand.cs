@@ -92,7 +92,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
             IEnumerable<ErrandPart> toAdd = _currentErrand.ErrandParts.Except(forCurrentErrand);
 
             List<Task> tasks = [];
-            if (existing.Any()) tasks.Add(Edit(errandId, existing));
+            if (existing.Any()) tasks.Add(Edit(existing));
             if (toDelete.Any()) tasks.Add(Remove(errandId, toDelete));
             if (toAdd.Any()) tasks.Add(Add(errandId, toAdd));
             Task.WhenAll(tasks);
@@ -104,7 +104,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
             }
         }
 
-        private async Task Edit(int errandId, IEnumerable<ErrandPart> existingParts)
+        private async Task Edit(IEnumerable<ErrandPart> existingParts)
         {
             foreach (ErrandPart errandPart in existingParts)
             {

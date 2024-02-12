@@ -1,7 +1,7 @@
 using Shopfloor.Interfaces;
-using System;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
+using System;
 
 namespace Shopfloor.Models.PartModel
 {

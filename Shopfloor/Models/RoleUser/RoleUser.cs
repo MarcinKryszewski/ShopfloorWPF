@@ -1,6 +1,3 @@
-
-using System.Threading.Tasks;
-
 namespace Shopfloor.Models.RoleUserModel
 {
     public class RoleUser

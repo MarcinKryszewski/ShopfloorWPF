@@ -1,11 +1,10 @@
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using Shopfloor.Features.Mechanic.Errands.ErrandPartsList;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.Commands;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Shopfloor.Features.Mechanic.Errands.Commands
 {
@@ -28,11 +27,9 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
             if (selectedPart is null) return;
             if (selectedPart.Id is null) return;
 
-            //_currentErrand.SelectedErrand?.Id
-
             if (errandParts.FirstOrDefault((p) => p.PartId == selectedPart.Id) == null)
             {
-                ErrandPart errandPart = new(_errandStore.SelectedErrand?.Id ?? 0, (int)selectedPart.Id)
+                ErrandPart errandPart = new(0, (int)selectedPart.Id)
                 {
                     Part = selectedPart
                 };

@@ -1,6 +1,5 @@
 using Shopfloor.Interfaces;
 using Shopfloor.Models.MachinePartModel;
-using Shopfloor.Models.PartTypeModel;
 using System;
 using System.Collections.Generic;
 
