@@ -107,8 +107,9 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             IsEdit = false;
             SelectedSupplier = null;
         }
-        public void ClearErrors(string propertyName)
+        public void ClearErrors(string? propertyName)
         {
+            if (propertyName is null) return;
             _propertyErrors.Remove(propertyName);
         }
         public IEnumerable GetErrors(string? propertyName)

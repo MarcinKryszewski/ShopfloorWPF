@@ -189,8 +189,9 @@ namespace Shopfloor.Features.Admin.Parts.Add
             }
             return true;
         }*/
-        public void ClearErrors(string propertyName)
+        public void ClearErrors(string? propertyName)
         {
+            if (propertyName is null) return;
             _propertyErrors.Remove(propertyName);
         }
         public IEnumerable GetErrors(string? propertyName)

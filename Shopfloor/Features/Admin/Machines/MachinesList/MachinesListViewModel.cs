@@ -280,8 +280,9 @@ namespace Shopfloor.Features.Admin.Machines.List
             value?.Add(errorMassage);
             OnErrorsChanged(propertyName);
         }
-        public void ClearErrors(string propertyName)
+        public void ClearErrors(string? propertyName)
         {
+            if (propertyName is null) return;
             if (_propertyErrors.Remove(propertyName))
             {
                 OnErrorsChanged(propertyName);

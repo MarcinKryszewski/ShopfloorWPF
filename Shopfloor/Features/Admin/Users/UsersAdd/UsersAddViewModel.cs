@@ -88,8 +88,9 @@ namespace Shopfloor.Features.Admin.Users.Add
             Surname = string.Empty;
             UpdateRoles();
         }
-        public void ClearErrors(string propertyName)
+        public void ClearErrors(string? propertyName)
         {
+            if (propertyName is null) return;
             _propertyErrors.Remove(propertyName);
         }
         public IEnumerable GetErrors(string? propertyName)

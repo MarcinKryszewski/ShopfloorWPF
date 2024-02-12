@@ -73,8 +73,9 @@ namespace Shopfloor.Features.Login
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
             OnPropertyChanged(nameof(IsDataValidate));
         }
-        public void ClearErrors(string propertyName)
+        public void ClearErrors(string? propertyName)
         {
+            if (propertyName is null) return;
             if (_propertyErrors.Remove(propertyName))
             {
                 OnErrorsChanged(propertyName);

@@ -272,8 +272,9 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsNew
         {
             ErrandDTO = new();
         }
-        public void ClearErrors(string propertyName)
+        public void ClearErrors(string? propertyName)
         {
+            if (propertyName is null) return;
             if (_propertyErrors.Remove(propertyName))
             {
                 OnErrorsChanged(propertyName);
