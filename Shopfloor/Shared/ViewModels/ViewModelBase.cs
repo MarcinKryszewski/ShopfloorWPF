@@ -2,7 +2,7 @@
 
 namespace Shopfloor.Shared.ViewModels
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    internal class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 

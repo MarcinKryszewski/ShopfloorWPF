@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.PartTypeModel
 {
-    public class PartTypesStore : IDataStore<PartType>
+    internal sealed class PartTypesStore : IDataStore<PartType>
     {
         private IEnumerable<PartType> _data = Enumerable.Empty<PartType>();
         private readonly IServiceProvider _databaseServices;

@@ -20,7 +20,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Parts.Edit
 {
-    public class PartsEditViewModel : ViewModelBase, IInputForm<Part>
+    internal sealed class PartsEditViewModel : ViewModelBase, IInputForm<Part>
     {
         private readonly IServiceProvider _databaseServices;
         private readonly IServiceProvider _mainServices;

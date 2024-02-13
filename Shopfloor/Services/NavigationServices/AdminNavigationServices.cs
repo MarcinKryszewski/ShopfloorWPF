@@ -11,7 +11,7 @@ using System;
 
 namespace Shopfloor.Services.NavigationServices
 {
-    public class AdminNavigationServices
+    internal sealed class AdminNavigationServices
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {

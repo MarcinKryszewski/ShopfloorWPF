@@ -7,7 +7,7 @@ using System;
 
 namespace Shopfloor.Features.Admin.Machines.Services
 {
-    public class MachinesNavigationService
+    internal sealed class MachinesNavigationService
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {

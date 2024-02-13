@@ -56,7 +56,6 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
             UpdateParts(errandId);
 
             _viewModel.ReloadData();
-            _viewModel.CleanForm();
         }
 
         private bool HasErrors(int errandId)

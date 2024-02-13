@@ -9,7 +9,7 @@ using System;
 
 namespace Shopfloor.Services.NavigationServices
 {
-    public class MechanicNavigationServices
+    internal sealed class MechanicNavigationServices
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {

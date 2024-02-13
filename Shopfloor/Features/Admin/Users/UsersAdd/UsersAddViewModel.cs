@@ -18,7 +18,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Users.Add
 {
-    public class UsersAddViewModel : ViewModelBase, IInputForm<User>
+    internal sealed class UsersAddViewModel : ViewModelBase, IInputForm<User>
     {
         private readonly IServiceProvider _database;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];

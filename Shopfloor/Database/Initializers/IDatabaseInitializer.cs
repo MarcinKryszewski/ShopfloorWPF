@@ -1,6 +1,6 @@
 ﻿namespace Shopfloor.Database.Initializers
 {
-    public interface IDatabaseInitializer
+    internal interface IDatabaseInitializer
     {
         void Initialize();
     }

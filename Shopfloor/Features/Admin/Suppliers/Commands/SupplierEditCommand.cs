@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Features.Admin.Suppliers.Commands
 {
-    public class SupplierEditCommand : CommandBase
+    internal sealed class SupplierEditCommand : CommandBase
     {
         private readonly SuppliersListViewModel _viewModel;
         private readonly SupplierProvider _provider;

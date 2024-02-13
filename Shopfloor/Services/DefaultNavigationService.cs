@@ -5,7 +5,7 @@ using System;
 
 namespace PrzegladyRemonty.Services
 {
-    public class DefaultNavigationService<TViewModel> : INavigationService<TViewModel> where TViewModel : ViewModelBase
+    internal sealed class DefaultNavigationService<TViewModel> : INavigationService<TViewModel> where TViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         private readonly Func<TViewModel> _createViewModel;

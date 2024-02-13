@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.SupplierModel
 {
-    public class SuppliersStore : IDataStore<Supplier>
+    internal sealed class SuppliersStore : IDataStore<Supplier>
     {
         private IEnumerable<Supplier> _data = Enumerable.Empty<Supplier>();
         private readonly IServiceProvider _databaseServices;

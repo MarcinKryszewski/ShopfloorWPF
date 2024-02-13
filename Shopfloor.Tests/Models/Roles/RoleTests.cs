@@ -5,7 +5,7 @@ namespace Shopfloor.Tests.Models.Roles
 {
     public sealed class RoleTests
     {
-        internal sealed class TestDataWithoutId : TheoryData<Role>
+        public sealed class TestDataWithoutId : TheoryData<Role>
         {
             public TestDataWithoutId()
             {
@@ -14,7 +14,7 @@ namespace Shopfloor.Tests.Models.Roles
                 Add(new Role("; Drop Database", -1));
             }
         }
-        internal sealed class TestDataWithId : TheoryData<Role>
+        public sealed class TestDataWithId : TheoryData<Role>
         {
             public TestDataWithId()
             {

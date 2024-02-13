@@ -1,6 +1,6 @@
 ﻿namespace Shopfloor.Shared.Services
 {
-    //public class CompositeNavigationService : INavigationService
+    //internal sealed class CompositeNavigationService : INavigationService
     //{
     //    private readonly IEnumerable<INavigationService> _navigationServices;
 

@@ -16,7 +16,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Suppliers.List
 {
-    public class SuppliersListViewModel : ViewModelBase, IInputForm<Supplier>
+    internal sealed class SuppliersListViewModel : ViewModelBase, IInputForm<Supplier>
     {
         private readonly IServiceProvider _databaseServices;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];

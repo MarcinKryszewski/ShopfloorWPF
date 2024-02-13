@@ -5,7 +5,7 @@ using System.Windows.Media;
 
 namespace Shopfloor.Controls.PlaceholderTextBox
 {
-    public class PlaceholderTextBoxControl : TextBox
+    internal sealed class PlaceholderTextBoxControl : TextBox
     {
         public static readonly DependencyProperty PlaceholderProperty =
             DependencyProperty.Register("Placeholder", typeof(string), typeof(PlaceholderTextBoxControl), new PropertyMetadata(string.Empty));

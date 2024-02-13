@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.MachinePartModel
 {
-    public class MachinePartProvider : IProvider<MachinePart>
+    internal sealed class MachinePartProvider : IProvider<MachinePart>
     {
         private readonly DatabaseConnectionFactory _database;
         public MachinePartProvider(DatabaseConnectionFactory database)

@@ -15,7 +15,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Login
 {
-    public class LoginViewModel : ViewModelBase, IInputForm<User>
+    internal sealed class LoginViewModel : ViewModelBase, IInputForm<User>
     {
         private string _username = string.Empty;
         private readonly CurrentUserStore _userStore;

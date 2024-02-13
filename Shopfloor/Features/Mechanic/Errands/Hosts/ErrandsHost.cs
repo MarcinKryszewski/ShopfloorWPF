@@ -8,7 +8,7 @@ using System;
 
 namespace Shopfloor.Features.Mechanic.Errands.Hosts
 {
-    public class ErrandsHost
+    internal sealed class ErrandsHost
     {
         public static IHost GetHost(IServiceProvider databaseServices, IServiceProvider userServices)
         {

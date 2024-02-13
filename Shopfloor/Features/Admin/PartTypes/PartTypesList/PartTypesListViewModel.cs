@@ -17,7 +17,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.PartTypes.List
 {
-    public class PartTypesListViewModel : ViewModelBase, IInputForm<PartType>
+    internal sealed class PartTypesListViewModel : ViewModelBase, IInputForm<PartType>
     {
         private readonly IServiceProvider _databaseServices;
         private readonly ObservableCollection<PartType> _partTypes = [];

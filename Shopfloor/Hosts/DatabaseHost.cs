@@ -17,7 +17,7 @@ using System;
 
 namespace Shopfloor.Hosts.DatabaseHost
 {
-    public class DatabaseHost
+    internal sealed class DatabaseHost
     {
         public static IHost GetHost(IServiceProvider configurationServices)
         {

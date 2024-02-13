@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace Shopfloor.Controls.PlaceholderTextBox.Converters
 {
-    public class AddLeftPaddingConverter : IValueConverter
+    internal sealed class AddLeftPaddingConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

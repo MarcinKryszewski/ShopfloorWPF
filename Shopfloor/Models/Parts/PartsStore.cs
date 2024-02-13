@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.PartModel
 {
-    public class PartsStore : IDataStore<Part>
+    internal sealed class PartsStore : IDataStore<Part>
     {
         private IEnumerable<Part> _data = [];
         private readonly IServiceProvider _databaseServices;

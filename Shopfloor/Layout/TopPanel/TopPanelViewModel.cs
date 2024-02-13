@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Layout.TopPanel
 {
-    public class TopPanelViewModel : ViewModelBase
+    internal sealed class TopPanelViewModel : ViewModelBase
     {
         private readonly CurrentUserStore _userStore;
         private User? User => _userStore.User;

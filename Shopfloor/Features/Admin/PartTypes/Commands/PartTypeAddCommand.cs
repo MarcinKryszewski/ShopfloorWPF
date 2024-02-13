@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Features.Admin.PartTypes.Commands
 {
-    public class PartTypeAddCommand : CommandBase
+    internal sealed class PartTypeAddCommand : CommandBase
     {
         private readonly PartTypesListViewModel _viewModel;
         private readonly PartTypeProvider _provider;

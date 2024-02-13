@@ -1,6 +1,6 @@
 ﻿namespace Shopfloor.Shared.Services
 {
-    //public class CloseModalNavigationService : INavigationService
+    //internal sealed class CloseModalNavigationService : INavigationService
     //{
     //    private readonly ModalNavigationStore _navigationStore;
 

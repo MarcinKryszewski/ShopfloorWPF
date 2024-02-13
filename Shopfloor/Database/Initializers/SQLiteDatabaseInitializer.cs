@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Shopfloor.Database.Initializers
 {
-    public class SQLiteDatabaseInitializer : IDatabaseInitializer
+    internal sealed class SQLiteDatabaseInitializer : IDatabaseInitializer
     {
         private readonly IDbConnection _connection;
         private readonly string _databasePath;

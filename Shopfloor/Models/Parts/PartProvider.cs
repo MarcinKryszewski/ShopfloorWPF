@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.PartModel
 {
-    public class PartProvider : IProvider<Part>
+    internal sealed class PartProvider : IProvider<Part>
     {
         private readonly DatabaseConnectionFactory _database;
 

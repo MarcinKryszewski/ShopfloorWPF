@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Shopfloor.Features.Admin.Users.Stores
 {
-    public class RolesStore
+    internal sealed class RolesStore
     {
         private readonly ObservableCollection<RoleValue> _roles;
 

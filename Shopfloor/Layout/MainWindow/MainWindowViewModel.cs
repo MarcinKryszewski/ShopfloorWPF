@@ -5,7 +5,7 @@ using System;
 
 namespace Shopfloor.Layout.MainWindow
 {
-    public class MainWindowViewModel
+    internal sealed class MainWindowViewModel
     {
         private readonly SidePanelViewModel _sidePanelViewModel;
         private readonly ContentViewModel _contentViewModel;

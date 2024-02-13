@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.PartTypeModel
 {
-    public class PartTypeProvider : IProvider<PartType>
+    internal sealed class PartTypeProvider : IProvider<PartType>
     {
         private readonly DatabaseConnectionFactory _database;
 
@@ -108,7 +108,7 @@ namespace Shopfloor.Models.PartTypeModel
 
         private static PartType ToPartType(PartTypeDTO item)
         {
-            return new PartType(item.Id, item.Part_Type_Name);
+            return new PartType((int)item.Id!, item.Part_Type_Name);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Shopfloor.Hosts.ConfigurationHost
 {
-    public class ConfigurationHost
+    internal sealed class ConfigurationHost
     {
         private readonly string _databaseType;
         private readonly string _databasePath;

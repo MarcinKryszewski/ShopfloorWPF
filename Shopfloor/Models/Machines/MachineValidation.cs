@@ -2,7 +2,7 @@
 
 namespace Shopfloor.Models.MachineModel
 {
-    public class MachineValidation
+    internal sealed class MachineValidation
     {
         private readonly IInputForm<Machine> _inputForm;
         public MachineValidation(IInputForm<Machine> inputForm)

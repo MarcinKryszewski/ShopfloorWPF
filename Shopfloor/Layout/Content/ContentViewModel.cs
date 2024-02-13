@@ -6,7 +6,7 @@ using System;
 
 namespace Shopfloor.Layout.Content
 {
-    public class ContentViewModel : ViewModelBase
+    internal sealed class ContentViewModel : ViewModelBase
     {
         private readonly TopPanelViewModel _topPanelViewModel;
         private readonly NavigationStore _navigationStore;

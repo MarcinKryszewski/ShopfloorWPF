@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Shopfloor.Models.MachinePartModel
 {
-    public class MachinePartServices
+    internal sealed class MachinePartServices
     {
         public static void GetServices(IServiceCollection services)
         {

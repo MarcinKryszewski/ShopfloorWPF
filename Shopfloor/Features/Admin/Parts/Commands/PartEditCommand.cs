@@ -6,7 +6,7 @@ using System;
 
 namespace Shopfloor.Features.Admin.Parts.Commands
 {
-    public class PartEditCommand : CommandBase
+    internal sealed class PartEditCommand : CommandBase
     {
         private readonly PartsEditViewModel _viewModel;
         private readonly IServiceProvider _databaseServices;

@@ -8,7 +8,7 @@ using System;
 
 namespace Shopfloor.Hosts
 {
-    public class UserHost
+    internal sealed class UserHost
     {
         public static IHost GetHost(IServiceProvider databaseServices)
         {

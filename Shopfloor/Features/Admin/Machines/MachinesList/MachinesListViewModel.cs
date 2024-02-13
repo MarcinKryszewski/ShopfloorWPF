@@ -16,7 +16,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Machines.List
 {
-    public sealed partial class MachinesListViewModel
+    internal sealed partial class MachinesListViewModel
     {
         private readonly IServiceProvider _databaseServices;
         //treeview needs separate collection, which has only root nodes in it
@@ -241,10 +241,10 @@ namespace Shopfloor.Features.Admin.Machines.List
             MachinesList.Refresh();
         }
     }
-    public sealed partial class MachinesListViewModel : ViewModelBase
+    internal sealed partial class MachinesListViewModel : ViewModelBase
     {
     }
-    public sealed partial class MachinesListViewModel
+    internal sealed partial class MachinesListViewModel
     {
         public void CleanForm()
         {
@@ -267,7 +267,7 @@ namespace Shopfloor.Features.Admin.Machines.List
             _databaseServices.GetRequiredService<MachineStore>().Load();
         }
     }
-    public sealed partial class MachinesListViewModel : IInputForm<Machine>
+    internal sealed partial class MachinesListViewModel : IInputForm<Machine>
     {
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         public void AddError(string propertyName, string errorMassage)

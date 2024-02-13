@@ -1,6 +1,6 @@
 namespace Shopfloor.Models.MachinePartModel
 {
-    public class MachinePartDTO
+    internal sealed class MachinePartDTO
     {
         public int? MachineId { get; set; }
         public int? PartId { get; set; }

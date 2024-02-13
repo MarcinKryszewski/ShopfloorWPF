@@ -1,6 +1,6 @@
 namespace Shopfloor.Models.SupplierModel
 {
-    public class SupplierDTO
+    internal sealed class SupplierDTO
     {
         public int? Id { get; set; }
         public string Name { get; set; } = string.Empty;

@@ -2,7 +2,7 @@
 
 namespace Shopfloor.Shared.Services
 {
-    public interface INavigationService<TViewModel> where TViewModel : ViewModelBase
+    internal interface INavigationService<TViewModel> where TViewModel : ViewModelBase
     {
         void Navigate();
     }

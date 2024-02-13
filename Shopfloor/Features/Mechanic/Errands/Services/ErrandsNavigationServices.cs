@@ -10,7 +10,7 @@ using System;
 
 namespace Shopfloor.Features.Mechanic.Errands.Services
 {
-    public class ErrandsNavigationServices
+    internal sealed class ErrandsNavigationServices
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {

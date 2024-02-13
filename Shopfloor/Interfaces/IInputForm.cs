@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace Shopfloor.Interfaces
 {
-    public interface IInputForm<T> : INotifyDataErrorInfo
+    internal interface IInputForm<T> : INotifyDataErrorInfo
     {
         public void CleanForm();
 

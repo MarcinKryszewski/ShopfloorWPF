@@ -158,7 +158,7 @@ namespace Shopfloor.Database.SQLite
             CREATE TABLE errands_parts (
                 part_id INTEGER,
                 errand_id INTEGER,
-                amount INTEGER,
+                amount REAL,
                 status TEXT,
                 FOREIGN KEY(errand_id) REFERENCES errands(id),
                 FOREIGN KEY(part_id) REFERENCES parts(id)

@@ -3,7 +3,7 @@ using Shopfloor.Models.PartModel;
 
 namespace Shopfloor.Models.MachinePartModel
 {
-    public class MachinePart
+    internal sealed class MachinePart
     {
         private readonly Part? _part;
         private readonly Machine? _machine;

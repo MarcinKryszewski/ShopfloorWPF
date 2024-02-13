@@ -10,7 +10,7 @@ using System;
 
 namespace Shopfloor.Hosts.MainHost
 {
-    public class MainHost
+    internal sealed class MainHost
     {
         public static IHost GetHost(IServiceProvider databaseServices, IServiceProvider userServices)
         {

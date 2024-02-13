@@ -3,7 +3,7 @@ using Shopfloor.Shared.Commands;
 
 namespace Shopfloor.Features.Admin.Machines.Commands
 {
-    public class CleanFormCommand : CommandBase
+    internal sealed class CleanFormCommand : CommandBase
     {
         private readonly MachinesListViewModel _viewModel;
 

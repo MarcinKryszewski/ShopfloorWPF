@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Shopfloor.Services.NavigationServices
 {
-    public class ManagerNavigationServices
+    internal sealed class ManagerNavigationServices
     {
         public static void Get(IServiceCollection services)
         {

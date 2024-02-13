@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Interfaces
 {
-    public interface IProvider<T>
+    internal interface IProvider<T>
     {
         Task<T> GetById(int id);
 

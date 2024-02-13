@@ -3,7 +3,7 @@ using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Shared.Services
 {
-    public class ParameterNavigationService<TParameter, TViewModel>
+    internal sealed class ParameterNavigationService<TParameter, TViewModel>
         where TViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;

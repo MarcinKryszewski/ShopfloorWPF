@@ -6,7 +6,7 @@ using System;
 
 namespace Shopfloor.Features.Admin.Suppliers.Hosts
 {
-    public class SuppliersHost
+    internal sealed class SuppliersHost
     {
         public static IHost GetHost(IServiceProvider databaseServices)
         {

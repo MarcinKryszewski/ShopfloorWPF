@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Shopfloor.Features.Admin.Machines.Commands
 {
-    public class MachineSetCurrentCommand : CommandBase
+    internal sealed class MachineSetCurrentCommand : CommandBase
     {
         private readonly MachinesListViewModel _viewModel;
 

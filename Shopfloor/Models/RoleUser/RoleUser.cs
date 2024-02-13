@@ -1,6 +1,6 @@
 namespace Shopfloor.Models.RoleUserModel
 {
-    public class RoleUser
+    internal sealed class RoleUser
     {
         public int? RoleId { get; }
         public int? UserId { get; }

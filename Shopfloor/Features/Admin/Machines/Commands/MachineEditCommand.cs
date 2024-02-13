@@ -4,7 +4,7 @@ using Shopfloor.Shared.Commands;
 
 namespace Shopfloor.Features.Admin.Machines.Commands
 {
-    public class MachineEditCommand : CommandBase
+    internal sealed class MachineEditCommand : CommandBase
     {
         private readonly MachinesListViewModel _viewModel;
         private readonly MachineProvider _provider;

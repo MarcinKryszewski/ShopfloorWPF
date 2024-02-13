@@ -9,7 +9,7 @@ using System;
 
 namespace Shopfloor.Features.Admin.Machines
 {
-    public class MachinesMainViewModel : ViewModelBase
+    internal sealed class MachinesMainViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         private readonly IHost _machinesServices;

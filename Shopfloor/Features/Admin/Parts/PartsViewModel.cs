@@ -9,7 +9,7 @@ using System;
 
 namespace Shopfloor.Features.Admin.Parts
 {
-    public class PartsMainViewModel : ViewModelBase
+    internal sealed class PartsMainViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         private readonly IHost _partsServices;

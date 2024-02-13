@@ -1,6 +1,6 @@
 namespace Shopfloor.Database.Configuration
 {
-    public class DatabaseConfiguration
+    internal sealed class DatabaseConfiguration
     {
         public string? Type { get; set; }
         public string? ConnectionString { get; set; }

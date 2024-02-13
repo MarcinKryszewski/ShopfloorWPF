@@ -274,7 +274,7 @@
                                     Margin="0,0,5,0"
                                     VerticalAlignment="Center"
                                     Style="{StaticResource InputTextBox}"
-                                    Text="{Binding Path=Amount, UpdateSourceTrigger=PropertyChanged, Delay=1000, PresentationTraceSources.TraceLevel=None}"
+                                    Text="{Binding Path=Amount, UpdateSourceTrigger=PropertyChanged, Delay=300, PresentationTraceSources.TraceLevel=None}"
                                     TextAlignment="Center" />
                                 <TextBlock
                                     Height="25"

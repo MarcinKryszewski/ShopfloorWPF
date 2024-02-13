@@ -4,7 +4,7 @@ using Shopfloor.Shared.Commands;
 
 namespace Shopfloor.Features.Admin.Parts.Commands
 {
-    public class PartCleanFormCommand : CommandBase
+    internal sealed class PartCleanFormCommand : CommandBase
     {
         private IInputForm<Part> _viewModel;
 

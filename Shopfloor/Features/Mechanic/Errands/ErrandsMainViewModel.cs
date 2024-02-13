@@ -9,7 +9,7 @@ using System;
 
 namespace Shopfloor.Features.Mechanic.Errands
 {
-    public class ErrandsMainViewModel : ViewModelBase
+    internal sealed class ErrandsMainViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         private readonly IHost _errandsServices;

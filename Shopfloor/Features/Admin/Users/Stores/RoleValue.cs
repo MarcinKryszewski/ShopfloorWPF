@@ -4,7 +4,7 @@ using Shopfloor.Models.RoleModel;
 
 namespace Shopfloor.Features.Admin.Users.Stores
 {
-    public class RoleValue
+    internal sealed class RoleValue
     {
         private readonly Role _role;
         private bool _value;

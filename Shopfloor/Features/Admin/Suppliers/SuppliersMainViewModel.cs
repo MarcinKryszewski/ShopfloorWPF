@@ -9,7 +9,7 @@ using System;
 
 namespace Shopfloor.Features.Admin.Suppliers
 {
-    public class SuppliersMainViewModel : ViewModelBase
+    internal sealed class SuppliersMainViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         private readonly IHost _suppliersServices;

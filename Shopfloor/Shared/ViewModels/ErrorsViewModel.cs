@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Shopfloor.Shared.ViewModels
 {
-    public class ErrorsViewModel : ViewModelBase, INotifyDataErrorInfo
+    internal sealed class ErrorsViewModel : ViewModelBase, INotifyDataErrorInfo
     {
         private readonly Dictionary<string, List<string>> _propertyErrors = new();
 

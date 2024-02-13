@@ -25,7 +25,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Layout.SidePanel
 {
-    public class SidePanelViewModel : ViewModelBase
+    internal sealed class SidePanelViewModel : ViewModelBase
     {
         private readonly CurrentUserStore _userStore;
         private User? User => _userStore.User;

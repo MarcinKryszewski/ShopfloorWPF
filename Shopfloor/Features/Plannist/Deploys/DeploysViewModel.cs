@@ -3,7 +3,7 @@ using System;
 
 namespace Shopfloor.Features.Plannist.Deploys
 {
-    public class DeploysViewModel : ViewModelBase
+    internal sealed class DeploysViewModel : ViewModelBase
     {
         public DeploysViewModel(IServiceProvider mainServices)
         {

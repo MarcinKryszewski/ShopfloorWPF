@@ -5,7 +5,7 @@ using System.Data;
 
 namespace Shopfloor.Database.Initializers
 {
-    public class DatabaseInitializerFactory
+    internal sealed class DatabaseInitializerFactory
     {
         private readonly IDbConnection _connection;
         private readonly DatabaseConfiguration _configuration;

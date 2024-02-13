@@ -19,7 +19,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Parts.Add
 {
-    public class PartsAddViewModel : ViewModelBase, IInputForm<Part>
+    internal sealed class PartsAddViewModel : ViewModelBase, IInputForm<Part>
     {
         private readonly IServiceProvider _databaseServices;
         private readonly IServiceProvider _mainServices;

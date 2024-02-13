@@ -3,7 +3,7 @@ using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Shared.Commands
 {
-    public class NavigateCommand<TViewModel> : CommandBase
+    internal sealed class NavigateCommand<TViewModel> : CommandBase
         where TViewModel : ViewModelBase
     {
         private readonly INavigationService<TViewModel> _navigationService;

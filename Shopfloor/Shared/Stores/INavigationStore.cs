@@ -2,7 +2,7 @@
 
 namespace Shopfloor.Shared.Stores
 {
-    public interface INavigationStore
+    internal interface INavigationStore
     {
         ViewModelBase CurrentViewModel
         {

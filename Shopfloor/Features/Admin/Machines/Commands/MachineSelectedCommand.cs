@@ -2,7 +2,7 @@ using Shopfloor.Shared.Commands;
 
 namespace Shopfloor.Features.Admin.Machines.Commands
 {
-    public class MachineSelectedCommand : CommandBase
+    internal sealed class MachineSelectedCommand : CommandBase
     {
         public override void Execute(object? parameter)
         {

@@ -6,7 +6,7 @@ using System.Data.Common;
 
 namespace Shopfloor.Database
 {
-    public class DatabaseConnectionFactory : IDisposable
+    internal sealed class DatabaseConnectionFactory : IDisposable
     {
         #region Fields
 

@@ -2,7 +2,7 @@
 
 namespace Shopfloor.Shared.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    internal sealed class MainViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;

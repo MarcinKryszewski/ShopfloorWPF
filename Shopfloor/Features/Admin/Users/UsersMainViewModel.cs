@@ -9,7 +9,7 @@ using System;
 
 namespace Shopfloor.Features.Admin.Users
 {
-    public class UsersMainViewModel : ViewModelBase
+    internal sealed class UsersMainViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         private readonly IHost _usersServices;

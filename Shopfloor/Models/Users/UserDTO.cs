@@ -1,6 +1,6 @@
 namespace Shopfloor.Models.UserModel
 {
-    public class UserDTO
+    internal sealed class UserDTO
     {
         public int Id { get; set; }
         public string Username { get; set; } = string.Empty;

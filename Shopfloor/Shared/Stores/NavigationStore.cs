@@ -3,7 +3,7 @@ using System;
 
 namespace Shopfloor.Shared.Stores
 {
-    public class NavigationStore : INavigationStore
+    internal sealed class NavigationStore : INavigationStore
     {
         private ViewModelBase? _currentViewModel;
 

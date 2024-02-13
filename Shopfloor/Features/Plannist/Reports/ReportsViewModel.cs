@@ -2,7 +2,7 @@ using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Plannist.Reports
 {
-    public class ReportsViewModel : ViewModelBase
+    internal sealed class ReportsViewModel : ViewModelBase
     {
     }
 }
