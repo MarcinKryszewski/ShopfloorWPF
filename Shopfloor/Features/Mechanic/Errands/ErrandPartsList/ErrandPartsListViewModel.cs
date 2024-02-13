@@ -118,7 +118,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
         {
             foreach (ErrandPart errandPart in errandPartStore.Data)
             {
-                if (errandPart.Status == ErrandPart.PartStatuses[6]) continue;
+                if (errandPart.LastStatusValue == 6) continue;
                 if (errandPart.ErrandId == _errandStore.SelectedErrand?.Id)
                 {
                     errandPart.Part = partsStore.Data.First(p => p.Id == errandPart.PartId);

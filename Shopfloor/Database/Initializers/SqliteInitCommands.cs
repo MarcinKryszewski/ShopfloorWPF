@@ -159,9 +159,20 @@ namespace Shopfloor.Database.SQLite
                 part_id INTEGER,
                 errand_id INTEGER,
                 amount REAL,
-                status TEXT,
                 FOREIGN KEY(errand_id) REFERENCES errands(id),
                 FOREIGN KEY(part_id) REFERENCES parts(id)
+            )";
+        private const string _errand_part_statuses_SQLCommand = @"
+            CREATE TABLE errand_statuses (
+                id INTEGER,
+                errand_part_id INTEGER,
+                errand_status_name TEXT,
+                create_date TEXT,
+                created_by INTEGER,
+                comment TEXT,
+                reason TEXT,
+                PRIMARY KEY(id),
+                FOREIGN KEY(errand_part_id) REFERENCES errands_parts(id)
             )";
         public SqliteInitCommands()
         {
@@ -180,6 +191,7 @@ namespace Shopfloor.Database.SQLite
                 _errands_SQLCommand,
                 _errand_statuses_SQLCommand,
                 _errands_parts_SQLCommand,
+                _errand_part_statuses_SQLCommand,
 
                 _init_admin_SQLCommand,
                 _init_roles_SQLCommand,

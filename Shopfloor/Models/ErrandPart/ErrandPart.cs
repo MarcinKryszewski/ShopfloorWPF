@@ -1,9 +1,12 @@
 using Shopfloor.Models.ErrandModel;
+using Shopfloor.Models.ErrandPartStatusModel;
+using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Models.PartModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Shopfloor.Models.ErrandPartModel
 {
@@ -15,12 +18,11 @@ namespace Shopfloor.Models.ErrandPartModel
             _data.ErrandId = errandId;
             _data.PartId = partId;
         }
-        public ErrandPart(int errandId, int partId, double? amount, string? status = null)
+        public ErrandPart(int errandId, int partId, double? amount)
         {
             _data.ErrandId = errandId;
             _data.PartId = partId;
             _data.Amount = amount;
-            _data.Status = status ?? PartStatuses[0];
         }
         public int ErrandId => _data.ErrandId;
         public int PartId => _data.PartId;
@@ -33,7 +35,6 @@ namespace Shopfloor.Models.ErrandPartModel
                 if (value.Id == PartId) _data.Part = value;
             }
         }
-        public string Status { get => _data.Status; set => _data.Status = value; }
         public double? Amount { get => _data.Amount; set => _data.Amount = value; }
         internal Errand? Errand
         {
@@ -44,6 +45,12 @@ namespace Shopfloor.Models.ErrandPartModel
                 if (value.Id == ErrandId) _data.Errand = value;
             }
         }
+        public List<ErrandPartStatus> StatusList = [];
+        public int LastStatusValue => StatusList.Where(status => status.StatusValue >= 0)
+                                                .OrderBy(status => status.CreatedDate)
+                                                .First()
+                                                .StatusValue;
+        public string LastStatusText => ErrandPartStatus.Status[LastStatusValue];
     }
     internal sealed partial class ErrandPart : INotifyDataErrorInfo
     {
@@ -77,19 +84,6 @@ namespace Shopfloor.Models.ErrandPartModel
                 OnErrorsChanged(propertyName);
             }
         }
-    }
-    internal sealed partial class ErrandPart
-    {
-        public static Dictionary<int, string> PartStatuses = new()
-        {
-            [0] = "ZATWIERDZANIE",
-            [1] = "OFERTOWANIE",
-            [2] = "ZAMAWIANIE",
-            [3] = "DOSTARCZANIE",
-            [4] = "POBIERANIE",
-            [5] = "ZAKOŃCZONE",
-            [6] = "ANULOWANE"
-        };
     }
     internal sealed partial class ErrandPart : IEquatable<ErrandPart>
     {

@@ -1,4 +1,5 @@
 ﻿using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.ErrandStatusModel;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,22 +36,22 @@ namespace Shopfloor.Models.ErrandModel
             if (partsAmount == 0) return "SPECYFIKOWANIE";
 
             Dictionary<string, int> partsCount = [];
-            foreach (KeyValuePair<int, string> item in ErrandPart.PartStatuses)
+            foreach (ErrandPart part in _errand.Parts)
             {
-                partsCount.Add(item.Value, 0);
+                partsCount.Add(part.LastStatusText, 0);
             }
 
             foreach (ErrandPart errandPart in _errand.Parts)
             {
-                partsCount[errandPart.Status]++;
+                partsCount[errandPart.LastStatusText]++;
             }
 
-            if (partsAmount == partsCount[ErrandPart.PartStatuses[5]]) return ErrandPart.PartStatuses[5];
-            if (partsCount[ErrandPart.PartStatuses[0]] > 0) return ErrandPart.PartStatuses[0];
-            if (partsCount[ErrandPart.PartStatuses[1]] > 0) return ErrandPart.PartStatuses[1];
-            if (partsCount[ErrandPart.PartStatuses[2]] > 0) return ErrandPart.PartStatuses[2];
-            if (partsCount[ErrandPart.PartStatuses[3]] > 0) return ErrandPart.PartStatuses[3];
-            if (partsCount[ErrandPart.PartStatuses[4]] > 0) return ErrandPart.PartStatuses[4];
+            if (partsAmount == partsCount[ErrandPartStatus.Status[5]]) return ErrandPartStatus.Status[5];
+            if (partsCount[ErrandPartStatus.Status[0]] > 0) return ErrandPartStatus.Status[0];
+            if (partsCount[ErrandPartStatus.Status[1]] > 0) return ErrandPartStatus.Status[1];
+            if (partsCount[ErrandPartStatus.Status[2]] > 0) return ErrandPartStatus.Status[2];
+            if (partsCount[ErrandPartStatus.Status[3]] > 0) return ErrandPartStatus.Status[3];
+            if (partsCount[ErrandPartStatus.Status[4]] > 0) return ErrandPartStatus.Status[4];
             return "ERROR";
         }
     }

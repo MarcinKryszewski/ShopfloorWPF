@@ -3,6 +3,7 @@ using Shopfloor.Features.Mechanic.Errands.ErrandsNew;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Stores;
@@ -15,57 +16,85 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         private readonly ErrandsNewViewModel _viewModel;
         private readonly IServiceProvider _databaseServices;
         private readonly ErrandProvider _errandProvider;
-        private readonly CurrentUserStore _currentUser;
+        private readonly int _currentUserId;
         private readonly SelectedErrandStore _currentErrand;
         private readonly ErrandPartProvider _errandPartProvider;
-        private readonly ErrandStatusProvider _errandStatus;
+        private readonly ErrandPartStatusProvider _errandPartStatusProvider;
+        private readonly ErrandStatusProvider _errandStatusProvider;
+        private bool _isPartAdd;
         public ErrandNewCommand(ErrandsNewViewModel errandsNewViewModel, IServiceProvider databaseServices, CurrentUserStore currentUser, SelectedErrandStore currentErrand)
         {
             _viewModel = errandsNewViewModel;
             _databaseServices = databaseServices;
+            _currentUserId = currentUser.User?.Id ?? -1;
+            _currentErrand = currentErrand;
+
             _errandProvider = _databaseServices.GetRequiredService<ErrandProvider>();
             _errandPartProvider = _databaseServices.GetRequiredService<ErrandPartProvider>();
-            _errandStatus = _databaseServices.GetRequiredService<ErrandStatusProvider>();
-            _currentUser = currentUser;
-            _currentErrand = currentErrand;
+            _errandStatusProvider = _databaseServices.GetRequiredService<ErrandStatusProvider>();
+            _errandPartStatusProvider = _databaseServices.GetRequiredService<ErrandPartStatusProvider>();
         }
         public override void Execute(object? parameter)
         {
-            bool partsOrdered = false;
-            if (!_viewModel.IsDataValidate) return;
-            if (!_viewModel.PartsList?.IsDataValidate ?? false) return;
-
+            _isPartAdd = false;
+            if (HasErrors()) return;
+            AddErrand();
+            ResetForm();
+        }
+        private void ResetForm()
+        {
+            _viewModel.ReloadData();
+            _viewModel.CleanForm();
+        }
+        private bool HasErrors()
+        {
+            if (!_viewModel.IsDataValidate) return true;
+            if (!_viewModel.PartsList?.IsDataValidate ?? false) return true;
+            if (_currentUserId == -1) return true;
+            return false;
+        }
+        private void AddParts(int errandId)
+        {
+            foreach (ErrandPart errandPart in _currentErrand.ErrandParts)
+            {
+                int errandPartId = _errandPartProvider.Create(new ErrandPart(errandId, errandPart.PartId, errandPart.Amount)).Result;
+                SetNewErrandPartStatus(errandPartId);
+                _isPartAdd = true;
+            }
+        }
+        private void AddErrand()
+        {
+            _currentErrand.ErrandId = CreateErrand();
+            SetErrandStatus((int)_currentErrand.ErrandId, ErrandStatusList.NoPartsList);
+            AddParts((int)_currentErrand.ErrandId);
+            if (_isPartAdd) SetErrandStatus((int)_currentErrand.ErrandId, ErrandStatusList.PartsListCompleted);
+        }
+        private int CreateErrand()
+        {
             ErrandDTO errandDTO = _viewModel.ErrandDTO;
 
-            Errand errand = new(DateTime.Now, _currentUser.User?.Id, errandDTO.Machine?.Id, errandDTO.ErrandType?.Id, errandDTO.Description ?? "BRAK OPISU", errandDTO.Priority)
+            Errand errand = new(DateTime.Now, _currentUserId, errandDTO.Machine?.Id, errandDTO.ErrandType?.Id, errandDTO.Description ?? "BRAK OPISU", errandDTO.Priority)
             {
                 ExpectedDate = errandDTO.ExpectedDate,
                 Responsible = errandDTO.Responsible,
                 SapNumber = errandDTO.SapNumber
             };
 
-            _currentErrand.ErrandId = _errandProvider.Create(errand).Result;
-
-            _ = _errandStatus.Create(new ErrandStatus(
-                (int)_currentErrand.ErrandId,
-                ErrandStatusList.NoPartsList,
-                DateTime.Now
-
-            ));
-
-            foreach (ErrandPart errandPart in _currentErrand.ErrandParts)
+            return _errandProvider.Create(errand).Result;
+        }
+        private void SetNewErrandPartStatus(int errandPartId)
+        {
+            ErrandPartStatus partStatus = new(errandPartId, _currentUserId, DateTime.Now);
+            partStatus.SetStatus(ErrandPartStatus.Status[0]);
+            _ = _errandPartStatusProvider.Create(partStatus);
+        }
+        private void SetErrandStatus(int errandId, string statusName)
+        {
+            if (_isPartAdd)
             {
-                _ = _errandPartProvider.Create(new ErrandPart((int)_currentErrand.ErrandId, errandPart.PartId, errandPart.Amount));
-                partsOrdered = true;
+                ErrandStatus errandStatus = new(errandId, statusName, DateTime.Now);
+                _ = _errandStatusProvider.Create(errandStatus);
             }
-            if (partsOrdered)
-            {
-                ErrandStatus errandStatus = new((int)_currentErrand.ErrandId, ErrandStatusList.PartsListCompleted, DateTime.Now);
-                _ = _errandStatus.Create(errandStatus);
-            }
-
-            _viewModel.ReloadData();
-            _viewModel.CleanForm();
         }
     }
 }
