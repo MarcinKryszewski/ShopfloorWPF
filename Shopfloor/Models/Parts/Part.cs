@@ -13,17 +13,17 @@ namespace Shopfloor.Models.PartModel
         private Supplier? _supplier;
         private readonly PartDTO _data = new();
         public int? Id => _data.Id;
-        public string NamePl => _data.Name_Pl;
-        public string NameOriginal => _data.Name_Original;
-        public int? TypeId => _data.Type_Id;
+        public string NamePl => _data.NamePl;
+        public string NameOriginal => _data.NameOriginal;
+        public int? TypeId => _data.TypeId;
         public PartType? Type => _type;
         public string TypeName => _type?.Name ?? string.Empty;
-        public int? Index => _data.Indeks;
+        public int? Index => _data.Index;
         public string Number => _data.Number;
         public string Details => _data.Details;
-        public int? ProducerId => _data.Producer_Id;
+        public int? ProducerId => _data.ProducerId;
         public Supplier? Producer => _producer;
-        public int? SupplierId => _data.Supplier_Id;
+        public int? SupplierId => _data.SupplierId;
         public Supplier? Supplier => _supplier;
         public string Unit => _data.Unit;
         public string RequiredInputValue => SetInputValue();
@@ -38,14 +38,14 @@ namespace Shopfloor.Models.PartModel
             int? supplierId,
             string unit = _defaultUnit)
         {
-            _data.Name_Pl = namePl ?? string.Empty;
-            _data.Name_Original = nameOriginal ?? string.Empty;
-            _data.Type_Id = typeId;
-            _data.Indeks = index;
+            _data.NamePl = namePl ?? string.Empty;
+            _data.NameOriginal = nameOriginal ?? string.Empty;
+            _data.TypeId = typeId;
+            _data.Index = index;
             _data.Number = number ?? string.Empty;
             _data.Details = details ?? string.Empty;
-            _data.Producer_Id = producerId;
-            _data.Supplier_Id = supplierId;
+            _data.ProducerId = producerId;
+            _data.SupplierId = supplierId;
             _data.Unit = unit;
         }
         public Part(
@@ -61,40 +61,40 @@ namespace Shopfloor.Models.PartModel
             string unit = _defaultUnit)
         {
             _data.Id = id;
-            _data.Name_Pl = namePl ?? string.Empty;
-            _data.Name_Original = nameOriginal ?? string.Empty;
-            _data.Type_Id = typeId;
-            _data.Indeks = index;
+            _data.NamePl = namePl ?? string.Empty;
+            _data.NameOriginal = nameOriginal ?? string.Empty;
+            _data.TypeId = typeId;
+            _data.Index = index;
             _data.Number = number ?? string.Empty;
             _data.Details = details ?? string.Empty;
-            _data.Producer_Id = producerId;
-            _data.Supplier_Id = supplierId;
+            _data.ProducerId = producerId;
+            _data.SupplierId = supplierId;
             _data.Unit = unit;
         }
         private string SetInputValue()
         {
-            string searchValue = _data.Name_Pl +
-                _data.Name_Original +
-                _data.Indeks;
+            string searchValue = _data.NamePl +
+                _data.NameOriginal +
+                _data.Index;
             return searchValue;
         }
         public void SetType(PartType type)
         {
             if (type is null) return;
             _type = type;
-            _data.Type_Id = type.Id;
+            _data.TypeId = type.Id;
         }
         public void SetProducer(Supplier producer)
         {
             if (producer is null) return;
             _producer = producer;
-            _data.Producer_Id = producer.Id;
+            _data.ProducerId = producer.Id;
         }
         public void SetSupplier(Supplier supplier)
         {
             if (supplier is null) return;
             _supplier = supplier;
-            _data.Supplier_Id = supplier.Id;
+            _data.SupplierId = supplier.Id;
         }
     }
     internal sealed partial class Part : ISearchableModel
@@ -103,10 +103,10 @@ namespace Shopfloor.Models.PartModel
         {
             get
             {
-                string searchValue = _data.Name_Pl +
-                    _data.Name_Original +
+                string searchValue = _data.NamePl +
+                    _data.NameOriginal +
                     (_type?.Name ?? string.Empty) +
-                    _data.Indeks +
+                    _data.Index +
                     _data.Details +
                     (_producer?.Name ?? string.Empty) +
                     (_supplier?.Name ?? string.Empty);

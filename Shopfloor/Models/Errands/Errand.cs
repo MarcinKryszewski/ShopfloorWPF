@@ -61,7 +61,7 @@ namespace Shopfloor.Models.ErrandModel
         public DateTime CreatedDate => _data.CreatedDate;
         public string Description
         {
-            get => _data.Description;
+            get => _data.Description ?? "BRAK OPISU";
             set
             {
                 if (value == null) return;

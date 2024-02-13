@@ -45,8 +45,8 @@
                     <DataTemplate DataType="{x:Type errands:ErrandsMainViewModel}">
                         <errands:ErrandsMainView />
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type requests:RequestsViewModel}">
-                        <requests:RequestsView />
+                    <DataTemplate DataType="{x:Type requests:RequestsMainViewModel}">
+                        <requests:RequestsMainView />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type minimalStates:MinimalStatesViewModel}">
                         <minimalStates:MinimalStatesView />

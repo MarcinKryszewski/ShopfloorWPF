@@ -2,7 +2,7 @@ using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Mechanic.Requests
 {
-    internal sealed class RequestsViewModel : ViewModelBase
+    internal sealed class RequestsMainViewModel : ViewModelBase
     {
     }
 }

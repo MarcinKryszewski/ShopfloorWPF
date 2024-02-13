@@ -62,7 +62,13 @@ namespace Shopfloor.Models.UserModel
             ";
 
         private const string _getByUsername = @"
-            SELECT *
+            SELECT 
+                id AS Id,
+                username AS Username,
+                user_name AS Name,
+                user_surname AS Surname,
+                image_path AS ImagePath,
+                active AS IsActive
             FROM users
             WHERE username = @Username AND active = 1
             ";

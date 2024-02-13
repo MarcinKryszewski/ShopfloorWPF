@@ -42,7 +42,11 @@ namespace Shopfloor.Models.UserModel
             _data.ImagePath = imagePath;
             _data.IsActive = isActive;
         }
-        public User(string username) => _data.Username = username;
+        public User(string username)
+        {
+            _data.Username = username;
+        }
+
         public void SetActive(bool isActive) => _data.IsActive = isActive;
         public void AddRole(Role role) => _roles.Add(role);
         public bool IsAuthorized(int roleValue) => _roles.Any(role => role.Value == roleValue);

@@ -2,9 +2,9 @@ using System.Windows.Controls;
 
 namespace Shopfloor.Features.Mechanic.Requests
 {
-    public sealed partial class RequestsView : UserControl
+    public sealed partial class RequestsMainView : UserControl
     {
-        public RequestsView()
+        public RequestsMainView()
         {
             this.InitializeComponent();
         }
