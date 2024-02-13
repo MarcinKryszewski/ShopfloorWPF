@@ -18,22 +18,52 @@ namespace Shopfloor.Models.PartModel
 
         private const string _createSQL = @"
             INSERT INTO parts (name_pl, name_original, type_id, indeks, number, details, producer_id, supplier_id)
-            VALUES (@NamePl, @NameOriginal, @TypeId, @Indeks, @Number, @Details, @ProducerId, @SupplierId)
+            VALUES (@NamePl, @NameOriginal, @TypeId, @Index, @Number, @Details, @ProducerId, @SupplierId)
             ";
 
         private const string _getOneSQL = @"
-            SELECT *
+            SELECT 
+                id AS Id,
+                name_pl AS NamePl,
+                name_original AS NameOriginal,
+                type_id AS TypeId,
+                indeks AS Index,
+                number AS Number,
+                details AS Details,
+                producer_id AS ProducerId,
+                supplier_id AS SupplierId,
+                unit AS Unit
             FROM parts
             WHERE id = @Id
             ";
 
         private const string _getAllSQL = @"
-            SELECT *
+            SELECT 
+                id AS Id,
+                name_pl AS NamePl,
+                name_original AS NameOriginal,
+                type_id AS TypeId,
+                indeks AS Index,
+                number AS Number,
+                details AS Details,
+                producer_id AS ProducerId,
+                supplier_id AS SupplierId,
+                unit AS Unit
             FROM parts
             ";
 
         private const string _getAllActiveSQL = @"
-            SELECT *
+            SELECT 
+                id AS Id,
+                name_pl AS NamePl,
+                name_original AS NameOriginal,
+                type_id AS TypeId,
+                indeks AS Index,
+                number AS Number,
+                details AS Details,
+                producer_id AS ProducerId,
+                supplier_id AS SupplierId,
+                unit AS Unit
             FROM parts
             WHERE active = TRUE
             ";
@@ -44,7 +74,7 @@ namespace Shopfloor.Models.PartModel
                 name_pl = @NamePl,
                 name_original = @NameOriginal,
                 type_id = @TypeId,
-                indeks = @Indeks,
+                indeks = @Index,
                 number = @Number,
                 details = @Details,
                 producer_id = @ProducerId,
@@ -75,7 +105,7 @@ namespace Shopfloor.Models.PartModel
                 NamePl = item.NamePl,
                 NameOriginal = item.NameOriginal,
                 TypeId = item.TypeId,
-                Indeks = item.Index,
+                Index = item.Index,
                 Number = item.Number,
                 Details = item.Details,
                 ProducerId = item.ProducerId,
@@ -120,7 +150,7 @@ namespace Shopfloor.Models.PartModel
                 NamePl = item.NamePl,
                 NameOriginal = item.NameOriginal,
                 TypeId = item.TypeId,
-                Indeks = item.Index,
+                Index = item.Index,
                 Number = item.Number,
                 Details = item.Details,
                 ProducerId = item.ProducerId,
@@ -145,14 +175,14 @@ namespace Shopfloor.Models.PartModel
         {
             return new Part(
                 item.Id,
-                item.Name_Pl,
-                item.Name_Original,
-                item.Type_Id,
-                item.Indeks,
+                item.NamePl,
+                item.NameOriginal,
+                item.TypeId,
+                item.Index,
                 item.Number,
                 item.Details,
-                item.Producer_Id,
-                item.Supplier_Id,
+                item.ProducerId,
+                item.SupplierId,
                 item.Unit);
         }
     }

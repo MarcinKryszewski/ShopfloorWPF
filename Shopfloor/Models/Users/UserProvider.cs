@@ -22,13 +22,25 @@ namespace Shopfloor.Models.UserModel
             ";
 
         private const string _getOneSQL = @"
-            SELECT *
+            SELECT 
+                id AS Id,
+                username AS Username,
+                user_name AS Name,
+                user_surname AS Surname,
+                image_path AS ImagePath,
+                active AS IsActive
             FROM users
             WHERE id = @Id
             ";
 
         private const string _getAllSQL = @"
-            SELECT *
+            SELECT 
+                id AS Id,
+                username AS Username,
+                user_name AS Name,
+                user_surname AS Surname,
+                image_path AS ImagePath,
+                active AS IsActive
             FROM users
             ";
 
@@ -169,10 +181,10 @@ namespace Shopfloor.Models.UserModel
             (
                 item.Id,
                 item.Username,
-                item.User_Name,
-                item.User_Surname,
-                item.Image_Path,
-                item.Active
+                item.Name,
+                item.Surname,
+                item.ImagePath,
+                item.IsActive
             );
         }
     }

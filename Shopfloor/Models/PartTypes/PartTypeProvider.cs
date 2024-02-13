@@ -22,13 +22,17 @@ namespace Shopfloor.Models.PartTypeModel
             ";
 
         private const string _getOneSQL = @"
-            SELECT *
+            SELECT 
+                id AS Id,
+                part_type_name AS Name
             FROM parts_types
             WHERE id = @Id
             ";
 
         private const string _getAllSQL = @"
-            SELECT *
+            SELECT 
+                id AS Id,
+                part_type_name AS Name
             FROM parts_types
             ";
 
@@ -108,7 +112,7 @@ namespace Shopfloor.Models.PartTypeModel
 
         private static PartType ToPartType(PartTypeDTO item)
         {
-            return new PartType((int)item.Id!, item.Part_Type_Name);
+            return new PartType((int)item.Id!, item.Name);
         }
     }
 }

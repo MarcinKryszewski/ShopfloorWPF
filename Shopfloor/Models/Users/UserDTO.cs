@@ -4,9 +4,9 @@ namespace Shopfloor.Models.UserModel
     {
         public int Id { get; set; }
         public string Username { get; set; } = string.Empty;
-        public string User_Name { get; set; } = string.Empty;
-        public string User_Surname { get; set; } = string.Empty;
-        public string Image_Path { get; set; } = string.Empty;
-        public bool Active { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Surname { get; set; } = string.Empty;
+        public string ImagePath { get; set; } = string.Empty;
+        public bool IsActive { get; set; }
     }
 }

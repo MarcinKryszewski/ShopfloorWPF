@@ -9,21 +9,16 @@ namespace Shopfloor.Models.UserModel
     internal sealed partial class User : ISearchableModel
     {
         private readonly HashSet<Role> _roles = [];
-        private readonly int? _id;
-        private readonly string _username = string.Empty;
-        private readonly string _name = string.Empty;
-        private readonly string _surname = string.Empty;
-        private readonly string _image = _defaultImagePath;
-        private bool _isActive;
+        private readonly UserDTO _data = new();
         private const string _defaultImagePath = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
-        public int? Id => _id;
-        public string Username => _username;
-        public string Image => _image.Length > 0 ? _image : _defaultImagePath;
-        public string Name => _name;
-        public string Surname => _surname;
-        public string FullName => $"{_name} {_surname}";
-        public bool IsActive => _isActive;
-        public string SearchValue => _username + _name + _surname;
+        public int? Id => _data.Id;
+        public string Username => _data.Username;
+        public string Image => _data.ImagePath.Length > 0 ? _data.ImagePath : _defaultImagePath;
+        public string Name => _data.Name;
+        public string Surname => _data.Surname;
+        public string FullName => $"{_data.Name} {_data.Surname}";
+        public bool IsActive => _data.IsActive;
+        public string SearchValue => _data.Username + _data.Name + _data.Surname;
         public User(
             int id,
             string username,
@@ -32,54 +27,42 @@ namespace Shopfloor.Models.UserModel
             string imagePath = _defaultImagePath,
             bool isActive = true)
         {
-            _id = id;
-            _username = username;
-            _name = name;
-            _surname = surname;
-            _image = imagePath;
-            _isActive = isActive;
+            _data.Id = id;
+            _data.Username = username;
+            _data.Name = name;
+            _data.Surname = surname;
+            _data.ImagePath = imagePath;
+            _data.IsActive = isActive;
         }
         public User(string username, string name, string surname, string imagePath, bool isActive)
         {
-            _username = username;
-            _name = name;
-            _surname = surname;
-            _image = imagePath;
-            _isActive = isActive;
+            _data.Username = username;
+            _data.Name = name;
+            _data.Surname = surname;
+            _data.ImagePath = imagePath;
+            _data.IsActive = isActive;
         }
-        public User(string username)
-        {
-            _username = username;
-        }
-        public void SetActive(bool isActive)
-        {
-            _isActive = isActive;
-        }
-        public void AddRole(Role role)
-        {
-            _roles.Add(role);
-        }
-        public bool IsAuthorized(int roleValue)
-        {
-            return _roles.Any(role => role.Value == roleValue);
-        }
+        public User(string username) => _data.Username = username;
+        public void SetActive(bool isActive) => _data.IsActive = isActive;
+        public void AddRole(Role role) => _roles.Add(role);
+        public bool IsAuthorized(int roleValue) => _roles.Any(role => role.Value == roleValue);
     }
     internal sealed partial class User : IEquatable<User>
     {
         public bool Equals(User? other)
         {
             if (other == null) return false;
-            if (_id == null && other._id == null)
+            if (Id == null && other.Id == null)
             {
                 return FullName == other.FullName;
             }
 
-            return _id == other.Id;
+            return Id == other.Id;
         }
         public override bool Equals(object? obj) => obj is User objUser && Equals(objUser);
         public override int GetHashCode()
         {
-            if (_id != null) return _id.GetHashCode();
+            if (Id != null) return Id.GetHashCode();
             return FullName.GetHashCode();
         }
     }
