@@ -7,27 +7,25 @@ namespace Shopfloor.Models.MachinePartModel
     {
         private readonly Part? _part;
         private readonly Machine? _machine;
-        private readonly int? _machineId;
-        private readonly int? _partId;
-        private readonly double _amount;
+        private readonly MachinePartDTO _data = new();
         public Part? Part => _part;
-        public int? PartId => _partId;
+        public int? PartId => _data.PartId;
         public Machine? Machine => _machine;
-        public int? MachineId => _machineId;
-        public double Amount => _amount;
+        public int? MachineId => _data.MachineId;
+        public double? Amount => _data.Amount;
         public MachinePart(Part part, Machine machine, double? amount = 1)
         {
             _part = part;
-            _partId = part.Id;
+            _data.PartId = part.Id;
             _machine = machine;
-            _machineId = machine.Id;
-            _amount = amount ?? 1;
+            _data.MachineId = machine.Id;
+            _data.Amount = amount ?? 1;
         }
         public MachinePart(int partId, int machineId, double? amount = 1)
         {
-            _partId = partId;
-            _machineId = machineId;
-            _amount = amount ?? 1;
+            _data.PartId = partId;
+            _data.MachineId = machineId;
+            _data.Amount = amount ?? 1;
         }
     }
 }

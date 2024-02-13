@@ -124,7 +124,7 @@ namespace Shopfloor.Models.SupplierModel
 
         private static Supplier ToSupplier(SupplierDTO item)
         {
-            return new Supplier(item.Id, item.Name, item.Active);
+            return new Supplier((int)item.Id!, item.Name, item.Active);
         }
     }
 }

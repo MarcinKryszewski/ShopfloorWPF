@@ -22,18 +22,24 @@ namespace Shopfloor.Models.MachinePartModel
         private const string _deleteSQL = @"
             DELETE
             FROM machines_parts
-            WHERE 
+            WHERE
                 machine_id = @Machine AND
                 part_id = @Part
         ";
         private const string _getAllSQL = @"
-            SELECT *
+            SELECT
+                machine_id AS MachineId,
+                part_id AS PartId,
+                amount AS Amount
             FROM machines_parts
             ";
         private const string _getOneSQL = @"
-            SELECT *
+            SELECT
+                machine_id AS MachineId,
+                part_id AS PartId,
+                amount AS Amount
             FROM machines_parts
-            WHERE 
+            WHERE
                 machine_id = @Machine AND
                 part_id = @Part
         ";
@@ -81,7 +87,7 @@ namespace Shopfloor.Models.MachinePartModel
         public Task Delete(int id) => throw new System.NotImplementedException();
         private static MachinePart ToModel(MachinePartDTO item)
         {
-            return new(item.Part_Id, item.Machine_Id, item.Amount);
+            return new((int)item.PartId!, (int)item.MachineId!, item.Amount);
         }
     }
 }

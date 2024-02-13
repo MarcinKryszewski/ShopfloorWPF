@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.MachineModel
 {
-    public class MachineProvider : IProvider<Machine>
+    internal sealed class MachineProvider : IProvider<Machine>
     {
         private readonly DatabaseConnectionFactory _database;
         #region SQLCommands
@@ -17,12 +17,24 @@ namespace Shopfloor.Models.MachineModel
             VALUES (@Name, @Number, @Parent)
             ";
         private const string _getOneSQL = @"
-            SELECT *
+            SELECT
+                id AS Id,
+                machine_name AS Name,
+                machine_number AS Number,
+                sap_number AS SapNumber,
+                parent AS Parent,
+                active AS Active
             FROM machines
             WHERE id = @Id
             ";
         private const string _getAllSQL = @"
-            SELECT *
+            SELECT
+                id AS Id,
+                machine_name AS Name,
+                machine_number AS Number,
+                sap_number AS SapNumber,
+                parent AS Parent,
+                active AS Active
             FROM machines
             ";
         private const string _updateSQL = @"
@@ -99,7 +111,7 @@ namespace Shopfloor.Models.MachineModel
         #endregion CRUD
         private static Machine ToMachine(MachineDTO item)
         {
-            return new Machine(item.Id, item.Machine_Name, item.Machine_Number, item.Sap_Number, item.Parent, item.Active);
+            return new Machine((int)item.Id!, item.Name, item.Number, item.SapNumber, item.Parent, item.Active);
         }
     }
 }

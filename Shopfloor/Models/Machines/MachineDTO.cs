@@ -1,11 +1,11 @@
 namespace Shopfloor.Models.MachineModel
 {
-    public class MachineDTO
+    internal sealed class MachineDTO
     {
-        public int Id { get; set; }
-        public string Machine_Name { get; set; } = string.Empty;
-        public string Machine_Number { get; set; } = string.Empty;
-        public string Sap_Number { get; set; } = string.Empty;
+        public int? Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string? Number { get; set; } = string.Empty;
+        public string? SapNumber { get; set; } = string.Empty;
         public int? Parent { get; set; }
         public bool Active { get; set; }
     }

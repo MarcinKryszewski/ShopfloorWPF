@@ -9,7 +9,7 @@ namespace Shopfloor.Models.ErrandModel
     {
         public int? CreatedById { get; set; }
         public DateTime CreatedDate { get; set; }
-        public string Description { get; set; } = string.Empty;
+        public string? Description { get; set; }
         public int? ErrandTypeId { get; set; }
         public DateTime? ExpectedDate { get; set; }
         public int? Id { get; set; }

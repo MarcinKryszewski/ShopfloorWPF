@@ -3,34 +3,38 @@ using System;
 
 namespace Shopfloor.Models.PartTypeModel
 {
-    public class PartType : IEquatable<PartType>, ISearchableModel
+    internal sealed partial class PartType
     {
-        private readonly int? _id;
-        private readonly string _name;
+        private readonly PartTypeDTO _data = new();
         public PartType(int id, string name)
         {
-            _id = id;
-            _name = name;
+            _data.Id = id;
+            _data.Part_Type_Name = name;
         }
         public PartType(string name)
         {
-            _name = name;
+            _data.Part_Type_Name = name;
         }
-        public int? Id => _id;
-        public string Name => _name;
-        public string SearchValue => _name ?? string.Empty;
-
+        public int? Id => _data.Id;
+        public string Name => _data.Part_Type_Name;
+    }
+    internal sealed partial class PartType : IEquatable<PartType>
+    {
         public bool Equals(PartType? other)
         {
             if (other == null) return false;
-            if (_id == null && other._id == null) return _name == other.Name;
-            return _id == other.Id;
+            if (_data.Id == null && other._data.Id == null) return _data.Part_Type_Name == other.Name;
+            return _data.Id == other.Id;
         }
         public override bool Equals(object? obj) => obj is PartType objPartType && Equals(objPartType);
         public override int GetHashCode()
         {
-            if (_id != null) return _id.GetHashCode();
-            return _name.GetHashCode();
+            if (_data.Id != null) return _data.Id.GetHashCode();
+            return _data.Part_Type_Name.GetHashCode();
         }
+    }
+    internal sealed partial class PartType : ISearchableModel
+    {
+        public string SearchValue => _data.Part_Type_Name ?? string.Empty;
     }
 }

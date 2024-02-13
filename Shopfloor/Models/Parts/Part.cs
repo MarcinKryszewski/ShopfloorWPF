@@ -5,39 +5,28 @@ using System;
 
 namespace Shopfloor.Models.PartModel
 {
-    public class Part : IEquatable<Part>, ISearchableModel
+    internal sealed partial class Part
     {
         private const string _defaultUnit = "SZT";
-        private readonly int? _id;
-        private string _namePl = string.Empty;
-        private string _nameOriginal = string.Empty;
-        private int? _typeId;
         private PartType? _type;
-        private int? _index;
-        private string _number = string.Empty;
-        private string _details = string.Empty;
-        private int? _producerId;
         private Supplier? _producer;
-        private int? _supplierId;
         private Supplier? _supplier;
-        private string _unit = _defaultUnit;
-        public int? Id => _id;
-        public string NamePl => _namePl;
-        public string NameOriginal => _nameOriginal;
-        public int? TypeId => _typeId;
+        private readonly PartDTO _data = new();
+        public int? Id => _data.Id;
+        public string NamePl => _data.Name_Pl;
+        public string NameOriginal => _data.Name_Original;
+        public int? TypeId => _data.Type_Id;
         public PartType? Type => _type;
         public string TypeName => _type?.Name ?? string.Empty;
-        public int? Index => _index;
-        public string Number => _number;
-        public string Details => _details;
-        public int? ProducerId => _producerId;
+        public int? Index => _data.Indeks;
+        public string Number => _data.Number;
+        public string Details => _data.Details;
+        public int? ProducerId => _data.Producer_Id;
         public Supplier? Producer => _producer;
-        public int? SupplierId => _supplierId;
+        public int? SupplierId => _data.Supplier_Id;
         public Supplier? Supplier => _supplier;
-        public string Unit => _unit;
-        public string SearchValue => SetSearchValue();
+        public string Unit => _data.Unit;
         public string RequiredInputValue => SetInputValue();
-
         public Part(
             string? namePl,
             string? nameOriginal,
@@ -49,17 +38,16 @@ namespace Shopfloor.Models.PartModel
             int? supplierId,
             string unit = _defaultUnit)
         {
-            _namePl = namePl ?? string.Empty;
-            _nameOriginal = nameOriginal ?? string.Empty;
-            _typeId = typeId;
-            _index = index;
-            _number = number ?? string.Empty;
-            _details = details ?? string.Empty;
-            _producerId = producerId;
-            _supplierId = supplierId;
-            _unit = unit;
+            _data.Name_Pl = namePl ?? string.Empty;
+            _data.Name_Original = nameOriginal ?? string.Empty;
+            _data.Type_Id = typeId;
+            _data.Indeks = index;
+            _data.Number = number ?? string.Empty;
+            _data.Details = details ?? string.Empty;
+            _data.Producer_Id = producerId;
+            _data.Supplier_Id = supplierId;
+            _data.Unit = unit;
         }
-
         public Part(
             int? id,
             string? namePl,
@@ -72,63 +60,72 @@ namespace Shopfloor.Models.PartModel
             int? supplierId,
             string unit = _defaultUnit)
         {
-            _id = id;
-            _namePl = namePl ?? string.Empty;
-            _nameOriginal = nameOriginal ?? string.Empty;
-            _typeId = typeId;
-            _index = index;
-            _number = number ?? string.Empty;
-            _details = details ?? string.Empty;
-            _producerId = producerId;
-            _supplierId = supplierId;
-            _unit = unit;
+            _data.Id = id;
+            _data.Name_Pl = namePl ?? string.Empty;
+            _data.Name_Original = nameOriginal ?? string.Empty;
+            _data.Type_Id = typeId;
+            _data.Indeks = index;
+            _data.Number = number ?? string.Empty;
+            _data.Details = details ?? string.Empty;
+            _data.Producer_Id = producerId;
+            _data.Supplier_Id = supplierId;
+            _data.Unit = unit;
         }
-
-        private string SetSearchValue()
-        {
-            string searchValue = _namePl +
-                _nameOriginal +
-                (_type?.Name ?? string.Empty) +
-                _index +
-                _details +
-                (_producer?.Name ?? string.Empty) +
-                (_supplier?.Name ?? string.Empty);
-            return searchValue;
-        }
-
         private string SetInputValue()
         {
-            string searchValue = _namePl +
-                _nameOriginal +
-                _index;
+            string searchValue = _data.Name_Pl +
+                _data.Name_Original +
+                _data.Indeks;
             return searchValue;
         }
-
-        public bool Equals(Part? other)
-        {
-            if (other == null) return false;
-            return _id == other.Id;
-        }
-
         public void SetType(PartType type)
         {
             if (type is null) return;
             _type = type;
-            _typeId = type.Id;
+            _data.Type_Id = type.Id;
         }
-
         public void SetProducer(Supplier producer)
         {
             if (producer is null) return;
             _producer = producer;
-            _producerId = producer.Id;
+            _data.Producer_Id = producer.Id;
         }
-
         public void SetSupplier(Supplier supplier)
         {
             if (supplier is null) return;
             _supplier = supplier;
-            _supplierId = supplier.Id;
+            _data.Supplier_Id = supplier.Id;
+        }
+    }
+    internal sealed partial class Part : ISearchableModel
+    {
+        public string SearchValue
+        {
+            get
+            {
+                string searchValue = _data.Name_Pl +
+                    _data.Name_Original +
+                    (_type?.Name ?? string.Empty) +
+                    _data.Indeks +
+                    _data.Details +
+                    (_producer?.Name ?? string.Empty) +
+                    (_supplier?.Name ?? string.Empty);
+                return searchValue;
+            }
+        }
+    }
+    internal sealed partial class Part : IEquatable<Part>
+    {
+        public bool Equals(Part? other)
+        {
+            if (other == null) return false;
+            return _data.Id == other.Id;
+        }
+        public override bool Equals(object? obj) => obj is Part objPart && Equals(objPart);
+        public override int GetHashCode()
+        {
+            if (Id != null) return Id.GetHashCode();
+            return SearchValue.GetHashCode();
         }
     }
 }

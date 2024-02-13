@@ -9,48 +9,39 @@ namespace Shopfloor.Models.ErrandPartModel
 {
     internal sealed partial class ErrandPart
     {
-        private readonly int _errandId;
-        private readonly int _partId;
-        private Errand? _errand;
-        private Part? _part;
-        private double? _amount;
-        private string _status = PartStatuses[0];
+        private readonly ErrandPartDTO _data = new();
         public ErrandPart(int errandId, int partId)
         {
-            _errandId = errandId;
-            _partId = partId;
+            _data.ErrandId = errandId;
+            _data.PartId = partId;
         }
         public ErrandPart(int errandId, int partId, double? amount, string? status = null)
         {
-            _errandId = errandId;
-            _partId = partId;
-            _amount = amount;
-            _status = status ?? PartStatuses[0];
+            _data.ErrandId = errandId;
+            _data.PartId = partId;
+            _data.Amount = amount;
+            _data.Status = status ?? PartStatuses[0];
         }
-        public int ErrandId => _errandId;
-        public int PartId => _partId;
+        public int ErrandId => _data.ErrandId;
+        public int PartId => _data.PartId;
         public Part? Part
         {
-            get => _part;
+            get => _data.Part;
             set
             {
                 if (value is null) return;
-                if (value.Id == _partId) _part = value;
+                if (value.Id == PartId) _data.Part = value;
             }
         }
-        public string Status { get => _status; set => _status = value; }
-        public double? Amount
-        {
-            get => _amount;
-            set => _amount = value;
-        }
+        public string Status { get => _data.Status; set => _data.Status = value; }
+        public double? Amount { get => _data.Amount; set => _data.Amount = value; }
         internal Errand? Errand
         {
-            get => _errand;
+            get => _data.Errand;
             set
             {
                 if (value is null) return;
-                if (value.Id == _errandId) _errand = value;
+                if (value.Id == ErrandId) _data.Errand = value;
             }
         }
     }
@@ -105,12 +96,12 @@ namespace Shopfloor.Models.ErrandPartModel
         public bool Equals(ErrandPart? other)
         {
             if (other == null) return false;
-            return _errandId == other.ErrandId && _partId == other.PartId;
+            return ErrandId == other.ErrandId && PartId == other.PartId;
         }
         public override bool Equals(object? obj) => obj is ErrandPart objErrandPart && Equals(objErrandPart);
         public override int GetHashCode()
         {
-            return _errandId.GetHashCode() & _partId.GetHashCode();
+            return ErrandId.GetHashCode() & PartId.GetHashCode();
         }
     }
 }

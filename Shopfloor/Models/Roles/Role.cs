@@ -2,6 +2,7 @@ namespace Shopfloor.Models.RoleModel
 {
     public class Role
     {
+        //private readonly RoleDTO _data = new();
         public Role(int id, string name, int value)
         {
             Id = id;

@@ -7,7 +7,7 @@ namespace Shopfloor.Models.ErrandPartModel
     {
         public int ErrandId { get; set; }
         public int PartId { get; set; }
-        public double Amount { get; set; }
+        public double? Amount { get; set; }
         public string Status { get; set; } = "NOWY";
         public Part? Part { get; set; }
         public Errand? Errand { get; set; }

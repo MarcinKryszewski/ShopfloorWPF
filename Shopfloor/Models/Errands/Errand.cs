@@ -12,7 +12,6 @@ namespace Shopfloor.Models.ErrandModel
     internal sealed partial class Errand
     {
         public const string DefaultPriority = "C";
-
         private readonly ErrandDisplay _display;
         private readonly List<ErrandStatus> _errandStatuses = [];
         private readonly List<ErrandPart> _parts = [];
