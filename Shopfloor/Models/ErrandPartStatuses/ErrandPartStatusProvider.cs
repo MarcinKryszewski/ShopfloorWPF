@@ -108,6 +108,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             return new ErrandPartStatus(
                 item.Id,
                 item.ErrandPartId,
+                item.StatusName,
                 item.CreatedDate,
                 item.CreatedById,
                 item.Comment,

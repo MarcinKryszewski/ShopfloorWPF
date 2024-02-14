@@ -217,6 +217,11 @@
                     </Button>
                 </StackPanel>
                 <!--#endregion-->
+                <Button
+                    Background="DeepPink"
+                    Command="{Binding AddTestData}"
+                    Content="Add Test DATA"
+                    Visibility="{Binding HasDataInside}" />
             </StackPanel>
         </ScrollViewer>
     </Grid>

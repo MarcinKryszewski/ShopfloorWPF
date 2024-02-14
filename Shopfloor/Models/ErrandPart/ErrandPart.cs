@@ -53,14 +53,14 @@ namespace Shopfloor.Models.ErrandPartModel
             }
         }
         public List<ErrandPartStatus> StatusList = [];
-        private ErrandPartStatus _lastStatus => StatusList.Where(status => status.StatusValue >= 0)
-                                                .OrderBy(status => status.CreatedDate)
+        private ErrandPartStatus LastStatus => StatusList.Where(status => status.StatusValue >= 0)
+                                                .OrderByDescending(status => status.CreatedDate)
                                                 .First();
         public int LastStatusValue
         {
             get
             {
-                if (StatusList.Count > 0) return _lastStatus.StatusValue;
+                if (StatusList.Count > 0) return LastStatus.StatusValue;
                 return -1;
             }
         }
@@ -68,7 +68,7 @@ namespace Shopfloor.Models.ErrandPartModel
         {
             get
             {
-                if (StatusList.Count > 0) return _lastStatus.CreatedDate.ToString();
+                if (StatusList.Count > 0) return LastStatus.CreatedDate.ToString();
                 return "NIGDY";
             }
         }

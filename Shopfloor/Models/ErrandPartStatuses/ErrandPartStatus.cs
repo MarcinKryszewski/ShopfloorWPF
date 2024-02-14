@@ -15,14 +15,25 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         public string? Comment => _data.Comment;
         public string? Reason => _data.Reason;
         public int StatusValue;
-        public ErrandPartStatus(int id, int errandPartId, DateTime createdDate, int createdById, string? comment = null, string? reason = "SYSTEM")
+        public ErrandPartStatus(int id, int errandPartId, string statusName, DateTime createdDate, int createdById, string? comment = null, string? reason = "SYSTEM")
         {
             _data.Id = id;
             _data.ErrandPartId = errandPartId;
+            _data.StatusName = statusName;
             _data.CreatedDate = createdDate;
             _data.CreatedById = createdById;
             _data.Comment = comment;
             _data.Reason = reason;
+            SetStatus(statusName);
+        }
+        public ErrandPartStatus(int errandPartId, int createdById, int statusId, DateTime createdDate, string? comment = null, string? reason = "SYSTEM")
+        {
+            _data.ErrandPartId = errandPartId;
+            _data.CreatedById = createdById;
+            _data.CreatedDate = createdDate;
+            _data.Comment = comment;
+            _data.Reason = reason;
+            SetStatus(statusId);
         }
         public ErrandPartStatus(int errandPartId, int createdById, DateTime createdDate, string? comment = null, string? reason = "SYSTEM")
         {
@@ -51,5 +62,4 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             [-7] = "AKTUALIZACJA"
         };
     }
-
 }

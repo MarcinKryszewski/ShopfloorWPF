@@ -117,7 +117,7 @@ namespace Shopfloor.Database.SQLite
                 description TEXT,
                 PRIMARY KEY(id)
             )";
-        private const string _init_part_types_SQLCommand = @"
+        private const string _init_errand_types_SQLCommand = @"
             BEGIN TRANSACTION;
                 INSERT INTO errand_types (name, description) VALUES ('Awaria', 'Zadania związane z awariami na liniach');
                 INSERT INTO errand_types (name, description) VALUES ('CILT', 'Cykliczne zadania związane z utrzymaniem maszyn');
@@ -198,7 +198,7 @@ namespace Shopfloor.Database.SQLite
                 _init_admin_SQLCommand,
                 _init_roles_SQLCommand,
                 _init_adminRoles_SQLCommand,
-                _init_part_types_SQLCommand,
+                _init_errand_types_SQLCommand,
             ];
         }
     }

@@ -20,7 +20,11 @@ namespace Shopfloor.Hosts.MainHost
             {
                 services.AddSingleton(userServices.GetRequiredService<CurrentUserStore>());
 
-                services.AddSingleton<SidePanelViewModel>();
+                services.AddSingleton<SidePanelViewModel>(provider =>
+                {
+                    //DELETE AFTER DEVELOPEMENT
+                    return new SidePanelViewModel(provider, databaseServices);
+                });
                 services.AddSingleton<ContentViewModel>();
                 services.AddTransient<TopPanelViewModel>();
                 services.AddSingleton<NavigationStore>();

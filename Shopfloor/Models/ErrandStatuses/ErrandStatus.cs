@@ -6,8 +6,9 @@ namespace Shopfloor.Models.ErrandStatusModel
     {
         private readonly ErrandStatusDTO _data = new();
 
-        public ErrandStatus(string statusName, string? comment, string? reason, DateTime? setDate)
+        public ErrandStatus(int errandId, string statusName, string? comment, string? reason, DateTime? setDate)
         {
+            _data.ErrandId = errandId;
             _data.StatusName = statusName;
             _data.SetDate = setDate ?? DateTime.Now;
             _data.Comment = comment ?? string.Empty;
