@@ -9,14 +9,15 @@ namespace Shopfloor.Features.Mechanic.Errands.Stores
         private Errand? _selectedErrand;
         public int? ErrandId { get; set; }
         public int? MachineId { get; set; }
-        public Errand? SelectedErrand 
-        { 
-            get => _selectedErrand; 
-            set  {
+        public Errand? SelectedErrand
+        {
+            get => _selectedErrand;
+            set
+            {
                 _selectedErrand = value;
                 if (value is not null) ErrandId = value.Id;
-                } 
             }
-        public ObservableCollection<ErrandPart> ErrandParts = [];        
+        }
+        public ObservableCollection<ErrandPart> ErrandParts = [];
     }
 }

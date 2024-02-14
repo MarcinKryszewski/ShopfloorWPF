@@ -29,5 +29,10 @@ namespace Shopfloor.Models.PartTypeModel
             IsLoaded = true;
             return Task.CompletedTask;
         }
+        public async Task Reload()
+        {
+            PartTypeProvider provider = _databaseServices.GetRequiredService<PartTypeProvider>();
+            _data = await provider.GetAll();
+        }
     }
 }

@@ -42,6 +42,7 @@ namespace Shopfloor.Models.ErrandPartModel
             ";
         private const string _getAllSQL = @"
             SELECT
+                id as Id,
                 errand_id AS ErrandId,
                 part_id AS PartId,
                 amount AS Amount
@@ -107,6 +108,7 @@ namespace Shopfloor.Models.ErrandPartModel
         private static ErrandPart ToErrandPart(ErrandPartDTO item)
         {
             return new ErrandPart(
+                item.Id,
                 item.ErrandId,
                 item.PartId,
                 item.Amount

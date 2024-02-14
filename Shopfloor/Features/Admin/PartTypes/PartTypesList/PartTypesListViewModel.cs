@@ -151,6 +151,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
             //await Task.Delay(5000);
             PartTypeProvider provider = _databaseServices.GetRequiredService<PartTypeProvider>();
             IEnumerable<PartType> partTypes = await provider.GetAll();
+            _ = _databaseServices.GetRequiredService<PartTypesStore>().Reload();
             foreach (PartType partType in partTypes)
             {
                 if (_partTypes.FirstOrDefault(s => s.Id == partType.Id) is null)

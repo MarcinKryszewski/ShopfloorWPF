@@ -36,9 +36,9 @@ namespace Shopfloor.Models.ErrandModel
             if (partsAmount == 0) return "SPECYFIKOWANIE";
 
             Dictionary<string, int> partsCount = [];
-            foreach (ErrandPart part in _errand.Parts)
+            foreach (KeyValuePair<int, string> status in ErrandPartStatus.Status)
             {
-                partsCount.Add(part.LastStatusText, 0);
+                partsCount.Add(status.Value, 0);
             }
 
             foreach (ErrandPart errandPart in _errand.Parts)

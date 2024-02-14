@@ -156,14 +156,16 @@ namespace Shopfloor.Database.SQLite
             )";
         private const string _errands_parts_SQLCommand = @"
             CREATE TABLE errands_parts (
+                id INTEGER,
                 part_id INTEGER,
                 errand_id INTEGER,
                 amount REAL,
+                PRIMARY KEY(id),
                 FOREIGN KEY(errand_id) REFERENCES errands(id),
                 FOREIGN KEY(part_id) REFERENCES parts(id)
             )";
         private const string _errand_part_statuses_SQLCommand = @"
-            CREATE TABLE errand_statuses (
+            CREATE TABLE errand_part_statuses (
                 id INTEGER,
                 errand_part_id INTEGER,
                 errand_status_name TEXT,

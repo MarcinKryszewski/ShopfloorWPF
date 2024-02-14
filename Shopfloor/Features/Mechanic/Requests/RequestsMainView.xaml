@@ -4,9 +4,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Shopfloor.Features.Mechanic.Requests"
+    xmlns:list="clr-namespace:Shopfloor.Features.Mechanic.Requests.RequestsList"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid Background="Pink" />
+    <Grid >
+        <Border Background="{StaticResource ResourceKey=BrushDarkNeutral400}">
+            <ContentControl Content="{Binding Content}">
+                <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type list:RequestsListViewModel}">
+                    <list:RequestsListView />
+                </DataTemplate>
+            </ContentControl.Resources>
+            </ContentControl>
+        </Border>
+    </Grid>
 </UserControl> 

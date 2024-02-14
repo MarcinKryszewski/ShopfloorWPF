@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
@@ -68,6 +69,9 @@ namespace Shopfloor.Hosts.DatabaseHost
 
             services.AddSingleton<ErrandPartProvider>();
             services.AddSingleton<ErrandPartStore>();
+
+            services.AddSingleton<ErrandPartStatusProvider>();
+            services.AddSingleton<ErrandPartStatusStore>();
         }
     }
 }

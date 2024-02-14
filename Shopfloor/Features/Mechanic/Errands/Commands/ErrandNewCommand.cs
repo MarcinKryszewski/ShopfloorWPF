@@ -61,6 +61,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
                 SetNewErrandPartStatus(errandPartId);
                 _isPartAdd = true;
             }
+            _ = _databaseServices.GetRequiredService<ErrandPartStore>().Reload();
         }
         private void AddErrand()
         {

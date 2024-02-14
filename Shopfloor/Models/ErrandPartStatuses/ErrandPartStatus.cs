@@ -40,6 +40,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         public void SetStatus(string name) => SetStatus(Status.FirstOrDefault(x => x.Value == name).Key);
         public static Dictionary<int, string> Status = new()
         {
+            [-1] = "ERROR",
             [0] = "OFERTOWANIE",
             [1] = "ZATWIERDZANIE",
             [2] = "ZAMAWIANIE",

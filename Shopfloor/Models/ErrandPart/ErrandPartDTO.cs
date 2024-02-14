@@ -5,6 +5,7 @@ namespace Shopfloor.Models.ErrandPartModel
 {
     internal sealed class ErrandPartDTO
     {
+        public int Id { get; set; }
         public int ErrandId { get; set; }
         public int PartId { get; set; }
         public double? Amount { get; set; }
