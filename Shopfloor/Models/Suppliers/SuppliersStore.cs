@@ -11,9 +11,9 @@ namespace Shopfloor.Models.SupplierModel
 {
     internal sealed class SuppliersStore : IDataStore<Supplier>
     {
-        private IEnumerable<Supplier> _data = Enumerable.Empty<Supplier>();
+        private List<Supplier> _data = [];
         private readonly IServiceProvider _databaseServices;
-        public IEnumerable<Supplier> Data => _data;
+        public List<Supplier> Data => _data;
         public bool IsLoaded { get; private set; }
 
         public SuppliersStore(IServiceProvider databaseServices)
@@ -24,7 +24,7 @@ namespace Shopfloor.Models.SupplierModel
         public Task Load()
         {
             IProvider<Supplier> provider = _databaseServices.GetRequiredService<SupplierProvider>();
-            _data = provider.GetAll().Result;
+            _data = new(provider.GetAll().Result);
             IsLoaded = true;
             return Task.CompletedTask;
         }

@@ -1,6 +1,7 @@
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.PartModel;
+using Shopfloor.Models.UserModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,18 +18,20 @@ namespace Shopfloor.Models.ErrandPartModel
             _data.ErrandId = errandId;
             _data.PartId = partId;
         }
-        public ErrandPart(int errandId, int partId, double? amount)
+        public ErrandPart(int errandId, int partId, double? amount, int orderedBy)
         {
             _data.ErrandId = errandId;
             _data.PartId = partId;
             _data.Amount = amount;
+            _data.OrderedById = orderedBy;
         }
-        public ErrandPart(int id, int errandId, int partId, double? amount)
+        public ErrandPart(int id, int errandId, int partId, double? amount, int orderedBy)
         {
             _data.Id = id;
             _data.ErrandId = errandId;
             _data.PartId = partId;
             _data.Amount = amount;
+            _data.OrderedById = orderedBy;
         }
         public int ErrandId => _data.ErrandId;
         public int PartId => _data.PartId;
@@ -43,7 +46,8 @@ namespace Shopfloor.Models.ErrandPartModel
             }
         }
         public double? Amount { get => _data.Amount; set => _data.Amount = value; }
-        internal Errand? Errand
+        public string AmountText => Amount + ((Part is not null) ? " " + Part.Unit : "");
+        public Errand? Errand
         {
             get => _data.Errand;
             set
@@ -68,11 +72,21 @@ namespace Shopfloor.Models.ErrandPartModel
         {
             get
             {
-                if (StatusList.Count > 0) return LastStatus.CreatedDate.ToString();
+                if (StatusList.Count > 0) return LastStatus.CreatedDate.ToString("dd/MM/yyyy");
                 return "NIGDY";
             }
         }
         public string LastStatusText => LastStatusValue == -1 ? "ERROR" : ErrandPartStatus.Status[LastStatusValue];
+        public int OrderedById => _data.OrderedById;
+        public User? OrderedByUser
+        {
+            get => _data.OrderedByUser;
+            set
+            {
+                if (value is null) return;
+                if (value.Id == OrderedById) _data.OrderedByUser = value;
+            }
+        }
     }
     internal sealed partial class ErrandPart : INotifyDataErrorInfo
     {

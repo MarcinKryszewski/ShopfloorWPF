@@ -17,18 +17,21 @@ namespace Shopfloor.Models.ErrandPartModel
             INSERT INTO errands_parts (
                 errand_id,
                 part_id,
-                amount
+                amount,
+                ordered_by_id
             )
             VALUES (
                 @ErrandId,
                 @PartId,
-                @Amount
+                @Amount,
+                @OrderedBy
             )";
         private const string _getOneSQL = @"
             SELECT
                 errand_id AS ErrandId,
                 part_id AS PartId,
-                amount AS Amount
+                amount AS Amount,
+                ordered_by_id as OrderedById
             FROM errands_parts
             WHERE id = @Id
             ";
@@ -36,7 +39,8 @@ namespace Shopfloor.Models.ErrandPartModel
             SELECT
                 errand_id AS ErrandId,
                 part_id AS PartId,
-                amount AS Amount
+                amount AS Amount,
+                ordered_by_id as OrderedById
             FROM errands_parts
             WHERE errand_id = @ErrandId
             ";
@@ -45,13 +49,14 @@ namespace Shopfloor.Models.ErrandPartModel
                 id as Id,
                 errand_id AS ErrandId,
                 part_id AS PartId,
-                amount AS Amount
+                amount AS Amount,
+                ordered_by_id as OrderedById
             FROM errands_parts
             ";
         private const string _updateSQL = @"
             UPDATE errands_parts
             SET
-                amount = @Amount,
+                amount = @Amount
             WHERE errand_id = @ErrandId AND part_id = @PartId
             ";
         #endregion SQLCommands
@@ -67,7 +72,8 @@ namespace Shopfloor.Models.ErrandPartModel
             {
                 ErrandId = item.ErrandId,
                 PartId = item.PartId,
-                Amount = item.Amount
+                Amount = item.Amount,
+                OrderedBy = item.OrderedById
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
@@ -111,7 +117,8 @@ namespace Shopfloor.Models.ErrandPartModel
                 item.Id,
                 item.ErrandId,
                 item.PartId,
-                item.Amount
+                item.Amount,
+                item.OrderedById
             );
         }
     }

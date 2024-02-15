@@ -11,10 +11,10 @@ namespace Shopfloor.Models.PartTypeModel
 {
     internal sealed class PartTypesStore : IDataStore<PartType>
     {
-        private IEnumerable<PartType> _data = Enumerable.Empty<PartType>();
+        private List<PartType> _data = [];
         private readonly IServiceProvider _databaseServices;
 
-        public IEnumerable<PartType> Data => _data;
+        public List<PartType> Data => _data;
         public bool IsLoaded { get; private set; }
 
         public PartTypesStore(IServiceProvider databaseServices)
@@ -25,14 +25,14 @@ namespace Shopfloor.Models.PartTypeModel
         public Task Load()
         {
             IProvider<PartType> provider = _databaseServices.GetRequiredService<PartTypeProvider>();
-            _data = provider.GetAll().Result;
+            _data = new(provider.GetAll().Result);
             IsLoaded = true;
             return Task.CompletedTask;
         }
         public async Task Reload()
         {
             PartTypeProvider provider = _databaseServices.GetRequiredService<PartTypeProvider>();
-            _data = await provider.GetAll();
+            _data = new(await provider.GetAll());
         }
     }
 }

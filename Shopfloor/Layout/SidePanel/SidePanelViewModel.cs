@@ -200,13 +200,13 @@ namespace Shopfloor.Layout.SidePanel
                 _ = errandStatusProvider.Create(new ErrandStatus(4, "Scheduled", "Task planned for next week", "Upcoming schedule", new DateTime(2024, 2, 17)));
 
                 ErrandPartProvider errandPartProvider = _dbServices.GetRequiredService<ErrandPartProvider>();
-                _ = errandPartProvider.Create(new ErrandPart(1, 1, 10.5));
-                _ = errandPartProvider.Create(new ErrandPart(1, 2, null));
-                _ = errandPartProvider.Create(new ErrandPart(4, 1, 7.25));
-                _ = errandPartProvider.Create(new ErrandPart(4, 2, 3.0));
-                _ = errandPartProvider.Create(new ErrandPart(1, 1, 1.0));
-                _ = errandPartProvider.Create(new ErrandPart(2, 1, 5.0));
-                _ = errandPartProvider.Create(new ErrandPart(3, 2, 8.0));
+                _ = errandPartProvider.Create(new ErrandPart(1, 1, 10.5, 1));
+                _ = errandPartProvider.Create(new ErrandPart(1, 2, null, 2));
+                _ = errandPartProvider.Create(new ErrandPart(4, 1, 7.25, 1));
+                _ = errandPartProvider.Create(new ErrandPart(4, 2, 3.0, 1));
+                _ = errandPartProvider.Create(new ErrandPart(1, 1, 1.0, 2));
+                _ = errandPartProvider.Create(new ErrandPart(2, 1, 5.0, 3));
+                _ = errandPartProvider.Create(new ErrandPart(3, 2, 8.0, 2));
 
                 ErrandPartStatusProvider errandPartStatusProvider = _dbServices.GetRequiredService<ErrandPartStatusProvider>();
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(7, 1, 0, DateTime.Now.AddDays(-17)));

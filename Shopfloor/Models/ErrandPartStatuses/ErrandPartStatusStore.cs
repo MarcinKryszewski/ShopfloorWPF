@@ -10,19 +10,19 @@ namespace Shopfloor.Models.ErrandPartStatusModel
     internal sealed class ErrandPartStatusStore : IDataStore<ErrandPartStatus>
     {
         private readonly IServiceProvider _databaseServices;
-        private IEnumerable<ErrandPartStatus> _data = [];
+        private List<ErrandPartStatus> _data = [];
         public ErrandPartStatusStore(IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
         }
-        public IEnumerable<ErrandPartStatus> Data => _data;
+        public List<ErrandPartStatus> Data => _data;
         public bool IsLoaded { get; private set; }
         public Task Load()
         {
             ErrandPartStatusProvider provider = _databaseServices.GetRequiredService<ErrandPartStatusProvider>();
             try
             {
-                _data = provider.GetAll().Result;
+                _data = new(provider.GetAll().Result);
                 IsLoaded = true;
             }
             catch (Exception e)
@@ -35,7 +35,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         public async Task Reload()
         {
             ErrandPartStatusProvider provider = _databaseServices.GetRequiredService<ErrandPartStatusProvider>();
-            _data = await provider.GetAll();
+            _data = new(await provider.GetAll());
         }
     }
 }

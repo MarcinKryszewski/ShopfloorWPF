@@ -40,11 +40,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
         }
         private async Task LoadData()
         {
-            Application.Current.Dispatcher.Invoke
-            (() =>
-            {
-                _errands.Clear();
-            });
+            Application.Current.Dispatcher.Invoke(_errands.Clear);
 
             ErrandStore errandStore = _databaseServices.GetRequiredService<ErrandStore>();
             UserStore userStore = _databaseServices.GetRequiredService<UserStore>();
@@ -68,11 +64,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
 
             if (tasks.Count > 0) await Task.WhenAll(tasks);
 
-            Application.Current.Dispatcher.Invoke
-            (() =>
-            {
-                Errands.Refresh();
-            });
+            Application.Current.Dispatcher.Invoke(Errands.Refresh);
         }
 
         private Task LoadErrandParts(ErrandPartStore errandPartStore)

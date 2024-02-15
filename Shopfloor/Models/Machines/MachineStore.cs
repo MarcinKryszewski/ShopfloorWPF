@@ -10,12 +10,12 @@ namespace Shopfloor.Models.MachineModel
     internal sealed class MachineStore : IDataStore<Machine>
     {
         private readonly IServiceProvider _databaseServices;
-        private IEnumerable<Machine> _data = [];
+        private List<Machine> _data = [];
         public MachineStore(IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
         }
-        public IEnumerable<Machine> Data => _data;
+        public List<Machine> Data => _data;
         public bool IsLoaded { get; private set; }
         public Task Load()
         {
@@ -36,7 +36,7 @@ namespace Shopfloor.Models.MachineModel
         public async Task Reload()
         {
             MachineProvider provider = _databaseServices.GetRequiredService<MachineProvider>();
-            _data = await provider.GetAll();
+            _data = new(await provider.GetAll());
         }
     }
 }

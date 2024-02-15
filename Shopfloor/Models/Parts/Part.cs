@@ -7,7 +7,7 @@ namespace Shopfloor.Models.PartModel
 {
     internal sealed partial class Part
     {
-        private const string _defaultUnit = "SZT";
+        private const string _defaultUnit = "szt";
         private PartType? _type;
         private Supplier? _producer;
         private Supplier? _supplier;
@@ -78,7 +78,7 @@ namespace Shopfloor.Models.PartModel
                 _data.Index;
             return searchValue;
         }
-        public void SetType(PartType type)
+        public void SetType(PartType? type)
         {
             if (type is null) return;
             _type = type;

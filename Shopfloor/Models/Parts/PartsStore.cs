@@ -10,10 +10,10 @@ namespace Shopfloor.Models.PartModel
 {
     internal sealed class PartsStore : IDataStore<Part>
     {
-        private IEnumerable<Part> _data = [];
+        private List<Part> _data = [];
         private readonly IServiceProvider _databaseServices;
 
-        public IEnumerable<Part> Data => _data;
+        public List<Part> Data => _data;
         public bool IsLoaded { get; private set; }
 
         public PartsStore(IServiceProvider databaseServices)
@@ -24,7 +24,7 @@ namespace Shopfloor.Models.PartModel
         public Task Load()
         {
             PartProvider provider = _databaseServices.GetRequiredService<PartProvider>();
-            _data = provider.GetAll().Result;
+            _data = new(provider.GetAll().Result);
             IsLoaded = true;
             return Task.CompletedTask;
         }

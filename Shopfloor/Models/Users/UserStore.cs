@@ -9,24 +9,24 @@ namespace Shopfloor.Models.UserModel
     internal sealed class UserStore : IDataStore<User>
     {
         private readonly IServiceProvider _databaseServices;
-        private IEnumerable<User> _data = [];
+        private List<User> _data = [];
         public UserStore(IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
         }
-        public IEnumerable<User> Data => _data;
+        public List<User> Data => _data;
         public bool IsLoaded { get; private set; }
         public Task Load()
         {
             UserProvider provider = _databaseServices.GetRequiredService<UserProvider>();
-            _data = provider.GetAll().Result;
+            _data = new(provider.GetAll().Result);
             IsLoaded = true;
             return Task.CompletedTask;
         }
         public async Task Reload()
         {
             UserProvider provider = _databaseServices.GetRequiredService<UserProvider>();
-            _data = await provider.GetAll();
+            _data = new(await provider.GetAll());
         }
     }
 }

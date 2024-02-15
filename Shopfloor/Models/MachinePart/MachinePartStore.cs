@@ -10,24 +10,24 @@ namespace Shopfloor.Models.MachinePartModel
     internal sealed class MachinePartStore : IDataStore<MachinePart>
     {
         private readonly IServiceProvider _databaseServices;
-        private IEnumerable<MachinePart> _data = [];
+        private List<MachinePart> _data = [];
         public MachinePartStore(IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
         }
-        public IEnumerable<MachinePart> Data => _data;
+        public List<MachinePart> Data => _data;
         public bool IsLoaded { get; private set; }
         public Task Load()
         {
             MachinePartProvider provider = _databaseServices.GetRequiredService<MachinePartProvider>();
-            _data = provider.GetAll().Result;
+            _data = new(provider.GetAll().Result);
             IsLoaded = true;
             return Task.CompletedTask;
         }
         public async Task Reload()
         {
             MachinePartProvider provider = _databaseServices.GetRequiredService<MachinePartProvider>();
-            _data = await provider.GetAll();
+            _data = new(await provider.GetAll());
         }
     }
 }

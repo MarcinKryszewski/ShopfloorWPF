@@ -10,7 +10,7 @@ namespace Shopfloor.Database.SQLite
                 id INTEGER,
                 part_type_name TEXT,
                 PRIMARY KEY(id AUTOINCREMENT)
-            )";
+            );";
         private const string _user_SQLCommand = @"
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER,
@@ -20,14 +20,14 @@ namespace Shopfloor.Database.SQLite
                 image_path TEXT,
                 active INTEGER DEFAULT 1,
                 PRIMARY KEY(id AUTOINCREMENT)
-            )";
+            );";
         private const string _roles_SQLCommand = @"
             CREATE TABLE IF NOT EXISTS roles (
                 id INTEGER,
                 role_name TEXT,
                 role_value INTEGER,
                 PRIMARY KEY(id AUTOINCREMENT)
-            )";
+            );";
         private const string _roles_users_SQLCommand = @"
             CREATE TABLE IF NOT EXISTS roles_users (
                 role_id INTEGER,
@@ -35,7 +35,7 @@ namespace Shopfloor.Database.SQLite
                 PRIMARY KEY(role_id, user_id),
                 FOREIGN KEY(user_id) REFERENCES users(Id),
                 FOREIGN KEY(role_id) REFERENCES roles(Id)
-            )";
+            );";
         private const string _init_admin_SQLCommand = @"
             BEGIN TRANSACTION;
                 INSERT INTO users (username, user_name, user_surname, image_path) VALUES ('@dm1n', 'Admin', 'Admin', '');
@@ -76,14 +76,14 @@ namespace Shopfloor.Database.SQLite
                 parent INTEGER,
                 active INTEGER DEFAULT 1,
                 PRIMARY KEY(id)
-            )";
+            );";
         private const string _suppliers_SQLCommand = @"
             CREATE TABLE IF NOT EXISTS suppliers (
                 id INTEGER,
                 name TEXT,
                 active INTEGER DEFAULT 1,
                 PRIMARY KEY(id)
-            )";
+            );";
         private const string _parts_SQLCommand = @"
             CREATE TABLE parts (
                 id INTEGER,
@@ -100,7 +100,7 @@ namespace Shopfloor.Database.SQLite
                 FOREIGN KEY(type_id) REFERENCES parts_types(id),
                 FOREIGN KEY(supplier_id) REFERENCES suppliers(id),
                 FOREIGN KEY(producer_id) REFERENCES suppliers(id)
-            )";
+            );";
         private const string _machines_parts_SQLCommand = @"
             CREATE TABLE machines_parts (
                 machine_id INTEGER,
@@ -109,14 +109,14 @@ namespace Shopfloor.Database.SQLite
                 FOREIGN KEY(machine_id) REFERENCES machines(id),
                 FOREIGN KEY(part_id) REFERENCES parts,
                 PRIMARY KEY(machine_id,part_id)
-            )";
+            );";
         private const string _errands_types_SQLCommand = @"
             CREATE TABLE errand_types (
                 id INTEGER,
                 name TEXT,
                 description TEXT,
                 PRIMARY KEY(id)
-            )";
+            );";
         private const string _init_errand_types_SQLCommand = @"
             BEGIN TRANSACTION;
                 INSERT INTO errand_types (name, description) VALUES ('Awaria', 'Zadania związane z awariami na liniach');
@@ -142,7 +142,7 @@ namespace Shopfloor.Database.SQLite
                 FOREIGN KEY(errand_type_id) REFERENCES errand_types(id),
                 FOREIGN KEY(created_by_id) REFERENCES users(id)
                 PRIMARY KEY(id)
-            )";
+            );";
         private const string _errand_statuses_SQLCommand = @"
             CREATE TABLE errand_statuses (
                 id INTEGER,
@@ -153,17 +153,19 @@ namespace Shopfloor.Database.SQLite
                 reason TEXT,
                 PRIMARY KEY(id),
                 FOREIGN KEY(errand_id) REFERENCES errands(id)
-            )";
+            );";
         private const string _errands_parts_SQLCommand = @"
             CREATE TABLE errands_parts (
                 id INTEGER,
                 part_id INTEGER,
                 errand_id INTEGER,
                 amount REAL,
+                ordered_by_id INTEGER,
                 PRIMARY KEY(id),
                 FOREIGN KEY(errand_id) REFERENCES errands(id),
-                FOREIGN KEY(part_id) REFERENCES parts(id)
-            )";
+                FOREIGN KEY(part_id) REFERENCES parts(id),
+                FOREIGN KEY(ordered_by_id) REFERENCES users(id)
+            );";
         private const string _errand_part_statuses_SQLCommand = @"
             CREATE TABLE errand_part_statuses (
                 id INTEGER,
@@ -175,7 +177,7 @@ namespace Shopfloor.Database.SQLite
                 reason TEXT,
                 PRIMARY KEY(id),
                 FOREIGN KEY(errand_part_id) REFERENCES errands_parts(id)
-            )";
+            );";
         public SqliteInitCommands()
         {
             InitCommands =

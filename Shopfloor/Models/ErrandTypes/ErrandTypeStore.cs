@@ -9,24 +9,24 @@ namespace Shopfloor.Models.ErrandTypeModel
     internal class ErrandTypeStore : IDataStore<ErrandType>
     {
         private readonly IServiceProvider _databaseServices;
-        private IEnumerable<ErrandType> _data = [];
+        private List<ErrandType> _data = [];
         public ErrandTypeStore(IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
         }
-        public IEnumerable<ErrandType> Data => _data;
+        public List<ErrandType> Data => _data;
         public bool IsLoaded { get; private set; } = false;
         public Task Load()
         {
             ErrandTypeProvider provider = _databaseServices.GetRequiredService<ErrandTypeProvider>();
-            _data = provider.GetAll().Result;
+            _data = new(provider.GetAll().Result);
             IsLoaded = true;
             return Task.CompletedTask;
         }
         public async Task Reload()
         {
             ErrandTypeProvider provider = _databaseServices.GetRequiredService<ErrandTypeProvider>();
-            _data = await provider.GetAll();
+            _data = new(await provider.GetAll());
         }
     }
 }

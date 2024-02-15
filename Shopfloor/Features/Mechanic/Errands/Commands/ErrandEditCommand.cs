@@ -124,7 +124,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         {
             foreach (ErrandPart errandPart in existingParts)
             {
-                int errandPartId = await _errandPartProvider.Create(new ErrandPart(errandId, errandPart.PartId, errandPart.Amount));
+                int errandPartId = await _errandPartProvider.Create(new ErrandPart(errandId, errandPart.PartId, errandPart.Amount, _currentUserId));
                 SetNewErrandPartStatus(errandPartId, ErrandPartStatus.Status[0]);
             }
         }
