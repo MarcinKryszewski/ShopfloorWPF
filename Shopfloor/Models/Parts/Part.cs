@@ -84,13 +84,13 @@ namespace Shopfloor.Models.PartModel
             _type = type;
             _data.TypeId = type.Id;
         }
-        public void SetProducer(Supplier producer)
+        public void SetProducer(Supplier? producer)
         {
             if (producer is null) return;
             _producer = producer;
             _data.ProducerId = producer.Id;
         }
-        public void SetSupplier(Supplier supplier)
+        public void SetSupplier(Supplier? supplier)
         {
             if (supplier is null) return;
             _supplier = supplier;

@@ -1,3 +1,4 @@
+using Shopfloor.Interfaces;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.PartModel;
 

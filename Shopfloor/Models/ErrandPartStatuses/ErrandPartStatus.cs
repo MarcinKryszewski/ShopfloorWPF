@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Shopfloor.Interfaces;
+using Shopfloor.Models.UserModel;
 
 namespace Shopfloor.Models.ErrandPartStatusModel
 {
@@ -15,6 +17,11 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         public string? Comment => _data.Comment;
         public string? Reason => _data.Reason;
         public int StatusValue;
+        public User? CreatedBy
+        {
+            get => _data.CreatedBy;
+            set => _data.CreatedBy = value;
+        }
         public ErrandPartStatus(int id, int errandPartId, string statusName, DateTime createdDate, int createdById, string? comment = null, string? reason = "SYSTEM")
         {
             _data.Id = id;

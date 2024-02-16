@@ -1,3 +1,4 @@
+using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.PartModel;
@@ -57,6 +58,7 @@ namespace Shopfloor.Models.ErrandPartModel
             }
         }
         public List<ErrandPartStatus> StatusList = [];
+        public IEnumerable<ErrandPartStatus> StatusListDisplay => StatusList;
         private ErrandPartStatus LastStatus => StatusList.Where(status => status.StatusValue >= 0)
                                                 .OrderByDescending(status => status.CreatedDate)
                                                 .First();

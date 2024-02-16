@@ -1,4 +1,5 @@
 ﻿using System;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandStatusModel
 {

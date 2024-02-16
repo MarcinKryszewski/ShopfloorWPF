@@ -1,4 +1,5 @@
 using System;
+using Shopfloor.Models.UserModel;
 
 namespace Shopfloor.Models.ErrandPartStatusModel
 {
@@ -11,6 +12,6 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         public int CreatedById { get; set; }
         public string? Comment { get; set; }
         public string? Reason { get; set; }
-
+        public User? CreatedBy { get; set; }
     }
 }
