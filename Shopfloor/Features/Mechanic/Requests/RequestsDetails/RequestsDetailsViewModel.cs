@@ -88,6 +88,7 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsDetails
         }
         private Task CombineErrandWithParts(PartsStore parts, ErrandStore errands, ErrandPartStore errandParts)
         {
+            _selectedRequest.Request!.Errand!.Parts.Clear();
             foreach (ErrandPart errandPart in errandParts.Data)
             {
                 if (errandPart.ErrandId != _selectedRequest.Request!.ErrandId) continue;

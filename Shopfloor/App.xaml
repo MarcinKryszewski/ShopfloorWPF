@@ -14,6 +14,7 @@
                 <ResourceDictionary Source="Themes/Controls/ComboBoxThemes.xaml" />
                 <ResourceDictionary Source="Themes/Controls/DatePickerThemes.xaml" />
                 <ResourceDictionary Source="Themes/Controls/RadioButtonThemes.xaml" />
+                <ResourceDictionary Source="Themes/Controls/DataGridThemes.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

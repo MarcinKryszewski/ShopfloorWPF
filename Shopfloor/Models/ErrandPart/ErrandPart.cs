@@ -62,22 +62,8 @@ namespace Shopfloor.Models.ErrandPartModel
         private ErrandPartStatus LastStatus => StatusList.Where(status => status.StatusValue >= 0)
                                                 .OrderByDescending(status => status.CreatedDate)
                                                 .First();
-        public int LastStatusValue
-        {
-            get
-            {
-                if (StatusList.Count > 0) return LastStatus.StatusValue;
-                return -1;
-            }
-        }
-        public string LastStatusUpdateDate
-        {
-            get
-            {
-                if (StatusList.Count > 0) return LastStatus.CreatedDate.ToString("dd/MM/yyyy");
-                return "NIGDY";
-            }
-        }
+        public int LastStatusValue => StatusList.Count > 0 ? LastStatus.StatusValue : -1;
+        public string LastStatusUpdateDate => StatusList.Count > 0 ? LastStatus.CreatedDate.ToString("dd/MM/yyyy") : "NIGDY";
         public string LastStatusText => LastStatusValue == -1 ? "ERROR" : ErrandPartStatus.Status[LastStatusValue];
         public int OrderedById => _data.OrderedById;
         public User? OrderedByUser
