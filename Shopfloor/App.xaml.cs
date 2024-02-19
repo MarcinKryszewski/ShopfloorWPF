@@ -42,30 +42,8 @@ namespace Shopfloor
             _mainHost = MainHost.GetHost(_databaseHost.Services, _userHost.Services);
             _mainHost.Start();
 
-            var photo = GetUserPicture("kryszm02");
-
             NavigationService<DashboardViewModel> navigationService = _mainHost.Services.GetRequiredService<NavigationService<DashboardViewModel>>();
             navigationService.Navigate();
-        }
-
-        private BitmapImage GetUserPicture(string userName)
-        {
-            var directoryEntry = new DirectoryEntry("LDAP://YourDomain");
-            var directorySearcher = new DirectorySearcher(directoryEntry);
-            directorySearcher.Filter = string.Format("(&(SAMAccountName={0}))", userName);
-            var user = directorySearcher.FindOne();
-
-            var bytes = user.Properties["thumbnailPhoto"][0] as byte[];
-
-            using (var ms = new MemoryStream(bytes))
-            {
-                var imageSource = new BitmapImage();
-                imageSource.BeginInit();
-                imageSource.StreamSource = ms;
-                imageSource.EndInit();
-
-                return imageSource;
-            }
         }
 
         private void ApplicationStart(object sender, StartupEventArgs e)
