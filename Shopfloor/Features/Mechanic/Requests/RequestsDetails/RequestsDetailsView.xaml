@@ -104,7 +104,6 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Width="auto" Binding="{Binding CreatedBy.FullName}" CanUserResize="False" Header="UTWORZONE PRZEZ" IsReadOnly="True" />
                 <DataGridTextColumn Width="*" Binding="{Binding Comment}" CanUserResize="False" Header="Komentarz" IsReadOnly="True" />
-                <DataGridTextColumn Width="auto" Binding="{Binding Reason}" CanUserResize="False" Header="ŹRÓDŁO" IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>
 
@@ -202,7 +201,7 @@
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="auto" Binding="{Binding Errand.Display.CreatedDateShortString}" CanUserResize="False" Header="Data zamówienia" IsReadOnly="True" />
-                    <DataGridTextColumn Width="auto" Binding="{Binding Amount}" CanUserResize="False" Header="Ilość" IsReadOnly="True" />
+                    <DataGridTextColumn Width="auto" Binding="{Binding AmountText}" CanUserResize="False" Header="Ilość" IsReadOnly="True" />
                     <DataGridTextColumn MinWidth="150" Width="auto" Binding="{Binding Errand.Display.MachineText}" CanUserResize="False" Header="Maszyna" IsReadOnly="True" />
                     <DataGridTextColumn Width="*" Binding="{Binding Errand.Display.DescriptionShort}" CanUserResize="False" Header="Działanie" IsReadOnly="True" />
                 </DataGrid.Columns>
