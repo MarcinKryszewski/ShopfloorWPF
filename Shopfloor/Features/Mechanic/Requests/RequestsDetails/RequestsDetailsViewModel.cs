@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Mechanic.Requests.RequestsList;
 using Shopfloor.Features.Mechanic.Requests.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
@@ -12,6 +14,8 @@ using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.SupplierModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Shared.Commands;
+using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Mechanic.Requests.RequestsDetails
@@ -21,11 +25,13 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsDetails
         private readonly IServiceProvider _mainServices;
         private readonly SelectedRequestStore _selectedRequest;
         public ErrandPart ErrandPart => _selectedRequest.Request!;
+        public ICommand ReturnCommand { get; }
         public RequestsDetailsViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             _mainServices = mainServices;
             Task.Run(() => LoadData(databaseServices));
             _selectedRequest = _mainServices.GetRequiredService<SelectedRequestStore>();
+            ReturnCommand = new NavigateCommand<RequestsListViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsListViewModel>>());
         }
         private async Task LoadData(IServiceProvider databaseServices)
         {

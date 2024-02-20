@@ -304,7 +304,7 @@
                 <DataGridTemplateColumn Width="auto" CanUserResize="False" Header="STATUS" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Border CornerRadius="14" BorderThickness="3" ToolTip="{Binding LastStatusUpdateDate}">
+                            <Border CornerRadius="14" BorderThickness="0" ToolTip="{Binding LastStatusUpdateDate}">
                                 <Label HorizontalContentAlignment="Center" Margin="2,0,2,0" Content="{Binding LastStatusText}" FontWeight="SemiBold" FontSize="12"/>
                                 <Border.Style>
                                     <Style TargetType="Border">

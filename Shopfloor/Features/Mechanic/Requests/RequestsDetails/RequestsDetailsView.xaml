@@ -7,6 +7,7 @@
     <Grid Margin="30,20,20,20">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -69,7 +70,7 @@
                 <DataGridTemplateColumn Width="auto" CanUserResize="False" Header="STATUS" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Border CornerRadius="14" BorderThickness="3" ToolTip="{Binding StatusName}">
+                            <Border CornerRadius="14" BorderThickness="3" ToolTip="{Binding CreatedDateDisplay}">
                                 <Label HorizontalContentAlignment="Center" Margin="2,0,2,0" Content="{Binding StatusName}" FontWeight="SemiBold" FontSize="12"/>
                                 <Border.Style>
                                     <Style TargetType="Border">
@@ -106,9 +107,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-
-
-        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
             <Separator Margin="0, 10,0,0"/>
             <TextBlock Grid.Row="1" Margin="0,10,0,20" HorizontalAlignment="Left" FontSize="24" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple400}" Text="Zadanie" />
             
@@ -157,7 +156,7 @@
                     <DataGridTemplateColumn Width="auto" CanUserResize="False" Header="STATUS" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Border CornerRadius="14" BorderThickness="3" ToolTip="{Binding LastStatusText}">
+                                <Border CornerRadius="14" BorderThickness="3" ToolTip="{Binding LastStatusUpdateDate}">
                                     <Label HorizontalContentAlignment="Center" Margin="2,0,2,0" Content="{Binding LastStatusText}" FontWeight="SemiBold" FontSize="12"/>
                                     <Border.Style>
                                         <Style TargetType="Border">
@@ -191,5 +190,21 @@
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
+
+        <Grid Grid.Row="2" Margin="0 10 0 0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button
+                Grid.Column="1"
+                Width="150"
+                Height="50"
+                Margin="5,0"
+                Command="{Binding Path=ReturnCommand}"
+                Content="WRÓĆ"
+                Style="{StaticResource ResourceKey=ButtonSide}" />
+        </Grid>
     </Grid>
 </UserControl> 

@@ -8,6 +8,7 @@ using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Stores;
 using System;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Features.Mechanic.Errands.Commands
 {
@@ -61,11 +62,13 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
                 SetNewErrandPartStatus(errandPartId);
                 _isPartAdd = true;
             }
-            _ = _databaseServices.GetRequiredService<ErrandPartStore>().Reload();
+            Task.Run(_databaseServices.GetRequiredService<ErrandPartStore>().Reload);
+            Task.Run(_databaseServices.GetRequiredService<ErrandPartStatusStore>().Reload);
         }
         private void AddErrand()
         {
             _currentErrand.ErrandId = CreateErrand();
+            Task.Run(_databaseServices.GetRequiredService<ErrandStore>().Reload);
             SetErrandStatus((int)_currentErrand.ErrandId, ErrandStatusList.NoPartsList);
             AddParts((int)_currentErrand.ErrandId);
             if (_isPartAdd) SetErrandStatus((int)_currentErrand.ErrandId, ErrandStatusList.PartsListCompleted);
@@ -95,6 +98,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
             {
                 ErrandStatus errandStatus = new(errandId, statusName, DateTime.Now);
                 _ = _errandStatusProvider.Create(errandStatus);
+                Task.Run(_databaseServices.GetRequiredService<ErrandStatusStore>().Reload);
             }
         }
     }
