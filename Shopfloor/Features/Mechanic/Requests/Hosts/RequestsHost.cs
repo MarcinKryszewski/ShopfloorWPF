@@ -9,7 +9,7 @@ namespace Shopfloor.Features.Mechanic.Requests.Hosts
 {
     internal sealed class RequestsHost
     {
-        public static IHost GetHost(IServiceProvider databaseServices)
+        public static IHost GetHost(IServiceProvider databaseServices, IServiceProvider userServices)
         {
             return Host
             .CreateDefaultBuilder()
@@ -18,7 +18,7 @@ namespace Shopfloor.Features.Mechanic.Requests.Hosts
                 services.AddSingleton<NavigationStore>();
                 services.AddSingleton<SelectedRequestStore>();
 
-                RequestsNavigationServices.Get(services, databaseServices);
+                RequestsNavigationServices.Get(services, databaseServices, userServices);
             })
             .Build();
         }

@@ -14,7 +14,7 @@ namespace Shopfloor.Services.NavigationServices
         public static void Get(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             GetTasksNavigation(services, databaseServices, userServices);
-            GetRequestsNavigation(services, databaseServices);
+            GetRequestsNavigation(services, databaseServices, userServices);
             GetMinimalStatesNavigation(services);
         }
         private static void GetMinimalStatesNavigation(IServiceCollection services)
@@ -29,9 +29,9 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-        private static void GetRequestsNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        private static void GetRequestsNavigation(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            services.AddTransient((s) => CreatRequestsViewModel(s, databaseServices));
+            services.AddTransient((s) => CreatRequestsViewModel(s, databaseServices, userServices));
             services.AddSingleton<CreateViewModel<RequestsMainViewModel>>((s) => () => s.GetRequiredService<RequestsMainViewModel>());
             services.AddSingleton((s) =>
             {
@@ -55,7 +55,7 @@ namespace Shopfloor.Services.NavigationServices
         }
 
         private static MinimalStatesViewModel CreateMinimalStatesViewModel(IServiceProvider services) => new MinimalStatesViewModel();
-        private static RequestsMainViewModel CreatRequestsViewModel(IServiceProvider services, IServiceProvider databaseServices) => new RequestsMainViewModel(databaseServices);
-        private static ErrandsMainViewModel CreatTasksViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new ErrandsMainViewModel(databaseServices, userServices);
+        private static RequestsMainViewModel CreatRequestsViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new RequestsMainViewModel(databaseServices, userServices);
+        private static ErrandsMainViewModel CreatTasksViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new(databaseServices, userServices);
     }
 }

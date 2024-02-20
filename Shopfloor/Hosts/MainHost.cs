@@ -22,7 +22,7 @@ namespace Shopfloor.Hosts.MainHost
 
                 services.AddSingleton<SidePanelViewModel>(provider =>
                 {
-                    //DELETE AFTER DEVELOPEMENT
+                    //DELETE AFTER DEVELOPEMENT -> FOR BUTTON ADDING TEST DATA
                     return new SidePanelViewModel(provider, databaseServices);
                 });
                 services.AddSingleton<ContentViewModel>();

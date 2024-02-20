@@ -12,6 +12,7 @@ using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
+using Shopfloor.Stores;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,13 +33,15 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
         public ICommand ErrandsAddNavigateCommand { get; }
         public Errand? SelectedErrand { get; set; }
         public ICommand EditErrandCommand { get; }
-        public ErrandsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public Visibility HasAccess { get; } = Visibility.Collapsed;
+        public ErrandsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             _mainServices = mainServices;
             _databaseServices = databaseServices;
             Task.Run(LoadData);
             ErrandsAddNavigateCommand = new NavigateCommand<ErrandsNewViewModel>(_mainServices.GetRequiredService<NavigationService<ErrandsNewViewModel>>());
             EditErrandCommand = new ErrandSetCommand(this, _mainServices);
+            if (userServices.GetRequiredService<CurrentUserStore>().User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
         }
         private async Task LoadData()
         {

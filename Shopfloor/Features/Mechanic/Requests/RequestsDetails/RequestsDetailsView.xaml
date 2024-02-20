@@ -8,6 +8,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -107,7 +108,7 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <Separator Margin="0, 10,0,0"/>
             <TextBlock Grid.Row="1" Margin="0,10,0,20" HorizontalAlignment="Left" FontSize="24" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple400}" Text="Zadanie" />
             
@@ -191,7 +192,24 @@
             </DataGrid>
         </StackPanel>
 
-        <Grid Grid.Row="2" Margin="0 10 0 0" Grid.ColumnSpan="2">
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <Separator Margin="0, 10,0,0"/>
+            <TextBlock Grid.Row="1" Margin="0,10,0,20" HorizontalAlignment="Left" FontSize="24" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple400}" Text="Historia" />
+            
+            <DataGrid ItemsSource="{Binding HistoricalData}" AutoGenerateColumns="False" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}" CellStyle="{DynamicResource DataGridCellMain}" Style="{DynamicResource DataGridMain}">
+                <DataGrid.RowStyle>
+                    <Style BasedOn="{StaticResource DataGridRowMain}" TargetType="DataGridRow" />
+                </DataGrid.RowStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="auto" Binding="{Binding Errand.Display.CreatedDateShortString}" CanUserResize="False" Header="Data zamówienia" IsReadOnly="True" />
+                    <DataGridTextColumn Width="auto" Binding="{Binding Amount}" CanUserResize="False" Header="Ilość" IsReadOnly="True" />
+                    <DataGridTextColumn MinWidth="150" Width="auto" Binding="{Binding Errand.Display.MachineText}" CanUserResize="False" Header="Maszyna" IsReadOnly="True" />
+                    <DataGridTextColumn Width="*" Binding="{Binding Errand.Display.DescriptionShort}" CanUserResize="False" Header="Działanie" IsReadOnly="True" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        <Grid Grid.Row="3" Margin="0 10 0 0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="auto" />

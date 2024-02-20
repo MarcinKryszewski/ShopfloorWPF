@@ -21,6 +21,7 @@ using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
+using Shopfloor.Stores;
 
 namespace Shopfloor.Features.Mechanic.Requests.RequestsList
 {
@@ -38,7 +39,8 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
         public ICollectionView Parts => CollectionViewSource.GetDefaultView(_parts);
         public ICommand EditCommand { get; }
         public ICommand DetailsCommand { get; }
-        public RequestsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public Visibility HasAccess { get; } = Visibility.Collapsed;
+        public RequestsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             _mainServices = mainServices;
             _databaseServices = databaseServices;
@@ -50,6 +52,8 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
 
             EditCommand = new NavigateCommand<RequestsEditViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsEditViewModel>>());
             DetailsCommand = new NavigateCommand<RequestsDetailsViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsDetailsViewModel>>());
+
+            if (userServices.GetRequiredService<CurrentUserStore>().User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
         }
         #region LOAD_DATA
         private async Task LoadData()

@@ -13,9 +13,9 @@ namespace Shopfloor.Features.Mechanic.Requests
     {
         public readonly NavigationStore _navigationStore;
         public ViewModelBase? Content => _navigationStore.CurrentViewModel;
-        public RequestsMainViewModel(IServiceProvider databaseServices)
+        public RequestsMainViewModel(IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            IHost host = RequestsHost.GetHost(databaseServices);
+            IHost host = RequestsHost.GetHost(databaseServices, userServices);
             host.Start();
             IServiceProvider services = host.Services;
 

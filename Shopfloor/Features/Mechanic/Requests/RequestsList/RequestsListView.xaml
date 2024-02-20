@@ -358,7 +358,8 @@
                                 <Button
                                     Margin="5,0,0,0"
                                     Command="{Binding Path=DataContext.EditCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                    Style="{StaticResource gridEditButton}">
+                                    Style="{StaticResource gridEditButton}"
+                                    Visibility="{Binding Path=DataContext.HasAccess, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
                                     <TextBlock
                                         FontFamily="Segoe MDL2 Assets"
                                         Style="{StaticResource gridButtonIcon}"

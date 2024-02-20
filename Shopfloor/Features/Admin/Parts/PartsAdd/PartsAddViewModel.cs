@@ -35,7 +35,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
         private Supplier? _producer;
         private Supplier? _supplier;
         private PartType? _type;
-        private string _unit = "SZT";
+        private string? _unit;
         #endregion modelFields
         public PartsAddViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
@@ -72,7 +72,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
                 OnPropertyChanged(nameof(Details));
             }
         }
-        public string Unit
+        public string? Unit
         {
             get => _unit;
             set

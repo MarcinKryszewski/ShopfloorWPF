@@ -25,6 +25,7 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsDetails
         private readonly IServiceProvider _mainServices;
         private readonly SelectedRequestStore _selectedRequest;
         public ErrandPart ErrandPart => _selectedRequest.Request!;
+        public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
         public ICommand ReturnCommand { get; }
         public RequestsDetailsViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
@@ -45,6 +46,7 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsDetails
 
             await LoadStores(suppliers, users, parts, errandPartStatuses, errands, errandTypes, errandPartStore);
             await CombineData(suppliers, users, parts, errandPartStatuses, errands, errandTypes, errandPartStore);
+            LoadHistoricalData(errandPartStore);
         }
         #region FETCH_DATA
         private async Task LoadStores(SuppliersStore suppliers, UserStore users, PartsStore parts, ErrandPartStatusStore errandPartStatuses, ErrandStore errands, ErrandTypeStore errandTypes, ErrandPartStore errandPartStore)
@@ -112,5 +114,9 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsDetails
             return Task.CompletedTask;
         }
         #endregion COMBINE_DATA
+        private void LoadHistoricalData(ErrandPartStore errandParts)
+        {
+            HistoricalData = errandParts.Data.Where(part => part.PartId == _selectedRequest.Request!.PartId);
+        }
     }
 }

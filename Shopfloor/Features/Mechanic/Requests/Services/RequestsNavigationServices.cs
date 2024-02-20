@@ -11,9 +11,9 @@ namespace Shopfloor.Features.Mechanic.Requests.Services
 {
     internal sealed class RequestsNavigationServices
     {
-        public static void Get(IServiceCollection services, IServiceProvider databaseServices)
+        public static void Get(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            GetListNavigation(services, databaseServices);
+            GetListNavigation(services, databaseServices, userServices);
             GetDetailsNavigation(services, databaseServices);
             GetEditNavigation(services, databaseServices);
         }
@@ -29,9 +29,9 @@ namespace Shopfloor.Features.Mechanic.Requests.Services
                 );
             });
         }
-        private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            services.AddTransient((s) => CreateListViewModel(s, databaseServices));
+            services.AddTransient((s) => CreateListViewModel(s, databaseServices, userServices));
             services.AddSingleton<CreateViewModel<RequestsListViewModel>>((s) => () => s.GetRequiredService<RequestsListViewModel>());
             services.AddSingleton((s) =>
             {
@@ -53,7 +53,7 @@ namespace Shopfloor.Features.Mechanic.Requests.Services
                 );
             });
         }
-        private static RequestsListViewModel CreateListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices) => new(mainServices, databaseServices);
+        private static RequestsListViewModel CreateListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices) => new(mainServices, databaseServices, userServices);
         private static RequestsEditViewModel CreateEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices) => new();
         private static RequestsDetailsViewModel CreateDetailsViewModel(IServiceProvider mainServices, IServiceProvider databaseServices) => new(mainServices, databaseServices);
     }

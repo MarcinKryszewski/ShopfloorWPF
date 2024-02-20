@@ -36,7 +36,7 @@ namespace Shopfloor.Models.PartModel
             string? details,
             int? producerId,
             int? supplierId,
-            string unit = _defaultUnit)
+            string? unit = _defaultUnit)
         {
             _data.NamePl = namePl ?? string.Empty;
             _data.NameOriginal = nameOriginal ?? string.Empty;
@@ -46,7 +46,7 @@ namespace Shopfloor.Models.PartModel
             _data.Details = details ?? string.Empty;
             _data.ProducerId = producerId;
             _data.SupplierId = supplierId;
-            _data.Unit = unit;
+            _data.Unit = unit ?? _defaultUnit;
         }
         public Part(
             int? id,
@@ -58,7 +58,7 @@ namespace Shopfloor.Models.PartModel
             string? details,
             int? producerId,
             int? supplierId,
-            string unit = _defaultUnit)
+            string? unit = _defaultUnit)
         {
             _data.Id = id;
             _data.NamePl = namePl ?? string.Empty;
@@ -69,7 +69,7 @@ namespace Shopfloor.Models.PartModel
             _data.Details = details ?? string.Empty;
             _data.ProducerId = producerId;
             _data.SupplierId = supplierId;
-            _data.Unit = unit;
+            _data.Unit = unit ?? _defaultUnit;
         }
         private string SetInputValue()
         {

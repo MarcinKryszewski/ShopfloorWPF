@@ -17,8 +17,8 @@ namespace Shopfloor.Models.PartModel
         #region SQLCommands
 
         private const string _createSQL = @"
-            INSERT INTO parts (name_pl, name_original, type_id, indeks, number, details, producer_id, supplier_id)
-            VALUES (@NamePl, @NameOriginal, @TypeId, @Index, @Number, @Details, @ProducerId, @SupplierId)
+            INSERT INTO parts (name_pl, name_original, type_id, indeks, number, details, producer_id, supplier_id, unit)
+            VALUES (@NamePl, @NameOriginal, @TypeId, @Index, @Number, @Details, @ProducerId, @SupplierId, @Unit)
             ";
 
         private const string _getOneSQL = @"
@@ -109,7 +109,8 @@ namespace Shopfloor.Models.PartModel
                 Number = item.Number,
                 Details = item.Details,
                 ProducerId = item.ProducerId,
-                SupplierId = item.SupplierId
+                SupplierId = item.SupplierId,
+                Unit = item.Unit
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 

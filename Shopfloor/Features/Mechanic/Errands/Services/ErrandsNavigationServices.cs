@@ -14,14 +14,14 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            GetListNavigation(services, databaseServices);
+            GetListNavigation(services, databaseServices, userServices);
             GetAddNavigation(services, databaseServices, userServices);
             GetEditNavigation(services, databaseServices, userServices);
             GetPartsListNavigation(services, databaseServices);
         }
-        private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            services.AddTransient((s) => CreateListViewModel(s, databaseServices));
+            services.AddTransient((s) => CreateListViewModel(s, databaseServices, userServices));
             services.AddSingleton<CreateViewModel<ErrandsListViewModel>>((s) => () => s.GetRequiredService<ErrandsListViewModel>());
             services.AddSingleton((s) =>
             {
@@ -57,7 +57,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
         }
         private static void GetPartsListNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreateartsListViewModel(s, databaseServices));
+            services.AddTransient((s) => CreatePartsListNavigation(s, databaseServices));
             services.AddSingleton<CreateViewModel<ErrandPartsListViewModel>>((s) => () => s.GetRequiredService<ErrandPartsListViewModel>());
             services.AddSingleton((s) =>
             {
@@ -67,9 +67,9 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
                 );
             });
         }
-        private static ErrandsListViewModel CreateListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        private static ErrandsListViewModel CreateListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            return new ErrandsListViewModel(mainServices, databaseServices);
+            return new ErrandsListViewModel(mainServices, databaseServices, userServices);
         }
         private static ErrandsEditViewModel CreateEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
         {
@@ -79,7 +79,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
         {
             return new ErrandsNewViewModel(mainServices, databaseServices, userServices);
         }
-        private static ErrandPartsListViewModel CreateartsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        private static ErrandPartsListViewModel CreatePartsListNavigation(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             return new ErrandPartsListViewModel(mainServices, databaseServices);
         }
