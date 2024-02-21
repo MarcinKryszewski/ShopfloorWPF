@@ -8,7 +8,7 @@ using Shopfloor.Features.Dashboard;
 using Shopfloor.Features.Mechanic.Errands;
 using Shopfloor.Features.Mechanic.MinimalStates;
 using Shopfloor.Features.Mechanic.Requests;
-using Shopfloor.Features.Plannist.ControlPanel;
+using Shopfloor.Features.Plannist.PlannistDashboard;
 using Shopfloor.Features.Plannist.Deploys;
 using Shopfloor.Features.Plannist.Orders;
 using Shopfloor.Features.Plannist.Reports;
@@ -57,7 +57,7 @@ namespace Shopfloor.Layout.SidePanel
 
         #region Plannist
 
-        public ICommand NavigateControlPanelCommand { get; }
+        public ICommand NavigatePlannistDashboardMainCommand { get; }
         public ICommand NavigateOrdersCommand { get; }
         public ICommand NavigateDeploysCommand { get; }
         public ICommand NavigateReservationsCommand { get; }
@@ -90,7 +90,7 @@ namespace Shopfloor.Layout.SidePanel
             NavigateRequestsCommand = new NavigateCommand<RequestsMainViewModel>(mainServices.GetRequiredService<NavigationService<RequestsMainViewModel>>());
             NavigateMinimalStatesCommand = new NavigateCommand<MinimalStatesViewModel>(mainServices.GetRequiredService<NavigationService<MinimalStatesViewModel>>());
 
-            NavigateControlPanelCommand = new NavigateCommand<ControlPanelViewModel>(mainServices.GetRequiredService<NavigationService<ControlPanelViewModel>>());
+            NavigatePlannistDashboardMainCommand = new NavigateCommand<PlannistDashboardMainViewModel>(mainServices.GetRequiredService<NavigationService<PlannistDashboardMainViewModel>>());
             NavigateOrdersCommand = new NavigateCommand<OrdersViewModel>(mainServices.GetRequiredService<NavigationService<OrdersViewModel>>());
             NavigateDeploysCommand = new NavigateCommand<DeploysViewModel>(mainServices.GetRequiredService<NavigationService<DeploysViewModel>>());
             NavigateReservationsCommand = new NavigateCommand<ReservationsViewModel>(mainServices.GetRequiredService<NavigationService<ReservationsViewModel>>());

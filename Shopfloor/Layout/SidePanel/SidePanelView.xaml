@@ -111,7 +111,7 @@
                 <!--#region Planista-->
                 <StackPanel Visibility="{Binding Path=HasAdminRole}">
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Planista" />
-                    <Button Command="{Binding Path=NavigateControlPanelCommand}">
+                    <Button Command="{Binding Path=NavigatePlannistDashboardMainCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border
                                 Width="24"

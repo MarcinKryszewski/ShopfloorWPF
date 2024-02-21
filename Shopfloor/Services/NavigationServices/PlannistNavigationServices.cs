@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Plannist.ControlPanel;
+using Shopfloor.Features.Plannist.PlannistDashboard;
 using Shopfloor.Features.Plannist.Deploys;
 using Shopfloor.Features.Plannist.Orders;
 using Shopfloor.Features.Plannist.Reports;
@@ -15,22 +15,22 @@ namespace Shopfloor.Services.NavigationServices
     {
         internal static void Get(IServiceCollection services)
         {
-            GetControlPanelNavigation(services);
+            GetPlannistDashboardMainNavigation(services);
             GetDeploysNavigation(services);
             GetOrdersNavigation(services);
             GetReportsNavigation(services);
             GetReservationsNavigation(services);
         }
 
-        private static void GetControlPanelNavigation(IServiceCollection services)
+        private static void GetPlannistDashboardMainNavigation(IServiceCollection services)
         {
-            services.AddTransient((s) => CreateControlPanelViewModel(s));
-            services.AddSingleton<CreateViewModel<ControlPanelViewModel>>((s) => () => s.GetRequiredService<ControlPanelViewModel>());
+            services.AddTransient((s) => CreatePlannistDashboardMainViewModel(s));
+            services.AddSingleton<CreateViewModel<PlannistDashboardMainViewModel>>((s) => () => s.GetRequiredService<PlannistDashboardMainViewModel>());
             services.AddSingleton((s) =>
             {
-                return new NavigationService<ControlPanelViewModel>(
+                return new NavigationService<PlannistDashboardMainViewModel>(
                     s.GetRequiredService<NavigationStore>(),
-                    s.GetRequiredService<CreateViewModel<ControlPanelViewModel>>()
+                    s.GetRequiredService<CreateViewModel<PlannistDashboardMainViewModel>>()
                 );
             });
         }
@@ -87,9 +87,9 @@ namespace Shopfloor.Services.NavigationServices
             });
         }
 
-        private static ControlPanelViewModel CreateControlPanelViewModel(IServiceProvider services)
+        private static PlannistDashboardMainViewModel CreatePlannistDashboardMainViewModel(IServiceProvider services)
         {
-            return new ControlPanelViewModel(services);
+            return new PlannistDashboardMainViewModel(services);
         }
 
         private static DeploysViewModel CreateDeploysViewModel(IServiceProvider services)

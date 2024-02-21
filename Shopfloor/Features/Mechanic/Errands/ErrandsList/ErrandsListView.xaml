@@ -661,22 +661,40 @@
                         </Style>
                     </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Display.PartsStatus}"
-                    Header="Części"
-                    IsReadOnly="True">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center" />
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                    <DataGridTextColumn.HeaderStyle>
-                        <Style BasedOn="{StaticResource DataGridColumnHeaderMain}" TargetType="DataGridColumnHeader">
-                            <Setter Property="HorizontalAlignment" Value="Center" />
-                        </Style>
-                    </DataGridTextColumn.HeaderStyle>
-                </DataGridTextColumn>
+                <DataGridTemplateColumn Width="auto" CanUserResize="False" Header="STATUS" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="14" BorderThickness="0" ToolTip="{Binding Display.LastStatusDate}">
+                                <Label HorizontalContentAlignment="Center" Margin="2,0,2,0" Content="{Binding Display.PartsStatus}" FontWeight="SemiBold" FontSize="12"/>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Setter Property="Background" Value="White"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Display.PartsStatus}" Value="OFERTOWANIE">
+                                                <Setter Property="Background" Value="#D64E12"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Display.PartsStatus}" Value="ZATWIERDZANIE">
+                                                <Setter Property="Background" Value="#F9A52C"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Display.PartsStatus}" Value="ZAMAWIANIE">
+                                                <Setter Property="Background" Value="#EFDF48"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Display.PartsStatus}" Value="DOSTARCZANIE">
+                                                <Setter Property="Background" Value="#60DBE8"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Display.PartsStatus}" Value="POBIERANIE">
+                                                <Setter Property="Background" Value="#16A4D8"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Display.PartsStatus}" Value="ZAKOŃCZONE">
+                                                <Setter Property="Background" Value="#8BD346"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn
                     Width="*"
                     Binding="{Binding Display.OwnerText}"

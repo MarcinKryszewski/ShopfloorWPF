@@ -18,6 +18,7 @@ using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Shared;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
@@ -55,7 +56,6 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
 
             if (userServices.GetRequiredService<CurrentUserStore>().User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
         }
-        #region LOAD_DATA
         private async Task LoadData()
         {
             Application.Current.Dispatcher.Invoke(_parts.Clear);
@@ -68,93 +68,30 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
             ErrandPartStatusStore partsStatusStore = _databaseServices.GetRequiredService<ErrandPartStatusStore>();
             PartTypesStore partTypesStore = _databaseServices.GetRequiredService<PartTypesStore>();
 
-            await LoadStores(errandStore, userStore, machineStore, errandPartStore, partsStore, partsStatusStore, partTypesStore);
-            await CombineData(errandStore, userStore, machineStore, errandPartStore, partsStore, partsStatusStore, partTypesStore);
+            await LoadStores(errandStore, errandPartStore, partsStore);
+            await CombineData(errandStore, errandPartStore, partsStore);
             await FillLists(errandPartStore);
 
             Application.Current.Dispatcher.Invoke(Parts.Refresh);
         }
-        #region FETCH_DATA
-        private static async Task LoadStores(ErrandStore errandStore, UserStore userStore, MachineStore machineStore, ErrandPartStore errandPartStore, PartsStore partsStore, ErrandPartStatusStore partsStatusStore, PartTypesStore partTypesStore)
+        private static async Task LoadStores(ErrandStore errandStore, ErrandPartStore errandPartStore, PartsStore partsStore)
         {
             List<Task> tasks = [];
-            if (!errandStore.IsLoaded) tasks.Add(LoadStore(errandStore));
-            if (!userStore.IsLoaded) tasks.Add(LoadStore(userStore));
-            if (!machineStore.IsLoaded) tasks.Add(LoadStore(machineStore));
-            if (!errandPartStore.IsLoaded) tasks.Add(LoadStore(errandPartStore));
-            if (!partsStore.IsLoaded) tasks.Add(LoadStore(partsStore));
-            if (!partsStatusStore.IsLoaded) tasks.Add(LoadStore(partsStatusStore));
-            if (!partTypesStore.IsLoaded) tasks.Add(LoadStore(partTypesStore));
+            tasks.Add(DataStore.LoadData(errandStore));
+            tasks.Add(DataStore.LoadData(errandPartStore));
+            tasks.Add(DataStore.LoadData(partsStore));
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
-        private static Task LoadStore<T>(IDataStore<T> dataStore)
+        private async Task CombineData(ErrandStore errandStore, ErrandPartStore errandPartStore, PartsStore partsStore)
         {
-            dataStore.Load();
-            return Task.CompletedTask;
+            List<Task> tasks = [];
+
+            tasks.Add(errandStore.CombineData());
+            tasks.Add(errandPartStore.CombineData());
+            tasks.Add(partsStore.CombineData());
+
+            if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
-        #endregion FETCH_DATA        
-        #region COMBINE_DATA
-        private Task CombineData(ErrandStore errandStore, UserStore userStore, MachineStore machineStore, ErrandPartStore errandPartStore, PartsStore partsStore, ErrandPartStatusStore partsStatusStore, PartTypesStore partTypesStore)
-        {
-            CombineErrandWithMachine(errandStore, machineStore);
-            CombineErrandPartWithErrand(errandStore, errandPartStore);
-            CombineErrandPartWithPart(errandPartStore, partsStore);
-            CombineErrandPartWithStatus(errandPartStore, partsStatusStore);
-            CombinePartWithType(partsStore, partTypesStore);
-            CombineErrandPartWithUser(errandPartStore, userStore);
-            return Task.CompletedTask;
-        }
-        private Task CombineErrandPartWithStatus(ErrandPartStore errandPartStore, ErrandPartStatusStore partsStatusStore)
-        {
-            foreach (ErrandPart errandPart in errandPartStore.Data)
-            {
-                errandPart.StatusList.Clear();
-                errandPart.StatusList.AddRange(partsStatusStore.Data.Where(p => p.ErrandPartId == errandPart.Id));
-            }
-            return Task.CompletedTask;
-        }
-        private static Task CombineErrandWithMachine(ErrandStore errandStore, MachineStore machineStore)
-        {
-            foreach (Errand errand in errandStore.Data)
-            {
-                errand.Machine = machineStore.Data.FirstOrDefault(m => m.Id == errand.MachineId);
-            }
-            return Task.CompletedTask;
-        }
-        private Task CombineErrandPartWithErrand(ErrandStore errandStore, ErrandPartStore errandPartStore)
-        {
-            foreach (ErrandPart errandPart in errandPartStore.Data)
-            {
-                errandPart.Errand = errandStore.Data.FirstOrDefault(e => e.Id == errandPart.ErrandId);
-            }
-            return Task.CompletedTask;
-        }
-        private Task CombineErrandPartWithUser(ErrandPartStore errandPartStore, UserStore userStore)
-        {
-            foreach (ErrandPart errandPart in errandPartStore.Data)
-            {
-                errandPart.OrderedByUser = userStore.Data.FirstOrDefault(u => u.Id == errandPart.OrderedById);
-            }
-            return Task.CompletedTask;
-        }
-        private Task CombineErrandPartWithPart(ErrandPartStore errandPartStore, PartsStore partsStore)
-        {
-            foreach (ErrandPart errandPart in errandPartStore.Data)
-            {
-                errandPart.Part = partsStore.Data.FirstOrDefault(p => p.Id == errandPart.PartId);
-            }
-            return Task.CompletedTask;
-        }
-        private Task CombinePartWithType(PartsStore partsStore, PartTypesStore partTypesStore)
-        {
-            foreach (Part part in partsStore.Data)
-            {
-                part.SetType(partTypesStore.Data.FirstOrDefault(type => type.Id == part.TypeId));
-            }
-            return Task.CompletedTask;
-        }
-        #endregion COMBINE_DATA        
-        #region FILL_LISTS
         private async Task FillLists(ErrandPartStore errandPartStore)
         {
             List<Task> tasks = [];
@@ -169,7 +106,5 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
             }
             return Task.CompletedTask;
         }
-        #endregion FILL_LISTS
-        #endregion LOAD_DATA
     }
 }

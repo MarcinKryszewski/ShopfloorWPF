@@ -25,6 +25,7 @@ namespace Shopfloor.Models.ErrandModel
         public string MachineText => _errand.Machine?.Path ?? _machineNotAssigned;
         public string OwnerText => _errand.Responsible?.FullName ?? _ownerNotAssigned;
         public string LastStatusName => LastStatus?.StatusName ?? _statusNotSet;
+        public string LastStatusDate => LastStatus?.SetDate.ToString("dd/MM/yyyy") ?? "";
         public string PartsStatus => GetPartsStatus();
         public string ExpectedDateShortString => _errand.ExpectedDate?.Date.ToString("dd.MM.yyyy") ?? _expectedDateNotAssigned;
         public string DescriptionShort => _errand.Description.Length > _maxDescriptionLength ? _errand.Description[.._maxDescriptionLength] + "..." : _errand.Description;

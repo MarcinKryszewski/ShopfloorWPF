@@ -49,32 +49,21 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
             Application.Current.Dispatcher.Invoke(_errands.Clear);
 
             ErrandStore errandStore = _databaseServices.GetRequiredService<ErrandStore>();
-            UserStore userStore = _databaseServices.GetRequiredService<UserStore>();
-            MachineStore machineStore = _databaseServices.GetRequiredService<MachineStore>();
             ErrandPartStore errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
             PartsStore partsStore = _databaseServices.GetRequiredService<PartsStore>();
-            ErrandStatusStore errandStatusStore = _databaseServices.GetRequiredService<ErrandStatusStore>();
-            ErrandPartStatusStore partsStatusStore = _databaseServices.GetRequiredService<ErrandPartStatusStore>();
-            ErrandTypeStore errandTypeStore = _databaseServices.GetRequiredService<ErrandTypeStore>();
 
-            await LoadStores(errandStore, userStore, machineStore, errandPartStore, partsStore, partsStatusStore, errandTypeStore, errandStatusStore);
+            await LoadStores(errandStore, partsStore);
             await CombineData(errandStore, errandPartStore);
             await FillErrandList(errandStore);
 
             Application.Current.Dispatcher.Invoke(Errands.Refresh);
         }
-        private async Task LoadStores(ErrandStore errandStore, UserStore userStore, MachineStore machineStore, ErrandPartStore errandPartStore, PartsStore partsStore, ErrandPartStatusStore partsStatusStore, ErrandTypeStore errandTypeStore, ErrandStatusStore errandStatusStore)
+        private async Task LoadStores(ErrandStore errandStore, PartsStore partsStore)
         {
             List<Task> tasks = [];
 
             if (!errandStore.IsLoaded) tasks.Add(LoadStore(errandStore));
-            if (!userStore.IsLoaded) tasks.Add(LoadStore(userStore));
-            if (!machineStore.IsLoaded) tasks.Add(LoadStore(machineStore));
-            if (!errandPartStore.IsLoaded) tasks.Add(LoadStore(errandPartStore));
             if (!partsStore.IsLoaded) tasks.Add(LoadStore(partsStore));
-            if (!partsStatusStore.IsLoaded) tasks.Add(LoadStore(partsStatusStore));
-            if (!errandTypeStore.IsLoaded) tasks.Add(LoadStore(errandTypeStore));
-            if (!errandStatusStore.IsLoaded) tasks.Add(LoadStore(errandStatusStore));
 
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }

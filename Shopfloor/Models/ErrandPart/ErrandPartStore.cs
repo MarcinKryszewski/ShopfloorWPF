@@ -1,6 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Interfaces;
+using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartStatusModel;
+using Shopfloor.Models.MachineModel;
+using Shopfloor.Models.PartModel;
+using Shopfloor.Models.UserModel;
+using Shopfloor.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +24,10 @@ namespace Shopfloor.Models.ErrandPartModel
         public List<ErrandPart> Data => new(_data);
         public bool IsLoaded { get; private set; }
         public bool HasStatuses { get; private set; }
+        public bool HasParts { get; private set; }
+        public bool HasUsers { get; private set; }
+        public bool HasErrands { get; private set; }
+
         public Task Load()
         {
             ErrandPartProvider provider = _databaseServices.GetRequiredService<ErrandPartProvider>();
@@ -36,19 +45,48 @@ namespace Shopfloor.Models.ErrandPartModel
             List<Task> tasks = [];
 
             if (!HasStatuses) tasks.Add(SetStatuses());
+            if (!HasParts) tasks.Add(SetParts());
+            if (!HasUsers) tasks.Add(SetUsers());
+            if (!HasErrands) tasks.Add(SetErrands());
 
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
-        private Task SetStatuses()
+        private async Task SetStatuses()
         {
-            List<ErrandPartStatus> statuses = _databaseServices.GetRequiredService<ErrandPartStatusStore>().Data;
+            List<ErrandPartStatus> statuses = await DataStore.GetData(_databaseServices.GetRequiredService<ErrandPartStatusStore>());
             foreach (ErrandPart errandPart in _data)
             {
                 errandPart.StatusList.Clear();
                 errandPart.StatusList.AddRange(statuses.Where(status => status.ErrandPartId == errandPart.Id));
             }
             HasStatuses = true;
-            return Task.CompletedTask;
+        }
+        private async Task SetParts()
+        {
+            List<Part> parts = await DataStore.GetData(_databaseServices.GetRequiredService<PartsStore>());
+            foreach (ErrandPart errandPart in _data)
+            {
+                errandPart.Part = parts.FirstOrDefault(part => part.Id == errandPart.PartId);
+            }
+            HasParts = true;
+        }
+        private async Task SetUsers()
+        {
+            List<User> users = await DataStore.GetData(_databaseServices.GetRequiredService<UserStore>());
+            foreach (ErrandPart errandPart in _data)
+            {
+                errandPart.OrderedByUser = users.FirstOrDefault(user => user.Id == errandPart.OrderedById);
+            }
+            HasUsers = true;
+        }
+        private async Task SetErrands()
+        {
+            List<Errand> errands = await DataStore.GetData(_databaseServices.GetRequiredService<ErrandStore>());
+            foreach (ErrandPart errandPart in _data)
+            {
+                errandPart.Errand = errands.FirstOrDefault(errand => errand.Id == errandPart.ErrandId);
+            }
+            HasErrands = true;
         }
     }
 }
