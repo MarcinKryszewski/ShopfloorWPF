@@ -237,7 +237,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsEdit
             Errand? errand = _selectedErrand.SelectedErrand;
             if (errand == null) return;
 
-            SelectedType = errandTypeStore.Data.First((t) => t.Id == errand.ErrandTypeId);
+            SelectedType = errandTypeStore.Data.First((t) => t.Id == errand.TypeId);
             SelectedMachine = machineStore.Data.First((m) => m.Id == errand.MachineId);
             SelectedDate = errand.ExpectedDate;
             SapNumber = errand.SapNumber;

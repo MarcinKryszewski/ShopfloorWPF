@@ -1,10 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Interfaces;
 
-
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Shopfloor.Models.PartTypeModel
@@ -33,6 +31,11 @@ namespace Shopfloor.Models.PartTypeModel
         {
             PartTypeProvider provider = _databaseServices.GetRequiredService<PartTypeProvider>();
             _data = new(await provider.GetAll());
+        }
+
+        public Task CombineData()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Shopfloor.Models.ErrandModel
             _display = new(this);
         }
         public ErrandDisplay Display => _display;
-        public List<ErrandStatus> ErrandStatuses => _errandStatuses;
+        public List<ErrandStatus> Statuses => _errandStatuses;
         public void AddStatus(ErrandStatus status) => _errandStatuses.Add(status);
         public List<ErrandPart> Parts => _parts;
     }
@@ -68,7 +68,7 @@ namespace Shopfloor.Models.ErrandModel
                 _data.Description = value;
             }
         }
-        public int? ErrandTypeId => _data.ErrandTypeId;
+        public int? TypeId => _data.ErrandTypeId;
         public DateTime? ExpectedDate
         {
             get => _data.ExpectedDate;

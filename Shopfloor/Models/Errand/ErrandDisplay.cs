@@ -20,7 +20,7 @@ namespace Shopfloor.Models.ErrandModel
         {
             _errand = errand;
         }
-        private ErrandStatus? LastStatus => _errand.ErrandStatuses.OrderByDescending(es => es.Id).FirstOrDefault();
+        private ErrandStatus? LastStatus => _errand.Statuses.OrderByDescending(es => es.Id).FirstOrDefault();
 
         public string MachineText => _errand.Machine?.Path ?? _machineNotAssigned;
         public string OwnerText => _errand.Responsible?.FullName ?? _ownerNotAssigned;

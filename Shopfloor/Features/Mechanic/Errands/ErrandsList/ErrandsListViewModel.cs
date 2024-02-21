@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Errands.Commands;
 using Shopfloor.Features.Mechanic.Errands.ErrandsNew;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
@@ -57,104 +58,40 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
             ErrandTypeStore errandTypeStore = _databaseServices.GetRequiredService<ErrandTypeStore>();
 
             await LoadStores(errandStore, userStore, machineStore, errandPartStore, partsStore, partsStatusStore, errandTypeStore, errandStatusStore);
-            await CombineData(errandStore, userStore, machineStore, errandTypeStore, errandStatusStore, errandPartStore, partsStatusStore);
+            await CombineData(errandStore, errandPartStore);
             await FillErrandList(errandStore);
 
             Application.Current.Dispatcher.Invoke(Errands.Refresh);
         }
-        #region LOAD_DATA
         private async Task LoadStores(ErrandStore errandStore, UserStore userStore, MachineStore machineStore, ErrandPartStore errandPartStore, PartsStore partsStore, ErrandPartStatusStore partsStatusStore, ErrandTypeStore errandTypeStore, ErrandStatusStore errandStatusStore)
         {
             List<Task> tasks = [];
-            if (!errandStore.IsLoaded) tasks.Add(LoadErrands(errandStore));
-            if (!userStore.IsLoaded) tasks.Add(LoadUsers(userStore));
-            if (!machineStore.IsLoaded) tasks.Add(LoadMachines(machineStore));
-            if (!errandPartStore.IsLoaded) tasks.Add(LoadErrandParts(errandPartStore));
-            if (!partsStore.IsLoaded) tasks.Add(LoadParts(partsStore));
-            if (!partsStatusStore.IsLoaded) tasks.Add(LoadPartsStatus(partsStatusStore));
-            if (!errandTypeStore.IsLoaded) tasks.Add(LoadErrandTypes(errandTypeStore));
-            if (!errandStatusStore.IsLoaded) tasks.Add(LoadErrandStatusStore(errandStatusStore));
+
+            if (!errandStore.IsLoaded) tasks.Add(LoadStore(errandStore));
+            if (!userStore.IsLoaded) tasks.Add(LoadStore(userStore));
+            if (!machineStore.IsLoaded) tasks.Add(LoadStore(machineStore));
+            if (!errandPartStore.IsLoaded) tasks.Add(LoadStore(errandPartStore));
+            if (!partsStore.IsLoaded) tasks.Add(LoadStore(partsStore));
+            if (!partsStatusStore.IsLoaded) tasks.Add(LoadStore(partsStatusStore));
+            if (!errandTypeStore.IsLoaded) tasks.Add(LoadStore(errandTypeStore));
+            if (!errandStatusStore.IsLoaded) tasks.Add(LoadStore(errandStatusStore));
+
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
-        private Task LoadErrandStatusStore(ErrandStatusStore errandStatusStore)
+        private static Task LoadStore<T>(IDataStore<T> dataStore)
         {
-            errandStatusStore.Load();
+            dataStore.Load();
             return Task.CompletedTask;
         }
-        private Task LoadErrandParts(ErrandPartStore errandPartStore)
+        private async Task CombineData(ErrandStore errandStore, ErrandPartStore errandParts)
         {
-            errandPartStore.Load();
-            return Task.CompletedTask;
-        }
-        private Task LoadErrandTypes(ErrandTypeStore errandTypeStore)
-        {
-            errandTypeStore.Load();
-            return Task.CompletedTask;
-        }
-        private Task LoadUsers(UserStore userStore)
-        {
-            userStore.Load();
-            return Task.CompletedTask;
-        }
-        private Task LoadErrands(ErrandStore errandStore)
-        {
-            errandStore.Load();
-            return Task.CompletedTask;
-        }
-        private Task LoadMachines(MachineStore machineStore)
-        {
-            machineStore.Load();
-            return Task.CompletedTask;
-        }
-        private Task LoadParts(PartsStore partsStore)
-        {
-            partsStore.Load();
-            return Task.CompletedTask;
-        }
-        private Task LoadPartsStatus(ErrandPartStatusStore partsStatusStore)
-        {
-            partsStatusStore.Load();
-            return Task.CompletedTask;
-        }
-        #endregion LOAD_DATA
-        #region COMBINE_DATA
-        private Task CombineData(ErrandStore errandStore, UserStore users, MachineStore machines, ErrandTypeStore types, ErrandStatusStore statuses, ErrandPartStore errandParts, ErrandPartStatusStore partsStatus)
-        {
-            CombineErrandPartWithStatus(errandParts, partsStatus);
-            CombineErrands(errandStore, users, machines, types, statuses, errandParts);
-            return Task.CompletedTask;
-        }
-        private Task CombineErrandPartWithStatus(ErrandPartStore errandPartStore, ErrandPartStatusStore partsStatusStore)
-        {
-            foreach (ErrandPart errandPart in errandPartStore.Data)
-            {
-                errandPart.StatusList.Clear();
-                errandPart.StatusList.AddRange(partsStatusStore.Data.Where(p => p.ErrandPartId == errandPart.Id));
-            }
-            return Task.CompletedTask;
-        }
-        private static Task CombineErrands(ErrandStore errandStore, UserStore users, MachineStore machines, ErrandTypeStore types, ErrandStatusStore statuses, ErrandPartStore errandParts)
-        {
-            foreach (Errand errand in errandStore.Data)
-            {
-                errand.Parts.Clear();
-                if (errand.OwnerId is not null) errand.Responsible = users.Data.First((u) => u.Id == errand.OwnerId);
-                if (errand.CreatedById is not null) errand.CreatedByUser = users.Data.First((u) => u.Id == errand.CreatedById);
-                if (errand.MachineId is not null) errand.Machine = machines.Data.First((m) => m.Id == errand.MachineId);
-                if (errand.ErrandTypeId is not null) errand.Type = types.Data.First((t) => t.Id == errand.ErrandTypeId);
+            List<Task> tasks = [];
 
-                foreach (ErrandStatus status in statuses.Data)
-                {
-                    if (status.ErrandId == errand.Id) errand.AddStatus(status);
-                }
-                foreach (ErrandPart errandPart in errandParts.Data)
-                {
-                    if (errandPart.ErrandId == errand.Id) errand.Parts.Add(errandPart);
-                }
-            }
-            return Task.CompletedTask;
+            tasks.Add(errandStore.CombineData());
+            tasks.Add(errandParts.CombineData());
+
+            if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
-        #endregion COMBINE_DATA
         private Task FillErrandList(ErrandStore errandStore)
         {
             _errands.AddRange(from Errand errand in errandStore.Data select errand);

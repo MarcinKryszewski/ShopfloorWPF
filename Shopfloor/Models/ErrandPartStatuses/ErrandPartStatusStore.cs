@@ -17,6 +17,12 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         }
         public List<ErrandPartStatus> Data => _data;
         public bool IsLoaded { get; private set; }
+
+        public Task CombineData()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task Load()
         {
             ErrandPartStatusProvider provider = _databaseServices.GetRequiredService<ErrandPartStatusProvider>();

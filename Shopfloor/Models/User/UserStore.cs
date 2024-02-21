@@ -16,6 +16,12 @@ namespace Shopfloor.Models.UserModel
         }
         public List<User> Data => _data;
         public bool IsLoaded { get; private set; }
+
+        public Task CombineData()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task Load()
         {
             UserProvider provider = _databaseServices.GetRequiredService<UserProvider>();

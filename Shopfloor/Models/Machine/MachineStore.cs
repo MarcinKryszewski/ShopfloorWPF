@@ -17,6 +17,12 @@ namespace Shopfloor.Models.MachineModel
         }
         public List<Machine> Data => _data;
         public bool IsLoaded { get; private set; }
+
+        public Task CombineData()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task Load()
         {
             MachineProvider provider = _databaseServices.GetRequiredService<MachineProvider>();

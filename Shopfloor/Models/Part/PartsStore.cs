@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Interfaces;
 
-
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -27,6 +26,16 @@ namespace Shopfloor.Models.PartModel
             _data = new(provider.GetAll().Result);
             IsLoaded = true;
             return Task.CompletedTask;
+        }
+
+        public Task Reload()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CombineData()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Mechanic.Requests.RequestsList;
 using Shopfloor.Features.Mechanic.Requests.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
@@ -14,8 +12,6 @@ using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.SupplierModel;
 using Shopfloor.Models.UserModel;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Mechanic.Requests.RequestsDetails
@@ -25,14 +21,11 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsDetails
         private readonly IServiceProvider _mainServices;
         private readonly SelectedRequestStore _selectedRequest;
         public ErrandPart ErrandPart => _selectedRequest.Request!;
-        public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
-        public ICommand ReturnCommand { get; }
         public RequestsDetailsViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             _mainServices = mainServices;
             Task.Run(() => LoadData(databaseServices));
             _selectedRequest = _mainServices.GetRequiredService<SelectedRequestStore>();
-            ReturnCommand = new NavigateCommand<RequestsListViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsListViewModel>>());
         }
         private async Task LoadData(IServiceProvider databaseServices)
         {
@@ -46,7 +39,6 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsDetails
 
             await LoadStores(suppliers, users, parts, errandPartStatuses, errands, errandTypes, errandPartStore);
             await CombineData(suppliers, users, parts, errandPartStatuses, errands, errandTypes, errandPartStore);
-            LoadHistoricalData(errandPartStore);
         }
         #region FETCH_DATA
         private async Task LoadStores(SuppliersStore suppliers, UserStore users, PartsStore parts, ErrandPartStatusStore errandPartStatuses, ErrandStore errands, ErrandTypeStore errandTypes, ErrandPartStore errandPartStore)
@@ -108,15 +100,11 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsDetails
         {
             foreach (Errand errand in errands.Data)
             {
-                errand.Type = types.Data.FirstOrDefault(type => type.Id == errand.ErrandTypeId);
+                errand.Type = types.Data.FirstOrDefault(type => type.Id == errand.TypeId);
                 errand.CreatedByUser = users.Data.FirstOrDefault(user => user.Id == errand.CreatedById);
             }
             return Task.CompletedTask;
         }
         #endregion COMBINE_DATA
-        private void LoadHistoricalData(ErrandPartStore errandParts)
-        {
-            HistoricalData = errandParts.Data.Where(part => part.PartId == _selectedRequest.Request!.PartId);
-        }
     }
 }

@@ -16,6 +16,12 @@ namespace Shopfloor.Models.ErrandTypeModel
         }
         public List<ErrandType> Data => _data;
         public bool IsLoaded { get; private set; } = false;
+
+        public Task CombineData()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task Load()
         {
             ErrandTypeProvider provider = _databaseServices.GetRequiredService<ErrandTypeProvider>();

@@ -100,7 +100,7 @@ namespace Shopfloor.Models.ErrandModel
                 OwnerId = item.OwnerId,
                 Priority = item.Priority,
                 MachineId = item.MachineId,
-                ErrandTypeId = item.ErrandTypeId,
+                ErrandTypeId = item.TypeId,
                 Description = item.Description,
                 SapNumber = item.SapNumber,
                 ExpectedDate = item.ExpectedDate?.ToString(_dateFormat)
@@ -135,7 +135,7 @@ namespace Shopfloor.Models.ErrandModel
                 OwnerId = item.OwnerId,
                 Priority = item.Priority,
                 MachineId = item.MachineId,
-                ErrandTypeId = item.ErrandTypeId,
+                ErrandTypeId = item.TypeId,
                 Description = item.Description,
                 SapNumber = item.SapNumber,
                 ExpectedDate = item.ExpectedDate?.ToString(_dateFormat)

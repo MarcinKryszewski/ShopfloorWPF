@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-
 namespace Shopfloor.Models.MachinePartModel
 {
     internal sealed class MachinePartStore : IDataStore<MachinePart>
@@ -17,6 +16,12 @@ namespace Shopfloor.Models.MachinePartModel
         }
         public List<MachinePart> Data => _data;
         public bool IsLoaded { get; private set; }
+
+        public Task CombineData()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task Load()
         {
             MachinePartProvider provider = _databaseServices.GetRequiredService<MachinePartProvider>();

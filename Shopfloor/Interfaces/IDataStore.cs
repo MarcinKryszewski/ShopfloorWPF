@@ -9,5 +9,7 @@ namespace Shopfloor.Interfaces
         public bool IsLoaded { get; }
 
         public Task Load();
+        public Task Reload();
+        public Task CombineData();
     }
 }
