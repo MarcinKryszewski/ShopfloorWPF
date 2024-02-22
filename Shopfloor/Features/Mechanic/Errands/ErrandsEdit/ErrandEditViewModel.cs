@@ -271,40 +271,19 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsEdit
                     break;
             }
         }
-
-        private Task LoadErrandTypes(ErrandTypeStore errandTypeStore)
-        {
-            errandTypeStore.Load();
-            return Task.CompletedTask;
-        }
-        private Task LoadMachines(MachineStore machineStore)
-        {
-            machineStore.Load();
-            return Task.CompletedTask;
-        }
         private async Task LoadStoresData(MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore, ErrandPartStore errandPartStore, PartsStore partsStore)
         {
             List<Task> tasks = [];
-            if (!machineStore.IsLoaded) tasks.Add(LoadMachines(machineStore));
-            if (!userStore.IsLoaded) tasks.Add(LoadUsers(userStore));
-            if (!errandTypeStore.IsLoaded) tasks.Add(LoadErrandTypes(errandTypeStore));
-            if (!errandPartStore.IsLoaded) tasks.Add(LoadErrandParts(errandPartStore));
-            if (!partsStore.IsLoaded) tasks.Add(LoadParts(partsStore));
+            if (!machineStore.IsLoaded) tasks.Add(LoadStore(machineStore));
+            if (!userStore.IsLoaded) tasks.Add(LoadStore(userStore));
+            if (!errandTypeStore.IsLoaded) tasks.Add(LoadStore(errandTypeStore));
+            if (!errandPartStore.IsLoaded) tasks.Add(LoadStore(errandPartStore));
+            if (!partsStore.IsLoaded) tasks.Add(LoadStore(partsStore));
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
-        private Task LoadUsers(UserStore userStore)
+        private static Task LoadStore<T>(IDataStore<T> dataStore)
         {
-            userStore.Load();
-            return Task.CompletedTask;
-        }
-        private Task LoadErrandParts(ErrandPartStore store)
-        {
-            store.Load();
-            return Task.CompletedTask;
-        }
-        private Task LoadParts(PartsStore store)
-        {
-            store.Load();
+            dataStore.Load();
             return Task.CompletedTask;
         }
         private void RefreshLists()

@@ -24,11 +24,11 @@ namespace Shopfloor.Models.ErrandModel
         }
         public List<Errand> Data => _data;
         public bool IsLoaded { get; private set; }
-        public bool HasParts { get; private set; }
-        public bool HasStatuses { get; private set; }
-        public bool HasUsers { get; private set; }
-        public bool HasMachines { get; private set; }
-        public bool HasTypes { get; private set; }
+        public bool HasParts => false;
+        public bool HasStatuses => false;
+        public bool HasUsers => false;
+        public bool HasMachines => false;
+        public bool HasTypes => false;
         public Task Load()
         {
             ErrandProvider provider = _databaseServices.GetRequiredService<ErrandProvider>();
@@ -61,6 +61,30 @@ namespace Shopfloor.Models.ErrandModel
 
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
+        public async Task CombineData(Errand errand)
+        {
+            List<Task> tasks = [];
+
+            List<ErrandPart> errandParts = await DataStore.GetData(_databaseServices.GetRequiredService<ErrandPartStore>());
+            errand.Parts.Clear();
+            errand.Parts.AddRange(errandParts.Where(errandPart => errandPart.ErrandId == errand.Id));
+
+            List<ErrandStatus> errandStatuses = await DataStore.GetData(_databaseServices.GetRequiredService<ErrandStatusStore>());
+            errand.Statuses.Clear();
+            errand.Statuses.AddRange(errandStatuses.Where(errandStatus => errandStatus.ErrandId == errand.Id));
+
+            List<User> users = await DataStore.GetData(_databaseServices.GetRequiredService<UserStore>());
+            errand.CreatedByUser = users.FirstOrDefault(user => user.Id == errand.CreatedById);
+            errand.Responsible = users.FirstOrDefault(user => user.Id == errand.OwnerId);
+
+            List<Machine> machines = await DataStore.GetData(_databaseServices.GetRequiredService<MachineStore>());
+            errand.Machine = machines.FirstOrDefault(machine => machine.Id == errand.MachineId);
+
+            List<ErrandType> types = await DataStore.GetData(_databaseServices.GetRequiredService<ErrandTypeStore>());
+            errand.Type = types.FirstOrDefault(type => type.Id == errand.TypeId);
+
+            if (tasks.Count > 0) await Task.WhenAll(tasks);
+        }
         private async Task SetParts()
         {
             List<ErrandPart> errandParts = await DataStore.GetData(_databaseServices.GetRequiredService<ErrandPartStore>());
@@ -69,7 +93,7 @@ namespace Shopfloor.Models.ErrandModel
                 errand.Parts.Clear();
                 errand.Parts.AddRange(errandParts.Where(errandPart => errandPart.ErrandId == errand.Id));
             }
-            HasParts = true;
+            //HasParts = true;
         }
         private async Task SetStatuses()
         {
@@ -79,7 +103,7 @@ namespace Shopfloor.Models.ErrandModel
                 errand.Statuses.Clear();
                 errand.Statuses.AddRange(errandStatuses.Where(errandStatus => errandStatus.ErrandId == errand.Id));
             }
-            HasStatuses = true;
+            //HasStatuses = true;
         }
         private async Task SetUsers()
         {
@@ -89,7 +113,7 @@ namespace Shopfloor.Models.ErrandModel
                 errand.CreatedByUser = users.FirstOrDefault(user => user.Id == errand.CreatedById);
                 errand.Responsible = users.FirstOrDefault(user => user.Id == errand.OwnerId);
             }
-            HasUsers = true;
+            //HasUsers = true;
         }
         private async Task SetMachines()
         {
@@ -98,7 +122,7 @@ namespace Shopfloor.Models.ErrandModel
             {
                 errand.Machine = machines.FirstOrDefault(machine => machine.Id == errand.MachineId);
             }
-            HasMachines = true;
+            //HasMachines = true;
         }
         private async Task SetTypes()
         {
@@ -107,7 +131,7 @@ namespace Shopfloor.Models.ErrandModel
             {
                 errand.Type = types.FirstOrDefault(type => type.Id == errand.TypeId);
             }
-            HasTypes = true;
+            //HasTypes = true;
         }
         /*private static async Task<List<T>> LoadData<T>(IDataStore<T> dataStore)
         {

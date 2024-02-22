@@ -23,10 +23,10 @@ namespace Shopfloor.Models.ErrandPartModel
         }
         public List<ErrandPart> Data => new(_data);
         public bool IsLoaded { get; private set; }
-        public bool HasStatuses { get; private set; }
-        public bool HasParts { get; private set; }
-        public bool HasUsers { get; private set; }
-        public bool HasErrands { get; private set; }
+        public bool HasStatuses => false;
+        public bool HasParts => false;
+        public bool HasUsers => false;
+        public bool HasErrands => false;
 
         public Task Load()
         {
@@ -59,7 +59,7 @@ namespace Shopfloor.Models.ErrandPartModel
                 errandPart.StatusList.Clear();
                 errandPart.StatusList.AddRange(statuses.Where(status => status.ErrandPartId == errandPart.Id));
             }
-            HasStatuses = true;
+            //HasStatuses = true;
         }
         private async Task SetParts()
         {
@@ -68,7 +68,7 @@ namespace Shopfloor.Models.ErrandPartModel
             {
                 errandPart.Part = parts.FirstOrDefault(part => part.Id == errandPart.PartId);
             }
-            HasParts = true;
+            //HasParts = true;
         }
         private async Task SetUsers()
         {
@@ -77,7 +77,7 @@ namespace Shopfloor.Models.ErrandPartModel
             {
                 errandPart.OrderedByUser = users.FirstOrDefault(user => user.Id == errandPart.OrderedById);
             }
-            HasUsers = true;
+            //HasUsers = true;
         }
         private async Task SetErrands()
         {
@@ -86,7 +86,7 @@ namespace Shopfloor.Models.ErrandPartModel
             {
                 errandPart.Errand = errands.FirstOrDefault(errand => errand.Id == errandPart.ErrandId);
             }
-            HasErrands = true;
+            //HasErrands = true;
         }
     }
 }

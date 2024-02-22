@@ -16,7 +16,7 @@ namespace Shopfloor.Models.PartModel
 
         public List<Part> Data => _data;
         public bool IsLoaded { get; private set; }
-        public bool HasTypes { get; private set; }
+        public bool HasTypes => false;
 
         public PartsStore(IServiceProvider databaseServices)
         {
@@ -51,7 +51,7 @@ namespace Shopfloor.Models.PartModel
             {
                 part.SetType(types.FirstOrDefault(type => type.Id == part.TypeId));
             }
-            HasTypes = true;
+            //HasTypes = true;
         }
     }
 }
