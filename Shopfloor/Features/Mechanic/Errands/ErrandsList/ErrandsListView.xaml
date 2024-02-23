@@ -236,11 +236,12 @@
             <Setter Property="Foreground" Value="#ffffff" />
             <Setter Property="FocusVisualStyle" Value="{x:Null}" />
             <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="12"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border
-                            Padding="5"
+                            Padding="3"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="1"
@@ -269,7 +270,7 @@
             </Style.Triggers>
         </Style>
         <Style
-            x:Key="gridInfoButton"
+            x:Key="gridConfirmButton"
             BasedOn="{StaticResource gridEditButton}"
             TargetType="Button">
             <Setter Property="Background" Value="#81d32f" />
@@ -277,6 +278,18 @@
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#89f536" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style
+            x:Key="gridInfoButton"
+            BasedOn="{StaticResource gridEditButton}"
+            TargetType="Button">
+            <Setter Property="Background" Value="#ced32f" />
+            <Setter Property="BorderBrush" Value="#b7af1c" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#f4e136" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -718,14 +731,20 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Style="{StaticResource gridInfoButton}">
+                                <Button Style="{StaticResource gridConfirmButton}">
+                                    <TextBlock
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Style="{StaticResource gridButtonIcon}"
+                                        Text="&#xE930;" />
+                                </Button>
+                                <Button Style="{StaticResource gridInfoButton}" Margin="3,0,0,0">
                                     <TextBlock
                                         FontFamily="Segoe MDL2 Assets"
                                         Style="{StaticResource gridButtonIcon}"
                                         Text="&#xE7B3;" />
                                 </Button>
                                 <Button
-                                    Margin="5,0,0,0"
+                                    Margin="3,0,0,0"
                                     Command="{Binding Path=DataContext.EditErrandCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                     Style="{StaticResource gridEditButton}"
                                     Visibility="{Binding Path=DataContext.HasAccess, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
@@ -734,8 +753,8 @@
                                         Style="{StaticResource gridButtonIcon}"
                                         Text="&#xE70F;" />
                                 </Button>
-                                <Button Margin="5,0,0,0" Style="{StaticResource gridRemoveButton}" 
-                                Visibility="{Binding Path=DataContext.HasAccess, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                                <Button Margin="3,0,0,0" Style="{StaticResource gridRemoveButton}" 
+                                    Visibility="{Binding Path=DataContext.HasAccess, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
                                     <TextBlock
                                         FontFamily="Segoe MDL2 Assets"
                                         Style="{StaticResource gridButtonIcon}"
