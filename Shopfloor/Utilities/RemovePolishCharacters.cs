@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
 namespace Shopfloor.Utilities
 {
     internal sealed class RemovePolishCharacters
@@ -18,7 +12,7 @@ namespace Shopfloor.Utilities
             {
                 input = input.Replace(polishChars[i], englishChars[i]);
             }
-
+            //System.Diagnostics.Debug.WriteLine("PL: " + DateTime.Now);
             return input;
         }
     }

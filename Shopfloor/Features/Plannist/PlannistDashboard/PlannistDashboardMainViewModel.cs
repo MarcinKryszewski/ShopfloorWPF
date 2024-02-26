@@ -1,187 +1,220 @@
 ﻿using Shopfloor.Features.Plannist.PlannistDashboard.Commands;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Utilities;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace Shopfloor.Features.Plannist.PlannistDashboard
 {
-    internal sealed class PlannistDashboardMainViewModel : ViewModelBase
+    internal sealed class PaginatedFilterableList : INotifyPropertyChanged
     {
-        private readonly List<Part> _data = [];
-        public PagingCollectionView Data { get; }
-        public ICommand LoadExcel { get; }
-        public ICommand PreviousPage { get; }
-        public ICommand NextPage { get; }
-        public PlannistDashboardMainViewModel(IServiceProvider mainServices)
-        {
-            LoadExcel = new LoadExcelDataCommand(this);
-            PreviousPage = new PreviousPageCommand(this);
-            NextPage = new NextPageCommand(this);
-            Data = new(_data, 20)
-            {
-                Filter = FilterData
-            };
-        }
+        private readonly List<ISearchableModel> _dataSource = [];
+        private readonly int _pageSize = 25;
+        private int _currentPage = 1;
+        private List<ISearchableModel> _dataDisplay = [];
+        private IEnumerable<ISearchableModel> _dataFiltered = [];
         private string _filterText = string.Empty;
+        public PaginatedFilterableList(int pageSize, List<ISearchableModel> dataSource)
+        {
+            _pageSize = pageSize;
+            _dataSource = dataSource;
+        }
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public int CurrentPage
+        {
+            get => _currentPage;
+            set
+            {
+                _currentPage = value;
+                OnPropertyChanged(nameof(CurrentPage));
+            }
+        }
+        public string CurrentPageText => $"{CurrentPage} z {MaxPage()}";
+        public List<ISearchableModel> DataDisplay => _dataDisplay;
+        public Task ChangePage()
+        {
+            if (_currentPage > MaxPage()) _currentPage = MaxPage();
+            int indexStart = (_currentPage - 1) * _pageSize;
+
+            _dataDisplay.Clear();
+            List<ISearchableModel> models = new(_dataFiltered);
+            _dataDisplay = models.GetRange(indexStart, Math.Min(_pageSize, models.Count - indexStart));
+
+            OnPropertyChanged(nameof(DataDisplay));
+            OnPropertyChanged(nameof(CurrentPage));
+            OnPropertyChanged(nameof(CurrentPageText));
+
+            return Task.CompletedTask;
+        }
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public void PageNext()
+        {
+            int nextLBound = _currentPage * _pageSize + 1;
+            if (nextLBound <= _dataSource.Count)
+            {
+                CurrentPage++;
+                ChangePage();
+            }
+        }
+        public void PagePrev()
+        {
+            if (_currentPage > 1)
+            {
+                CurrentPage--;
+                ChangePage();
+            }
+        }
+        private async Task FilterList()
+        {
+            if (string.IsNullOrEmpty(_filterText))
+            {
+                _dataFiltered = _dataSource;
+                await ChangePage();
+                return;
+            }
+
+            List<ISearchableModel> models = [];
+            string filterTextNormalized = RemovePolishCharacters.Remove(_filterText.ToLower());
+
+            // HashSet?
+            foreach (ISearchableModel model in _dataSource)
+            {
+                if (model.SearchValue.Contains(filterTextNormalized)) models.Add(model);
+            }
+            _dataFiltered = models;
+            await ChangePage();
+        }
+        private int MaxPage()
+        {
+            int pagesAmount = (int)Math.Ceiling((double)_dataFiltered.Count() / _pageSize);
+            return Math.Max(pagesAmount, 1);
+        }
         public string FilterText
         {
             get => _filterText;
             set
             {
-                _filterText = RemovePolishCharacters.Remove(value.ToLower());
-                Data.Refresh();
-                OnPropertyChanged(nameof(FilterText));
+                _filterText = value;
+                _ = FilterList();
             }
-        }
-        private bool FilterData(object obj)
-        {
-            if (string.IsNullOrEmpty(_filterText)) return true;
-            if (obj is Part Part)
-            {
-                return Part.SearchValue.Contains(_filterText);
-            }
-            return false;
-        }
-        public async Task LoadData(List<Part> parts)
-        {
-            System.Diagnostics.Debug.WriteLine(DateTime.Now);
-            _data.Clear();
-            foreach (Part part in parts)
-            {
-                _data.Add(part);
-            }
-            await Application.Current.Dispatcher.InvokeAsync(Data.Refresh);
-        }
-        public void ClearData()
-        {
-            _data.Clear();
-            Data.Refresh();
         }
     }
-
-    public class PagingCollectionView : CollectionView
+    internal sealed class PlannistDashboardMainViewModel : ViewModelBase
     {
-        private readonly int _itemsPerPage;
-
+        private readonly List<Part> _dataSource = [];
+        private readonly int _pageSize = 25;
         private int _currentPage = 1;
-
-        public PagingCollectionView(IEnumerable innerList, int itemsPerPage)
-            : base(innerList)
+        private List<Part> _dataDisplay = [];
+        private IEnumerable<Part> _dataFiltered = [];
+        private string _filterText = string.Empty;
+        //public PaginatedFilterableList DisplayList { get; }
+        public PlannistDashboardMainViewModel(IServiceProvider mainServices)
         {
-            _itemsPerPage = itemsPerPage;
+            //DisplayList = new(25, _dataSource);
+            LoadExcel = new LoadExcelDataCommand(this);
+            NextPage = new NextPageCommand(this);
+            PrevPage = new PreviousPageCommand(this);
         }
-
-        public int FilteredCount
-        {
-            get { return FilteredCollection.Count(); }
-        }
-
-        private IEnumerable<object> FilteredCollection
-        {
-            get
-            {
-                if (Filter is null) return SourceCollection.OfType<object>();
-                return SourceCollection.OfType<object>().Where(o => Filter(o));
-            }
-        }
-
-        public override int Count
-        {
-            get
-            {
-                if (FilteredCount == 0) return 0;
-                if (_currentPage < PageCount) // page 1..n-1
-                {
-                    return _itemsPerPage;
-                }
-                else // page n
-                {
-                    var itemsLeft = FilteredCount % _itemsPerPage;
-                    if (0 == itemsLeft)
-                    {
-                        return _itemsPerPage; // exactly itemsPerPage left
-                    }
-                    else
-                    {
-                        // return the remaining items
-                        return itemsLeft;
-                    }
-                }
-            }
-        }
-
         public int CurrentPage
         {
-            get { return _currentPage; }
+            get => _currentPage;
             set
             {
                 _currentPage = value;
-                if (_currentPage > PageCount) CurrentPage = PageCount;
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(CurrentPage)));
+                OnPropertyChanged(nameof(CurrentPage));
             }
         }
-
-        public int ItemsPerPage { get { return _itemsPerPage; } }
-
-        public int PageCount
+        public string CurrentPageText => $"{CurrentPage} z {MaxPage()}";
+        public List<Part> DataDisplay => _dataDisplay;
+        public string FilterText
         {
-            get
+            get => _filterText;
+            set
             {
-                return (FilteredCount + _itemsPerPage - 1)
-                    / _itemsPerPage;
+                _filterText = value;
+                _ = FilterList();
             }
         }
-
-        private int EndIndex
+        public ICommand LoadExcel { get; }
+        public ICommand NextPage { get; }
+        public ICommand PrevPage { get; }
+        public Task ChangePage()
         {
-            get
+            if (_currentPage > MaxPage()) _currentPage = MaxPage();
+            int indexStart = (_currentPage - 1) * _pageSize;
+
+            _dataDisplay.Clear();
+            List<Part> parts = new(_dataFiltered);
+            _dataDisplay = parts.GetRange(indexStart, Math.Min(_pageSize, parts.Count - indexStart));
+
+            OnPropertyChanged(nameof(DataDisplay));
+            OnPropertyChanged(nameof(CurrentPage));
+            OnPropertyChanged(nameof(CurrentPageText));
+
+            return Task.CompletedTask;
+        }
+        public async Task LoadData(List<Part> parts)
+        {
+            _dataSource.Clear();
+            foreach (Part part in parts)
             {
-                var end = _currentPage * _itemsPerPage - 1;
-                return (end > FilteredCount) ? FilteredCount : end;
+                _dataSource.Add(part);
             }
+            _dataFiltered = _dataSource;
+            await Application.Current.Dispatcher.InvokeAsync(ChangePage);
+            OnPropertyChanged(nameof(CurrentPageText));
         }
-
-        private int StartIndex
+        public void PageNext()
         {
-            get { return (_currentPage - 1) * _itemsPerPage; }
-        }
-
-        public override object GetItemAt(int index)
-        {
-            if (FilteredCount == 0) return null;
-            var offset = index % _itemsPerPage;
-            return FilteredCollection.ElementAt(StartIndex + offset);
-        }
-
-        public void MoveToNextPage()
-        {
-            if (_currentPage < PageCount)
+            int nextLBound = _currentPage * _pageSize + 1;
+            if (nextLBound <= _dataSource.Count)
             {
-                CurrentPage += 1;
+                CurrentPage++;
+                ChangePage();
             }
-            Refresh();
         }
-
-        public void MoveToPreviousPage()
+        public void PagePrev()
         {
             if (_currentPage > 1)
             {
-                CurrentPage -= 1;
+                CurrentPage--;
+                ChangePage();
             }
-            Refresh();
+        }
+        private async Task FilterList()
+        {
+            if (string.IsNullOrEmpty(_filterText))
+            {
+                _dataFiltered = _dataSource;
+                await ChangePage();
+                return;
+            }
+
+            List<Part> parts = [];
+            string filterTextNormalized = RemovePolishCharacters.Remove(_filterText.ToLower());
+
+            // HashSet?
+            foreach (Part part in _dataSource)
+            {
+                if (part.SearchValue.Contains(filterTextNormalized)) parts.Add(part);
+            }
+            _dataFiltered = parts;
+            await ChangePage();
+        }
+        private int MaxPage()
+        {
+            int pagesAmount = (int)Math.Ceiling((double)_dataFiltered.Count() / _pageSize);
+            return Math.Max(pagesAmount, 1);
         }
     }
 }

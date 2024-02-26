@@ -1,20 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
-using System.Threading.Tasks;
-using System.Windows;
 using ExcelDataReader;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.Commands;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
 {
     internal sealed class LoadExcelDataCommand : AsyncCommandBase
     {
-        private string _filePath = @"C:\Users\kryszm02\Downloads\Zapas części.xlsx";
-        private PlannistDashboardMainViewModel _viewModel;
+        private readonly string _filePath = "Resources/Zapas części.xlsx";
+        private readonly PlannistDashboardMainViewModel _viewModel;
 
         public LoadExcelDataCommand(PlannistDashboardMainViewModel plannistDashboardMainViewModel)
         {
@@ -23,7 +21,6 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
 
         public override async Task ExecuteAsync(object? parameter)
         {
-            System.Diagnostics.Debug.WriteLine(DateTime.Now);
             List<Part> parts = [];
             ExcelDataSetConfiguration config = new()
             {
@@ -52,8 +49,7 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
                         parts.Add(part);
                     }
                 }
-                _ = _viewModel.LoadData(parts);
-                System.Diagnostics.Debug.WriteLine(DateTime.Now);
+                await _viewModel.LoadData(parts);
             }
         }
     }
@@ -69,7 +65,7 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
 
         public override void Execute(object? parameter)
         {
-            _viewModel.Data.MoveToNextPage();
+            _viewModel.PageNext();
         }
     }
 
@@ -84,7 +80,7 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
 
         public override void Execute(object? parameter)
         {
-            _viewModel.Data.MoveToPreviousPage();
+            _viewModel.PagePrev();
         }
     }
 }
