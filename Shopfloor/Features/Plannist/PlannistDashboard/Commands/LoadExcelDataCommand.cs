@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
@@ -54,6 +55,36 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
                 _ = _viewModel.LoadData(parts);
                 System.Diagnostics.Debug.WriteLine(DateTime.Now);
             }
+        }
+    }
+
+    internal sealed class NextPageCommand : CommandBase
+    {
+        private PlannistDashboardMainViewModel _viewModel;
+
+        public NextPageCommand(PlannistDashboardMainViewModel plannistDashboardMainViewModel)
+        {
+            _viewModel = plannistDashboardMainViewModel;
+        }
+
+        public override void Execute(object? parameter)
+        {
+            _viewModel.Data.MoveToNextPage();
+        }
+    }
+
+    internal sealed class PreviousPageCommand : CommandBase
+    {
+        private PlannistDashboardMainViewModel _viewModel;
+
+        public PreviousPageCommand(PlannistDashboardMainViewModel plannistDashboardMainViewModel)
+        {
+            _viewModel = plannistDashboardMainViewModel;
+        }
+
+        public override void Execute(object? parameter)
+        {
+            _viewModel.Data.MoveToPreviousPage();
         }
     }
 }

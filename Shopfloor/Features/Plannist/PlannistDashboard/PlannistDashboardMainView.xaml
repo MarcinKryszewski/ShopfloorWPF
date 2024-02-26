@@ -8,12 +8,30 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid >
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Content="LOAD EXCEL DATA" Command="{Binding LoadExcel}"/>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Path=Data}" AutoGenerateColumns="True"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <Label Grid.Row="0" Margin="2" Foreground="White">
+                <Label.Content>
+                    <Binding Path="Data.CurrentPage">
+                        <Binding.StringFormat>Current Page: {0}</Binding.StringFormat>
+                    </Binding>
+                </Label.Content>
+            </Label>
+            <Button Content="Next" Command="{Binding NextPage}" Margin="2"/>
+            <Button Content="LOAD" Command="{Binding LoadExcel}" Margin="2"/>
+            <Button Content="Previous" Command="{Binding PreviousPage}" Margin="2"/>
+            <TextBox Text="{Binding FilterText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" MinWidth="200" />
+        </StackPanel>
+        <DataGrid ItemsSource="{Binding Data}" Grid.Row="1" AutoGenerateColumns="False" RowStyle="{StaticResource DataGridRowMain}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}" CellStyle="{DynamicResource DataGridCellMain}" Style="{DynamicResource DataGridMain}" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=Index}" Header="Login" />
+                <DataGridTextColumn Binding="{Binding Path=NamePl}" Header="Imię" />
+                <DataGridTextColumn Binding="{Binding Path=Number}" Header="Imię" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

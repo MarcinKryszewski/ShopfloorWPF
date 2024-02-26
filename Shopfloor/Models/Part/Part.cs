@@ -1,6 +1,7 @@
 using Shopfloor.Interfaces;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
+using Shopfloor.Utilities;
 using System;
 
 namespace Shopfloor.Models.PartModel
@@ -47,6 +48,7 @@ namespace Shopfloor.Models.PartModel
             _data.ProducerId = producerId;
             _data.SupplierId = supplierId;
             _data.Unit = unit ?? _defaultUnit;
+            SetSearchValue();
         }
         public Part(
             int? id,
@@ -70,6 +72,7 @@ namespace Shopfloor.Models.PartModel
             _data.ProducerId = producerId;
             _data.SupplierId = supplierId;
             _data.Unit = unit ?? _defaultUnit;
+            SetSearchValue();
         }
         private string SetInputValue()
         {
@@ -99,19 +102,15 @@ namespace Shopfloor.Models.PartModel
     }
     internal sealed partial class Part : ISearchableModel
     {
-        public string SearchValue
+        private string _searchValue = string.Empty;
+        public string SearchValue => _searchValue;
+        private void SetSearchValue()
         {
-            get
-            {
-                string searchValue = _data.NamePl +
+            string searchValue = _data.NamePl +
                     _data.NameOriginal +
-                    (_type?.Name ?? string.Empty) +
-                    _data.Index +
-                    _data.Details +
-                    (_producer?.Name ?? string.Empty) +
-                    (_supplier?.Name ?? string.Empty);
-                return searchValue;
-            }
+                    _type?.Name ?? string.Empty +
+                    _data.Index;
+            _searchValue = RemovePolishCharacters.Remove(searchValue.ToLower());
         }
     }
     internal sealed partial class Part : IEquatable<Part>
