@@ -196,10 +196,9 @@ namespace Shopfloor.Models.PartModel
             }
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
-        private static Task ExecuteUpdate(string command, IDbConnection connection)
+        private async Task ExecuteUpdate(string command, IDbConnection connection)
         {
-            connection.ExecuteAsync(command, connection);
-            return Task.CompletedTask;
+            await connection.ExecuteAsync(command, connection);
         }
         private static string GetStorageUpdateBulkCommand(IEnumerable<Part> parts)
         {
