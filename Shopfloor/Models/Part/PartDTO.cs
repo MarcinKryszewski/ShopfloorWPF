@@ -12,5 +12,7 @@
         public int? ProducerId { get; set; }
         public int? SupplierId { get; set; }
         public string Unit { get; set; } = string.Empty;
+        public double StorageAmount { get; set; }
+        public double StorageValue { get; set; }
     }
 }

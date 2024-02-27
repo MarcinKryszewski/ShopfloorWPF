@@ -2,7 +2,7 @@
 using Shopfloor.Database;
 
 using Shopfloor.Interfaces;
-
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -32,7 +32,9 @@ namespace Shopfloor.Models.PartModel
                 details AS Details,
                 producer_id AS ProducerId,
                 supplier_id AS SupplierId,
-                unit AS Unit
+                unit AS Unit,
+                storage_amount as StorageAmount,
+                storage_value as StorageValue
             FROM parts
             WHERE id = @Id
             ";
@@ -48,7 +50,9 @@ namespace Shopfloor.Models.PartModel
                 details AS Details,
                 producer_id AS ProducerId,
                 supplier_id AS SupplierId,
-                unit AS Unit
+                unit AS Unit,
+                storage_amount as StorageAmount,
+                storage_value as StorageValue
             FROM parts
             ";
 
@@ -63,7 +67,9 @@ namespace Shopfloor.Models.PartModel
                 details AS Details,
                 producer_id AS ProducerId,
                 supplier_id AS SupplierId,
-                unit AS Unit
+                unit AS Unit,
+                storage_amount as StorageAmount,
+                storage_value as StorageValue
             FROM parts
             WHERE active = TRUE
             ";
@@ -169,8 +175,68 @@ namespace Shopfloor.Models.PartModel
             };
             await connection.ExecuteAsync(_deleteSQL, parameters);
         }
-
         #endregion CRUD
+
+        public async Task StorageUpdate(List<Part> parts)
+        {
+            if (parts.Count == 0) return;
+
+            string sqlCommand;
+            int batchSize = 100;
+            int batches = (parts.Count + batchSize - 1) / batchSize;
+            List<Task> tasks = [];
+
+            using IDbConnection connection = _database.Connect();
+            for (int batch = 1; batch <= batches; batch++)
+            {
+                int minIndex = (batch - 1) * batchSize;
+                int maxIndex = Math.Min(batchSize, parts.Count - minIndex);
+                sqlCommand = GetStorageUpdateBulkCommand(parts.GetRange(minIndex, maxIndex));
+                tasks.Add(ExecuteUpdate(sqlCommand, connection));
+            }
+            if (tasks.Count > 0) await Task.WhenAll(tasks);
+        }
+        private static Task ExecuteUpdate(string command, IDbConnection connection)
+        {
+            connection.ExecuteAsync(command, connection);
+            return Task.CompletedTask;
+        }
+        private static string GetStorageUpdateBulkCommand(IEnumerable<Part> parts)
+        {
+            string amounts = "";
+            string values = "";
+            string indexes = "";
+
+            foreach (Part part in parts)
+            {
+
+                if (part.Index is null) continue;
+                if (part.Index == 0) continue;
+                int index = (int)part.Index;
+
+                string indexText = index.ToString();
+                string value = part.StorageValue.ToString();
+                string amount = part.StorageAmount.ToString();
+
+                amounts += $"WHEN [index] = {indexText} THEN '{amount}', ";
+                values += $"WHEN [index] = {indexText} THEN '{value}', ";
+                indexes += $"{indexText}, ";
+            }
+
+            return @$"
+            UPDATE parts
+            SET 
+                storage_amount = 
+                    CASE 
+                        {amounts}
+                    END,
+                storage_value = 
+                    CASE 
+                        {values}
+                    END
+            WHERE [index] IN ({indexes});
+            ";
+        }
 
         private static Part ToPart(PartDTO item)
         {

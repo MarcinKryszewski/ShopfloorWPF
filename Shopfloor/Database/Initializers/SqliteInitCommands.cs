@@ -96,6 +96,8 @@ namespace Shopfloor.Database.SQLite
                 producer_id INTEGER,
                 supplier_id INTEGER,
                 unit TEXT,
+                storage_amount REAL DEFAULT 0,
+                storage_value REAl DEFAULT 0,
                 PRIMARY KEY(id),
                 FOREIGN KEY(type_id) REFERENCES parts_types(id),
                 FOREIGN KEY(supplier_id) REFERENCES suppliers(id),
