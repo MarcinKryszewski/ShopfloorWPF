@@ -13,10 +13,16 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
     {
         private readonly string _filePath = "Resources/Zapas części.xlsx";
         private readonly PlannistDashboardMainViewModel _viewModel;
+        private PaginatedFilterableList _displayList;
 
         public LoadExcelDataCommand(PlannistDashboardMainViewModel plannistDashboardMainViewModel)
         {
             _viewModel = plannistDashboardMainViewModel;
+        }
+
+        public LoadExcelDataCommand(PaginatedFilterableList displayList)
+        {
+            _displayList = displayList;
         }
 
         public override async Task ExecuteAsync(object? parameter)
@@ -43,9 +49,9 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
                         if (item.ItemArray[0] is null) continue;
                         if ((double)item.ItemArray[0] == 0) continue;
 
-                        double val = 0;
-                        if (item.ItemArray[0] is not DBNull) val = (double)item.ItemArray[0];
-                        Part part = new(item.ItemArray[1].ToString(), item.ItemArray[10].ToString(), null, Convert.ToInt32(val), item.ItemArray[2].ToString(), null, null, null, item.ItemArray[3].ToString());
+                        int val = 0;
+                        if (item.ItemArray[0] is not DBNull) val = Convert.ToInt32((double)item.ItemArray[0]);
+                        Part part = new(item.ItemArray[1].ToString(), item.ItemArray[10].ToString(), null, val, item.ItemArray[2].ToString(), null, null, null, item.ItemArray[3].ToString());
                         parts.Add(part);
                     }
                 }
@@ -56,31 +62,31 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
 
     internal sealed class NextPageCommand : CommandBase
     {
-        private PlannistDashboardMainViewModel _viewModel;
+        private PaginatedFilterableList _displayList;
 
-        public NextPageCommand(PlannistDashboardMainViewModel plannistDashboardMainViewModel)
+        public NextPageCommand(PaginatedFilterableList displayList)
         {
-            _viewModel = plannistDashboardMainViewModel;
+            _displayList = displayList;
         }
 
         public override void Execute(object? parameter)
         {
-            _viewModel.PageNext();
+            _displayList.PageNext();
         }
     }
 
     internal sealed class PreviousPageCommand : CommandBase
     {
-        private PlannistDashboardMainViewModel _viewModel;
+        private PaginatedFilterableList _displayList;
 
-        public PreviousPageCommand(PlannistDashboardMainViewModel plannistDashboardMainViewModel)
+        public PreviousPageCommand(PaginatedFilterableList displayList)
         {
-            _viewModel = plannistDashboardMainViewModel;
+            _displayList = displayList;
         }
 
         public override void Execute(object? parameter)
         {
-            _viewModel.PagePrev();
+            _displayList.PagePrev();
         }
     }
 }

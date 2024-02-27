@@ -18,7 +18,7 @@
             <Label
                 Grid.Row="0"
                 Margin="2"
-                Content="{Binding Path=CurrentPageText}"
+                Content="{Binding Path=DisplayList.CurrentPageText}"
                 Foreground="White" />
             <Button
                 Margin="2"
@@ -32,20 +32,21 @@
                 Margin="2"
                 Command="{Binding Path=PrevPage}"
                 Content="Previous" />
-            <TextBox MinWidth="200" Text="{Binding Path=FilterText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox MinWidth="200" Text="{Binding Path=DisplayList.FilterText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
         <DataGrid
             Grid.Row="1"
             AutoGenerateColumns="False"
             CellStyle="{DynamicResource DataGridCellMain}"
             ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
-            ItemsSource="{Binding Path=DataDisplay}"
+            ItemsSource="{Binding Path=DisplayList.DataDisplay}"
             RowStyle="{StaticResource DataGridRowMain}"
             Style="{DynamicResource DataGridMain}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=Index}" Header="Login" />
                 <DataGridTextColumn Binding="{Binding Path=NamePl}" Header="Imię" />
                 <DataGridTextColumn Binding="{Binding Path=Number}" Header="Imię" />
+                <DataGridTextColumn Binding="{Binding Path=SearchValue}" Header="Imię" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

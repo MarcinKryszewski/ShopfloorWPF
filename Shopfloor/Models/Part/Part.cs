@@ -108,8 +108,8 @@ namespace Shopfloor.Models.PartModel
         {
             string searchValue = _data.NamePl +
                     _data.NameOriginal +
-                    _type?.Name ?? string.Empty +
-                    _data.Index;
+                    _data.Index.ToString() +
+                    _type?.Name ?? string.Empty;
             _searchValue = RemovePolishCharacters.Remove(searchValue.ToLower());
         }
     }
