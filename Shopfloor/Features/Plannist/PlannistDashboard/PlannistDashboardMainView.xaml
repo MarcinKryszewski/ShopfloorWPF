@@ -30,6 +30,10 @@
                 Content="LOAD" />
             <Button
                 Margin="2"
+                Command="{Binding Path=UpdateValues}"
+                Content="UPDATE" />
+            <Button
+                Margin="2"
                 Command="{Binding Path=PrevPage}"
                 Content="Previous" />
             <TextBox MinWidth="200" Text="{Binding Path=DisplayList.FilterText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />

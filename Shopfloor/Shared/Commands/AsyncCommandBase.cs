@@ -38,7 +38,11 @@ namespace Shopfloor.Shared.Commands
 
             try
             {
-                await ExecuteAsync(parameter);
+                //await ExecuteAsync(parameter);
+                await Task.Run(async () =>
+                {
+                    await ExecuteAsync(parameter);
+                });
             }
             catch (Exception ex)
             {

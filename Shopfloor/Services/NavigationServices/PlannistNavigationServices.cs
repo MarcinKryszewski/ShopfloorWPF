@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Plannist.PlannistDashboard;
 using Shopfloor.Features.Plannist.Deploys;
 using Shopfloor.Features.Plannist.Orders;
+using Shopfloor.Features.Plannist.PlannistDashboard;
 using Shopfloor.Features.Plannist.Reports;
 using Shopfloor.Features.Plannist.Reservations;
 using Shopfloor.Shared.Services;
@@ -13,18 +13,18 @@ namespace Shopfloor.Services.NavigationServices
 {
     internal sealed class PlannistNavigationServices
     {
-        internal static void Get(IServiceCollection services)
+        internal static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {
-            GetPlannistDashboardMainNavigation(services);
+            GetPlannistDashboardMainNavigation(services, databaseServices);
             GetDeploysNavigation(services);
             GetOrdersNavigation(services);
             GetReportsNavigation(services);
             GetReservationsNavigation(services);
         }
 
-        private static void GetPlannistDashboardMainNavigation(IServiceCollection services)
+        private static void GetPlannistDashboardMainNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreatePlannistDashboardMainViewModel(s));
+            services.AddTransient((s) => CreatePlannistDashboardMainViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<PlannistDashboardMainViewModel>>((s) => () => s.GetRequiredService<PlannistDashboardMainViewModel>());
             services.AddSingleton((s) =>
             {
@@ -87,9 +87,9 @@ namespace Shopfloor.Services.NavigationServices
             });
         }
 
-        private static PlannistDashboardMainViewModel CreatePlannistDashboardMainViewModel(IServiceProvider services)
+        private static PlannistDashboardMainViewModel CreatePlannistDashboardMainViewModel(IServiceProvider services, IServiceProvider databaseServices)
         {
-            return new PlannistDashboardMainViewModel(services);
+            return new PlannistDashboardMainViewModel(services, databaseServices);
         }
 
         private static DeploysViewModel CreateDeploysViewModel(IServiceProvider services)

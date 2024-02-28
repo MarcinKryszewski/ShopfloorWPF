@@ -22,7 +22,7 @@ namespace Shopfloor.Models.PartModel
             ";
 
         private const string _getOneSQL = @"
-            SELECT 
+            SELECT
                 id AS Id,
                 name_pl AS NamePl,
                 name_original AS NameOriginal,
@@ -40,7 +40,7 @@ namespace Shopfloor.Models.PartModel
             ";
 
         private const string _getAllSQL = @"
-            SELECT 
+            SELECT
                 id AS Id,
                 name_pl AS NamePl,
                 name_original AS NameOriginal,
@@ -57,7 +57,7 @@ namespace Shopfloor.Models.PartModel
             ";
 
         private const string _getAllActiveSQL = @"
-            SELECT 
+            SELECT
                 id AS Id,
                 name_pl AS NamePl,
                 name_original AS NameOriginal,
@@ -208,7 +208,6 @@ namespace Shopfloor.Models.PartModel
 
             foreach (Part part in parts)
             {
-
                 if (part.Index is null) continue;
                 if (part.Index == 0) continue;
                 int index = (int)part.Index;
@@ -217,23 +216,24 @@ namespace Shopfloor.Models.PartModel
                 string value = part.StorageValue.ToString();
                 string amount = part.StorageAmount.ToString();
 
-                amounts += $"WHEN [index] = {indexText} THEN '{amount}', ";
-                values += $"WHEN [index] = {indexText} THEN '{value}', ";
-                indexes += $"{indexText}, ";
+                amounts += $"WHEN [indeks] = {indexText} THEN '{amount}' ";
+                values += $"WHEN [indeks] = {indexText} THEN '{value}' ";
+                indexes += $"{indexText},";
             }
+            indexes = indexes.Remove(indexes.Length - 1, 1);
 
             return @$"
             UPDATE parts
-            SET 
-                storage_amount = 
-                    CASE 
+            SET
+                storage_amount =
+                    CASE
                         {amounts}
                     END,
-                storage_value = 
-                    CASE 
+                storage_value =
+                    CASE
                         {values}
                     END
-            WHERE [index] IN ({indexes});
+            WHERE [indeks] IN ({indexes});
             ";
         }
 

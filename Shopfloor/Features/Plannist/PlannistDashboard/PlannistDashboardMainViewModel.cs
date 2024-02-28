@@ -1,4 +1,5 @@
-﻿using Shopfloor.Features.Plannist.PlannistDashboard.Commands;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Plannist.PlannistDashboard.Commands;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.ViewModels;
@@ -116,15 +117,18 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard
     internal sealed class PlannistDashboardMainViewModel : ViewModelBase
     {
         private readonly List<Part> _dataSource = [];
+        public List<Part> DataSource => _dataSource;
         public PaginatedFilterableList DisplayList { get; }
         public ICommand NextPage { get; }
         public ICommand PrevPage { get; }
-        public PlannistDashboardMainViewModel(IServiceProvider mainServices)
+        public ICommand UpdateValues { get; }
+        public PlannistDashboardMainViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             DisplayList = new(25, _dataSource);
             LoadExcel = new LoadExcelDataCommand(this);
             NextPage = new NextPageCommand(DisplayList);
             PrevPage = new PreviousPageCommand(DisplayList);
+            UpdateValues = new UpdateDataCommand(this, databaseServices.GetRequiredService<PartProvider>());
         }
         public ICommand LoadExcel { get; }
         public async Task LoadData(List<Part> parts)

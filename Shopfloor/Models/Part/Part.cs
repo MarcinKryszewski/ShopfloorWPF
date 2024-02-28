@@ -28,8 +28,17 @@ namespace Shopfloor.Models.PartModel
         public Supplier? Supplier => _supplier;
         public string Unit => _data.Unit;
         public string RequiredInputValue => SetInputValue();
-        public double StorageValue => _data.StorageValue;
-        public double StorageAmount => _data.StorageAmount;
+        public double StorageValue
+        {
+            get => _data.StorageValue;
+            set => _data.StorageValue = value;
+        }
+        public double StorageAmount
+        {
+            get => _data.StorageAmount;
+            set => _data.StorageAmount = value;
+        }
+
         public Part(
             string? namePl, //1
             string? nameOriginal,
