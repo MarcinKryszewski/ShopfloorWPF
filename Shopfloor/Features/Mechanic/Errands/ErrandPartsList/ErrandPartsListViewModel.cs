@@ -6,6 +6,7 @@ using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared;
 using Shopfloor.Shared.ViewModels;
+using Shopfloor.Utilities.CustomList;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,6 +45,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
             return false;
         }
         public int PartsAmount => _errandStore.ErrandParts.Count;
+        public SearchableModelList DisplayList { get; }
         public ICollectionView PartsAll => CollectionViewSource.GetDefaultView(_parts);
         public ICollectionView PartsMachine => CollectionViewSource.GetDefaultView(_parts);
         public ICollectionView ErrandParts
@@ -64,6 +66,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
             AddPartToListCommand = new ErrandAddPartCommand(this, _errandStore);
             RemovePartFromListCommand = new ErrandRemovePartCommand(this, _errandStore);
             _errandPartValidation = new(this);
+            DisplayList = new(_parts, 15);
             Task.Run(LoadData);
         }
         private async Task LoadData()
@@ -85,10 +88,11 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
             Application.Current.Dispatcher.Invoke
             (() =>
             {
-                PartsAll.Refresh();
+                //PartsAll.Refresh();
                 PartsMachine.Refresh();
                 ErrandParts.Refresh();
             });
+            await DisplayList.ReloadSourceData();
         }
         public async Task CombineData(PartsStore partsStore, ErrandPartStore errandPartStore)
         {

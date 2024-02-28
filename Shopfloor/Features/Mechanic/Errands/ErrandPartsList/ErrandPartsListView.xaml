@@ -77,7 +77,7 @@
                             Placeholder="Szukaj"
                             PlaceholderColor="{StaticResource BrushPurple900}"
                             Style="{StaticResource DefaultPlaceholderTextBox}"
-                            Text="{Binding Path=SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                            Text="{Binding Path=DisplayList.FilterText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                 </Border>
 
@@ -138,13 +138,19 @@
                 </Button>
             </Grid>
 
-            <ListView
+            <DataGrid
                 x:Name="PartsList"
                 Grid.Row="3"
                 MinHeight="274"
-                ItemsSource="{Binding Path=PartsAll}"
+                ItemsSource="{Binding Path=DisplayList.DataDisplay}"
                 SelectedItem="{Binding Path=SelectedPart, Mode=TwoWay}"
-                SelectionMode="Single">
+                SelectionMode="Single"
+                CellStyle="{DynamicResource DataGridCellMain}"
+                RowStyle="{StaticResource DataGridRowMain}"
+                Style="{DynamicResource DataGridMain}"
+                SelectionUnit="FullRow"
+                IsReadOnly = "True"
+                ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}">
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
@@ -152,47 +158,45 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
 
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn
+                <DataGrid.Columns>
+                        <DataGridTextColumn
                             Width="120"
-                            DisplayMemberBinding="{Binding NamePl}"
+                            Binding="{Binding NamePl}"
                             Header="Nazwa PL" />
-                        <GridViewColumn
+                        <DataGridTextColumn
                             Width="120"
-                            DisplayMemberBinding="{Binding Path=NameOriginal}"
+                            Binding="{Binding Path=NameOriginal}"
                             Header="Nazwa katalogowa" />
-                        <GridViewColumn
+                        <DataGridTextColumn
                             Width="120"
-                            DisplayMemberBinding="{Binding Path=TypeName}"
+                            Binding="{Binding Path=TypeName}"
                             Header="Rodzaj" />
-                        <GridViewColumn
+                        <DataGridTextColumn
                             Width="120"
-                            DisplayMemberBinding="{Binding Path=Index}"
+                            Binding="{Binding Path=Index}"
                             Header="Indeks" />
-                        <GridViewColumn
+                        <DataGridTextColumn
                             Width="120"
-                            DisplayMemberBinding="{Binding Path=Number}"
+                            Binding="{Binding Path=Number, Mode=OneWay}"
                             Header="Numer" />
-                        <GridViewColumn
+                        <DataGridTextColumn
                             Width="120"
-                            DisplayMemberBinding="{Binding Path=Details}"
+                            Binding="{Binding Path=Details}"
                             Header="Szczegóły" />
-                        <GridViewColumn
+                        <DataGridTextColumn
                             Width="120"
-                            DisplayMemberBinding="{Binding Path=Producer.Name}"
+                            Binding="{Binding Path=Producer.Name}"
                             Header="Producent" />
-                        <GridViewColumn
+                        <DataGridTextColumn
                             Width="120"
-                            DisplayMemberBinding="{Binding Path=Supplier.Name}"
+                            Binding="{Binding Path=Supplier.Name}"
                             Header="Dostawca" />
-                        <GridViewColumn
+                        <DataGridTextColumn
                             Width="120"
-                            DisplayMemberBinding="{Binding Path=Unit}"
+                            Binding="{Binding Path=Unit}"
                             Header="Jednostka" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+                    </DataGrid.Columns>
+            </DataGrid>
         </Grid>
 
         <StackPanel Grid.Row="1">
