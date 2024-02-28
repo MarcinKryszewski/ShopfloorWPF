@@ -81,31 +81,6 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
             };
         }
     }
-
-    internal sealed class NextPageCommand : CommandBase
-    {
-        private readonly PaginatedFilterableList _displayList;
-        public NextPageCommand(PaginatedFilterableList displayList)
-        {
-            _displayList = displayList;
-        }
-        public override void Execute(object? parameter)
-        {
-            _displayList.PageNext();
-        }
-    }
-    internal sealed class PreviousPageCommand : CommandBase
-    {
-        private readonly PaginatedFilterableList _displayList;
-        public PreviousPageCommand(PaginatedFilterableList displayList)
-        {
-            _displayList = displayList;
-        }
-        public override void Execute(object? parameter)
-        {
-            _displayList.PagePrev();
-        }
-    }
     internal sealed class UpdateDataCommand : AsyncCommandBase
     {
         private readonly PartProvider _provider;

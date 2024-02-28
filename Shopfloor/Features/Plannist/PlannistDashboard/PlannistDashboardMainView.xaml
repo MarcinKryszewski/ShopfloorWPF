@@ -49,7 +49,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=Index}" Header="Login" />
                 <DataGridTextColumn Binding="{Binding Path=NamePl}" Header="Imię" />
-                <DataGridTextColumn Binding="{Binding Path=Number}" Header="Imię" />
+                <DataGridTextColumn Binding="{Binding Path=StorageAmount}" Header="Imię" />
                 <DataGridTextColumn Binding="{Binding Path=SearchValue}" Header="Imię" />
             </DataGrid.Columns>
         </DataGrid>
