@@ -11,6 +11,7 @@
     xmlns:machines="clr-namespace:Shopfloor.Features.Admin.Machines"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:minimalStates="clr-namespace:Shopfloor.Features.Mechanic.MinimalStates"
+    xmlns:partsStock="clr-namespace:Shopfloor.Features.Mechanic.PartsStock"
     xmlns:orders="clr-namespace:Shopfloor.Features.Plannist.Orders"
     xmlns:partTypes="clr-namespace:Shopfloor.Features.Admin.PartTypes"
     xmlns:parts="clr-namespace:Shopfloor.Features.Admin.Parts"
@@ -50,6 +51,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type minimalStates:MinimalStatesViewModel}">
                         <minimalStates:MinimalStatesView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type partsStock:PartsStockMainViewModel}">
+                        <partsStock:PartsStockMainView />
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type plannistDashboard:PlannistDashboardMainViewModel}">

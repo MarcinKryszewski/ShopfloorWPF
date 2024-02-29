@@ -4,6 +4,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Shopfloor.Features.Mechanic.Requests.RequestsList"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:custom="clr-namespace:Shopfloor.Controls.PlaceholderTextBox"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" d:DataContext="{d:DesignInstance Type=local:RequestsListViewModel}" d:DesignHeight="450" d:DesignWidth="800" mc:Ignorable="d">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
@@ -271,10 +272,10 @@
                 Panel.ZIndex="1"
                 Foreground="#FF8B8F96"
                 IsHitTestVisible="False"
-                Text="Szukaj . . ."
+                Text="Szukaj ..."
                 Visibility="{Binding ElementName=textBoxFilter, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
 
-            <TextBox Name="textBoxFilter" Style="{StaticResource filterTextBox}" />
+            <TextBox Name="textBoxFilter" Style="{StaticResource filterTextBox}" Text="{Binding FilterText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged }" />
         </Grid>
 
         <Separator
@@ -336,7 +337,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>                
                 <DataGridTextColumn Width="auto" Binding="{Binding Path=Part.Type.Name}" CanUserResize="False" Header="RODZAJ CZĘŚCI" IsReadOnly="True" />
-                <DataGridTextColumn Width="auto" Binding="{Binding Path=Part.NamePl}" CanUserResize="False" Header="NAZWA CZĘŚĆI" IsReadOnly="True" />
+                <DataGridTextColumn Width="auto" Binding="{Binding Path=Part.NamePl}" CanUserResize="False" Header="NAZWA CZĘŚCI" IsReadOnly="True" />
                 <DataGridTextColumn Width="auto" Binding="{Binding Path=AmountText}" CanUserResize="False" Header="ILOŚĆ" IsReadOnly="True" />
                 <DataGridTextColumn Width="auto" Binding="{Binding Path=OrderedByUser.FullName}" CanUserResize="False" Header="ZAMAWIAJĄCY" IsReadOnly="True" />
                 <DataGridTextColumn Width="auto" Binding="{Binding Path=Errand.Display.MachineText}" CanUserResize="False" Header="MASZYNA" IsReadOnly="True" />                

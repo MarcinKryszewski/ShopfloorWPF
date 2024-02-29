@@ -17,7 +17,7 @@ namespace Shopfloor.Services.NavigationServices
             GetTasksNavigation(services, databaseServices, userServices);
             GetRequestsNavigation(services, databaseServices, userServices);
             GetMinimalStatesNavigation(services);
-            GetPartsStockNavigation(services);
+            GetPartsStockNavigation(services, databaseServices);
         }
         private static void GetMinimalStatesNavigation(IServiceCollection services)
         {
@@ -55,9 +55,9 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-        private static void GetPartsStockNavigation(IServiceCollection services)
+        private static void GetPartsStockNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreatPartStockViewModel(s));
+            services.AddTransient((s) => CreatPartStockViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<PartsStockMainViewModel>>((s) => () => s.GetRequiredService<PartsStockMainViewModel>());
             services.AddSingleton((s) =>
             {
@@ -68,9 +68,9 @@ namespace Shopfloor.Services.NavigationServices
             });
         }
 
-        private static MinimalStatesViewModel CreateMinimalStatesViewModel(IServiceProvider services) => new MinimalStatesViewModel();
+        private static MinimalStatesViewModel CreateMinimalStatesViewModel(IServiceProvider services) => new();
         private static RequestsMainViewModel CreatRequestsViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new RequestsMainViewModel(databaseServices, userServices);
         private static ErrandsMainViewModel CreatTasksViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new(databaseServices, userServices);
-        private static PartsStockMainViewModel CreatPartStockViewModel(IServiceProvider services) => new();
+        private static PartsStockMainViewModel CreatPartStockViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(databaseServices);
     }
 }

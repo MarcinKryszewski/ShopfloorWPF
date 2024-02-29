@@ -1,4 +1,5 @@
 using ExcelDataReader;
+using Shopfloor.Features.Mechanic.PartsStock.PartsStockList;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.Commands;
 using System;
@@ -12,8 +13,8 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
     internal sealed class LoadExcelDataCommand : AsyncCommandBase
     {
         private const string _filePath = "Resources/Zapas części.xlsx";
-        private readonly PlannistDashboardMainViewModel _viewModel;
-        public LoadExcelDataCommand(PlannistDashboardMainViewModel viewModel)
+        private readonly PartsStockListViewModel _viewModel;
+        public LoadExcelDataCommand(PartsStockListViewModel viewModel)
         {
             _viewModel = viewModel;
         }
@@ -84,8 +85,8 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
     internal sealed class UpdateDataCommand : AsyncCommandBase
     {
         private readonly PartProvider _provider;
-        private readonly PlannistDashboardMainViewModel _viewModel;
-        public UpdateDataCommand(PlannistDashboardMainViewModel viewModel, PartProvider provider)
+        private readonly PartsStockListViewModel _viewModel;
+        public UpdateDataCommand(PartsStockListViewModel viewModel, PartProvider provider)
         {
             _viewModel = viewModel;
             _provider = provider;

@@ -1,14 +1,9 @@
-﻿<UserControl
-    x:Class="Shopfloor.Layout.SidePanel.SidePanelView"
+﻿<UserControl x:Class="Shopfloor.Layout.SidePanel.SidePanelView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Shopfloor.Layout.SidePanel"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DataContext="{d:DesignInstance Type=local:SidePanelViewModel}"
-    d:Height="1020"
-    d:Width="240"
-    mc:Ignorable="d">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DataContext="{d:DesignInstance Type=local:SidePanelViewModel}" d:Height="1020" d:Width="240" mc:Ignorable="d">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -49,22 +44,14 @@
         <Border Grid.Row="0" Background="BlueViolet">
             <Border Margin="20,0,20,0" Background="Aqua" />
         </Border>
-        <ScrollViewer
-            Grid.Row="1"
-            Background="{StaticResource BrushDarkNeutral250}"
-            HorizontalScrollBarVisibility="Disabled"
-            VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="1" Background="{StaticResource BrushDarkNeutral250}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="0,15,0,0" Orientation="Vertical">
                 <!--#region Dashboard-->
                 <Button Command="{Binding Path=NavigateDashboardCommand}">
                     <StackPanel Style="{StaticResource ButtonStackPanel}">
-                        <Border
-                            Width="24"
-                            Height="24"
-                            Margin="0,0,9,0"
-                            Background="Transparent" >
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF404;" Foreground="{StaticResource BrushDarkNeutral1000}" FontSize="24" TextAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>                           
+                        <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
+                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF404;" Foreground="{StaticResource BrushDarkNeutral1000}" FontSize="24" TextAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
                         <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dashboard" />
                     </StackPanel>
                 </Button>
@@ -74,45 +61,29 @@
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Mechanik" />
                     <Button Command="{Binding Path=NavigateTasksCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Transparent" >
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEADF;" Foreground="{StaticResource BrushDarkNeutral1000}" FontSize="24" TextAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zadania" />
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding Path=NavigateRequestsCommand}" >
+                    <Button Command="{Binding Path=NavigateRequestsCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Transparent" >
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74C;" Foreground="{StaticResource BrushDarkNeutral1000}" FontSize="24" TextAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zapotrzebowanie" />
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding Path=NavigateMinimalStatesCommand}" Visibility="{Binding Path=HasAdminRole}" >
+                    <Button Command="{Binding Path=NavigateMinimalStatesCommand}" Visibility="{Binding Path=HasAdminRole}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Stany minimalne" />
                         </StackPanel>
                     </Button>
-                    <Button Visibility="{Binding Path=HasAdminRole}" >
+                    <Button Visibility="{Binding Path=HasAdminRole}" Command="{Binding NavigatePartStockCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Stany magazynowe" />
                         </StackPanel>
                     </Button>
@@ -123,51 +94,31 @@
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Planista" />
                     <Button Command="{Binding Path=NavigatePlannistDashboardMainCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Panel kontrolny" />
                         </StackPanel>
                     </Button>
                     <Button Command="{Binding Path=NavigateOrdersCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zamówienia" />
                         </StackPanel>
                     </Button>
                     <Button Command="{Binding Path=NavigateDeploysCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Pobrania" />
                         </StackPanel>
                     </Button>
                     <Button Command="{Binding Path=NavigateReservationsCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Rezerwacje" />
                         </StackPanel>
                     </Button>
                     <Button Command="{Binding Path=NavigateReportsCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Raporty" />
                         </StackPanel>
                     </Button>
@@ -176,30 +127,22 @@
                 <!--#region Kierownik-->
                 <StackPanel Visibility="{Binding Path=HasAdminRole}">
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Kierownik" />
-                    <Button Command="" Visibility="{Binding Path=HasAdminRole}" >
+                    <Button Command="" Visibility="{Binding Path=HasAdminRole}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
-                                <StackPanel>
-                                    <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zamówienia" />
-                                    <TextBlock Style="{StaticResource ButtonTextBlock}" FontSize="10" Text="Do zatwierdzenia"  />
-                                </StackPanel>                            
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zamówienia" />
+                                <TextBlock Style="{StaticResource ButtonTextBlock}" FontSize="10" Text="Do zatwierdzenia" />
+                            </StackPanel>
                         </StackPanel>
                     </Button>
-                    <Button Command="" Visibility="{Binding Path=HasAdminRole}" >
+                    <Button Command="" Visibility="{Binding Path=HasAdminRole}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
-                                <StackPanel>
-                                    <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Stany minimalne" />
-                                    <TextBlock Style="{StaticResource ButtonTextBlock}" FontSize="10" Text="Do zatwierdzenia"  />
-                                </StackPanel>
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Stany minimalne" />
+                                <TextBlock Style="{StaticResource ButtonTextBlock}" FontSize="10" Text="Do zatwierdzenia" />
+                            </StackPanel>
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -209,61 +152,39 @@
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Admin" />
                     <Button Command="{Binding Path=NavigateUsersCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Użytkownicy" />
                         </StackPanel>
                     </Button>
                     <Button Command="{Binding Path=NavigateMachinesCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Maszyny" />
                         </StackPanel>
                     </Button>
                     <Button Command="{Binding Path=NavigatePartsCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Części" />
                         </StackPanel>
                     </Button>
                     <Button Command="{Binding Path=NavigateSuppliersCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dostawcy" />
                         </StackPanel>
                     </Button>
                     <Button Command="{Binding Path=NavigatePartTypesCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border
-                                Width="24"
-                                Height="24"
-                                Margin="0,0,9,0"
-                                Background="Yellow" />
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Części - rodzaje" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
                 <!--#endregion-->
-                <Button
-                    Background="DeepPink"
-                    Command="{Binding AddTestData}"
-                    Content="Add Test DATA"
-                    Visibility="{Binding HasDataInside}" />
+                <Button Background="DeepPink" Command="{Binding AddTestData}" Content="Add Test DATA" Visibility="{Binding HasDataInside}" />
+                <Label Content="Marcin Kryszewski" FontSize="8" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch" Foreground="{StaticResource BrushDarkNeutral700}"/>
+                <Label Content="v1.0.0" FontSize="8" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch" Foreground="{StaticResource BrushDarkNeutral700}"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

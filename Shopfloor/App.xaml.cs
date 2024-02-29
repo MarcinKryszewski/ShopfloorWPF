@@ -13,10 +13,7 @@ using Shopfloor.Shared.Services;
 using Shopfloor.Stores;
 using System;
 using System.Data;
-using System.DirectoryServices;
-using System.IO;
 using System.Windows;
-using System.Windows.Media.Imaging;
 
 namespace Shopfloor
 {

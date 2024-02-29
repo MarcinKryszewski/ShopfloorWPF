@@ -8,7 +8,7 @@ namespace Shopfloor.Features.Mechanic.PartsStock.Hosts
 {
     public class PartsStockHost
     {
-        public static IHost GetHost()
+        public static IHost GetHost(IServiceProvider databaseServices)
         {
             return Host
             .CreateDefaultBuilder()
@@ -16,7 +16,7 @@ namespace Shopfloor.Features.Mechanic.PartsStock.Hosts
             {
                 services.AddSingleton<NavigationStore>();
 
-                PartsStockNavigationServices.Get(services);
+                PartsStockNavigationServices.Get(services, databaseServices);
             })
             .Build();
         }

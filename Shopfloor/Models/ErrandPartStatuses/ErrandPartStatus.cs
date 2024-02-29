@@ -9,7 +9,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
     internal sealed partial class ErrandPartStatus
     {
         private readonly ErrandPartStatusDTO _data = new();
-        public int Id => _data.Id;
+        public int? Id => _data.Id;
         public int ErrandPartId => _data.ErrandPartId;
         public string StatusName => _data.StatusName;
         public int CreatedById => _data.CreatedById;
@@ -69,5 +69,9 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             [-6] = "ANULOWANE",
             [-7] = "AKTUALIZACJA"
         };
+    }
+    internal sealed partial class ErrandPartStatus : ISearchableModel
+    {
+        public string SearchValue => throw new NotImplementedException();
     }
 }

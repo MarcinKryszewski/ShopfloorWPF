@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Features.Mechanic.PartsStock.Hosts;
@@ -11,17 +12,17 @@ namespace Shopfloor.Features.Mechanic.PartsStock
     internal sealed class PartsStockMainViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
-        private readonly IHost _errandsServices;
+        private readonly IHost _partsStockServices;
         public ViewModelBase? Content => _navigationStore.CurrentViewModel;
-        public PartsStockMainViewModel()
+        public PartsStockMainViewModel(IServiceProvider databaseServices)
         {
-            _errandsServices = PartsStockHost.GetHost();
-            _errandsServices.Start();
+            _partsStockServices = PartsStockHost.GetHost(databaseServices);
+            _partsStockServices.Start();
 
-            _navigationStore = _errandsServices.Services.GetRequiredService<NavigationStore>();
+            _navigationStore = _partsStockServices.Services.GetRequiredService<NavigationStore>();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
-            NavigationService<PartsStockListViewModel> navigationService = _errandsServices.Services.GetRequiredService<NavigationService<PartsStockListViewModel>>();
+            NavigationService<PartsStockListViewModel> navigationService = _partsStockServices.Services.GetRequiredService<NavigationService<PartsStockListViewModel>>();
             navigationService.Navigate();
         }
         private void OnCurrentViewModelChanged()

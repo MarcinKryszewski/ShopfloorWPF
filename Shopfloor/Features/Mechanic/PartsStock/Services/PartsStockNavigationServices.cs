@@ -9,13 +9,13 @@ namespace Shopfloor.Features.Mechanic.PartsStock.Services
 {
     internal sealed class PartsStockNavigationServices
     {
-        public static void Get(IServiceCollection services)
+        public static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {
-            GetListNavigation(services);
+            GetListNavigation(services, databaseServices);
         }
-        private static void GetListNavigation(IServiceCollection services)
+        private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreateListViewModel(s));
+            services.AddTransient((s) => CreateListViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<PartsStockListViewModel>>((s) => () => s.GetRequiredService<PartsStockListViewModel>());
             services.AddSingleton((s) =>
             {
@@ -25,9 +25,9 @@ namespace Shopfloor.Features.Mechanic.PartsStock.Services
                 );
             });
         }
-        private static PartsStockListViewModel CreateListViewModel(IServiceProvider mainServices)
+        private static PartsStockListViewModel CreateListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
-            return new PartsStockListViewModel();
+            return new PartsStockListViewModel(mainServices, databaseServices);
         }
     }
 }

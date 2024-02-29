@@ -111,4 +111,8 @@ namespace Shopfloor.Models.ErrandPartModel
         public override bool Equals(object? obj) => obj is ErrandPart objErrandPart && Equals(objErrandPart);
         public override int GetHashCode() => ErrandId.GetHashCode() & PartId.GetHashCode();
     }
+    internal sealed partial class ErrandPart : ISearchableModel
+    {
+        public string SearchValue => LastStatusText;
+    }
 }

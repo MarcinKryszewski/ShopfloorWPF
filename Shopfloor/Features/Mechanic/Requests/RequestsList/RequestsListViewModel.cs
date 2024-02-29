@@ -32,10 +32,24 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
         private readonly IServiceProvider _mainServices;
         private readonly IServiceProvider _databaseServices;
         private readonly SelectedRequestStore _requestStore;
+        private string? _filterText;
         public ErrandPart? SelectedRow
         {
             get => _requestStore.Request;
             set => _requestStore.Request = value;
+        }
+        public string? FilterText
+        {
+            get => _filterText;
+            set
+            {
+                _filterText = value;
+                if (string.IsNullOrEmpty(value))
+                {
+                    Parts.Filter = null;
+                }
+                else Parts.Filter = FilterParts;
+            }
         }
         public ICollectionView Parts => CollectionViewSource.GetDefaultView(_parts);
         public ICommand EditCommand { get; }
@@ -105,6 +119,15 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
                 _parts.Add(errandPart);
             }
             return Task.CompletedTask;
+        }
+        private bool FilterParts(object obj)
+        {
+            if (string.IsNullOrEmpty(_filterText)) return true;
+            if (obj is ErrandPart errandPart)
+            {
+                return errandPart.SearchValue.Contains(_filterText, StringComparison.InvariantCultureIgnoreCase);
+            }
+            return false;
         }
     }
 }

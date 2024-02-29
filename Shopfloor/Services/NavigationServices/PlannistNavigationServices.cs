@@ -89,7 +89,7 @@ namespace Shopfloor.Services.NavigationServices
 
         private static PlannistDashboardMainViewModel CreatePlannistDashboardMainViewModel(IServiceProvider services, IServiceProvider databaseServices)
         {
-            return new PlannistDashboardMainViewModel(services, databaseServices);
+            return new PlannistDashboardMainViewModel();
         }
 
         private static DeploysViewModel CreateDeploysViewModel(IServiceProvider services)
