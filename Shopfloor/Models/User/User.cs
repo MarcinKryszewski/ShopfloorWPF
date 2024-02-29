@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Shopfloor.Models.UserModel
 {
-    internal sealed partial class User : ISearchableModel
+    internal sealed partial class User
     {
         private readonly HashSet<Role> _roles = [];
         private readonly UserDTO _data = new();
@@ -18,7 +18,6 @@ namespace Shopfloor.Models.UserModel
         public string Surname => _data.Surname;
         public string FullName => $"{_data.Name} {_data.Surname}";
         public bool IsActive => _data.IsActive;
-        public string SearchValue => _data.Username + _data.Name + _data.Surname;
         public User(
             int id,
             string username,
@@ -69,5 +68,9 @@ namespace Shopfloor.Models.UserModel
             if (Id != null) return Id.GetHashCode();
             return FullName.GetHashCode();
         }
+    }
+    internal sealed partial class User : ISearchableModel
+    {
+        public string SearchValue => _data.Username + _data.Name + _data.Surname;
     }
 }

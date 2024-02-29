@@ -31,6 +31,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using Shopfloor.Features.Mechanic.PartsStock;
 
 namespace Shopfloor.Layout.SidePanel
 {
@@ -52,6 +53,7 @@ namespace Shopfloor.Layout.SidePanel
         public ICommand NavigateTasksCommand { get; }
         public ICommand NavigateRequestsCommand { get; }
         public ICommand NavigateMinimalStatesCommand { get; }
+        public ICommand NavigatePartStockCommand { get; }
 
         #endregion Mechanic
 
@@ -89,6 +91,7 @@ namespace Shopfloor.Layout.SidePanel
             NavigateTasksCommand = new NavigateCommand<ErrandsMainViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsMainViewModel>>());
             NavigateRequestsCommand = new NavigateCommand<RequestsMainViewModel>(mainServices.GetRequiredService<NavigationService<RequestsMainViewModel>>());
             NavigateMinimalStatesCommand = new NavigateCommand<MinimalStatesViewModel>(mainServices.GetRequiredService<NavigationService<MinimalStatesViewModel>>());
+            NavigatePartStockCommand = new NavigateCommand<PartsStockMainViewModel>(mainServices.GetRequiredService<NavigationService<PartsStockMainViewModel>>());
 
             NavigatePlannistDashboardMainCommand = new NavigateCommand<PlannistDashboardMainViewModel>(mainServices.GetRequiredService<NavigationService<PlannistDashboardMainViewModel>>());
             NavigateOrdersCommand = new NavigateCommand<OrdersViewModel>(mainServices.GetRequiredService<NavigationService<OrdersViewModel>>());

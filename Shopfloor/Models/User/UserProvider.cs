@@ -185,7 +185,7 @@ namespace Shopfloor.Models.UserModel
         {
             return new User
             (
-                item.Id,
+                (int)item.Id!,
                 item.Username,
                 item.Name,
                 item.Surname,

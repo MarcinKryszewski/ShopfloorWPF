@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Errands;
 using Shopfloor.Features.Mechanic.MinimalStates;
+using Shopfloor.Features.Mechanic.PartsStock;
 using Shopfloor.Features.Mechanic.Requests;
 using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
@@ -16,6 +17,7 @@ namespace Shopfloor.Services.NavigationServices
             GetTasksNavigation(services, databaseServices, userServices);
             GetRequestsNavigation(services, databaseServices, userServices);
             GetMinimalStatesNavigation(services);
+            GetPartsStockNavigation(services);
         }
         private static void GetMinimalStatesNavigation(IServiceCollection services)
         {
@@ -53,9 +55,22 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
+        private static void GetPartsStockNavigation(IServiceCollection services)
+        {
+            services.AddTransient((s) => CreatPartStockViewModel(s));
+            services.AddSingleton<CreateViewModel<PartsStockMainViewModel>>((s) => () => s.GetRequiredService<PartsStockMainViewModel>());
+            services.AddSingleton((s) =>
+            {
+                return new NavigationService<PartsStockMainViewModel>(
+                    s.GetRequiredService<NavigationStore>(),
+                    s.GetRequiredService<CreateViewModel<PartsStockMainViewModel>>()
+                );
+            });
+        }
 
         private static MinimalStatesViewModel CreateMinimalStatesViewModel(IServiceProvider services) => new MinimalStatesViewModel();
         private static RequestsMainViewModel CreatRequestsViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new RequestsMainViewModel(databaseServices, userServices);
         private static ErrandsMainViewModel CreatTasksViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new(databaseServices, userServices);
+        private static PartsStockMainViewModel CreatPartStockViewModel(IServiceProvider services) => new();
     }
 }

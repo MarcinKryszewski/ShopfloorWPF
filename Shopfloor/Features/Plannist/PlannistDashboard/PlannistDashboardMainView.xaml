@@ -10,48 +10,5 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Label
-                Grid.Row="0"
-                Margin="2"
-                Content="{Binding Path=DisplayList.CurrentPageText}"
-                Foreground="White" />
-            <Button
-                Margin="2"
-                Command="{Binding Path=NextPage}"
-                Content="Next" />
-            <Button
-                Margin="2"
-                Command="{Binding Path=LoadExcel}"
-                Content="LOAD" />
-            <Button
-                Margin="2"
-                Command="{Binding Path=UpdateValues}"
-                Content="UPDATE" />
-            <Button
-                Margin="2"
-                Command="{Binding Path=PrevPage}"
-                Content="Previous" />
-            <TextBox MinWidth="200" Text="{Binding Path=DisplayList.FilterText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
-        <DataGrid
-            Grid.Row="1"
-            AutoGenerateColumns="False"
-            CellStyle="{DynamicResource DataGridCellMain}"
-            ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
-            ItemsSource="{Binding Path=DisplayList.DataDisplay}"
-            RowStyle="{StaticResource DataGridRowMain}"
-            Style="{DynamicResource DataGridMain}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=Index}" Header="Login" />
-                <DataGridTextColumn Binding="{Binding Path=NamePl}" Header="Imię" />
-                <DataGridTextColumn Binding="{Binding Path=StorageAmount}" Header="Imię" />
-                <DataGridTextColumn Binding="{Binding Path=SearchValue}" Header="Imię" />
-            </DataGrid.Columns>
-        </DataGrid>
     </Grid>
 </UserControl>

@@ -16,7 +16,7 @@ namespace Shopfloor.Features.Mechanic.PartsStock.Hosts
             {
                 services.AddSingleton<NavigationStore>();
 
-                PartsStockNavigationServices.Get();
+                PartsStockNavigationServices.Get(services);
             })
             .Build();
         }
