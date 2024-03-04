@@ -6,9 +6,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Mechanic.Requests.RequestsDetails;
-using Shopfloor.Features.Mechanic.Requests.RequestsEdit;
-using Shopfloor.Features.Mechanic.Requests.Stores;
+using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
@@ -22,9 +20,9 @@ using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 
-namespace Shopfloor.Features.Mechanic.Requests.RequestsList
+namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
 {
-    internal sealed class RequestsListViewModel : ViewModelBase
+    internal sealed class PlannistPartsListViewModel : ViewModelBase
     {
         private readonly List<ErrandPart> _parts = [];
         private readonly IServiceProvider _mainServices;
@@ -50,10 +48,10 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
             }
         }
         public ICollectionView Parts => CollectionViewSource.GetDefaultView(_parts);
-        public ICommand EditCommand { get; }
-        public ICommand DetailsCommand { get; }
+        //public ICommand EditCommand { get; }
+        //public ICommand DetailsCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public RequestsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
+        public PlannistPartsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             _mainServices = mainServices;
             _databaseServices = databaseServices;
@@ -63,10 +61,10 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
             _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
             SelectedRow = null;
 
-            EditCommand = new NavigateCommand<RequestsEditViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsEditViewModel>>());
-            DetailsCommand = new NavigateCommand<RequestsDetailsViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsDetailsViewModel>>());
+            //EditCommand = new NavigateCommand<RequestsEditViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsEditViewModel>>());
+            //DetailsCommand = new NavigateCommand<RequestsDetailsViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsDetailsViewModel>>());
 
-            if (userServices.GetRequiredService<CurrentUserStore>().User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
+            //if (userServices.GetRequiredService<CurrentUserStore>().User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
         }
         private async Task LoadData()
         {

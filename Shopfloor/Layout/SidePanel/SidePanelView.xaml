@@ -41,8 +41,11 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Background="BlueViolet">
-            <Border Margin="20,0,20,0" Background="Aqua" />
+        <Border Grid.Row="0" Background="{StaticResource BrushPurple1000}">
+            <Grid>
+            <TextBlock Margin="5,5,0,0" Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="Yellow"/>
+            <TextBlock Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple200}"/>
+        </Grid>
         </Border>
         <ScrollViewer Grid.Row="1" Background="{StaticResource BrushDarkNeutral250}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="0,15,0,0" Orientation="Vertical">
@@ -96,6 +99,12 @@
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Panel kontrolny" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding Path=NavigateOffersCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Yellow" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Oferty" />
                         </StackPanel>
                     </Button>
                     <Button Command="{Binding Path=NavigateOrdersCommand}">

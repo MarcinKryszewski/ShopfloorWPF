@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Plannist.Deploys;
+using Shopfloor.Features.Plannist.Offers;
 using Shopfloor.Features.Plannist.Orders;
 using Shopfloor.Features.Plannist.PlannistDashboard;
 using Shopfloor.Features.Plannist.Reports;
@@ -20,6 +21,7 @@ namespace Shopfloor.Services.NavigationServices
             GetOrdersNavigation(services);
             GetReportsNavigation(services);
             GetReservationsNavigation(services);
+            GetOffersNavigation(services);
         }
 
         private static void GetPlannistDashboardMainNavigation(IServiceCollection services, IServiceProvider databaseServices)
@@ -61,6 +63,19 @@ namespace Shopfloor.Services.NavigationServices
             });
         }
 
+        private static void GetOffersNavigation(IServiceCollection services)
+        {
+            services.AddTransient((s) => CreateOffersViewModel(s));
+            services.AddSingleton<CreateViewModel<OffersViewModel>>((s) => () => s.GetRequiredService<OffersViewModel>());
+            services.AddSingleton((s) =>
+            {
+                return new NavigationService<OffersViewModel>(
+                    s.GetRequiredService<NavigationStore>(),
+                    s.GetRequiredService<CreateViewModel<OffersViewModel>>()
+                );
+            });
+        }
+
         private static void GetReportsNavigation(IServiceCollection services)
         {
             services.AddTransient((s) => CreateReportsViewModel(s));
@@ -89,7 +104,7 @@ namespace Shopfloor.Services.NavigationServices
 
         private static PlannistDashboardMainViewModel CreatePlannistDashboardMainViewModel(IServiceProvider services, IServiceProvider databaseServices)
         {
-            return new PlannistDashboardMainViewModel();
+            return new PlannistDashboardMainViewModel(databaseServices);
         }
 
         private static DeploysViewModel CreateDeploysViewModel(IServiceProvider services)
@@ -100,6 +115,11 @@ namespace Shopfloor.Services.NavigationServices
         private static OrdersViewModel CreateOrdersViewModel(IServiceProvider services)
         {
             return new OrdersViewModel(services);
+        }
+
+        private static OffersViewModel CreateOffersViewModel(IServiceProvider services)
+        {
+            return new OffersViewModel();
         }
 
         private static ReportsViewModel CreateReportsViewModel(IServiceProvider services)

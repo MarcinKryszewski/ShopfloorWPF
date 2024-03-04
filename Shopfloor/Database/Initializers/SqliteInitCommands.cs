@@ -177,6 +177,7 @@ namespace Shopfloor.Database.SQLite
                 created_by INTEGER,
                 comment TEXT,
                 reason TEXT,
+                confirmed INTEGER,
                 PRIMARY KEY(id),
                 FOREIGN KEY(errand_part_id) REFERENCES errands_parts(id)
             );";

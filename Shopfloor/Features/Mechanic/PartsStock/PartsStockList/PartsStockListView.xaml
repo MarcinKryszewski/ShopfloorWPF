@@ -17,7 +17,14 @@
             <Button Margin="2" Command="{Binding Path=PrevPage}" Content="Previous" />
             <TextBox MinWidth="200" Text="{Binding Path=DisplayList.FilterText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
         </StackPanel>
-        <DataGrid Grid.Row="1" AutoGenerateColumns="False" CellStyle="{DynamicResource DataGridCellMain}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}" ItemsSource="{Binding Path=DisplayList.DataDisplay}" RowStyle="{StaticResource DataGridRowMain}" Style="{DynamicResource DataGridMain}">
+        <DataGrid 
+        Grid.Row="1" 
+        AutoGenerateColumns="False" 
+        CellStyle="{DynamicResource DataGridCellMain}" 
+        ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}" 
+        ItemsSource="{Binding Path=DisplayList.DataDisplay}" 
+        RowStyle="{StaticResource DataGridRowMain}" 
+        Style="{DynamicResource DataGridMain}">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Path=Index}" Header="Login" />
                 <DataGridTextColumn Binding="{Binding Path=NamePl}" Header="Imię" />

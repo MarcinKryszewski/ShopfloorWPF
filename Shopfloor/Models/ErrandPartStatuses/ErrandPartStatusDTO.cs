@@ -13,5 +13,6 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         public string? Comment { get; set; }
         public string? Reason { get; set; }
         public User? CreatedBy { get; set; }
+        public bool Confirmed { get; set; }
     }
 }
