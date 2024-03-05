@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Plannist.Commands;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
@@ -15,10 +16,7 @@ using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
-using Shopfloor.Stores;
 
 namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
 {
@@ -48,8 +46,10 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
             }
         }
         public ICollectionView Parts => CollectionViewSource.GetDefaultView(_parts);
-        //public ICommand EditCommand { get; }
-        //public ICommand DetailsCommand { get; }
+        public PlannistConfirmCommand ConfirmCommand { get; }
+        public ICommand CancelCommand { get; }
+        public PlannistAbortCommand AbortCommand { get; }
+        public ICommand DetailsCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
         public PlannistPartsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
@@ -61,11 +61,15 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
             _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
             SelectedRow = null;
 
-            //EditCommand = new NavigateCommand<RequestsEditViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsEditViewModel>>());
-            //DetailsCommand = new NavigateCommand<RequestsDetailsViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsDetailsViewModel>>());
+            ConfirmCommand = new PlannistConfirmCommand(_requestStore, databaseServices);
+            CancelCommand = new PlannistCancelCommand();
+            AbortCommand = new PlannistAbortCommand(_requestStore, databaseServices);
+            DetailsCommand = new PlannistDetailsCommand();
 
-            //if (userServices.GetRequiredService<CurrentUserStore>().User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
+            ConfirmCommand.RequestConfirmed += OnRequestChanged;
+            AbortCommand.RequestAborted += OnRequestChanged;
         }
+        private void OnRequestChanged() => Parts.Refresh();
         private async Task LoadData()
         {
             Application.Current.Dispatcher.Invoke(_parts.Clear);

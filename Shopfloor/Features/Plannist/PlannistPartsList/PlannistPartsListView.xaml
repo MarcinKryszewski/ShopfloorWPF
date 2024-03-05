@@ -201,6 +201,24 @@
             </Style.Triggers>
         </Style>
         <Style
+            x:Key="gridAbortButton"
+            BasedOn="{StaticResource gridButton}"
+            TargetType="Button">
+            <Setter Property="Background" Value="#ac30d9" />
+            <Setter Property="BorderBrush" Value="#ae21d9" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#c72ff5" />
+                </Trigger>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>                        
+                        <Condition Binding="{Binding Path=LastStatus.Confirmed}" Value="True" />
+                    </MultiDataTrigger.Conditions>
+                    <Setter Property="Visibility" Value="Visible" />
+                </MultiDataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style
             x:Key="gridOrderButton"
             BasedOn="{StaticResource gridButton}"
             TargetType="Button">
@@ -331,6 +349,7 @@
 
         <DataGrid
             Grid.Row="3"
+            SelectedItem="{Binding Path=SelectedRow, Mode=TwoWay}"
             MaxHeight="785"
             CellStyle="{DynamicResource DataGridCellMain}"
             ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
@@ -346,6 +365,7 @@
                     IsReadOnly="True" />
                 <DataGridTemplateColumn
                     Width="auto"
+                    MinWidth="120"
                     CanUserResize="False"
                     Header="STATUS"
                     IsReadOnly="True">
@@ -443,7 +463,7 @@
                                 </Button>
                                 <Button
                                     Margin="5,0,0,0"
-                                    Command="{Binding Path=DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    Command="{Binding Path=DataContext.ConfirmCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                     Style="{StaticResource gridOfferButton}">
                                     <TextBlock
                                         FontFamily="Segoe MDL2 Assets"
@@ -452,7 +472,7 @@
                                 </Button>
                                 <Button
                                     Margin="5,0,0,0"
-                                    Command="{Binding Path=DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    Command="{Binding Path=DataContext.ConfirmCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                     Style="{StaticResource gridOrderButton}">
                                     <TextBlock
                                         FontFamily="Segoe MDL2 Assets"
@@ -461,12 +481,21 @@
                                 </Button>
                                 <Button
                                     Margin="5,0,0,0"
-                                    Command="{Binding Path=DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    Command="{Binding Path=DataContext.ConfirmCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                     Style="{StaticResource gridDeployButton}">
                                     <TextBlock
                                         FontFamily="Segoe MDL2 Assets"
                                         Style="{StaticResource gridButtonIcon}"
                                         Text="&#xF133;" />
+                                </Button>
+                                <Button
+                                    Margin="5,0,0,0"
+                                    Command="{Binding Path=DataContext.AbortCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    Style="{StaticResource gridAbortButton}">
+                                    <TextBlock
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Style="{StaticResource gridButtonIcon}"
+                                        Text="&#xF78A;" />
                                 </Button>
                             </StackPanel>
                         </DataTemplate>

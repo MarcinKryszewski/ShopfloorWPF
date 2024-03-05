@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:content="clr-namespace:Shopfloor.Layout.Content"
-    xmlns:plannistDashboard="clr-namespace:Shopfloor.Features.Plannist.PlannistDashboard"
+    xmlns:plannistDashboard="clr-namespace:Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dashboard="clr-namespace:Shopfloor.Features.Dashboard"
     xmlns:deploys="clr-namespace:Shopfloor.Features.Plannist.Deploys"
@@ -14,6 +14,7 @@
     xmlns:partsStock="clr-namespace:Shopfloor.Features.Mechanic.PartsStock"
     xmlns:orders="clr-namespace:Shopfloor.Features.Plannist.Orders"
     xmlns:offers="clr-namespace:Shopfloor.Features.Plannist.Offers"
+    xmlns:addOffer="clr-namespace:Shopfloor.Features.Plannist.Offers.AddOffer"
     xmlns:partTypes="clr-namespace:Shopfloor.Features.Admin.PartTypes"
     xmlns:parts="clr-namespace:Shopfloor.Features.Admin.Parts"
     xmlns:reports="clr-namespace:Shopfloor.Features.Plannist.Reports"
@@ -57,8 +58,11 @@
                         <partsStock:PartsStockMainView />
                     </DataTemplate>
 
-                    <DataTemplate DataType="{x:Type plannistDashboard:PlannistDashboardMainViewModel}">
-                        <plannistDashboard:PlannistDashboardMainView />
+                    <DataTemplate DataType="{x:Type plannistDashboard:PlannistPartsListViewModel}">
+                        <plannistDashboard:PlannistPartsListView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type addOffer:AddOfferViewModel}">
+                        <addOffer:AddOfferView />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type offers:OffersViewModel}">
                         <offers:OffersView />

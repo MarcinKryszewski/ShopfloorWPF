@@ -33,6 +33,7 @@ using System.Windows;
 using System.Windows.Input;
 using Shopfloor.Features.Mechanic.PartsStock;
 using Shopfloor.Features.Plannist.Offers;
+using Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList;
 
 namespace Shopfloor.Layout.SidePanel
 {
@@ -95,7 +96,7 @@ namespace Shopfloor.Layout.SidePanel
             NavigateMinimalStatesCommand = new NavigateCommand<MinimalStatesViewModel>(mainServices.GetRequiredService<NavigationService<MinimalStatesViewModel>>());
             NavigatePartStockCommand = new NavigateCommand<PartsStockMainViewModel>(mainServices.GetRequiredService<NavigationService<PartsStockMainViewModel>>());
 
-            NavigatePlannistDashboardMainCommand = new NavigateCommand<PlannistDashboardMainViewModel>(mainServices.GetRequiredService<NavigationService<PlannistDashboardMainViewModel>>());
+            NavigatePlannistDashboardMainCommand = new NavigateCommand<PlannistPartsListViewModel>(mainServices.GetRequiredService<NavigationService<PlannistPartsListViewModel>>());
             NavigateOffersCommand = new NavigateCommand<OffersViewModel>(mainServices.GetRequiredService<NavigationService<OffersViewModel>>());
             NavigateOrdersCommand = new NavigateCommand<OrdersViewModel>(mainServices.GetRequiredService<NavigationService<OrdersViewModel>>());
             NavigateDeploysCommand = new NavigateCommand<DeploysViewModel>(mainServices.GetRequiredService<NavigationService<DeploysViewModel>>());

@@ -57,6 +57,11 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             SET confirmed = 1
             WHERE id = @Id 
         ";
+        private const string _abortSQL = @"
+            UPDATE errand_part_statuses
+            SET confirmed = 0
+            WHERE id = @Id 
+        ";
         public ErrandPartStatusProvider(DatabaseConnectionFactory database)
         {
             _database = database;
@@ -121,6 +126,15 @@ namespace Shopfloor.Models.ErrandPartStatusModel
                 Id = id
             };
             await connection.ExecuteAsync(_confirmSQL, parameters);
+        }
+        public async Task Abort(int id)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                Id = id
+            };
+            await connection.ExecuteAsync(_abortSQL, parameters);
         }
         private static ErrandPartStatus ToModel(ErrandPartStatusDTO item)
         {

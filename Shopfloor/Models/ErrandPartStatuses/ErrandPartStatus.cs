@@ -60,6 +60,8 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             _data.StatusName = Status[id];
             StatusValue = id;
         }
+        public void Confirm() => _data.Confirmed = true;
+        public void Abort() => _data.Confirmed = false;
         public void SetStatus(string name) => SetStatus(Status.FirstOrDefault(x => x.Value == name).Key);
         public static Dictionary<int, string> Status = new()
         {
