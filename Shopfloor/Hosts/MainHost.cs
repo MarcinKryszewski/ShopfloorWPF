@@ -32,7 +32,7 @@ namespace Shopfloor.Hosts.MainHost
                 DashboardNavigationServices.Get(services);
                 LoginNavigationServices.Get(services, databaseServices, userServices);
                 MechanicNavigationServices.Get(services, databaseServices, userServices);
-                PlannistNavigationServices.Get(services, databaseServices);
+                PlannistNavigationServices.Get(services, databaseServices, userServices);
                 ManagerNavigationServices.Get(services);
                 AdminNavigationServices.Get(services, databaseServices);
             })

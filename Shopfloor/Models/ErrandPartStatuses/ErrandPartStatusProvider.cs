@@ -62,6 +62,11 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             SET confirmed = 0
             WHERE id = @Id 
         ";
+        private const string _setCommentSQL = @"
+            UPDATE errand_part_statuses
+            SET comment = @Comment
+            WHERE id = @Id 
+        ";
         public ErrandPartStatusProvider(DatabaseConnectionFactory database)
         {
             _database = database;
@@ -102,7 +107,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             IEnumerable<ErrandPartStatusDTO> ErrandPartStatusDTOs = await connection.QueryAsync<ErrandPartStatusDTO>(_getByErrandIdSQL, parameters);
             return ErrandPartStatusDTOs.Select(ToModel);
         }
-        public async Task Update(ErrandPartStatus item)
+        public async Task UpdateAmount(ErrandPartStatus item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
@@ -135,6 +140,16 @@ namespace Shopfloor.Models.ErrandPartStatusModel
                 Id = id
             };
             await connection.ExecuteAsync(_abortSQL, parameters);
+        }
+        public async Task SetComment(int id, string comment)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                Id = id,
+                Comment = comment
+            };
+            await connection.ExecuteAsync(_setCommentSQL, parameters);
         }
         private static ErrandPartStatus ToModel(ErrandPartStatusDTO item)
         {

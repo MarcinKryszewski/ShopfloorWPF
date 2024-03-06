@@ -17,7 +17,7 @@ namespace Shopfloor.Services.NavigationServices
 {
     internal sealed class PlannistNavigationServices
     {
-        internal static void Get(IServiceCollection services, IServiceProvider databaseServices)
+        internal static void Get(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             AddStoresToServices(services);
             GetPlannistDashboardMainNavigation(services, databaseServices);
@@ -26,7 +26,7 @@ namespace Shopfloor.Services.NavigationServices
             GetReportsNavigation(services);
             GetReservationsNavigation(services);
             GetOffersNavigation(services, databaseServices);
-            GetAddOfferNavigation(services, databaseServices);
+            GetAddOfferNavigation(services, databaseServices, userServices);
         }
         public static void AddStoresToServices(IServiceCollection services)
         {
@@ -46,9 +46,9 @@ namespace Shopfloor.Services.NavigationServices
             });
         }
 
-        private static void GetAddOfferNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        private static void GetAddOfferNavigation(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            services.AddTransient((s) => CreateAddOfferViewModel(s, databaseServices));
+            services.AddTransient((s) => CreateAddOfferViewModel(s, databaseServices, userServices));
             services.AddSingleton<CreateViewModel<AddOfferViewModel>>((s) => () => s.GetRequiredService<AddOfferViewModel>());
             services.AddSingleton((s) =>
             {
@@ -152,9 +152,9 @@ namespace Shopfloor.Services.NavigationServices
         {
             return new ReservationsViewModel();
         }
-        private static AddOfferViewModel CreateAddOfferViewModel(IServiceProvider services, IServiceProvider databaseServices)
+        private static AddOfferViewModel CreateAddOfferViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            return new AddOfferViewModel(services, databaseServices);
+            return new AddOfferViewModel(services, databaseServices, userServices);
         }
     }
 }

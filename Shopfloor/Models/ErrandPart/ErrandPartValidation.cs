@@ -24,6 +24,11 @@ namespace Shopfloor.Models.ErrandPartModel
             if (value is null) errandPart.AddError(amountName, "Podaj ilość");
             if (value < 0) errandPart.AddError(amountName, "Ilość nie może być ujemna");
         }
+        public void ValidatePrice(string propertyName, double? value)
+        {
+            _inputForm.ClearErrors(propertyName);
+            Price_CheckPositive(propertyName, value);
+        }
         private void Amount_CheckZero(string propertyName, double? value)
         {
             if (value == 0) _inputForm.AddError(propertyName, "Podaj ilość");
@@ -35,6 +40,10 @@ namespace Shopfloor.Models.ErrandPartModel
         private void Amount_CheckNegative(string propertyName, double? value)
         {
             if (value < 0) _inputForm.AddError(propertyName, "Ilość nie może być ujemna");
+        }
+        private void Price_CheckPositive(string propertyName, double? value)
+        {
+            if (!(value > 0)) _inputForm.AddError(propertyName, "Części nie mogą być za darmo!");
         }
     }
 }

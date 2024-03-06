@@ -15,7 +15,12 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         public int CreatedById => _data.CreatedById;
         public DateTime CreatedDate => _data.CreatedDate;
         public string CreatedDateDisplay => _data.CreatedDate.ToShortDateString();
-        public string? Comment => _data.Comment;
+        public string? Comment
+        {
+            get => _data.Comment;
+            set => _data.Comment = value;
+        }
+
         public string? Reason => _data.Reason;
         public int StatusValue;
         public bool Confirmed => _data.Confirmed;

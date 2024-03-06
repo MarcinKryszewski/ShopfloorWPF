@@ -44,6 +44,10 @@
         <Border Grid.Row="0" Background="{StaticResource BrushPurple1000}">
             <Grid>
             <TextBlock Margin="5,5,0,0" Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="Yellow"/>
+            <TextBlock Margin="4,4,0,0" Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="Yellow"/>
+            <TextBlock Margin="3,3,0,0" Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="Yellow"/>
+            <TextBlock Margin="2,2,0,0" Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="Yellow"/>
+            <TextBlock Margin="1,1,0,0" Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="Yellow"/>
             <TextBlock Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple200}"/>
         </Grid>
         </Border>

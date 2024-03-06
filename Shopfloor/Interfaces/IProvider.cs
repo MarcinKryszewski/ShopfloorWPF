@@ -11,7 +11,7 @@ namespace Shopfloor.Interfaces
 
         Task<int> Create(T item);
 
-        Task Update(T item);
+        Task UpdateAmount(T item);
 
         Task Delete(int id);
     }

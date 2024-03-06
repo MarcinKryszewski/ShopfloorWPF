@@ -18,20 +18,23 @@ namespace Shopfloor.Models.ErrandPartModel
                 errand_id,
                 part_id,
                 amount,
-                ordered_by_id
+                ordered_by_id,
+                price_per_unit
             )
             VALUES (
                 @ErrandId,
                 @PartId,
                 @Amount,
-                @OrderedBy
+                @OrderedBy,
+                @Price
             )";
         private const string _getOneSQL = @"
             SELECT
                 errand_id AS ErrandId,
                 part_id AS PartId,
                 amount AS Amount,
-                ordered_by_id as OrderedById
+                ordered_by_id as OrderedById,
+                price_per_unit as PricePerUnit
             FROM errands_parts
             WHERE id = @Id
             ";
@@ -40,7 +43,8 @@ namespace Shopfloor.Models.ErrandPartModel
                 errand_id AS ErrandId,
                 part_id AS PartId,
                 amount AS Amount,
-                ordered_by_id as OrderedById
+                ordered_by_id as OrderedById,
+                price_per_unit as PricePerUnit
             FROM errands_parts
             WHERE errand_id = @ErrandId
             ";
@@ -50,14 +54,21 @@ namespace Shopfloor.Models.ErrandPartModel
                 errand_id AS ErrandId,
                 part_id AS PartId,
                 amount AS Amount,
-                ordered_by_id as OrderedById
+                ordered_by_id as OrderedById,
+                price_per_unit as PricePerUnit
             FROM errands_parts
             ";
-        private const string _updateSQL = @"
+        private const string _updateAmountSQL = @"
             UPDATE errands_parts
             SET
                 amount = @Amount
             WHERE errand_id = @ErrandId AND part_id = @PartId
+            ";
+        private const string _updatePriceSQL = @"
+            UPDATE errands_parts
+            SET
+                price_per_unit = @Price
+            WHERE id as @Id
             ";
         #endregion SQLCommands
         public ErrandPartProvider(DatabaseConnectionFactory database)
@@ -73,7 +84,8 @@ namespace Shopfloor.Models.ErrandPartModel
                 ErrandId = item.ErrandId,
                 PartId = item.PartId,
                 Amount = item.Amount,
-                OrderedBy = item.OrderedById
+                OrderedBy = item.OrderedById,
+                Price = item.PricePerUnit
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
@@ -97,7 +109,7 @@ namespace Shopfloor.Models.ErrandPartModel
             return errandPartDTOs.Select(ToErrandPart);
         }
         public Task<ErrandPart> GetById(int id) => throw new NotImplementedException();
-        public async Task Update(ErrandPart item)
+        public async Task UpdateAmount(ErrandPart item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
@@ -106,7 +118,17 @@ namespace Shopfloor.Models.ErrandPartModel
                 PartId = item.PartId,
                 Amount = item.Amount
             };
-            await connection.ExecuteAsync(_updateSQL, parameters);
+            await connection.ExecuteAsync(_updateAmountSQL, parameters);
+        }
+        public async Task UpdatePrice(int id, double pricePerUnit)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                ErrandId = id,
+                Price = pricePerUnit
+            };
+            await connection.ExecuteAsync(_updatePriceSQL, parameters);
         }
         public Task Delete(int id) => throw new NotImplementedException();
         public Task Delete(int errandId, int partId) => throw new NotImplementedException();

@@ -26,7 +26,7 @@ namespace Shopfloor.Features.Admin.PartTypes.Commands
                 (int)selectedPartType.Id,
                 _viewModel.Name);
 
-            _ = _provider.Update(partType);
+            _ = _provider.UpdateAmount(partType);
 
             Task.Run(() => _viewModel.UpdateData(selectedPartType));
 

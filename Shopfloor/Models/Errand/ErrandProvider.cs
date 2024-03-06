@@ -126,7 +126,7 @@ namespace Shopfloor.Models.ErrandModel
             ErrandDTO? errandDTO = await connection.QuerySingleAsync<ErrandDTO>(_getOneSQL, parameters);
             return ToErrand(errandDTO);
         }
-        public async Task Update(Errand item)
+        public async Task UpdateAmount(Errand item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new

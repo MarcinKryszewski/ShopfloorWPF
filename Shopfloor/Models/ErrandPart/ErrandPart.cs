@@ -34,6 +34,7 @@ namespace Shopfloor.Models.ErrandPartModel
             _data.Amount = amount;
             _data.OrderedById = orderedBy;
         }
+        public double PricePerUnit => _data.PricePerUnit;
         public int ErrandId => _data.ErrandId;
         public int PartId => _data.PartId;
         public int? Id => _data.Id;
@@ -48,6 +49,15 @@ namespace Shopfloor.Models.ErrandPartModel
         }
         public double? Amount { get => _data.Amount; set => _data.Amount = value; }
         public string AmountText => Amount + ((Part is not null) ? " " + Part.Unit : "");
+        public void SetPrice(double price, double? amount = null)
+        {
+            if (amount is null)
+            {
+                _data.PricePerUnit = price;
+                return;
+            }
+            _data.PricePerUnit = price / (double)amount;
+        }
         public Errand? Errand
         {
             get => _data.Errand;

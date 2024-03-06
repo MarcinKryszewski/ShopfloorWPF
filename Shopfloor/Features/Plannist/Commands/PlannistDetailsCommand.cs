@@ -7,7 +7,7 @@ namespace Shopfloor.Features.Plannist.Commands
     {
         public override void Execute(object? parameter)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

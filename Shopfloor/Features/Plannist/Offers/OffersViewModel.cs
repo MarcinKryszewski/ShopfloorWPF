@@ -92,7 +92,7 @@ namespace Shopfloor.Features.Plannist.Offers
             tasks.Add(DataStore.LoadData(partsStore));
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
-        private async Task CombineData(ErrandStore errandStore, ErrandPartStore errandPartStore, PartsStore partsStore)
+        private static async Task CombineData(ErrandStore errandStore, ErrandPartStore errandPartStore, PartsStore partsStore)
         {
             List<Task> tasks = [];
 
@@ -119,10 +119,7 @@ namespace Shopfloor.Features.Plannist.Offers
         private bool FilterParts(object obj)
         {
             if (string.IsNullOrEmpty(_filterText)) return true;
-            if (obj is ErrandPart errandPart)
-            {
-                return errandPart.SearchValue.Contains(_filterText, StringComparison.InvariantCultureIgnoreCase);
-            }
+            if (obj is ErrandPart errandPart) return errandPart.SearchValue.Contains(_filterText, StringComparison.InvariantCultureIgnoreCase);
             return false;
         }
     }

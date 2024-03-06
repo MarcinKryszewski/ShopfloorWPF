@@ -14,5 +14,6 @@ namespace Shopfloor.Models.ErrandPartModel
         public Part? Part { get; set; }
         public Errand? Errand { get; set; }
         public User? OrderedByUser { get; set; }
+        public double PricePerUnit { get; set; }
     }
 }

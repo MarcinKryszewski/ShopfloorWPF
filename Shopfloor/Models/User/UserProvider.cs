@@ -143,7 +143,7 @@ namespace Shopfloor.Models.UserModel
             return ToUser(userDTO);
         }
 
-        public async Task Update(User item)
+        public async Task UpdateAmount(User item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new

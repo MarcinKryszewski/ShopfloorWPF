@@ -60,7 +60,7 @@ namespace Shopfloor.Models.RoleModel
             return ToRole(roleDTO);
         }
 
-        public Task Update(Role item)
+        public Task UpdateAmount(Role item)
         {
             throw new NotImplementedException();
         }

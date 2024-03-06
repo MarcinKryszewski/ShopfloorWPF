@@ -32,7 +32,7 @@ namespace Shopfloor.Features.Admin.Parts.Commands
             );
             if (!_viewModel.IsDataValidate) return;
 
-            _ = _databaseServices.GetRequiredService<PartProvider>().Update(part);
+            _ = _databaseServices.GetRequiredService<PartProvider>().UpdateAmount(part);
             _viewModel.ReloadData();
             //_viewModel.CleanForm();
         }

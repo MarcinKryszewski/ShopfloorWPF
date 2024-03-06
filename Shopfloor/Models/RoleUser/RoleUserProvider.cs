@@ -125,7 +125,7 @@ namespace Shopfloor.Models.RoleUserModel
             throw new NotImplementedException();
         }
 
-        public Task Update(RoleUser item)
+        public Task UpdateAmount(RoleUser item)
         {
             throw new NotImplementedException();
         }

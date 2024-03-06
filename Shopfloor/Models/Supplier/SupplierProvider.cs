@@ -98,7 +98,7 @@ namespace Shopfloor.Models.SupplierModel
             return ToSupplier(supplierDTO);
         }
 
-        public async Task Update(Supplier item)
+        public async Task UpdateAmount(Supplier item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
