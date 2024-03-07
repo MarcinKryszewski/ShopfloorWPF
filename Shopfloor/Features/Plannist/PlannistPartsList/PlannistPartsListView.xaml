@@ -297,7 +297,7 @@
             FontSize="32"
             FontWeight="SemiBold"
             Foreground="{StaticResource BrushPurple400}"
-            Text="Zamówienia / pobrania" />
+            Text="Dashboard planisty" />
 
         <TextBlock
             Grid.Row="1"
@@ -355,11 +355,12 @@
             ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
             ItemsSource="{Binding Path=Parts}"
             RowStyle="{StaticResource DataGridRowMain}"
-            Style="{DynamicResource DataGridMain}">
+            Style="{DynamicResource DataGridMain}"
+            TargetUpdated="DataGrid_TargetUpdated">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Width="auto"
-                    Binding="{Binding Path=Id}"
+                    Binding="{Binding Path=Id, NotifyOnTargetUpdated=True}"
                     CanUserResize="False"
                     Header="ID"
                     IsReadOnly="True" />
@@ -374,12 +375,12 @@
                             <Border
                                 BorderThickness="0"
                                 CornerRadius="14"
-                                ToolTip="{Binding LastStatusUpdateDate}">
+                                ToolTip="{Binding LastStatusUpdateDate, NotifyOnTargetUpdated=True}">
                                 <Label
                                     MinWidth="100"
                                     Margin="2,0,2,0"
                                     HorizontalContentAlignment="Center"
-                                    Content="{Binding LastStatusText}"
+                                    Content="{Binding LastStatusText, NotifyOnTargetUpdated=True}"
                                     FontSize="12"
                                     FontWeight="SemiBold" />
                                 <Border.Style>
@@ -413,31 +414,31 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn
                     Width="auto"
-                    Binding="{Binding Path=Part.Type.Name}"
+                    Binding="{Binding Path=Part.Type.Name, NotifyOnTargetUpdated=True}"
                     CanUserResize="False"
                     Header="RODZAJ CZĘŚCI"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="auto"
-                    Binding="{Binding Path=Part.NamePl}"
+                    Binding="{Binding Path=Part.NamePl, NotifyOnTargetUpdated=True}"
                     CanUserResize="False"
                     Header="NAZWA CZĘŚCI"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="auto"
-                    Binding="{Binding Path=AmountText}"
+                    Binding="{Binding Path=AmountText, NotifyOnTargetUpdated=True}"
                     CanUserResize="False"
                     Header="ILOŚĆ"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="auto"
-                    Binding="{Binding Path=OrderedByUser.FullName}"
+                    Binding="{Binding Path=OrderedByUser.FullName, NotifyOnTargetUpdated=True}"
                     CanUserResize="False"
                     Header="ZAMAWIAJĄCY"
                     IsReadOnly="True" />
                 <DataGridTextColumn
                     Width="auto"
-                    Binding="{Binding Path=Errand.Display.MachineText}"
+                    Binding="{Binding Path=Errand.Display.MachineText, NotifyOnTargetUpdated=True}"
                     CanUserResize="False"
                     Header="MASZYNA"
                     IsReadOnly="True" />

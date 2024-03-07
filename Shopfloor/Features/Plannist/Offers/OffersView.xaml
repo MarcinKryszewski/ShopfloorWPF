@@ -169,7 +169,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Margin="0,0,0,0" HorizontalAlignment="Left" FontSize="32" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple400}" Text="Zamówienia / pobrania" />
+        <TextBlock Grid.Row="0" Margin="0,0,0,0" HorizontalAlignment="Left" FontSize="32" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple400}" Text="Oferty" />
 
         <TextBlock Grid.Row="1" Margin="0,5,215,0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple400}" Text="Filtr" />
 
@@ -187,9 +187,9 @@
             <Button Content="Nieprzypisane" Style="{StaticResource tabButton}" />
         </StackPanel>
 
-        <DataGrid Grid.Row="3" SelectedItem="{Binding Path=SelectedRow, Mode=TwoWay}" MaxHeight="785" CellStyle="{DynamicResource DataGridCellMain}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}" ItemsSource="{Binding Path=Parts}" RowStyle="{StaticResource DataGridRowMain}" Style="{DynamicResource DataGridMain}">
+        <DataGrid TargetUpdated="DataGrid_TargetUpdated" Grid.Row="3" SelectedItem="{Binding Path=SelectedRow, Mode=TwoWay}" MaxHeight="785" CellStyle="{DynamicResource DataGridCellMain}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}" ItemsSource="{Binding Path=Parts}" RowStyle="{StaticResource DataGridRowMain}" Style="{DynamicResource DataGridMain}">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="auto" Binding="{Binding Path=Id}" CanUserResize="False" Header="ID" IsReadOnly="True" />
+                <DataGridTextColumn Width="auto" Binding="{Binding Path=Id, NotifyOnTargetUpdated=True}" CanUserResize="False" Header="ID" IsReadOnly="True" />
                 <DataGridTemplateColumn Width="auto" MinWidth="120" CanUserResize="False" Header="STATUS" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

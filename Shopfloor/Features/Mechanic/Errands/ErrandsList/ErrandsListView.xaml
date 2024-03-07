@@ -677,7 +677,7 @@
                 <DataGridTemplateColumn Width="auto" CanUserResize="False" Header="STATUS" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Border CornerRadius="14" BorderThickness="0" ToolTip="{Binding Display.LastStatusDate}">
+                            <Border CornerRadius="14" BorderThickness="0" ToolTip="{Binding Display.LastStatusDate, NotifyOnTargetUpdated=True}">
                                 <Label HorizontalContentAlignment="Center" Margin="2,0,2,0" Content="{Binding Display.PartsStatus}" FontWeight="SemiBold" FontSize="12"/>
                                 <Border.Style>
                                     <Style TargetType="Border">
