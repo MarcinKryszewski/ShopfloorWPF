@@ -9,7 +9,11 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
+    <StackPanel>
         <TextBlock Text="Dashboard" />
-    </Grid>
+        <Button
+            MinHeight="50"
+            Command="{Binding Path=NotifierTest}"
+            Content="TEST" />
+    </StackPanel>
 </UserControl> 

@@ -15,6 +15,7 @@
                 <ResourceDictionary Source="Themes/Controls/DatePickerThemes.xaml" />
                 <ResourceDictionary Source="Themes/Controls/RadioButtonThemes.xaml" />
                 <ResourceDictionary Source="Themes/Controls/DataGridThemes.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ToastNotifications.Messages;component/Themes/Default.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

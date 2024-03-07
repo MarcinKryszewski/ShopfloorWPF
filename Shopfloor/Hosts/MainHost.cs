@@ -4,6 +4,7 @@ using Shopfloor.Layout.Content;
 using Shopfloor.Layout.SidePanel;
 using Shopfloor.Layout.TopPanel;
 using Shopfloor.Services.NavigationServices;
+using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Stores;
 using System;
@@ -35,6 +36,8 @@ namespace Shopfloor.Hosts.MainHost
                 PlannistNavigationServices.Get(services, databaseServices, userServices);
                 ManagerNavigationServices.Get(services);
                 AdminNavigationServices.Get(services, databaseServices);
+
+                NotifierService.Get(services);
             })
             .Build();
         }
