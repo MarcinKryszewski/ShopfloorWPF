@@ -142,7 +142,7 @@ namespace Shopfloor.Models.ErrandPartModel
             };
             await connection.ExecuteAsync(_updatePriceSQL, parameters);
         }
-        public async Task UpdateDeliveryDate(int id, DateTime expectedDeliveryDate)
+        public async Task UpdateDeliveryDate(int id, DateTime? expectedDeliveryDate)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new

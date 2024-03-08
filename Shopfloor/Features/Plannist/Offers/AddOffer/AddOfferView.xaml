@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -32,6 +32,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -71,8 +72,17 @@
                 <TextBlock Grid.Row="6" FontWeight="SemiBold" Grid.Column="2" Foreground="{StaticResource BrushPurple400}" Text="Cena (łącznie)" FontSize="14" VerticalAlignment="Center" TextAlignment="Left"/>
                 <TextBox Grid.Row="6" Margin="10,0,20,0" Grid.Column="3" Width="200" MinHeight="30" Padding="5,0" VerticalContentAlignment="Center" Text="{Binding Path=PriceTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxMain}"/>
 
-                <TextBlock Grid.Row="7" FontWeight="SemiBold" Grid.Column="0" Foreground="{StaticResource BrushPurple400}" Text="Komentarz" FontSize="14" VerticalAlignment="Center" TextAlignment="Left"/>
-                <TextBox MinLines="3" VerticalContentAlignment="Top" Grid.Row="8" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,5,20,0" Grid.Column="0" Grid.ColumnSpan="4" Padding="5,5" Text="{Binding Path=ErrandPart.LastStatus.Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxMain}"/>
+                <TextBlock Grid.Row="7" FontWeight="SemiBold" Grid.Column="0" Foreground="{StaticResource BrushPurple400}" Text="Data dostawy" FontSize="14" VerticalAlignment="Center" TextAlignment="Left"/>
+                <DatePicker Height="30" Grid.Row="7" Grid.Column="1" Margin="10,0,20,0"
+                    FirstDayOfWeek="Monday"
+                    Language="Pl"
+                    SelectedDate="{Binding SelectedDate, Mode=TwoWay}"
+                    SelectedDateFormat="Long"
+                    Style="{DynamicResource DatePickerMain}"
+                    Width="200" />
+
+                <TextBlock Grid.Row="8" FontWeight="SemiBold" Grid.Column="0" Foreground="{StaticResource BrushPurple400}" Text="Komentarz" FontSize="14" VerticalAlignment="Center" TextAlignment="Left"/>
+                <TextBox MinLines="3" VerticalContentAlignment="Top" Grid.Row="9" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,5,20,0" Grid.Column="0" Grid.ColumnSpan="4" Padding="5,5" Text="{Binding Path=ErrandPart.LastStatus.Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxMain}"/>
             </Grid>
         </StackPanel>
 
@@ -248,7 +258,7 @@
             <Button Grid.Column="2" Width="150" Height="50" Margin="5,0" Command="{Binding Path=ConfirmCommand}" CommandParameter="CONFIRM" Style="{StaticResource ResourceKey=ButtonEmpty}">
                 <StackPanel>
                     <TextBlock Text="ZAPISZ" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <TextBlock Text="I ZATIWERDŹ" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"/>
+                    <TextBlock Text="i ZATIWERDŹ" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"/>
                 </StackPanel>
             </Button>
             <Button Grid.Column="3" Width="150" Height="50" Margin="5,0" Command="{Binding Path=ReturnCommand}" Content="WRÓĆ" Style="{StaticResource ResourceKey=ButtonSide}" />

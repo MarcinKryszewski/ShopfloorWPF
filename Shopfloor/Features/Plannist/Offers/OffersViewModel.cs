@@ -107,6 +107,7 @@ namespace Shopfloor.Features.Plannist.Offers
             List<Task> tasks = [];
             tasks.Add(FillPartList(errandPartStore));
             if (tasks.Count > 0) await Task.WhenAll(tasks);
+
         }
         private Task FillPartList(ErrandPartStore errandPartStore)
         {

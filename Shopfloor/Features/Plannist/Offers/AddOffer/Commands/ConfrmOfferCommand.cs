@@ -60,8 +60,10 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         {
             ErrandPartProvider errandPartProvider = _database.GetRequiredService<ErrandPartProvider>();
             double price = _viewModel.PricePerUnit;
+            DateTime? deliveryDate = request.ExpectedDeliveryDate;
             request.SetPrice(price);
             await errandPartProvider.UpdatePrice((int)request.Id!, price);
+            await errandPartProvider.UpdateDeliveryDate((int)request.Id!, deliveryDate);
         }
         private async Task UpdateErrandPartStatus(ErrandPart request)
         {

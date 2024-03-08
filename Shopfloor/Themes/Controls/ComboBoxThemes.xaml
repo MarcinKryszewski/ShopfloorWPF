@@ -38,7 +38,7 @@
                                                     Background="{TemplateBinding Background}"
                                                     BorderBrush="Yellow"
                                                     BorderThickness="0"
-                                                    CornerRadius="8,0,0,8">
+                                                    CornerRadius="5,0,0,5">
                                                     <ScrollViewer x:Name="PART_ContentHost" />
                                                 </Border>
                                             </ControlTemplate>
@@ -66,7 +66,7 @@
                                                     Background="{StaticResource BrushDarkNeutral1100}"
                                                     BorderBrush="Yellow"
                                                     BorderThickness="0"
-                                                    CornerRadius="0,8,8,0">
+                                                    CornerRadius="0,5,5,0">
                                                     <Grid>
                                                         <ContentPresenter />
                                                         <Path

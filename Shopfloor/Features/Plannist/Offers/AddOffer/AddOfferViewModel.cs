@@ -29,42 +29,45 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         public ICommand ReturnCommand { get; }
         public ICommand ConfirmCommand { get; }
         public ErrandPart ErrandPart => _requestStore.Request!;
+        public DateTime? SelectedDate
+        {
+            get => ErrandPart.ExpectedDeliveryDate;
+            set => ErrandPart.ExpectedDeliveryDate = value;
+        }
         public double PriceTotal
         {
             get
             {
-                if (_requestStore.Request is null) return 0;
-                if (_requestStore.Request.Amount is null) return 0;
+                if (ErrandPart is null) return 0;
+                if (ErrandPart.Amount is null) return 0;
 
-                return _requestStore.Request.PricePerUnit * (double)_requestStore.Request.Amount;
+                return ErrandPart.PricePerUnit * (double)ErrandPart.Amount;
             }
             set
             {
-                if (_requestStore.Request is null) return;
-                _requestStore.Request.SetPrice(value, _requestStore.Request.Amount);
+                if (ErrandPart is null) return;
+                ErrandPart.SetPrice(value, ErrandPart.Amount);
                 OnPropertyChanged(nameof(PriceTotal));
                 OnPropertyChanged(nameof(PricePerUnit));
-                //PricePerUnit = _requestStore.Request.PricePerUnit;
             }
         }
         public double PricePerUnit
         {
             get
             {
-                if (_requestStore.Request is null) return 0;
-                if (_requestStore.Request.Amount is null) return 0;
+                if (ErrandPart is null) return 0;
+                if (ErrandPart.Amount is null) return 0;
 
-                return _requestStore.Request.PricePerUnit;
+                return ErrandPart.PricePerUnit;
             }
             set
             {
-                if (_requestStore.Request is null) return;
-                if (_requestStore.Request.Amount is null) return;
+                if (ErrandPart is null) return;
+                if (ErrandPart.Amount is null) return;
 
-                _requestStore.Request.SetPrice(value);
+                ErrandPart.SetPrice(value);
                 OnPropertyChanged(nameof(PriceTotal));
                 OnPropertyChanged(nameof(PricePerUnit));
-                //PriceTotal = _requestStore.Request.PricePerUnit * (double)_requestStore.Request.Amount;
             }
         }
         public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
@@ -147,11 +150,11 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         }
         private Task CombineErrandWithParts(PartsStore parts, ErrandStore errands, ErrandPartStore errandParts)
         {
-            _requestStore.Request!.Errand!.Parts.Clear();
+            ErrandPart.Errand!.Parts.Clear();
             foreach (ErrandPart errandPart in errandParts.Data)
             {
-                if (errandPart.ErrandId != _requestStore.Request!.ErrandId) continue;
-                _requestStore.Request!.Errand!.Parts.Add(errandPart);
+                if (errandPart.ErrandId != ErrandPart.ErrandId) continue;
+                ErrandPart.Errand!.Parts.Add(errandPart);
             }
             return Task.CompletedTask;
         }
@@ -167,7 +170,7 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         #endregion COMBINE_DATA
         private void LoadHistoricalData(ErrandPartStore errandParts)
         {
-            HistoricalData = errandParts.Data.Where(part => part.PartId == _requestStore.Request!.PartId);
+            HistoricalData = errandParts.Data.Where(part => part.PartId == ErrandPart.PartId);
         }
     }
     internal sealed partial class AddOfferViewModel : IInputForm<ErrandPart>
