@@ -12,6 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
+using ToastNotifications;
 
 namespace Shopfloor.Features.Login
 {
@@ -51,7 +52,8 @@ namespace Shopfloor.Features.Login
                 databaseServices.GetRequiredService<UserProvider>(),
                 _userStore,
                 this,
-                NavigateDashboardCommand);
+                NavigateDashboardCommand,
+                mainServices.GetRequiredService<Notifier>());
             _userValidation = new(this);
         }
         private void OnUserLogin(object? sender, PropertyChangedEventArgs e)

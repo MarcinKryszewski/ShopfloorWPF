@@ -1,9 +1,10 @@
 using System;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Shared.Commands;
+using ToastNotifications;
+using ToastNotifications.Messages;
 
 namespace Shopfloor.Features.Plannist.Commands
 {
@@ -11,10 +12,12 @@ namespace Shopfloor.Features.Plannist.Commands
     {
         private readonly SelectedRequestStore _selectedRequest;
         private readonly IServiceProvider _databaseServices;
-        public PlannistConfirmCommand(SelectedRequestStore selectedRequest, IServiceProvider databaseServices)
+        private readonly Notifier _notifier;
+        public PlannistConfirmCommand(SelectedRequestStore selectedRequest, IServiceProvider databaseServices, Notifier notifier)
         {
             _selectedRequest = selectedRequest;
             _databaseServices = databaseServices;
+            _notifier = notifier;
         }
         public override void Execute(object? parameter)
         {
@@ -25,6 +28,7 @@ namespace Shopfloor.Features.Plannist.Commands
             _databaseServices.GetRequiredService<ErrandPartStatusProvider>().Confirm((int)requestId).Wait();
             _selectedRequest.Request.LastStatus.Confirm();
             RequestConfirmed?.Invoke();
+            _notifier.ShowInformation("Przekazano do realizacji");
         }
         public event Action? RequestConfirmed;
     }

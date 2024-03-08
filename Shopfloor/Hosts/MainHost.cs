@@ -30,6 +30,8 @@ namespace Shopfloor.Hosts.MainHost
                 services.AddTransient<TopPanelViewModel>();
                 services.AddSingleton<NavigationStore>();
 
+                NotifierServices.Get(services);
+
                 DashboardNavigationServices.Get(services);
                 LoginNavigationServices.Get(services, databaseServices, userServices);
                 MechanicNavigationServices.Get(services, databaseServices, userServices);
@@ -37,7 +39,7 @@ namespace Shopfloor.Hosts.MainHost
                 ManagerNavigationServices.Get(services);
                 AdminNavigationServices.Get(services, databaseServices);
 
-                NotifierService.Get(services);
+
             })
             .Build();
         }

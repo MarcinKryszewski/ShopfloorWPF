@@ -17,6 +17,7 @@ using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared;
 using Shopfloor.Shared.ViewModels;
+using ToastNotifications;
 
 namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
 {
@@ -61,7 +62,7 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
             _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
             SelectedRow = null;
 
-            ConfirmCommand = new PlannistConfirmCommand(_requestStore, databaseServices);
+            ConfirmCommand = new PlannistConfirmCommand(_requestStore, databaseServices, mainServices.GetRequiredService<Notifier>());
             CancelCommand = new PlannistCancelCommand();
             AbortCommand = new PlannistAbortCommand(_requestStore, databaseServices);
             DetailsCommand = new PlannistDetailsCommand();

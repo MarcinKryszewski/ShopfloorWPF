@@ -14,6 +14,7 @@ using Shopfloor.Stores;
 using System;
 using System.Data;
 using System.Windows;
+using ToastNotifications;
 
 namespace Shopfloor
 {
@@ -53,13 +54,16 @@ namespace Shopfloor
             //tries to login user automatically
             _userHost.Services.GetRequiredService<CurrentUserStore>().AutoLogin(
                 Environment.UserName,
-                _databaseHost.Services.GetRequiredService<UserProvider>()
+                _databaseHost.Services.GetRequiredService<UserProvider>(),
+                _mainHost.Services.GetRequiredService<Notifier>()
             );
 
             MainWindow = new MainWindow()
             {
                 DataContext = new MainWindowViewModel(_mainHost.Services)
             };
+
+
 
             MainWindow.Show();
         }

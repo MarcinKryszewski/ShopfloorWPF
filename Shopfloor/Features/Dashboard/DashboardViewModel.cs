@@ -4,7 +4,7 @@ using Shopfloor.Shared.ViewModels;
 using System;
 using System.Windows.Input;
 using ToastNotifications;
-using static Shopfloor.Services.NotificationServices.NotifierService.ToastMessageStyles;
+using static Shopfloor.Services.NotificationServices.NotifierServices.ToastMessageStyles;
 
 namespace Shopfloor.Features.Dashboard
 {

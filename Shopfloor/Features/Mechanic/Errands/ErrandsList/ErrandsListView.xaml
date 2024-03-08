@@ -1,340 +1,13 @@
-﻿<UserControl
-    x:Class="Shopfloor.Features.Mechanic.Errands.ErrandsList.ErrandsListView"
+﻿<UserControl x:Class="Shopfloor.Features.Mechanic.Errands.ErrandsList.ErrandsListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Shopfloor.Features.Mechanic.Errands.ErrandsList"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
-    d:DataContext="{d:DesignInstance Type=local:ErrandsListViewModel}"
-    d:DesignHeight="720"
-    d:DesignWidth="1080"
-    mc:Ignorable="d">
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" d:DataContext="{d:DesignInstance Type=local:ErrandsListViewModel}" d:DesignHeight="720" d:DesignWidth="1080" mc:Ignorable="d">
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
-        <Style x:Key="topButton" TargetType="Button">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="#6E7783" />
-            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-            <Setter Property="Height" Value="30" />
-            <Setter Property="Width" Value="30" />
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="50">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#dcdcdc" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="menuButton" TargetType="Button">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="#D0C0FF" />
-            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-            <Setter Property="Height" Value="35" />
-            <Setter Property="Margin" Value="15,3" />
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="7">
-                            <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#7B5CD6" />
-                    <Setter Property="Foreground" Value="#ffffff" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="menuButtonIcon" TargetType="TextBlock">
-            <Setter Property="Margin" Value="20,2,20,0" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Width" Value="15" />
-            <Setter Property="Height" Value="15" />
-        </Style>
-        <Style x:Key="searchTextbox" TargetType="TextBox">
-            <Setter Property="Background" Value="#ffffff" />
-            <Setter Property="Foreground" Value="#B0B9C6" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="Padding" Value="15,10" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="0,10" />
-
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                        <Border
-                            x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="#E0E6ED"
-                            BorderThickness="1"
-                            CornerRadius="20"
-                            SnapsToDevicePixels="True">
-                            <ScrollViewer
-                                x:Name="PART_ContentHost"
-                                Focusable="false"
-                                HorizontalScrollBarVisibility="Hidden"
-                                VerticalScrollBarVisibility="Hidden" />
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#d9d9d9" />
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="true">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#d9d9d9" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="addButton" TargetType="Button">
-            <Setter Property="Background" Value="#6741D9" />
-            <Setter Property="Foreground" Value="#ffffff" />
-            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-            <Setter Property="Height" Value="35" />
-            <Setter Property="Width" Value="180" />
-            <Setter Property="Margin" Value="0,10,0,0" />
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="HorizontalAlignment" Value="Right" />
-            <Setter Property="Grid.Row" Value="1" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="7">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#7B5CD6" />
-                    <Setter Property="Foreground" Value="#ffffff" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="tabButton" TargetType="Button">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{StaticResource BrushPurple400}" />
-            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-            <Setter Property="Height" Value="45" />
-            <Setter Property="MinWidth" Value="70" />
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="FontWeight" Value="SemiBold" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0,0,0,4">
-                            <ContentPresenter
-                                Margin="10,0,10,0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="BorderBrush" Value="#784FF2" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style
-            x:Key="filterTextBox"
-            BasedOn="{StaticResource searchTextbox}"
-            TargetType="TextBox">
-            <Setter Property="Padding" Value="10,7" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                        <Border
-                            x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="#E0E6ED"
-                            BorderThickness="1"
-                            CornerRadius="7"
-                            SnapsToDevicePixels="True">
-                            <ScrollViewer
-                                x:Name="PART_ContentHost"
-                                Focusable="false"
-                                HorizontalScrollBarVisibility="Hidden"
-                                VerticalScrollBarVisibility="Hidden" />
-                        </Border>
-
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#d9d9d9" />
-                            </Trigger>
-                            <Trigger Property="IsKeyboardFocused" Value="true">
-                                <Setter TargetName="border" Property="BorderBrush" Value="#d9d9d9" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="pagingButton" TargetType="Button">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="#6C7682" />
-            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-            <Setter Property="Margin" Value="1,0" />
-            <Setter Property="FontSize" Value="13" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            Padding="10,5"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="5">
-                            <ContentPresenter
-                                Margin="0,0,0,1"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#7950F2" />
-                    <Setter Property="Foreground" Value="#ffffff" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="pagingButtonIcon" TargetType="TextBlock">
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Width" Value="10" />
-            <Setter Property="Height" Value="10" />
-        </Style>
-        <Style x:Key="gridEditButton" TargetType="Button">
-            <Setter Property="Background" Value="#512DA8" />
-            <Setter Property="BorderBrush" Value="#4A148C" />
-            <Setter Property="Foreground" Value="#ffffff" />
-            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            Padding="3"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="1"
-                            CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#673AB7" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style
-            x:Key="gridRemoveButton"
-            BasedOn="{StaticResource gridEditButton}"
-            TargetType="Button">
-            <Setter Property="Background" Value="#D32F2F" />
-            <Setter Property="BorderBrush" Value="#B71C1C" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#F44336" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style
-            x:Key="gridConfirmButton"
-            BasedOn="{StaticResource gridEditButton}"
-            TargetType="Button">
-            <Setter Property="Background" Value="#81d32f" />
-            <Setter Property="BorderBrush" Value="#6ab81c" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#89f536" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style
-            x:Key="gridInfoButton"
-            BasedOn="{StaticResource gridEditButton}"
-            TargetType="Button">
-            <Setter Property="Background" Value="#ced32f" />
-            <Setter Property="BorderBrush" Value="#b7af1c" />
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#f4e136" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="gridButtonIcon" TargetType="TextBlock">
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Width" Value="12" />
-            <Setter Property="Height" Value="12" />
-        </Style>
-        <!--#region DataGrid Style-->
-        <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}" TargetType="{x:Type Button}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid>
-                            <Rectangle
-                                x:Name="Border"
-                                Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
-                                SnapsToDevicePixels="True" />
-                            <Polygon
-                                x:Name="Arrow"
-                                Margin="8,8,3,3"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom"
-                                Fill="Black"
-                                Opacity="0.15"
-                                Points="0,10 10,10 10,0"
-                                Stretch="Uniform" />
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Stroke" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="Border" Property="Fill" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="Arrow" Property="Visibility" Value="Collapsed" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>        
-
-        <!--#endregion-->
         <!--#region Check Box Style-->
         <SolidColorBrush x:Key="OptionMark.Static.Background" Color="#FFFFFFFF" />
         <SolidColorBrush x:Key="OptionMark.Static.Border" Color="#FF707070" />
@@ -357,48 +30,18 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type CheckBox}">
-                        <Grid
-                            x:Name="templateRoot"
-                            Background="Transparent"
-                            SnapsToDevicePixels="True">
+                        <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Border
-                                x:Name="checkBoxBorder"
-                                Margin="1"
-                                Padding="1"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="3">
+                            <Border x:Name="checkBoxBorder" Margin="1" Padding="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="3">
                                 <Grid x:Name="markGrid">
-                                    <Path
-                                        x:Name="optionMark"
-                                        Margin="1"
-                                        Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z "
-                                        Fill="{StaticResource OptionMark.Static.Glyph}"
-                                        Opacity="0"
-                                        Stretch="None" />
-                                    <Rectangle
-                                        x:Name="indeterminateMark"
-                                        Margin="2"
-                                        Fill="{StaticResource OptionMark.Static.Glyph}"
-                                        Opacity="0" />
+                                    <Path x:Name="optionMark" Margin="1" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Fill="{StaticResource OptionMark.Static.Glyph}" Opacity="0" Stretch="None" />
+                                    <Rectangle x:Name="indeterminateMark" Margin="2" Fill="{StaticResource OptionMark.Static.Glyph}" Opacity="0" />
                                 </Grid>
                             </Border>
-                            <ContentPresenter
-                                x:Name="contentPresenter"
-                                Grid.Column="1"
-                                Margin="{TemplateBinding Padding}"
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Focusable="False"
-                                RecognizesAccessKey="True"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Focusable="False" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="HasContent" Value="true">
@@ -452,120 +95,55 @@
         </Grid.RowDefinitions>
 
         <!--
-        <Grid Width="300"
-            HorizontalAlignment="Left">
-            <TextBlock Margin="20 0"
-                VerticalAlignment="Center"
-                Foreground="#B0B9C6"
-                IsHitTestVisible="False"
-                Panel.ZIndex="1"
-                Text="Search here ..."
-                Visibility="{Binding ElementName=textBoxSearch, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
+        <Grid Width="300" HorizontalAlignment="Left">
+            <TextBlock Margin="20 0" VerticalAlignment="Center" Foreground="#B0B9C6" IsHitTestVisible="False" Panel.ZIndex="1" Text="Search here ..." Visibility="{Binding ElementName=textBoxSearch, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
 
-            <TextBox Name="textBoxSearch"
-                Style="{StaticResource searchTextbox}" />
+            <TextBox Name="textBoxSearch" Style="{StaticResource searchTextbox}" />
 
-            <TextBlock Style="{StaticResource pagingButtonIcon}"
-                FontFamily="Segoe MDL2 Assets"
-                Text="&#xE71E;"
-                IsHitTestVisible="False"
-                VerticalAlignment="Center"
-                FontSize="16"
-                Margin="0 0 20 0"
-                Foreground="#B0B9C6"
-                HorizontalAlignment="Right" />
+            <TextBlock Style="{StaticResource pagingButtonIcon}" FontFamily="Segoe MDL2 Assets" Text="&#xE71E;" IsHitTestVisible="False" VerticalAlignment="Center" FontSize="16" Margin="0 0 20 0" Foreground="#B0B9C6" HorizontalAlignment="Right" />
         </Grid>
 
-        <Button Style="{StaticResource topButton}"
-            Margin="0 0 20 0"
-            Background="#dcdcdc">
-            <TextBlock Text="&#xF8B0;"
-                FontFamily="Segoe MDL2 Assets" />
+        <Button Style="{StaticResource topButton}" Margin="0 0 20 0" Background="#dcdcdc">
+            <TextBlock Text="&#xF8B0;" FontFamily="Segoe MDL2 Assets" />
         </Button>
         -->
 
         <!--  Page Title  -->
-        <TextBlock
-            Grid.Row="1"
-            Margin="0,0,0,0"
-            HorizontalAlignment="Left"
-            FontSize="32"
-            FontWeight="SemiBold"
-            Foreground="{StaticResource BrushPurple400}"
-            Text="DCS zadania" />
+        <TextBlock Grid.Row="1" Margin="0,0,0,0" HorizontalAlignment="Left" FontSize="32" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple400}" Text="DCS zadania" />
 
         <!--  Add Button  -->
         <Button Command="{Binding Path=ErrandsAddNavigateCommand}" Style="{StaticResource addButton}" Visibility="{Binding HasAccess}">
             <StackPanel Orientation="Horizontal">
                 <!--  AddTo  -->
-                <TextBlock
-                    Margin="0,2,4,0"
-                    FontFamily="Segoe MDL2 Assets"
-                    FontSize="16"
-                    Text="&#xECC8;" />
+                <TextBlock Margin="0,2,4,0" FontFamily="Segoe MDL2 Assets" FontSize="16" Text="&#xECC8;" />
                 <TextBlock Text="Dodaj nowe działanie" />
             </StackPanel>
         </Button>
 
         <!--  Seprator  -->
-        <Separator
-            Grid.Row="3"
-            Height="1"
-            Margin="0,-5,0,5"
-            Background="#DAE2EA" />
+        <Separator Grid.Row="3" Height="1" Margin="0,-5,0,5" Background="#DAE2EA" />
 
         <!--  Tab buttons  -->
-        <StackPanel
-            Grid.Row="2"
-            Margin="0,10,0,0"
-            Orientation="Horizontal">
-            <Button
-                BorderBrush="{StaticResource BrushPurple700}"
-                Content="Wszystkie"
-                Style="{StaticResource tabButton}" />
+        <StackPanel Grid.Row="2" Margin="0,10,0,0" Orientation="Horizontal">
+            <Button BorderBrush="{StaticResource BrushPurple700}" Content="Wszystkie" Style="{StaticResource tabButton}" />
             <Button Content="Moje" Style="{StaticResource tabButton}" />
             <Button Content="Nieprzypisane" Style="{StaticResource tabButton}" />
         </StackPanel>
 
         <!--  Counter Title  -->
-        <!--<TextBlock Text="68 Club Staff"
-            Grid.Row="4"
-            FontSize="18"
-            FontWeight="SemiBold"
-            Foreground="#121518"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center" />-->
+        <!--<TextBlock Text="68 Club Staff" Grid.Row="4" FontSize="18" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" VerticalAlignment="Center" />-->
 
-        <TextBlock
-            Grid.Row="2"
-            Margin="0,10,215,0"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center"
-            FontSize="13"
-            FontWeight="SemiBold"
-            Foreground="{StaticResource BrushPurple400}"
-            Text="Filtr" />
+        <TextBlock Grid.Row="2" Margin="0,10,215,0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple400}" Text="Filtr" />
 
         <!--  Filter Textbox  -->
-        <Grid
-            Grid.Row="2"
-            Width="200"
-            Margin="0,10,0,0"
-            HorizontalAlignment="Right">
-            <TextBlock
-                Margin="15,0"
-                VerticalAlignment="Center"
-                Panel.ZIndex="1"
-                Foreground="#B0B9C6"
-                IsHitTestVisible="False"
-                Text="Szukaj . . ."
-                Visibility="{Binding ElementName=textBoxFilter, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
+        <Grid Grid.Row="2" Width="200" Margin="0,10,0,0" HorizontalAlignment="Right">
+            <TextBlock Margin="15,0" VerticalAlignment="Center" Panel.ZIndex="1" Foreground="#B0B9C6" IsHitTestVisible="False" Text="Szukaj . . ." Visibility="{Binding ElementName=textBoxFilter, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
 
             <TextBox Name="textBoxFilter" Style="{StaticResource filterTextBox}" />
         </Grid>
 
         <!--  Members Data Grid  -->
-        <!--  PreviewMouseWheel="UIElement_OnPreviewMouseWheel"  -->
+        <!-- PreviewMouseWheel="UIElement_OnPreviewMouseWheel"  -->
         <!--
             Priorytet+
             ID+
@@ -576,14 +154,7 @@
             Status+
             Termin
         -->
-        <DataGrid
-            x:Name="membersDataGrid"
-            MaxHeight="785"
-            CellStyle="{DynamicResource DataGridCellMain}"
-            ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
-            ItemsSource="{Binding Path=Errands}"
-            SelectedItem="{Binding Path=SelectedErrand, Mode=TwoWay}"
-            Style="{DynamicResource DataGridMain}">
+        <DataGrid x:Name="membersDataGrid" MaxHeight="785" CellStyle="{DynamicResource DataGridCellMain}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}" ItemsSource="{Binding Path=Errands}" SelectedItem="{Binding Path=SelectedErrand, Mode=TwoWay}" Style="{DynamicResource DataGridMain}">
             <DataGrid.RowStyle>
                 <Style BasedOn="{StaticResource DataGridRowMain}" TargetType="DataGridRow">
                     <Style.Triggers>
@@ -600,42 +171,20 @@
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
-                <!--<DataGridCheckBoxColumn
-                    Width="auto"
-                    CanUserResize="False"
-                    ElementStyle="{StaticResource CheckBoxStyle1}"
-                    Header="C">
+                <!--<DataGridCheckBoxColumn Width="auto" CanUserResize="False" ElementStyle="{StaticResource CheckBoxStyle1}" Header="C">
                     <DataGridCheckBoxColumn.HeaderTemplate>
                         <DataTemplate>
                             <CheckBox Style="{StaticResource CheckBoxStyle1}" />
                         </DataTemplate>
                     </DataGridCheckBoxColumn.HeaderTemplate>
                 </DataGridCheckBoxColumn>-->
-                <DataGridTextColumn
-                    Width="auto"
-                    Binding="{Binding Path=Id}"
-                    CanUserResize="False"
-                    Header="#"
-                    IsReadOnly="True" />
-                <!--<DataGridTemplateColumn
-                    Width="*"
-                    Header="Member"
-                    IsReadOnly="True">
+                <DataGridTextColumn Width="auto" Binding="{Binding Path=Id}" CanUserResize="False" Header="#" IsReadOnly="True" />
+                <!--<DataGridTemplateColumn Width="*" Header="Member" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Border
-                                    Width="25"
-                                    Height="25"
-                                    Margin="0,0,10,0"
-                                    Background="{Binding BgColor}"
-                                    CornerRadius="50">
-                                    <TextBlock
-                                        Margin="0,0,0,1"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Foreground="White"
-                                        Text="{Binding Character}" />
+                                <Border Width="25" Height="25" Margin="0,0,10,0" Background="{Binding BgColor}" CornerRadius="50">
+                                    <TextBlock Margin="0,0,0,1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Text="{Binding Character}" />
                                 </Border>
 
                                 <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
@@ -643,26 +192,10 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>-->
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Display.ErrandTypeName}"
-                    Header="Rodzaj"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Display.MachineText}"
-                    Header="Maszyna"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Width="4*"
-                    Binding="{Binding Display.DescriptionShort}"
-                    Header="Opis"
-                    IsReadOnly="True" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Display.LastStatusName}"
-                    Header="Status"
-                    IsReadOnly="True">
+                <DataGridTextColumn Width="*" Binding="{Binding Display.ErrandTypeName}" Header="Rodzaj" IsReadOnly="True" />
+                <DataGridTextColumn Width="*" Binding="{Binding Display.MachineText}" Header="Maszyna" IsReadOnly="True" />
+                <DataGridTextColumn Width="4*" Binding="{Binding Display.DescriptionShort}" Header="Opis" IsReadOnly="True" />
+                <DataGridTextColumn Width="*" Binding="{Binding Display.LastStatusName}" Header="Status" IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -708,11 +241,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Display.OwnerText}"
-                    Header="Odpowiedzialny"
-                    IsReadOnly="True">
+                <DataGridTextColumn Width="*" Binding="{Binding Display.OwnerText}" Header="Odpowiedzialny" IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -724,41 +253,21 @@
                         </Style>
                     </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
-                <DataGridTemplateColumn
-                    Width="auto"
-                    Header="Akcje"
-                    IsReadOnly="True">
+                <DataGridTemplateColumn Width="auto" Header="Akcje" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button Style="{StaticResource gridConfirmButton}">
-                                    <TextBlock
-                                        FontFamily="Segoe MDL2 Assets"
-                                        Style="{StaticResource gridButtonIcon}"
-                                        Text="&#xE930;" />
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Style="{StaticResource gridButtonIcon}" Text="&#xE930;" />
                                 </Button>
                                 <Button Style="{StaticResource gridInfoButton}" Margin="3,0,0,0">
-                                    <TextBlock
-                                        FontFamily="Segoe MDL2 Assets"
-                                        Style="{StaticResource gridButtonIcon}"
-                                        Text="&#xE7B3;" />
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Style="{StaticResource gridButtonIcon}" Text="&#xE7B3;" />
                                 </Button>
-                                <Button
-                                    Margin="3,0,0,0"
-                                    Command="{Binding Path=DataContext.EditErrandCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                    Style="{StaticResource gridEditButton}"
-                                    Visibility="{Binding Path=DataContext.HasAccess, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
-                                    <TextBlock
-                                        FontFamily="Segoe MDL2 Assets"
-                                        Style="{StaticResource gridButtonIcon}"
-                                        Text="&#xE70F;" />
+                                <Button Margin="3,0,0,0" Command="{Binding Path=DataContext.EditErrandCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource gridEditButton}" Visibility="{Binding Path=DataContext.HasAccess, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Style="{StaticResource gridButtonIcon}" Text="&#xE70F;" />
                                 </Button>
-                                <Button Margin="3,0,0,0" Style="{StaticResource gridRemoveButton}" 
-                                    Visibility="{Binding Path=DataContext.HasAccess, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
-                                    <TextBlock
-                                        FontFamily="Segoe MDL2 Assets"
-                                        Style="{StaticResource gridButtonIcon}"
-                                        Text="&#xE74D;" />
+                                <Button Margin="3,0,0,0" Style="{StaticResource gridRemoveButton}" Visibility="{Binding Path=DataContext.HasAccess, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Style="{StaticResource gridButtonIcon}" Text="&#xE74D;" />
                                 </Button>
                             </StackPanel>
                         </DataTemplate>
@@ -769,53 +278,26 @@
 
         <!--  Pagingation Section  -->
         <!--
-        <Border Grid.Row="6"
-            HorizontalAlignment="Right"
-            BorderBrush="#DEE4EC"
-            BorderThickness="1"
-            CornerRadius="5"
-            Padding="5"
-            Background="#ffffff"
-            Margin="0 10 10 10">
+        <Border Grid.Row="6" HorizontalAlignment="Right" BorderBrush="#DEE4EC" BorderThickness="1" CornerRadius="5" Padding="5" Background="#ffffff" Margin="0 10 10 10">
             <StackPanel Orientation="Horizontal">
                 <Button Style="{StaticResource pagingButton}">
-                    <TextBlock Text="&#xE76B;"
-                        FontFamily="Segoe MDL2 Assets"
-                        Style="{StaticResource pagingButtonIcon}" />
+                    <TextBlock Text="&#xE76B;" FontFamily="Segoe MDL2 Assets" Style="{StaticResource pagingButtonIcon}" />
                 </Button>
-                <Rectangle Width="1"
-                    Fill="#DEE4EC"
-                    Margin="3 7" />
+                <Rectangle Width="1" Fill="#DEE4EC" Margin="3 7" />
 
-                <Button Style="{StaticResource pagingButton}"
-                    Content="1" />
-                <Button Style="{StaticResource pagingButton}"
-                    Content="2"
-                    Background="#7950F2"
-                    Foreground="#ffffff" />
-                <Button Style="{StaticResource pagingButton}"
-                    Content="3" />
+                <Button Style="{StaticResource pagingButton}" Content="1" />
+                <Button Style="{StaticResource pagingButton}" Content="2" Background="#7950F2" Foreground="#ffffff" />
+                <Button Style="{StaticResource pagingButton}" Content="3" />
 
-                <TextBlock Text="..."
-                    Foreground="#6C7682"
-                    VerticalAlignment="Center"
-                    Margin="10 0"
-                    FontSize="15" />
+                <TextBlock Text="..." Foreground="#6C7682" VerticalAlignment="Center" Margin="10 0" FontSize="15" />
 
-                <Button Style="{StaticResource pagingButton}"
-                    Content="7" />
-                <Button Style="{StaticResource pagingButton}"
-                    Content="8" />
-                <Button Style="{StaticResource pagingButton}"
-                    Content="9" />
+                <Button Style="{StaticResource pagingButton}" Content="7" />
+                <Button Style="{StaticResource pagingButton}" Content="8" />
+                <Button Style="{StaticResource pagingButton}" Content="9" />
 
-                <Rectangle Width="1"
-                    Fill="#DEE4EC"
-                    Margin="3 7" />
+                <Rectangle Width="1" Fill="#DEE4EC" Margin="3 7" />
                 <Button Style="{StaticResource pagingButton}">
-                    <TextBlock Text="&#xE76C;"
-                        FontFamily="Segoe MDL2 Assets"
-                        Style="{StaticResource pagingButtonIcon}" />
+                    <TextBlock Text="&#xE76C;" FontFamily="Segoe MDL2 Assets" Style="{StaticResource pagingButtonIcon}" />
                 </Button>
             </StackPanel>
         </Border>-->

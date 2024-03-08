@@ -8,6 +8,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using ToastNotifications;
+using ToastNotifications.Messages;
 
 namespace Shopfloor.Stores
 {
@@ -35,7 +37,7 @@ namespace Shopfloor.Stores
         }
         public User? User => _user;
 
-        public void Login(string username, UserProvider provider, IInputForm<User> inputForm)
+        public void Login(string username, UserProvider provider, IInputForm<User> inputForm, Notifier notifier)
         {
             _user = provider.GetByUsername(username.ToLower()).Result ?? null;
             _userValidation.ValidateLogin(_user, inputForm);
@@ -47,6 +49,7 @@ namespace Shopfloor.Stores
 
             _isUserLoggedIn = true;
             SetUserRoles(_user!);
+            LoginNotification(notifier);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
         }
         public void Logout()
@@ -80,10 +83,11 @@ namespace Shopfloor.Stores
                 user.AddRole(role);
             }
         }
+        private static void LoginNotification(Notifier notifier) => notifier.ShowInformation("ZALOGOWANO POPRAWNIE");
     }
     internal sealed partial class CurrentUserStore
     {
-        public void AutoLogin(string username, UserProvider provider)
+        public void AutoLogin(string username, UserProvider provider, Notifier notifier)
         {
             _user = provider.GetByUsername(username.ToLower()).Result ?? null;
             _userValidation.ValidateAutoLogin(_user, _propertyErrors);

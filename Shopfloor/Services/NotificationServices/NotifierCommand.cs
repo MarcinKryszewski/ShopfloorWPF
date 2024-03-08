@@ -1,7 +1,7 @@
 ﻿using Shopfloor.Shared.Commands;
 using ToastNotifications;
 using ToastNotifications.Messages;
-using static Shopfloor.Services.NotificationServices.NotifierService;
+using static Shopfloor.Services.NotificationServices.NotifierServices;
 
 namespace Shopfloor.Services.NotificationServices
 {

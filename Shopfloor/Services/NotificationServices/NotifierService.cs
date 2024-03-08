@@ -7,7 +7,7 @@ using ToastNotifications.Position;
 
 namespace Shopfloor.Services.NotificationServices
 {
-    internal sealed class NotifierService
+    internal sealed class NotifierServices
     {
         public static void Get(IServiceCollection services)
         {
@@ -25,8 +25,8 @@ namespace Shopfloor.Services.NotificationServices
                     offsetY: 10);
 
                 cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
-                    notificationLifetime: TimeSpan.FromSeconds(5),
-                    maximumNotificationCount: MaximumNotificationCount.FromCount(3));
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
 
                 cfg.Dispatcher = Application.Current.Dispatcher;
             });

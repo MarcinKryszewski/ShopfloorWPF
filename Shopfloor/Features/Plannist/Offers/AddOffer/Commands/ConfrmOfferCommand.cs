@@ -9,6 +9,8 @@ using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Stores;
+using ToastNotifications;
+using ToastNotifications.Messages;
 
 namespace Shopfloor.Features.Plannist.Offers.AddOffer
 {
@@ -67,7 +69,7 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
                 (int)_currentUser.Id,
                 1,
                 DateTime.Now,
-                null,
+                request.LastStatus.Comment,
                 "DODANO OFERTĘ"
             );
 
@@ -78,6 +80,7 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         }
         private void ReturnToOffer()
         {
+            _services.GetRequiredService<Notifier>().ShowSuccess("Dodano ofertę i przekazano do zatwierdzenia!");
             NavigationService<OffersViewModel> navigationService = _services.GetRequiredService<NavigationService<OffersViewModel>>();
             navigationService.Navigate();
         }
