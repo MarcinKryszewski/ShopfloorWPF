@@ -164,6 +164,7 @@ namespace Shopfloor.Database.SQLite
                 amount REAL,
                 ordered_by_id INTEGER,
                 price_per_unit REAL,
+                expected_delivery_date TEXT,
                 PRIMARY KEY(id),
                 FOREIGN KEY(errand_id) REFERENCES errands(id),
                 FOREIGN KEY(part_id) REFERENCES parts(id),

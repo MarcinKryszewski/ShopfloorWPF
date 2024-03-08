@@ -12,6 +12,7 @@ namespace Shopfloor.Models.ErrandPartModel
     internal sealed class ErrandPartProvider : IProvider<ErrandPart>
     {
         private readonly DatabaseConnectionFactory _database;
+        private const string dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
         #region SQLCommands
         private const string _createSQL = @"
             INSERT INTO errands_parts (
@@ -19,14 +20,16 @@ namespace Shopfloor.Models.ErrandPartModel
                 part_id,
                 amount,
                 ordered_by_id,
-                price_per_unit
+                price_per_unit,
+                expected_delivery_date
             )
             VALUES (
                 @ErrandId,
                 @PartId,
                 @Amount,
                 @OrderedBy,
-                @Price
+                @Price,
+                @ExpectedDeliveryDate
             )";
         private const string _getOneSQL = @"
             SELECT
@@ -34,7 +37,8 @@ namespace Shopfloor.Models.ErrandPartModel
                 part_id AS PartId,
                 amount AS Amount,
                 ordered_by_id as OrderedById,
-                price_per_unit as PricePerUnit
+                price_per_unit as PricePerUnit,
+                expected_delivery_date as ExpectedDeliveryDate
             FROM errands_parts
             WHERE id = @Id
             ";
@@ -44,7 +48,8 @@ namespace Shopfloor.Models.ErrandPartModel
                 part_id AS PartId,
                 amount AS Amount,
                 ordered_by_id as OrderedById,
-                price_per_unit as PricePerUnit
+                price_per_unit as PricePerUnit,
+                expected_delivery_date as ExpectedDeliveryDate
             FROM errands_parts
             WHERE errand_id = @ErrandId
             ";
@@ -55,7 +60,8 @@ namespace Shopfloor.Models.ErrandPartModel
                 part_id AS PartId,
                 amount AS Amount,
                 ordered_by_id as OrderedById,
-                price_per_unit as PricePerUnit
+                price_per_unit as PricePerUnit,
+                expected_delivery_date as ExpectedDeliveryDate
             FROM errands_parts
             ";
         private const string _updateAmountSQL = @"
@@ -68,6 +74,12 @@ namespace Shopfloor.Models.ErrandPartModel
             UPDATE errands_parts
             SET
                 price_per_unit = @Price
+            WHERE id as @Id
+            ";
+        private const string _updateDeliveryDateSQL = @"
+            UPDATE errands_parts
+            SET
+                expected_delivery_date = @ExpectedDeliveryDate
             WHERE id as @Id
             ";
         #endregion SQLCommands
@@ -130,18 +142,30 @@ namespace Shopfloor.Models.ErrandPartModel
             };
             await connection.ExecuteAsync(_updatePriceSQL, parameters);
         }
+        public async Task UpdateDeliveryDate(int id, DateTime expectedDeliveryDate)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                ErrandId = id,
+                ExpectedDeliveryDate = expectedDeliveryDate
+            };
+            await connection.ExecuteAsync(_updateDeliveryDateSQL, parameters);
+        }
         public Task Delete(int id) => throw new NotImplementedException();
         public Task Delete(int errandId, int partId) => throw new NotImplementedException();
         #endregion CRUD
         private static ErrandPart ToErrandPart(ErrandPartDTO item)
         {
-            return new ErrandPart(
-                item.Id,
-                item.ErrandId,
-                item.PartId,
-                item.Amount,
-                item.OrderedById
-            );
+            return new ErrandPart()
+            {
+                Id = item.Id,
+                Amount = item.Amount,
+                ErrandId = item.ErrandId,
+                ExpectedDeliveryDate = item.ExpectedDeliveryDate,
+                OrderedById = item.OrderedById,
+                PartId = item.PartId
+            };
         }
     }
 }

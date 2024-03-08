@@ -69,7 +69,7 @@
                                 <Button Command="{Binding Path=DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource gridDetailsButton}">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" Style="{StaticResource gridButtonIcon}" Text="&#xE7B3;" />
                                 </Button>
-                                <Button Margin="5,0,0,0" Command="{Binding Path=DataContext.OfferCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource gridOfferButton}">
+                                <Button Visibility="Visible" Margin="5,0,0,0" Command="{Binding Path=DataContext.OfferCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource gridOfferButton}">
                                     <TextBlock FontFamily="Segoe MDL2 Assets" Style="{StaticResource gridButtonIcon}" Text="&#xE8F3;" />
                                 </Button>
                             </StackPanel>

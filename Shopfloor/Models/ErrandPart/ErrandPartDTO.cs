@@ -1,3 +1,4 @@
+using System;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.UserModel;
@@ -6,7 +7,7 @@ namespace Shopfloor.Models.ErrandPartModel
 {
     internal sealed class ErrandPartDTO
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int ErrandId { get; set; }
         public int PartId { get; set; }
         public double? Amount { get; set; }
@@ -15,5 +16,6 @@ namespace Shopfloor.Models.ErrandPartModel
         public Errand? Errand { get; set; }
         public User? OrderedByUser { get; set; }
         public double PricePerUnit { get; set; }
+        public DateTime? ExpectedDeliveryDate { get; set; }
     }
 }

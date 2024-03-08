@@ -43,9 +43,19 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
             tasks.Add(UpdateErrandPart(request));
             tasks.Add(UpdateErrandPartStatus(request));
             tasks.Add(ErrandPartNewStatus(request));
+            tasks.Add(SelfConfirm(parameter, request));
             Task.WhenAll(tasks);
             ReturnToOffer(); //return or lock?
         }
+        private async Task SelfConfirm(object? parameter, ErrandPart request)
+        {
+            if (parameter is null) return;
+            if (parameter is not string) return;
+            if ((string)parameter != "CONFIRM") return;
+
+            await NewStatus(request, 2, null, "ZATWIERDZONO PODCZAS OFERTOWANIA");
+        }
+
         private async Task UpdateErrandPart(ErrandPart request)
         {
             ErrandPartProvider errandPartProvider = _database.GetRequiredService<ErrandPartProvider>();
@@ -60,17 +70,19 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
 
             await provider.SetComment((int)request.Id!, comment);
         }
-        private async Task ErrandPartNewStatus(ErrandPart request)
+        private async Task ErrandPartNewStatus(ErrandPart request) => await NewStatus(request, 1, request.LastStatus.Comment, "DODANO OFERTĘ");
+
+        private async Task NewStatus(ErrandPart request, int statusId, string? comment, string reason)
         {
             if (_currentUser.Id is null) return;
             ErrandPartStatusProvider errandPartStatusProvider = _database.GetRequiredService<ErrandPartStatusProvider>();
             ErrandPartStatus status = new(
                 (int)request.Id!,
                 (int)_currentUser.Id,
-                1,
+                statusId,
                 DateTime.Now,
-                request.LastStatus.Comment,
-                "DODANO OFERTĘ"
+                comment,
+                reason
             );
 
             ErrandPartStatusStore store = _database.GetRequiredService<ErrandPartStatusStore>();
@@ -78,6 +90,7 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
 
             await errandPartStatusProvider.Create(status);
         }
+
         private void ReturnToOffer()
         {
             _services.GetRequiredService<Notifier>().ShowSuccess("Dodano ofertę i przekazano do zatwierdzenia!");

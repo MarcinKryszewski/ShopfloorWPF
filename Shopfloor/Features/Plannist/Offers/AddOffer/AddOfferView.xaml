@@ -236,6 +236,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Button Grid.Column="1" Width="150" Height="50" Margin="5,0" Command="{Binding Path=ConfirmCommand}" Style="{StaticResource ResourceKey=ButtonMain}">
@@ -244,7 +245,13 @@
                     <TextBlock Text="DO ZATWIERDZENIA" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"/>
                 </StackPanel>
             </Button>
-            <Button Grid.Column="2" Width="150" Height="50" Margin="5,0" Command="{Binding Path=ReturnCommand}" Content="WRÓĆ" Style="{StaticResource ResourceKey=ButtonSide}" />
+            <Button Grid.Column="2" Width="150" Height="50" Margin="5,0" Command="{Binding Path=ConfirmCommand}" CommandParameter="CONFIRM" Style="{StaticResource ResourceKey=ButtonEmpty}">
+                <StackPanel>
+                    <TextBlock Text="ZAPISZ" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="I ZATIWERDŹ" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"/>
+                </StackPanel>
+            </Button>
+            <Button Grid.Column="3" Width="150" Height="50" Margin="5,0" Command="{Binding Path=ReturnCommand}" Content="WRÓĆ" Style="{StaticResource ResourceKey=ButtonSide}" />
         </Grid>
     </Grid>
-</UserControl> 
+</UserControl>

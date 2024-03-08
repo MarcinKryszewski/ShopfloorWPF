@@ -14,30 +14,27 @@ namespace Shopfloor.Models.ErrandPartModel
     internal sealed partial class ErrandPart
     {
         private readonly ErrandPartDTO _data = new();
-        public ErrandPart(int errandId, int partId)
-        {
-            _data.ErrandId = errandId;
-            _data.PartId = partId;
-        }
-        public ErrandPart(int errandId, int partId, double? amount, int orderedBy)
-        {
-            _data.ErrandId = errandId;
-            _data.PartId = partId;
-            _data.Amount = amount;
-            _data.OrderedById = orderedBy;
-        }
-        public ErrandPart(int id, int errandId, int partId, double? amount, int orderedBy)
-        {
-            _data.Id = id;
-            _data.ErrandId = errandId;
-            _data.PartId = partId;
-            _data.Amount = amount;
-            _data.OrderedById = orderedBy;
-        }
         public double PricePerUnit => _data.PricePerUnit;
-        public int ErrandId => _data.ErrandId;
-        public int PartId => _data.PartId;
-        public int? Id => _data.Id;
+        public required int ErrandId
+        {
+            get => _data.ErrandId;
+            init => _data.ErrandId = value;
+        }
+        public required int PartId
+        {
+            get => _data.PartId;
+            init => _data.PartId = value;
+        }
+        public int? Id
+        {
+            get => _data.Id;
+            init => _data.Id = value;
+        }
+        public DateTime? ExpectedDeliveryDate
+        {
+            get => _data.ExpectedDeliveryDate;
+            set => _data.ExpectedDeliveryDate = value;
+        }
         public Part? Part
         {
             get => _data.Part;
@@ -49,15 +46,7 @@ namespace Shopfloor.Models.ErrandPartModel
         }
         public double? Amount { get => _data.Amount; set => _data.Amount = value; }
         public string AmountText => Amount + ((Part is not null) ? " " + Part.Unit : "");
-        public void SetPrice(double price, double? amount = null)
-        {
-            if (amount is null)
-            {
-                _data.PricePerUnit = price;
-                return;
-            }
-            _data.PricePerUnit = price / (double)amount;
-        }
+        public void SetPrice(double price, double? amount = null) => _data.PricePerUnit = amount is null ? price : price / (double)amount;
         public Errand? Errand
         {
             get => _data.Errand;
@@ -75,7 +64,11 @@ namespace Shopfloor.Models.ErrandPartModel
         public int LastStatusValue => StatusList.Count > 0 ? LastStatus.StatusValue : -1;
         public string LastStatusUpdateDate => StatusList.Count > 0 ? LastStatus.CreatedDate.ToString("dd/MM/yyyy") : "NIGDY";
         public string LastStatusText => LastStatusValue == -1 ? "ERROR" : ErrandPartStatus.Status[LastStatusValue];
-        public int OrderedById => _data.OrderedById;
+        public int OrderedById
+        {
+            get => _data.OrderedById;
+            init => _data.OrderedById = value;
+        }
         public User? OrderedByUser
         {
             get => _data.OrderedByUser;
