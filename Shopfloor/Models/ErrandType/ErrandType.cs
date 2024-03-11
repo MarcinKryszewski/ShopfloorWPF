@@ -6,20 +6,22 @@ namespace Shopfloor.Models.ErrandTypeModel
     internal sealed partial class ErrandType
     {
         private readonly ErrandTypeDTO _data = new();
-        public ErrandType(string name, string? description)
+        public ErrandType() { }
+        public int? Id
         {
-            _data.Name = name;
-            _data.Description = description;
+            get => _data.Id;
+            init => _data.Id = value;
         }
-        public ErrandType(int id, string name, string? description)
+        public required string Name
         {
-            _data.Id = id;
-            _data.Name = name;
-            _data.Description = description;
+            get => _data.Name;
+            init => _data.Name = value;
         }
-        public int? Id => _data.Id;
-        public string Name => _data.Name;
-        public string? Description => _data.Description;
+        public required string? Description
+        {
+            get => _data.Description;
+            init => _data.Description = value;
+        }
     }
     internal sealed partial class ErrandType : IEquatable<ErrandType>
     {

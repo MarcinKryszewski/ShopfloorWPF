@@ -141,8 +141,8 @@ namespace Shopfloor.Features.Admin.Machines.List
                 if (MachinesList.Filter is not null) MachinesList.Filter = null;
                 _id = value.Id;
                 MachineName = value.Name;
-                MachineNumber = value.Number;
-                SapNumber = value.SapNumber;
+                MachineNumber = value.Number ?? string.Empty;
+                SapNumber = value?.SapNumber ?? string.Empty;
                 _selectedMachine = value;
                 IsEdit = true;
 

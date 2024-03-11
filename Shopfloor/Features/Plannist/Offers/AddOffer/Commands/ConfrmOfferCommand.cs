@@ -78,14 +78,14 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         {
             if (_currentUser.Id is null) return;
             ErrandPartStatusProvider errandPartStatusProvider = _database.GetRequiredService<ErrandPartStatusProvider>();
-            ErrandPartStatus status = new(
-                (int)request.Id!,
-                (int)_currentUser.Id,
-                statusId,
-                DateTime.Now,
-                comment,
-                reason
-            );
+            ErrandPartStatus status = new(statusId)
+            {
+                Reason = reason,
+                Comment = comment,
+                ErrandPartId = (int)request.Id!,
+                CreatedById = (int)_currentUser.Id,
+                CreatedDate = DateTime.Now,
+            };
 
             ErrandPartStatusStore store = _database.GetRequiredService<ErrandPartStatusStore>();
             store.Data.Add(status);

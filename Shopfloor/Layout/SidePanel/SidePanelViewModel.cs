@@ -177,8 +177,19 @@ namespace Shopfloor.Layout.SidePanel
                 _ = partTypesProvider.Create(new PartType("Koło"));
 
                 MachineProvider machineProvider = _dbServices.GetRequiredService<MachineProvider>();
-                _ = machineProvider.Create(new Machine("Monoblok", "sdfsd", null, null, true));
-                _ = machineProvider.Create(new Machine("Etykieciarka", "sdfsd", null, null, true));
+                //string name, string number, string? sapNumber, int? parent, bool isActive
+                _ = machineProvider.Create(new Machine()
+                {
+                    Name = "Monoblok",
+                    Number = "sdfsd",
+                    IsActive = true,
+                });
+                _ = machineProvider.Create(new Machine()
+                {
+                    Name = "Etykieciarka",
+                    Number = "sdfsd",
+                    IsActive = true,
+                });
 
                 SupplierProvider supplierProvider = _dbServices.GetRequiredService<SupplierProvider>();
                 _ = supplierProvider.Create(new Supplier("Krones", true));
@@ -188,23 +199,108 @@ namespace Shopfloor.Layout.SidePanel
                 _ = partProvider.Create(new Part("21Z D30", "sprocket", 2, 215463, "ZA12354fd", null, 1, 1));
 
                 MachinePartProvider machinePartProvider = _dbServices.GetRequiredService<MachinePartProvider>();
-                _ = machinePartProvider.Create(new MachinePart(1, 1, 5));
-                _ = machinePartProvider.Create(new MachinePart(1, 2, 7));
-                _ = machinePartProvider.Create(new MachinePart(2, 1, 3));
+                _ = machinePartProvider.Create(new MachinePart()
+                {
+                    Amount = 5,
+                    MachineId = 1,
+                    PartId = 1,
+                });
+                _ = machinePartProvider.Create(new MachinePart()
+                {
+                    Amount = 7,
+                    PartId = 1,
+                    MachineId = 2,
+                });
+                _ = machinePartProvider.Create(new MachinePart()
+                {
+                    Amount = 3,
+                    PartId = 2,
+                    MachineId = 1,
+                });
 
                 ErrandProvider errandProvider = _dbServices.GetRequiredService<ErrandProvider>();
-                _ = errandProvider.Create(new Errand(DateTime.Now, 2, 1, 1, "Awaria", "A"));
-                _ = errandProvider.Create(new Errand(DateTime.Now, 3, 2, 2, "Cilty robienie", "C"));
-                _ = errandProvider.Create(new Errand(DateTime.Now, 2, 1, 4, "Naprawa czegośtam", "B"));
-                _ = errandProvider.Create(new Errand(DateTime.Now, 2, 2, 3, "Modyfikacja cośtam"));
+                _ = errandProvider.Create(new Errand()
+                {
+                    CreatedDate = DateTime.Now,
+                    CreatedById = 2,
+                    Description = "Awaria",
+                    Priority = "A",
+                    MachineId = 1,
+                    TypeId = 1,
+                });
+                _ = errandProvider.Create(new Errand()
+                {
+                    CreatedDate = DateTime.Now,
+                    CreatedById = 3,
+                    Description = "Cilty robienie",
+                    Priority = "C",
+                    MachineId = 2,
+                    TypeId = 2,
+                });
+                _ = errandProvider.Create(new Errand()
+                {
+                    CreatedDate = DateTime.Now,
+                    CreatedById = 2,
+                    Description = "Naprawa czegośtam",
+                    Priority = "B",
+                    MachineId = 1,
+                    TypeId = 4,
+                });
+                _ = errandProvider.Create(new Errand()
+                {
+                    CreatedDate = DateTime.Now,
+                    CreatedById = 2,
+                    Description = "Modyfikacja cośtam",
+                    MachineId = 2,
+                    TypeId = 3,
+                });
 
                 ErrandStatusProvider errandStatusProvider = _dbServices.GetRequiredService<ErrandStatusProvider>();
-                _ = errandStatusProvider.Create(new ErrandStatus(1, "Completed", "No issues found.", "All tasks done.", DateTime.Now));
-                _ = errandStatusProvider.Create(new ErrandStatus(1, "Pending", null, null, new DateTime(2024, 1, 15)));
-                _ = errandStatusProvider.Create(new ErrandStatus(2, "InProgress", "Work in progress", "Awaiting approval", null));
-                _ = errandStatusProvider.Create(new ErrandStatus(2, "Cancelled", null, null, new DateTime(2024, 2, 16)));
-                _ = errandStatusProvider.Create(new ErrandStatus(3, "Delayed", "Task postponed due to inclement weather", "Weather conditions", null));
-                _ = errandStatusProvider.Create(new ErrandStatus(4, "Scheduled", "Task planned for next week", "Upcoming schedule", new DateTime(2024, 2, 17)));
+                //int errandId, string statusName, string? comment, string? reason, DateTime? setDate
+                _ = errandStatusProvider.Create(new ErrandStatus()
+                {
+                    ErrandId = 1,
+                    StatusName = "Completed",
+                    Comment = "No issues found.",
+                    Reason = "All tasks done.",
+                    SetDate = DateTime.Now,
+                });
+                _ = errandStatusProvider.Create(new ErrandStatus()
+                {
+                    ErrandId = 1,
+                    StatusName = "Pending",
+                    SetDate = new DateTime(2024, 1, 15),
+                });
+                _ = errandStatusProvider.Create(new ErrandStatus()
+                {
+                    ErrandId = 2,
+                    StatusName = "InProgress",
+                    Comment = "Work in progress",
+                    Reason = "Awaiting approval",
+                    SetDate = DateTime.Now,
+                });
+                _ = errandStatusProvider.Create(new ErrandStatus()
+                {
+                    ErrandId = 2,
+                    StatusName = "Cancelled",
+                    SetDate = new DateTime(2024, 2, 16),
+                });
+                _ = errandStatusProvider.Create(new ErrandStatus()
+                {
+                    ErrandId = 3,
+                    StatusName = "Delayed",
+                    Comment = "Task postponed due to inclement weather",
+                    Reason = "Weather conditions",
+                    SetDate = DateTime.Now
+                });
+                _ = errandStatusProvider.Create(new ErrandStatus()
+                {
+                    ErrandId = 4,
+                    StatusName = "Scheduled",
+                    Comment = "Task planned for next week",
+                    Reason = "Upcoming schedule",
+                    SetDate = new DateTime(2024, 2, 17),
+                });
 
                 ErrandPartProvider errandPartProvider = _dbServices.GetRequiredService<ErrandPartProvider>();
                 _ = errandPartProvider.Create(new ErrandPart() { ErrandId = 1, PartId = 1, Amount = 10.5, OrderedById = 1 });
@@ -216,21 +312,112 @@ namespace Shopfloor.Layout.SidePanel
                 _ = errandPartProvider.Create(new ErrandPart() { ErrandId = 3, PartId = 2, Amount = 8.0, OrderedById = 2 });
 
                 ErrandPartStatusProvider errandPartStatusProvider = _dbServices.GetRequiredService<ErrandPartStatusProvider>();
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(7, 1, 0, DateTime.Now.AddDays(-17)));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(1, 2, 2, DateTime.Now.AddDays(-3), "In progress"));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(4, 3, 5, DateTime.Now.AddDays(-8), "Pending", "Waiting for approval"));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(5, 1, 3, DateTime.Now.AddDays(-12), reason: null));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(6, 2, 1, DateTime.Now.AddDays(-21), "Completed", "User feedback received"));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(2, 3, 4, DateTime.Now.AddDays(-5), "Delayed", "Supplier issue"));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(3, 1, 5, DateTime.Now.AddDays(-10), "Cancelled"));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(1, 2, 0, DateTime.Now.AddDays(-14), reason: "SYSTEM"));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(2, 3, 1, DateTime.Now.AddDays(-19), reason: "SYSTEM"));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(3, 1, 3, DateTime.Now.AddDays(-22), "Completed"));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(4, 2, 4, DateTime.Now.AddDays(-7)));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(5, 3, 5, DateTime.Now.AddDays(-9), "In progress", "Technical issue"));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(6, 1, 0, DateTime.Now.AddDays(-15)));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(7, 2, 1, DateTime.Now.AddDays(-20), "In progress"));
-                _ = errandPartStatusProvider.Create(new ErrandPartStatus(1, 3, 2, DateTime.Now.AddDays(-25), "Pending", "Waiting for approval"));
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(0)
+                {
+                    ErrandPartId = 7,
+                    CreatedById = 1,
+                    CreatedDate = DateTime.Now.AddDays(-17),
+                });
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(2)
+                {
+                    ErrandPartId = 1,
+                    CreatedById = 2,
+                    CreatedDate = DateTime.Now.AddDays(-3),
+                    Comment = "In progress",
+                });
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(5)
+                {
+                    ErrandPartId = 4,
+                    CreatedById = 3,
+                    CreatedDate = DateTime.Now.AddDays(-8),
+                    Comment = "Pending",
+                    Reason = "Waiting for approval",
+                });
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(3)
+                {
+                    ErrandPartId = 5,
+                    CreatedById = 1,
+                    CreatedDate = DateTime.Now.AddDays(-12)
+                });
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(1)
+                {
+                    ErrandPartId = 6,
+                    CreatedById = 2,
+                    CreatedDate = DateTime.Now.AddDays(-21),
+                    Comment = "Completed",
+                    Reason = "User feedback received",
+                });
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(4)
+                {
+                    ErrandPartId = 2,
+                    CreatedById = 3,
+                    CreatedDate = DateTime.Now.AddDays(-5),
+                    Comment = "Delayed",
+                    Reason = "Supplier issue",
+                });
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(5)
+                {
+                    ErrandPartId = 3,
+                    CreatedById = 1,
+                    CreatedDate = DateTime.Now.AddDays(-10),
+                    Comment = "Cancelled",
+                });
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(0)
+                {
+                    ErrandPartId = 1,
+                    CreatedById = 2,
+                    CreatedDate = DateTime.Now.AddDays(-14),
+                    Reason = "SYSTEM",
+                });
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(1)
+                {
+                    ErrandPartId = 2,
+                    CreatedById = 3,
+                    CreatedDate = DateTime.Now.AddDays(-19),
+                    Reason = "SYSTEM",
+                });
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(3)
+                {
+                    ErrandPartId = 3,
+                    CreatedById = 1,
+                    CreatedDate = DateTime.Now.AddDays(-22),
+                    Comment = "Completed",
+                });
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(4)
+                {
+                    ErrandPartId = 4,
+                    CreatedById = 2,
+                    CreatedDate = DateTime.Now.AddDays(-7),
+                });
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(5)
+                {
+                    ErrandPartId = 5,
+                    CreatedById = 3,
+                    CreatedDate = DateTime.Now.AddDays(-9),
+                    Comment = "In progress",
+                    Reason = "Technical issue",
+                }); ;
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(0)
+                {
+                    ErrandPartId = 6,
+                    CreatedById = 1,
+                    CreatedDate = DateTime.Now.AddDays(-15),
+                });
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(1)
+                {
+                    ErrandPartId = 7,
+                    CreatedById = 2,
+                    CreatedDate = DateTime.Now.AddDays(-20),
+                    Comment = "In progress",
+                });
+                _ = errandPartStatusProvider.Create(new ErrandPartStatus(2)
+                {
+                    ErrandPartId = 1,
+                    CreatedById = 3,
+                    CreatedDate = DateTime.Now.AddDays(-25),
+                    Comment = "Pending",
+                    Reason = "Waiting for approval",
+                });
 
                 _sidePanelViewModel.HasDataInside = Visibility.Collapsed;
                 _sidePanelViewModel.OnPropertyChanged(nameof(HasDataInside));

@@ -31,10 +31,7 @@ namespace Shopfloor.Stores
             _userValidation = new(this);
             _propertyErrors = [];
         }
-        public bool IsUserLoggedIn
-        {
-            get => _isUserLoggedIn;
-        }
+        public bool IsUserLoggedIn => _isUserLoggedIn;
         public User? User => _user;
 
         public void Login(string username, UserProvider provider, IInputForm<User> inputForm, Notifier notifier)
@@ -65,8 +62,8 @@ namespace Shopfloor.Stores
         }
         private IEnumerable<RoleUser> GetRoleUsers()
         {
-            if (User == null) return Enumerable.Empty<RoleUser>();
-            if (User.Id is null) return Enumerable.Empty<RoleUser>();
+            if (User == null) return [];
+            if (User.Id is null) return [];
 
             IEnumerable<RoleUser> roleUsers = _roleUserProvider.GetAllForUser((int)User.Id).Result;
 
@@ -107,10 +104,7 @@ namespace Shopfloor.Stores
         private readonly Dictionary<string, List<string>?> _propertyErrors;
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public bool HasErrors => _propertyErrors.Count != 0;
-        public IEnumerable GetErrors(string? propertyName)
-        {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
-        }
+        public IEnumerable GetErrors(string? propertyName) => _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
     }
     internal sealed partial class CurrentUserStore : INotifyPropertyChanged
     {

@@ -87,7 +87,12 @@ namespace Shopfloor.Models.MachinePartModel
         public Task Delete(int id) => throw new System.NotImplementedException();
         private static MachinePart ToModel(MachinePartDTO item)
         {
-            return new((int)item.PartId!, (int)item.MachineId!, item.Amount);
+            return new MachinePart()
+            {
+                Amount = item.Amount,
+                PartId = (int)item.PartId!,
+                MachineId = (int)item.MachineId!
+            };
         }
     }
 }

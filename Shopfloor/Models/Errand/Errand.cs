@@ -16,28 +16,8 @@ namespace Shopfloor.Models.ErrandModel
         private readonly List<ErrandStatus> _errandStatuses = [];
         private readonly List<ErrandPart> _parts = [];
         private User? _createdByUser;
-        public Errand(int id, DateTime createdDate, int? createdById, int? machineId, int? errandTypeId, string description, string? sapNumber, DateTime? expectedDate, int? ownerId, string? priority = DefaultPriority)
+        public Errand()
         {
-            _data.Id = id;
-            _data.CreatedById = createdById;
-            _data.CreatedDate = createdDate;
-            _data.OwnerId = ownerId;
-            _data.Priority = priority ?? DefaultPriority;
-            _data.MachineId = machineId;
-            _data.ErrandTypeId = errandTypeId;
-            _data.Description = description;
-            _data.SapNumber = sapNumber;
-            _data.ExpectedDate = expectedDate;
-            _display = new(this);
-        }
-        public Errand(DateTime createdDate, int? createdById, int? machineId, int? errandTypeId, string description, string? priority = DefaultPriority)
-        {
-            _data.CreatedById = createdById;
-            _data.CreatedDate = createdDate;
-            _data.MachineId = machineId;
-            _data.ErrandTypeId = errandTypeId;
-            _data.Description = description;
-            _data.Priority = priority ?? DefaultPriority;
             _display = new(this);
         }
         public ErrandDisplay Display => _display;
@@ -48,7 +28,11 @@ namespace Shopfloor.Models.ErrandModel
     internal sealed partial class Errand
     {
         private readonly ErrandDTO _data = new();
-        public int? CreatedById => _data.CreatedById;
+        public required int? CreatedById
+        {
+            get => _data.CreatedById;
+            init => _data.CreatedById = value;
+        }
         public User? CreatedByUser
         {
             get => _createdByUser;
@@ -58,8 +42,12 @@ namespace Shopfloor.Models.ErrandModel
                 if (value.Id == _data.CreatedById) _createdByUser = value;
             }
         }
-        public DateTime CreatedDate => _data.CreatedDate;
-        public string Description
+        public required DateTime CreatedDate
+        {
+            get => _data.CreatedDate;
+            init => _data.CreatedDate = value;
+        }
+        public required string Description
         {
             get => _data.Description ?? "BRAK OPISU";
             set
@@ -68,7 +56,11 @@ namespace Shopfloor.Models.ErrandModel
                 _data.Description = value;
             }
         }
-        public int? TypeId => _data.ErrandTypeId;
+        public required int? TypeId
+        {
+            get => _data.ErrandTypeId;
+            init => _data.ErrandTypeId = value;
+        }
         public DateTime? ExpectedDate
         {
             get => _data.ExpectedDate;
@@ -78,7 +70,11 @@ namespace Shopfloor.Models.ErrandModel
                 _data.ExpectedDate = value;
             }
         }
-        public int? Id => _data.Id;
+        public int? Id
+        {
+            get => _data.Id;
+            init => _data.Id = value;
+        }
         public Machine? Machine
         {
             get => _data.Machine;
@@ -88,12 +84,20 @@ namespace Shopfloor.Models.ErrandModel
                 _data.Machine = value;
             }
         }
-        public int? MachineId => _data.MachineId;
-        public int? OwnerId => _data.OwnerId;
-        public string Priority
+        public required int? MachineId
+        {
+            get => _data.MachineId;
+            init => _data.MachineId = value;
+        }
+        public int? OwnerId
+        {
+            get => _data.OwnerId;
+            init => _data.OwnerId = value;
+        }
+        public string? Priority
         {
             get => _data.Priority ?? DefaultPriority;
-            set => _data.Priority = value;
+            set => _data.Priority = value is null ? DefaultPriority : value;
         }
         public User? Responsible
         {

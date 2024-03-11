@@ -47,11 +47,12 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
 
             if (_currentErrand.ErrandParts.Count == 0)
             {
-                _ = _errandStatus.Create(new ErrandStatus(
-                    errandId,
-                    ErrandStatusList.NoPartsList,
-                    DateTime.Now
-                ));
+                _ = _errandStatus.Create(new ErrandStatus()
+                {
+                    ErrandId = errandId,
+                    StatusName = ErrandStatusList.NoPartsList,
+                    SetDate = DateTime.Now,
+                });
             }
 
             UpdateParts(errandId);
@@ -68,17 +69,19 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         private void UpdateErrand(int errandId)
         {
             ErrandDTO errandDTO = _viewModel.ErrandDTO;
-            Errand errand = new(
-                errandId,
-                DateTime.Now,
-                null,
-                errandDTO.Machine?.Id,
-                errandDTO.ErrandType?.Id,
-                errandDTO.Description ?? "BRAK OPISU",
-                errandDTO.SapNumber,
-                errandDTO.ExpectedDate,
-                errandDTO.Responsible?.Id,
-                errandDTO.Priority);
+            Errand errand = new()
+            {
+                Id = errandId,
+                CreatedDate = DateTime.Now,
+                Description = errandDTO.Description ?? "BRAK OPISU",
+                Priority = errandDTO.Priority,
+                MachineId = errandDTO.Machine?.Id,
+                TypeId = errandDTO.ErrandType?.Id,
+                SapNumber = errandDTO.SapNumber,
+                ExpectedDate = errandDTO.ExpectedDate,
+                OwnerId = errandDTO.Responsible?.Id,
+                CreatedById = null,
+            };
             _ = _errandProvider.UpdateAmount(errand);
         }
         private void UpdateParts(int errandId)
@@ -96,7 +99,12 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
 
             if (!forCurrentErrand.Any() && toAdd.Any())
             {
-                ErrandStatus errandStatus = new(errandId, ErrandStatusList.PartsListCompleted, DateTime.Now);
+                ErrandStatus errandStatus = new()
+                {
+                    ErrandId = errandId,
+                    StatusName = ErrandStatusList.PartsListCompleted,
+                    SetDate = DateTime.Now,
+                };
                 _ = _errandStatus.Create(errandStatus);
             }
         }
@@ -130,8 +138,12 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         }
         private void SetNewErrandPartStatus(int errandPartId, string statusName)
         {
-            ErrandPartStatus partStatus = new(errandPartId, _currentUserId, DateTime.Now);
-            partStatus.SetStatus(statusName);
+            ErrandPartStatus partStatus = new(statusName)
+            {
+                ErrandPartId = errandPartId,
+                CreatedDate = DateTime.Now,
+                CreatedById = _currentUserId,
+            };
             _ = _errandPartStatusProvider.Create(partStatus);
         }
     }

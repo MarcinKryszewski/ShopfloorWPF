@@ -19,12 +19,14 @@ namespace Shopfloor.Features.Admin.Machines.Commands
         {
             int? parentId = _viewModel.SelectedParent?.Id;
 
-            Machine machine = new(
-                _viewModel.MachineName,
-                _viewModel.MachineNumber,
-                _viewModel.SapNumber,
-                parentId,
-                true);
+            Machine machine = new()
+            {
+                Name = _viewModel.MachineName,
+                Number = _viewModel.MachineNumber,
+                SapNumber = _viewModel.SapNumber,
+                ParentId = parentId,
+                IsActive = true,
+            };
 
             if (!_viewModel.IsDataValidate) return;
 

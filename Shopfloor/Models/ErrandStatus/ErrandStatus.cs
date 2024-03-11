@@ -1,46 +1,31 @@
 ﻿using System;
-using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandStatusModel
 {
     internal sealed class ErrandStatus
     {
         private readonly ErrandStatusDTO _data = new();
-
-        public ErrandStatus(int errandId, string statusName, string? comment, string? reason, DateTime? setDate)
+        public ErrandStatus() { }
+        public int Id
         {
-            _data.ErrandId = errandId;
-            _data.StatusName = statusName;
-            _data.SetDate = setDate ?? DateTime.Now;
-            _data.Comment = comment ?? string.Empty;
-            _data.Reason = reason ?? string.Empty;
+            get => _data.Id;
+            init => _data.Id = value;
         }
-
-        public ErrandStatus(int errandId, string statusName, DateTime? setDate)
+        public required int ErrandId
         {
-            _data.ErrandId = errandId;
-            _data.StatusName = statusName;
-            _data.SetDate = setDate ?? DateTime.Now;
+            get => _data.ErrandId;
+            init => _data.ErrandId = value;
         }
-
-        public ErrandStatus(int id, int errandId, string statusName, DateTime setDate, string comment, string reason)
-        {
-            _data.Id = id;
-            _data.ErrandId = errandId;
-            _data.StatusName = statusName;
-            _data.SetDate = setDate;
-            _data.Comment = comment;
-            _data.Reason = reason;
-        }
-
-        public int Id => _data.Id;
-        public int ErrandId => _data.ErrandId;
-        public string StatusName
+        public required string StatusName
         {
             get => _data.StatusName;
             set => _data.StatusName = value;
         }
-        public DateTime SetDate => _data.SetDate;
+        public required DateTime SetDate
+        {
+            get => _data.SetDate;
+            init => _data.SetDate = value;
+        }
         public string Comment
         {
             get => _data.Comment;

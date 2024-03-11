@@ -112,14 +112,15 @@ namespace Shopfloor.Models.ErrandStatusModel
         }
         private static ErrandStatus ToModel(ErrandStatusDTO item)
         {
-            return new ErrandStatus(
-                item.Id,
-                item.ErrandId,
-                item.StatusName,
-                item.SetDate,
-                item.Comment,
-                item.Reason
-            );
+            return new ErrandStatus()
+            {
+                Id = item.Id,
+                ErrandId = item.ErrandId,
+                StatusName = item.StatusName,
+                SetDate = item.SetDate,
+                Comment = item.Comment,
+                Reason = item.Reason,
+            };
         }
     }
 }

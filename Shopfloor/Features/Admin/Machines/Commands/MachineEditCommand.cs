@@ -22,14 +22,15 @@ namespace Shopfloor.Features.Admin.Machines.Commands
             if (_viewModel.Id == null) return;
             int? parentId = _viewModel.SelectedParent?.Id;
 
-            Machine machine = new(
-                (int)_viewModel.Id,
-                _viewModel.MachineName,
-                _viewModel.MachineNumber,
-                _viewModel.SapNumber,
-                parentId,
-                selectedMachine.IsActive
-            );
+            Machine machine = new()
+            {
+                Id = (int)_viewModel.Id,
+                Name = _viewModel.MachineName,
+                Number = _viewModel.MachineNumber,
+                SapNumber = _viewModel.SapNumber,
+                ParentId = parentId,
+                IsActive = selectedMachine.IsActive,
+            };
 
             if (_viewModel.HasErrors) return;
 

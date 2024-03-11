@@ -242,7 +242,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsEdit
             SelectedDate = errand.ExpectedDate;
             SapNumber = errand.SapNumber;
             SelectedResponsible = errand.Responsible;
-            SelectedPriority = errand.Priority;
+            SelectedPriority = errand.Priority ?? "C";
             TaskDescription = errand.Description;
             SetupPriority(errand);
             SetupParts(errandPartStore);

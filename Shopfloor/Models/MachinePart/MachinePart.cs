@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.PartModel;
@@ -6,27 +7,38 @@ namespace Shopfloor.Models.MachinePartModel
 {
     internal sealed class MachinePart
     {
-        private readonly Part? _part;
-        private readonly Machine? _machine;
+        private Part? _part;
+        private Machine? _machine;
         private readonly MachinePartDTO _data = new();
-        public Part? Part => _part;
-        public int? PartId => _data.PartId;
+        public Part? Part
+        {
+            get => _part;
+            set => _part = value;
+        }
+        public required int? PartId
+        {
+            get => _data.PartId;
+            init => _data.PartId = value;
+        }
         public Machine? Machine => _machine;
-        public int? MachineId => _data.MachineId;
-        public double? Amount => _data.Amount;
-        public MachinePart(Part part, Machine machine, double? amount = 1)
+        public required int? MachineId
+        {
+            get => _data.MachineId;
+            init => _data.MachineId = value;
+        }
+        public double? Amount
+        {
+            get => _data.Amount;
+            init => _data.Amount = value ?? 1;
+        }
+        [SetsRequiredMembers]
+        public MachinePart(Part part, Machine machine)
         {
             _part = part;
-            _data.PartId = part.Id;
+            PartId = part.Id;
             _machine = machine;
-            _data.MachineId = machine.Id;
-            _data.Amount = amount ?? 1;
+            MachineId = machine.Id;
         }
-        public MachinePart(int partId, int machineId, double? amount = 1)
-        {
-            _data.PartId = partId;
-            _data.MachineId = machineId;
-            _data.Amount = amount ?? 1;
-        }
+        public MachinePart() { }
     }
 }

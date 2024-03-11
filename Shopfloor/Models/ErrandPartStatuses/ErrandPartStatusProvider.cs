@@ -153,16 +153,16 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         }
         private static ErrandPartStatus ToModel(ErrandPartStatusDTO item)
         {
-            return new ErrandPartStatus(
-                item.Id,
-                item.ErrandPartId,
-                item.StatusName,
-                item.CreatedDate,
-                item.CreatedById,
-                item.Comment,
-                item.Reason,
-                item.Confirmed
-            );
+            return new ErrandPartStatus(item.StatusName)
+            {
+                Id = item.Id,
+                ErrandPartId = item.ErrandPartId,
+                CreatedDate = item.CreatedDate,
+                CreatedById = item.CreatedById,
+                Comment = item.Comment,
+                Reason = item.Reason,
+                Confirmed = item.Confirmed,
+            };
         }
     }
 }

@@ -111,7 +111,15 @@ namespace Shopfloor.Models.MachineModel
         #endregion CRUD
         private static Machine ToMachine(MachineDTO item)
         {
-            return new Machine((int)item.Id!, item.Name, item.Number, item.SapNumber, item.Parent, item.Active);
+            return new Machine()
+            {
+                Id = (int)item.Id!,
+                Name = item.Name,
+                Number = item.Number,
+                SapNumber = item.SapNumber,
+                ParentId = item.Parent,
+                IsActive = item.Active
+            };
         }
     }
 }

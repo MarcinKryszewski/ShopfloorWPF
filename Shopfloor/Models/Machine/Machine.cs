@@ -8,32 +8,41 @@ namespace Shopfloor.Models.MachineModel
     internal sealed partial class Machine
     {
         private readonly MachineDTO _data = new();
-        public int? Id => _data.Id;
-        public string Name => _data.Name;
-        public string Number => _data.Number ?? string.Empty;
-        public string SapNumber => _data.SapNumber ?? string.Empty;
-        public bool IsActive => _data.Active;
-        public int? ParentId => _data.Parent;
-        public Machine(int id, string name, string? number, string? sapNumber, int? parent, bool isActive)
+        public int? Id
         {
-            _data.Id = id;
-            _data.Name = name;
-            _data.Number = number;
-            _data.SapNumber = sapNumber;
-            _data.Parent = parent;
-            _path = Name;
-            _data.Active = isActive;
+            get => _data.Id;
+            init => _data.Id = value;
         }
-        public Machine(string name, string number, string? sapNumber, int? parent, bool isActive)
+        public required string Name
         {
-            _data.Name = name;
-            _data.Name = name;
-            _data.Number = number;
-            _data.SapNumber = sapNumber;
-            _data.Parent = parent;
-            _path = Name;
-            _data.Active = isActive;
+            get => _data.Name;
+            init
+            {
+                _data.Name = value;
+                Path = value;
+            }
         }
+        public string? Number
+        {
+            get => _data.Number ?? string.Empty;
+            init => _data.Number = value;
+        }
+        public string? SapNumber
+        {
+            get => _data.SapNumber ?? string.Empty;
+            init => _data.SapNumber = value;
+        }
+        public bool IsActive
+        {
+            get => _data.Active;
+            set => _data.Active = value;
+        }
+        public int? ParentId
+        {
+            get => _data.Parent;
+            init => _data.Parent = value;
+        }
+        public Machine() { }
     }
     internal sealed partial class Machine
     {
@@ -49,16 +58,16 @@ namespace Shopfloor.Models.MachineModel
         }
         public void SetParent(Machine parent)
         {
-            _path = $@"{parent.Path}\{_path}";
+            Path = $@"{parent.Path}\{Path}";
             _parent = parent;
             _data.Parent = parent.Id;
         }
     }
     internal sealed partial class Machine : ISearchableModel
     {
-        private string _path;
-        public string Path => _path;
-        public string SearchValue => _path.Replace(@"\", string.Empty);
+        //private string _path;
+        public string Path { get; private set; } = string.Empty;
+        public string SearchValue => Path.Replace(@"\", string.Empty);
     }
     internal sealed partial class Machine : IEquatable<Machine>
     {
@@ -76,7 +85,7 @@ namespace Shopfloor.Models.MachineModel
         public override int GetHashCode()
         {
             if (_data.Id != null) return _data.Id.GetHashCode();
-            return _path.GetHashCode();
+            return Path.GetHashCode();
         }
     }
 }

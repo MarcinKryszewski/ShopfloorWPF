@@ -28,7 +28,12 @@ namespace Shopfloor.Models.ErrandTypeModel
         }
         private static ErrandType ToErrandType(ErrandTypeDTO item)
         {
-            return new ErrandType((int)item.Id!, item.Name, item.Description);
+            return new ErrandType()
+            {
+                Id = (int)item.Id!,
+                Name = item.Name,
+                Description = item.Description,
+            };
         }
         #region NOT_IMPLEMENTED
         public Task<int> Create(ErrandType item) => throw new NotImplementedException();

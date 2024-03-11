@@ -12,7 +12,12 @@ namespace Shopfloor.Tests.Models.MachinesParts
         {
             // Arrange
             Part part = new("test", null, null, null, null, null, null, null);
-            Machine machine = new("test", "sdf435", null, null, true);
+            Machine machine = new()
+            {
+                Name = "test",
+                Number = "sdf435",
+                IsActive = true,
+            };
             MachinePart machinePart = new(part, machine);
             // Act
             Part? result = machinePart.Part;
@@ -24,7 +29,12 @@ namespace Shopfloor.Tests.Models.MachinesParts
         {
             // Arrange
             Part part = new("test", null, null, null, null, null, null, null);
-            Machine machine = new("test", "sdf435", null, null, true);
+            Machine machine = new()
+            {
+                Name = "test",
+                Number = "sdf435",
+                IsActive = true,
+            };
             MachinePart machinePart = new(part, machine);
             // Act
             Part? result = machinePart.Part;
@@ -36,7 +46,12 @@ namespace Shopfloor.Tests.Models.MachinesParts
         {
             // Arrange
             Part part = new("test", null, null, null, null, null, null, null);
-            Machine machine = new("test", "sdf435", null, null, true);
+            Machine machine = new()
+            {
+                Name = "test",
+                Number = "sdf435",
+                IsActive = true,
+            };
             MachinePart machinePart = new(part, machine);
             // Act
             bool? result = machinePart.Part?.Equals(part);
@@ -49,7 +64,12 @@ namespace Shopfloor.Tests.Models.MachinesParts
         {
             // Arrange
             Part part = new("test", null, null, null, null, null, null, null);
-            Machine machine = new("test", "sdf435", null, null, true);
+            Machine machine = new()
+            {
+                Name = "test",
+                Number = "sdf435",
+                IsActive = true,
+            };
             MachinePart machinePart = new(part, machine);
             // Act
             Machine? result = machinePart.Machine;
@@ -61,7 +81,12 @@ namespace Shopfloor.Tests.Models.MachinesParts
         {
             // Arrange
             Part part = new("test", null, null, null, null, null, null, null);
-            Machine machine = new("test", "sdf435", null, null, true);
+            Machine machine = new()
+            {
+                Name = "test",
+                Number = "sdf435",
+                IsActive = true,
+            };
             MachinePart machinePart = new(part, machine);
             // Act
             bool? result = machinePart.Machine?.Equals(machine);

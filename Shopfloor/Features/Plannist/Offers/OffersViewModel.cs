@@ -41,11 +41,7 @@ namespace Shopfloor.Features.Plannist.Offers
             set
             {
                 _filterText = value;
-                if (string.IsNullOrEmpty(value))
-                {
-                    Parts.Filter = null;
-                }
-                else Parts.Filter = FilterParts;
+                Parts.Filter = string.IsNullOrEmpty(value) ? null : FilterParts;
             }
         }
         public ICollectionView Parts => CollectionViewSource.GetDefaultView(_parts);

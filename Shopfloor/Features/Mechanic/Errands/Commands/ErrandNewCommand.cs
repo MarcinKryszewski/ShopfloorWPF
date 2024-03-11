@@ -77,26 +77,41 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         {
             ErrandDTO errandDTO = _viewModel.ErrandDTO;
 
-            Errand errand = new(DateTime.Now, _currentUserId, errandDTO.Machine?.Id, errandDTO.ErrandType?.Id, errandDTO.Description ?? "BRAK OPISU", errandDTO.Priority)
+            Errand errand = new()
             {
                 ExpectedDate = errandDTO.ExpectedDate,
                 Responsible = errandDTO.Responsible,
-                SapNumber = errandDTO.SapNumber
+                SapNumber = errandDTO.SapNumber,
+                CreatedById = _currentUserId,
+                CreatedDate = DateTime.Now,
+                Description = errandDTO.Description ?? "BRAK OPISU",
+                Priority = errandDTO.Priority,
+                MachineId = errandDTO.Machine?.Id,
+                TypeId = errandDTO.ErrandType?.Id,
             };
 
             return _errandProvider.Create(errand).Result;
         }
         private void SetNewErrandPartStatus(int errandPartId)
         {
-            ErrandPartStatus partStatus = new(errandPartId, _currentUserId, DateTime.Now);
-            partStatus.SetStatus(ErrandPartStatus.Status[0]);
+            ErrandPartStatus partStatus = new(ErrandPartStatus.Status[0])
+            {
+                ErrandPartId = errandPartId,
+                CreatedDate = DateTime.Now,
+                CreatedById = _currentUserId,
+            };
             _ = _errandPartStatusProvider.Create(partStatus);
         }
         private void SetErrandStatus(int errandId, string statusName)
         {
             if (_isPartAdd)
             {
-                ErrandStatus errandStatus = new(errandId, statusName, DateTime.Now);
+                ErrandStatus errandStatus = new()
+                {
+                    ErrandId = errandId,
+                    StatusName = statusName,
+                    SetDate = DateTime.Now,
+                };
                 _ = _errandStatusProvider.Create(errandStatus);
                 Task.Run(_databaseServices.GetRequiredService<ErrandStatusStore>().Reload);
             }

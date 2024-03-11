@@ -9,36 +9,56 @@ namespace Shopfloor.Models.ErrandPartStatusModel
     internal sealed partial class ErrandPartStatus
     {
         private readonly ErrandPartStatusDTO _data = new();
-        public int? Id => _data.Id;
-        public int ErrandPartId => _data.ErrandPartId;
+        public int? Id
+        {
+            get => _data.Id;
+            init => _data.Id = value ?? 0;
+        }
+        public required int ErrandPartId
+        {
+            get => _data.ErrandPartId;
+            init => _data.ErrandPartId = value;
+        }
         public string StatusName => _data.StatusName;
-        public int CreatedById => _data.CreatedById;
-        public DateTime CreatedDate => _data.CreatedDate;
+        public required int CreatedById
+        {
+            get => _data.CreatedById;
+            init => _data.CreatedById = value;
+        }
+        public required DateTime CreatedDate
+        {
+            get => _data.CreatedDate;
+            init => _data.CreatedDate = value;
+        }
         public string CreatedDateDisplay => _data.CreatedDate.ToShortDateString();
         public string? Comment
         {
-            get => _data.Comment;
+            get => _data.Comment ?? "";
             set => _data.Comment = value;
         }
-
-        public string? Reason => _data.Reason;
+        public string? Reason
+        {
+            get => _data.Reason;
+            init => _data.Reason = value ?? "SYSTEM";
+        }
         public int StatusValue;
-        public bool Confirmed => _data.Confirmed;
+        public bool Confirmed
+        {
+            get => _data.Confirmed;
+            init => _data.Confirmed = value;
+        }
         public User? CreatedBy
         {
             get => _data.CreatedBy;
             set => _data.CreatedBy = value;
         }
-        public ErrandPartStatus(int id, int errandPartId, string statusName, DateTime createdDate, int createdById, string? comment = null, string? reason = "SYSTEM", bool confirmed = false)
+        public ErrandPartStatus() { }
+        public ErrandPartStatus(int statusId)
         {
-            _data.Id = id;
-            _data.ErrandPartId = errandPartId;
-            _data.StatusName = statusName;
-            _data.CreatedDate = createdDate;
-            _data.CreatedById = createdById;
-            _data.Comment = comment;
-            _data.Reason = reason;
-            _data.Confirmed = confirmed;
+            SetStatus(statusId);
+        }
+        public ErrandPartStatus(string statusName)
+        {
             SetStatus(statusName);
         }
         public ErrandPartStatus(int errandPartId, int createdById, int statusId, DateTime createdDate, string? comment = null, string? reason = "SYSTEM", bool confirmed = false)
@@ -50,15 +70,6 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             _data.Reason = reason;
             _data.Confirmed = confirmed;
             SetStatus(statusId);
-        }
-        public ErrandPartStatus(int errandPartId, int createdById, DateTime createdDate, string? comment = null, string? reason = "SYSTEM", bool confirmed = false)
-        {
-            _data.ErrandPartId = errandPartId;
-            _data.CreatedById = createdById;
-            _data.CreatedDate = createdDate;
-            _data.Comment = comment;
-            _data.Reason = reason;
-            _data.Confirmed = confirmed;
         }
         public void SetStatus(int id)
         {
