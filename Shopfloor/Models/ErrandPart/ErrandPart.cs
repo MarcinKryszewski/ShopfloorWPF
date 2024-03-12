@@ -20,6 +20,11 @@ namespace Shopfloor.Models.ErrandPartModel
             get => _data.ErrandId;
             init => _data.ErrandId = value;
         }
+        public bool Canceled
+        {
+            get => _data.Canceled;
+            set => _data.Canceled = value;
+        }
         public required int PartId
         {
             get => _data.PartId;

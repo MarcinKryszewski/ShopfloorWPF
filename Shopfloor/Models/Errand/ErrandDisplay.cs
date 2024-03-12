@@ -47,12 +47,16 @@ namespace Shopfloor.Models.ErrandModel
                 partsCount[errandPart.LastStatusText]++;
             }
 
-            if (partsAmount == partsCount[ErrandPartStatus.Status[5]]) return ErrandPartStatus.Status[5];
+            if (partsAmount == partsCount[ErrandPartStatus.Status[7]]) return ErrandPartStatus.Status[7];
+            if (partsCount[ErrandPartStatus.Status[9]] > 0) return ErrandPartStatus.Status[9];
+            if (partsCount[ErrandPartStatus.Status[8]] > 0) return ErrandPartStatus.Status[8];
             if (partsCount[ErrandPartStatus.Status[0]] > 0) return ErrandPartStatus.Status[0];
             if (partsCount[ErrandPartStatus.Status[1]] > 0) return ErrandPartStatus.Status[1];
             if (partsCount[ErrandPartStatus.Status[2]] > 0) return ErrandPartStatus.Status[2];
             if (partsCount[ErrandPartStatus.Status[3]] > 0) return ErrandPartStatus.Status[3];
             if (partsCount[ErrandPartStatus.Status[4]] > 0) return ErrandPartStatus.Status[4];
+            if (partsCount[ErrandPartStatus.Status[5]] > 0) return ErrandPartStatus.Status[5];
+            if (partsCount[ErrandPartStatus.Status[6]] > 0) return ErrandPartStatus.Status[6];
             return "ERROR";
         }
     }

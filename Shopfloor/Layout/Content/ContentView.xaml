@@ -24,6 +24,8 @@
     xmlns:errands="clr-namespace:Shopfloor.Features.Mechanic.Errands"
     xmlns:topPanel="clr-namespace:Shopfloor.Layout.TopPanel"
     xmlns:users="clr-namespace:Shopfloor.Features.Admin.Users"
+    xmlns:ordersToApprove="clr-namespace:Shopfloor.Features.Manager.OrdersToApprove"
+    xmlns:approveOrder="clr-namespace:Shopfloor.Features.Manager.OrderApprove"
     d:DataContext="{d:DesignInstance Type=content:ContentViewModel}"
     d:Height="1020"
     d:Width="1680"
@@ -78,6 +80,13 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type reports:ReportsViewModel}">
                         <reports:ReportsView />
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type ordersToApprove:OrdersToApproveViewModel}">
+                        <ordersToApprove:OrdersToApproveView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type approveOrder:OrderApproveViewModel}">
+                        <approveOrder:OrderApproveView />
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type users:UsersMainViewModel}">

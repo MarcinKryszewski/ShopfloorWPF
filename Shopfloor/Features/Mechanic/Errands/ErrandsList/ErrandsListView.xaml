@@ -234,6 +234,9 @@
                                             <DataTrigger Binding="{Binding Display.PartsStatus}" Value="ZAKOŃCZONE">
                                                 <Setter Property="Background" Value="#8BD346"/>
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding Display.PartsStatus}" Value="ANULOWANE">
+                                                <Setter Property="Background" Value="#ED4CFC"/>
+                                            </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </Border.Style>

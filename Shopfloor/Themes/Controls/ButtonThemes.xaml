@@ -219,6 +219,17 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="gridConfirmOrderButton" BasedOn="{StaticResource gridButton}" TargetType="Button">
+        <Setter Property="Background" Value="#F9A52C" />
+        <Setter Property="BorderBrush" Value="#fa9c11" />
+        <Setter Property="Foreground" Value="Black" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#fac475" />
+            </Trigger>            
+        </Style.Triggers>
+    </Style>
+
     <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}" TargetType="{x:Type Button}">
         <Setter Property="Template">
             <Setter.Value>

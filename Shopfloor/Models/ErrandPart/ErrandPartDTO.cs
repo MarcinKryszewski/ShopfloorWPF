@@ -17,5 +17,6 @@ namespace Shopfloor.Models.ErrandPartModel
         public User? OrderedByUser { get; set; }
         public double PricePerUnit { get; set; }
         public DateTime? ExpectedDeliveryDate { get; set; }
+        public bool Canceled { get; set; }
     }
 }

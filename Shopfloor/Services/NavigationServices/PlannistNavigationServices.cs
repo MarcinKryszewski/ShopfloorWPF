@@ -3,7 +3,6 @@ using Shopfloor.Features.Plannist.Deploys;
 using Shopfloor.Features.Plannist.Offers;
 using Shopfloor.Features.Plannist.Offers.AddOffer;
 using Shopfloor.Features.Plannist.Orders;
-using Shopfloor.Features.Plannist.PlannistDashboard;
 using Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Features.Plannist.Reports;
@@ -21,10 +20,10 @@ namespace Shopfloor.Services.NavigationServices
         {
             AddStoresToServices(services);
             GetPlannistDashboardMainNavigation(services, databaseServices);
-            GetDeploysNavigation(services);
-            GetOrdersNavigation(services);
-            GetReportsNavigation(services);
-            GetReservationsNavigation(services);
+            GetDeploysNavigation(services, databaseServices);
+            GetOrdersNavigation(services, databaseServices);
+            GetReportsNavigation(services, databaseServices);
+            GetReservationsNavigation(services, databaseServices);
             GetOffersNavigation(services, databaseServices);
             GetAddOfferNavigation(services, databaseServices, userServices);
         }
@@ -45,7 +44,6 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-
         private static void GetAddOfferNavigation(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             services.AddTransient((s) => CreateAddOfferViewModel(s, databaseServices, userServices));
@@ -58,10 +56,9 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-
-        private static void GetDeploysNavigation(IServiceCollection services)
+        private static void GetDeploysNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreateDeploysViewModel(s));
+            services.AddTransient((s) => CreateDeploysViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<DeploysViewModel>>((s) => () => s.GetRequiredService<DeploysViewModel>());
             services.AddSingleton((s) =>
             {
@@ -71,10 +68,9 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-
-        private static void GetOrdersNavigation(IServiceCollection services)
+        private static void GetOrdersNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreateOrdersViewModel(s));
+            services.AddTransient((s) => CreateOrdersViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<OrdersViewModel>>((s) => () => s.GetRequiredService<OrdersViewModel>());
             services.AddSingleton((s) =>
             {
@@ -84,7 +80,6 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-
         private static void GetOffersNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreateOffersViewModel(s, databaseServices));
@@ -97,10 +92,9 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-
-        private static void GetReportsNavigation(IServiceCollection services)
+        private static void GetReportsNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreateReportsViewModel(s));
+            services.AddTransient((s) => CreateReportsViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<ReportsViewModel>>((s) => () => s.GetRequiredService<ReportsViewModel>());
             services.AddSingleton((s) =>
             {
@@ -110,10 +104,9 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-
-        private static void GetReservationsNavigation(IServiceCollection services)
+        private static void GetReservationsNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
-            services.AddTransient((s) => CreateReservationsViewModel(s));
+            services.AddTransient((s) => CreateReservationsViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<ReservationsViewModel>>((s) => () => s.GetRequiredService<ReservationsViewModel>());
             services.AddSingleton((s) =>
             {
@@ -123,38 +116,12 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-
-        private static PlannistPartsListViewModel CreatePlannistDashboardMainViewModel(IServiceProvider services, IServiceProvider databaseServices)
-        {
-            return new PlannistPartsListViewModel(services, databaseServices);
-        }
-
-        private static DeploysViewModel CreateDeploysViewModel(IServiceProvider services)
-        {
-            return new DeploysViewModel(services);
-        }
-
-        private static OrdersViewModel CreateOrdersViewModel(IServiceProvider services)
-        {
-            return new OrdersViewModel(services);
-        }
-
-        private static OffersViewModel CreateOffersViewModel(IServiceProvider services, IServiceProvider databaseServices)
-        {
-            return new OffersViewModel(services, databaseServices);
-        }
-
-        private static ReportsViewModel CreateReportsViewModel(IServiceProvider services)
-        {
-            return new ReportsViewModel();
-        }
-        private static ReservationsViewModel CreateReservationsViewModel(IServiceProvider services)
-        {
-            return new ReservationsViewModel();
-        }
-        private static AddOfferViewModel CreateAddOfferViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices)
-        {
-            return new AddOfferViewModel(services, databaseServices, userServices);
-        }
+        private static PlannistPartsListViewModel CreatePlannistDashboardMainViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
+        private static DeploysViewModel CreateDeploysViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
+        private static OrdersViewModel CreateOrdersViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
+        private static OffersViewModel CreateOffersViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
+        private static ReportsViewModel CreateReportsViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
+        private static ReservationsViewModel CreateReservationsViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
+        private static AddOfferViewModel CreateAddOfferViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new(services, databaseServices, userServices);
     }
 }

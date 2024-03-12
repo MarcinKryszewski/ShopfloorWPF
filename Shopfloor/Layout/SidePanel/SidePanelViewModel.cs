@@ -34,6 +34,7 @@ using System.Windows.Input;
 using Shopfloor.Features.Mechanic.PartsStock;
 using Shopfloor.Features.Plannist.Offers;
 using Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList;
+using Shopfloor.Features.Manager.OrdersToApprove;
 
 namespace Shopfloor.Layout.SidePanel
 {
@@ -70,6 +71,12 @@ namespace Shopfloor.Layout.SidePanel
 
         #endregion Plannist
 
+        #region Manager
+
+        public ICommand NavigateOrdersToApproveCommand { get; }
+
+        #endregion Manager
+
         #region Admin
 
         public ICommand NavigateUsersCommand { get; }
@@ -102,6 +109,8 @@ namespace Shopfloor.Layout.SidePanel
             NavigateDeploysCommand = new NavigateCommand<DeploysViewModel>(mainServices.GetRequiredService<NavigationService<DeploysViewModel>>());
             NavigateReservationsCommand = new NavigateCommand<ReservationsViewModel>(mainServices.GetRequiredService<NavigationService<ReservationsViewModel>>());
             NavigateReportsCommand = new NavigateCommand<ReportsViewModel>(mainServices.GetRequiredService<NavigationService<ReportsViewModel>>());
+
+            NavigateOrdersToApproveCommand = new NavigateCommand<OrdersToApproveViewModel>(mainServices.GetRequiredService<NavigationService<OrdersToApproveViewModel>>());
 
             NavigateUsersCommand = new NavigateCommand<UsersMainViewModel>(mainServices.GetRequiredService<NavigationService<UsersMainViewModel>>());
             NavigateMachinesCommand = new NavigateCommand<MachinesMainViewModel>(mainServices.GetRequiredService<NavigationService<MachinesMainViewModel>>());

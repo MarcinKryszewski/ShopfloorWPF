@@ -84,12 +84,14 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             [-1] = "ERROR",
             [0] = "OFERTOWANIE",
             [1] = "ZATWIERDZANIE",
-            [2] = "ZAMAWIANIE",
-            [3] = "DOSTARCZANIE",
-            [4] = "POBIERANIE",
-            [5] = "ZAKOŃCZONE",
-            [-6] = "ANULOWANE",
-            [-7] = "AKTUALIZACJA"
+            [2] = "KOREKCJA",
+            [3] = "ZAMAWIANIE",
+            [4] = "DOSTARCZANIE",
+            [5] = "REZERWOWANIE",
+            [6] = "POBIERANIE",
+            [7] = "ZAKOŃCZONE",
+            [8] = "WSTRZYMANE",
+            [9] = "ANULOWANE",
         };
     }
     internal sealed partial class ErrandPartStatus : ISearchableModel

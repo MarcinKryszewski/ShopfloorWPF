@@ -165,6 +165,7 @@ namespace Shopfloor.Database.SQLite
                 ordered_by_id INTEGER,
                 price_per_unit REAL,
                 expected_delivery_date TEXT,
+                canceled INTEGER DEFAULT 0,
                 PRIMARY KEY(id),
                 FOREIGN KEY(errand_id) REFERENCES errands(id),
                 FOREIGN KEY(part_id) REFERENCES parts(id),

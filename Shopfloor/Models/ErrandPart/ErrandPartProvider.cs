@@ -21,7 +21,7 @@ namespace Shopfloor.Models.ErrandPartModel
                 amount,
                 ordered_by_id,
                 price_per_unit,
-                expected_delivery_date
+                expected_delivery_date,
             )
             VALUES (
                 @ErrandId,
@@ -38,7 +38,8 @@ namespace Shopfloor.Models.ErrandPartModel
                 amount AS Amount,
                 ordered_by_id as OrderedById,
                 price_per_unit as PricePerUnit,
-                expected_delivery_date as ExpectedDeliveryDate
+                expected_delivery_date as ExpectedDeliveryDate,
+                canceled as Canceled
             FROM errands_parts
             WHERE id = @Id
             ";
@@ -49,7 +50,8 @@ namespace Shopfloor.Models.ErrandPartModel
                 amount AS Amount,
                 ordered_by_id as OrderedById,
                 price_per_unit as PricePerUnit,
-                expected_delivery_date as ExpectedDeliveryDate
+                expected_delivery_date as ExpectedDeliveryDate,
+                canceled as Canceled
             FROM errands_parts
             WHERE errand_id = @ErrandId
             ";
@@ -61,7 +63,8 @@ namespace Shopfloor.Models.ErrandPartModel
                 amount AS Amount,
                 ordered_by_id as OrderedById,
                 price_per_unit as PricePerUnit,
-                expected_delivery_date as ExpectedDeliveryDate
+                expected_delivery_date as ExpectedDeliveryDate,
+                canceled as Canceled
             FROM errands_parts
             ";
         private const string _updateAmountSQL = @"
@@ -80,6 +83,12 @@ namespace Shopfloor.Models.ErrandPartModel
             UPDATE errands_parts
             SET
                 expected_delivery_date = @ExpectedDeliveryDate
+            WHERE id as @Id
+            ";
+        private const string _cancelPartSQL = @"
+            UPDATE errands_parts
+            SET
+                canceled = @Canceled
             WHERE id as @Id
             ";
         #endregion SQLCommands
@@ -151,6 +160,16 @@ namespace Shopfloor.Models.ErrandPartModel
                 ExpectedDeliveryDate = expectedDeliveryDate
             };
             await connection.ExecuteAsync(_updateDeliveryDateSQL, parameters);
+        }
+        public async Task UpdateDeliveryDate(int id, bool cancel)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                ErrandId = id,
+                Canceled = cancel
+            };
+            await connection.ExecuteAsync(_cancelPartSQL, parameters);
         }
         public Task Delete(int id) => throw new NotImplementedException();
         public Task Delete(int errandId, int partId) => throw new NotImplementedException();

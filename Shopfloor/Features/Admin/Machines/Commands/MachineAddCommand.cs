@@ -8,13 +8,11 @@ namespace Shopfloor.Features.Admin.Machines.Commands
     {
         private readonly MachinesListViewModel _viewModel;
         private readonly MachineProvider _provider;
-
         public MachineAddCommand(MachinesListViewModel viewModel, MachineProvider provider)
         {
             _viewModel = viewModel;
             _provider = provider;
         }
-
         public override void Execute(object? parameter)
         {
             int? parentId = _viewModel.SelectedParent?.Id;
