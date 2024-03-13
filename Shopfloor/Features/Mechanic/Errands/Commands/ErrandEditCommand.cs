@@ -142,7 +142,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
             {
                 ErrandPartId = errandPartId,
                 CreatedDate = DateTime.Now,
-                CreatedById = _currentUserId,
+                CompletedById = null,
             };
             _ = _errandPartStatusProvider.Create(partStatus);
         }

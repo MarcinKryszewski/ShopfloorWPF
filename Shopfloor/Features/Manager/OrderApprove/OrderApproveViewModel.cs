@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Manager.Commands;
+using Shopfloor.Features.Manager.OrdersToApprove;
 using Shopfloor.Features.Manager.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
@@ -25,23 +27,24 @@ namespace Shopfloor.Features.Manager.OrderApprove
     {
         private readonly IServiceProvider _mainServices;
         private readonly SelectedRequestStore _requestStore;
-        //public ICommand ReturnCommand { get; }
-        //public ICommand ConfirmCommand { get; }
+        public ICommand ReturnCommand { get; }
+        public ICommand ConfirmCommand { get; }
         public ErrandPart ErrandPart => _requestStore.Request!;
+        public string Comment { get; set; } = string.Empty;
         public DateTime? SelectedDate
         {
             get => ErrandPart.ExpectedDeliveryDate;
             set => ErrandPart.ExpectedDeliveryDate = value;
         }
         public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
-        public OrderApproveViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public OrderApproveViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             _mainServices = mainServices;
             Task.Run(() => LoadData(databaseServices));
             _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
 
-            //ReturnCommand = new NavigateCommand<OffersViewModel>(_mainServices.GetRequiredService<NavigationService<OffersViewModel>>());
-            //ConfirmCommand = new ConfrmOfferCommand(_requestStore, this, databaseServices, userServices, mainServices);
+            ReturnCommand = new NavigateCommand<OrdersToApproveViewModel>(_mainServices.GetRequiredService<NavigationService<OrdersToApproveViewModel>>());
+            ConfirmCommand = new ApproveOrderCommand(_requestStore, this, databaseServices, userServices, mainServices);
 
             _errandPartValidation = new(this);
         }
@@ -108,7 +111,7 @@ namespace Shopfloor.Features.Manager.OrderApprove
         {
             foreach (ErrandPartStatus status in statuses.Data)
             {
-                status.CreatedBy = users.Data.FirstOrDefault(user => user.Id == status.CreatedById);
+                status.CompletedBy = users.Data.FirstOrDefault(user => user.Id == status.CompletedById);
             }
             return Task.CompletedTask;
         }

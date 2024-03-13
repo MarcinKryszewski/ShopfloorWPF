@@ -21,7 +21,6 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         private readonly IServiceProvider _database;
         private readonly IServiceProvider _services;
         private readonly User _currentUser;
-
         public ConfrmOfferCommand(SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, IServiceProvider databaseServices, IServiceProvider userServices, IServiceProvider mainServices)
         {
             _requestStore = requestStore;
@@ -30,7 +29,6 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
             _services = mainServices;
             _currentUser = userServices.GetRequiredService<CurrentUserStore>().User!;
         }
-
         public override void Execute(object? parameter)
         {
             if (_requestStore.Request is null) return;
@@ -41,21 +39,42 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
 
             List<Task> tasks = [];
             tasks.Add(UpdateErrandPart(request));
-            tasks.Add(UpdateErrandPartStatus(request));
-            tasks.Add(ErrandPartNewStatus(request));
-            tasks.Add(SelfConfirm(parameter, request));
+            tasks.Add(ErrandPartStatusConfirm(request.LastStatus));
+            tasks.Add(AddNextStatus(request, parameter));
             Task.WhenAll(tasks);
             ReturnToOffer(); //return or lock?
         }
-        private async Task SelfConfirm(object? parameter, ErrandPart request)
+
+        private async Task AddNextStatus(ErrandPart request, object? parameter)
         {
-            if (parameter is null) return;
-            if (parameter is not string) return;
-            if ((string)parameter != "CONFIRM") return;
-
-            await NewStatus(request, 2, null, "ZATWIERDZONO PODCZAS OFERTOWANIA");
+            ErrandPartStatus newStatus = new(ErrandPartStatus.Status[1])
+            {
+                CreatedDate = DateTime.Now,
+                Reason = "OFFER ADDED",
+                ErrandPartId = (int)request.Id!
+            };
+            await ErrandPartStatusNew(newStatus);
+            if (SelfConfirm(parameter))
+            {
+                List<Task> tasks = [];
+                newStatus.Comment = "Potwierdzone podczas składania oferty";
+                tasks.Add(ErrandPartStatusConfirm(newStatus));
+                tasks.Add(ErrandPartStatusNew(new(ErrandPartStatus.Status[3])
+                {
+                    CreatedDate = DateTime.Now,
+                    Reason = "CONFIRMED DURING OFFER",
+                    ErrandPartId = (int)request.Id!
+                }));
+                await Task.WhenAll(tasks);
+            }
         }
-
+        private static bool SelfConfirm(object? parameter)
+        {
+            if (parameter is null) return false;
+            if (parameter is not string) return false;
+            if ((string)parameter == "CONFIRM") return true;
+            return false;
+        }
         private async Task UpdateErrandPart(ErrandPart request)
         {
             ErrandPartProvider errandPartProvider = _database.GetRequiredService<ErrandPartProvider>();
@@ -65,34 +84,22 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
             await errandPartProvider.UpdatePrice((int)request.Id!, price);
             await errandPartProvider.UpdateDeliveryDate((int)request.Id!, deliveryDate);
         }
-        private async Task UpdateErrandPartStatus(ErrandPart request)
+        private async Task ErrandPartStatusConfirm(ErrandPartStatus status)
         {
             ErrandPartStatusProvider provider = _database.GetRequiredService<ErrandPartStatusProvider>();
-            string comment = request.LastStatus.Comment ?? string.Empty;
-
-            await provider.SetComment((int)request.Id!, comment);
+            await provider.ConfirmStatus((int)status.Id!, status.Comment, (int)_currentUser.Id!);
         }
-        private async Task ErrandPartNewStatus(ErrandPart request) => await NewStatus(request, 1, request.LastStatus.Comment, "DODANO OFERTĘ");
-
-        private async Task NewStatus(ErrandPart request, int statusId, string? comment, string reason)
+        private async Task ErrandPartStatusNew(ErrandPartStatus status)
         {
-            if (_currentUser.Id is null) return;
-            ErrandPartStatusProvider errandPartStatusProvider = _database.GetRequiredService<ErrandPartStatusProvider>();
-            ErrandPartStatus status = new(statusId)
-            {
-                Reason = reason,
-                Comment = comment,
-                ErrandPartId = (int)request.Id!,
-                CreatedById = (int)_currentUser.Id,
-                CreatedDate = DateTime.Now,
-            };
-
+            ErrandPartStatusProvider provider = _database.GetRequiredService<ErrandPartStatusProvider>();
+            status.Id = await provider.Create(status);
+            AddToStatusStore(status);
+        }
+        private void AddToStatusStore(ErrandPartStatus status)
+        {
             ErrandPartStatusStore store = _database.GetRequiredService<ErrandPartStatusStore>();
             store.Data.Add(status);
-
-            await errandPartStatusProvider.Create(status);
         }
-
         private void ReturnToOffer()
         {
             _services.GetRequiredService<Notifier>().ShowSuccess("Dodano ofertę i przekazano do zatwierdzenia!");

@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.UserModel;
@@ -12,7 +14,15 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         public int? Id
         {
             get => _data.Id;
-            init => _data.Id = value ?? 0;
+            set
+            {
+                if (_data.Id is not null)
+                {
+                    AddError(nameof(Id), "Id already assigned");
+                    return;
+                }
+                _data.Id = value;
+            }
         }
         public required int ErrandPartId
         {
@@ -20,10 +30,10 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             init => _data.ErrandPartId = value;
         }
         public string StatusName => _data.StatusName;
-        public required int CreatedById
+        public int? CompletedById
         {
-            get => _data.CreatedById;
-            init => _data.CreatedById = value;
+            get => _data.CompletedById;
+            set => _data.CompletedById = value;
         }
         public required DateTime CreatedDate
         {
@@ -33,7 +43,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         public string CreatedDateDisplay => _data.CreatedDate.ToShortDateString();
         public string? Comment
         {
-            get => _data.Comment ?? "";
+            get => _data.Comment;
             set => _data.Comment = value;
         }
         public string? Reason
@@ -47,10 +57,10 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             get => _data.Confirmed;
             init => _data.Confirmed = value;
         }
-        public User? CreatedBy
+        public User? CompletedBy
         {
-            get => _data.CreatedBy;
-            set => _data.CreatedBy = value;
+            get => _data.CompletedBy;
+            set => _data.CompletedBy = value;
         }
         public ErrandPartStatus() { }
         public ErrandPartStatus(int statusId)
@@ -60,16 +70,6 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         public ErrandPartStatus(string statusName)
         {
             SetStatus(statusName);
-        }
-        public ErrandPartStatus(int errandPartId, int createdById, int statusId, DateTime createdDate, string? comment = null, string? reason = "SYSTEM", bool confirmed = false)
-        {
-            _data.ErrandPartId = errandPartId;
-            _data.CreatedById = createdById;
-            _data.CreatedDate = createdDate;
-            _data.Comment = comment;
-            _data.Reason = reason;
-            _data.Confirmed = confirmed;
-            SetStatus(statusId);
         }
         public void SetStatus(int id)
         {
@@ -97,5 +97,30 @@ namespace Shopfloor.Models.ErrandPartStatusModel
     internal sealed partial class ErrandPartStatus : ISearchableModel
     {
         public string SearchValue => throw new NotImplementedException();
+    }
+    internal sealed partial class ErrandPartStatus : INotifyDataErrorInfo
+    {
+        public bool HasErrors => _propertyErrors.Count != 0;
+        private readonly Dictionary<string, List<string>?> _propertyErrors = [];
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+        public IEnumerable GetErrors(string? propertyName) => _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
+        private void OnErrorsChanged(string propertyName) => ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+        public void AddError(string propertyName, string errorMassage)
+        {
+            if (!_propertyErrors.TryGetValue(propertyName, out List<string>? value))
+            {
+                value = [];
+                _propertyErrors.Add(propertyName, value);
+            }
+            value?.Add(errorMassage);
+            OnErrorsChanged(propertyName);
+        }
+        public void ClearErrors(string propertyName)
+        {
+            if (_propertyErrors.Remove(propertyName))
+            {
+                OnErrorsChanged(propertyName);
+            }
+        }
     }
 }

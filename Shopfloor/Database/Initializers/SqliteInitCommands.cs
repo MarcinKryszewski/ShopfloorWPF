@@ -177,12 +177,23 @@ namespace Shopfloor.Database.SQLite
                 errand_part_id INTEGER,
                 errand_status_name TEXT,
                 create_date TEXT,
-                created_by INTEGER,
+                completed_by INTEGER,
                 comment TEXT,
                 reason TEXT,
                 confirmed INTEGER,
+                completed INTEGER DEFAULT 0,
+                completed_date TEXT,
                 PRIMARY KEY(id),
-                FOREIGN KEY(errand_part_id) REFERENCES errands_parts(id)
+                FOREIGN KEY(errand_part_id) REFERENCES errands_parts(id),
+                FOREIGN KEY(completed_by) REFERENCES users(id),
+            );";
+        private const string _messages_SQLCommand = @"
+            CREATE TABLE messages (
+                id INTEGER,
+                text TEXT,
+                receiver INTEGER,
+                read INTEGER,
+                PRIMARY KEY(id)
             );";
         public SqliteInitCommands()
         {
@@ -202,6 +213,8 @@ namespace Shopfloor.Database.SQLite
                 _errand_statuses_SQLCommand,
                 _errands_parts_SQLCommand,
                 _errand_part_statuses_SQLCommand,
+
+                _messages_SQLCommand,
 
                 _init_admin_SQLCommand,
                 _init_roles_SQLCommand,

@@ -144,7 +144,7 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         {
             foreach (ErrandPartStatus status in statuses.Data)
             {
-                status.CreatedBy = users.Data.FirstOrDefault(user => user.Id == status.CreatedById);
+                status.CompletedBy = users.Data.FirstOrDefault(user => user.Id == status.CompletedById);
             }
             return Task.CompletedTask;
         }

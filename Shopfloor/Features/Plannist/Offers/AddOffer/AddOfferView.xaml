@@ -68,9 +68,9 @@
                 <TextBox Grid.Row="5" Margin="10,0,20,0" Grid.Column="3" Width="200" MinHeight="30" IsReadOnly="True" Padding="5,0" VerticalContentAlignment="Center" Text="{Binding Path=ErrandPart.Part.Supplier.Name, Mode=OneWay}" Style="{StaticResource TextBoxMain}"/>
 
                 <TextBlock Grid.Row="6" FontWeight="SemiBold" Grid.Column="0" Foreground="{StaticResource BrushPurple400}" Text="Cena (jednostka)" FontSize="14" VerticalAlignment="Center" TextAlignment="Left"/>
-                <TextBox Grid.Row="6" Margin="10,0,20,0" Grid.Column="1" Width="200" MinHeight="30" Padding="5,0" VerticalContentAlignment="Center" Text="{Binding Path=PricePerUnit, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxMain}"/>
+                <TextBox Grid.Row="6" Margin="10,0,20,0" Grid.Column="1" Width="200" MinHeight="30" Padding="5,0" VerticalContentAlignment="Center" Text="{Binding Path=PricePerUnit, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ConverterCulture=pl-Pl}" Style="{StaticResource TextBoxMain}"/>
                 <TextBlock Grid.Row="6" FontWeight="SemiBold" Grid.Column="2" Foreground="{StaticResource BrushPurple400}" Text="Cena (łącznie)" FontSize="14" VerticalAlignment="Center" TextAlignment="Left"/>
-                <TextBox Grid.Row="6" Margin="10,0,20,0" Grid.Column="3" Width="200" MinHeight="30" Padding="5,0" VerticalContentAlignment="Center" Text="{Binding Path=PriceTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxMain}"/>
+                <TextBox Grid.Row="6" Margin="10,0,20,0" Grid.Column="3" Width="200" MinHeight="30" Padding="5,0" VerticalContentAlignment="Center" Text="{Binding Path=PriceTotal, Mode=TwoWay, UpdateSourceTrigger=LostFocus, ConverterCulture=pl-Pl}" Style="{StaticResource TextBoxMain}"/>
 
                 <TextBlock Grid.Row="7" FontWeight="SemiBold" Grid.Column="0" Foreground="{StaticResource BrushPurple400}" Text="Data dostawy" FontSize="14" VerticalAlignment="Center" TextAlignment="Left"/>
                 <DatePicker Height="30" Grid.Row="7" Grid.Column="1" Margin="10,0,20,0"
@@ -126,7 +126,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Width="auto" Binding="{Binding CreatedBy.FullName}" CanUserResize="False" Header="UTWORZONE PRZEZ" IsReadOnly="True" />
+                <DataGridTextColumn Width="auto" Binding="{Binding CompletedBy.FullName}" CanUserResize="False" Header="UTWORZONE PRZEZ" IsReadOnly="True" />
                 <DataGridTextColumn Width="*" Binding="{Binding Comment}" CanUserResize="False" Header="Komentarz" IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>

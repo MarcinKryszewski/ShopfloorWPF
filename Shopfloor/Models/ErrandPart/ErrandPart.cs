@@ -40,6 +40,14 @@ namespace Shopfloor.Models.ErrandPartModel
             get => _data.ExpectedDeliveryDate;
             set => _data.ExpectedDeliveryDate = value;
         }
+        public string ExpectedDeliveryDateDisplay
+        {
+            get
+            {
+                if (_data.ExpectedDeliveryDate is null) return string.Empty;
+                return ((DateTime)_data.ExpectedDeliveryDate).ToShortDateString();
+            }
+        }
         public Part? Part
         {
             get => _data.Part;

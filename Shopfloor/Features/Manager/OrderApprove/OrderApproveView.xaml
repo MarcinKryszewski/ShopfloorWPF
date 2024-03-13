@@ -34,16 +34,16 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/> <!--01-->
+                        <RowDefinition Height="*"/> <!--02-->
+                        <RowDefinition Height="*"/> <!--03-->
+                        <RowDefinition Height="*"/> <!--04-->
+                        <RowDefinition Height="*"/> <!--05-->
+                        <RowDefinition Height="*"/> <!--06-->
+                        <RowDefinition Height="*"/> <!--07-->
+                        <RowDefinition Height="*"/> <!--08-->
+                        <RowDefinition Height="*"/> <!--09-->
+                        <RowDefinition Height="*"/> <!--10-->
                     </Grid.RowDefinitions>
     
     
@@ -72,10 +72,22 @@
                     <TextBlock Grid.Row="6" FontWeight="SemiBold" Grid.Column="0" Foreground="{StaticResource BrushDarkNeutral1000}" Text="Cena (jednostka)" FontSize="14" VerticalAlignment="Center" TextAlignment="Left"/>
                     <TextBox Grid.Row="6" Margin="10,0,20,0" Grid.Column="1" Width="200" MinHeight="30" IsReadOnly="True" Padding="5,0" VerticalContentAlignment="Center" Text="{Binding Path=ErrandPart.PricePerUnit, Mode=OneWay}" Style="{StaticResource TextBoxMain}"/>
                     <TextBlock Grid.Row="6" FontWeight="SemiBold" Grid.Column="2" Foreground="{StaticResource BrushDarkNeutral1000}" Text="Data dostawy" FontSize="14" VerticalAlignment="Center" TextAlignment="Left"/>
-                    <TextBox Grid.Row="6" Margin="10,0,20,0" Grid.Column="3" Width="200" MinHeight="30" IsReadOnly="True" Padding="5,0" VerticalContentAlignment="Center" Text="{Binding Path=ErrandPart.ExpectedDeliveryDate, Mode=OneWay}" Style="{StaticResource TextBoxMain}"/>
+                    <TextBox Grid.Row="6" Margin="10,0,20,0" Grid.Column="3" Width="200" MinHeight="30" IsReadOnly="True" Padding="5,0" VerticalContentAlignment="Center" Text="{Binding Path=ErrandPart.ExpectedDeliveryDateDisplay, Mode=OneWay}" Style="{StaticResource TextBoxMain}"/>
     
-                    <TextBlock Grid.Row="8" FontWeight="SemiBold" Grid.Column="0" Foreground="{StaticResource BrushPurple400}" Text="Komentarz" FontSize="14" VerticalAlignment="Center" TextAlignment="Left"/>
-                    <TextBox MinLines="3" VerticalContentAlignment="Top" Grid.Row="9" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,5,20,0" Grid.Column="0" Grid.ColumnSpan="4" Padding="5,5" Text="{Binding Path=ErrandPart.LastStatus.Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxMain}"/>
+                    <TextBlock Grid.Row="7" FontWeight="SemiBold" Grid.Column="0" Foreground="{StaticResource BrushPurple400}" Text="Komentarz" FontSize="14" VerticalAlignment="Center" TextAlignment="Left"/>
+                    <TextBox MinLines="3" VerticalContentAlignment="Top" Grid.Row="8" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,5,20,0" Grid.Column="0" Grid.ColumnSpan="4" Padding="5,5" Text="{Binding Path=Comment, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TextBoxMain}"/>
+                
+                    <Grid Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="4" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--Helper buttons to fill comment section-->
+                    </Grid>
+                
                 </Grid>
             </StackPanel>
     
@@ -119,7 +131,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Width="auto" Binding="{Binding CreatedBy.FullName}" CanUserResize="False" Header="UTWORZONE PRZEZ" IsReadOnly="True" />
+                    <DataGridTextColumn Width="auto" Binding="{Binding CompletedBy.FullName}" CanUserResize="False" Header="UTWORZONE PRZEZ" IsReadOnly="True" />
                     <DataGridTextColumn Width="*" Binding="{Binding Comment}" CanUserResize="False" Header="Komentarz" IsReadOnly="True" />
                 </DataGrid.Columns>
             </DataGrid>
@@ -240,21 +252,25 @@
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="1" Width="150" Height="50" Margin="5,0" Command="{Binding Path=ConfirmCommand}" Style="{StaticResource ResourceKey=ButtonMain}">
+                <Button Grid.Column="1" Width="150" Height="50" Margin="5,0" Command="{Binding Path=ConfirmCommand}" CommandParameter="CONFIRM" Style="{StaticResource ResourceKey=ButtonMain}">
                     <StackPanel>
-                        <TextBlock Text="ZAPISZ" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <TextBlock Text="DO ZATWIERDZENIA" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"/>
+                        <TextBlock Text="ZATWIERDŹ" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Column="2" Width="150" Height="50" Margin="5,0" Command="{Binding Path=ConfirmCommand}" CommandParameter="CONFIRM" Style="{StaticResource ResourceKey=ButtonEmpty}">
+                <Button Grid.Column="2" Width="150" Height="50" Margin="5,0" Command="{Binding Path=ConfirmCommand}" CommandParameter="HOLD" Style="{StaticResource ResourceKey=ButtonEmpty}">
                     <StackPanel>
-                        <TextBlock Text="ZAPISZ" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <TextBlock Text="i ZATIWERDŹ" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"/>
+                        <TextBlock Text="WSTRZYMAJ" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
                     </StackPanel>
                 </Button>
-                <Button Grid.Column="3" Width="150" Height="50" Margin="5,0" Command="{Binding Path=ReturnCommand}" Content="WRÓĆ" Style="{StaticResource ResourceKey=ButtonSide}" />
+                <Button Grid.Column="3" Width="150" Height="50" Margin="5,0" Command="{Binding Path=ConfirmCommand}" CommandParameter="CANCEL" Style="{StaticResource ResourceKey=ButtonEmpty}">
+                    <StackPanel>
+                        <TextBlock Text="ODRZUĆ" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
+                    </StackPanel>
+                </Button>
+                <Button Grid.Column="4" Width="150" Height="50" Margin="5,0" Command="{Binding Path=ReturnCommand}" Content="WRÓĆ" Style="{StaticResource ResourceKey=ButtonSide}" />
             </Grid>
         </Grid>
     </UserControl>

@@ -1,6 +1,7 @@
 using Dapper;
 using Shopfloor.Database;
 using Shopfloor.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
                 errand_part_id = @ErrandPartId,
                 errand_status_name = @StatusName,
                 create_date = @CreatedDate,
-                created_by = @CreatedById,
+                completed_by = @CompletedById,
                 comment = @Comment,
                 reason = @Reason,
                 confirmed = @Confirmed
@@ -30,7 +31,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
                 errand_part_id AS ErrandPartId,
                 errand_status_name AS StatusName,
                 create_date AS CreatedDate,
-                created_by AS CreatedById,
+                completed_by AS CompletedById,
                 comment AS Comment,
                 reason AS Reason,
                 confirmed AS Confirmed
@@ -43,15 +44,15 @@ namespace Shopfloor.Models.ErrandPartStatusModel
                 errand_part_id AS ErrandPartId,
                 errand_status_name AS StatusName,
                 create_date AS CreatedDate,
-                created_by AS CreatedById,
+                completed_by AS CompletedById,
                 comment AS Comment,
                 reason AS Reason,
                 confirmed AS Confirmed
             FROM errand_part_statuses
         ;";
         private const string _createSQL = @"
-            INSERT INTO errand_part_statuses (errand_part_id, errand_status_name, create_date, created_by, comment, reason, confirmed)
-            VALUES (@ErrandPartId, @StatusName, @CreatedDate, @CreatedById, @Comment, @Reason, @Confirmed);";
+            INSERT INTO errand_part_statuses (errand_part_id, errand_status_name, create_date, comment, reason, confirmed)
+            VALUES (@ErrandPartId, @StatusName, @CreatedDate, @Comment, @Reason, @Confirmed);";
         private const string _confirmSQL = @"
             UPDATE errand_part_statuses
             SET confirmed = 1
@@ -64,7 +65,11 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         ";
         private const string _setCommentSQL = @"
             UPDATE errand_part_statuses
-            SET comment = @Comment
+            SET 
+                comment = @Comment,
+                completed_by = @User,
+                completed = 1,
+                completed_date = @CompletedDate
             WHERE id = @Id 
         ";
         public ErrandPartStatusProvider(DatabaseConnectionFactory database)
@@ -79,7 +84,6 @@ namespace Shopfloor.Models.ErrandPartStatusModel
                 ErrandPartId = item.ErrandPartId,
                 StatusName = item.StatusName,
                 CreatedDate = item.CreatedDate.ToString(dateTimeFormat),
-                CreatedById = item.CreatedById,
                 Comment = item.Comment,
                 Reason = item.Reason,
                 Confirmed = item.Confirmed
@@ -89,14 +93,14 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             string lastIdSQL = "SELECT last_insert_rowid()";
             return connection.Query<int>(lastIdSQL).Single();
         }
-        public Task Delete(int id) => throw new System.NotImplementedException();
+        public Task Delete(int id) => throw new NotImplementedException();
         public async Task<IEnumerable<ErrandPartStatus>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
             IEnumerable<ErrandPartStatusDTO> ErrandPartStatusDTOs = await connection.QueryAsync<ErrandPartStatusDTO>(_getAllSQL);
             return ErrandPartStatusDTOs.Select(ToModel);
         }
-        public Task<ErrandPartStatus> GetById(int id) => throw new System.NotImplementedException();
+        public Task<ErrandPartStatus> GetById(int id) => throw new NotImplementedException();
         public async Task<IEnumerable<ErrandPartStatus>> GetAllForErrand(int errandId)
         {
             using IDbConnection connection = _database.Connect();
@@ -116,7 +120,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
                 ErrandPartId = item.ErrandPartId,
                 StatusName = item.StatusName,
                 CreatedDate = item.CreatedDate.ToString(dateTimeFormat),
-                CreatedById = item.CreatedById,
+                CompletedById = item.CompletedById,
                 Comment = item.Comment,
                 Reason = item.Reason,
                 Confirmed = item.Confirmed
@@ -141,13 +145,15 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             };
             await connection.ExecuteAsync(_abortSQL, parameters);
         }
-        public async Task SetComment(int id, string comment)
+        public async Task ConfirmStatus(int id, string? comment, int userId)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
                 Id = id,
-                Comment = comment
+                Comment = comment,
+                User = userId,
+                CompletedDate = DateTime.Now.ToString(dateTimeFormat)
             };
             await connection.ExecuteAsync(_setCommentSQL, parameters);
         }
@@ -158,7 +164,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
                 Id = item.Id,
                 ErrandPartId = item.ErrandPartId,
                 CreatedDate = item.CreatedDate,
-                CreatedById = item.CreatedById,
+                CompletedById = item.CompletedById,
                 Comment = item.Comment,
                 Reason = item.Reason,
                 Confirmed = item.Confirmed,

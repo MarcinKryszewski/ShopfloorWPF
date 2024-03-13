@@ -91,7 +91,7 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsDetails
         {
             foreach (ErrandPartStatus status in statuses.Data)
             {
-                status.CreatedBy = users.Data.FirstOrDefault(user => user.Id == status.CreatedById);
+                status.CompletedBy = users.Data.FirstOrDefault(user => user.Id == status.CompletedById);
             }
             return Task.CompletedTask;
         }

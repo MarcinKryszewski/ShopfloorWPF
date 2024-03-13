@@ -36,10 +36,8 @@ namespace Shopfloor.Hosts.MainHost
                 LoginNavigationServices.Get(services, databaseServices, userServices);
                 MechanicNavigationServices.Get(services, databaseServices, userServices);
                 PlannistNavigationServices.Get(services, databaseServices, userServices);
-                ManagerNavigationServices.Get(services, databaseServices);
+                ManagerNavigationServices.Get(services, databaseServices, userServices);
                 AdminNavigationServices.Get(services, databaseServices);
-
-
             })
             .Build();
         }

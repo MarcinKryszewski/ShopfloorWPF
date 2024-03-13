@@ -77,19 +77,19 @@ namespace Shopfloor.Models.ErrandPartModel
             UPDATE errands_parts
             SET
                 price_per_unit = @Price
-            WHERE id as @Id
+            WHERE id = @Id
             ";
         private const string _updateDeliveryDateSQL = @"
             UPDATE errands_parts
             SET
                 expected_delivery_date = @ExpectedDeliveryDate
-            WHERE id as @Id
+            WHERE id = @Id
             ";
         private const string _cancelPartSQL = @"
             UPDATE errands_parts
             SET
                 canceled = @Canceled
-            WHERE id as @Id
+            WHERE id = @Id
             ";
         #endregion SQLCommands
         public ErrandPartProvider(DatabaseConnectionFactory database)
@@ -146,7 +146,7 @@ namespace Shopfloor.Models.ErrandPartModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                ErrandId = id,
+                Id = id,
                 Price = pricePerUnit
             };
             await connection.ExecuteAsync(_updatePriceSQL, parameters);
@@ -156,7 +156,7 @@ namespace Shopfloor.Models.ErrandPartModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                ErrandId = id,
+                Id = id,
                 ExpectedDeliveryDate = expectedDeliveryDate
             };
             await connection.ExecuteAsync(_updateDeliveryDateSQL, parameters);

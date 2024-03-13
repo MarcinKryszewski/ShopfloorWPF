@@ -11,11 +11,11 @@ namespace Shopfloor.Services.NavigationServices
 {
     internal sealed class ManagerNavigationServices
     {
-        public static void Get(IServiceCollection services, IServiceProvider databaseServices)
+        public static void Get(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             AddStoresToServices(services);
             GetOrdersToApproveNavigation(services, databaseServices);
-            GetOrderApproveNavigation(services, databaseServices);
+            GetOrderApproveNavigation(services, databaseServices, userServices);
         }
         public static void AddStoresToServices(IServiceCollection services)
         {
@@ -33,9 +33,9 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-        private static void GetOrderApproveNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        private static void GetOrderApproveNavigation(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            services.AddTransient((s) => CreateOrderApproveViewModel(s, databaseServices));
+            services.AddTransient((s) => CreateOrderApproveViewModel(s, databaseServices, userServices));
             services.AddSingleton<CreateViewModel<OrderApproveViewModel>>((s) => () => s.GetRequiredService<OrderApproveViewModel>());
             services.AddSingleton((s) =>
             {
@@ -46,6 +46,6 @@ namespace Shopfloor.Services.NavigationServices
             });
         }
         private static OrdersToApproveViewModel CreateOrdersToApproveViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
-        private static OrderApproveViewModel CreateOrderApproveViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
+        private static OrderApproveViewModel CreateOrderApproveViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new(services, databaseServices, userServices);
     }
 }

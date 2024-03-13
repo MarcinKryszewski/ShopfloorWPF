@@ -324,20 +324,20 @@ namespace Shopfloor.Layout.SidePanel
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(0)
                 {
                     ErrandPartId = 7,
-                    CreatedById = 1,
+                    CompletedById = 1,
                     CreatedDate = DateTime.Now.AddDays(-17),
                 });
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(2)
                 {
                     ErrandPartId = 1,
-                    CreatedById = 2,
+                    CompletedById = 2,
                     CreatedDate = DateTime.Now.AddDays(-3),
                     Comment = "In progress",
                 });
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(5)
                 {
                     ErrandPartId = 4,
-                    CreatedById = 3,
+                    CompletedById = 3,
                     CreatedDate = DateTime.Now.AddDays(-8),
                     Comment = "Pending",
                     Reason = "Waiting for approval",
@@ -345,13 +345,13 @@ namespace Shopfloor.Layout.SidePanel
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(3)
                 {
                     ErrandPartId = 5,
-                    CreatedById = 1,
+                    CompletedById = 1,
                     CreatedDate = DateTime.Now.AddDays(-12)
                 });
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(1)
                 {
                     ErrandPartId = 6,
-                    CreatedById = 2,
+                    CompletedById = 2,
                     CreatedDate = DateTime.Now.AddDays(-21),
                     Comment = "Completed",
                     Reason = "User feedback received",
@@ -359,7 +359,7 @@ namespace Shopfloor.Layout.SidePanel
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(4)
                 {
                     ErrandPartId = 2,
-                    CreatedById = 3,
+                    CompletedById = 3,
                     CreatedDate = DateTime.Now.AddDays(-5),
                     Comment = "Delayed",
                     Reason = "Supplier issue",
@@ -367,41 +367,41 @@ namespace Shopfloor.Layout.SidePanel
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(5)
                 {
                     ErrandPartId = 3,
-                    CreatedById = 1,
+                    CompletedById = 1,
                     CreatedDate = DateTime.Now.AddDays(-10),
                     Comment = "Cancelled",
                 });
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(0)
                 {
                     ErrandPartId = 1,
-                    CreatedById = 2,
+                    CompletedById = 2,
                     CreatedDate = DateTime.Now.AddDays(-14),
                     Reason = "SYSTEM",
                 });
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(1)
                 {
                     ErrandPartId = 2,
-                    CreatedById = 3,
+                    CompletedById = 3,
                     CreatedDate = DateTime.Now.AddDays(-19),
                     Reason = "SYSTEM",
                 });
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(3)
                 {
                     ErrandPartId = 3,
-                    CreatedById = 1,
+                    CompletedById = 1,
                     CreatedDate = DateTime.Now.AddDays(-22),
                     Comment = "Completed",
                 });
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(4)
                 {
                     ErrandPartId = 4,
-                    CreatedById = 2,
+                    CompletedById = 2,
                     CreatedDate = DateTime.Now.AddDays(-7),
                 });
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(5)
                 {
                     ErrandPartId = 5,
-                    CreatedById = 3,
+                    CompletedById = 3,
                     CreatedDate = DateTime.Now.AddDays(-9),
                     Comment = "In progress",
                     Reason = "Technical issue",
@@ -409,20 +409,20 @@ namespace Shopfloor.Layout.SidePanel
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(0)
                 {
                     ErrandPartId = 6,
-                    CreatedById = 1,
+                    CompletedById = 1,
                     CreatedDate = DateTime.Now.AddDays(-15),
                 });
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(1)
                 {
                     ErrandPartId = 7,
-                    CreatedById = 2,
+                    CompletedById = 2,
                     CreatedDate = DateTime.Now.AddDays(-20),
                     Comment = "In progress",
                 });
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(2)
                 {
                     ErrandPartId = 1,
-                    CreatedById = 3,
+                    CompletedById = 3,
                     CreatedDate = DateTime.Now.AddDays(-25),
                     Comment = "Pending",
                     Reason = "Waiting for approval",

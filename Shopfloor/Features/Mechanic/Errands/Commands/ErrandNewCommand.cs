@@ -97,8 +97,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
             ErrandPartStatus partStatus = new(ErrandPartStatus.Status[0])
             {
                 ErrandPartId = errandPartId,
-                CreatedDate = DateTime.Now,
-                CreatedById = _currentUserId,
+                CreatedDate = DateTime.Now
             };
             _ = _errandPartStatusProvider.Create(partStatus);
         }
