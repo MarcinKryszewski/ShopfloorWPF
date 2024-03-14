@@ -195,6 +195,21 @@ namespace Shopfloor.Database.SQLite
                 read INTEGER,
                 PRIMARY KEY(id)
             );";
+        private const string _orders_SQLCommand = @"
+        CREATE TABLE orders (
+            id INTEGER,
+            delivery_date TEXT,
+            creation_date TEXT,
+            delivered INTEGER DEFAULT 0,
+            PRIMARY KEY(id)
+        );";
+        private const string _errand_parts_orders_SQLCommand = @"
+        CREATE TABLE errand_parts_orders (
+            id INTEGER,
+            errand_part INTEGER,
+            order INTEGER,
+            PRIMARY KEY(id)
+        );";
         public SqliteInitCommands()
         {
             InitCommands =
@@ -213,6 +228,9 @@ namespace Shopfloor.Database.SQLite
                 _errand_statuses_SQLCommand,
                 _errands_parts_SQLCommand,
                 _errand_part_statuses_SQLCommand,
+
+                _orders_SQLCommand,
+                _errand_parts_orders_SQLCommand,
 
                 _messages_SQLCommand,
 

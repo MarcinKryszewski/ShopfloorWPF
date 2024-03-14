@@ -60,6 +60,8 @@ namespace Shopfloor.Features.Plannist.Offers
 
             OfferCommand = new NavigateCommand<AddOfferViewModel>(_mainServices.GetRequiredService<NavigationService<AddOfferViewModel>>());
             DetailsCommand = new PlannistDetailsCommand();
+
+
         }
         private void OnRequestChanged() => Parts.Refresh();
         private async Task LoadData()

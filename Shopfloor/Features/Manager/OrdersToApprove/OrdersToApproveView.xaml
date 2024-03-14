@@ -18,7 +18,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
     
-            <TextBlock Grid.Row="0" Margin="0,0,0,0" HorizontalAlignment="Left" FontSize="32" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple400}" Text="Oferty" />
+            <TextBlock Grid.Row="0" Margin="0,0,0,0" HorizontalAlignment="Left" FontSize="32" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple400}" Text="Witaj kierowniku! Masz oferty do zatwierdzenia." />
     
             <TextBlock Grid.Row="1" Margin="0,5,215,0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple400}" Text="Filtr" />
     

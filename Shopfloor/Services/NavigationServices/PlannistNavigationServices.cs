@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Plannist.Deploys;
 using Shopfloor.Features.Plannist.Offers;
 using Shopfloor.Features.Plannist.Offers.AddOffer;
-using Shopfloor.Features.Plannist.Orders;
+using Shopfloor.Features.Plannist.PartsOrders;
 using Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Features.Plannist.Reports;
@@ -71,12 +71,12 @@ namespace Shopfloor.Services.NavigationServices
         private static void GetOrdersNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreateOrdersViewModel(s, databaseServices));
-            services.AddSingleton<CreateViewModel<OrdersViewModel>>((s) => () => s.GetRequiredService<OrdersViewModel>());
+            services.AddSingleton<CreateViewModel<PartsOrdersViewModel>>((s) => () => s.GetRequiredService<PartsOrdersViewModel>());
             services.AddSingleton((s) =>
             {
-                return new NavigationService<OrdersViewModel>(
+                return new NavigationService<PartsOrdersViewModel>(
                     s.GetRequiredService<NavigationStore>(),
-                    s.GetRequiredService<CreateViewModel<OrdersViewModel>>()
+                    s.GetRequiredService<CreateViewModel<PartsOrdersViewModel>>()
                 );
             });
         }
@@ -118,7 +118,7 @@ namespace Shopfloor.Services.NavigationServices
         }
         private static PlannistPartsListViewModel CreatePlannistDashboardMainViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
         private static DeploysViewModel CreateDeploysViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
-        private static OrdersViewModel CreateOrdersViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
+        private static PartsOrdersViewModel CreateOrdersViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
         private static OffersViewModel CreateOffersViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
         private static ReportsViewModel CreateReportsViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
         private static ReservationsViewModel CreateReservationsViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);

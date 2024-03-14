@@ -12,7 +12,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:minimalStates="clr-namespace:Shopfloor.Features.Mechanic.MinimalStates"
     xmlns:partsStock="clr-namespace:Shopfloor.Features.Mechanic.PartsStock"
-    xmlns:orders="clr-namespace:Shopfloor.Features.Plannist.Orders"
+    xmlns:partsOrders="clr-namespace:Shopfloor.Features.Plannist.PartsOrders"
     xmlns:offers="clr-namespace:Shopfloor.Features.Plannist.Offers"
     xmlns:addOffer="clr-namespace:Shopfloor.Features.Plannist.Offers.AddOffer"
     xmlns:partTypes="clr-namespace:Shopfloor.Features.Admin.PartTypes"
@@ -69,8 +69,8 @@
                     <DataTemplate DataType="{x:Type offers:OffersViewModel}">
                         <offers:OffersView />
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type orders:OrdersViewModel}">
-                        <orders:OrdersView />
+                    <DataTemplate DataType="{x:Type partsOrders:PartsOrdersViewModel}">
+                        <partsOrders:PartsOrdersView />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type deploys:DeploysViewModel}">
                         <deploys:DeploysView />

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -16,12 +16,13 @@ using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared;
+using Shopfloor.Shared.Commands;
+using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
-using ToastNotifications;
 
-namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
+namespace Shopfloor.Features.Plannist.PartsOrders
 {
-    internal sealed class PlannistPartsListViewModel : ViewModelBase
+    internal sealed class PartsOrdersViewModel : ViewModelBase
     {
         private readonly List<ErrandPart> _parts = [];
         private readonly IServiceProvider _mainServices;
@@ -39,20 +40,14 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
             set
             {
                 _filterText = value;
-                if (string.IsNullOrEmpty(value))
-                {
-                    Parts.Filter = null;
-                }
-                else Parts.Filter = FilterParts;
+                Parts.Filter = string.IsNullOrEmpty(value) ? null : FilterParts;
             }
         }
         public ICollectionView Parts => CollectionViewSource.GetDefaultView(_parts);
-        public PlannistConfirmCommand ConfirmCommand { get; }
-        public ICommand CancelCommand { get; }
-        public PlannistAbortCommand AbortCommand { get; }
+        //public ICommand OfferCommand { get; }
         public ICommand DetailsCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public PlannistPartsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public PartsOrdersViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             _mainServices = mainServices;
             _databaseServices = databaseServices;
@@ -62,17 +57,8 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
             _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
             SelectedRow = null;
 
-            ConfirmCommand = new PlannistConfirmCommand(_requestStore, databaseServices, mainServices.GetRequiredService<Notifier>());
-            CancelCommand = new PlannistCancelCommand();
-            AbortCommand = new PlannistAbortCommand(_requestStore, databaseServices);
+            //OfferCommand = new NavigateCommand<AddOfferViewModel>(_mainServices.GetRequiredService<NavigationService<AddOfferViewModel>>());
             DetailsCommand = new PlannistDetailsCommand();
-
-            ConfirmCommand.RequestConfirmed += OnRequestChanged;
-            AbortCommand.RequestAborted += OnRequestChanged;
-
-            /*PropertyGroupDescription groupDescription = new("Errand");
-            Parts.GroupDescriptions.Clear();
-            Parts.GroupDescriptions.Add(groupDescription);*/
         }
         private void OnRequestChanged() => Parts.Refresh();
         private async Task LoadData()
@@ -91,16 +77,7 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
             await CombineData(errandStore, errandPartStore, partsStore);
             await FillLists(errandPartStore);
 
-            RefreshView();
-        }
-        private void RefreshView()
-        {
-            /*PropertyGroupDescription groupDescription = new("Errand");
-            Parts.GroupDescriptions.Clear();
-            Parts.GroupDescriptions.Add(groupDescription);*/
-
-            Application.Current.Dispatcher.Invoke(() => Parts.Refresh);
-            OnPropertyChanged(nameof(Parts));
+            Application.Current.Dispatcher.Invoke(Parts.Refresh);
         }
         private static async Task LoadStores(ErrandStore errandStore, ErrandPartStore errandPartStore, PartsStore partsStore)
         {
@@ -110,7 +87,7 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
             tasks.Add(DataStore.LoadData(partsStore));
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
-        private async Task CombineData(ErrandStore errandStore, ErrandPartStore errandPartStore, PartsStore partsStore)
+        private static async Task CombineData(ErrandStore errandStore, ErrandPartStore errandPartStore, PartsStore partsStore)
         {
             List<Task> tasks = [];
 
@@ -125,22 +102,20 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
             List<Task> tasks = [];
             tasks.Add(FillPartList(errandPartStore));
             if (tasks.Count > 0) await Task.WhenAll(tasks);
+
         }
         private Task FillPartList(ErrandPartStore errandPartStore)
         {
             foreach (ErrandPart errandPart in errandPartStore.Data)
             {
-                _parts.Add(errandPart);
+                if (errandPart.LastStatusText == "ZAMAWIANIE" && errandPart.LastStatus.Confirmed) _parts.Add(errandPart);
             }
             return Task.CompletedTask;
         }
         private bool FilterParts(object obj)
         {
             if (string.IsNullOrEmpty(_filterText)) return true;
-            if (obj is ErrandPart errandPart)
-            {
-                return errandPart.SearchValue.Contains(_filterText, StringComparison.InvariantCultureIgnoreCase);
-            }
+            if (obj is ErrandPart errandPart) return errandPart.SearchValue.Contains(_filterText, StringComparison.InvariantCultureIgnoreCase);
             return false;
         }
     }

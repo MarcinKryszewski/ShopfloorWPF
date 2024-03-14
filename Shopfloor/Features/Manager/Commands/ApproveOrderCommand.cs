@@ -78,11 +78,11 @@ namespace Shopfloor.Features.Manager.Commands
                 Reason = "APPROVAL STATUS CHANGED"
             };
             AddToStore(newStatus);
-            int nextId = await _provider.Create(newStatus);
+            newStatus.Id = await _provider.Create(newStatus);
 
             if ((nextStatusName == ErrandPartStatus.Status[8]) | (nextStatusName == ErrandPartStatus.Status[9]))
             {
-                await _provider.ConfirmStatus(nextId, _viewModel.Comment, (int)_currentUser.Id!);
+                await _provider.ConfirmStatus((int)newStatus.Id!, _viewModel.Comment, (int)_currentUser.Id!);
             }
         }
         private void AddToStore(ErrandPartStatus status)
