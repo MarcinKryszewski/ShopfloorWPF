@@ -69,6 +69,16 @@ namespace Shopfloor.Stores
 
             return roleUsers;
         }
+        public bool HasRole(Role role)
+        {
+            if (GetRoles().FirstOrDefault(role) is null) return false;
+            return true;
+        }
+        public bool HasRole(int roleValue)
+        {
+            if (GetRoles().FirstOrDefault((r) => r.Value == roleValue) is null) return false;
+            return true;
+        }
         private void SetUserRoles(User user)
         {
             IEnumerable<Role> roles = GetRoles();

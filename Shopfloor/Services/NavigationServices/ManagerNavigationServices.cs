@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Manager.ManagerDashboard;
 using Shopfloor.Features.Manager.OrderApprove;
 using Shopfloor.Features.Manager.OrdersToApprove;
 using Shopfloor.Features.Manager.Stores;
@@ -14,12 +15,25 @@ namespace Shopfloor.Services.NavigationServices
         public static void Get(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             AddStoresToServices(services);
+            GetDashboardNavigation(services);
             GetOrdersToApproveNavigation(services, databaseServices);
             GetOrderApproveNavigation(services, databaseServices, userServices);
         }
         public static void AddStoresToServices(IServiceCollection services)
         {
             services.AddSingleton<SelectedRequestStore>();
+        }
+        private static void GetDashboardNavigation(IServiceCollection services)
+        {
+            services.AddTransient((s) => CreateDashboardViewModel(s));
+            services.AddSingleton<CreateViewModel<ManagerDashboardViewModel>>((s) => () => s.GetRequiredService<ManagerDashboardViewModel>());
+            services.AddSingleton((s) =>
+            {
+                return new NavigationService<ManagerDashboardViewModel>(
+                    s.GetRequiredService<NavigationStore>(),
+                    s.GetRequiredService<CreateViewModel<ManagerDashboardViewModel>>()
+                );
+            });
         }
         private static void GetOrdersToApproveNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
@@ -45,6 +59,7 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
+        private static ManagerDashboardViewModel CreateDashboardViewModel(IServiceProvider services) => new();
         private static OrdersToApproveViewModel CreateOrdersToApproveViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
         private static OrderApproveViewModel CreateOrderApproveViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new(services, databaseServices, userServices);
     }

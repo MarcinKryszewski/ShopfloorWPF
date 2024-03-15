@@ -5,12 +5,10 @@
     xmlns:content="clr-namespace:Shopfloor.Layout.Content"
     xmlns:plannistDashboard="clr-namespace:Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dashboard="clr-namespace:Shopfloor.Features.Dashboard"
     xmlns:deploys="clr-namespace:Shopfloor.Features.Plannist.Deploys"
     xmlns:login="clr-namespace:Shopfloor.Features.Login"
     xmlns:machines="clr-namespace:Shopfloor.Features.Admin.Machines"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:minimalStates="clr-namespace:Shopfloor.Features.Mechanic.MinimalStates"
     xmlns:partsStock="clr-namespace:Shopfloor.Features.Mechanic.PartsStock"
     xmlns:partsOrders="clr-namespace:Shopfloor.Features.Plannist.PartsOrders"
     xmlns:offers="clr-namespace:Shopfloor.Features.Plannist.Offers"
@@ -40,9 +38,6 @@
         <Border Grid.Row="1" Background="{StaticResource BrushDarkNeutral100}">
             <ContentControl Content="{Binding Content}">
                 <ContentControl.Resources>
-                    <DataTemplate DataType="{x:Type dashboard:DashboardViewModel}">
-                        <dashboard:DashboardView />
-                    </DataTemplate>
                     <DataTemplate DataType="{x:Type login:LoginViewModel}">
                         <login:LoginView />
                     </DataTemplate>
@@ -52,9 +47,6 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type requests:RequestsMainViewModel}">
                         <requests:RequestsMainView />
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type minimalStates:MinimalStatesViewModel}">
-                        <minimalStates:MinimalStatesView />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type partsStock:PartsStockMainViewModel}">
                         <partsStock:PartsStockMainView />

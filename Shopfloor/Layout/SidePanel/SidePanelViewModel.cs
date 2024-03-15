@@ -4,11 +4,8 @@ using Shopfloor.Features.Admin.Parts;
 using Shopfloor.Features.Admin.PartTypes;
 using Shopfloor.Features.Admin.Suppliers;
 using Shopfloor.Features.Admin.Users;
-using Shopfloor.Features.Dashboard;
 using Shopfloor.Features.Mechanic.Errands;
-using Shopfloor.Features.Mechanic.MinimalStates;
 using Shopfloor.Features.Mechanic.Requests;
-using Shopfloor.Features.Plannist.PlannistDashboard;
 using Shopfloor.Features.Plannist.Deploys;
 using Shopfloor.Features.Plannist.PartsOrders;
 using Shopfloor.Features.Plannist.Reports;
@@ -96,11 +93,11 @@ namespace Shopfloor.Layout.SidePanel
 
         public SidePanelViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
-            NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(mainServices.GetRequiredService<NavigationService<DashboardViewModel>>());
+            //NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(mainServices.GetRequiredService<NavigationService<DashboardViewModel>>());
 
             NavigateTasksCommand = new NavigateCommand<ErrandsMainViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsMainViewModel>>());
             NavigateRequestsCommand = new NavigateCommand<RequestsMainViewModel>(mainServices.GetRequiredService<NavigationService<RequestsMainViewModel>>());
-            NavigateMinimalStatesCommand = new NavigateCommand<MinimalStatesViewModel>(mainServices.GetRequiredService<NavigationService<MinimalStatesViewModel>>());
+            //NavigateMinimalStatesCommand = new NavigateCommand<MinimalStatesViewModel>(mainServices.GetRequiredService<NavigationService<MinimalStatesViewModel>>());
             NavigatePartStockCommand = new NavigateCommand<PartsStockMainViewModel>(mainServices.GetRequiredService<NavigationService<PartsStockMainViewModel>>());
 
             NavigatePlannistDashboardMainCommand = new NavigateCommand<PlannistPartsListViewModel>(mainServices.GetRequiredService<NavigationService<PlannistPartsListViewModel>>());

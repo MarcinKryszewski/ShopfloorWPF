@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Dashboard;
+using Shopfloor.Features.Mechanic.MechanicDashboard;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.Services;
 using Shopfloor.Stores;
@@ -22,7 +22,7 @@ namespace Shopfloor.Layout.TopPanel.Commands
         {
             _userStore.Logout();
 
-            NavigationService<DashboardViewModel> navigationService = _mainServices.GetRequiredService<NavigationService<DashboardViewModel>>();
+            NavigationService<MechanicDashboardViewModel> navigationService = _mainServices.GetRequiredService<NavigationService<MechanicDashboardViewModel>>();
             navigationService.Navigate();
         }
     }

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Dashboard;
 using Shopfloor.Features.Login.Commands;
+using Shopfloor.Features.Mechanic.MechanicDashboard;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
@@ -45,7 +45,7 @@ namespace Shopfloor.Features.Login
         public ICommand LoginCommand { get; }
         public LoginViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userProvider)
         {
-            ICommand NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(mainServices.GetRequiredService<NavigationService<DashboardViewModel>>());
+            ICommand NavigateDashboardCommand = new NavigateCommand<MechanicDashboardViewModel>(mainServices.GetRequiredService<NavigationService<MechanicDashboardViewModel>>());
             _userStore = userProvider.GetRequiredService<CurrentUserStore>();
             _userStore.PropertyChanged += OnUserLogin;
             LoginCommand = new LoginCommand(

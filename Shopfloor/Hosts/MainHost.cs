@@ -32,7 +32,6 @@ namespace Shopfloor.Hosts.MainHost
 
                 NotifierServices.Get(services);
 
-                DashboardNavigationServices.Get(services);
                 LoginNavigationServices.Get(services, databaseServices, userServices);
                 MechanicNavigationServices.Get(services, databaseServices, userServices);
                 PlannistNavigationServices.Get(services, databaseServices, userServices);

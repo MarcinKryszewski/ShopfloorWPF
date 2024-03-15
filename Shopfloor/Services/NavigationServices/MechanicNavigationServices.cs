@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Errands;
-using Shopfloor.Features.Mechanic.MinimalStates;
+using Shopfloor.Features.Mechanic.MechanicDashboard;
 using Shopfloor.Features.Mechanic.PartsStock;
 using Shopfloor.Features.Mechanic.Requests;
 using Shopfloor.Shared.Services;
@@ -14,20 +14,20 @@ namespace Shopfloor.Services.NavigationServices
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
+            GetDashboardNavigation(services);
             GetTasksNavigation(services, databaseServices, userServices);
             GetRequestsNavigation(services, databaseServices, userServices);
-            GetMinimalStatesNavigation(services);
             GetPartsStockNavigation(services, databaseServices);
         }
-        private static void GetMinimalStatesNavigation(IServiceCollection services)
+        private static void GetDashboardNavigation(IServiceCollection services)
         {
-            services.AddTransient((s) => CreateMinimalStatesViewModel(s));
-            services.AddSingleton<CreateViewModel<MinimalStatesViewModel>>((s) => () => s.GetRequiredService<MinimalStatesViewModel>());
+            services.AddTransient((s) => CreateDashboardViewModel(s));
+            services.AddSingleton<CreateViewModel<MechanicDashboardViewModel>>((s) => () => s.GetRequiredService<MechanicDashboardViewModel>());
             services.AddSingleton((s) =>
             {
-                return new NavigationService<MinimalStatesViewModel>(
+                return new NavigationService<MechanicDashboardViewModel>(
                     s.GetRequiredService<NavigationStore>(),
-                    s.GetRequiredService<CreateViewModel<MinimalStatesViewModel>>()
+                    s.GetRequiredService<CreateViewModel<MechanicDashboardViewModel>>()
                 );
             });
         }
@@ -67,8 +67,7 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-
-        private static MinimalStatesViewModel CreateMinimalStatesViewModel(IServiceProvider services) => new();
+        private static MechanicDashboardViewModel CreateDashboardViewModel(IServiceProvider services) => new();
         private static RequestsMainViewModel CreatRequestsViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new RequestsMainViewModel(databaseServices, userServices);
         private static ErrandsMainViewModel CreatTasksViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new(databaseServices, userServices);
         private static PartsStockMainViewModel CreatPartStockViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(databaseServices);

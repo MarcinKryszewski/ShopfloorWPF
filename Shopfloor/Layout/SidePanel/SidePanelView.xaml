@@ -104,14 +104,6 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zapotrzebowanie" />
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding Path=NavigateMinimalStatesCommand}" Visibility="{Binding Path=HasAdminRole}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xE898;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Stany minimalne" />
-                        </StackPanel>
-                    </Button>
                     <Button Visibility="{Binding Path=HasAdminRole}" Command="{Binding NavigatePartStockCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
@@ -174,14 +166,6 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Pobrania" />
                         </StackPanel>
                     </Button>
-                    <Button Command="{Binding Path=NavigateReportsCommand}" Visibility="{Binding Path=HasAdminRole}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xE9F9;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Raporty" />
-                        </StackPanel>
-                    </Button>
                 </StackPanel>
                 <!--#endregion-->
 
@@ -204,17 +188,6 @@
                             </Border>
                             <StackPanel>
                                 <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zamówienia" />
-                                <TextBlock Style="{StaticResource ButtonTextBlock}" FontSize="10" Text="Do zatwierdzenia" />
-                            </StackPanel>
-                        </StackPanel>
-                    </Button>
-                    <Button Command="" Visibility="{Binding Path=HasAdminRole}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xE898;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <StackPanel>
-                                <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Stany minimalne" />
                                 <TextBlock Style="{StaticResource ButtonTextBlock}" FontSize="10" Text="Do zatwierdzenia" />
                             </StackPanel>
                         </StackPanel>

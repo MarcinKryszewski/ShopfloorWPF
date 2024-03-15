@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
 using Shopfloor.Database.Initializers;
-using Shopfloor.Features.Dashboard;
+using Shopfloor.Features.Manager.ManagerDashboard;
+using Shopfloor.Features.Mechanic.MechanicDashboard;
+using Shopfloor.Features.Plannist.PlannistDashboard;
 using Shopfloor.Hosts;
 using Shopfloor.Hosts.ConfigurationHost;
 using Shopfloor.Hosts.DatabaseHost;
@@ -40,8 +42,7 @@ namespace Shopfloor
             _mainHost = MainHost.GetHost(_databaseHost.Services, _userHost.Services);
             _mainHost.Start();
 
-            NavigationService<DashboardViewModel> navigationService = _mainHost.Services.GetRequiredService<NavigationService<DashboardViewModel>>();
-            navigationService.Navigate();
+
         }
 
         private void ApplicationStart(object sender, StartupEventArgs e)
@@ -62,10 +63,26 @@ namespace Shopfloor
             {
                 DataContext = new MainWindowViewModel(_mainHost.Services)
             };
-
-
-
             MainWindow.Show();
+            DashboardNavigate();
+
+            //NavigationService<MechanicDashboardViewModel> navigationService = _mainHost.Services.GetRequiredService<NavigationService<MechanicDashboardViewModel>>();
+            //navigationService.Navigate();
+        }
+        private void DashboardNavigate()
+        {
+            CurrentUserStore currentUser = _userHost.Services.GetRequiredService<CurrentUserStore>();
+            if (currentUser.HasRole(777))
+            {
+                _mainHost.Services.GetRequiredService<NavigationService<ManagerDashboardViewModel>>().Navigate();
+                return;
+            }
+            if (currentUser.HasRole(460))
+            {
+                _mainHost.Services.GetRequiredService<NavigationService<PlannistDashboardViewModel>>().Navigate();
+                return;
+            }
+            _mainHost.Services.GetRequiredService<NavigationService<MechanicDashboardViewModel>>().Navigate();
         }
     }
 }

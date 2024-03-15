@@ -3,6 +3,7 @@ using Shopfloor.Features.Plannist.Deploys;
 using Shopfloor.Features.Plannist.Offers;
 using Shopfloor.Features.Plannist.Offers.AddOffer;
 using Shopfloor.Features.Plannist.PartsOrders;
+using Shopfloor.Features.Plannist.PlannistDashboard;
 using Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Features.Plannist.Reports;
@@ -19,6 +20,7 @@ namespace Shopfloor.Services.NavigationServices
         internal static void Get(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             AddStoresToServices(services);
+            GetDashboardNavigation(services);
             GetPlannistDashboardMainNavigation(services, databaseServices);
             GetDeploysNavigation(services, databaseServices);
             GetOrdersNavigation(services, databaseServices);
@@ -31,6 +33,18 @@ namespace Shopfloor.Services.NavigationServices
         {
             //SelectedRequestStore requestStore = new();
             services.AddSingleton<SelectedRequestStore>();
+        }
+        private static void GetDashboardNavigation(IServiceCollection services)
+        {
+            services.AddTransient((s) => CreateDashboardViewModel(s));
+            services.AddSingleton<CreateViewModel<PlannistDashboardViewModel>>((s) => () => s.GetRequiredService<PlannistDashboardViewModel>());
+            services.AddSingleton((s) =>
+            {
+                return new NavigationService<PlannistDashboardViewModel>(
+                    s.GetRequiredService<NavigationStore>(),
+                    s.GetRequiredService<CreateViewModel<PlannistDashboardViewModel>>()
+                );
+            });
         }
         private static void GetPlannistDashboardMainNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
@@ -116,6 +130,7 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
+        private static PlannistDashboardViewModel CreateDashboardViewModel(IServiceProvider services) => new();
         private static PlannistPartsListViewModel CreatePlannistDashboardMainViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
         private static DeploysViewModel CreateDeploysViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
         private static PartsOrdersViewModel CreateOrdersViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(services, databaseServices);
