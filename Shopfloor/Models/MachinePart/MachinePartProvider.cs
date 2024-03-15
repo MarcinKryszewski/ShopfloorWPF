@@ -83,7 +83,7 @@ namespace Shopfloor.Models.MachinePartModel
             return ToModel(machinePartDTO);
         }
         public Task<MachinePart> GetById(int id) => throw new System.NotImplementedException();
-        public Task UpdateAmount(MachinePart item) => throw new System.NotImplementedException();
+        public Task Update(MachinePart item) => throw new System.NotImplementedException();
         public Task Delete(int id) => throw new System.NotImplementedException();
         private static MachinePart ToModel(MachinePartDTO item)
         {

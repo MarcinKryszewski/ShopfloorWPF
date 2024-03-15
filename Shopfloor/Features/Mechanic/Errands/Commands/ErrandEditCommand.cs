@@ -82,7 +82,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
                 OwnerId = errandDTO.Responsible?.Id,
                 CreatedById = null,
             };
-            _ = _errandProvider.UpdateAmount(errand);
+            _ = _errandProvider.Update(errand);
         }
         private void UpdateParts(int errandId)
         {
@@ -113,7 +113,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
             foreach (ErrandPart errandPart in existingParts)
             {
                 //errandPart.Status = ErrandPart.PartStatuses[0];
-                await _errandPartProvider.UpdateAmount(errandPart);
+                await _errandPartProvider.Update(errandPart);
                 SetNewErrandPartStatus(errandPart.PartId, ErrandPartStatus.Status[-7]);
                 await _errandPartStore.Reload();
             }

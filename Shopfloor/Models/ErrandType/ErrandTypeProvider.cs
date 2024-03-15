@@ -40,7 +40,7 @@ namespace Shopfloor.Models.ErrandTypeModel
         public Task Delete(int id) => Task.CompletedTask;
 
         public Task<ErrandType> GetById(int id) => throw new NotImplementedException();
-        public Task UpdateAmount(ErrandType item) => Task.CompletedTask;
+        public Task Update(ErrandType item) => Task.CompletedTask;
         #endregion NOT_IMPLEMENTED
     }
 }

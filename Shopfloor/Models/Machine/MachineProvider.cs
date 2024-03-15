@@ -86,7 +86,7 @@ namespace Shopfloor.Models.MachineModel
             MachineDTO? machineDTO = await connection.QuerySingleAsync<MachineDTO>(_getOneSQL, parameters);
             return ToMachine(machineDTO);
         }
-        public async Task UpdateAmount(Machine item)
+        public async Task Update(Machine item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new

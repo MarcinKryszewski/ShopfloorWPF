@@ -52,7 +52,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
                 _isActive
             );
             if (!_viewModel.IsDataValidate) return;
-            _ = _userProvider.UpdateAmount(user);
+            _ = _userProvider.Update(user);
             _viewModel.CleanForm();
             AddRoles();
             RemoveRoles();

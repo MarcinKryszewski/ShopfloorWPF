@@ -34,7 +34,7 @@ namespace Shopfloor.Features.Admin.Machines.Commands
 
             if (_viewModel.HasErrors) return;
 
-            _ = _provider.UpdateAmount(machine);
+            _ = _provider.Update(machine);
             _viewModel.ReloadData();
             _viewModel.CleanForm();
             _viewModel.UpdateList();

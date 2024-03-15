@@ -130,7 +130,7 @@ namespace Shopfloor.Models.ErrandPartModel
             return errandPartDTOs.Select(ToErrandPart);
         }
         public Task<ErrandPart> GetById(int id) => throw new NotImplementedException();
-        public async Task UpdateAmount(ErrandPart item)
+        public async Task Update(ErrandPart item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new

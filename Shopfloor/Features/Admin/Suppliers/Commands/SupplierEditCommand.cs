@@ -27,7 +27,7 @@ namespace Shopfloor.Features.Admin.Suppliers.Commands
                 _viewModel.Name,
                 selectedSupplier.IsActive);
 
-            _ = _provider.UpdateAmount(supplier);
+            _ = _provider.Update(supplier);
 
             Task.Run(() => _viewModel.UpdateData(selectedSupplier));
 

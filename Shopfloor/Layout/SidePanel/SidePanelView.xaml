@@ -77,19 +77,17 @@
         </Border>
         <ScrollViewer Grid.Row="1" Background="{StaticResource BrushDarkNeutral250}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="0,15,0,0" Orientation="Vertical">
-                <!--#region Dashboard-->
-                <Button Command="{Binding Path=NavigateDashboardCommand}">
-                    <StackPanel Style="{StaticResource ButtonStackPanel}" Background="Transparent">
-                        <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                            <TextBlock Style="{StaticResource IconBlock}" Text="&#xF404;"/>
-                        </Border>
-                        <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dashboard" Background="Transparent" />
-                    </StackPanel>
-                </Button>
-                <!--#endregion-->
                 <!--#region Mechanik-->
                 <StackPanel>
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Mechanik" />
+                    <Button Command="{Binding Path=NavigateDashboardCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}" Background="Transparent">
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
+                                <TextBlock Style="{StaticResource IconBlock}" Text="&#xF404;"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dashboard mechanika" Background="Transparent" />
+                        </StackPanel>
+                    </Button>
                     <Button Command="{Binding Path=NavigateTasksCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
@@ -127,6 +125,15 @@
                 <!--#region Planista-->
                 <StackPanel Visibility="{Binding Path=HasPlannistRole}">
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Planista" />
+
+                    <Button Command="{Binding Path=NavigateDashboardCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}" Background="Transparent">
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
+                                <TextBlock Style="{StaticResource IconBlock}" Text="&#xF404;"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dashboard planisty" Background="Transparent" />
+                        </StackPanel>
+                    </Button>
                     <Button Command="{Binding Path=NavigatePlannistDashboardMainCommand}" Visibility="{Binding Path=HasPlannistRole}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
@@ -177,9 +184,19 @@
                     </Button>
                 </StackPanel>
                 <!--#endregion-->
+
                 <!--#region Kierownik-->
                 <StackPanel Visibility="{Binding Path=HasManagerRole}">
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Kierownik" />
+
+                    <Button Command="{Binding Path=NavigateDashboardCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}" Background="Transparent">
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
+                                <TextBlock Style="{StaticResource IconBlock}" Text="&#xF404;"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dashboard kierownika" Background="Transparent" />
+                        </StackPanel>
+                    </Button>
                     <Button Command="{Binding NavigateOrdersToApproveCommand}" Visibility="{Binding Path=HasAdminRole}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
@@ -204,9 +221,19 @@
                     </Button>
                 </StackPanel>
                 <!--#endregion-->
+
                 <!--#region Admin-->
                 <StackPanel Visibility="{Binding Path=HasAdminRole}">
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Admin" />
+
+                    <Button Command="{Binding Path=NavigateDashboardCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}" Background="Transparent">
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
+                                <TextBlock Style="{StaticResource IconBlock}" Text="&#xF404;"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dashboard admina" Background="Transparent" />
+                        </StackPanel>
+                    </Button>
                     <Button Command="{Binding Path=NavigateUsersCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
@@ -247,8 +274,9 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Części - rodzaje" />
                         </StackPanel>
                     </Button>
-                </StackPanel>
+                </StackPanel>                
                 <!--#endregion-->
+                
                 <Button Background="DeepPink" Command="{Binding AddTestData}" Content="Add Test DATA" Visibility="{Binding HasDataInside}" />
                 <Label Content="Marcin Kryszewski" FontSize="8" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch" Foreground="{StaticResource BrushDarkNeutral700}"/>
                 <Label Content="v1.0.0" FontSize="8" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch" Foreground="{StaticResource BrushDarkNeutral700}"/>

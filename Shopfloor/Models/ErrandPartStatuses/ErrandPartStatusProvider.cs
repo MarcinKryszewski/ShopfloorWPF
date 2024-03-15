@@ -111,7 +111,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             IEnumerable<ErrandPartStatusDTO> ErrandPartStatusDTOs = await connection.QueryAsync<ErrandPartStatusDTO>(_getByErrandIdSQL, parameters);
             return ErrandPartStatusDTOs.Select(ToModel);
         }
-        public async Task UpdateAmount(ErrandPartStatus item)
+        public async Task Update(ErrandPartStatus item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new

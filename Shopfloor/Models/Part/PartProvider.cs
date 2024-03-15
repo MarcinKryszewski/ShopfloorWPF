@@ -148,7 +148,7 @@ namespace Shopfloor.Models.PartModel
             return ToPart(partDTO);
         }
 
-        public async Task UpdateAmount(Part item)
+        public async Task Update(Part item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
