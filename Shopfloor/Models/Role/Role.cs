@@ -17,5 +17,6 @@ namespace Shopfloor.Models.RoleModel
         public int? Id { get; }
         public string Name { get; }
         public int Value { get; }
+
     }
 }

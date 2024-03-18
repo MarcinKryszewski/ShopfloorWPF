@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartStatusModel;
-using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared;

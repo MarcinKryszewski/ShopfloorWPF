@@ -1,61 +1,53 @@
-using Dapper;
-using Shopfloor.Database;
-using Shopfloor.Interfaces;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Shopfloor.Models.MachineModel
+namespace Shopfloor.Models.MessageModel
 {
-    internal sealed class MachineProvider : IProvider<Machine>
+    internal sealed class MessageProvider : IProvider<Message>
     {
         private readonly DatabaseConnectionFactory _database;
         private const string _createSQL = @"
-            INSERT INTO machines (machine_name, machine_number, parent)
+            INSERT INTO messages (message_name, message_number, parent)
             VALUES (@Name, @Number, @Parent)
             ";
         private const string _getOneSQL = @"
             SELECT
                 id AS Id,
-                machine_name AS Name,
-                machine_number AS Number,
+                message_name AS Name,
+                message_number AS Number,
                 sap_number AS SapNumber,
                 parent AS Parent,
                 active AS Active
-            FROM machines
+            FROM messages
             WHERE id = @Id
             ";
         private const string _getAllSQL = @"
             SELECT
                 id AS Id,
-                machine_name AS Name,
-                machine_number AS Number,
+                message_name AS Name,
+                message_number AS Number,
                 sap_number AS SapNumber,
                 parent AS Parent,
                 active AS Active
-            FROM machines
+            FROM messages
             ";
         private const string _updateSQL = @"
-            UPDATE machines
+            UPDATE messages
             SET
-                machine_name = @Name,
-                machine_number = @Number,
+                message_name = @Name,
+                message_number = @Number,
                 parent = @Parent,
                 active = @Active
             WHERE id = @Id
             ";
         private const string _deleteSQL = @"
             DELETE
-            FROM machines
+            FROM messages
             WHERE id = @Id
             ";
-        public MachineProvider(DatabaseConnectionFactory database)
+        public MessageProvider(DatabaseConnectionFactory database)
         {
             _database = database;
         }
         #region CRUD
-        public async Task<int> Create(Machine item)
+        public async Task<int> Create(Message item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
@@ -68,23 +60,23 @@ namespace Shopfloor.Models.MachineModel
 
             return 0;
         }
-        public async Task<IEnumerable<Machine>> GetAll()
+        public async Task<IEnumerable<Message>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
-            IEnumerable<MachineDTO> machineDTOs = await connection.QueryAsync<MachineDTO>(_getAllSQL);
-            return machineDTOs.Select(ToModel);
+            IEnumerable<MessageDTO> messageDTOs = await connection.QueryAsync<MessageDTO>(_getAllSQL);
+            return messageDTOs.Select(ToMessage);
         }
-        public async Task<Machine> GetById(int id)
+        public async Task<Message> GetById(int id)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
                 Id = id
             };
-            MachineDTO? machineDTO = await connection.QuerySingleAsync<MachineDTO>(_getOneSQL, parameters);
-            return ToModel(machineDTO);
+            MessageDTO? messageDTO = await connection.QuerySingleAsync<MessageDTO>(_getOneSQL, parameters);
+            return ToModel(messageDTO);
         }
-        public async Task Update(Machine item)
+        public async Task Update(Message item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
@@ -107,9 +99,9 @@ namespace Shopfloor.Models.MachineModel
             await connection.ExecuteAsync(_deleteSQL, parameters);
         }
         #endregion CRUD
-        private static Machine ToModel(MachineDTO item)
+        private static Message ToModel(MessageDTO item)
         {
-            return new Machine()
+            return new Message()
             {
                 Id = (int)item.Id!,
                 Name = item.Name,

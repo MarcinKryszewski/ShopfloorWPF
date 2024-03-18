@@ -1,6 +1,6 @@
 using System;
 
-namespace Shopfloor.Models.Order
+namespace Shopfloor.Models.OrderModel
 {
     internal sealed class OrderDTO
     {

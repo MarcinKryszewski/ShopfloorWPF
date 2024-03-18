@@ -3,7 +3,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:content="clr-namespace:Shopfloor.Layout.Content"
-    xmlns:plannistDashboard="clr-namespace:Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:deploys="clr-namespace:Shopfloor.Features.Plannist.Deploys"
     xmlns:login="clr-namespace:Shopfloor.Features.Login"
@@ -24,6 +23,9 @@
     xmlns:users="clr-namespace:Shopfloor.Features.Admin.Users"
     xmlns:ordersToApprove="clr-namespace:Shopfloor.Features.Manager.OrdersToApprove"
     xmlns:approveOrder="clr-namespace:Shopfloor.Features.Manager.OrderApprove"
+    xmlns:mechanicDashboard="clr-namespace:Shopfloor.Features.Mechanic.MechanicDashboard"
+    xmlns:plannistDashboard="clr-namespace:Shopfloor.Features.Plannist.PlannistDashboard"
+    xmlns:managerDashboard="clr-namespace:Shopfloor.Features.Manager.ManagerDashboard"
     d:DataContext="{d:DesignInstance Type=content:ContentViewModel}"
     d:Height="1020"
     d:Width="1680"
@@ -42,6 +44,9 @@
                         <login:LoginView />
                     </DataTemplate>
 
+                    <DataTemplate DataType="{x:Type mechanicDashboard:MechanicDashboardViewModel}">
+                        <mechanicDashboard:MechanicDashboardView />
+                    </DataTemplate>
                     <DataTemplate DataType="{x:Type errands:ErrandsMainViewModel}">
                         <errands:ErrandsMainView />
                     </DataTemplate>
@@ -52,8 +57,8 @@
                         <partsStock:PartsStockMainView />
                     </DataTemplate>
 
-                    <DataTemplate DataType="{x:Type plannistDashboard:PlannistPartsListViewModel}">
-                        <plannistDashboard:PlannistPartsListView />
+                    <DataTemplate DataType="{x:Type plannistDashboard:PlannistDashboardViewModel}">
+                        <plannistDashboard:PlannistDashboardView />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type addOffer:AddOfferViewModel}">
                         <addOffer:AddOfferView />
@@ -74,6 +79,9 @@
                         <reports:ReportsView />
                     </DataTemplate>
 
+                    <DataTemplate DataType="{x:Type managerDashboard:ManagerDashboardViewModel}">
+                        <managerDashboard:ManagerDashboardView />
+                    </DataTemplate>
                     <DataTemplate DataType="{x:Type ordersToApprove:OrdersToApproveViewModel}">
                         <ordersToApprove:OrdersToApproveView />
                     </DataTemplate>
