@@ -68,7 +68,7 @@ namespace Shopfloor.Services.NavigationServices
             });
         }
         private static MechanicDashboardViewModel CreateDashboardViewModel(IServiceProvider services) => new();
-        private static RequestsMainViewModel CreatRequestsViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new RequestsMainViewModel(databaseServices, userServices);
+        private static RequestsMainViewModel CreatRequestsViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new(databaseServices, userServices);
         private static ErrandsMainViewModel CreatTasksViewModel(IServiceProvider services, IServiceProvider databaseServices, IServiceProvider userServices) => new(databaseServices, userServices);
         private static PartsStockMainViewModel CreatPartStockViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(databaseServices);
     }

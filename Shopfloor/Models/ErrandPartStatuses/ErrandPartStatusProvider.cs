@@ -12,14 +12,14 @@ namespace Shopfloor.Models.ErrandPartStatusModel
     internal sealed class ErrandPartStatusProvider : IProvider<ErrandPartStatus>
     {
         private readonly DatabaseConnectionFactory _database;
-        private const string dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+        private const string _dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
         private const string _updateSQL = @"
             UPDATE errand_part_statuses
             SET
                 errand_part_id = @ErrandPartId,
                 errand_status_name = @StatusName,
                 create_date = @CreatedDate,
-                completed_by = @CompletedById,
+                completed_by_id = @CompletedById,
                 comment = @Comment,
                 reason = @Reason,
                 confirmed = @Confirmed
@@ -31,7 +31,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
                 errand_part_id AS ErrandPartId,
                 errand_status_name AS StatusName,
                 create_date AS CreatedDate,
-                completed_by AS CompletedById,
+                completed_by_id AS CompletedById,
                 comment AS Comment,
                 reason AS Reason,
                 confirmed AS Confirmed
@@ -44,7 +44,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
                 errand_part_id AS ErrandPartId,
                 errand_status_name AS StatusName,
                 create_date AS CreatedDate,
-                completed_by AS CompletedById,
+                completed_by_id AS CompletedById,
                 comment AS Comment,
                 reason AS Reason,
                 confirmed AS Confirmed
@@ -56,21 +56,21 @@ namespace Shopfloor.Models.ErrandPartStatusModel
         private const string _confirmSQL = @"
             UPDATE errand_part_statuses
             SET confirmed = 1
-            WHERE id = @Id 
+            WHERE id = @Id
         ";
         private const string _abortSQL = @"
             UPDATE errand_part_statuses
             SET confirmed = 0
-            WHERE id = @Id 
+            WHERE id = @Id
         ";
         private const string _setCommentSQL = @"
             UPDATE errand_part_statuses
-            SET 
+            SET
                 comment = @Comment,
-                completed_by = @User,
+                completed_by_id = @User,
                 completed = 1,
                 completed_date = @CompletedDate
-            WHERE id = @Id 
+            WHERE id = @Id
         ";
         public ErrandPartStatusProvider(DatabaseConnectionFactory database)
         {
@@ -83,7 +83,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             {
                 ErrandPartId = item.ErrandPartId,
                 StatusName = item.StatusName,
-                CreatedDate = item.CreatedDate.ToString(dateTimeFormat),
+                CreatedDate = item.CreatedDate.ToString(_dateTimeFormat),
                 Comment = item.Comment,
                 Reason = item.Reason,
                 Confirmed = item.Confirmed
@@ -119,7 +119,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
                 Id = item.Id,
                 ErrandPartId = item.ErrandPartId,
                 StatusName = item.StatusName,
-                CreatedDate = item.CreatedDate.ToString(dateTimeFormat),
+                CreatedDate = item.CreatedDate.ToString(_dateTimeFormat),
                 CompletedById = item.CompletedById,
                 Comment = item.Comment,
                 Reason = item.Reason,
@@ -153,7 +153,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
                 Id = id,
                 Comment = comment,
                 User = userId,
-                CompletedDate = DateTime.Now.ToString(dateTimeFormat)
+                CompletedDate = DateTime.Now.ToString(_dateTimeFormat)
             };
             await connection.ExecuteAsync(_setCommentSQL, parameters);
         }

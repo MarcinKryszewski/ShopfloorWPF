@@ -21,7 +21,6 @@ namespace Shopfloor.Services.NavigationServices
             GetSuppliersNavigation(services, databaseServices);
             GetPartTypesNavigation(services, databaseServices);
         }
-
         public static void GetUsersNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreateUsersMainViewModel(s, databaseServices));
@@ -34,7 +33,6 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-
         public static void GetMachinesNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreateMachinesViewModel(s, databaseServices));
@@ -47,7 +45,6 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-
         public static void GetPartsNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreatePartsMainViewModel(databaseServices));
@@ -60,7 +57,6 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-
         public static void GetSuppliersNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreateSuppliersViewModel(databaseServices));
@@ -73,7 +69,6 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-
         public static void GetPartTypesNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreatePartTypesViewModel(databaseServices));
@@ -86,30 +81,10 @@ namespace Shopfloor.Services.NavigationServices
                 );
             });
         }
-
-        private static UsersMainViewModel CreateUsersMainViewModel(IServiceProvider services, IServiceProvider databaseServices)
-        {
-            return new UsersMainViewModel(databaseServices);
-        }
-
-        private static MachinesMainViewModel CreateMachinesViewModel(IServiceProvider services, IServiceProvider databaseServices)
-        {
-            return new MachinesMainViewModel(databaseServices);
-        }
-
-        private static PartsMainViewModel CreatePartsMainViewModel(IServiceProvider databaseServices)
-        {
-            return new PartsMainViewModel(databaseServices);
-        }
-
-        private static SuppliersMainViewModel CreateSuppliersViewModel(IServiceProvider databaseServices)
-        {
-            return new SuppliersMainViewModel(databaseServices);
-        }
-
-        private static PartTypesMainViewModel CreatePartTypesViewModel(IServiceProvider databaseServices)
-        {
-            return new PartTypesMainViewModel(databaseServices);
-        }
+        private static UsersMainViewModel CreateUsersMainViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(databaseServices);
+        private static MachinesMainViewModel CreateMachinesViewModel(IServiceProvider services, IServiceProvider databaseServices) => new(databaseServices);
+        private static PartsMainViewModel CreatePartsMainViewModel(IServiceProvider databaseServices) => new(databaseServices);
+        private static SuppliersMainViewModel CreateSuppliersViewModel(IServiceProvider databaseServices) => new(databaseServices);
+        private static PartTypesMainViewModel CreatePartTypesViewModel(IServiceProvider databaseServices) => new(databaseServices);
     }
 }

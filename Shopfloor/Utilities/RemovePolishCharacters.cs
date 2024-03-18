@@ -4,7 +4,6 @@ namespace Shopfloor.Utilities
     {
         public static string Remove(string input)
         {
-            //System.Diagnostics.Debug.WriteLine("PL: " + DateTime.Now);
             string polishChars = "ąćęłńóśźż";
             string englishChars = "acelnoszz";
 
@@ -12,7 +11,6 @@ namespace Shopfloor.Utilities
             {
                 input = input.Replace(polishChars[i], englishChars[i]);
             }
-            //System.Diagnostics.Debug.WriteLine("PL: " + DateTime.Now);
             return input;
         }
     }

@@ -1,9 +1,8 @@
+using Shopfloor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
-using Shopfloor.Interfaces;
 
 namespace Shopfloor.Utilities.CustomList
 {
@@ -111,7 +110,7 @@ namespace Shopfloor.Utilities.CustomList
         }
         private int MaxPage()
         {
-            int pagesAmount = (int)Math.Ceiling((double)_dataFiltered.Count() / _pageSize);
+            int pagesAmount = (int)Math.Ceiling((double)_dataFiltered.Count / _pageSize);
             return Math.Max(pagesAmount, 1);
         }
         public string FilterText
