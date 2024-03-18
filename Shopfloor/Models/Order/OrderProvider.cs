@@ -7,7 +7,7 @@ using Dapper;
 using Shopfloor.Database;
 using Shopfloor.Interfaces;
 
-namespace Shopfloor.Models.Order
+namespace Shopfloor.Models.OrderModel
 {
     internal sealed class OrderProvider : IProvider<Order>
     {

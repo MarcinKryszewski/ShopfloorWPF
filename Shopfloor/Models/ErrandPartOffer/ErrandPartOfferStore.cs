@@ -4,28 +4,28 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Interfaces;
 
-namespace Shopfloor.Models.ErrandPartOrderModel
+namespace Shopfloor.Models.ErrandPartOfferModel
 {
-    internal sealed class ErrandPartOrderStore : IDataStore<ErrandPartOrder>
+    internal sealed class ErrandPartOfferStore : IDataStore<ErrandPartOffer>
     {
         private readonly IServiceProvider _databaseServices;
-        private List<ErrandPartOrder> _data = [];
-        public ErrandPartOrderStore(IServiceProvider databaseServices)
+        private List<ErrandPartOffer> _data = [];
+        public ErrandPartOfferStore(IServiceProvider databaseServices)
         {
             _databaseServices = databaseServices;
         }
-        public List<ErrandPartOrder> Data => _data;
+        public List<ErrandPartOffer> Data => _data;
         public bool IsLoaded { get; private set; }
         public Task Load()
         {
-            ErrandPartOrderProvider provider = _databaseServices.GetRequiredService<ErrandPartOrderProvider>();
+            ErrandPartOfferProvider provider = _databaseServices.GetRequiredService<ErrandPartOfferProvider>();
             _data = new(provider.GetAll().Result);
             IsLoaded = true;
             return Task.CompletedTask;
         }
         public async Task Reload()
         {
-            ErrandPartOrderProvider provider = _databaseServices.GetRequiredService<ErrandPartOrderProvider>();
+            ErrandPartOfferProvider provider = _databaseServices.GetRequiredService<ErrandPartOfferProvider>();
             _data = new(await provider.GetAll());
         }
         public async Task CombineData()

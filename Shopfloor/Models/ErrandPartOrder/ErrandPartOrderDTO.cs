@@ -1,12 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.OrderModel;
 
-namespace Shopfloor.Models.ErrandPartOrder
+namespace Shopfloor.Models.ErrandPartOrderModel
 {
-    public class ErrandPartOrderDTO
+    internal sealed class ErrandPartOrderDTO
     {
-        
+        public int? Id { get; set; }
+        public ErrandPart? ErrandPart { get; set; }
+        public int ErrandPartId { get; set; }
+        public Order? Order { get; set; }
+        public int OrderId { get; set; }
     }
 }

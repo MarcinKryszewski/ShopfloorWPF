@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.OfferModel;
 
-namespace Shopfloor.Models.OrderModel
+namespace Shopfloor.Models.ErrandPartOfferModel
 {
-    internal sealed partial class Order
+    internal sealed partial class ErrandPartOffer
     {
-        private readonly OrderDTO _data = new();
+        private readonly ErrandPartOfferDTO _data = new();
         public int? Id
         {
             get => _data.Id;
@@ -21,27 +23,54 @@ namespace Shopfloor.Models.OrderModel
                 _data.Id = value;
             }
         }
-        public required DateTime CreationDate
+        public ErrandPart? ErrandPart
         {
-            get => _data.CreationDate;
-            init => _data.CreationDate = value;
+            get => _data.ErrandPart;
+            set
+            {
+                if (value is null)
+                {
+                    _data.ErrandPart = null;
+                    return;
+                }
+                if (value.Id == ErrandPartId)
+                {
+                    _data.ErrandPart = value;
+                    return;
+                }
+                AddError(nameof(ErrandPart), "ErrandPartId do not match");
+            }
         }
-        public DateTime? DeliveryDate
+        public required int ErrandPartId
         {
-            get => _data.DeliveryDate;
-            set => _data.DeliveryDate = value;
+            get => _data.ErrandPartId;
+            init => _data.ErrandPartId = value;
         }
-        public bool Delivered
+        public Offer? Offer
         {
-            get => _data.Delivered;
-            set => _data.Delivered = value;
+            get => _data.Offer;
+            set
+            {
+                if (value is null)
+                {
+                    _data.Offer = null;
+                    return;
+                }
+                if (value.Id == OfferId)
+                {
+                    _data.Offer = value;
+                    return;
+                }
+                AddError(nameof(Offer), "OfferId do not match");
+            }
         }
-        public Order()
+        public required int OfferId
         {
-            Delivered = false;
+            get => _data.OfferId;
+            init => _data.OfferId = value;
         }
     }
-    internal sealed partial class Order : INotifyDataErrorInfo
+    internal sealed partial class ErrandPartOffer : INotifyDataErrorInfo
     {
         public bool HasErrors => _propertyErrors.Count != 0;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];

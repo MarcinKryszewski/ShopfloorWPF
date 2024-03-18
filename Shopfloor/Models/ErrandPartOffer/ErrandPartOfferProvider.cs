@@ -1,89 +1,88 @@
+using Dapper;
+using Shopfloor.Database;
+using Shopfloor.Interfaces;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
-using Shopfloor.Database;
-using Shopfloor.Interfaces;
 
-namespace Shopfloor.Models.ErrandPartOrderModel
+namespace Shopfloor.Models.ErrandPartOfferModel
 {
-    internal sealed class ErrandPartOrderProvider : IProvider<ErrandPartOrder>
+    internal sealed class ErrandPartOfferProvider : IProvider<ErrandPartOffer>
     {
         private readonly DatabaseConnectionFactory _database;
         private const string _createSQL = @"
-            INSERT INTO errandPartOrders (errand_part, order)
-            VALUES (@ErrandPartId, @OrderId)
+            INSERT INTO errand_parts_offers (errand_part, offer)
+            VALUES (@ErrandPartId, @OfferId)
             ";
         private const string _getOneSQL = @"
             SELECT
                 id AS Id,
-                errand_part AS ErrandPartId,
-                order as OrderId
-            FROM errandPartOrders
+                errand_part AS ErrandPart,
+                offer AS Offer
+            FROM errand_parts_offers
             WHERE id = @Id
             ";
         private const string _getAllSQL = @"
             SELECT
                 id AS Id,
-                errand_part AS ErrandPartId,
-                order as OrderId
-            FROM errandPartOrders
+                errand_part AS ErrandPart,
+                offer AS Offer
+            FROM errand_parts_offers
             ";
         private const string _updateSQL = @"
-            UPDATE errandPartOrders
+            UPDATE errand_parts_offers
             SET
-                errand_part AS ErrandPartId,
-                order as OrderId
+                errand_part = @ErrandPartId,
+                offer = @OfferId
             WHERE id = @Id
             ";
         private const string _deleteSQL = @"
             DELETE
-            FROM errandPartOrders
+            FROM errand_parts_offers
             WHERE id = @Id
             ";
-        public ErrandPartOrderProvider(DatabaseConnectionFactory database)
+        public ErrandPartOfferProvider(DatabaseConnectionFactory database)
         {
             _database = database;
         }
         #region CRUD
-        public async Task<int> Create(ErrandPartOrder item)
+        public async Task<int> Create(ErrandPartOffer item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Id = item.Id,
                 ErrandPartId = item.ErrandPartId,
-                OrderId = item.OrderId
+                OfferId = item.OfferId,
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
             return 0;
         }
-        public async Task<IEnumerable<ErrandPartOrder>> GetAll()
+        public async Task<IEnumerable<ErrandPartOffer>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
-            IEnumerable<ErrandPartOrderDTO> errandPartOrderDTOs = await connection.QueryAsync<ErrandPartOrderDTO>(_getAllSQL);
-            return errandPartOrderDTOs.Select(ToModel);
+            IEnumerable<ErrandPartOfferDTO> errandPartOfferDTOs = await connection.QueryAsync<ErrandPartOfferDTO>(_getAllSQL);
+            return errandPartOfferDTOs.Select(ToModel);
         }
-        public async Task<ErrandPartOrder> GetById(int id)
+        public async Task<ErrandPartOffer> GetById(int id)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
                 Id = id
             };
-            ErrandPartOrderDTO? errandPartOrderDTO = await connection.QuerySingleAsync<ErrandPartOrderDTO>(_getOneSQL, parameters);
-            return ToModel(errandPartOrderDTO);
+            ErrandPartOfferDTO? errandPartOfferDTO = await connection.QuerySingleAsync<ErrandPartOfferDTO>(_getOneSQL, parameters);
+            return ToModel(errandPartOfferDTO);
         }
-        public async Task Update(ErrandPartOrder item)
+        public async Task Update(ErrandPartOffer item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
                 Id = item.Id,
                 ErrandPartId = item.ErrandPartId,
-                OrderId = item.OrderId
+                OfferId = item.OfferId,
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
@@ -97,13 +96,13 @@ namespace Shopfloor.Models.ErrandPartOrderModel
             await connection.ExecuteAsync(_deleteSQL, parameters);
         }
         #endregion CRUD
-        private static ErrandPartOrder ToModel(ErrandPartOrderDTO item)
+        private static ErrandPartOffer ToModel(ErrandPartOfferDTO item)
         {
-            return new ErrandPartOrder()
+            return new ErrandPartOffer()
             {
                 Id = (int)item.Id!,
                 ErrandPartId = item.ErrandPartId,
-                OrderId = item.OrderId
+                OfferId = item.OfferId
             };
         }
     }

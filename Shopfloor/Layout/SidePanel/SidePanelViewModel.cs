@@ -8,8 +8,6 @@ using Shopfloor.Features.Mechanic.Errands;
 using Shopfloor.Features.Mechanic.Requests;
 using Shopfloor.Features.Plannist.Deploys;
 using Shopfloor.Features.Plannist.PartsOrders;
-using Shopfloor.Features.Plannist.Reports;
-using Shopfloor.Features.Plannist.Reservations;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
@@ -30,83 +28,64 @@ using System.Windows;
 using System.Windows.Input;
 using Shopfloor.Features.Mechanic.PartsStock;
 using Shopfloor.Features.Plannist.Offers;
-using Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList;
 using Shopfloor.Features.Manager.OrdersToApprove;
+using Shopfloor.Features.Mechanic.MechanicDashboard;
+using Shopfloor.Features.Plannist.PlannistDashboard;
+using Shopfloor.Features.Manager.ManagerDashboard;
+using Shopfloor.Models.RoleModel;
 
 namespace Shopfloor.Layout.SidePanel
 {
     internal sealed partial class SidePanelViewModel : ViewModelBase
     {
         private readonly CurrentUserStore _userStore;
-        private User? User => _userStore.User;
-
-        #region Commands
-
-        #region Dashboard
-
-        public ICommand NavigateDashboardCommand { get; }
-
-        #endregion Dashboard
+        private User? _user => _userStore.User;
 
         #region Mechanic
-
+        public ICommand NavigateMechanicDashboardCommand { get; }
         public ICommand NavigateTasksCommand { get; }
         public ICommand NavigateRequestsCommand { get; }
-        public ICommand NavigateMinimalStatesCommand { get; }
         public ICommand NavigatePartStockCommand { get; }
-
         #endregion Mechanic
 
         #region Plannist
-
-        public ICommand NavigatePlannistDashboardMainCommand { get; }
+        public ICommand NavigatePlannistDashboardCommand { get; }
         public ICommand NavigateOffersCommand { get; }
         public ICommand NavigateOrdersCommand { get; }
         public ICommand NavigateDeploysCommand { get; }
-        public ICommand NavigateReservationsCommand { get; }
-        public ICommand NavigateReportsCommand { get; }
-
         #endregion Plannist
 
         #region Manager
-
+        public ICommand NavigateManagerDashboardCommand { get; }
         public ICommand NavigateOrdersToApproveCommand { get; }
-
         #endregion Manager
 
         #region Admin
-
         public ICommand NavigateUsersCommand { get; }
         public ICommand NavigateMachinesCommand { get; }
         public ICommand NavigatePartsCommand { get; }
         public ICommand NavigateSuppliersCommand { get; }
         public ICommand NavigatePartTypesCommand { get; }
-
         #endregion Admin
 
-        #endregion Commands
-
-        public Visibility HasAdminRole => AdminRole();
-        public Visibility HasPlannistRole => PlannistRole();
-        public Visibility HasManagerRole => ManagerRole();
-        public Visibility HasUserRole => UserRole();
-
+        public Visibility HasAdminRole => HasAuthorization(Roles.Admin);
+        public Visibility HasPlannistRole => HasAuthorization(Roles.Plannist);
+        public Visibility HasManagerRole => HasAuthorization(Roles.Manager);
+        public Visibility HasUserRole => HasAuthorization(Roles.User);
         public SidePanelViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
-            //NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(mainServices.GetRequiredService<NavigationService<DashboardViewModel>>());
 
+            NavigateMechanicDashboardCommand = new NavigateCommand<MechanicDashboardViewModel>(mainServices.GetRequiredService<NavigationService<MechanicDashboardViewModel>>());
             NavigateTasksCommand = new NavigateCommand<ErrandsMainViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsMainViewModel>>());
             NavigateRequestsCommand = new NavigateCommand<RequestsMainViewModel>(mainServices.GetRequiredService<NavigationService<RequestsMainViewModel>>());
-            //NavigateMinimalStatesCommand = new NavigateCommand<MinimalStatesViewModel>(mainServices.GetRequiredService<NavigationService<MinimalStatesViewModel>>());
             NavigatePartStockCommand = new NavigateCommand<PartsStockMainViewModel>(mainServices.GetRequiredService<NavigationService<PartsStockMainViewModel>>());
 
-            NavigatePlannistDashboardMainCommand = new NavigateCommand<PlannistPartsListViewModel>(mainServices.GetRequiredService<NavigationService<PlannistPartsListViewModel>>());
+            NavigatePlannistDashboardCommand = new NavigateCommand<PlannistDashboardViewModel>(mainServices.GetRequiredService<NavigationService<PlannistDashboardViewModel>>());
             NavigateOffersCommand = new NavigateCommand<OffersViewModel>(mainServices.GetRequiredService<NavigationService<OffersViewModel>>());
             NavigateOrdersCommand = new NavigateCommand<PartsOrdersViewModel>(mainServices.GetRequiredService<NavigationService<PartsOrdersViewModel>>());
             NavigateDeploysCommand = new NavigateCommand<DeploysViewModel>(mainServices.GetRequiredService<NavigationService<DeploysViewModel>>());
-            NavigateReservationsCommand = new NavigateCommand<ReservationsViewModel>(mainServices.GetRequiredService<NavigationService<ReservationsViewModel>>());
-            NavigateReportsCommand = new NavigateCommand<ReportsViewModel>(mainServices.GetRequiredService<NavigationService<ReportsViewModel>>());
 
+            NavigateManagerDashboardCommand = new NavigateCommand<ManagerDashboardViewModel>(mainServices.GetRequiredService<NavigationService<ManagerDashboardViewModel>>());
             NavigateOrdersToApproveCommand = new NavigateCommand<OrdersToApproveViewModel>(mainServices.GetRequiredService<NavigationService<OrdersToApproveViewModel>>());
 
             NavigateUsersCommand = new NavigateCommand<UsersMainViewModel>(mainServices.GetRequiredService<NavigationService<UsersMainViewModel>>());
@@ -131,39 +110,17 @@ namespace Shopfloor.Layout.SidePanel
                 OnPropertyChanged(nameof(HasUserRole));
             }
         }
-
-        private Visibility AdminRole()
+        private Visibility HasAuthorization(int authVal)
         {
-            if (User is null) return Visibility.Collapsed;
-            if (User.IsAuthorized(777)) return Visibility.Visible;
-            return Visibility.Collapsed;
-        }
-
-        private Visibility PlannistRole()
-        {
-            if (User is null) return Visibility.Collapsed;
-            if (User.IsAuthorized(460)) return Visibility.Visible;
-            return Visibility.Collapsed;
-        }
-
-        private Visibility ManagerRole()
-        {
-            if (User is null) return Visibility.Collapsed;
-            if (User.IsAuthorized(205)) return Visibility.Visible;
-            return Visibility.Collapsed;
-        }
-
-        private Visibility UserRole()
-        {
-            if (User is null) return Visibility.Collapsed;
-            if (User.IsAuthorized(568)) return Visibility.Visible;
+            if (_user is null) return Visibility.Collapsed;
+            if (_user.IsAuthorized(authVal)) return Visibility.Visible;
             return Visibility.Collapsed;
         }
     }
     internal sealed partial class SidePanelViewModel
     {
         public ICommand AddTestData => new TestDataCommand(this, _dbServices);
-        private IServiceProvider _dbServices;
+        private readonly IServiceProvider _dbServices;
         public Visibility HasDataInside { get; private set; } = Visibility.Visible;
         private class TestDataCommand : CommandBase
         {
