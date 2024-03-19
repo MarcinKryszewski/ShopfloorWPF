@@ -1,3 +1,11 @@
+using Dapper;
+using Shopfloor.Database;
+using Shopfloor.Interfaces;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace Shopfloor.Models.OfferModel
 {
     internal sealed class OfferProvider : IProvider<Offer>
@@ -52,9 +60,9 @@ namespace Shopfloor.Models.OfferModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Name = item.Name,
-                Number = item.Number,
-                Parent = item.ParentId
+                //Name = item.Name,
+                //Number = item.Number,
+                //Parent = item.ParentId
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
@@ -64,7 +72,7 @@ namespace Shopfloor.Models.OfferModel
         {
             using IDbConnection connection = _database.Connect();
             IEnumerable<OfferDTO> offerDTOs = await connection.QueryAsync<OfferDTO>(_getAllSQL);
-            return offerDTOs.Select(ToOffer);
+            return offerDTOs.Select(ToModel);
         }
         public async Task<Offer> GetById(int id)
         {
@@ -81,11 +89,11 @@ namespace Shopfloor.Models.OfferModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Id = item.Id,
+                /*Id = item.Id,
                 Name = item.Name,
                 Number = item.Number,
                 Parent = item.ParentId,
-                Active = item.IsActive
+                Active = item.IsActive*/
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
@@ -103,12 +111,12 @@ namespace Shopfloor.Models.OfferModel
         {
             return new Offer()
             {
-                Id = (int)item.Id!,
+                /*Id = (int)item.Id!,
                 Name = item.Name,
                 Number = item.Number,
                 SapNumber = item.SapNumber,
                 ParentId = item.Parent,
-                IsActive = item.Active
+                IsActive = item.Active*/
             };
         }
     }

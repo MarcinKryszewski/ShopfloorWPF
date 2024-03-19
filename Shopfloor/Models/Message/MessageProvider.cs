@@ -1,3 +1,11 @@
+using Dapper;
+using Shopfloor.Database;
+using Shopfloor.Interfaces;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace Shopfloor.Models.MessageModel
 {
     internal sealed class MessageProvider : IProvider<Message>
@@ -52,9 +60,9 @@ namespace Shopfloor.Models.MessageModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Name = item.Name,
-                Number = item.Number,
-                Parent = item.ParentId
+                //Name = item.Name,
+                //Number = item.Number,
+                //Parent = item.ParentId
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
@@ -64,7 +72,7 @@ namespace Shopfloor.Models.MessageModel
         {
             using IDbConnection connection = _database.Connect();
             IEnumerable<MessageDTO> messageDTOs = await connection.QueryAsync<MessageDTO>(_getAllSQL);
-            return messageDTOs.Select(ToMessage);
+            return messageDTOs.Select(ToModel);
         }
         public async Task<Message> GetById(int id)
         {
@@ -81,11 +89,11 @@ namespace Shopfloor.Models.MessageModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Id = item.Id,
-                Name = item.Name,
-                Number = item.Number,
-                Parent = item.ParentId,
-                Active = item.IsActive
+                //Id = item.Id,
+                //Name = item.Name,
+                //Number = item.Number,
+                //Parent = item.ParentId,
+                //Active = item.IsActive
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
@@ -103,12 +111,12 @@ namespace Shopfloor.Models.MessageModel
         {
             return new Message()
             {
-                Id = (int)item.Id!,
+                /*Id = (int)item.Id!,
                 Name = item.Name,
                 Number = item.Number,
                 SapNumber = item.SapNumber,
                 ParentId = item.Parent,
-                IsActive = item.Active
+                IsActive = item.Active*/
             };
         }
     }
