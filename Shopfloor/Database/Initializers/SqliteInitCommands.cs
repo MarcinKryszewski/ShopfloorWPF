@@ -30,9 +30,10 @@ namespace Shopfloor.Database.SQLite
             );";
         private const string _roles_users_SQLCommand = @"
             CREATE TABLE IF NOT EXISTS roles_users (
+                id INTEGER,
                 role_id INTEGER,
                 user_id INTEGER,
-                PRIMARY KEY(role_id, user_id),
+                PRIMARY KEY(id),
                 FOREIGN KEY(user_id) REFERENCES users(Id),
                 FOREIGN KEY(role_id) REFERENCES roles(Id)
             );";

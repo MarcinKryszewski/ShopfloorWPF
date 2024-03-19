@@ -12,37 +12,32 @@ namespace Shopfloor.Models.MessageModel
     {
         private readonly DatabaseConnectionFactory _database;
         private const string _createSQL = @"
-            INSERT INTO messages (message_name, message_number, parent)
-            VALUES (@Name, @Number, @Parent)
+            INSERT INTO messages (text, receiver_id, read)
+            VALUES (@Text, @ReceiverId, @Read)
             ";
         private const string _getOneSQL = @"
             SELECT
                 id AS Id,
-                message_name AS Name,
-                message_number AS Number,
-                sap_number AS SapNumber,
-                parent AS Parent,
-                active AS Active
+                text AS Text,
+                receiver_id AS ReceiverId,
+                read AS Read
             FROM messages
             WHERE id = @Id
             ";
         private const string _getAllSQL = @"
             SELECT
                 id AS Id,
-                message_name AS Name,
-                message_number AS Number,
-                sap_number AS SapNumber,
-                parent AS Parent,
-                active AS Active
+                text AS Text,
+                receiver_id AS ReceiverId,
+                read AS Read
             FROM messages
             ";
         private const string _updateSQL = @"
             UPDATE messages
             SET
-                message_name = @Name,
-                message_number = @Number,
-                parent = @Parent,
-                active = @Active
+                text = @Text,
+                receiver_id = @ReceiverId,
+                read = @Read
             WHERE id = @Id
             ";
         private const string _deleteSQL = @"
@@ -54,15 +49,14 @@ namespace Shopfloor.Models.MessageModel
         {
             _database = database;
         }
-        #region CRUD
         public async Task<int> Create(Message item)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                //Name = item.Name,
-                //Number = item.Number,
-                //Parent = item.ParentId
+                Text = item.Text,
+                ReceiverId = item.ReceiverId,
+                Read = item.WasRead
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
@@ -89,11 +83,10 @@ namespace Shopfloor.Models.MessageModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                //Id = item.Id,
-                //Name = item.Name,
-                //Number = item.Number,
-                //Parent = item.ParentId,
-                //Active = item.IsActive
+                Id = item.Id,
+                Text = item.Text,
+                ReceiverId = item.ReceiverId,
+                Read = item.WasRead
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
@@ -106,17 +99,14 @@ namespace Shopfloor.Models.MessageModel
             };
             await connection.ExecuteAsync(_deleteSQL, parameters);
         }
-        #endregion CRUD
         private static Message ToModel(MessageDTO item)
         {
             return new Message()
             {
-                /*Id = (int)item.Id!,
-                Name = item.Name,
-                Number = item.Number,
-                SapNumber = item.SapNumber,
-                ParentId = item.Parent,
-                IsActive = item.Active*/
+                Id = item.Id,
+                Text = item.Text,
+                ReceiverId = item.ReceiverId,
+                WasRead = item.Read
             };
         }
     }

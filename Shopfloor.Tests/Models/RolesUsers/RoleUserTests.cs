@@ -16,7 +16,11 @@ namespace Shopfloor.Tests.Models.RolesUsers
             // Arrange
             Role role = new(id, "test", 1);
             User user = new(10, "test", "test", "test", "test", true);
-            RoleUser roleUser = new(role.Id, user.Id);
+            RoleUser roleUser = new()
+            {
+                RoleId = (int)role.Id!,
+                UserId = (int)user.Id!
+            };
             // Act
             int? result = roleUser.RoleId;
             // Assert
@@ -29,7 +33,11 @@ namespace Shopfloor.Tests.Models.RolesUsers
             // Arrange
             Role role = new("test", 1);
             User user = new(10, "test", "test", "test", "test", true);
-            RoleUser roleUser = new(role.Id, user.Id);
+            RoleUser roleUser = new()
+            {
+                RoleId = (int)role.Id!,
+                UserId = (int)user.Id!
+            };
             // Act
             int? result = roleUser.RoleId;
             // Assert
@@ -45,7 +53,11 @@ namespace Shopfloor.Tests.Models.RolesUsers
             // Arrange
             Role role = new(10, "test", 1);
             User user = new(id, "test", "test", "test", "test", true);
-            RoleUser roleUser = new(role.Id, user.Id);
+            RoleUser roleUser = new()
+            {
+                RoleId = (int)role.Id!,
+                UserId = (int)user.Id!
+            };
             // Act
             int? result = roleUser.UserId;
             // Assert
@@ -58,7 +70,11 @@ namespace Shopfloor.Tests.Models.RolesUsers
             // Arrange
             Role role = new(3, "test", 1);
             User user = new("test", "test", "test", "test", true);
-            RoleUser roleUser = new(role.Id, user.Id);
+            RoleUser roleUser = new()
+            {
+                RoleId = (int)role.Id!,
+                UserId = (int)user.Id!
+            };
             // Act
             int? result = roleUser.UserId;
             // Assert

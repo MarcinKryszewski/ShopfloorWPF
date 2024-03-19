@@ -139,7 +139,11 @@ namespace Shopfloor.Models.RoleUserModel
 
         private static RoleUser ToRoleUser(RoleUserDTO item)
         {
-            return new RoleUser(item.Role_Id, item.User_Id);
+            return new RoleUser()
+            {
+                RoleId = item.Role_Id,
+                UserId = item.User_Id
+            }; ;
         }
     }
 }
