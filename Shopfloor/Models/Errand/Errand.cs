@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Shopfloor.Models.ErrandModel
 {
-    internal sealed partial class Errand
+    internal sealed partial class Errand : DataModel
     {
         public const string DefaultPriority = "C";
         private readonly ErrandDisplay _display;

@@ -3,7 +3,7 @@ using System;
 
 namespace Shopfloor.Models.PartTypeModel
 {
-    internal sealed partial class PartType
+    internal sealed partial class PartType : DataModel
     {
         private readonly PartTypeDTO _data = new();
         public PartType(int id, string name)

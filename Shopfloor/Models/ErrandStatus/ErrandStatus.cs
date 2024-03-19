@@ -2,7 +2,7 @@
 
 namespace Shopfloor.Models.ErrandStatusModel
 {
-    internal sealed class ErrandStatus
+    internal sealed class ErrandStatus : DataModel
     {
         private readonly ErrandStatusDTO _data = new();
         public ErrandStatus() { }

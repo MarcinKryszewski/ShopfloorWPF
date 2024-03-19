@@ -3,7 +3,7 @@ using System;
 
 namespace Shopfloor.Models.SupplierModel
 {
-    internal sealed class Supplier : IEquatable<Supplier>, ISearchableModel
+    internal sealed class Supplier : DataModel, IEquatable<Supplier>, ISearchableModel
     {
         private readonly SupplierDTO _data = new();
         public int? Id => _data.Id;

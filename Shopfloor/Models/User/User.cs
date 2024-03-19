@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Shopfloor.Models.UserModel
 {
-    internal sealed partial class User
+    internal sealed partial class User : DataModel
     {
         private readonly HashSet<Role> _roles = [];
         private readonly UserDTO _data = new();

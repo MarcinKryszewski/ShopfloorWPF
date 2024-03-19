@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Shopfloor.Models.MachineModel
 {
-    internal sealed partial class Machine
+    internal sealed partial class Machine : DataModel
     {
         private readonly MachineDTO _data = new();
         public int? Id

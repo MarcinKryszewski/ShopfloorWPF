@@ -3,26 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Shopfloor.Models.OfferModel
+namespace Shopfloor.Models
 {
-    internal sealed partial class Offer
-    {
-        private readonly OfferDTO _data = new();
-        public int? Id
-        {
-            get => _data.Id;
-            set
-            {
-                if (_data.Id is not null)
-                {
-                    AddError(nameof(Id), "Id already assigned");
-                    return;
-                }
-                _data.Id = value;
-            }
-        }
-    }
-    internal sealed partial class Offer : INotifyDataErrorInfo
+    public class DataModel : INotifyDataErrorInfo
     {
         public bool HasErrors => _propertyErrors.Count != 0;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
@@ -41,10 +24,7 @@ namespace Shopfloor.Models.OfferModel
         }
         public void ClearErrors(string propertyName)
         {
-            if (_propertyErrors.Remove(propertyName))
-            {
-                OnErrorsChanged(propertyName);
-            }
+            if (_propertyErrors.Remove(propertyName)) OnErrorsChanged(propertyName);
         }
     }
 }

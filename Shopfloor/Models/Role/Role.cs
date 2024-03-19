@@ -1,6 +1,6 @@
 namespace Shopfloor.Models.RoleModel
 {
-    public sealed class Role
+    public sealed class Role : DataModel
     {
         //private readonly RoleDTO _data = new();
         public Role(int id, string name, int value)

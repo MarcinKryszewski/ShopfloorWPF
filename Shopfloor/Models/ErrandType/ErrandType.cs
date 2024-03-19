@@ -3,7 +3,7 @@ using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandTypeModel
 {
-    internal sealed partial class ErrandType
+    internal sealed partial class ErrandType : DataModel
     {
         private readonly ErrandTypeDTO _data = new();
         public ErrandType() { }

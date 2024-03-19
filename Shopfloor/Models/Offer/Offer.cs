@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace Shopfloor.Models.MessageModel
+namespace Shopfloor.Models.OfferModel
 {
-    internal sealed partial class Message : DataModel
+    internal sealed partial class Offer : DataModel
     {
-        private MessageDTO _data => new();
+        private readonly OfferDTO _data = new();
         public int? Id
         {
             get => _data.Id;

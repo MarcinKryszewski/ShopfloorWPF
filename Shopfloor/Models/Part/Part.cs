@@ -6,7 +6,7 @@ using System;
 
 namespace Shopfloor.Models.PartModel
 {
-    internal sealed partial class Part
+    internal sealed partial class Part : DataModel
     {
         private const string _defaultUnit = "szt";
         private PartType? _type;

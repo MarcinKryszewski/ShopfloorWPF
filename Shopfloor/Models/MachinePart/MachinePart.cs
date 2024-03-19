@@ -5,7 +5,7 @@ using Shopfloor.Models.PartModel;
 
 namespace Shopfloor.Models.MachinePartModel
 {
-    internal sealed class MachinePart
+    internal sealed class MachinePart : DataModel
     {
         private Part? _part;
         private Machine? _machine;
