@@ -9,7 +9,7 @@ namespace Shopfloor.Models.ErrandPartOfferModel
 {
     internal sealed partial class ErrandPartOffer : DataModel
     {
-        private readonly ErrandPartOfferDTO _data = new();
+        private readonly ErrandPartOfferDTO _data;
         public int? Id
         {
             get => _data.Id;
@@ -68,6 +68,10 @@ namespace Shopfloor.Models.ErrandPartOfferModel
         {
             get => _data.OfferId;
             init => _data.OfferId = value;
+        }
+        public ErrandPartOffer()
+        {
+            _data = new();
         }
     }
 }

@@ -214,6 +214,18 @@ namespace Shopfloor.Database.SQLite
                 FOREIGN KEY(errand_part_id) REFERENCES errands_parts(id),
                 FOREIGN KEY(order_id) REFERENCES orders(id)
             );";
+        private const string _reservations_SQLCommand = @"
+            CREATE TABLE reservations (
+                id INTEGER,
+                errand_part_id INTEGER,
+                amount REAL,
+                create_date TEXT,
+                expiration_date TEXT,
+                completed INTEGER DEFAULT 0,
+                FOREIGN KEY(errand_part_id) REFERENCES errands_parts(id),
+                PRIMARY KEY(id)
+            );
+        ";
         public SqliteInitCommands()
         {
             InitCommands =

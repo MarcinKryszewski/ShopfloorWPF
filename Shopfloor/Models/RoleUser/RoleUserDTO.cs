@@ -2,7 +2,7 @@ namespace Shopfloor.Models.RoleUserModel
 {
     internal sealed class RoleUserDTO
     {
-        public int Role_Id { get; set; }
-        public int User_Id { get; set; }
+        public int RoleId { get; set; }
+        public int UserId { get; set; }
     }
 }

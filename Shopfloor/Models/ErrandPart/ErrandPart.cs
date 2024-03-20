@@ -13,7 +13,11 @@ namespace Shopfloor.Models.ErrandPartModel
 {
     internal sealed partial class ErrandPart : DataModel
     {
-        private readonly ErrandPartDTO _data = new();
+        private readonly ErrandPartDTO _data;
+        public ErrandPart()
+        {
+            _data = new();
+        }
         public double PricePerUnit => _data.PricePerUnit;
         public required int ErrandId
         {

@@ -12,7 +12,7 @@ namespace Shopfloor.Models.PartModel
         private PartType? _type;
         private Supplier? _producer;
         private Supplier? _supplier;
-        private readonly PartDTO _data = new();
+        private readonly PartDTO _data;
         public int? Id => _data.Id;
         public string NamePl => _data.NamePl;
         public string NameOriginal => _data.NameOriginal;
@@ -50,15 +50,18 @@ namespace Shopfloor.Models.PartModel
             int? supplierId,
             string? unit = _defaultUnit) //3
         {
-            _data.NamePl = namePl ?? string.Empty;
-            _data.NameOriginal = nameOriginal ?? string.Empty;
-            _data.TypeId = typeId;
-            _data.Index = index;
-            _data.Number = number ?? string.Empty;
-            _data.Details = details ?? string.Empty;
-            _data.ProducerId = producerId;
-            _data.SupplierId = supplierId;
-            _data.Unit = unit ?? _defaultUnit;
+            _data = new()
+            {
+                NamePl = namePl ?? string.Empty,
+                NameOriginal = nameOriginal ?? string.Empty,
+                TypeId = typeId,
+                Index = index,
+                Number = number ?? string.Empty,
+                Details = details ?? string.Empty,
+                ProducerId = producerId,
+                SupplierId = supplierId,
+                Unit = unit ?? _defaultUnit
+            };
             SetSearchValue();
         }
         public Part(
@@ -73,16 +76,19 @@ namespace Shopfloor.Models.PartModel
             int? supplierId,
             string? unit = _defaultUnit)
         {
-            _data.Id = id;
-            _data.NamePl = namePl ?? string.Empty;
-            _data.NameOriginal = nameOriginal ?? string.Empty;
-            _data.TypeId = typeId;
-            _data.Index = index;
-            _data.Number = number ?? string.Empty;
-            _data.Details = details ?? string.Empty;
-            _data.ProducerId = producerId;
-            _data.SupplierId = supplierId;
-            _data.Unit = unit ?? _defaultUnit;
+            _data = new()
+            {
+                Id = id,
+                NamePl = namePl ?? string.Empty,
+                NameOriginal = nameOriginal ?? string.Empty,
+                TypeId = typeId,
+                Index = index,
+                Number = number ?? string.Empty,
+                Details = details ?? string.Empty,
+                ProducerId = producerId,
+                SupplierId = supplierId,
+                Unit = unit ?? _defaultUnit
+            };
             SetSearchValue();
         }
         private string SetInputValue()

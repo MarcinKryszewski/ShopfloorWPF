@@ -7,7 +7,7 @@ namespace Shopfloor.Models.OrderModel
 {
     internal sealed partial class Order : DataModel
     {
-        private readonly OrderDTO _data = new();
+        private readonly OrderDTO _data;
         public int? Id
         {
             get => _data.Id;
@@ -38,6 +38,7 @@ namespace Shopfloor.Models.OrderModel
         }
         public Order()
         {
+            _data = new();
             Delivered = false;
         }
     }

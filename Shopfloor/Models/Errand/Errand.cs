@@ -19,6 +19,7 @@ namespace Shopfloor.Models.ErrandModel
         public Errand()
         {
             _display = new(this);
+            _data = new();
         }
         public ErrandDisplay Display => _display;
         public List<ErrandStatus> Statuses => _errandStatuses;
@@ -27,7 +28,7 @@ namespace Shopfloor.Models.ErrandModel
     }
     internal sealed partial class Errand
     {
-        private readonly ErrandDTO _data = new();
+        private readonly ErrandDTO _data;
         public required int? CreatedById
         {
             get => _data.CreatedById;

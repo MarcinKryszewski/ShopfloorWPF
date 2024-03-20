@@ -9,7 +9,7 @@ namespace Shopfloor.Models.MachinePartModel
     {
         private Part? _part;
         private Machine? _machine;
-        private readonly MachinePartDTO _data = new();
+        private readonly MachinePartDTO _data;
         public Part? Part
         {
             get => _part;
@@ -34,11 +34,15 @@ namespace Shopfloor.Models.MachinePartModel
         [SetsRequiredMembers]
         public MachinePart(Part part, Machine machine)
         {
+            _data = new();
             _part = part;
             PartId = part.Id;
             _machine = machine;
             MachineId = machine.Id;
         }
-        public MachinePart() { }
+        public MachinePart()
+        {
+            _data = new();
+        }
     }
 }

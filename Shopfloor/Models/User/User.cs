@@ -9,7 +9,7 @@ namespace Shopfloor.Models.UserModel
     internal sealed partial class User : DataModel
     {
         private readonly HashSet<Role> _roles = [];
-        private readonly UserDTO _data = new();
+        private readonly UserDTO _data;
         private const string _defaultImagePath = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
         public int? Id => _data.Id;
         public string Username => _data.Username;
@@ -26,24 +26,33 @@ namespace Shopfloor.Models.UserModel
             string imagePath = _defaultImagePath,
             bool isActive = true)
         {
-            _data.Id = id;
-            _data.Username = username;
-            _data.Name = name;
-            _data.Surname = surname;
-            _data.ImagePath = imagePath;
-            _data.IsActive = isActive;
+            _data = new()
+            {
+                Id = id,
+                Username = username,
+                Name = name,
+                Surname = surname,
+                ImagePath = imagePath,
+                IsActive = isActive
+            };
         }
         public User(string username, string name, string surname, string imagePath, bool isActive)
         {
-            _data.Username = username;
-            _data.Name = name;
-            _data.Surname = surname;
-            _data.ImagePath = imagePath;
-            _data.IsActive = isActive;
+            _data = new()
+            {
+                Username = username,
+                Name = name,
+                Surname = surname,
+                ImagePath = imagePath,
+                IsActive = isActive
+            };
         }
         public User(string username)
         {
-            _data.Username = username;
+            _data = new()
+            {
+                Username = username
+            };
         }
 
         public void SetActive(bool isActive) => _data.IsActive = isActive;

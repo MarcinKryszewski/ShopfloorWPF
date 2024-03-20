@@ -2,16 +2,20 @@ namespace Shopfloor.Models.RoleUserModel
 {
     internal sealed class RoleUser : DataModel
     {
-        private RoleUserDTO _data => new();
+        private readonly RoleUserDTO _data;
         public required int RoleId
         {
-            get => _data.Role_Id;
-            init => _data.Role_Id = value;
+            get => _data.RoleId;
+            init => _data.RoleId = value;
         }
         public required int UserId
         {
-            get => _data.User_Id;
-            init => _data.User_Id = value;
+            get => _data.UserId;
+            init => _data.UserId = value;
+        }
+        public RoleUser()
+        {
+            _data = new();
         }
     }
 }

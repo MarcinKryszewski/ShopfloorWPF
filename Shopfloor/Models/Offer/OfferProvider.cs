@@ -11,6 +11,7 @@ namespace Shopfloor.Models.OfferModel
     internal sealed class OfferProvider : IProvider<Offer>
     {
         private readonly DatabaseConnectionFactory _database;
+        private const string _dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
         private const string _createSQL = @"
             INSERT INTO offers (offer_name, offer_number, parent)
             VALUES (@Name, @Number, @Parent)
@@ -60,9 +61,8 @@ namespace Shopfloor.Models.OfferModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                //Name = item.Name,
-                //Number = item.Number,
-                //Parent = item.ParentId
+                CreateDate = item.CreateDate.ToString(_dateTimeFormat),
+                CreateBy = item.CreateById
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
@@ -89,11 +89,9 @@ namespace Shopfloor.Models.OfferModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                /*Id = item.Id,
-                Name = item.Name,
-                Number = item.Number,
-                Parent = item.ParentId,
-                Active = item.IsActive*/
+                Id = item.Id,
+                CreateDate = item.CreateDate.ToString(_dateTimeFormat),
+                CreateBy = item.CreateById
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
@@ -111,12 +109,9 @@ namespace Shopfloor.Models.OfferModel
         {
             return new Offer()
             {
-                /*Id = (int)item.Id!,
-                Name = item.Name,
-                Number = item.Number,
-                SapNumber = item.SapNumber,
-                ParentId = item.Parent,
-                IsActive = item.Active*/
+                Id = (int)item.Id!,
+                CreateDate = item.CreateDate,
+                CreateById = item.CreateById
             };
         }
     }

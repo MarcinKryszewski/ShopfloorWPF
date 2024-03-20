@@ -5,21 +5,27 @@ namespace Shopfloor.Models.SupplierModel
 {
     internal sealed class Supplier : DataModel, IEquatable<Supplier>, ISearchableModel
     {
-        private readonly SupplierDTO _data = new();
+        private readonly SupplierDTO _data;
         public int? Id => _data.Id;
         public string Name => _data.Name;
         public bool IsActive => _data.Active;
         public string SearchValue => _data.Name;
         public Supplier(int id, string name, bool isActive)
         {
-            _data.Id = id;
-            _data.Name = name;
-            _data.Active = isActive;
+            _data = new()
+            {
+                Id = id,
+                Name = name,
+                Active = isActive
+            };
         }
         public Supplier(string name, bool isActive)
         {
-            _data.Name = name;
-            _data.Active = isActive;
+            _data = new()
+            {
+                Name = name,
+                Active = isActive
+            };
         }
         public bool Equals(Supplier? other)
         {

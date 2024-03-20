@@ -5,15 +5,21 @@ namespace Shopfloor.Models.PartTypeModel
 {
     internal sealed partial class PartType : DataModel
     {
-        private readonly PartTypeDTO _data = new();
+        private readonly PartTypeDTO _data;
         public PartType(int id, string name)
         {
-            _data.Id = id;
-            _data.Name = name;
+            _data = new()
+            {
+                Id = id,
+                Name = name
+            };
         }
         public PartType(string name)
         {
-            _data.Name = name;
+            _data = new()
+            {
+                Name = name
+            };
         }
         public int? Id => _data.Id;
         public string Name => _data.Name;

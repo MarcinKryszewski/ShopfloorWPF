@@ -23,7 +23,10 @@ namespace Shopfloor.Models.RoleUserModel
             ";
 
         private const string _getAllSQL = @"
-            SELECT *
+            SELECT
+                id as Id,
+                role_id as RoleId,
+                user_id as UserId
             FROM roles_users
             ";
 
@@ -34,13 +37,19 @@ namespace Shopfloor.Models.RoleUserModel
             ";
 
         private const string _getAllForUser = @"
-            SELECT *
+            SELECT
+                id as Id,
+                role_id as RoleId,
+                user_id as UserId
             FROM roles_users
             WHERE user_id = @UserId
             ";
 
         private const string _getAllForRole = @"
-            SELECT *
+            SELECT
+                id as Id,
+                role_id as RoleId,
+                user_id as UserId
             FROM roles_users
             WHERE role_id = @RoleId
             ";
@@ -141,8 +150,8 @@ namespace Shopfloor.Models.RoleUserModel
         {
             return new RoleUser()
             {
-                RoleId = item.Role_Id,
-                UserId = item.User_Id
+                RoleId = item.RoleId,
+                UserId = item.UserId
             }; ;
         }
     }

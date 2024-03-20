@@ -7,7 +7,7 @@ namespace Shopfloor.Models.MachineModel
 {
     internal sealed partial class Machine : DataModel
     {
-        private readonly MachineDTO _data = new();
+        private readonly MachineDTO _data;
         public int? Id
         {
             get => _data.Id;
@@ -42,7 +42,10 @@ namespace Shopfloor.Models.MachineModel
             get => _data.Parent;
             init => _data.Parent = value;
         }
-        public Machine() { }
+        public Machine()
+        {
+            _data = new();
+        }
     }
     internal sealed partial class Machine
     {

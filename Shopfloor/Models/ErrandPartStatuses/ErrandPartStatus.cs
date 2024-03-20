@@ -10,7 +10,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel
 {
     internal sealed partial class ErrandPartStatus : DataModel
     {
-        private readonly ErrandPartStatusDTO _data = new();
+        private readonly ErrandPartStatusDTO _data;
         public int? Id
         {
             get => _data.Id;
@@ -62,13 +62,18 @@ namespace Shopfloor.Models.ErrandPartStatusModel
             get => _data.CompletedBy;
             set => _data.CompletedBy = value;
         }
-        public ErrandPartStatus() { }
+        public ErrandPartStatus()
+        {
+            _data = new();
+        }
         public ErrandPartStatus(int statusId)
         {
+            _data = new();
             SetStatus(statusId);
         }
         public ErrandPartStatus(string statusName)
         {
+            _data = new();
             SetStatus(statusName);
         }
         public void SetStatus(int id)

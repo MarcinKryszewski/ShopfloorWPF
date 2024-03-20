@@ -4,8 +4,11 @@ namespace Shopfloor.Models.ErrandStatusModel
 {
     internal sealed class ErrandStatus : DataModel
     {
-        private readonly ErrandStatusDTO _data = new();
-        public ErrandStatus() { }
+        private readonly ErrandStatusDTO _data;
+        public ErrandStatus()
+        {
+            _data = new();
+        }
         public int Id
         {
             get => _data.Id;

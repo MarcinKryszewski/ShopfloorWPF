@@ -5,8 +5,11 @@ namespace Shopfloor.Models.ErrandTypeModel
 {
     internal sealed partial class ErrandType : DataModel
     {
-        private readonly ErrandTypeDTO _data = new();
-        public ErrandType() { }
+        private readonly ErrandTypeDTO _data;
+        public ErrandType()
+        {
+            _data = new();
+        }
         public int? Id
         {
             get => _data.Id;
