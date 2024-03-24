@@ -225,7 +225,7 @@ namespace Shopfloor.Features.Admin.Machines.List
             if (!_machineStore.IsLoaded) tasks.Add(LoadMachines());
             if (tasks.Count > 0) await Task.WhenAll(tasks);
 
-            IEnumerable<Machine> machines = _machineStore.Data;
+            IEnumerable<Machine> machines = _machineStore.GetData;
 
             foreach (Machine machine in machines)
             {

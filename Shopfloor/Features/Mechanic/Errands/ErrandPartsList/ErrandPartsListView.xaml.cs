@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 
-namespace Shopfloor.Features.Mechanic.Errands.ErrandPartsList
+namespace Shopfloor.Features.Mechanic.Errands
 {
     public sealed partial class ErrandPartsListView : UserControl
     {

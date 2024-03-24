@@ -14,7 +14,7 @@ namespace Shopfloor.Models.MessageModel
         {
             _databaseServices = databaseServices;
         }
-        public List<Message> Data => _data;
+        public List<Message> GetData => _data;
         public bool IsLoaded { get; private set; }
         public Task Load()
         {

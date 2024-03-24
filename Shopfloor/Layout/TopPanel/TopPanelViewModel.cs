@@ -1,12 +1,11 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Login;
+﻿using Shopfloor.Features.Login;
+using Shopfloor.Features.Mechanic.MechanicDashboard;
 using Shopfloor.Layout.TopPanel.Commands;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
-using System;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -32,12 +31,15 @@ namespace Shopfloor.Layout.TopPanel
         public ICommand NavigateLoginCommand { get; }
         public ICommand LogoutCommand { get; }
 
-        public TopPanelViewModel(IServiceProvider userServices, IServiceProvider mainServices)
+        public TopPanelViewModel(INavigationService navigationService, CurrentUserStore userStore)
         {
-            _userStore = userServices.GetRequiredService<CurrentUserStore>();
+            _userStore = userStore;
             _userStore.PropertyChanged += OnUserAuthenticated;
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(mainServices.GetRequiredService<NavigationService<LoginViewModel>>());
-            LogoutCommand = new LogoutCommand(_userStore, mainServices);
+            //NavigateLoginCommand = new NavigateCommand<LoginViewModel>(mainServices.GetRequiredService<NavigationService<LoginViewModel>>());
+            NavigateLoginCommand = new RelayCommand(o => { navigationService.NavigateTo<LoginViewModel>(); }, o => true);
+
+            RelayCommand returnCommand = new(o => { navigationService.NavigateTo<MechanicDashboardViewModel>(); }, o => true);
+            LogoutCommand = new LogoutCommand(_userStore, returnCommand);
         }
 
         private void OnUserAuthenticated(object? sender, PropertyChangedEventArgs e)

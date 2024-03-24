@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Manager.OrderApprove;
 using Shopfloor.Features.Manager.Stores;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
-using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Stores;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using ToastNotifications;
 using ToastNotifications.Messages;
 
@@ -50,8 +48,8 @@ namespace Shopfloor.Features.Manager.Commands
         private void ReturnToApprovals()
         {
             _services.GetRequiredService<Notifier>().ShowSuccess("Dodano ofertę i przekazano do zatwierdzenia!");
-            NavigationService<OrderApproveViewModel> navigationService = _services.GetRequiredService<NavigationService<OrderApproveViewModel>>();
-            navigationService.Navigate();
+            //NavigationService<OrderApproveViewModel> navigationService = _services.GetRequiredService<NavigationService<OrderApproveViewModel>>();
+            //navigationService.Navigate();
         }
         private async Task ErrandPartUpdateStatus(ErrandPartStatus requestStatus)
         {
@@ -88,7 +86,7 @@ namespace Shopfloor.Features.Manager.Commands
         private void AddToStore(ErrandPartStatus status)
         {
             ErrandPartStatusStore store = _databaseServices.GetRequiredService<ErrandPartStatusStore>();
-            store.Data.Add(status);
+            store.GetData.Add(status);
         }
     }
 }

@@ -1,29 +1,26 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Mechanic.MechanicDashboard;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
+﻿using Shopfloor.Shared.Commands;
 using Shopfloor.Stores;
-using System;
 
 namespace Shopfloor.Layout.TopPanel.Commands
 {
     internal class LogoutCommand : CommandBase
     {
         private readonly CurrentUserStore _userStore;
-        private readonly IServiceProvider _mainServices;
+        private readonly RelayCommand _returnCommand;
 
-        public LogoutCommand(CurrentUserStore userStore, IServiceProvider mainServices)
+        public LogoutCommand(CurrentUserStore userStore, RelayCommand returnCommand)
         {
             _userStore = userStore;
-            _mainServices = mainServices;
+            _returnCommand = returnCommand;
         }
 
         public override void Execute(object? parameter)
         {
             _userStore.Logout();
+            _returnCommand.Execute(true);
 
-            NavigationService<MechanicDashboardViewModel> navigationService = _mainServices.GetRequiredService<NavigationService<MechanicDashboardViewModel>>();
-            navigationService.Navigate();
+            //NavigationService<MechanicDashboardViewModel> navigationService = _mainServices.GetRequiredService<NavigationService<MechanicDashboardViewModel>>();
+            //navigationService.Navigate();
         }
     }
 }

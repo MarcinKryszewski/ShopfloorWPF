@@ -1,8 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Suppliers.List;
-using Shopfloor.Shared.Services;
-using Shopfloor.Shared.Stores;
-using Shopfloor.Shared.ViewModels;
 using System;
 
 namespace Shopfloor.Features.Admin.Suppliers.Services
@@ -11,10 +7,10 @@ namespace Shopfloor.Features.Admin.Suppliers.Services
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {
-            GetListNavigation(services, databaseServices);
+            //GetListNavigation(services, databaseServices);
         }
 
-        private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        /*private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreateSuppliersListViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<SuppliersListViewModel>>((s) => () => s.GetRequiredService<SuppliersListViewModel>());
@@ -30,6 +26,6 @@ namespace Shopfloor.Features.Admin.Suppliers.Services
         private static SuppliersListViewModel CreateSuppliersListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             return new SuppliersListViewModel(databaseServices);
-        }
+        }*/
     }
 }

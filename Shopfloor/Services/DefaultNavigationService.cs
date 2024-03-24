@@ -1,11 +1,6 @@
-﻿using Shopfloor.Shared.Services;
-using Shopfloor.Shared.Stores;
-using Shopfloor.Shared.ViewModels;
-using System;
-
-namespace PrzegladyRemonty.Services
+﻿namespace PrzegladyRemonty.Services
 {
-    internal sealed class DefaultNavigationService<TViewModel> : INavigationService<TViewModel> where TViewModel : ViewModelBase
+    /*internal sealed class DefaultNavigationService<TViewModel> : INavigationService<TViewModel> where TViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
         private readonly Func<TViewModel> _createViewModel;
@@ -20,5 +15,5 @@ namespace PrzegladyRemonty.Services
         {
             _navigationStore.CurrentViewModel = _createViewModel();
         }
-    }
+    }*/
 }

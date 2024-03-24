@@ -125,7 +125,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
 
             if (tasks.Count > 0) await Task.WhenAll(tasks);
 
-            IEnumerable<Supplier> suppliers = _suppliersStore.Data;
+            IEnumerable<Supplier> suppliers = _suppliersStore.GetData;
             foreach (Supplier supplier in suppliers)
             {
                 Application.Current.Dispatcher.Invoke(() =>

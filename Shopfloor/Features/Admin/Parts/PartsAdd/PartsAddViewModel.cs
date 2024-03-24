@@ -1,12 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Parts.Commands;
-using Shopfloor.Features.Admin.Parts.List;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
@@ -42,12 +39,12 @@ namespace Shopfloor.Features.Admin.Parts.Add
             _mainServices = mainServices;
             _databaseServices = databaseServices;
 
-            ReturnCommand = new NavigateCommand<PartsListViewModel>(_mainServices.GetRequiredService<NavigationService<PartsListViewModel>>());
+            //ReturnCommand = new NavigateCommand<PartsListViewModel>(_mainServices.GetRequiredService<NavigationService<PartsListViewModel>>());
             CleanFormCommand = new PartCleanFormCommand(this);
             AddPartCommand = new PartAddCommand(this, _databaseServices);
 
-            _partTypes = new(_databaseServices.GetRequiredService<PartTypesStore>().Data);
-            _suppliers = new(_databaseServices.GetRequiredService<SuppliersStore>().Data);
+            _partTypes = new(_databaseServices.GetRequiredService<PartTypeStore>().GetData);
+            _suppliers = new(_databaseServices.GetRequiredService<SuppliersStore>().GetData);
 
             PartTypes = CollectionViewSource.GetDefaultView(_partTypes);
             Suppliers = CollectionViewSource.GetDefaultView(_suppliers);
@@ -201,7 +198,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
         public bool IsDataValidate => !HasErrors;
         public void ReloadData()
         {
-            _databaseServices.GetRequiredService<PartsStore>().Load();
+            _databaseServices.GetRequiredService<PartStore>().Load();
         }
         private void OnErrorsChanged(string propertyName)
         {

@@ -1,11 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Users.Add;
-using Shopfloor.Features.Admin.Users.Edit;
 using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Features.Admin.UsersList.Commands;
 using Shopfloor.Models.UserModel;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -64,8 +60,8 @@ namespace Shopfloor.Features.Admin.Users.List
 
             _selectedUser = mainServices.GetRequiredService<SelectedUserStore>();
 
-            AddNewUserCommand = new NavigateCommand<UsersAddViewModel>(mainServices.GetRequiredService<NavigationService<UsersAddViewModel>>());
-            EditUserCommand = new NavigateCommand<UsersEditViewModel>(mainServices.GetRequiredService<NavigationService<UsersEditViewModel>>());
+            //AddNewUserCommand = new NavigateCommand<UsersAddViewModel>(mainServices.GetRequiredService<NavigationService<UsersAddViewModel>>());
+            //EditUserCommand = new NavigateCommand<UsersEditViewModel>(mainServices.GetRequiredService<NavigationService<UsersEditViewModel>>());
             SetActivityUserCommand = new UserSetActivityCommand(this, userProvider);
         }
 

@@ -9,7 +9,7 @@ namespace Shopfloor.Shared
         public static async Task<List<T>> GetData<T>(IDataStore<T> dataStore)
         {
             if (!dataStore.IsLoaded) await dataStore.Load();
-            return dataStore.Data;
+            return dataStore.GetData;
         }
         public static async Task LoadData<T>(IDataStore<T> dataStore)
         {

@@ -14,7 +14,7 @@ namespace Shopfloor.Models.MachinePartModel
         {
             _databaseServices = databaseServices;
         }
-        public List<MachinePart> Data => _data;
+        public List<MachinePart> GetData => _data;
         public bool IsLoaded { get; private set; }
 
         public Task CombineData()

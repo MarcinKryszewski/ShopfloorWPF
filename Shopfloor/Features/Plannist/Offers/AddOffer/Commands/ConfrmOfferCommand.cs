@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Stores;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using ToastNotifications;
 using ToastNotifications.Messages;
 
@@ -98,13 +97,13 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         private void AddToStatusStore(ErrandPartStatus status)
         {
             ErrandPartStatusStore store = _database.GetRequiredService<ErrandPartStatusStore>();
-            store.Data.Add(status);
+            store.GetData.Add(status);
         }
         private void ReturnToOffer()
         {
             _services.GetRequiredService<Notifier>().ShowSuccess("Dodano ofertę i przekazano do zatwierdzenia!");
-            NavigationService<OffersViewModel> navigationService = _services.GetRequiredService<NavigationService<OffersViewModel>>();
-            navigationService.Navigate();
+            //NavigationService<OffersViewModel> navigationService = _services.GetRequiredService<NavigationService<OffersViewModel>>();
+            //navigationService.Navigate();
         }
     }
 }

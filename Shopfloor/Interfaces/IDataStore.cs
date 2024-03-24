@@ -5,11 +5,8 @@ namespace Shopfloor.Interfaces
 {
     internal interface IDataStore<T>
     {
-        public List<T> Data { get; }
+        public List<T> GetData(bool ShouldCombine);
         public bool IsLoaded { get; }
-
-        public Task Load();
         public Task Reload();
-        public Task CombineData();
     }
 }

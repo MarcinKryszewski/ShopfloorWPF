@@ -1,15 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Manager.Commands;
-using Shopfloor.Features.Manager.OrdersToApprove;
 using Shopfloor.Features.Manager.Stores;
 using Shopfloor.Interfaces;
+using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
@@ -17,9 +10,15 @@ using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.SupplierModel;
 using Shopfloor.Models.UserModel;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using Shopfloor.Models.ErrandPartModel.Store;
 
 namespace Shopfloor.Features.Manager.OrderApprove
 {
@@ -43,7 +42,7 @@ namespace Shopfloor.Features.Manager.OrderApprove
             Task.Run(() => LoadData(databaseServices));
             _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
 
-            ReturnCommand = new NavigateCommand<OrdersToApproveViewModel>(_mainServices.GetRequiredService<NavigationService<OrdersToApproveViewModel>>());
+            //ReturnCommand = new NavigateCommand<OrdersToApproveViewModel>(_mainServices.GetRequiredService<NavigationService<OrdersToApproveViewModel>>());
             ConfirmCommand = new ApproveOrderCommand(_requestStore, this, databaseServices, userServices, mainServices);
 
             _errandPartValidation = new(this);
@@ -58,7 +57,7 @@ namespace Shopfloor.Features.Manager.OrderApprove
         {
             SuppliersStore suppliers = databaseServices.GetRequiredService<SuppliersStore>();
             UserStore users = databaseServices.GetRequiredService<UserStore>();
-            PartsStore parts = databaseServices.GetRequiredService<PartsStore>();
+            PartStore parts = databaseServices.GetRequiredService<PartStore>();
             ErrandPartStatusStore errandPartStatuses = databaseServices.GetRequiredService<ErrandPartStatusStore>();
             ErrandStore errands = databaseServices.GetRequiredService<ErrandStore>();
             ErrandTypeStore errandTypes = databaseServices.GetRequiredService<ErrandTypeStore>();
@@ -70,7 +69,7 @@ namespace Shopfloor.Features.Manager.OrderApprove
             LoadHistoricalData(errandPartStore);
         }
         #region FETCH_DATA
-        private async Task LoadStores(SuppliersStore suppliers, UserStore users, PartsStore parts, ErrandPartStatusStore errandPartStatuses, ErrandStore errands, ErrandTypeStore errandTypes, ErrandPartStore errandPartStore)
+        private async Task LoadStores(SuppliersStore suppliers, UserStore users, PartStore parts, ErrandPartStatusStore errandPartStatuses, ErrandStore errands, ErrandTypeStore errandTypes, ErrandPartStore errandPartStore)
         {
             List<Task> tasks = [];
             if (!suppliers.IsLoaded) tasks.Add(LoadStore(suppliers));
@@ -89,7 +88,7 @@ namespace Shopfloor.Features.Manager.OrderApprove
         }
         #endregion FETCH_DATA
         #region COMBINE_DATA
-        private async Task CombineData(SuppliersStore suppliers, UserStore users, PartsStore parts, ErrandPartStatusStore statuses, ErrandStore errands, ErrandTypeStore errandTypes, ErrandPartStore errandPartStore)
+        private async Task CombineData(SuppliersStore suppliers, UserStore users, PartStore parts, ErrandPartStatusStore statuses, ErrandStore errands, ErrandTypeStore errandTypes, ErrandPartStore errandPartStore)
         {
             List<Task> tasks = [];
             tasks.Add(CombinePartWithSuppliers(parts, suppliers));
@@ -98,27 +97,27 @@ namespace Shopfloor.Features.Manager.OrderApprove
             tasks.Add(CombineErrandWithParts(parts, errands, errandPartStore));
             await Task.WhenAll(tasks);
         }
-        private static Task CombinePartWithSuppliers(PartsStore parts, SuppliersStore suppliers)
+        private static Task CombinePartWithSuppliers(PartStore parts, SuppliersStore suppliers)
         {
-            foreach (Part part in parts.Data)
+            foreach (Part part in parts.GetData)
             {
-                part.SetSupplier(suppliers.Data.FirstOrDefault(supplier => supplier.Id == part.SupplierId));
-                part.SetProducer(suppliers.Data.FirstOrDefault(producer => producer.Id == part.ProducerId));
+                part.SetSupplier(suppliers.GetData.FirstOrDefault(supplier => supplier.Id == part.SupplierId));
+                part.SetProducer(suppliers.GetData.FirstOrDefault(producer => producer.Id == part.ProducerId));
             }
             return Task.CompletedTask;
         }
         private Task CombineStatusWithPerson(ErrandPartStatusStore statuses, UserStore users)
         {
-            foreach (ErrandPartStatus status in statuses.Data)
+            foreach (ErrandPartStatus status in statuses.GetData)
             {
-                status.CompletedBy = users.Data.FirstOrDefault(user => user.Id == status.CompletedById);
+                status.CompletedBy = users.GetData.FirstOrDefault(user => user.Id == status.CompletedById);
             }
             return Task.CompletedTask;
         }
-        private Task CombineErrandWithParts(PartsStore parts, ErrandStore errands, ErrandPartStore errandParts)
+        private Task CombineErrandWithParts(PartStore parts, ErrandStore errands, ErrandPartStore errandParts)
         {
             ErrandPart.Errand!.Parts.Clear();
-            foreach (ErrandPart errandPart in errandParts.Data)
+            foreach (ErrandPart errandPart in errandParts.GetData)
             {
                 if (errandPart.ErrandId != ErrandPart.ErrandId) continue;
                 ErrandPart.Errand!.Parts.Add(errandPart);
@@ -127,17 +126,17 @@ namespace Shopfloor.Features.Manager.OrderApprove
         }
         private Task CombineErrandWithTypePerson(ErrandStore errands, ErrandTypeStore types, UserStore users)
         {
-            foreach (Errand errand in errands.Data)
+            foreach (Errand errand in errands.GetData)
             {
-                errand.Type = types.Data.FirstOrDefault(type => type.Id == errand.TypeId);
-                errand.CreatedByUser = users.Data.FirstOrDefault(user => user.Id == errand.CreatedById);
+                errand.Type = types.GetData.FirstOrDefault(type => type.Id == errand.TypeId);
+                errand.CreatedByUser = users.GetData.FirstOrDefault(user => user.Id == errand.CreatedById);
             }
             return Task.CompletedTask;
         }
         #endregion COMBINE_DATA
         private void LoadHistoricalData(ErrandPartStore errandParts)
         {
-            HistoricalData = errandParts.Data.Where(part => part.PartId == ErrandPart.PartId);
+            HistoricalData = errandParts.GetData.Where(part => part.PartId == ErrandPart.PartId);
         }
     }
     internal sealed partial class OrderApproveViewModel : IInputForm<ErrandPart>

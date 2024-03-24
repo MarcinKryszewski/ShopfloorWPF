@@ -1,3 +1,16 @@
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Mechanic.Requests.Stores;
+using Shopfloor.Models.ErrandModel.Store;
+using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.ErrandPartModel.Store;
+using Shopfloor.Models.ErrandPartStatusModel;
+using Shopfloor.Models.MachineModel;
+using Shopfloor.Models.PartModel;
+using Shopfloor.Models.PartTypeModel;
+using Shopfloor.Models.UserModel;
+using Shopfloor.Shared;
+using Shopfloor.Shared.ViewModels;
+using Shopfloor.Stores;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -5,22 +18,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Mechanic.Requests.RequestsDetails;
-using Shopfloor.Features.Mechanic.Requests.RequestsEdit;
-using Shopfloor.Features.Mechanic.Requests.Stores;
-using Shopfloor.Models.ErrandModel;
-using Shopfloor.Models.ErrandPartModel;
-using Shopfloor.Models.ErrandPartStatusModel;
-using Shopfloor.Models.MachineModel;
-using Shopfloor.Models.PartModel;
-using Shopfloor.Models.PartTypeModel;
-using Shopfloor.Models.UserModel;
-using Shopfloor.Shared;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
-using Shopfloor.Shared.ViewModels;
-using Shopfloor.Stores;
 
 namespace Shopfloor.Features.Mechanic.Requests.RequestsList
 {
@@ -63,8 +60,8 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
             _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
             SelectedRow = null;
 
-            EditCommand = new NavigateCommand<RequestsEditViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsEditViewModel>>());
-            DetailsCommand = new NavigateCommand<RequestsDetailsViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsDetailsViewModel>>());
+            //EditCommand = new NavigateCommand<RequestsEditViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsEditViewModel>>());
+            //DetailsCommand = new NavigateCommand<RequestsDetailsViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsDetailsViewModel>>());
 
             if (userServices.GetRequiredService<CurrentUserStore>().User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
         }
@@ -76,9 +73,9 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
             UserStore userStore = _databaseServices.GetRequiredService<UserStore>();
             MachineStore machineStore = _databaseServices.GetRequiredService<MachineStore>();
             ErrandPartStore errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
-            PartsStore partsStore = _databaseServices.GetRequiredService<PartsStore>();
+            PartStore partsStore = _databaseServices.GetRequiredService<PartStore>();
             ErrandPartStatusStore partsStatusStore = _databaseServices.GetRequiredService<ErrandPartStatusStore>();
-            PartTypesStore partTypesStore = _databaseServices.GetRequiredService<PartTypesStore>();
+            PartTypeStore partTypesStore = _databaseServices.GetRequiredService<PartTypeStore>();
 
             await LoadStores(errandStore, errandPartStore, partsStore);
             await CombineData(errandStore, errandPartStore, partsStore);
@@ -86,7 +83,7 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
 
             Application.Current.Dispatcher.Invoke(Parts.Refresh);
         }
-        private static async Task LoadStores(ErrandStore errandStore, ErrandPartStore errandPartStore, PartsStore partsStore)
+        private static async Task LoadStores(ErrandStore errandStore, ErrandPartStore errandPartStore, PartStore partsStore)
         {
             List<Task> tasks = [];
             tasks.Add(DataStore.LoadData(errandStore));
@@ -94,7 +91,7 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
             tasks.Add(DataStore.LoadData(partsStore));
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
-        private async Task CombineData(ErrandStore errandStore, ErrandPartStore errandPartStore, PartsStore partsStore)
+        private async Task CombineData(ErrandStore errandStore, ErrandPartStore errandPartStore, PartStore partsStore)
         {
             List<Task> tasks = [];
 
@@ -112,7 +109,7 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
         }
         private Task FillPartList(ErrandPartStore errandPartStore)
         {
-            foreach (ErrandPart errandPart in errandPartStore.Data)
+            foreach (ErrandPart errandPart in errandPartStore.GetData)
             {
                 _parts.Add(errandPart);
             }

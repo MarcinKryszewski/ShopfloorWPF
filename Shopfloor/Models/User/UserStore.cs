@@ -14,7 +14,12 @@ namespace Shopfloor.Models.UserModel
         {
             _databaseServices = databaseServices;
         }
-        public List<User> Data => _data;
+        public List<User> GetData(bool shouldCombine = false)
+        {
+            if (!IsLoaded) Load();
+            if (shouldCombine) CombineData();
+            return _data;
+        }
         public bool IsLoaded { get; private set; }
 
         public Task CombineData()

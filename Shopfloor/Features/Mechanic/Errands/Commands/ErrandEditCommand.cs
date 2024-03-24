@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Mechanic.Errands.ErrandsEdit;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Shared.Commands;
@@ -16,7 +16,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
 {
     internal sealed class ErrandEditCommand : CommandBase
     {
-        private readonly ErrandsEditViewModel _viewModel;
+        private readonly ErrandEditViewModel _viewModel;
         private readonly IServiceProvider _databaseServices;
         private readonly int _currentUserId;
         private readonly SelectedErrandStore _currentErrand;
@@ -25,7 +25,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         private readonly ErrandPartStore _errandPartStore;
         private readonly ErrandStatusProvider _errandStatus;
         private readonly ErrandPartStatusProvider _errandPartStatusProvider;
-        public ErrandEditCommand(ErrandsEditViewModel viewModel, IServiceProvider databaseServices, CurrentUserStore currentUser, SelectedErrandStore selectedErrand)
+        public ErrandEditCommand(ErrandEditViewModel viewModel, IServiceProvider databaseServices, CurrentUserStore currentUser, SelectedErrandStore selectedErrand)
         {
             _viewModel = viewModel;
             _databaseServices = databaseServices;
@@ -86,7 +86,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         }
         private void UpdateParts(int errandId)
         {
-            IEnumerable<ErrandPart> forCurrentErrand = _errandPartStore.Data.Where(ep => ep.ErrandId == errandId);
+            IEnumerable<ErrandPart> forCurrentErrand = _errandPartStore.GetData.Where(ep => ep.ErrandId == errandId);
             IEnumerable<ErrandPart> existing = _currentErrand.ErrandParts.Intersect(forCurrentErrand);
             IEnumerable<ErrandPart> toDelete = forCurrentErrand.Except(_currentErrand.ErrandParts);
             IEnumerable<ErrandPart> toAdd = _currentErrand.ErrandParts.Except(forCurrentErrand);

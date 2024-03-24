@@ -1,11 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Mechanic.Errands.ErrandPartsList;
-using Shopfloor.Features.Mechanic.Errands.ErrandsEdit;
-using Shopfloor.Features.Mechanic.Errands.ErrandsList;
-using Shopfloor.Features.Mechanic.Errands.ErrandsNew;
-using Shopfloor.Shared.Services;
-using Shopfloor.Shared.Stores;
-using Shopfloor.Shared.ViewModels;
 using System;
 
 namespace Shopfloor.Features.Mechanic.Errands.Services
@@ -14,12 +7,12 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
-            GetListNavigation(services, databaseServices, userServices);
-            GetAddNavigation(services, databaseServices, userServices);
-            GetEditNavigation(services, databaseServices, userServices);
-            GetPartsListNavigation(services, databaseServices);
+            //GetListNavigation(services, databaseServices, userServices);
+            //GetAddNavigation(services, databaseServices, userServices);
+            //GetEditNavigation(services, databaseServices, userServices);
+            //GetPartsListNavigation(services, databaseServices);
         }
-        private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
+        /*private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices, IServiceProvider userServices)
         {
             services.AddTransient((s) => CreateListViewModel(s, databaseServices, userServices));
             services.AddSingleton<CreateViewModel<ErrandsListViewModel>>((s) => () => s.GetRequiredService<ErrandsListViewModel>());
@@ -82,6 +75,6 @@ namespace Shopfloor.Features.Mechanic.Errands.Services
         private static ErrandPartsListViewModel CreatePartsListNavigation(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             return new ErrandPartsListViewModel(mainServices, databaseServices);
-        }
+        }*/
     }
 }

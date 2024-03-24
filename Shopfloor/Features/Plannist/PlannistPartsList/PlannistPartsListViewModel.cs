@@ -8,8 +8,9 @@ using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Plannist.Commands;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
-using Shopfloor.Models.ErrandModel;
+using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.PartModel;
@@ -83,9 +84,9 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
             UserStore userStore = _databaseServices.GetRequiredService<UserStore>();
             MachineStore machineStore = _databaseServices.GetRequiredService<MachineStore>();
             ErrandPartStore errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
-            PartsStore partsStore = _databaseServices.GetRequiredService<PartsStore>();
+            PartStore partsStore = _databaseServices.GetRequiredService<PartStore>();
             ErrandPartStatusStore partsStatusStore = _databaseServices.GetRequiredService<ErrandPartStatusStore>();
-            PartTypesStore partTypesStore = _databaseServices.GetRequiredService<PartTypesStore>();
+            PartTypeStore partTypesStore = _databaseServices.GetRequiredService<PartTypeStore>();
 
             await LoadStores(errandStore, errandPartStore, partsStore);
             await CombineData(errandStore, errandPartStore, partsStore);
@@ -102,7 +103,7 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
             Application.Current.Dispatcher.Invoke(() => Parts.Refresh);
             OnPropertyChanged(nameof(Parts));
         }
-        private static async Task LoadStores(ErrandStore errandStore, ErrandPartStore errandPartStore, PartsStore partsStore)
+        private static async Task LoadStores(ErrandStore errandStore, ErrandPartStore errandPartStore, PartStore partsStore)
         {
             List<Task> tasks = [];
             tasks.Add(DataStore.LoadData(errandStore));
@@ -110,7 +111,7 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
             tasks.Add(DataStore.LoadData(partsStore));
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
-        private async Task CombineData(ErrandStore errandStore, ErrandPartStore errandPartStore, PartsStore partsStore)
+        private async Task CombineData(ErrandStore errandStore, ErrandPartStore errandPartStore, PartStore partsStore)
         {
             List<Task> tasks = [];
 
@@ -128,7 +129,7 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
         }
         private Task FillPartList(ErrandPartStore errandPartStore)
         {
-            foreach (ErrandPart errandPart in errandPartStore.Data)
+            foreach (ErrandPart errandPart in errandPartStore.GetData)
             {
                 _parts.Add(errandPart);
             }

@@ -14,7 +14,7 @@ namespace Shopfloor.Models.OrderModel
         {
             _databaseServices = databaseServices;
         }
-        public List<Order> Data => _data;
+        public List<Order> GetData => _data;
         public bool IsLoaded { get; private set; }
         public Task Load()
         {

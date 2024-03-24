@@ -1,14 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Parts.Commands;
-using Shopfloor.Features.Admin.Parts.List;
 using Shopfloor.Features.Admin.Parts.Stores;
 using Shopfloor.Interfaces;
 
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
@@ -46,12 +43,12 @@ namespace Shopfloor.Features.Admin.Parts.Edit
 
             _selectedPart = _mainServices.GetRequiredService<SelectedPartStore>().Part;
 
-            ReturnCommand = new NavigateCommand<PartsListViewModel>(_mainServices.GetRequiredService<NavigationService<PartsListViewModel>>());
+            //ReturnCommand = new NavigateCommand<PartsListViewModel>(_mainServices.GetRequiredService<NavigationService<PartsListViewModel>>());
             CleanFormCommand = new PartCleanFormCommand(this);
             EditPartCommand = new PartEditCommand(this, _databaseServices);
 
-            _partTypes = new(_databaseServices.GetRequiredService<PartTypesStore>().Data);
-            _suppliers = new(_databaseServices.GetRequiredService<SuppliersStore>().Data);
+            _partTypes = new(_databaseServices.GetRequiredService<PartTypeStore>().GetData);
+            _suppliers = new(_databaseServices.GetRequiredService<SuppliersStore>().GetData);
 
             Suppliers = CollectionViewSource.GetDefaultView(_suppliers);
             Producers = CollectionViewSource.GetDefaultView(_suppliers);
@@ -180,7 +177,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         public bool IsDataValidate => !HasErrors;
         public void ReloadData()
         {
-            _databaseServices.GetRequiredService<PartsStore>().Load();
+            _databaseServices.GetRequiredService<PartStore>().Load();
         }
         public void SetupForm()
         {

@@ -14,7 +14,7 @@ namespace Shopfloor.Models.ErrandPartOfferModel
         {
             _databaseServices = databaseServices;
         }
-        public List<ErrandPartOffer> Data => _data;
+        public List<ErrandPartOffer> GetData => _data;
         public bool IsLoaded { get; private set; }
         public Task Load()
         {

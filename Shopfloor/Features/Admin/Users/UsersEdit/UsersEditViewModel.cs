@@ -1,13 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Users.List;
 using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Features.Admin.UsersList.Commands;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
@@ -38,7 +35,7 @@ namespace Shopfloor.Features.Admin.Users.Edit
 
             FillForm();
 
-            BackToListCommand = new NavigateCommand<UsersListViewModel>(mainServices.GetRequiredService<NavigationService<UsersListViewModel>>());
+            //BackToListCommand = new NavigateCommand<UsersListViewModel>(mainServices.GetRequiredService<NavigationService<UsersListViewModel>>());
 
             string imagePath = _selectedUser.SelectedUser?.Image ?? string.Empty;
             bool isActive = _selectedUser.SelectedUser?.IsActive ?? false;

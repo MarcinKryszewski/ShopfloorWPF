@@ -14,7 +14,7 @@ namespace Shopfloor.Models.ReservationModel
         {
             _databaseServices = databaseServices;
         }
-        public List<Reservation> Data => _data;
+        public List<Reservation> GetData => _data;
         public bool IsLoaded { get; private set; }
         public Task Load()
         {

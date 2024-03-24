@@ -14,7 +14,7 @@ namespace Shopfloor.Models.OfferModel
         {
             _databaseServices = databaseServices;
         }
-        public List<Offer> Data => _data;
+        public List<Offer> GetData => _data;
         public bool IsLoaded { get; private set; }
         public Task Load()
         {

@@ -1,8 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Features.Admin.PartTypes.Hosts;
-using Shopfloor.Features.Admin.PartTypes.List;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
 using System;
@@ -24,8 +22,8 @@ namespace Shopfloor.Features.Admin.PartTypes
             _navigationStore = _partTypesServices.Services.GetRequiredService<NavigationStore>();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
-            NavigationService<PartTypesListViewModel> navigationService = _partTypesServices.Services.GetRequiredService<NavigationService<PartTypesListViewModel>>();
-            navigationService.Navigate();
+            //NavigationService<PartTypesListViewModel> navigationService = _partTypesServices.Services.GetRequiredService<NavigationService<PartTypesListViewModel>>();
+            //navigationService.Navigate();
         }
 
         private void OnCurrentViewModelChanged()

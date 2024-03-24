@@ -1,10 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Parts.Add;
-using Shopfloor.Features.Admin.Parts.Edit;
-using Shopfloor.Features.Admin.Parts.List;
-using Shopfloor.Shared.Services;
-using Shopfloor.Shared.Stores;
-using Shopfloor.Shared.ViewModels;
 using System;
 
 namespace Shopfloor.Features.Admin.Parts.Services
@@ -13,12 +7,12 @@ namespace Shopfloor.Features.Admin.Parts.Services
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {
-            GetListNavigation(services, databaseServices);
-            GetAddNavigation(services, databaseServices);
-            GetEditNavigation(services, databaseServices);
+            //GetListNavigation(services, databaseServices);
+            //GetAddNavigation(services, databaseServices);
+            //GetEditNavigation(services, databaseServices);
         }
 
-        private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        /*private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreatePartsListViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<PartsListViewModel>>((s) => () => s.GetRequiredService<PartsListViewModel>());
@@ -70,6 +64,6 @@ namespace Shopfloor.Features.Admin.Parts.Services
         private static PartsEditViewModel CreatePartsEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             return new PartsEditViewModel(mainServices, databaseServices);
-        }
+        }*/
     }
 }

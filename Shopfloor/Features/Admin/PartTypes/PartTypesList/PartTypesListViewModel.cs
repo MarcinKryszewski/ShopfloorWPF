@@ -21,7 +21,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
     {
         private readonly IServiceProvider _databaseServices;
         private readonly ObservableCollection<PartType> _partTypes = [];
-        private readonly PartTypesStore _partTypesStore;
+        private readonly PartTypeStore _partTypesStore;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         private bool _isEdit;
         private string _name = string.Empty;
@@ -36,7 +36,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
             EditCommand = new PartTypeEditCommand(this, provider);
             CleanFormCommand = new CleanFormCommand(this);
 
-            _partTypesStore = _databaseServices.GetRequiredService<PartTypesStore>();
+            _partTypesStore = _databaseServices.GetRequiredService<PartTypeStore>();
             Task.Run(() => LoadData(_databaseServices));
         }
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
@@ -126,7 +126,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
 
             if (tasks.Count > 0) await Task.WhenAll(tasks);
 
-            IEnumerable<PartType> partTypes = _partTypesStore.Data;
+            IEnumerable<PartType> partTypes = _partTypesStore.GetData;
             foreach (PartType partType in partTypes)
             {
                 Application.Current.Dispatcher.Invoke(() =>
@@ -143,7 +143,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
         }
         public void ReloadData()
         {
-            _databaseServices.GetRequiredService<PartTypesStore>().Load();
+            _databaseServices.GetRequiredService<PartTypeStore>().Load();
         }
         //Updates the list if value didn't exist, ie. after add
         public async Task UpdateData()
@@ -151,7 +151,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
             //await Task.Delay(5000);
             PartTypeProvider provider = _databaseServices.GetRequiredService<PartTypeProvider>();
             IEnumerable<PartType> partTypes = await provider.GetAll();
-            _ = _databaseServices.GetRequiredService<PartTypesStore>().Reload();
+            _ = _databaseServices.GetRequiredService<PartTypeStore>().Reload();
             foreach (PartType partType in partTypes)
             {
                 if (_partTypes.FirstOrDefault(s => s.Id == partType.Id) is null)

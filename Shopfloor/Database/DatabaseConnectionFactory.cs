@@ -1,6 +1,5 @@
 ﻿using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Data.Common;
 
@@ -12,9 +11,9 @@ namespace Shopfloor.Database
         private readonly IConfiguration _configuration;
         private DbConnection? _connection;
         public string DatabaseType => _databaseType;
-        public DatabaseConnectionFactory(IServiceProvider configurationServices)
+        public DatabaseConnectionFactory(IConfiguration configuration)
         {
-            _configuration = configurationServices.GetRequiredService<IConfiguration>();
+            _configuration = configuration;
             _databaseType = _configuration["DatabaseType"] ?? string.Empty;
         }
         public DbConnection Connect()

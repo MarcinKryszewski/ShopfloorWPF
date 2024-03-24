@@ -1,13 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Machines;
-using Shopfloor.Features.Admin.Parts;
-using Shopfloor.Features.Admin.PartTypes;
-using Shopfloor.Features.Admin.Suppliers;
-using Shopfloor.Features.Admin.Users;
 using Shopfloor.Features.Mechanic.Errands;
-using Shopfloor.Features.Mechanic.Requests;
-using Shopfloor.Features.Plannist.Deploys;
-using Shopfloor.Features.Plannist.PartsOrders;
+using Shopfloor.Features.Mechanic.MechanicDashboard;
+using Shopfloor.Features.Plannist.PlannistDashboard;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
@@ -16,23 +10,17 @@ using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.MachinePartModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
+using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.SupplierModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
-using Shopfloor.Features.Mechanic.PartsStock;
-using Shopfloor.Features.Plannist.Offers;
-using Shopfloor.Features.Manager.OrdersToApprove;
-using Shopfloor.Features.Mechanic.MechanicDashboard;
-using Shopfloor.Features.Plannist.PlannistDashboard;
-using Shopfloor.Features.Manager.ManagerDashboard;
-using Shopfloor.Models.RoleModel;
 
 namespace Shopfloor.Layout.SidePanel
 {
@@ -72,29 +60,32 @@ namespace Shopfloor.Layout.SidePanel
         public Visibility HasPlannistRole => HasAuthorization(Roles.Plannist);
         public Visibility HasManagerRole => HasAuthorization(Roles.Manager);
         public Visibility HasUserRole => HasAuthorization(Roles.User);
-        public SidePanelViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public SidePanelViewModel(INavigationService navigationService, CurrentUserStore userStore, IServiceProvider databaseServices)
         {
+            NavigateMechanicDashboardCommand = new RelayCommand(o => { navigationService.NavigateTo<MechanicDashboardViewModel>(); }, o => true);
+            NavigateTasksCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandsListViewModel>(); }, o => true);
 
-            NavigateMechanicDashboardCommand = new NavigateCommand<MechanicDashboardViewModel>(mainServices.GetRequiredService<NavigationService<MechanicDashboardViewModel>>());
-            NavigateTasksCommand = new NavigateCommand<ErrandsMainViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsMainViewModel>>());
-            NavigateRequestsCommand = new NavigateCommand<RequestsMainViewModel>(mainServices.GetRequiredService<NavigationService<RequestsMainViewModel>>());
-            NavigatePartStockCommand = new NavigateCommand<PartsStockMainViewModel>(mainServices.GetRequiredService<NavigationService<PartsStockMainViewModel>>());
+            //NavigateTasksCommand = new NavigateCommand<ErrandsMainViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsMainViewModel>>());
+            //NavigateRequestsCommand = new NavigateCommand<RequestsMainViewModel>(mainServices.GetRequiredService<NavigationService<RequestsMainViewModel>>());
+            //NavigatePartStockCommand = new NavigateCommand<PartsStockMainViewModel>(mainServices.GetRequiredService<NavigationService<PartsStockMainViewModel>>());
 
-            NavigatePlannistDashboardCommand = new NavigateCommand<PlannistDashboardViewModel>(mainServices.GetRequiredService<NavigationService<PlannistDashboardViewModel>>());
-            NavigateOffersCommand = new NavigateCommand<OffersViewModel>(mainServices.GetRequiredService<NavigationService<OffersViewModel>>());
-            NavigateOrdersCommand = new NavigateCommand<PartsOrdersViewModel>(mainServices.GetRequiredService<NavigationService<PartsOrdersViewModel>>());
-            NavigateDeploysCommand = new NavigateCommand<DeploysViewModel>(mainServices.GetRequiredService<NavigationService<DeploysViewModel>>());
+            NavigatePlannistDashboardCommand = new RelayCommand(o => { navigationService.NavigateTo<PlannistDashboardViewModel>(); }, o => true);
 
-            NavigateManagerDashboardCommand = new NavigateCommand<ManagerDashboardViewModel>(mainServices.GetRequiredService<NavigationService<ManagerDashboardViewModel>>());
-            NavigateOrdersToApproveCommand = new NavigateCommand<OrdersToApproveViewModel>(mainServices.GetRequiredService<NavigationService<OrdersToApproveViewModel>>());
+            //NavigatePlannistDashboardCommand = new NavigateCommand<PlannistDashboardViewModel>(mainServices.GetRequiredService<NavigationService<PlannistDashboardViewModel>>());
+            //NavigateOffersCommand = new NavigateCommand<OffersViewModel>(mainServices.GetRequiredService<NavigationService<OffersViewModel>>());
+            //NavigateOrdersCommand = new NavigateCommand<PartsOrdersViewModel>(mainServices.GetRequiredService<NavigationService<PartsOrdersViewModel>>());
+            //NavigateDeploysCommand = new NavigateCommand<DeploysViewModel>(mainServices.GetRequiredService<NavigationService<DeploysViewModel>>());
 
-            NavigateUsersCommand = new NavigateCommand<UsersMainViewModel>(mainServices.GetRequiredService<NavigationService<UsersMainViewModel>>());
-            NavigateMachinesCommand = new NavigateCommand<MachinesMainViewModel>(mainServices.GetRequiredService<NavigationService<MachinesMainViewModel>>());
-            NavigatePartsCommand = new NavigateCommand<PartsMainViewModel>(mainServices.GetRequiredService<NavigationService<PartsMainViewModel>>());
-            NavigateSuppliersCommand = new NavigateCommand<SuppliersMainViewModel>(mainServices.GetRequiredService<NavigationService<SuppliersMainViewModel>>());
-            NavigatePartTypesCommand = new NavigateCommand<PartTypesMainViewModel>(mainServices.GetRequiredService<NavigationService<PartTypesMainViewModel>>());
+            //NavigateManagerDashboardCommand = new NavigateCommand<ManagerDashboardViewModel>(mainServices.GetRequiredService<NavigationService<ManagerDashboardViewModel>>());
+            //NavigateOrdersToApproveCommand = new NavigateCommand<OrdersToApproveViewModel>(mainServices.GetRequiredService<NavigationService<OrdersToApproveViewModel>>());
 
-            _userStore = mainServices.GetRequiredService<CurrentUserStore>();
+            //NavigateUsersCommand = new NavigateCommand<UsersMainViewModel>(mainServices.GetRequiredService<NavigationService<UsersMainViewModel>>());
+            //NavigateMachinesCommand = new NavigateCommand<MachinesMainViewModel>(mainServices.GetRequiredService<NavigationService<MachinesMainViewModel>>());
+            //NavigatePartsCommand = new NavigateCommand<PartsMainViewModel>(mainServices.GetRequiredService<NavigationService<PartsMainViewModel>>());
+            //NavigateSuppliersCommand = new NavigateCommand<SuppliersMainViewModel>(mainServices.GetRequiredService<NavigationService<SuppliersMainViewModel>>());
+            //NavigatePartTypesCommand = new NavigateCommand<PartTypesMainViewModel>(mainServices.GetRequiredService<NavigationService<PartTypesMainViewModel>>());
+
+            _userStore = userStore;
             _userStore.PropertyChanged += OnUserAuthenticated;
 
             _dbServices = databaseServices;
@@ -115,6 +106,7 @@ namespace Shopfloor.Layout.SidePanel
             if (_user is null) return Visibility.Collapsed;
             if (_user.IsAuthorized(authVal)) return Visibility.Visible;
             return Visibility.Collapsed;
+            //return Visibility.Visible;
         }
     }
     internal sealed partial class SidePanelViewModel

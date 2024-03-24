@@ -1,9 +1,5 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList;
-using Shopfloor.Shared.Services;
-using Shopfloor.Shared.Stores;
-using Shopfloor.Shared.ViewModels;
+using System;
 
 namespace Shopfloor.Features.Plannist.PlannistDashboard.Services
 {
@@ -11,9 +7,9 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Services
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {
-            GetListNavigation(services, databaseServices);
+            //GetListNavigation(services, databaseServices);
         }
-        private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        /*private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreateListViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<PlannistPartsListViewModel>>((s) => () => s.GetRequiredService<PlannistPartsListViewModel>());
@@ -25,6 +21,6 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Services
                 );
             });
         }
-        private static PlannistPartsListViewModel CreateListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices) => new(mainServices, databaseServices);
+        private static PlannistPartsListViewModel CreateListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices) => new(mainServices, databaseServices);*/
     }
 }

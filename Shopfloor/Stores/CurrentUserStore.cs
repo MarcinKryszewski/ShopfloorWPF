@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
@@ -15,26 +14,26 @@ namespace Shopfloor.Stores
 {
     internal sealed partial class CurrentUserStore
     {
-        private readonly IServiceProvider _databaseServices;
         private readonly RoleProvider _roleProvider;
         private readonly RoleUserProvider _roleUserProvider;
+        private readonly Notifier _notifier;
         private readonly UserValidation _userValidation;
         private bool _isUserLoggedIn;
         private User? _user;
-        public CurrentUserStore(IServiceProvider databaseServices)
+        public CurrentUserStore(RoleProvider roleProvider, RoleUserProvider roleUserProvider, Notifier notifier)
         {
-            _databaseServices = databaseServices;
             _user = new("GOŚĆ");
             _isUserLoggedIn = false;
-            _roleProvider = databaseServices.GetRequiredService<RoleProvider>();
-            _roleUserProvider = databaseServices.GetRequiredService<RoleUserProvider>();
+            _roleProvider = roleProvider;
+            _roleUserProvider = roleUserProvider;
+            _notifier = notifier;
             _userValidation = new(this);
             _propertyErrors = [];
         }
         public bool IsUserLoggedIn => _isUserLoggedIn;
         public User? User => _user;
 
-        public void Login(string username, UserProvider provider, IInputForm<User> inputForm, Notifier notifier)
+        public void Login(string username, UserProvider provider, IInputForm<User> inputForm)
         {
             _user = provider.GetByUsername(username.ToLower()).Result ?? null;
             _userValidation.ValidateLogin(_user, inputForm);
@@ -46,7 +45,7 @@ namespace Shopfloor.Stores
 
             _isUserLoggedIn = true;
             SetUserRoles(_user!);
-            LoginNotification(notifier);
+            LoginNotification(_notifier);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
         }
         public void Logout()
@@ -94,18 +93,20 @@ namespace Shopfloor.Stores
     }
     internal sealed partial class CurrentUserStore
     {
-        public void AutoLogin(string username, UserProvider provider, Notifier notifier)
+        public void AutoLogin(string username, UserProvider provider)
         {
             _user = provider.GetByUsername(username.ToLower()).Result ?? null;
             _userValidation.ValidateAutoLogin(_user, _propertyErrors);
             if (HasErrors)
             {
                 _propertyErrors.Remove("LoginFailed");
+                _notifier.ShowError("Nie udane logowanie automatyczne. Zaloguj się samodzielnie.");
                 return;
             }
 
             _isUserLoggedIn = true;
             SetUserRoles(_user!);
+            _notifier.ShowSuccess("Zalogowano automatycznie!");
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
         }
     }

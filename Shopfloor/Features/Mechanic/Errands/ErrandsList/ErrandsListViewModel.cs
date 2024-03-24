@@ -1,15 +1,11 @@
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Mechanic.Errands.Commands;
-using Shopfloor.Features.Mechanic.Errands.ErrandsNew;
 using Shopfloor.Interfaces;
+using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandModel;
-using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.PartModel;
+using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -17,43 +13,44 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using Shopfloor.Models.ErrandPartModel.Store;
 
-namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
+namespace Shopfloor.Features.Mechanic.Errands
 {
     internal sealed class ErrandsListViewModel : ViewModelBase
     {
-        private readonly IServiceProvider _mainServices;
-        private readonly IServiceProvider _databaseServices;
         private readonly List<Errand> _errands = [];
+        private readonly PartStore _partsStore;
+        private readonly ErrandStore _errandStore;
+        private readonly ErrandPartStore _errandPartStore;
+
         public ICollectionView Errands => CollectionViewSource.GetDefaultView(_errands);
         public ICommand ErrandsAddNavigateCommand { get; }
         public Errand? SelectedErrand { get; set; }
         public ICommand EditErrandCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public ErrandsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
+        public ErrandsListViewModel(NavigationService navigationService, CurrentUserStore currentUserStore, ErrandStore errandStore, ErrandPartStore errandPartStore, PartStore partsStore)
         {
-            _mainServices = mainServices;
-            _databaseServices = databaseServices;
+            _partsStore = partsStore;
+            _errandStore = errandStore;
+            _errandPartStore = errandPartStore;
+
             Task.Run(LoadData);
-            ErrandsAddNavigateCommand = new NavigateCommand<ErrandsNewViewModel>(_mainServices.GetRequiredService<NavigationService<ErrandsNewViewModel>>());
-            EditErrandCommand = new ErrandSetCommand(this, _mainServices);
-            if (userServices.GetRequiredService<CurrentUserStore>().User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
+            ErrandsAddNavigateCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandNewViewModel>(); }, o => true);
+            EditErrandCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandEditViewModel>(); }, o => true);
+            if (currentUserStore.User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
         }
         private async Task LoadData()
         {
             Application.Current.Dispatcher.Invoke(_errands.Clear);
 
-            ErrandStore errandStore = _databaseServices.GetRequiredService<ErrandStore>();
-            ErrandPartStore errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
-            PartsStore partsStore = _databaseServices.GetRequiredService<PartsStore>();
-
-            await LoadStores(errandStore, partsStore);
-            await CombineData(errandStore, errandPartStore);
-            await FillErrandList(errandStore);
+            await LoadStores(_errandStore, _partsStore);
+            await CombineData(_errandStore, _errandPartStore);
+            await FillErrandList(_errandStore);
 
             Application.Current.Dispatcher.Invoke(Errands.Refresh);
         }
-        private async Task LoadStores(ErrandStore errandStore, PartsStore partsStore)
+        private async Task LoadStores(ErrandStore errandStore, PartStore partsStore)
         {
             List<Task> tasks = [];
 
@@ -78,7 +75,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandsList
         }
         private Task FillErrandList(ErrandStore errandStore)
         {
-            _errands.AddRange(from Errand errand in errandStore.Data select errand);
+            _errands.AddRange(from Errand errand in errandStore.GetData select errand);
             return Task.CompletedTask;
         }
     }

@@ -11,7 +11,7 @@ namespace Shopfloor.Models.SupplierModel
     {
         private List<Supplier> _data = [];
         private readonly IServiceProvider _databaseServices;
-        public List<Supplier> Data => _data;
+        public List<Supplier> GetData => _data;
         public bool IsLoaded { get; private set; }
 
         public SuppliersStore(IServiceProvider databaseServices)

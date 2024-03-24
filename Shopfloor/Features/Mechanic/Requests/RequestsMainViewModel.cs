@@ -1,11 +1,9 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Features.Mechanic.Requests.Hosts;
-using Shopfloor.Features.Mechanic.Requests.RequestsList;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
+using System;
 
 namespace Shopfloor.Features.Mechanic.Requests
 {
@@ -22,8 +20,8 @@ namespace Shopfloor.Features.Mechanic.Requests
             _navigationStore = services.GetRequiredService<NavigationStore>();
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
 
-            NavigationService<RequestsListViewModel> navigationService = services.GetRequiredService<NavigationService<RequestsListViewModel>>();
-            navigationService.Navigate();
+            //NavigationService<RequestsListViewModel> navigationService = services.GetRequiredService<NavigationService<RequestsListViewModel>>();
+            //navigationService.Navigate();
         }
         private void OnCurrentViewModelChanged() => OnPropertyChanged(nameof(Content));
     }

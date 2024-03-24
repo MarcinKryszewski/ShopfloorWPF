@@ -2,16 +2,11 @@
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
 using Shopfloor.Database.Initializers;
-using Shopfloor.Features.Manager.ManagerDashboard;
 using Shopfloor.Features.Mechanic.MechanicDashboard;
-using Shopfloor.Features.Plannist.PlannistDashboard;
 using Shopfloor.Hosts;
-using Shopfloor.Hosts.ConfigurationHost;
-using Shopfloor.Hosts.DatabaseHost;
-using Shopfloor.Hosts.MainHost;
 using Shopfloor.Layout.MainWindow;
 using Shopfloor.Models.UserModel;
-using Shopfloor.Shared.Services;
+using Shopfloor.Services.NavigationServices;
 using Shopfloor.Stores;
 using System;
 using System.Data;
@@ -22,67 +17,60 @@ namespace Shopfloor
 {
     public partial class App : Application
     {
-        private readonly IHost _configurationHost;
-        private readonly IHost _databaseHost;
-        private readonly IHost _mainHost;
-        private readonly IHost _userHost;
+        private readonly IHost _appHost;
 
         public App()
         {
-            ConfigurationHost configuration = new();
-            _configurationHost = configuration.GetHost();
-            _configurationHost.Start();
-
-            _databaseHost = DatabaseHost.GetHost(_configurationHost.Services);
-            _databaseHost.Start();
-
-            _userHost = UserHost.GetHost(_databaseHost.Services);
-            _userHost.Start();
-
-            _mainHost = MainHost.GetHost(_databaseHost.Services, _userHost.Services);
-            _mainHost.Start();
-
-
+            _appHost = AppHost.Get();
+            _appHost.Start();
         }
 
         private void ApplicationStart(object sender, StartupEventArgs e)
         {
-            using IDbConnection connection = _databaseHost.Services.GetRequiredService<DatabaseConnectionFactory>().Connect();
-            DatabaseInitializerFactory initializer = new(_configurationHost.Services, connection);
+            IServiceProvider services = _appHost.Services;
+
+            using IDbConnection connection = services.GetRequiredService<DatabaseConnectionFactory>().Connect();
+            DatabaseInitializerFactory initializer = new(_appHost.Services, connection);
             IDatabaseInitializer databaseInitializer = initializer.CreateInitializer();
             databaseInitializer.Initialize();
 
-            //tries to login user automatically
-            _userHost.Services.GetRequiredService<CurrentUserStore>().AutoLogin(
-                Environment.UserName,
-                _databaseHost.Services.GetRequiredService<UserProvider>(),
-                _mainHost.Services.GetRequiredService<Notifier>()
-            );
-
             MainWindow = new MainWindow()
             {
-                DataContext = new MainWindowViewModel(_mainHost.Services)
+                DataContext = new MainWindowViewModel(services)
             };
             MainWindow.Show();
+            AutoLogin(services);
             DashboardNavigate();
 
             //NavigationService<MechanicDashboardViewModel> navigationService = _mainHost.Services.GetRequiredService<NavigationService<MechanicDashboardViewModel>>();
             //navigationService.Navigate();
         }
+        //tries to login user automatically
+        private static void AutoLogin(IServiceProvider services)
+        {
+            CurrentUserStore loginService = services.GetRequiredService<CurrentUserStore>();
+            UserProvider userProvider = services.GetRequiredService<UserProvider>();
+            Notifier notifier = services.GetRequiredService<Notifier>();
+            string userName = Environment.UserName;
+            loginService.AutoLogin(userName, userProvider);
+        }
+
         private void DashboardNavigate()
         {
-            CurrentUserStore currentUser = _userHost.Services.GetRequiredService<CurrentUserStore>();
+            /*CurrentUserStore currentUser = _userHost.Services.GetRequiredService<CurrentUserStore>();
             if (currentUser.HasRole(777))
             {
-                _mainHost.Services.GetRequiredService<NavigationService<ManagerDashboardViewModel>>().Navigate();
+                //_mainHost.Services.GetRequiredService<NavigationService<ManagerDashboardViewModel>>().Navigate();
                 return;
             }
             if (currentUser.HasRole(460))
             {
-                _mainHost.Services.GetRequiredService<NavigationService<PlannistDashboardViewModel>>().Navigate();
+                //_mainHost.Services.GetRequiredService<NavigationService<PlannistDashboardViewModel>>().Navigate();
                 return;
             }
-            _mainHost.Services.GetRequiredService<NavigationService<MechanicDashboardViewModel>>().Navigate();
+            //_mainHost.Services.GetRequiredService<NavigationService<MechanicDashboardViewModel>>().Navigate();*/
+            NavigationService navigation = _appHost.Services.GetRequiredService<NavigationService>();
+            navigation.NavigateTo<MechanicDashboardViewModel>();
         }
     }
 }

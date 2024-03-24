@@ -33,7 +33,6 @@
     <Watch Remove="Features\Admin\Machines\MachinesList\MachinesListView.xaml" />
     <Watch Remove="Features\Admin\PartTypes\PartTypesList\PartTypesListView.xaml" />
     <Watch Remove="Features\Admin\PartTypes\PartTypesMainView.xaml" />
-    <Watch Remove="Features\Mechanic\Errands\ErrandEdit\ErrandEditView.xaml" />
     <Watch Remove="Features\Mechanic\Errands\ErrandNew\ErrandNewView.xaml" />
     <Watch Remove="Features\Mechanic\Tasks\TasksList\TasksListView.xaml" />
     <Watch Remove="Features\Mechanic\Tasks\TasksMainView.xaml" />
@@ -74,10 +73,10 @@
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
-	  <PackageReference Include="ToastNotifications" Version="2.5.1" >
+	  <PackageReference Include="ToastNotifications" Version="2.5.1">
 		  <NoWarn>NU1701</NoWarn>
 	  </PackageReference>
-	  <PackageReference Include="ToastNotifications.Messages" Version="2.5.1" >
+	  <PackageReference Include="ToastNotifications.Messages" Version="2.5.1">
 		  <NoWarn>NU1701</NoWarn>
 	  </PackageReference>
     <PackageReference Include="xunit.analyzers" Version="1.10.0" />

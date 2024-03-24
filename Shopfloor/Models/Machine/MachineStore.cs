@@ -15,7 +15,12 @@ namespace Shopfloor.Models.MachineModel
         {
             _databaseServices = databaseServices;
         }
-        public List<Machine> Data => _data;
+        public List<Machine> GetData(bool shouldCombine = false)
+        {
+            if (!IsLoaded) Load();
+            if (shouldCombine) CombineData();
+            return _data;
+        }
         public bool IsLoaded { get; private set; }
 
         public Task CombineData()

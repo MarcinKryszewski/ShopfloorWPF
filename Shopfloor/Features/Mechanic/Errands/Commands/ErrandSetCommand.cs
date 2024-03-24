@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Mechanic.Errands.ErrandsEdit;
-using Shopfloor.Features.Mechanic.Errands.ErrandsList;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using System;
 
 namespace Shopfloor.Features.Mechanic.Errands.Commands
@@ -25,8 +22,8 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         {
             _errandStore.SelectedErrand = _viewModel.SelectedErrand;
 
-            NavigationService<ErrandsEditViewModel> navigationService = _mainServices.GetRequiredService<NavigationService<ErrandsEditViewModel>>();
-            navigationService.Navigate();
+            //NavigationService<ErrandsEditViewModel> navigationService = _mainServices.GetRequiredService<NavigationService<ErrandsEditViewModel>>();
+            //navigationService.Navigate();
         }
     }
 }

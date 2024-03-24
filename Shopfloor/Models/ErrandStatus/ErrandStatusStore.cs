@@ -14,12 +14,18 @@ namespace Shopfloor.Models.ErrandStatusModel
         {
             _databaseServices = databaseServices;
         }
-        public List<ErrandStatus> Data => _data;
+        public List<ErrandStatus> GetData(bool shouldCombine = false)
+        {
+            if (!IsLoaded) Load();
+            if (shouldCombine) CombineData();
+            return _data;
+        }
         public bool IsLoaded { get; private set; }
 
         public Task CombineData()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return Task.CompletedTask;
         }
 
         public Task Load()

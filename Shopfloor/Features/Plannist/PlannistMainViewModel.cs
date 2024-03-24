@@ -1,7 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Features.Plannist.PlannistDashboard.Hosts;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
 using System;
@@ -27,8 +26,8 @@ namespace Shopfloor.Features.Plannist
         }
         public void NavigationService(ViewModelBase viewModel)
         {
-            NavigationService<ViewModelBase> navigationService = _services.GetRequiredService<NavigationService<ViewModelBase>>();
-            navigationService.Navigate();
+            //NavigationService<ViewModelBase> navigationService = _services.GetRequiredService<NavigationService<ViewModelBase>>();
+            //navigationService.Navigate();
         }
         private void OnCurrentViewModelChanged() => OnPropertyChanged(nameof(Content));
     }

@@ -1,12 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Parts.Add;
-using Shopfloor.Features.Admin.Parts.Edit;
 using Shopfloor.Features.Admin.Parts.Stores;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -28,9 +24,9 @@ namespace Shopfloor.Features.Admin.Parts.List
         private readonly ObservableCollection<Part> _parts;
         private readonly SelectedPartStore _selectedPart;
 
-        private readonly PartsStore _partsStore;
+        private readonly PartStore _partsStore;
         private readonly SuppliersStore _suppliersStore;
-        private readonly PartTypesStore _partTypesStore;
+        private readonly PartTypeStore _partTypesStore;
 
         public Visibility IsSelected => SelectedPart is null ? Visibility.Collapsed : Visibility.Visible;
         public ICollectionView Parts { get; }
@@ -70,14 +66,14 @@ namespace Shopfloor.Features.Admin.Parts.List
             _parts = new();
             _selectedPart = _mainServices.GetRequiredService<SelectedPartStore>();
 
-            AddPartCommand = new NavigateCommand<PartsAddViewModel>(mainServices.GetRequiredService<NavigationService<PartsAddViewModel>>());
-            EditPartCommand = new NavigateCommand<PartsEditViewModel>(mainServices.GetRequiredService<NavigationService<PartsEditViewModel>>());
+            //AddPartCommand = new NavigateCommand<PartsAddViewModel>(mainServices.GetRequiredService<NavigationService<PartsAddViewModel>>());
+            //EditPartCommand = new NavigateCommand<PartsEditViewModel>(mainServices.GetRequiredService<NavigationService<PartsEditViewModel>>());
 
             Parts = CollectionViewSource.GetDefaultView(_parts);
 
-            _partsStore = _databaseServices.GetRequiredService<PartsStore>();
+            _partsStore = _databaseServices.GetRequiredService<PartStore>();
             _suppliersStore = _databaseServices.GetRequiredService<SuppliersStore>();
-            _partTypesStore = _databaseServices.GetRequiredService<PartTypesStore>();
+            _partTypesStore = _databaseServices.GetRequiredService<PartTypeStore>();
 
             Task.Run(LoadData);
             Parts.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Part.TypeName)));
@@ -95,9 +91,9 @@ namespace Shopfloor.Features.Admin.Parts.List
 
             if (tasks.Count > 0) await Task.WhenAll(tasks);
 
-            IEnumerable<Part> parts = _partsStore.Data;
-            IEnumerable<Supplier> suppliers = _suppliersStore.Data;
-            IEnumerable<PartType> partTypes = _partTypesStore.Data;
+            IEnumerable<Part> parts = _partsStore.GetData;
+            IEnumerable<Supplier> suppliers = _suppliersStore.GetData;
+            IEnumerable<PartType> partTypes = _partTypesStore.GetData;
 
             foreach (Part part in parts)
             {

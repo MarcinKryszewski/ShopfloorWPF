@@ -1,10 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Users.Add;
-using Shopfloor.Features.Admin.Users.Edit;
-using Shopfloor.Features.Admin.Users.List;
-using Shopfloor.Shared.Services;
-using Shopfloor.Shared.Stores;
-using Shopfloor.Shared.ViewModels;
 using System;
 
 namespace Shopfloor.Features.Admin.Users.Services
@@ -13,12 +7,12 @@ namespace Shopfloor.Features.Admin.Users.Services
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {
-            GetListNavigation(services, databaseServices);
-            GetAddNavigation(services, databaseServices);
-            GetEditNavigation(services, databaseServices);
+            //GetListNavigation(services, databaseServices);
+            //GetAddNavigation(services, databaseServices);
+            //GetEditNavigation(services, databaseServices);
         }
 
-        private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        /*private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreateUsersListViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<UsersListViewModel>>((s) => () => s.GetRequiredService<UsersListViewModel>());
@@ -70,6 +64,6 @@ namespace Shopfloor.Features.Admin.Users.Services
         private static UsersEditViewModel CreateUsersEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             return new UsersEditViewModel(mainServices, databaseServices);
-        }
+        }*/
     }
 }

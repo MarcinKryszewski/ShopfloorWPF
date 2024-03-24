@@ -1,10 +1,9 @@
-using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Login.Commands;
 using Shopfloor.Features.Mechanic.MechanicDashboard;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System;
@@ -12,7 +11,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
-using ToastNotifications;
 
 namespace Shopfloor.Features.Login
 {
@@ -43,17 +41,16 @@ namespace Shopfloor.Features.Login
         }
 
         public ICommand LoginCommand { get; }
-        public LoginViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userProvider)
+        public LoginViewModel(NavigationService navigationService, CurrentUserStore userStore, UserProvider userProvider)
         {
-            ICommand NavigateDashboardCommand = new NavigateCommand<MechanicDashboardViewModel>(mainServices.GetRequiredService<NavigationService<MechanicDashboardViewModel>>());
-            _userStore = userProvider.GetRequiredService<CurrentUserStore>();
+            ICommand NavigateDashboardCommand = new RelayCommand(o => { navigationService.NavigateTo<MechanicDashboardViewModel>(); }, o => true);
+            _userStore = userStore;
             _userStore.PropertyChanged += OnUserLogin;
             LoginCommand = new LoginCommand(
-                databaseServices.GetRequiredService<UserProvider>(),
+                userProvider,
                 _userStore,
                 this,
-                NavigateDashboardCommand,
-                mainServices.GetRequiredService<Notifier>());
+               NavigateDashboardCommand);
             _userValidation = new(this);
         }
         private void OnUserLogin(object? sender, PropertyChangedEventArgs e)

@@ -1,9 +1,5 @@
-using System;
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Mechanic.PartsStock.PartsStockList;
-using Shopfloor.Shared.Services;
-using Shopfloor.Shared.Stores;
-using Shopfloor.Shared.ViewModels;
+using System;
 
 namespace Shopfloor.Features.Mechanic.PartsStock.Services
 {
@@ -11,9 +7,9 @@ namespace Shopfloor.Features.Mechanic.PartsStock.Services
     {
         public static void Get(IServiceCollection services, IServiceProvider databaseServices)
         {
-            GetListNavigation(services, databaseServices);
+            //GetListNavigation(services, databaseServices);
         }
-        private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
+        /*private static void GetListNavigation(IServiceCollection services, IServiceProvider databaseServices)
         {
             services.AddTransient((s) => CreateListViewModel(s, databaseServices));
             services.AddSingleton<CreateViewModel<PartsStockListViewModel>>((s) => () => s.GetRequiredService<PartsStockListViewModel>());
@@ -28,6 +24,6 @@ namespace Shopfloor.Features.Mechanic.PartsStock.Services
         private static PartsStockListViewModel CreateListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             return new PartsStockListViewModel(mainServices, databaseServices);
-        }
+        }*/
     }
 }

@@ -1,3 +1,15 @@
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Manager.Stores;
+using Shopfloor.Models.ErrandModel.Store;
+using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.ErrandPartModel.Store;
+using Shopfloor.Models.ErrandPartStatusModel;
+using Shopfloor.Models.MachineModel;
+using Shopfloor.Models.PartModel;
+using Shopfloor.Models.PartTypeModel;
+using Shopfloor.Models.UserModel;
+using Shopfloor.Shared;
+using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -5,20 +17,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Manager.OrderApprove;
-using Shopfloor.Features.Manager.Stores;
-using Shopfloor.Models.ErrandModel;
-using Shopfloor.Models.ErrandPartModel;
-using Shopfloor.Models.ErrandPartStatusModel;
-using Shopfloor.Models.MachineModel;
-using Shopfloor.Models.PartModel;
-using Shopfloor.Models.PartTypeModel;
-using Shopfloor.Models.UserModel;
-using Shopfloor.Shared;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
-using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Manager.OrdersToApprove
 {
@@ -57,7 +55,7 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
             _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
             SelectedRow = null;
 
-            ApproveCommand = new NavigateCommand<OrderApproveViewModel>(_mainServices.GetRequiredService<NavigationService<OrderApproveViewModel>>());
+            //ApproveCommand = new NavigateCommand<OrderApproveViewModel>(_mainServices.GetRequiredService<NavigationService<OrderApproveViewModel>>());
             //DetailsCommand = new PlannistDetailsCommand();
         }
         private void OnRequestChanged() => Orders.Refresh();
@@ -69,9 +67,9 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
             UserStore userStore = _databaseServices.GetRequiredService<UserStore>();
             MachineStore machineStore = _databaseServices.GetRequiredService<MachineStore>();
             ErrandPartStore errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
-            PartsStore partsStore = _databaseServices.GetRequiredService<PartsStore>();
+            PartStore partsStore = _databaseServices.GetRequiredService<PartStore>();
             ErrandPartStatusStore partsStatusStore = _databaseServices.GetRequiredService<ErrandPartStatusStore>();
-            PartTypesStore partTypesStore = _databaseServices.GetRequiredService<PartTypesStore>();
+            PartTypeStore partTypesStore = _databaseServices.GetRequiredService<PartTypeStore>();
 
             await LoadStores(errandStore, errandPartStore, partsStore);
             await CombineData(errandStore, errandPartStore, partsStore);
@@ -83,7 +81,7 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
                 System.Diagnostics.Debug.WriteLine("TEST");
             });
         }
-        private static async Task LoadStores(ErrandStore errandStore, ErrandPartStore errandPartStore, PartsStore partsStore)
+        private static async Task LoadStores(ErrandStore errandStore, ErrandPartStore errandPartStore, PartStore partsStore)
         {
             List<Task> tasks = [];
             tasks.Add(DataStore.LoadData(errandStore));
@@ -91,7 +89,7 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
             tasks.Add(DataStore.LoadData(partsStore));
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
-        private static async Task CombineData(ErrandStore errandStore, ErrandPartStore errandPartStore, PartsStore partsStore)
+        private static async Task CombineData(ErrandStore errandStore, ErrandPartStore errandPartStore, PartStore partsStore)
         {
             List<Task> tasks = [];
 
@@ -107,11 +105,10 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
             tasks.Add(FillPartList(errandPartStore));
             if (tasks.Count > 0) await Task.WhenAll(tasks);
             //await Task.Delay(2000);
-
         }
         private Task FillPartList(ErrandPartStore errandPartStore)
         {
-            foreach (ErrandPart errandPart in errandPartStore.Data)
+            foreach (ErrandPart errandPart in errandPartStore.GetData)
             {
                 if (errandPart.LastStatusText == ErrandPartStatus.Status[1]) _orders.Add(errandPart);
             }
