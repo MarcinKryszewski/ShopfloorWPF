@@ -85,7 +85,8 @@ namespace Shopfloor.Stores
 
             foreach (RoleUser roleUser in roleUsers)
             {
-                Role role = roles.First(r => r.Id == roleUser.RoleId);
+                Role? role = roles.FirstOrDefault(r => r.Id == roleUser.RoleId);
+                if (role == null) continue;
                 user.AddRole(role);
             }
         }

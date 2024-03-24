@@ -24,9 +24,9 @@ namespace Shopfloor.Models.RoleUserModel
 
         private const string _getAllSQL = @"
             SELECT
-                id as Id,
-                role_id as RoleId,
-                user_id as UserId
+                id AS Id,
+                role_id AS RoleId,
+                user_id AS UserId
             FROM roles_users
             ";
 
@@ -38,18 +38,18 @@ namespace Shopfloor.Models.RoleUserModel
 
         private const string _getAllForUser = @"
             SELECT
-                id as Id,
-                role_id as RoleId,
-                user_id as UserId
+                id AS Id,
+                role_id AS RoleId,
+                user_id AS UserId
             FROM roles_users
             WHERE user_id = @UserId
             ";
 
         private const string _getAllForRole = @"
             SELECT
-                id as Id,
-                role_id as RoleId,
-                user_id as UserId
+                id AS Id,
+                role_id AS RoleId,
+                user_id AS UserId
             FROM roles_users
             WHERE role_id = @RoleId
             ";

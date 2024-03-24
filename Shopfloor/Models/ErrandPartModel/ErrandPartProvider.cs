@@ -13,7 +13,6 @@ namespace Shopfloor.Models.ErrandPartModel
     {
         private readonly DatabaseConnectionFactory _database;
         private const string _dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-        #region SQLCommands
         private const string _createSQL = @"
             INSERT INTO errands_parts (
                 errand_id,
@@ -91,12 +90,10 @@ namespace Shopfloor.Models.ErrandPartModel
                 canceled = @Canceled
             WHERE id = @Id
             ";
-        #endregion SQLCommands
         public ErrandPartProvider(DatabaseConnectionFactory database)
         {
             _database = database;
         }
-        #region CRUD
         public async Task<int> Create(ErrandPart item)
         {
             using IDbConnection connection = _database.Connect();
@@ -107,7 +104,7 @@ namespace Shopfloor.Models.ErrandPartModel
                 Amount = item.Amount,
                 OrderedBy = item.OrderedById,
                 Price = item.PricePerUnit,
-                ExpectedDeliveryDate = item.ExpectedDeliveryDate is null ? null : ((DateTime)item.ExpectedDeliveryDate!).ToString(_dateTimeFormat)
+                ExpectedDeliveryDate = item.ExpectedDeliveryDate is null ? null : ((DateTime)item.ExpectedDeliveryDate!).ToString(_dateTimeFormat),
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
@@ -174,7 +171,6 @@ namespace Shopfloor.Models.ErrandPartModel
         }
         public Task Delete(int id) => throw new NotImplementedException();
         public Task Delete(int errandId, int partId) => throw new NotImplementedException();
-        #endregion CRUD
         private static ErrandPart ToErrandPart(ErrandPartDTO item)
         {
             return new ErrandPart()
