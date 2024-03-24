@@ -3,6 +3,7 @@ using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Shared.BaseClasses;
 using System;
 using System.Collections;
 using System.Collections.Generic;

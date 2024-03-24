@@ -4,6 +4,7 @@ using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Shared.BaseClasses;
 using System;
 using System.Collections.Generic;
 

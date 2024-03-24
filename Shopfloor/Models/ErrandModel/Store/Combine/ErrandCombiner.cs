@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ErrandModel.Store.Combine
 {
-    internal sealed class ErrandCombine : ICombiner
+    internal sealed class ErrandCombiner : ICombiner
     {
-        private readonly ErrandPartToErrand _errandPart;
-        private readonly ErrandStatusToErrand _errandStatus;
-        private readonly ErrandTypeToErrand _errandType;
-        private readonly UserToErrand _user;
-        private readonly MachineToErrand _machine;
-        public ErrandCombine(ErrandPartToErrand errandPart, ErrandStatusToErrand errandStatus, ErrandTypeToErrand errandType, UserToErrand user, MachineToErrand machine)
+        private readonly ErrandToErrandPart _errandPart;
+        private readonly ErrandToErrandStatus _errandStatus;
+        private readonly ErrandToErrandType _errandType;
+        private readonly ErrandToUser _user;
+        private readonly ErrandToMachine _machine;
+        public ErrandCombiner(ErrandToErrandPart errandPart, ErrandToErrandStatus errandStatus, ErrandToErrandType errandType, ErrandToUser user, ErrandToMachine machine)
         {
             _errandPart = errandPart;
             _errandStatus = errandStatus;

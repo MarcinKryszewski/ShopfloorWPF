@@ -6,6 +6,7 @@ using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandModel.Store.Combine;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
+using Shopfloor.Models.ErrandPartModel.Store.Combine;
 using Shopfloor.Models.ErrandPartOfferModel;
 using Shopfloor.Models.ErrandPartOrderModel;
 using Shopfloor.Models.ErrandPartStatusModel;
@@ -45,10 +46,10 @@ namespace Shopfloor.Hosts.Database
         public static void ModelServices(IServiceCollection services)
         {
             ErrandServices(services);
+            ErrandPartServices(services);
         }
         private static void StoresServices(IServiceCollection services)
         {
-            services.AddSingleton<ErrandPartStore>();
             services.AddSingleton<ErrandPartOfferStore>();
             services.AddSingleton<ErrandPartOrderStore>();
             services.AddSingleton<ErrandPartStatusStore>();
@@ -70,7 +71,6 @@ namespace Shopfloor.Hosts.Database
 
         private static void ProvidersServices(IServiceCollection services)
         {
-            services.AddSingleton<ErrandPartProvider>();
             services.AddSingleton<ErrandPartOfferProvider>();
             services.AddSingleton<ErrandPartOrderProvider>();
             services.AddSingleton<ErrandPartStatusProvider>();
@@ -93,13 +93,24 @@ namespace Shopfloor.Hosts.Database
         {
             services.AddSingleton<ErrandStore>();
             services.AddSingleton<ErrandProvider>();
-            services.AddSingleton<ErrandCombine>();
+            services.AddSingleton<ErrandCombiner>();
 
+            services.AddSingleton<ErrandToErrandPart>();
+            services.AddSingleton<ErrandToErrandStatus>();
+            services.AddSingleton<ErrandToUser>();
+            services.AddSingleton<ErrandToMachine>();
+            services.AddSingleton<ErrandToErrandType>();
+        }
+        private static void ErrandPartServices(IServiceCollection services)
+        {
+            services.AddSingleton<ErrandPartStore>();
+            services.AddSingleton<ErrandPartProvider>();
+            services.AddSingleton<ErrandPartCombiner>();
+
+            services.AddSingleton<ErrandPartToErrandPartStatus>();
             services.AddSingleton<ErrandPartToErrand>();
-            services.AddSingleton<ErrandStatusToErrand>();
-            services.AddSingleton<UserToErrand>();
-            services.AddSingleton<MachineToErrand>();
-            services.AddSingleton<ErrandTypeToErrand>();
+            services.AddSingleton<ErrandPartToPart>();
+            services.AddSingleton<ErrandPartToUser>();
         }
     }
 }

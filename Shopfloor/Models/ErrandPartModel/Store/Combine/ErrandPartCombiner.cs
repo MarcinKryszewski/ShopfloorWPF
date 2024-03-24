@@ -6,11 +6,11 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
 {
     internal sealed class ErrandPartCombiner : ICombiner
     {
-        private readonly ErrandPartStatusToErrandPart _errandPartStatusToErrandPart;
-        private readonly ErrandToErrandPart _errandToErrandPart;
-        private readonly PartToErrandPart _partToErrandPart;
-        private readonly UserToErrandPart _userToErrandPart;
-        public ErrandPartCombiner(UserToErrandPart userToErrandPart, PartToErrandPart partToErrandPart, ErrandToErrandPart errandToErrandPart, ErrandPartStatusToErrandPart errandPartStatusToErrandPart)
+        private readonly ErrandPartToErrandPartStatus _errandPartStatusToErrandPart;
+        private readonly ErrandPartToErrand _errandToErrandPart;
+        private readonly ErrandPartToPart _partToErrandPart;
+        private readonly ErrandPartToUser _userToErrandPart;
+        public ErrandPartCombiner(ErrandPartToUser userToErrandPart, ErrandPartToPart partToErrandPart, ErrandPartToErrand errandToErrandPart, ErrandPartToErrandPartStatus errandPartStatusToErrandPart)
         {
             _userToErrandPart = userToErrandPart;
             _partToErrandPart = partToErrandPart;

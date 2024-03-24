@@ -1,11 +1,16 @@
-<UserControl x:Class="Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList.PlannistPartsListView"
+<UserControl
+    x:Class="Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList.PlannistPartsListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:custom="clr-namespace:Shopfloor.Controls.PlaceholderTextBox"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" d:DataContext="{d:DesignInstance Type=local:PlannistPartsListViewModel}" d:DesignHeight="450" d:DesignWidth="800" mc:Ignorable="d">
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
+    d:DataContext="{d:DesignInstance Type=local:PlannistPartsListViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
     </UserControl.Resources>
@@ -18,32 +23,99 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Margin="0,0,0,0" HorizontalAlignment="Left" FontSize="32" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple400}" Text="Dashboard planisty" />
+        <TextBlock
+            Grid.Row="0"
+            Margin="0,0,0,0"
+            HorizontalAlignment="Left"
+            FontSize="32"
+            FontWeight="SemiBold"
+            Foreground="{StaticResource BrushPurple400}"
+            Text="Dashboard planisty" />
 
-        <TextBlock Grid.Row="1" Margin="0,5,215,0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple400}" Text="Filtr" />
+        <TextBlock
+            Grid.Row="1"
+            Margin="0,5,215,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            FontSize="13"
+            FontWeight="SemiBold"
+            Foreground="{StaticResource BrushPurple400}"
+            Text="Filtr" />
 
-        <Grid Grid.Row="1" Width="200" Margin="0,5,0,0" HorizontalAlignment="Right">
-            <TextBlock Margin="15,0" VerticalAlignment="Center" Panel.ZIndex="1" Foreground="#FF8B8F96" IsHitTestVisible="False" Text="Szukaj ..." Visibility="{Binding ElementName=textBoxFilter, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
+        <Grid
+            Grid.Row="1"
+            Width="200"
+            Margin="0,5,0,0"
+            HorizontalAlignment="Right">
+            <TextBlock
+                Margin="15,0"
+                VerticalAlignment="Center"
+                Panel.ZIndex="1"
+                Foreground="#FF8B8F96"
+                IsHitTestVisible="False"
+                Text="Szukaj ..."
+                Visibility="{Binding ElementName=textBoxFilter, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
 
-            <TextBox Name="textBoxFilter" Style="{StaticResource filterTextBox}" Text="{Binding FilterText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox
+                Name="textBoxFilter"
+                Style="{StaticResource filterTextBox}"
+                Text="{Binding FilterText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
 
-        <Separator Grid.Row="2" Height="1" Margin="0,-3,0,5" Background="#DAE2EA" />
+        <Separator
+            Grid.Row="2"
+            Height="1"
+            Margin="0,-3,0,5"
+            Background="#DAE2EA" />
 
-        <StackPanel Grid.Row="1" Margin="0,10,0,0" Orientation="Horizontal">
-            <Button BorderBrush="{StaticResource BrushPurple700}" Content="Wszystkie" Style="{StaticResource tabButton}" />
+        <StackPanel
+            Grid.Row="1"
+            Margin="0,10,0,0"
+            Orientation="Horizontal">
+            <Button
+                BorderBrush="{StaticResource BrushPurple700}"
+                Content="Wszystkie"
+                Style="{StaticResource tabButton}" />
             <Button Content="Moje" Style="{StaticResource tabButton}" />
             <Button Content="Nieprzypisane" Style="{StaticResource tabButton}" />
         </StackPanel>
 
-        <DataGrid Grid.Row="3" SelectedItem="{Binding Path=SelectedRow, Mode=TwoWay}" MaxHeight="785" CellStyle="{DynamicResource DataGridCellMain}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}" ItemsSource="{Binding Path=Parts}" RowStyle="{StaticResource DataGridRowMain}" Style="{DynamicResource DataGridMain}" TargetUpdated="DataGrid_TargetUpdated">
+        <DataGrid
+            Grid.Row="3"
+            MaxHeight="785"
+            CellStyle="{DynamicResource DataGridCellMain}"
+            ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
+            ItemsSource="{Binding Path=Parts}"
+            RowStyle="{StaticResource DataGridRowMain}"
+            SelectedItem="{Binding Path=SelectedRow, Mode=TwoWay}"
+            Style="{DynamicResource DataGridMain}"
+            TargetUpdated="DataGrid_TargetUpdated">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="auto" Binding="{Binding Path=Id, NotifyOnTargetUpdated=True}" CanUserResize="False" Header="ID" IsReadOnly="True" />
-                <DataGridTemplateColumn Width="auto" MinWidth="120" CanUserResize="False" Header="STATUS" IsReadOnly="True">
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Path=Id, NotifyOnTargetUpdated=True}"
+                    CanUserResize="False"
+                    Header="ID"
+                    IsReadOnly="True" />
+                <DataGridTemplateColumn
+                    Width="auto"
+                    MinWidth="120"
+                    CanUserResize="False"
+                    Header="STATUS"
+                    IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Border BorderThickness="0" CornerRadius="14" ToolTip="{Binding LastStatusUpdateDate, NotifyOnTargetUpdated=True}">
-                                <Label MinWidth="100" Margin="2,0,2,0" HorizontalContentAlignment="Center" Content="{Binding LastStatusText, NotifyOnTargetUpdated=True}" FontSize="12" FontWeight="SemiBold" />
+                            <Border
+                                BorderThickness="0"
+                                CornerRadius="14"
+                                ToolTip="{Binding LastStatusUpdateDate, NotifyOnTargetUpdated=True}">
+                                <Label
+                                    MinWidth="100"
+                                    Margin="2,0,2,0"
+                                    HorizontalContentAlignment="Center"
+                                    Content="{Binding LastStatusText, NotifyOnTargetUpdated=True}"
+                                    FontSize="12"
+                                    FontWeight="SemiBold" />
                                 <Border.Style>
                                     <Style TargetType="Border">
                                         <Setter Property="Background" Value="White" />
@@ -73,30 +145,91 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Width="auto" Binding="{Binding Path=Part.Type.Name, NotifyOnTargetUpdated=True}" CanUserResize="False" Header="RODZAJ CZĘŚCI" IsReadOnly="True" />
-                <DataGridTextColumn Width="auto" Binding="{Binding Path=Part.NamePl, NotifyOnTargetUpdated=True}" CanUserResize="False" Header="NAZWA CZĘŚCI" IsReadOnly="True" />
-                <DataGridTextColumn Width="auto" Binding="{Binding Path=AmountText, NotifyOnTargetUpdated=True}" CanUserResize="False" Header="ILOŚĆ" IsReadOnly="True" />
-                <DataGridTextColumn Width="auto" Binding="{Binding Path=OrderedByUser.FullName, NotifyOnTargetUpdated=True}" CanUserResize="False" Header="ZAMAWIAJĄCY" IsReadOnly="True" />
-                <DataGridTextColumn Width="auto" Binding="{Binding Path=Errand.Display.MachineText, NotifyOnTargetUpdated=True}" CanUserResize="False" Header="MASZYNA" IsReadOnly="True" />
-                <DataGridTextColumn Width="*" Binding="{Binding Path=Errand.Display.DescriptionShort}" CanUserResize="False" Header="DZIAŁANIE" IsReadOnly="True" />
-                <DataGridTemplateColumn Width="auto" MinWidth="60" Header="AKCJE" IsReadOnly="True">
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Path=Part.Type.Name, NotifyOnTargetUpdated=True}"
+                    CanUserResize="False"
+                    Header="RODZAJ CZĘŚCI"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Path=Part.NamePl, NotifyOnTargetUpdated=True}"
+                    CanUserResize="False"
+                    Header="NAZWA CZĘŚCI"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Path=AmountText, NotifyOnTargetUpdated=True}"
+                    CanUserResize="False"
+                    Header="ILOŚĆ"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Path=OrderedByUser.FullName, NotifyOnTargetUpdated=True}"
+                    CanUserResize="False"
+                    Header="ZAMAWIAJĄCY"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Path=Errand.Display.MachineText, NotifyOnTargetUpdated=True}"
+                    CanUserResize="False"
+                    Header="MASZYNA"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Path=Errand.Display.DescriptionShort}"
+                    CanUserResize="False"
+                    Header="DZIAŁANIE"
+                    IsReadOnly="True" />
+                <DataGridTemplateColumn
+                    Width="auto"
+                    MinWidth="60"
+                    Header="AKCJE"
+                    IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <Button Command="{Binding Path=DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource gridDetailsButton}">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" Style="{StaticResource gridButtonIcon}" Text="&#xE7B3;" />
+                                    <TextBlock
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Style="{StaticResource gridButtonIcon}"
+                                        Text="&#xE7B3;" />
                                 </Button>
-                                <Button Margin="5,0,0,0" Command="{Binding Path=DataContext.ConfirmCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource gridOfferButton}">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" Style="{StaticResource gridButtonIcon}" Text="&#xF571;" />
+                                <Button
+                                    Margin="5,0,0,0"
+                                    Command="{Binding Path=DataContext.ConfirmCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    Style="{StaticResource gridOfferButton}">
+                                    <TextBlock
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Style="{StaticResource gridButtonIcon}"
+                                        Text="&#xF571;" />
                                 </Button>
-                                <Button Margin="5,0,0,0" Command="{Binding Path=DataContext.ConfirmCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource gridOrderButton}">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" Style="{StaticResource gridButtonIcon}" Text="&#xF785;" />
+                                <Button
+                                    Margin="5,0,0,0"
+                                    Command="{Binding Path=DataContext.ConfirmCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    Style="{StaticResource gridOrderButton}">
+                                    <TextBlock
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Style="{StaticResource gridButtonIcon}"
+                                        Text="&#xF785;" />
                                 </Button>
-                                <Button Margin="5,0,0,0" Command="{Binding Path=DataContext.ConfirmCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource gridDeployButton}">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" Style="{StaticResource gridButtonIcon}" Text="&#xF133;" />
+                                <Button
+                                    Margin="5,0,0,0"
+                                    Command="{Binding Path=DataContext.ConfirmCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    Style="{StaticResource gridDeployButton}">
+                                    <TextBlock
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Style="{StaticResource gridButtonIcon}"
+                                        Text="&#xF133;" />
                                 </Button>
-                                <Button Margin="5,0,0,0" Command="{Binding Path=DataContext.AbortCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource gridAbortButton}">
-                                    <TextBlock FontFamily="Segoe MDL2 Assets" Style="{StaticResource gridButtonIcon}" Text="&#xF78A;" />
+                                <Button
+                                    Margin="5,0,0,0"
+                                    Command="{Binding Path=DataContext.AbortCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    Style="{StaticResource gridAbortButton}">
+                                    <TextBlock
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Style="{StaticResource gridButtonIcon}"
+                                        Text="&#xF78A;" />
                                 </Button>
                             </StackPanel>
                         </DataTemplate>
@@ -118,7 +251,7 @@
                                                     <TextBlock FontWeight="Bold" Text="{Binding Name.Display.MachineText}" Foreground="White" Margin="10,0,0,0"/>
                                                     <TextBlock FontWeight="Bold" Text="-" Foreground="White" Margin="10,0,10,0"/>
                                                     <TextBlock FontWeight="Bold" Text="{Binding Name.Display.DescriptionShort}" Foreground="White"/>
-                                                </StackPanel>                                                
+                                                </StackPanel>
                                             </Expander.Header>
                                             <ItemsPresenter/>
                                         </Expander>
