@@ -80,13 +80,13 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
                 SapNumber = errandDTO.SapNumber,
                 ExpectedDate = errandDTO.ExpectedDate,
                 OwnerId = errandDTO.Responsible?.Id,
-                CreatedById = null,
+                CreatedById = -1,
             };
             _ = _errandProvider.Update(errand);
         }
         private void UpdateParts(int errandId)
         {
-            IEnumerable<ErrandPart> forCurrentErrand = _errandPartStore.GetData.Where(ep => ep.ErrandId == errandId);
+            IEnumerable<ErrandPart> forCurrentErrand = _errandPartStore.GetData().Where(ep => ep.ErrandId == errandId);
             IEnumerable<ErrandPart> existing = _currentErrand.ErrandParts.Intersect(forCurrentErrand);
             IEnumerable<ErrandPart> toDelete = forCurrentErrand.Except(_currentErrand.ErrandParts);
             IEnumerable<ErrandPart> toAdd = _currentErrand.ErrandParts.Except(forCurrentErrand);

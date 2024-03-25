@@ -118,15 +118,11 @@ namespace Shopfloor.Features.Admin.PartTypes.List
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public bool IsDataValidate => !HasErrors;
-        public async Task LoadData(IServiceProvider databaseServices)
+        public Task LoadData(IServiceProvider databaseServices)
         {
-            List<Task> tasks = [];
             Application.Current.Dispatcher.Invoke(_partTypes.Clear);
-            if (!_partTypesStore.IsLoaded) tasks.Add(LoadPartTypes());
 
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
-
-            IEnumerable<PartType> partTypes = _partTypesStore.GetData;
+            List<PartType> partTypes = _partTypesStore.GetData();
             foreach (PartType partType in partTypes)
             {
                 Application.Current.Dispatcher.Invoke(() =>
@@ -135,15 +131,11 @@ namespace Shopfloor.Features.Admin.PartTypes.List
                     OnPropertyChanged(nameof(PartTypes));
                 });
             }
-        }
-        public Task LoadPartTypes()
-        {
-            _partTypesStore.Load();
             return Task.CompletedTask;
         }
         public void ReloadData()
         {
-            _databaseServices.GetRequiredService<PartTypeStore>().Load();
+            _databaseServices.GetRequiredService<PartTypeStore>().Reload().Wait();
         }
         //Updates the list if value didn't exist, ie. after add
         public async Task UpdateData()

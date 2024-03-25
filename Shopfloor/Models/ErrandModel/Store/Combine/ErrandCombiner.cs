@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ErrandModel.Store.Combine
 {
-    internal sealed class ErrandCombiner : ICombiner
+    internal sealed class ErrandCombiner
     {
         private readonly ErrandToErrandPart _errandPart;
         private readonly ErrandToErrandStatus _errandStatus;

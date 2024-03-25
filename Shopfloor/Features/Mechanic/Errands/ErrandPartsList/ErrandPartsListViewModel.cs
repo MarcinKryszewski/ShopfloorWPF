@@ -5,7 +5,6 @@ using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.PartModel;
-using Shopfloor.Shared;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Utilities.CustomList;
 using System;
@@ -82,8 +81,8 @@ namespace Shopfloor.Features.Mechanic.Errands
             PartStore partsStore = _databaseServices.GetRequiredService<PartStore>();
             ErrandPartStore errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
 
-            await LoadStores(partsStore, errandPartStore);
-            await CombineData(partsStore, errandPartStore);
+            //await LoadStores(partsStore, errandPartStore);
+            //await CombineData(partsStore, errandPartStore);
             await FillLists(partsStore, errandPartStore);
 
             Application.Current.Dispatcher.Invoke
@@ -95,20 +94,6 @@ namespace Shopfloor.Features.Mechanic.Errands
             });
             await DisplayList.ReloadSourceData();
         }
-        public async Task CombineData(PartStore partsStore, ErrandPartStore errandPartStore)
-        {
-            List<Task> tasks = [];
-            tasks.Add(partsStore.CombineData());
-            tasks.Add(errandPartStore.CombineData());
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
-        }
-        public async Task LoadStores(PartStore partsStore, ErrandPartStore errandPartStore)
-        {
-            List<Task> tasks = [];
-            if (!partsStore.IsLoaded) tasks.Add(DataStore.LoadData(partsStore));
-            if (!errandPartStore.IsLoaded) tasks.Add(DataStore.LoadData(errandPartStore));
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
-        }
         public async Task FillLists(PartStore partsStore, ErrandPartStore errandPartStore)
         {
             List<Task> tasks = [];
@@ -118,7 +103,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         }
         private Task FillPartsList(PartStore partsStore)
         {
-            _parts.AddRange(partsStore.GetData);
+            _parts.AddRange(partsStore.GetData());
             /*foreach (Part part in partsStore.Data)
             {
                 _parts.Add(part);
@@ -127,12 +112,12 @@ namespace Shopfloor.Features.Mechanic.Errands
         }
         private Task FillErrandPartsList(ErrandPartStore errandPartStore, PartStore partsStore)
         {
-            foreach (ErrandPart errandPart in errandPartStore.GetData)
+            foreach (ErrandPart errandPart in errandPartStore.GetData())
             {
                 if (errandPart.LastStatusValue == 6) continue;
                 if (errandPart.ErrandId == _errandStore.SelectedErrand?.Id)
                 {
-                    errandPart.Part = partsStore.GetData.First(p => p.Id == errandPart.PartId);
+                    errandPart.Part = partsStore.GetData().First(p => p.Id == errandPart.PartId);
                     _errandStore.ErrandParts.Add(errandPart);
                 }
             }

@@ -34,19 +34,19 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
             //_errandStatusProvider = _databaseServices.GetRequiredService<ErrandStatusProvider>();
             //_errandPartStatusProvider = _databaseServices.GetRequiredService<ErrandPartStatusProvider>();
         }
-        public ErrandProvider ErrandProvider
+        public required ErrandProvider ErrandProvider
         {
             init => _errandProvider = value;
         }
-        public ErrandPartProvider ErrandPartProvider
+        public required ErrandPartProvider ErrandPartProvider
         {
             init => _errandPartProvider = value;
         }
-        public ErrandStatusProvider ErrandStatusProvider
+        public required ErrandStatusProvider ErrandStatusProvider
         {
             init => _errandStatusProvider = value;
         }
-        public ErrandPartStatusProvider ErrandPartStatusProvider
+        public required ErrandPartStatusProvider ErrandPartStatusProvider
         {
             init => _errandPartStatusProvider = value;
         }
@@ -76,13 +76,13 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
                 SetNewErrandPartStatus(errandPartId);
                 _isPartAdd = true;
             }
-            Task.Run(_databaseServices.GetRequiredService<ErrandPartStore>().Reload);
-            Task.Run(_databaseServices.GetRequiredService<ErrandPartStatusStore>().Reload);
+            Task.Run(_errandPartStore.Reload);
+            Task.Run(_errandPartStatusStore.Reload);
         }
         private void AddErrand()
         {
             _currentErrand.ErrandId = CreateErrand();
-            Task.Run(_databaseServices.GetRequiredService<ErrandStore>().Reload);
+            Task.Run(_errandStore.Reload);
             SetErrandStatus((int)_currentErrand.ErrandId, ErrandStatusList.NoPartsList);
             AddParts((int)_currentErrand.ErrandId);
             if (_isPartAdd) SetErrandStatus((int)_currentErrand.ErrandId, ErrandStatusList.PartsListCompleted);
@@ -126,8 +126,32 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
                     SetDate = DateTime.Now,
                 };
                 _ = _errandStatusProvider.Create(errandStatus);
-                Task.Run(_databaseServices.GetRequiredService<ErrandStatusStore>().Reload);
+                _errandStatusStore.Reload().Start();
             }
+        }
+        private ErrandStatusStore _errandStatusStore;
+        public required ErrandStatusStore ErrandStatusStore
+        {
+            private get => _errandStatusStore;
+            init => _errandStatusStore = value;
+        }
+        private ErrandStore _errandStore;
+        public required ErrandStore ErrandStore
+        {
+            private get => _errandStore;
+            init => _errandStore = value;
+        }
+        private ErrandPartStore _errandPartStore;
+        public required ErrandPartStore ErrandPartStore
+        {
+            private get => _errandPartStore;
+            init => _errandPartStore = value;
+        }
+        private ErrandPartStatusStore _errandPartStatusStore;
+        public required ErrandPartStatusStore ErrandPartStatusStore
+        {
+            private get => _errandPartStatusStore;
+            init => _errandPartStatusStore = value;
         }
     }
 }

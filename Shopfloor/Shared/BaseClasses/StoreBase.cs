@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-internal abstract class StoreBase<T> : IDataStore<T>
+internal abstract class StoreBase<T>
 {
     protected List<T> _data;
     protected readonly IProvider<T> _provider;

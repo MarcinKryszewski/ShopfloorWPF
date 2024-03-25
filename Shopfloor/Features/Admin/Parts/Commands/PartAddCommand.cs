@@ -11,10 +11,10 @@ namespace Shopfloor.Features.Admin.Parts.Commands
         private readonly PartsAddViewModel _viewModel;
         private readonly PartProvider _partProvider;
 
-        public PartAddCommand(PartsAddViewModel partsAddViewModel, IServiceProvider databaseServices)
+        public PartAddCommand(PartsAddViewModel partsAddViewModel, PartProvider provider)
         {
             _viewModel = partsAddViewModel;
-            _partProvider = databaseServices.GetRequiredService<PartProvider>();
+            _partProvider = provider;
         }
 
         public override void Execute(object? parameter)

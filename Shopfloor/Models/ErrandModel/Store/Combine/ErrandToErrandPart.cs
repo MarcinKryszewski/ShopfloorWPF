@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ErrandModel.Store.Combine
 {
-    internal sealed class ErrandToErrandPart : ICombiner
+    internal sealed class ErrandToErrandPart : ICombiner<Errand>
     {
         private readonly ErrandPartStore _errandPartStore;
         private readonly ErrandStore _errandStore;
@@ -15,20 +15,20 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
         {
             _errandStore = errandStore;
             _errandPartStore = errandPartStore;
-        }
-        public Task Combine()
+        }`
+        public Task Combine(List<Errand> data)
         {
-            List<ErrandPart> errandParts = LoadErrandParts();
-            List<Errand> errands = LoadErrands();
+            List<ErrandPart> errandParts = GetErrandParts();
+            //List<Errand> errands = GetErrands();
 
-            foreach (Errand errand in errands)
+            foreach (Errand errand in data)
             {
                 errand.Parts.Clear();
                 errand.Parts.AddRange(errandParts.Where(errandPart => errandPart.ErrandId == errand.Id));
             }
             return Task.CompletedTask;
         }
-        private List<ErrandPart> LoadErrandParts() => _errandPartStore.GetData();
-        private List<Errand> LoadErrands() => _errandStore.GetData();
+        private List<ErrandPart> GetErrandParts() => _errandPartStore.GetData();
+        //private List<Errand> GetErrands() => _errandStore.GetData();
     }
 }

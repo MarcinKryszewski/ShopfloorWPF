@@ -86,7 +86,8 @@ namespace Shopfloor.Features.Manager.Commands
         private void AddToStore(ErrandPartStatus status)
         {
             ErrandPartStatusStore store = _databaseServices.GetRequiredService<ErrandPartStatusStore>();
-            store.GetData.Add(status);
+            List<ErrandPartStatus> errandPartStatuses = store.GetData();
+            errandPartStatuses.Add(status);
         }
     }
 }

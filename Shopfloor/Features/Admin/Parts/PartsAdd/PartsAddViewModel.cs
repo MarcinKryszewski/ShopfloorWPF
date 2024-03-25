@@ -1,9 +1,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Parts.Commands;
+using Shopfloor.Features.Admin.Parts.List;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
+using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
@@ -18,12 +21,10 @@ namespace Shopfloor.Features.Admin.Parts.Add
 {
     internal sealed class PartsAddViewModel : ViewModelBase, IInputForm<Part>
     {
-        private readonly IServiceProvider _databaseServices;
-        private readonly IServiceProvider _mainServices;
-        private readonly ObservableCollection<PartType> _partTypes = [];
+        private readonly List<PartType> _partTypes;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
-        private readonly ObservableCollection<Supplier> _suppliers = [];
-        #region modelFields
+        private readonly List<Supplier> _suppliers = [];
+        private readonly PartStore _partStore;
         private string _details = string.Empty;
         private int? _index;
         private string _nameOriginal = string.Empty;
@@ -33,18 +34,17 @@ namespace Shopfloor.Features.Admin.Parts.Add
         private Supplier? _supplier;
         private PartType? _type;
         private string? _unit;
-        #endregion modelFields
-        public PartsAddViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public PartsAddViewModel(NavigationService navigationService, PartTypeStore partTypeStore, SuppliersStore suppliersStore, PartStore partStore, PartProvider partProvider)
         {
-            _mainServices = mainServices;
-            _databaseServices = databaseServices;
+            _partStore = partStore;
 
             //ReturnCommand = new NavigateCommand<PartsListViewModel>(_mainServices.GetRequiredService<NavigationService<PartsListViewModel>>());
+            ReturnCommand = new RelayCommand(o => { navigationService.NavigateTo<PartsListViewModel>(); }, o => true);
             CleanFormCommand = new PartCleanFormCommand(this);
-            AddPartCommand = new PartAddCommand(this, _databaseServices);
+            AddPartCommand = new PartAddCommand(this, partProvider);
 
-            _partTypes = new(_databaseServices.GetRequiredService<PartTypeStore>().GetData);
-            _suppliers = new(_databaseServices.GetRequiredService<SuppliersStore>().GetData);
+            _partTypes = partTypeStore.GetData();
+            _suppliers = suppliersStore.GetData();
 
             PartTypes = CollectionViewSource.GetDefaultView(_partTypes);
             Suppliers = CollectionViewSource.GetDefaultView(_suppliers);
@@ -198,7 +198,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
         public bool IsDataValidate => !HasErrors;
         public void ReloadData()
         {
-            _databaseServices.GetRequiredService<PartStore>().Load();
+            _partStore.Reload();
         }
         private void OnErrorsChanged(string propertyName)
         {

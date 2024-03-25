@@ -72,29 +72,9 @@ namespace Shopfloor.Features.Plannist.Offers
             ErrandPartStatusStore partsStatusStore = _databaseServices.GetRequiredService<ErrandPartStatusStore>();
             PartTypeStore partTypesStore = _databaseServices.GetRequiredService<PartTypeStore>();
 
-            await LoadStores(errandStore, errandPartStore, partsStore);
-            await CombineData(errandStore, errandPartStore, partsStore);
             await FillLists(errandPartStore);
 
             Application.Current.Dispatcher.Invoke(Parts.Refresh);
-        }
-        private static async Task LoadStores(ErrandStore errandStore, ErrandPartStore errandPartStore, PartStore partsStore)
-        {
-            List<Task> tasks = [];
-            tasks.Add(DataStore.LoadData(errandStore));
-            tasks.Add(DataStore.LoadData(errandPartStore));
-            tasks.Add(DataStore.LoadData(partsStore));
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
-        }
-        private static async Task CombineData(ErrandStore errandStore, ErrandPartStore errandPartStore, PartStore partsStore)
-        {
-            List<Task> tasks = [];
-
-            tasks.Add(errandStore.CombineData());
-            tasks.Add(errandPartStore.CombineData());
-            tasks.Add(partsStore.CombineData());
-
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
         private async Task FillLists(ErrandPartStore errandPartStore)
         {
@@ -104,7 +84,7 @@ namespace Shopfloor.Features.Plannist.Offers
         }
         private Task FillPartList(ErrandPartStore errandPartStore)
         {
-            foreach (ErrandPart errandPart in errandPartStore.GetData)
+            foreach (ErrandPart errandPart in errandPartStore.GetData(true))
             {
                 if (errandPart.LastStatusText == "OFERTOWANIE" && errandPart.LastStatus.Confirmed) _parts.Add(errandPart);
             }

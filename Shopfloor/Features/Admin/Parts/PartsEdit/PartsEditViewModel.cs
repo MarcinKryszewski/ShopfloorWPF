@@ -21,11 +21,10 @@ namespace Shopfloor.Features.Admin.Parts.Edit
     {
         private readonly IServiceProvider _databaseServices;
         private readonly IServiceProvider _mainServices;
-        private readonly ObservableCollection<PartType> _partTypes = [];
+        private readonly List<PartType> _partTypes = [];
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         private readonly Part? _selectedPart;
-        private readonly ObservableCollection<Supplier> _suppliers = [];
-        #region modelFields
+        private readonly List<Supplier> _suppliers = [];
         private string _details = string.Empty;
         private int? _index;
         private string _nameOriginal = string.Empty;
@@ -35,7 +34,6 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         private Supplier? _supplier;
         private PartType? _type;
         private string _unit = "SZT";
-        #endregion modelFields
         public PartsEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
             _mainServices = mainServices;
@@ -47,8 +45,8 @@ namespace Shopfloor.Features.Admin.Parts.Edit
             CleanFormCommand = new PartCleanFormCommand(this);
             EditPartCommand = new PartEditCommand(this, _databaseServices);
 
-            _partTypes = new(_databaseServices.GetRequiredService<PartTypeStore>().GetData);
-            _suppliers = new(_databaseServices.GetRequiredService<SuppliersStore>().GetData);
+            _partTypes = _databaseServices.GetRequiredService<PartTypeStore>().GetData();
+            _suppliers = _databaseServices.GetRequiredService<SuppliersStore>().GetData();
 
             Suppliers = CollectionViewSource.GetDefaultView(_suppliers);
             Producers = CollectionViewSource.GetDefaultView(_suppliers);
@@ -177,7 +175,7 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         public bool IsDataValidate => !HasErrors;
         public void ReloadData()
         {
-            _databaseServices.GetRequiredService<PartStore>().Load();
+            _databaseServices.GetRequiredService<PartStore>().Reload().Wait();
         }
         public void SetupForm()
         {

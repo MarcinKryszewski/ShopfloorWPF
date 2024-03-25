@@ -79,21 +79,11 @@ namespace Shopfloor.Features.Admin.Parts.List
             Parts.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Part.TypeName)));
         }
 
-        public async Task LoadData()
+        public Task LoadData()
         {
-            //Stopwatch stopwatch = Stopwatch.StartNew();
-
-            List<Task> tasks = new();
-
-            if (!_partsStore.IsLoaded) tasks.Add(LoadParts());
-            if (!_suppliersStore.IsLoaded) tasks.Add(LoadSuppliers());
-            if (!_partTypesStore.IsLoaded) tasks.Add(LoadPartTypes());
-
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
-
-            IEnumerable<Part> parts = _partsStore.GetData;
-            IEnumerable<Supplier> suppliers = _suppliersStore.GetData;
-            IEnumerable<PartType> partTypes = _partTypesStore.GetData;
+            List<Part> parts = _partsStore.GetData();
+            List<Supplier> suppliers = _suppliersStore.GetData();
+            List<PartType> partTypes = _partTypesStore.GetData();
 
             foreach (Part part in parts)
             {
@@ -113,28 +103,8 @@ namespace Shopfloor.Features.Admin.Parts.List
                 });
             }
 
-            //stopwatch.Stop();
-            //Debug.WriteLine(stopwatch.ElapsedTicks);
-        }
-
-        public Task LoadParts()
-        {
-            _partsStore.Load();
             return Task.CompletedTask;
         }
-
-        public Task LoadPartTypes()
-        {
-            _partTypesStore.Load();
-            return Task.CompletedTask;
-        }
-
-        public Task LoadSuppliers()
-        {
-            _suppliersStore.Load();
-            return Task.CompletedTask;
-        }
-
         private bool FilterParts(object obj)
         {
             if (obj is Part part)

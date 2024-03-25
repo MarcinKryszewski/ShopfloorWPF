@@ -36,7 +36,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly SelectedErrandStore _selectedErrand;
         private readonly ObservableCollection<User> _users = [];
         private ErrandDTO _errandDTO = new();
-        public ErrandEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
+        public ErrandEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices, ErrandPartsListViewModel partsViewModel)
         {
             _mainServices = mainServices;
             _databaseServices = databaseServices;
@@ -46,7 +46,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             EditErrandCommand = new ErrandEditCommand(this, _databaseServices, userServices.GetRequiredService<CurrentUserStore>(), _selectedErrand);
             //ReturnCommand = new NavigateCommand<ErrandsListViewModel>(_mainServices.GetRequiredService<NavigationService<ErrandsListViewModel>>());
             PrioritySetCommand = new PrioritySetCommand(this);
-            ShowPartsListCommand = new ErrandsShowPartsList(this, _mainServices);
+            ShowPartsListCommand = new ErrandsShowPartsList(this, partsViewModel);
 
             _errandValidation = new(this);
 
@@ -169,11 +169,11 @@ namespace Shopfloor.Features.Mechanic.Errands
             Application.Current.Dispatcher.Invoke(() =>
             {
                 _selectedErrand.ErrandParts.Clear();
-                foreach (ErrandPart part in errandPartStore.GetData)
+                foreach (ErrandPart part in errandPartStore.GetData())
                 {
                     if (part.ErrandId == _selectedErrand.SelectedErrand?.Id)
                     {
-                        part.Part = partsStore.GetData.First(p => p.Id == part.PartId);
+                        part.Part = partsStore.GetData().First(p => p.Id == part.PartId);
                         _selectedErrand.ErrandParts.Add(part);
                     }
                 }
@@ -184,7 +184,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (Machine machine in machineStore.GetData)
+                foreach (Machine machine in machineStore.GetData())
                 {
                     _machines.Add(machine);
                 }
@@ -195,7 +195,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (ErrandType type in errandTypeStore.GetData)
+                foreach (ErrandType type in errandTypeStore.GetData())
                 {
                     _errandTypes.Add(type);
                 }
@@ -206,7 +206,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (User user in userStore.GetData)
+                foreach (User user in userStore.GetData())
                 {
                     _users.Add(user);
                 }
@@ -223,7 +223,6 @@ namespace Shopfloor.Features.Mechanic.Errands
             ErrandPartStore errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
             PartStore partsStore = _databaseServices.GetRequiredService<PartStore>();
 
-            await LoadStoresData(machineStore, userStore, errandTypeStore, errandPartStore, partsStore);
             await FillLists(machineStore, userStore, errandTypeStore, errandPartStore, partsStore);
 
             RefreshLists();
@@ -235,8 +234,8 @@ namespace Shopfloor.Features.Mechanic.Errands
             Errand? errand = _selectedErrand.SelectedErrand;
             if (errand == null) return;
 
-            SelectedType = errandTypeStore.GetData.First((t) => t.Id == errand.TypeId);
-            SelectedMachine = machineStore.GetData.First((m) => m.Id == errand.MachineId);
+            SelectedType = errandTypeStore.GetData().First((t) => t.Id == errand.TypeId);
+            SelectedMachine = machineStore.GetData().First((m) => m.Id == errand.MachineId);
             SelectedDate = errand.ExpectedDate;
             SapNumber = errand.SapNumber;
             SelectedResponsible = errand.Responsible;
@@ -267,21 +266,6 @@ namespace Shopfloor.Features.Mechanic.Errands
                     OnPropertyChanged(nameof(PrioC));
                     break;
             }
-        }
-        private async Task LoadStoresData(MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore, ErrandPartStore errandPartStore, PartStore partsStore)
-        {
-            List<Task> tasks = [];
-            if (!machineStore.IsLoaded) tasks.Add(LoadStore(machineStore));
-            if (!userStore.IsLoaded) tasks.Add(LoadStore(userStore));
-            if (!errandTypeStore.IsLoaded) tasks.Add(LoadStore(errandTypeStore));
-            if (!errandPartStore.IsLoaded) tasks.Add(LoadStore(errandPartStore));
-            if (!partsStore.IsLoaded) tasks.Add(LoadStore(partsStore));
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
-        }
-        private static Task LoadStore<T>(IDataStore<T> dataStore)
-        {
-            dataStore.Load();
-            return Task.CompletedTask;
         }
         private void RefreshLists()
         {

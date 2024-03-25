@@ -1,8 +1,14 @@
 ﻿using Shopfloor.Features.Mechanic.Errands.Commands;
+using Shopfloor.Features.Mechanic.Errands.ErrandNew;
 using Shopfloor.Features.Mechanic.Errands.Interfaces;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
+using Shopfloor.Models.ErrandModel.Store;
+using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.ErrandPartModel.Store;
+using Shopfloor.Models.ErrandPartStatusModel;
+using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.UserModel;
@@ -34,11 +40,21 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly UserStore _userStore;
         private readonly ErrandTypeStore _errandTypeStore;
 
-        public ErrandNewViewModel(ErrandPartsListViewModel errandPartsListViewModel, NavigationService navigationService, SelectedErrandStore selectedErrandStore, CurrentUserStore currentUserStore, MachineStore machineStore, ErrandTypeStore errandTypeStore, UserStore userStore)
+        public ErrandNewViewModel(ErrandPartsListViewModel errandPartsListViewModel, NavigationService navigationService, SelectedErrandStore selectedErrandStore, CurrentUserStore currentUserStore, MachineStore machineStore, ErrandTypeStore errandTypeStore, UserStore userStore, ErrandProvider errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, ErrandPartStore errandPartStore, ErrandStatusStore errandStatusStore, ErrandStore errandStore)
         {
             _selectedErrand = selectedErrandStore;
 
-            NewErrandCommand = new ErrandNewCommand(this, _databaseServices, currentUserStore, _selectedErrand);
+            NewErrandCommand = new ErrandNewCommand(this, currentUserStore, _selectedErrand)
+            {
+                ErrandPartProvider = errandPartProvider,
+                ErrandPartStatusProvider = errandPartStatusProvider,
+                ErrandProvider = errandProvider,
+                ErrandStatusProvider = errandStatusProvider,
+                ErrandPartStatusStore = errandPartStatusStore,
+                ErrandPartStore = errandPartStore,
+                ErrandStatusStore = errandStatusStore,
+                ErrandStore = errandStore
+            };
             ReturnCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandsListViewModel>(); }, o => true);
             PrioritySetCommand = new PrioritySetCommand(this);
             ShowPartsListCommand = new ErrandsShowPartsList(this, errandPartsListViewModel);
@@ -135,7 +151,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (Machine machine in machineStore.GetData)
+                foreach (Machine machine in machineStore.GetData())
                 {
                     _machines.Add(machine);
                 }
@@ -146,7 +162,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (ErrandType type in errandTypeStore.GetData)
+                foreach (ErrandType type in errandTypeStore.GetData())
                 {
                     _errandTypes.Add(type);
                 }
@@ -157,7 +173,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (User user in userStore.GetData)
+                foreach (User user in userStore.GetData())
                 {
                     _users.Add(user);
                 }
@@ -168,18 +184,18 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             ClearLists();
 
-            await LoadStoresData(_machineStore, _userStore, _errandTypeStore);
+            //await LoadStoresData(_machineStore, _userStore, _errandTypeStore);
             await FillLists(_machineStore, _userStore, _errandTypeStore);
             RefreshLists();
         }
-        private async Task LoadStoresData(MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore)
+        /*private async Task LoadStoresData(MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore)
         {
             List<Task> tasks = [];
             if (!machineStore.IsLoaded) tasks.Add(LoadMachines(machineStore));
             if (!userStore.IsLoaded) tasks.Add(LoadUsers(userStore));
             if (!errandTypeStore.IsLoaded) tasks.Add(LoadErrandTypes(errandTypeStore));
             if (tasks.Count > 0) await Task.WhenAll(tasks);
-        }
+        }*/
         private async Task FillLists(MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore)
         {
             List<Task> tasks = [];
@@ -210,21 +226,21 @@ namespace Shopfloor.Features.Mechanic.Errands
                 ErrandTypes.Refresh();
             });
         }
-        private Task LoadErrandTypes(ErrandTypeStore errandTypeStore)
-        {
-            errandTypeStore.Load();
-            return Task.CompletedTask;
-        }
-        private Task LoadMachines(MachineStore machineStore)
-        {
-            machineStore.Load();
-            return Task.CompletedTask;
-        }
-        private Task LoadUsers(UserStore userStore)
-        {
-            userStore.Load();
-            return Task.CompletedTask;
-        }
+        // private Task LoadErrandTypes(ErrandTypeStore errandTypeStore)
+        // {
+        //     errandTypeStore.Load();
+        //     return Task.CompletedTask;
+        // }
+        // private Task LoadMachines(MachineStore machineStore)
+        // {
+        //     machineStore.Load();
+        //     return Task.CompletedTask;
+        // }
+        // private Task LoadUsers(UserStore userStore)
+        // {
+        //     userStore.Load();
+        //     return Task.CompletedTask;
+        // }
     }
     internal sealed partial class ErrandNewViewModel : IInputForm<Errand>
     {

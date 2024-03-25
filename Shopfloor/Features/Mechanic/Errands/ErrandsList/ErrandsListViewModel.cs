@@ -44,38 +44,14 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(_errands.Clear);
 
-            await LoadStores(_errandStore, _partsStore);
-            await CombineData(_errandStore, _errandPartStore);
             await FillErrandList(_errandStore);
 
             Application.Current.Dispatcher.Invoke(Errands.Refresh);
         }
-        private async Task LoadStores(ErrandStore errandStore, PartStore partsStore)
-        {
-            List<Task> tasks = [];
 
-            if (!errandStore.IsLoaded) tasks.Add(LoadStore(errandStore));
-            if (!partsStore.IsLoaded) tasks.Add(LoadStore(partsStore));
-
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
-        }
-        private static Task LoadStore<T>(IDataStore<T> dataStore)
-        {
-            dataStore.Load();
-            return Task.CompletedTask;
-        }
-        private async Task CombineData(ErrandStore errandStore, ErrandPartStore errandParts)
-        {
-            List<Task> tasks = [];
-
-            tasks.Add(errandStore.CombineData());
-            tasks.Add(errandParts.CombineData());
-
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
-        }
         private Task FillErrandList(ErrandStore errandStore)
         {
-            _errands.AddRange(from Errand errand in errandStore.GetData select errand);
+            _errands.AddRange(from Errand errand in errandStore.GetData(true) select errand);
             return Task.CompletedTask;
         }
     }

@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Interfaces
 {
-    internal interface ICombiner
+    internal interface ICombiner<T>
     {
-        public Task Combine();
+        public Task Combine(List<T> data);
     }
 }

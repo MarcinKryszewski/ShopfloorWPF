@@ -96,80 +96,12 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
             ErrandTypeStore errandTypes = databaseServices.GetRequiredService<ErrandTypeStore>();
             ErrandPartStore errandPartStore = databaseServices.GetRequiredService<ErrandPartStore>();
 
-            await LoadStores(suppliers, users, parts, errandPartStatuses, errands, errandTypes, errandPartStore);
-            await CombineData(suppliers, users, parts, errandPartStatuses, errands, errandTypes, errandPartStore);
-
             LoadHistoricalData(errandPartStore);
         }
-        #region FETCH_DATA
-        private async Task LoadStores(SuppliersStore suppliers, UserStore users, PartStore parts, ErrandPartStatusStore errandPartStatuses, ErrandStore errands, ErrandTypeStore errandTypes, ErrandPartStore errandPartStore)
-        {
-            List<Task> tasks = [];
-            if (!suppliers.IsLoaded) tasks.Add(LoadStore(suppliers));
-            if (!users.IsLoaded) tasks.Add(LoadStore(users));
-            if (!parts.IsLoaded) tasks.Add(LoadStore(parts));
-            if (!errandPartStatuses.IsLoaded) tasks.Add(LoadStore(errandPartStatuses));
-            if (!errands.IsLoaded) tasks.Add(LoadStore(errands));
-            if (!errandTypes.IsLoaded) tasks.Add(LoadStore(errandTypes));
-            if (!errandPartStore.IsLoaded) tasks.Add(LoadStore(errandPartStore));
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
-        }
-        private static Task LoadStore<T>(IDataStore<T> dataStore)
-        {
-            dataStore.Load();
-            return Task.CompletedTask;
-        }
-        #endregion FETCH_DATA
-        #region COMBINE_DATA
-        private async Task CombineData(SuppliersStore suppliers, UserStore users, PartStore parts, ErrandPartStatusStore statuses, ErrandStore errands, ErrandTypeStore errandTypes, ErrandPartStore errandPartStore)
-        {
-            List<Task> tasks = [];
-            tasks.Add(CombinePartWithSuppliers(parts, suppliers));
-            tasks.Add(CombineStatusWithPerson(statuses, users));
-            tasks.Add(CombineErrandWithTypePerson(errands, errandTypes, users));
-            tasks.Add(CombineErrandWithParts(parts, errands, errandPartStore));
-            await Task.WhenAll(tasks);
-        }
-        private static Task CombinePartWithSuppliers(PartStore parts, SuppliersStore suppliers)
-        {
-            foreach (Part part in parts.GetData)
-            {
-                part.SetSupplier(suppliers.GetData.FirstOrDefault(supplier => supplier.Id == part.SupplierId));
-                part.SetProducer(suppliers.GetData.FirstOrDefault(producer => producer.Id == part.ProducerId));
-            }
-            return Task.CompletedTask;
-        }
-        private Task CombineStatusWithPerson(ErrandPartStatusStore statuses, UserStore users)
-        {
-            foreach (ErrandPartStatus status in statuses.GetData)
-            {
-                status.CompletedBy = users.GetData.FirstOrDefault(user => user.Id == status.CompletedById);
-            }
-            return Task.CompletedTask;
-        }
-        private Task CombineErrandWithParts(PartStore parts, ErrandStore errands, ErrandPartStore errandParts)
-        {
-            ErrandPart.Errand!.Parts.Clear();
-            foreach (ErrandPart errandPart in errandParts.GetData)
-            {
-                if (errandPart.ErrandId != ErrandPart.ErrandId) continue;
-                ErrandPart.Errand!.Parts.Add(errandPart);
-            }
-            return Task.CompletedTask;
-        }
-        private Task CombineErrandWithTypePerson(ErrandStore errands, ErrandTypeStore types, UserStore users)
-        {
-            foreach (Errand errand in errands.GetData)
-            {
-                errand.Type = types.GetData.FirstOrDefault(type => type.Id == errand.TypeId);
-                errand.CreatedByUser = users.GetData.FirstOrDefault(user => user.Id == errand.CreatedById);
-            }
-            return Task.CompletedTask;
-        }
-        #endregion COMBINE_DATA
+
         private void LoadHistoricalData(ErrandPartStore errandParts)
         {
-            HistoricalData = errandParts.GetData.Where(part => part.PartId == ErrandPart.PartId);
+            HistoricalData = errandParts.GetData(true).Where(part => part.PartId == ErrandPart.PartId);
         }
     }
     internal sealed partial class AddOfferViewModel : IInputForm<ErrandPart>

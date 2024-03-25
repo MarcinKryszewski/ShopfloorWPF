@@ -117,15 +117,12 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public bool IsDataValidate => !HasErrors;
-        public async Task LoadData(IServiceProvider databaseServices)
+        public Task LoadData(IServiceProvider databaseServices)
         {
-            List<Task> tasks = [];
             Application.Current.Dispatcher.Invoke(_suppliers.Clear);
-            if (!_suppliersStore.IsLoaded) tasks.Add(LoadSuppliers());
 
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
 
-            IEnumerable<Supplier> suppliers = _suppliersStore.GetData;
+            List<Supplier> suppliers = _suppliersStore.GetData();
             foreach (Supplier supplier in suppliers)
             {
                 Application.Current.Dispatcher.Invoke(() =>
@@ -134,15 +131,11 @@ namespace Shopfloor.Features.Admin.Suppliers.List
                     OnPropertyChanged(nameof(Suppliers));
                 });
             }
-        }
-        public Task LoadSuppliers()
-        {
-            _suppliersStore.Load();
             return Task.CompletedTask;
         }
         public void ReloadData()
         {
-            _databaseServices.GetRequiredService<SuppliersStore>().Load();
+            _databaseServices.GetRequiredService<SuppliersStore>().Reload();
         }
         //Updates the list if value didn't exist, ie. after add
         public async Task UpdateData()
