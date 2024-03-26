@@ -18,9 +18,9 @@ namespace Shopfloor.Features.Mechanic.Requests
     internal sealed class RequestsListViewModel : ViewModelBase
     {
         private List<ErrandPart> _parts = [];
-        private readonly IServiceProvider _mainServices;
-        private readonly IServiceProvider _databaseServices;
         private readonly SelectedRequestStore _requestStore;
+        private readonly ErrandPartCombiner _errandPartCombiner;
+        private readonly ErrandPartStore _errandPartStore;
         private string? _filterText;
         public ErrandPart? SelectedRow
         {
@@ -44,12 +44,12 @@ namespace Shopfloor.Features.Mechanic.Requests
         public ICommand EditCommand { get; }
         public ICommand DetailsCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public RequestsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
+        public RequestsListViewModel(CurrentUserStore currentUserStore, SelectedRequestStore selectedRequestStore, ErrandPartCombiner errandPartCombiner, ErrandPartStore errandPartStore)
         {
-            _mainServices = mainServices;
-            _databaseServices = databaseServices;
 
-            _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
+            _requestStore = selectedRequestStore;
+            _errandPartCombiner = errandPartCombiner;
+            _errandPartStore = errandPartStore;
             SelectedRow = null;
 
             FillPartList();
@@ -57,12 +57,12 @@ namespace Shopfloor.Features.Mechanic.Requests
             //EditCommand = new NavigateCommand<RequestsEditViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsEditViewModel>>());
             //DetailsCommand = new NavigateCommand<RequestsDetailsViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsDetailsViewModel>>());
 
-            if (userServices.GetRequiredService<CurrentUserStore>().User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
+            if (currentUserStore.User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
         }
         private Task FillPartList()
         {
-            _mainServices.GetRequiredService<ErrandPartCombiner>().Combine().Wait();
-            _parts = _mainServices.GetRequiredService<ErrandPartStore>().GetData();
+            _errandPartCombiner.Combine().Wait();
+            _parts = _errandPartStore.Data;
 
             Application.Current.Dispatcher.Invoke(() =>
             {

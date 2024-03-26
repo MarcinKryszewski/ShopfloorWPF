@@ -220,7 +220,7 @@ namespace Shopfloor.Features.Admin.Machines.List
             //if (!_machineStore.IsLoaded) tasks.Add(LoadMachines());
             //if (tasks.Count > 0) await Task.WhenAll(tasks);
 
-            List<Machine> machines = _machineStore.GetData();
+            List<Machine> machines = _machineStore.Data;
 
             foreach (Machine machine in machines)
             {

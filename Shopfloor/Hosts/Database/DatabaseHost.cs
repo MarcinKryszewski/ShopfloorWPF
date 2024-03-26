@@ -90,7 +90,6 @@ namespace Shopfloor.Hosts.Database
         }
         private static void ErrandPartServices(IServiceCollection services)
         {
-            services.AddSingleton<IDataStore<ErrandPart>, ErrandPartStore>();
             services.AddSingleton<ErrandPartStore>();
             services.AddSingleton<ErrandPartProvider>();
             services.AddSingleton<ErrandPartCombiner>();
@@ -114,21 +113,18 @@ namespace Shopfloor.Hosts.Database
         }
         private static void ErrandPartStatusServices(IServiceCollection services)
         {
-            services.AddSingleton<IDataStore<ErrandPartStatus>, ErrandPartStatusStore>();
             services.AddSingleton<ErrandPartStatusStore>();
             services.AddSingleton<ErrandPartStatusProvider>();
             services.AddSingleton<ErrandPartStatusCombiner>();
         }
         private static void ErrandStatusServices(IServiceCollection services)
         {
-            services.AddSingleton<IDataStore<ErrandStatus>, ErrandStatusStore>();
             services.AddSingleton<ErrandStatusProvider>();
             services.AddSingleton<ErrandStatusStore>();
             services.AddSingleton<ErrandStatusCombiner>();
         }
         private static void ErrandTypeServices(IServiceCollection services)
         {
-            services.AddSingleton<IDataStore<ErrandType>, ErrandTypeStore>();
             services.AddSingleton<ErrandTypeStore>();
             services.AddSingleton<ErrandTypeProvider>();
             services.AddSingleton<ErrandTypeCombiner>();
@@ -167,7 +163,6 @@ namespace Shopfloor.Hosts.Database
         }
         private static void PartServices(IServiceCollection services)
         {
-            services.AddSingleton<IDataStore<Part>, PartStore>();
             services.AddSingleton<PartProvider>();
             services.AddSingleton<PartStore>();
             services.AddSingleton<PartCombiner>();
@@ -204,7 +199,6 @@ namespace Shopfloor.Hosts.Database
         }
         private static void UserServices(IServiceCollection services)
         {
-            services.AddSingleton<IDataStore<User>, UserStore>();
             services.AddSingleton<UserStore>();
             services.AddSingleton<UserProvider>();
             services.AddSingleton<UserCombiner>();

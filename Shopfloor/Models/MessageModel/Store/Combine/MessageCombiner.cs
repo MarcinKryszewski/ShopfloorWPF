@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.MessageModel.Store.Combine
 {
-    internal sealed class MessageCombiner : ICombiner<Message>
+    internal sealed class MessageCombiner : ICombinerManager<Message>
     {
-        public Task Combine(List<Message> data)
+        public Task Combine()
         {
             return Task.CompletedTask;
         }

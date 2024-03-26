@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.UserModel.Store.Combine
 {
-    internal sealed class UserCombiner : ICombiner<User>
+    internal sealed class UserCombiner : ICombinerManager<User>
     {
-        public Task Combine(List<User> data)
+        public Task Combine()
         {
             return Task.CompletedTask;
         }

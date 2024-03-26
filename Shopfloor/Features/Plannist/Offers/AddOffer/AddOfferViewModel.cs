@@ -100,7 +100,7 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
 
         private void LoadHistoricalData(ErrandPartStore errandParts)
         {
-            HistoricalData = errandParts.GetData().Where(part => part.PartId == ErrandPart.PartId);
+            HistoricalData = errandParts.Data.Where(part => part.PartId == ErrandPart.PartId);
         }
     }
     internal sealed partial class AddOfferViewModel : IInputForm<ErrandPart>

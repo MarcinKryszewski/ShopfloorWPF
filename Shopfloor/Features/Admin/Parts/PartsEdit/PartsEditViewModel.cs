@@ -45,8 +45,8 @@ namespace Shopfloor.Features.Admin.Parts.Edit
             CleanFormCommand = new PartCleanFormCommand(this);
             EditPartCommand = new PartEditCommand(this, _databaseServices);
 
-            _partTypes = _databaseServices.GetRequiredService<PartTypeStore>().GetData();
-            _suppliers = _databaseServices.GetRequiredService<SuppliersStore>().GetData();
+            _partTypes = _databaseServices.GetRequiredService<PartTypeStore>().Data;
+            _suppliers = _databaseServices.GetRequiredService<SuppliersStore>().Data;
 
             Suppliers = CollectionViewSource.GetDefaultView(_suppliers);
             Producers = CollectionViewSource.GetDefaultView(_suppliers);

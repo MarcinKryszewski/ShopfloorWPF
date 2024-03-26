@@ -169,11 +169,11 @@ namespace Shopfloor.Features.Mechanic.Errands
             Application.Current.Dispatcher.Invoke(() =>
             {
                 _selectedErrand.ErrandParts.Clear();
-                foreach (ErrandPart part in errandPartStore.GetData())
+                foreach (ErrandPart part in errandPartStore.Data)
                 {
                     if (part.ErrandId == _selectedErrand.SelectedErrand?.Id)
                     {
-                        part.Part = partsStore.GetData().First(p => p.Id == part.PartId);
+                        part.Part = partsStore.Data.First(p => p.Id == part.PartId);
                         _selectedErrand.ErrandParts.Add(part);
                     }
                 }
@@ -184,7 +184,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (Machine machine in machineStore.GetData())
+                foreach (Machine machine in machineStore.Data)
                 {
                     _machines.Add(machine);
                 }
@@ -195,7 +195,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (ErrandType type in errandTypeStore.GetData())
+                foreach (ErrandType type in errandTypeStore.Data)
                 {
                     _errandTypes.Add(type);
                 }
@@ -206,7 +206,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (User user in userStore.GetData())
+                foreach (User user in userStore.Data)
                 {
                     _users.Add(user);
                 }
@@ -234,8 +234,8 @@ namespace Shopfloor.Features.Mechanic.Errands
             Errand? errand = _selectedErrand.SelectedErrand;
             if (errand == null) return;
 
-            SelectedType = errandTypeStore.GetData().First((t) => t.Id == errand.TypeId);
-            SelectedMachine = machineStore.GetData().First((m) => m.Id == errand.MachineId);
+            SelectedType = errandTypeStore.Data.First((t) => t.Id == errand.TypeId);
+            SelectedMachine = machineStore.Data.First((m) => m.Id == errand.MachineId);
             SelectedDate = errand.ExpectedDate;
             SapNumber = errand.SapNumber;
             SelectedResponsible = errand.Responsible;

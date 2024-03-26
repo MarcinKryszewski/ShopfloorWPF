@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.SupplierModel.Store.Combine
 {
-    internal sealed class SupplierCombiner : ICombiner<Supplier>
+    internal sealed class SupplierCombiner : ICombinerManager<Supplier>
     {
-        public Task Combine(List<Supplier> data)
+        public Task Combine()
         {
             return Task.CompletedTask;
         }

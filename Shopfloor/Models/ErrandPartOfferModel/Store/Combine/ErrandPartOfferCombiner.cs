@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ErrandPartOfferModel.Store
 {
-    internal sealed class ErrandPartOfferCombiner : ICombiner<ErrandPartOffer>
+    internal sealed class ErrandPartOfferCombiner : ICombinerManager<ErrandPartOffer>
     {
         public ErrandPartOfferCombiner()
         {
         }
-        public Task Combine(List<ErrandPartOffer> data)
+        public Task Combine()
         {
             return Task.CompletedTask;
         }

@@ -86,7 +86,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         }
         private void UpdateParts(int errandId)
         {
-            IEnumerable<ErrandPart> forCurrentErrand = _errandPartStore.GetData().Where(ep => ep.ErrandId == errandId);
+            IEnumerable<ErrandPart> forCurrentErrand = _errandPartStore.Data.Where(ep => ep.ErrandId == errandId);
             IEnumerable<ErrandPart> existing = _currentErrand.ErrandParts.Intersect(forCurrentErrand);
             IEnumerable<ErrandPart> toDelete = forCurrentErrand.Except(_currentErrand.ErrandParts);
             IEnumerable<ErrandPart> toAdd = _currentErrand.ErrandParts.Except(forCurrentErrand);

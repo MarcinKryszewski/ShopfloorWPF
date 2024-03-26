@@ -17,17 +17,17 @@ namespace Shopfloor.Hosts.Features.Mechanic
         }
         private static void GetErrand(IServiceCollection services)
         {
-            services.AddSingleton<ErrandsListViewModel>();
-            services.AddSingleton<ErrandEditViewModel>();
-            services.AddSingleton<ErrandNewViewModel>();
-            services.AddSingleton<ErrandPartsListViewModel>();
+            services.AddTransient<ErrandsListViewModel>();
+            services.AddTransient<ErrandEditViewModel>();
+            services.AddTransient<ErrandNewViewModel>();
+            services.AddTransient<ErrandPartsListViewModel>();
             services.AddSingleton<SelectedErrandStore>();
         }
         private static void GetRequest(IServiceCollection services)
         {
-            services.AddSingleton<RequestsListViewModel>();
-            services.AddSingleton<RequestsEditViewModel>();
-            services.AddSingleton<RequestsDetailsViewModel>();
+            services.AddTransient<RequestsListViewModel>();
+            services.AddTransient<RequestsEditViewModel>();
+            services.AddTransient<RequestsDetailsViewModel>();
             services.AddSingleton<SelectedRequestStore>();
         }
     }

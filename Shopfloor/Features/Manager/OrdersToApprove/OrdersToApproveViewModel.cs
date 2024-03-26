@@ -82,7 +82,7 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
         }
         private Task FillPartList(ErrandPartStore errandPartStore)
         {
-            foreach (ErrandPart errandPart in errandPartStore.GetData())
+            foreach (ErrandPart errandPart in errandPartStore.Data)
             {
                 if (errandPart.LastStatusText == ErrandPartStatus.Status[1]) _orders.Add(errandPart);
             }

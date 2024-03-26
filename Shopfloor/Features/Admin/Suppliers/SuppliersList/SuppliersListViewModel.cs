@@ -122,7 +122,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             Application.Current.Dispatcher.Invoke(_suppliers.Clear);
 
 
-            List<Supplier> suppliers = _suppliersStore.GetData();
+            List<Supplier> suppliers = _suppliersStore.Data;
             foreach (Supplier supplier in suppliers)
             {
                 Application.Current.Dispatcher.Invoke(() =>

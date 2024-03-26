@@ -9,24 +9,24 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
     internal sealed class ErrandPartToErrandPartStatus : ICombiner<ErrandPart>
     {
         private readonly IDataStore<ErrandPartStatus> _errandPartStatusStore;
-        private readonly IDataStore<ErrandPart> _errandPartStore;
-        public ErrandPartToErrandPartStatus(IDataStore<ErrandPartStatus> errandPartStatusStore, IDataStore<ErrandPart> errandPartStore)
+        private readonly ErrandPartStore _errandPartStore;
+        public ErrandPartToErrandPartStatus(IDataStore<ErrandPartStatus> errandPartStatusStore, ErrandPartStore errandPartStore)
         {
             _errandPartStatusStore = errandPartStatusStore;
             _errandPartStore = errandPartStore;
         }
-        public Task Combine(List<ErrandPart> data)
+        public Task Combine()
         {
             List<ErrandPartStatus> statuses = GetErrandPartStatuses();
 
-            foreach (ErrandPart errandPart in _errandPartStore.GetData())
+            foreach (ErrandPart errandPart in _errandPartStore.Data)
             {
                 errandPart.StatusList.Clear();
                 errandPart.StatusList.AddRange(statuses.Where(status => status.ErrandPartId == errandPart.Id));
             }
             return Task.CompletedTask;
         }
-        private List<ErrandPartStatus> GetErrandPartStatuses() => _errandPartStatusStore.GetData();
-        private List<ErrandPart> GetErrandParts() => _errandPartStore.GetData();
+        private List<ErrandPartStatus> GetErrandPartStatuses() => _errandPartStatusStore.Data;
+        private List<ErrandPart> GetErrandParts() => _errandPartStore.Data;
     }
 }

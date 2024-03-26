@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.MachinePartModel.Store.Combine
 {
-    internal sealed class MachinePartCombiner : ICombiner<MachinePart>
+    internal sealed class MachinePartCombiner : ICombinerManager<MachinePart>
     {
-        public Task Combine(List<MachinePart> data)
+        public Task Combine()
         {
             return Task.CompletedTask;
         }

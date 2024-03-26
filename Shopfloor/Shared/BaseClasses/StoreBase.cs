@@ -11,10 +11,14 @@ internal abstract class StoreBase<T> : IDataStore<T>
         _data = [];
         _provider = provider;
     }
-    public List<T> GetData()
+    public List<T> Data
     {
-        if (!IsLoaded) Load();
-        return _data;
+        get
+        {
+            if (!IsLoaded) Load();
+            return _data;
+        }
+
     }
     public bool IsLoaded { get; protected set; }
     protected Task Load()

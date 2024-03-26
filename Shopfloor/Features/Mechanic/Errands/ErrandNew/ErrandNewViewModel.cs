@@ -151,7 +151,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (Machine machine in machineStore.GetData())
+                foreach (Machine machine in machineStore.Data)
                 {
                     _machines.Add(machine);
                 }
@@ -162,7 +162,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (ErrandType type in errandTypeStore.GetData())
+                foreach (ErrandType type in errandTypeStore.Data)
                 {
                     _errandTypes.Add(type);
                 }
@@ -173,7 +173,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (User user in userStore.GetData())
+                foreach (User user in userStore.Data)
                 {
                     _users.Add(user);
                 }

@@ -43,8 +43,8 @@ namespace Shopfloor.Features.Admin.Parts.Add
             CleanFormCommand = new PartCleanFormCommand(this);
             AddPartCommand = new PartAddCommand(this, partProvider);
 
-            _partTypes = partTypeStore.GetData();
-            _suppliers = suppliersStore.GetData();
+            _partTypes = partTypeStore.Data;
+            _suppliers = suppliersStore.Data;
 
             PartTypes = CollectionViewSource.GetDefaultView(_partTypes);
             Suppliers = CollectionViewSource.GetDefaultView(_suppliers);

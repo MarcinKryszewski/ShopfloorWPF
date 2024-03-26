@@ -45,7 +45,7 @@ namespace Shopfloor.Features.Mechanic.Requests
         }
         private void LoadHistoricalData(ErrandPartStore errandParts)
         {
-            HistoricalData = errandParts.GetData().Where(part => part.PartId == _selectedRequest.Request!.PartId);
+            HistoricalData = errandParts.Data.Where(part => part.PartId == _selectedRequest.Request!.PartId);
         }
     }
 }

@@ -104,7 +104,7 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.PlannistPartsList
         }
         private Task FillPartList(ErrandPartStore errandPartStore)
         {
-            foreach (ErrandPart errandPart in errandPartStore.GetData())
+            foreach (ErrandPart errandPart in errandPartStore.Data)
             {
                 _parts.Add(errandPart);
             }

@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.OrderModel.Store.Combine
 {
-    internal sealed class OrderCombiner : ICombiner<Order>
+    internal sealed class OrderCombiner : ICombinerManager<Order>
     {
-        public Task Combine(List<Order> data)
+        public Task Combine()
         {
             return Task.CompletedTask;
         }

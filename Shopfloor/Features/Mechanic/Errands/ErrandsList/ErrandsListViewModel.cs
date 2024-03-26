@@ -51,7 +51,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             _errandPartCombiner.Combine().Wait();
             _errandCombiner.Combine().Wait();
 
-            _errands = errandStore.GetData();
+            _errands = errandStore.Data;
             return Task.CompletedTask;
         }
     }

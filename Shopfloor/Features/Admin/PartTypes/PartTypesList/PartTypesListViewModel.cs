@@ -122,7 +122,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
         {
             Application.Current.Dispatcher.Invoke(_partTypes.Clear);
 
-            List<PartType> partTypes = _partTypesStore.GetData();
+            List<PartType> partTypes = _partTypesStore.Data;
             foreach (PartType partType in partTypes)
             {
                 Application.Current.Dispatcher.Invoke(() =>

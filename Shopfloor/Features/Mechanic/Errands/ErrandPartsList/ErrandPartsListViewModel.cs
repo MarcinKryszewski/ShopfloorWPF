@@ -103,7 +103,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         }
         private Task FillPartsList(PartStore partsStore)
         {
-            _parts.AddRange(partsStore.GetData());
+            _parts.AddRange(partsStore.Data);
             /*foreach (Part part in partsStore.Data)
             {
                 _parts.Add(part);
@@ -112,12 +112,12 @@ namespace Shopfloor.Features.Mechanic.Errands
         }
         private Task FillErrandPartsList(ErrandPartStore errandPartStore, PartStore partsStore)
         {
-            foreach (ErrandPart errandPart in errandPartStore.GetData())
+            foreach (ErrandPart errandPart in errandPartStore.Data)
             {
                 if (errandPart.LastStatusValue == 6) continue;
                 if (errandPart.ErrandId == _errandStore.SelectedErrand?.Id)
                 {
-                    errandPart.Part = partsStore.GetData().First(p => p.Id == errandPart.PartId);
+                    errandPart.Part = partsStore.Data.First(p => p.Id == errandPart.PartId);
                     _errandStore.ErrandParts.Add(errandPart);
                 }
             }

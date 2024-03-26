@@ -97,7 +97,7 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         private void AddToStatusStore(ErrandPartStatus status)
         {
             ErrandPartStatusStore store = _database.GetRequiredService<ErrandPartStatusStore>();
-            store.GetData().Add(status);
+            store.Data.Add(status);
         }
         private void ReturnToOffer()
         {

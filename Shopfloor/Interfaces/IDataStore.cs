@@ -5,7 +5,7 @@ namespace Shopfloor.Interfaces
 {
     internal interface IDataStore<T>
     {
-        public List<T> GetData();
+        public List<T> Data { get; }
         public bool IsLoaded { get; }
         public Task Reload();
     }

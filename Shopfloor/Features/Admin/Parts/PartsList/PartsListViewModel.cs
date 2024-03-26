@@ -81,9 +81,9 @@ namespace Shopfloor.Features.Admin.Parts.List
 
         public Task LoadData()
         {
-            List<Part> parts = _partsStore.GetData();
-            List<Supplier> suppliers = _suppliersStore.GetData();
-            List<PartType> partTypes = _partTypesStore.GetData();
+            List<Part> parts = _partsStore.Data;
+            List<Supplier> suppliers = _suppliersStore.Data;
+            List<PartType> partTypes = _partTypesStore.Data;
 
             foreach (Part part in parts)
             {

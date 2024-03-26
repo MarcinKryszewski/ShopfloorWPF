@@ -20,17 +20,17 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
             _errandType = errandType;
             _user = user;
             _machine = machine;
-            _data = store.GetData();
+            _data = store.Data;
         }
         public async Task Combine()
         {
             List<Task> tasks = [];
 
-            tasks.Add(_errandPart.Combine(_data));
-            tasks.Add(_errandStatus.Combine(_data));
-            tasks.Add(_errandType.Combine(_data));
-            tasks.Add(_user.Combine(_data));
-            tasks.Add(_machine.Combine(_data));
+            tasks.Add(_errandPart.Combine());
+            tasks.Add(_errandStatus.Combine());
+            tasks.Add(_errandType.Combine());
+            tasks.Add(_user.Combine());
+            tasks.Add(_machine.Combine());
 
             await Task.WhenAll(tasks);
         }

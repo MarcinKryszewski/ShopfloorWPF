@@ -13,13 +13,13 @@ namespace Shopfloor.Models.MachineModel.Store
         public MachineCombiner(MachineStore store, MachineToMachine machineToMachine)
         {
             _machineToMachine = machineToMachine;
-            _data = store.GetData();
+            _data = store.Data;
         }
         public async Task Combine()
         {
             List<Task> tasks = [];
 
-            tasks.Add(_machineToMachine.Combine(_data));
+            tasks.Add(_machineToMachine.Combine());
 
             await Task.WhenAll(tasks);
         }

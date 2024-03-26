@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ErrandStatusModel.Store.Combine
 {
-    internal sealed class ErrandStatusCombiner : ICombiner<ErrandStatus>
+    internal sealed class ErrandStatusCombiner : ICombinerManager<ErrandStatus>
     {
-        public Task Combine(List<ErrandStatus> data)
+        public Task Combine()
         {
             return Task.CompletedTask;
         }

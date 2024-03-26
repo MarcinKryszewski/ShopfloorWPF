@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.PartTypeModel.Store.Combine
 {
-    internal sealed class PartTypeCombiner : ICombiner<PartType>
+    internal sealed class PartTypeCombiner : ICombinerManager<PartType>
     {
-        public Task Combine(List<PartType> data)
+        public Task Combine()
         {
             return Task.CompletedTask;
         }
