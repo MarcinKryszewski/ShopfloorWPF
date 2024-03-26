@@ -6,21 +6,18 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ErrandModel.Store.Combine
 {
-    internal sealed class ErrandToUser : ICombiner
+    internal sealed class ErrandToUser : ICombiner<Errand>
     {
-        private readonly ErrandStore _errandStore;
         private readonly UserStore _userStore;
-        public ErrandToUser(ErrandStore errandStore, UserStore userStore)
+        public ErrandToUser(UserStore userStore)
         {
-            _errandStore = errandStore;
             _userStore = userStore;
         }
-        public Task Combine()
+        public Task Combine(List<Errand> data)
         {
             List<User> users = GetUsers();
-            List<Errand> errands = GetErrands();
 
-            foreach (Errand errand in errands)
+            foreach (Errand errand in data)
             {
                 errand.CreatedByUser = users.FirstOrDefault(user => user.Id == errand.CreatedById);
                 errand.Responsible = users.FirstOrDefault(user => user.Id == errand.OwnerId);
@@ -28,6 +25,5 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
             return Task.CompletedTask;
         }
         private List<User> GetUsers() => _userStore.GetData();
-        private List<Errand> GetErrands() => _errandStore.GetData();
     }
 }

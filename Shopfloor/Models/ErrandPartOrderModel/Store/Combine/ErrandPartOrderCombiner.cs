@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Shopfloor.Interfaces;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ErrandPartOrderModel.Store.Combine
 {
-    internal sealed class ErrandPartOrderCombiner : ICombiner
+    internal sealed class ErrandPartOrderCombiner : ICombinerManager<ErrandPartOrder>
     {
         public Task Combine()
         {

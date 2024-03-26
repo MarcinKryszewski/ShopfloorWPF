@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-internal abstract class StoreBase<T>
+internal abstract class StoreBase<T> : IDataStore<T>
 {
     protected List<T> _data;
     protected readonly IProvider<T> _provider;
-    protected readonly ICombiner _combiner;
-    public StoreBase(IProvider<T> provider, ICombiner combiner)
+    public StoreBase(IProvider<T> provider)
     {
         _data = [];
         _provider = provider;
-        _combiner = combiner;
     }
-    public List<T> GetData(bool shouldCombine = false)
+    public List<T> GetData()
     {
         if (!IsLoaded) Load();
-        if (shouldCombine) _combiner.Combine().Wait();
         return _data;
     }
     public bool IsLoaded { get; protected set; }

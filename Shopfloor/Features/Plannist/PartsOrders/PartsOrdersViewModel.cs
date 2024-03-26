@@ -82,7 +82,7 @@ namespace Shopfloor.Features.Plannist.PartsOrders
         }
         private Task FillPartList(ErrandPartStore errandPartStore)
         {
-            foreach (ErrandPart errandPart in errandPartStore.GetData(true))
+            foreach (ErrandPart errandPart in errandPartStore.GetData())
             {
                 if (errandPart.LastStatusText == "ZAMAWIANIE" && errandPart.LastStatus.Confirmed) _parts.Add(errandPart);
             }

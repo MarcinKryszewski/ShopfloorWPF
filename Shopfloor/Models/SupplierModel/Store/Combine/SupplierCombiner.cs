@@ -1,11 +1,12 @@
-using System.Threading.Tasks;
 using Shopfloor.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Models.SupplierModel.Store.Combine
 {
-    public class SupplierCombiner : ICombiner
+    internal sealed class SupplierCombiner : ICombiner<Supplier>
     {
-        public Task Combine()
+        public Task Combine(List<Supplier> data)
         {
             return Task.CompletedTask;
         }

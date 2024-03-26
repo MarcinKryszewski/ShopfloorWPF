@@ -1,10 +1,10 @@
 <UserControl
-    x:Class="Shopfloor.Features.Mechanic.Requests.RequestsList.RequestsListView"
+    x:Class="Shopfloor.Features.Mechanic.Requests.RequestsListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:custom="clr-namespace:Shopfloor.Controls.PlaceholderTextBox"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Shopfloor.Features.Mechanic.Requests.RequestsList"
+    xmlns:local="clr-namespace:Shopfloor.Features.Mechanic.Requests"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
     d:DataContext="{d:DesignInstance Type=local:RequestsListViewModel}"

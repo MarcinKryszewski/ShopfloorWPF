@@ -1,11 +1,12 @@
-using System.Threading.Tasks;
 using Shopfloor.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Models.UserModel.Store.Combine
 {
-    public class UserCombiner : ICombiner
+    internal sealed class UserCombiner : ICombiner<User>
     {
-        public Task Combine()
+        public Task Combine(List<User> data)
         {
             return Task.CompletedTask;
         }

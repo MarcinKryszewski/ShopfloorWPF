@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Shopfloor.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Models.OrderModel.Store.Combine
 {
-    public class OrderCombiner : ICombiner
+    internal sealed class OrderCombiner : ICombiner<Order>
     {
-        public Task Combine()
+        public Task Combine(List<Order> data)
         {
             return Task.CompletedTask;
         }

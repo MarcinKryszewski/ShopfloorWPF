@@ -1,23 +1,25 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.MachineModel.Store.Combine;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Models.MachineModel.Store
 {
-    internal sealed class MachineCombiner : ICombiner
+    internal sealed class MachineCombiner : ICombinerManager<Machine>
     {
         private readonly MachineToMachine _machineToMachine;
+        private readonly List<Machine> _data;
 
-        public MachineCombiner(MachineToMachine machineToMachine)
+        public MachineCombiner(MachineStore store, MachineToMachine machineToMachine)
         {
             _machineToMachine = machineToMachine;
+            _data = store.GetData();
         }
         public async Task Combine()
         {
             List<Task> tasks = [];
 
-            tasks.Add(_machineToMachine.Combine());
+            tasks.Add(_machineToMachine.Combine(_data));
 
             await Task.WhenAll(tasks);
         }

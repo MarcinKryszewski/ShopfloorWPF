@@ -1,11 +1,12 @@
-using System.Threading.Tasks;
 using Shopfloor.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Models.PartTypeModel.Store.Combine
 {
-    public class PartTypeCombiner : ICombiner
+    internal sealed class PartTypeCombiner : ICombiner<PartType>
     {
-        public Task Combine()
+        public Task Combine(List<PartType> data)
         {
             return Task.CompletedTask;
         }

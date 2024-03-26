@@ -7,4 +7,8 @@ namespace Shopfloor.Interfaces
     {
         public Task Combine(List<T> data);
     }
+    internal interface ICombinerManager<T>
+    {
+        public Task Combine();
+    }
 }

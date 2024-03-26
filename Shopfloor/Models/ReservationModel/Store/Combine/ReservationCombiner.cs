@@ -1,11 +1,12 @@
-using System.Threading.Tasks;
 using Shopfloor.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ReservationModel.Store.Combine
 {
-    public class ReservationCombiner : ICombiner
+    internal sealed class ReservationCombiner : ICombiner<Reservation>
     {
-        public Task Combine()
+        public Task Combine(List<Reservation> data)
         {
             return Task.CompletedTask;
         }

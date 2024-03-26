@@ -1,11 +1,12 @@
-using System.Threading.Tasks;
 using Shopfloor.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ErrandTypeModel.Store.Combine
 {
-    public class ErrandTypeCombiner : ICombiner
+    internal sealed class ErrandTypeCombiner : ICombiner<ErrandType>
     {
-        public Task Combine()
+        public Task Combine(List<ErrandType> data)
         {
             //throw new NotImplementedException();
             return Task.CompletedTask;

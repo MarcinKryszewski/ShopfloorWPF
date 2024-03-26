@@ -58,9 +58,16 @@
                         <errands:ErrandNewView />
                     </DataTemplate>
 
-                    <DataTemplate DataType="{x:Type requests:RequestsMainViewModel}">
-                        <requests:RequestsMainView />
+                    <DataTemplate DataType="{x:Type requests:RequestsListViewModel}">
+                        <requests:RequestsListView />
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type requests:RequestsDetailsViewModel}">
+                        <requests:RequestsDetailsView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type requests:RequestsEditViewModel}">
+                        <requests:RequestsEditView />
+                    </DataTemplate>
+
                     <DataTemplate DataType="{x:Type partsStock:PartsStockMainViewModel}">
                         <partsStock:PartsStockMainView />
                     </DataTemplate>

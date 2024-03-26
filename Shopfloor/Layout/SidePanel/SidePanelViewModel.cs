@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Errands;
 using Shopfloor.Features.Mechanic.MechanicDashboard;
+using Shopfloor.Features.Mechanic.Requests;
 using Shopfloor.Features.Plannist.PlannistDashboard;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
@@ -64,6 +65,7 @@ namespace Shopfloor.Layout.SidePanel
         {
             NavigateMechanicDashboardCommand = new RelayCommand(o => { navigationService.NavigateTo<MechanicDashboardViewModel>(); }, o => true);
             NavigateTasksCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandsListViewModel>(); }, o => true);
+            NavigateRequestsCommand = new RelayCommand(o => { navigationService.NavigateTo<RequestsListViewModel>(); }, o => true);
 
             //NavigateTasksCommand = new NavigateCommand<ErrandsMainViewModel>(mainServices.GetRequiredService<NavigationService<ErrandsMainViewModel>>());
             //NavigateRequestsCommand = new NavigateCommand<RequestsMainViewModel>(mainServices.GetRequiredService<NavigationService<RequestsMainViewModel>>());

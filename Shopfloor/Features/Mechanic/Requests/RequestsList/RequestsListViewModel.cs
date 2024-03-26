@@ -1,14 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Requests.Stores;
-using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
-using Shopfloor.Models.ErrandPartStatusModel;
-using Shopfloor.Models.MachineModel;
-using Shopfloor.Models.PartModel;
-using Shopfloor.Models.PartTypeModel;
-using Shopfloor.Models.UserModel;
-using Shopfloor.Shared;
+using Shopfloor.Models.ErrandPartModel.Store.Combine;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System;
@@ -19,11 +13,11 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Mechanic.Requests.RequestsList
+namespace Shopfloor.Features.Mechanic.Requests
 {
     internal sealed class RequestsListViewModel : ViewModelBase
     {
-        private readonly List<ErrandPart> _parts = [];
+        private List<ErrandPart> _parts = [];
         private readonly IServiceProvider _mainServices;
         private readonly IServiceProvider _databaseServices;
         private readonly SelectedRequestStore _requestStore;
@@ -55,39 +49,26 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsList
             _mainServices = mainServices;
             _databaseServices = databaseServices;
 
-            Task.Run(LoadData);
-
             _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
             SelectedRow = null;
+
+            FillPartList();
 
             //EditCommand = new NavigateCommand<RequestsEditViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsEditViewModel>>());
             //DetailsCommand = new NavigateCommand<RequestsDetailsViewModel>(_mainServices.GetRequiredService<NavigationService<RequestsDetailsViewModel>>());
 
             if (userServices.GetRequiredService<CurrentUserStore>().User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
         }
-        private async Task LoadData()
+        private Task FillPartList()
         {
-            Application.Current.Dispatcher.Invoke(_parts.Clear);
+            _mainServices.GetRequiredService<ErrandPartCombiner>().Combine().Wait();
+            _parts = _mainServices.GetRequiredService<ErrandPartStore>().GetData();
 
-            ErrandPartStore errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
-
-            await FillLists(errandPartStore);
-
-            Application.Current.Dispatcher.Invoke(Parts.Refresh);
-        }
-
-        private async Task FillLists(ErrandPartStore errandPartStore)
-        {
-            List<Task> tasks = [];
-            tasks.Add(FillPartList(errandPartStore));
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
-        }
-        private Task FillPartList(ErrandPartStore errandPartStore)
-        {
-            foreach (ErrandPart errandPart in errandPartStore.GetData(true))
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                _parts.Add(errandPart);
-            }
+                Parts.Refresh();
+            });
+
             return Task.CompletedTask;
         }
         private bool FilterParts(object obj)

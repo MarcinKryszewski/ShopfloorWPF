@@ -2,8 +2,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel.Store;
-using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.PartModel;
@@ -17,7 +17,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Shopfloor.Models.ErrandPartModel.Store;
 
 namespace Shopfloor.Features.Plannist.Offers.AddOffer
 {
@@ -101,7 +100,7 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
 
         private void LoadHistoricalData(ErrandPartStore errandParts)
         {
-            HistoricalData = errandParts.GetData(true).Where(part => part.PartId == ErrandPart.PartId);
+            HistoricalData = errandParts.GetData().Where(part => part.PartId == ErrandPart.PartId);
         }
     }
     internal sealed partial class AddOfferViewModel : IInputForm<ErrandPart>

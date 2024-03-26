@@ -1,9 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Requests.Stores;
-using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel.Store;
-using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.PartModel;
@@ -15,9 +14,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Shopfloor.Models.ErrandPartModel.Store;
 
-namespace Shopfloor.Features.Mechanic.Requests.RequestsDetails
+namespace Shopfloor.Features.Mechanic.Requests
 {
     internal sealed class RequestsDetailsViewModel : ViewModelBase
     {
@@ -43,12 +41,11 @@ namespace Shopfloor.Features.Mechanic.Requests.RequestsDetails
             ErrandTypeStore errandTypes = databaseServices.GetRequiredService<ErrandTypeStore>();
             ErrandPartStore errandPartStore = databaseServices.GetRequiredService<ErrandPartStore>();
 
-
             LoadHistoricalData(errandPartStore);
         }
         private void LoadHistoricalData(ErrandPartStore errandParts)
         {
-            HistoricalData = errandParts.GetData(true).Where(part => part.PartId == _selectedRequest.Request!.PartId);
+            HistoricalData = errandParts.GetData().Where(part => part.PartId == _selectedRequest.Request!.PartId);
         }
     }
 }

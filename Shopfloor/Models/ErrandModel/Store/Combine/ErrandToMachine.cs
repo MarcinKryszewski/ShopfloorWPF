@@ -6,27 +6,22 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ErrandModel.Store.Combine
 {
-    internal sealed class ErrandToMachine : ICombiner
+    internal sealed class ErrandToMachine : ICombiner<Errand>
     {
-        private readonly ErrandStore _errandStore;
-
         private readonly MachineStore _machineStore;
-        public ErrandToMachine(ErrandStore errandStore, MachineStore machineStore)
+        public ErrandToMachine(MachineStore machineStore)
         {
-            _errandStore = errandStore;
             _machineStore = machineStore;
         }
-        public Task Combine()
+        public Task Combine(List<Errand> data)
         {
-            List<Errand> errands = LoadErrands();
             List<Machine> machines = LoadMachines();
-            foreach (Errand errand in errands)
+            foreach (Errand errand in data)
             {
                 errand.Machine = machines.FirstOrDefault(machine => machine.Id == errand.MachineId);
             }
             return Task.CompletedTask;
         }
         private List<Machine> LoadMachines() => _machineStore.GetData();
-        private List<Errand> LoadErrands() => _errandStore.GetData();
     }
 }

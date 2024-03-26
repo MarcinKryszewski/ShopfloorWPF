@@ -6,28 +6,27 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ErrandPartModel.Store.Combine
 {
-    internal sealed class ErrandPartToErrandPartStatus : ICombiner
+    internal sealed class ErrandPartToErrandPartStatus : ICombiner<ErrandPart>
     {
-        private readonly ErrandPartStore _errandPartStore;
-        private readonly ErrandPartStatusStore _errandPartStatusStore;
-        public ErrandPartToErrandPartStatus(ErrandPartStore errandPartStore, ErrandPartStatusStore errandPartStatusStore)
+        private readonly IDataStore<ErrandPartStatus> _errandPartStatusStore;
+        private readonly IDataStore<ErrandPart> _errandPartStore;
+        public ErrandPartToErrandPartStatus(IDataStore<ErrandPartStatus> errandPartStatusStore, IDataStore<ErrandPart> errandPartStore)
         {
-            _errandPartStore = errandPartStore;
             _errandPartStatusStore = errandPartStatusStore;
+            _errandPartStore = errandPartStore;
         }
-        public Task Combine()
+        public Task Combine(List<ErrandPart> data)
         {
-            List<ErrandPart> errandParts = GetErrandParts();
             List<ErrandPartStatus> statuses = GetErrandPartStatuses();
 
-            foreach (ErrandPart errandPart in errandParts)
+            foreach (ErrandPart errandPart in _errandPartStore.GetData())
             {
                 errandPart.StatusList.Clear();
                 errandPart.StatusList.AddRange(statuses.Where(status => status.ErrandPartId == errandPart.Id));
             }
             return Task.CompletedTask;
         }
-        private List<ErrandPart> GetErrandParts() => _errandPartStore.GetData();
         private List<ErrandPartStatus> GetErrandPartStatuses() => _errandPartStatusStore.GetData();
+        private List<ErrandPart> GetErrandParts() => _errandPartStore.GetData();
     }
 }
