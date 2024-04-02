@@ -1,5 +1,6 @@
 using Shopfloor.Features.Admin.Users;
 using Shopfloor.Features.Admin.Users.Stores;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
@@ -11,7 +12,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
     internal sealed class UserEditCommand : CommandBase
     {
         private readonly UserProvider _userProvider;
-        private readonly RoleUserProvider _roleUserProvider;
+        private readonly IRoleUserProvider _roleUserProvider;
         private readonly RolesStore _rolesStore;
         private readonly UsersEditViewModel _viewModel;
         private readonly int _userId;
@@ -21,7 +22,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
         public UserEditCommand(
             UsersEditViewModel viewModel,
             UserProvider userProvider,
-            RoleUserProvider roleUserProvider,
+            IRoleUserProvider roleUserProvider,
             RolesStore rolesStore,
             int userId,
             string imagePath,

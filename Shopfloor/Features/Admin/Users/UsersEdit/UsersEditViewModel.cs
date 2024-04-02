@@ -22,13 +22,13 @@ namespace Shopfloor.Features.Admin.Users
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         private readonly RolesStore _rolesValueStore;
         private readonly SelectedUserStore _selectedUser;
-        private readonly RoleProvider _roleProvider;
+        private readonly IProvider<Role> _roleProvider;
         private readonly int _selectedUserId;
         private string _name = string.Empty;
         private string _surname = string.Empty;
         private string _username = string.Empty;
-        private readonly RoleUserProvider _roleUserProvider;
-        public UsersEditViewModel(NavigationService navigationService, SelectedUserStore selectedUserStore, UserProvider userProvider, RoleUserProvider roleUserProvider, RoleProvider roleProvider)
+        private readonly IRoleUserProvider _roleUserProvider;
+        public UsersEditViewModel(NavigationService navigationService, SelectedUserStore selectedUserStore, UserProvider userProvider, IRoleUserProvider roleUserProvider, IProvider<Role> roleProvider)
         {
             _selectedUser = selectedUserStore;
             _roleProvider = roleProvider;

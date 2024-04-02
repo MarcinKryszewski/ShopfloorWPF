@@ -20,12 +20,12 @@ namespace Shopfloor.Features.Admin.Users
     {
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         private readonly RolesStore _rolesValueStore;
-        private readonly RoleProvider _roleProvider;
+        private readonly IProvider<Role> _roleProvider;
         private string _name = string.Empty;
         private List<Role> _rolesStorage = [];
         private string _surname = string.Empty;
         private string _username = string.Empty;
-        public UsersAddViewModel(NavigationService navigationService, UserProvider userProvider, RoleUserProvider roleUserProvider, RoleProvider roleProvider)
+        public UsersAddViewModel(NavigationService navigationService, UserProvider userProvider, RoleUserProvider roleUserProvider, IProvider<Role> roleProvider)
         {
             _rolesValueStore = new();
             SetRoles();

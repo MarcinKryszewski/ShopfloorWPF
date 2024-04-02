@@ -2,25 +2,24 @@ using Shopfloor.Interfaces;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Services.NotificationServices;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using ToastNotifications;
-using ToastNotifications.Messages;
 
 namespace Shopfloor.Stores
 {
     internal sealed partial class CurrentUserStore
     {
-        private readonly RoleProvider _roleProvider;
-        private readonly RoleUserProvider _roleUserProvider;
-        private readonly Notifier _notifier;
+        private readonly IProvider<Role> _roleProvider;
+        private readonly IRoleUserProvider _roleUserProvider;
+        private readonly INotifier _notifier;
         private readonly UserValidation _userValidation;
         private bool _isUserLoggedIn;
         private User? _user;
-        public CurrentUserStore(RoleProvider roleProvider, RoleUserProvider roleUserProvider, Notifier notifier)
+        public CurrentUserStore(IProvider<Role> roleProvider, IRoleUserProvider roleUserProvider, INotifier notifier)
         {
             _user = new("GOŚĆ");
             _isUserLoggedIn = false;
@@ -32,7 +31,6 @@ namespace Shopfloor.Stores
         }
         public bool IsUserLoggedIn => _isUserLoggedIn;
         public User? User => _user;
-
         public void Login(string username, UserProvider provider, IInputForm<User> inputForm)
         {
             _user = provider.GetByUsername(username.ToLower()).Result ?? null;
@@ -45,27 +43,23 @@ namespace Shopfloor.Stores
 
             _isUserLoggedIn = true;
             SetUserRoles(_user!);
-            LoginNotification(_notifier);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
+            LoginNotification();
+            OnPropertyChanged(nameof(IsUserLoggedIn));
         }
         public void Logout()
         {
             _user = new("GOŚĆ");
 
             _isUserLoggedIn = false;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
+            OnPropertyChanged(nameof(IsUserLoggedIn));
         }
-        private IEnumerable<Role> GetRoles()
-        {
-            return _roleProvider.GetAll().Result;
-        }
+        private IEnumerable<Role> GetRoles() => _roleProvider.GetAll().Result;
         private IEnumerable<RoleUser> GetRoleUsers()
         {
             if (User == null) return [];
             if (User.Id is null) return [];
 
             IEnumerable<RoleUser> roleUsers = _roleUserProvider.GetAllForUser((int)User.Id).Result;
-
             return roleUsers;
         }
         public bool HasRole(Role role)
@@ -90,7 +84,7 @@ namespace Shopfloor.Stores
                 user.AddRole(role);
             }
         }
-        private static void LoginNotification(Notifier notifier) => notifier.ShowInformation("ZALOGOWANO POPRAWNIE");
+        private void LoginNotification() => _notifier.ShowInformation("ZALOGOWANO POPRAWNIE");
     }
     internal sealed partial class CurrentUserStore
     {
@@ -108,7 +102,7 @@ namespace Shopfloor.Stores
             _isUserLoggedIn = true;
             SetUserRoles(_user!);
             _notifier.ShowSuccess("Zalogowano automatycznie!");
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
+            OnPropertyChanged(nameof(IsUserLoggedIn));
         }
     }
     internal sealed partial class CurrentUserStore : INotifyDataErrorInfo
@@ -121,5 +115,9 @@ namespace Shopfloor.Stores
     internal sealed partial class CurrentUserStore : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

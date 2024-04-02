@@ -184,11 +184,12 @@ namespace Shopfloor.Hosts.Database
         private static void RolePServices(IServiceCollection services)
         {
             //services.AddSingleton<RoleStore>();
-            services.AddSingleton<RoleProvider>();
+            services.AddSingleton<IProvider<Role>, RoleProvider>();
         }
         private static void RoleUserServices(IServiceCollection services)
         {
-            services.AddSingleton<RoleUserProvider>();
+            services.AddTransient<IProvider<RoleUser>, RoleUserProvider>();
+            services.AddTransient<IRoleUserProvider, RoleUserProvider>();
             //services.AddSingleton<RoleUserStore>();
         }
         private static void SupplierServices(IServiceCollection services)

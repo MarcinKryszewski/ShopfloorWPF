@@ -11,7 +11,13 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.RoleUserModel
 {
-    internal sealed class RoleUserProvider : IProvider<RoleUser>
+    internal interface IRoleUserProvider : IProvider<RoleUser>
+    {
+        Task<IEnumerable<RoleUser>> GetAllForUser(int userId);
+        Task<int> Create(int RoleId, int UserId);
+        Task Delete(int roleId, int userId);
+    }
+    internal sealed class RoleUserProvider : IRoleUserProvider
     {
         private readonly DatabaseConnectionFactory _database;
 

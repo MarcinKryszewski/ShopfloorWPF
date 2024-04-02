@@ -1,10 +1,9 @@
 ﻿using Shopfloor.Features.Admin.Users;
 using Shopfloor.Features.Admin.Users.Stores;
-
+using Shopfloor.Interfaces;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
-
 using Shopfloor.Shared.Commands;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,11 +15,10 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
     {
         private readonly UsersAddViewModel _viewModel;
         private readonly RolesStore _rolesStore;
-
         private readonly UserProvider _userProvider;
-        private readonly RoleUserProvider _roleUserProvider;
+        private readonly IRoleUserProvider _roleUserProvider;
 
-        public UserAddCommand(UsersAddViewModel viewModel, RolesStore rolesStore, UserProvider userProvider, RoleUserProvider roleUserProvider)
+        public UserAddCommand(UsersAddViewModel viewModel, RolesStore rolesStore, UserProvider userProvider, IRoleUserProvider roleUserProvider)
         {
             _viewModel = viewModel;
             _rolesStore = rolesStore;
