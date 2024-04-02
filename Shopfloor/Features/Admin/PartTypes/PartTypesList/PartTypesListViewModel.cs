@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.PartTypes.Commands;
+﻿using Shopfloor.Features.Admin.PartTypes.Commands;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Shared.ViewModels;
@@ -15,11 +14,10 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Admin.PartTypes.List
+namespace Shopfloor.Features.Admin.PartTypes
 {
     internal sealed class PartTypesListViewModel : ViewModelBase, IInputForm<PartType>
     {
-        private readonly IServiceProvider _databaseServices;
         private readonly ObservableCollection<PartType> _partTypes = [];
         private readonly PartTypeStore _partTypesStore;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
@@ -27,17 +25,17 @@ namespace Shopfloor.Features.Admin.PartTypes.List
         private string _name = string.Empty;
         private string _searchText = string.Empty;
         private PartType? _selectedPartType;
-        public PartTypesListViewModel(IServiceProvider databaseServices)
+        private readonly PartTypeProvider _partTypeProvider;
+        public PartTypesListViewModel(PartTypeProvider partTypeProvider, PartTypeStore partTypeStore)
         {
-            _databaseServices = databaseServices;
-            PartTypeProvider provider = _databaseServices.GetRequiredService<PartTypeProvider>();
+            _partTypeProvider = partTypeProvider;
 
-            AddCommand = new PartTypeAddCommand(this, provider);
-            EditCommand = new PartTypeEditCommand(this, provider);
+            AddCommand = new PartTypeAddCommand(this, _partTypeProvider);
+            EditCommand = new PartTypeEditCommand(this, _partTypeProvider);
             CleanFormCommand = new CleanFormCommand(this);
 
-            _partTypesStore = _databaseServices.GetRequiredService<PartTypeStore>();
-            Task.Run(() => LoadData(_databaseServices));
+            _partTypesStore = partTypeStore;
+            Task.Run(LoadData);
         }
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public ICommand AddCommand { get; }
@@ -118,7 +116,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public bool IsDataValidate => !HasErrors;
-        public Task LoadData(IServiceProvider databaseServices)
+        public Task LoadData()
         {
             Application.Current.Dispatcher.Invoke(_partTypes.Clear);
 
@@ -135,15 +133,15 @@ namespace Shopfloor.Features.Admin.PartTypes.List
         }
         public void ReloadData()
         {
-            _databaseServices.GetRequiredService<PartTypeStore>().Reload().Wait();
+            _partTypesStore.Reload().Wait();
         }
         //Updates the list if value didn't exist, ie. after add
         public async Task UpdateData()
         {
             //await Task.Delay(5000);
-            PartTypeProvider provider = _databaseServices.GetRequiredService<PartTypeProvider>();
+            PartTypeProvider provider = _partTypeProvider;
             IEnumerable<PartType> partTypes = await provider.GetAll();
-            _ = _databaseServices.GetRequiredService<PartTypeStore>().Reload();
+            _partTypesStore.Reload().Wait();
             foreach (PartType partType in partTypes)
             {
                 if (_partTypes.FirstOrDefault(s => s.Id == partType.Id) is null)
@@ -160,7 +158,7 @@ namespace Shopfloor.Features.Admin.PartTypes.List
         public async Task UpdateData(PartType partTypeToRemove)
         {
             if (partTypeToRemove.Id is null) return;
-            PartTypeProvider provider = _databaseServices.GetRequiredService<PartTypeProvider>();
+            PartTypeProvider provider = _partTypeProvider;
             PartType partTypeToAdd = await provider.GetById((int)partTypeToRemove.Id);
             if (_partTypes.FirstOrDefault(s => s.Id == partTypeToRemove.Id) is not null)
             {

@@ -1,14 +1,10 @@
-using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Manager.OrderApprove;
 using Shopfloor.Features.Manager.Stores;
-using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
-using Shopfloor.Models.MachineModel;
-using Shopfloor.Models.PartModel;
-using Shopfloor.Models.PartTypeModel;
-using Shopfloor.Models.UserModel;
-using Shopfloor.Shared;
+using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -23,9 +19,8 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
     internal sealed class OrdersToApproveViewModel : ViewModelBase
     {
         private readonly List<ErrandPart> _orders = [];
-        private readonly IServiceProvider _mainServices;
-        private readonly IServiceProvider _databaseServices;
         private readonly SelectedRequestStore _requestStore;
+        private readonly ErrandPartStore _errandPartStore;
         private string? _filterText;
         public ErrandPart? SelectedRow
         {
@@ -45,17 +40,15 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
         public ICommand ApproveCommand { get; }
         //public ICommand DetailsCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public OrdersToApproveViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public OrdersToApproveViewModel(NavigationService navigationService, SelectedRequestStore selectedRequestStore, ErrandPartStore errandPartStore)
         {
-            _mainServices = mainServices;
-            _databaseServices = databaseServices;
-
             Task.Run(LoadData);
 
-            _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
+            _requestStore = selectedRequestStore;
+            _errandPartStore = errandPartStore;
             SelectedRow = null;
 
-            //ApproveCommand = new NavigateCommand<OrderApproveViewModel>(_mainServices.GetRequiredService<NavigationService<OrderApproveViewModel>>());
+            ApproveCommand = new RelayCommand(o => { navigationService.NavigateTo<OrderApproveViewModel>(); }, o => true);
             //DetailsCommand = new PlannistDetailsCommand();
         }
         private void OnRequestChanged() => Orders.Refresh();
@@ -63,7 +56,7 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
         {
             Application.Current.Dispatcher.Invoke(_orders.Clear);
 
-            ErrandPartStore errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
+            ErrandPartStore errandPartStore = _errandPartStore;
 
             await FillLists(errandPartStore);
 

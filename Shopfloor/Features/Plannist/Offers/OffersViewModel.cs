@@ -1,15 +1,9 @@
-using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Plannist.Commands;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
-using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
-using Shopfloor.Models.ErrandPartStatusModel;
-using Shopfloor.Models.MachineModel;
-using Shopfloor.Models.PartModel;
-using Shopfloor.Models.PartTypeModel;
-using Shopfloor.Models.UserModel;
-using Shopfloor.Shared;
+using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -19,14 +13,13 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Plannist.Offers
+namespace Shopfloor.Features.Plannist
 {
     internal sealed class OffersViewModel : ViewModelBase
     {
         private readonly List<ErrandPart> _parts = [];
-        private readonly IServiceProvider _mainServices;
-        private readonly IServiceProvider _databaseServices;
         private readonly SelectedRequestStore _requestStore;
+        private readonly ErrandPartStore _errandPartStore;
         private string? _filterText;
         public ErrandPart? SelectedRow
         {
@@ -46,17 +39,15 @@ namespace Shopfloor.Features.Plannist.Offers
         public ICommand OfferCommand { get; }
         public ICommand DetailsCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public OffersViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public OffersViewModel(SelectedRequestStore selectedRequestStore, ErrandPartStore errandPartStore, NavigationService navigationService)
         {
-            _mainServices = mainServices;
-            _databaseServices = databaseServices;
-
             Task.Run(LoadData);
 
-            _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
+            _requestStore = selectedRequestStore;
+            _errandPartStore = errandPartStore;
             SelectedRow = null;
 
-            //OfferCommand = new NavigateCommand<AddOfferViewModel>(_mainServices.GetRequiredService<NavigationService<AddOfferViewModel>>());
+            OfferCommand = new RelayCommand(o => { navigationService.NavigateTo<AddOfferViewModel>(); }, o => true);
             DetailsCommand = new PlannistDetailsCommand();
         }
         private void OnRequestChanged() => Parts.Refresh();
@@ -64,15 +55,7 @@ namespace Shopfloor.Features.Plannist.Offers
         {
             Application.Current.Dispatcher.Invoke(_parts.Clear);
 
-            ErrandStore errandStore = _databaseServices.GetRequiredService<ErrandStore>();
-            UserStore userStore = _databaseServices.GetRequiredService<UserStore>();
-            MachineStore machineStore = _databaseServices.GetRequiredService<MachineStore>();
-            ErrandPartStore errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
-            PartStore partsStore = _databaseServices.GetRequiredService<PartStore>();
-            ErrandPartStatusStore partsStatusStore = _databaseServices.GetRequiredService<ErrandPartStatusStore>();
-            PartTypeStore partTypesStore = _databaseServices.GetRequiredService<PartTypeStore>();
-
-            await FillLists(errandPartStore);
+            await FillLists(_errandPartStore);
 
             Application.Current.Dispatcher.Invoke(Parts.Refresh);
         }

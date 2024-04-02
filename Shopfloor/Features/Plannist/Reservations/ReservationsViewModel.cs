@@ -1,11 +1,10 @@
-using System;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.Plannist.Reservations
+namespace Shopfloor.Features.Plannist
 {
     internal sealed class ReservationsViewModel : ViewModelBase
     {
-        public ReservationsViewModel(IServiceProvider services, IServiceProvider databaseServices)
+        public ReservationsViewModel()
         {
         }
     }

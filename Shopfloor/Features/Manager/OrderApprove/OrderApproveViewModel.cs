@@ -1,30 +1,26 @@
-using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Manager.Commands;
+using Shopfloor.Features.Manager.OrdersToApprove;
 using Shopfloor.Features.Manager.Stores;
 using Shopfloor.Interfaces;
-using Shopfloor.Models.ErrandModel.Store;
-using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
-using Shopfloor.Models.ErrandTypeModel;
-using Shopfloor.Models.PartModel;
-using Shopfloor.Models.SupplierModel;
-using Shopfloor.Models.UserModel;
+using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
+using Shopfloor.Stores;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using Shopfloor.Models.ErrandPartModel.Store;
+using ToastNotifications;
 
 namespace Shopfloor.Features.Manager.OrderApprove
 {
     internal sealed partial class OrderApproveViewModel : ViewModelBase
     {
-        private readonly IServiceProvider _mainServices;
         private readonly SelectedRequestStore _requestStore;
         public ICommand ReturnCommand { get; }
         public ICommand ConfirmCommand { get; }
@@ -36,13 +32,12 @@ namespace Shopfloor.Features.Manager.OrderApprove
             set => ErrandPart.ExpectedDeliveryDate = value;
         }
         public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
-        public OrderApproveViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
+        public OrderApproveViewModel(SelectedRequestStore selectedRequestStore, NavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, Notifier notifier, SelectedRequestStore requestStore, CurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
         {
-            _mainServices = mainServices;
-            _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
+            _requestStore = selectedRequestStore;
 
-            //ReturnCommand = new NavigateCommand<OrdersToApproveViewModel>(_mainServices.GetRequiredService<NavigationService<OrdersToApproveViewModel>>());
-            ConfirmCommand = new ApproveOrderCommand(_requestStore, this, databaseServices, userServices, mainServices);
+            ReturnCommand = new RelayCommand(o => { navigationService.NavigateTo<OrdersToApproveViewModel>(); }, o => true);
+            ConfirmCommand = new ApproveOrderCommand(navigationService, errandPartStatusStore, notifier, requestStore, this, currentUserStore, errandPartStatusProvider);
 
             _errandPartValidation = new(this);
         }

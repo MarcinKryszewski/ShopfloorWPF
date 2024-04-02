@@ -1,6 +1,4 @@
-using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Parts.Commands;
-using Shopfloor.Features.Admin.Parts.List;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
@@ -11,13 +9,12 @@ using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Admin.Parts.Add
+namespace Shopfloor.Features.Admin.Parts
 {
     internal sealed class PartsAddViewModel : ViewModelBase, IInputForm<Part>
     {
@@ -38,7 +35,6 @@ namespace Shopfloor.Features.Admin.Parts.Add
         {
             _partStore = partStore;
 
-            //ReturnCommand = new NavigateCommand<PartsListViewModel>(_mainServices.GetRequiredService<NavigationService<PartsListViewModel>>());
             ReturnCommand = new RelayCommand(o => { navigationService.NavigateTo<PartsListViewModel>(); }, o => true);
             CleanFormCommand = new PartCleanFormCommand(this);
             AddPartCommand = new PartAddCommand(this, partProvider);
@@ -59,7 +55,6 @@ namespace Shopfloor.Features.Admin.Parts.Add
         public ICollectionView Producers { get; }
         public ICommand ReturnCommand { get; }
         public ICollectionView Suppliers { get; }
-        #region model properties
         public string Details
         {
             get => _details;
@@ -144,7 +139,6 @@ namespace Shopfloor.Features.Admin.Parts.Add
             }
         }
         public int? TypeId => Type?.Id;
-        #endregion model properties
         public void AddError(string propertyName, string errorMassage)
         {
             if (!_propertyErrors.ContainsKey(propertyName))
@@ -198,7 +192,7 @@ namespace Shopfloor.Features.Admin.Parts.Add
         public bool IsDataValidate => !HasErrors;
         public void ReloadData()
         {
-            _partStore.Reload();
+            _partStore.Reload().Wait();
         }
         private void OnErrorsChanged(string propertyName)
         {

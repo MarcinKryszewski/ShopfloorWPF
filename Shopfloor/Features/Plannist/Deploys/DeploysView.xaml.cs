@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Shopfloor.Features.Plannist.Deploys
+namespace Shopfloor.Features.Plannist
 {
     /// <summary>
     /// Interaction logic for DeploysView.xaml

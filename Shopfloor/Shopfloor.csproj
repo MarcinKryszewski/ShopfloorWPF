@@ -32,7 +32,6 @@
   <ItemGroup>
     <Watch Remove="Features\Admin\Machines\MachinesList\MachinesListView.xaml" />
     <Watch Remove="Features\Admin\PartTypes\PartTypesList\PartTypesListView.xaml" />
-    <Watch Remove="Features\Admin\PartTypes\PartTypesMainView.xaml" />
     <Watch Remove="Features\Mechanic\Errands\ErrandNew\ErrandNewView.xaml" />
     <Watch Remove="Features\Mechanic\Tasks\TasksList\TasksListView.xaml" />
     <Watch Remove="Features\Mechanic\Tasks\TasksMainView.xaml" />

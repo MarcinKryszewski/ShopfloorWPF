@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
@@ -17,16 +16,20 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
     {
         private readonly SelectedRequestStore _requestStore;
         private readonly AddOfferViewModel _viewModel;
-        private readonly IServiceProvider _database;
-        private readonly IServiceProvider _services;
+        private readonly ErrandPartProvider _errandPartProvider;
+        private readonly ErrandPartStatusProvider _errandPartStatusProvider;
+        private readonly ErrandPartStatusStore _errandPartStatusStore;
+        private readonly Notifier _notifier;
         private readonly User _currentUser;
-        public ConfrmOfferCommand(SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, IServiceProvider databaseServices, IServiceProvider userServices, IServiceProvider mainServices)
+        public ConfrmOfferCommand(SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, CurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, Notifier notifier)
         {
             _requestStore = requestStore;
             _viewModel = addOfferViewModel;
-            _database = databaseServices;
-            _services = mainServices;
-            _currentUser = userServices.GetRequiredService<CurrentUserStore>().User!;
+            _errandPartProvider = errandPartProvider;
+            _errandPartStatusProvider = errandPartStatusProvider;
+            _errandPartStatusStore = errandPartStatusStore;
+            _notifier = notifier;
+            _currentUser = currentUserStore.User!;
         }
         public override void Execute(object? parameter)
         {
@@ -76,32 +79,28 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         }
         private async Task UpdateErrandPart(ErrandPart request)
         {
-            ErrandPartProvider errandPartProvider = _database.GetRequiredService<ErrandPartProvider>();
             double price = _viewModel.PricePerUnit;
             DateTime? deliveryDate = request.ExpectedDeliveryDate;
             request.SetPrice(price);
-            await errandPartProvider.UpdatePrice((int)request.Id!, price);
-            await errandPartProvider.UpdateDeliveryDate((int)request.Id!, deliveryDate);
+            await _errandPartProvider.UpdatePrice((int)request.Id!, price);
+            await _errandPartProvider.UpdateDeliveryDate((int)request.Id!, deliveryDate);
         }
         private async Task ErrandPartStatusConfirm(ErrandPartStatus status)
         {
-            ErrandPartStatusProvider provider = _database.GetRequiredService<ErrandPartStatusProvider>();
-            await provider.ConfirmStatus((int)status.Id!, status.Comment, (int)_currentUser.Id!);
+            await _errandPartStatusProvider.ConfirmStatus((int)status.Id!, status.Comment, (int)_currentUser.Id!);
         }
         private async Task ErrandPartStatusNew(ErrandPartStatus status)
         {
-            ErrandPartStatusProvider provider = _database.GetRequiredService<ErrandPartStatusProvider>();
-            status.Id = await provider.Create(status);
+            status.Id = await _errandPartStatusProvider.Create(status);
             AddToStatusStore(status);
         }
         private void AddToStatusStore(ErrandPartStatus status)
         {
-            ErrandPartStatusStore store = _database.GetRequiredService<ErrandPartStatusStore>();
-            store.Data.Add(status);
+            _errandPartStatusStore.Data.Add(status);
         }
         private void ReturnToOffer()
         {
-            _services.GetRequiredService<Notifier>().ShowSuccess("Dodano ofertę i przekazano do zatwierdzenia!");
+            _notifier.ShowSuccess("Dodano ofertę i przekazano do zatwierdzenia!");
             //NavigationService<OffersViewModel> navigationService = _services.GetRequiredService<NavigationService<OffersViewModel>>();
             //navigationService.Navigate();
         }

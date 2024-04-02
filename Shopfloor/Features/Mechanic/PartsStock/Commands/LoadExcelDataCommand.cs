@@ -1,5 +1,5 @@
 using ExcelDataReader;
-using Shopfloor.Features.Mechanic.PartsStock.PartsStockList;
+using Shopfloor.Features.Mechanic.PartsStock;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.Commands;
 using System;

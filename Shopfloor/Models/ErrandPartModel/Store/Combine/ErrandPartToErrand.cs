@@ -1,5 +1,6 @@
 ﻿using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
+using Shopfloor.Models.ErrandModel.Store;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,8 +10,8 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
     internal sealed class ErrandPartToErrand : ICombiner<ErrandPart>
     {
         private readonly ErrandPartStore _errandPartStore;
-        private readonly IDataStore<Errand> _errandStore;
-        public ErrandPartToErrand(IDataStore<Errand> errandStore, ErrandPartStore errandPartStore)
+        private readonly ErrandStore _errandStore;
+        public ErrandPartToErrand(ErrandStore errandStore, ErrandPartStore errandPartStore)
         {
             _errandStore = errandStore;
             _errandPartStore = errandPartStore;

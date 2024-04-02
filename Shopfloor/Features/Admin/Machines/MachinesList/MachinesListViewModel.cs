@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Machines.Commands;
+﻿using Shopfloor.Features.Admin.Machines.Commands;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Shared.ViewModels;
@@ -14,11 +13,10 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Admin.Machines.List
+namespace Shopfloor.Features.Admin.Machines
 {
     internal sealed partial class MachinesListViewModel
     {
-        private readonly IServiceProvider _databaseServices;
         //treeview needs separate collection, which has only root nodes in it
         //this one is for combobox
         private readonly ObservableCollection<Machine> _machines;
@@ -35,19 +33,17 @@ namespace Shopfloor.Features.Admin.Machines.List
         private Machine? _selectedMachine;
         private Machine? _selectedParent;
         private readonly MachineValidation _machineValidation;
-        public MachinesListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public MachinesListViewModel(MachineStore machineStore, MachineProvider machineProvider)
         {
-            _databaseServices = databaseServices;
-
             _machines = [];
             _machinesAll = [];
 
             IsEdit = false;
 
-            _machineStore = _databaseServices.GetRequiredService<MachineStore>();
+            _machineStore = machineStore;
             Task.Run(LoadData);
 
-            MachineProvider provider = databaseServices.GetRequiredService<MachineProvider>();
+            MachineProvider provider = machineProvider;
 
             MachineDeleteCommand = new MachineDeleteCommand();
             MachineAddCommand = new MachineAddCommand(this, provider);
@@ -260,7 +256,7 @@ namespace Shopfloor.Features.Admin.Machines.List
         }
         public void ReloadData()
         {
-            _databaseServices.GetRequiredService<MachineStore>().Reload().Wait();
+            _machineStore.Reload().Wait();
         }
     }
     internal sealed partial class MachinesListViewModel : IInputForm<Machine>

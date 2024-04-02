@@ -2,27 +2,26 @@
     x:Class="Shopfloor.Layout.Content.ContentView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:addOffer="clr-namespace:Shopfloor.Features.Plannist.Offers.AddOffer"
+    xmlns:addOffer="clr-namespace:Shopfloor.Features.Plannist"
     xmlns:approveOrder="clr-namespace:Shopfloor.Features.Manager.OrderApprove"
     xmlns:content="clr-namespace:Shopfloor.Layout.Content"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:deploys="clr-namespace:Shopfloor.Features.Plannist.Deploys"
+    xmlns:deploys="clr-namespace:Shopfloor.Features.Plannist"
     xmlns:errands="clr-namespace:Shopfloor.Features.Mechanic.Errands"
     xmlns:login="clr-namespace:Shopfloor.Features.Login"
     xmlns:machines="clr-namespace:Shopfloor.Features.Admin.Machines"
     xmlns:managerDashboard="clr-namespace:Shopfloor.Features.Manager.ManagerDashboard"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:mechanicDashboard="clr-namespace:Shopfloor.Features.Mechanic.MechanicDashboard"
-    xmlns:offers="clr-namespace:Shopfloor.Features.Plannist.Offers"
+    xmlns:mechanicDashboard="clr-namespace:Shopfloor.Features.Mechanic"
+    xmlns:offers="clr-namespace:Shopfloor.Features.Plannist"
     xmlns:ordersToApprove="clr-namespace:Shopfloor.Features.Manager.OrdersToApprove"
     xmlns:partTypes="clr-namespace:Shopfloor.Features.Admin.PartTypes"
     xmlns:parts="clr-namespace:Shopfloor.Features.Admin.Parts"
-    xmlns:partsOrders="clr-namespace:Shopfloor.Features.Plannist.PartsOrders"
+    xmlns:partsOrders="clr-namespace:Shopfloor.Features.Plannist"
     xmlns:partsStock="clr-namespace:Shopfloor.Features.Mechanic.PartsStock"
-    xmlns:plannistDashboard="clr-namespace:Shopfloor.Features.Plannist.PlannistDashboard"
-    xmlns:reports="clr-namespace:Shopfloor.Features.Plannist.Reports"
+    xmlns:plannistDashboard="clr-namespace:Shopfloor.Features.Plannist"
     xmlns:requests="clr-namespace:Shopfloor.Features.Mechanic.Requests"
-    xmlns:reservations="clr-namespace:Shopfloor.Features.Plannist.Reservations"
+    xmlns:reservations="clr-namespace:Shopfloor.Features.Plannist"
     xmlns:suppliers="clr-namespace:Shopfloor.Features.Admin.Suppliers"
     xmlns:topPanel="clr-namespace:Shopfloor.Layout.TopPanel"
     xmlns:users="clr-namespace:Shopfloor.Features.Admin.Users"
@@ -68,8 +67,8 @@
                         <requests:RequestsEditView />
                     </DataTemplate>
 
-                    <DataTemplate DataType="{x:Type partsStock:PartsStockMainViewModel}">
-                        <partsStock:PartsStockMainView />
+                    <DataTemplate DataType="{x:Type partsStock:PartsStockListViewModel}">
+                        <partsStock:PartsStockListView />
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type plannistDashboard:PlannistDashboardViewModel}">
@@ -90,9 +89,6 @@
                     <DataTemplate DataType="{x:Type reservations:ReservationsViewModel}">
                         <reservations:ReservationsView />
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type reports:ReportsViewModel}">
-                        <reports:ReportsView />
-                    </DataTemplate>
 
                     <DataTemplate DataType="{x:Type managerDashboard:ManagerDashboardViewModel}">
                         <managerDashboard:ManagerDashboardView />
@@ -104,20 +100,36 @@
                         <approveOrder:OrderApproveView />
                     </DataTemplate>
 
-                    <DataTemplate DataType="{x:Type users:UsersMainViewModel}">
-                        <users:UsersMainView />
+                    <DataTemplate DataType="{x:Type users:UsersListViewModel}">
+                        <users:UsersListView />
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type machines:MachinesMainViewModel}">
-                        <machines:MachinesMainView />
+                    <DataTemplate DataType="{x:Type users:UsersAddViewModel}">
+                        <users:UsersAddView />
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type parts:PartsMainViewModel}">
-                        <parts:PartsMainView />
+                    <DataTemplate DataType="{x:Type users:UsersEditViewModel}">
+                        <users:UsersEditView />
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type suppliers:SuppliersMainViewModel}">
-                        <suppliers:SuppliersMainView />
+
+                    <DataTemplate DataType="{x:Type machines:MachinesListViewModel}">
+                        <machines:MachinesListView />
                     </DataTemplate>
-                    <DataTemplate DataType="{x:Type partTypes:PartTypesMainViewModel}">
-                        <partTypes:PartTypesMainView />
+
+                    <DataTemplate DataType="{x:Type parts:PartsListViewModel}">
+                        <parts:PartsListView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type parts:PartsAddViewModel}">
+                        <parts:PartsAddView />
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type parts:PartsEditViewModel}">
+                        <parts:PartsEditView />
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type suppliers:SuppliersListViewModel}">
+                        <suppliers:SuppliersListView />
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type partTypes:PartTypesListViewModel}">
+                        <partTypes:PartTypesListView />
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>

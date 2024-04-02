@@ -77,7 +77,7 @@ namespace Shopfloor.Hosts.Database
         }
         private static void ErrandServices(IServiceCollection services)
         {
-            services.AddSingleton<IDataStore<Errand>, ErrandStore>();
+            services.AddSingleton<ErrandStore, ErrandStore>();
             services.AddSingleton<ErrandStore>();
             services.AddSingleton<ErrandProvider>();
             services.AddSingleton<ErrandCombiner>();

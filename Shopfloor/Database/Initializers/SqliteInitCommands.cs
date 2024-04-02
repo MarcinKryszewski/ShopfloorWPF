@@ -249,6 +249,7 @@ namespace Shopfloor.Database.SQLite
                 _errand_parts_orders_SQLCommand,
 
                 _messages_SQLCommand,
+                _reservations_SQLCommand,
 
                 _init_admin_SQLCommand,
                 _init_roles_SQLCommand,

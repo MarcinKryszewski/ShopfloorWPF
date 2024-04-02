@@ -1,5 +1,4 @@
-﻿using Shopfloor.Features.Admin.PartTypes.List;
-using Shopfloor.Shared.Commands;
+﻿using Shopfloor.Shared.Commands;
 
 namespace Shopfloor.Features.Admin.PartTypes.Commands
 {

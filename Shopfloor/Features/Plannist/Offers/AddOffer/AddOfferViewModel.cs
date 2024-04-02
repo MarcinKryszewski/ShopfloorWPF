@@ -1,15 +1,13 @@
-using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Plannist.Offers.AddOffer;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Interfaces;
-using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
-using Shopfloor.Models.ErrandTypeModel;
-using Shopfloor.Models.PartModel;
-using Shopfloor.Models.SupplierModel;
-using Shopfloor.Models.UserModel;
+using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
+using Shopfloor.Stores;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,13 +15,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ToastNotifications;
 
-namespace Shopfloor.Features.Plannist.Offers.AddOffer
+namespace Shopfloor.Features.Plannist
 {
     internal sealed partial class AddOfferViewModel : ViewModelBase
     {
-        private readonly IServiceProvider _mainServices;
         private readonly SelectedRequestStore _requestStore;
+        private readonly ErrandPartStore _errandPartStore;
+
         public ICommand ReturnCommand { get; }
         public ICommand ConfirmCommand { get; }
         public ErrandPart ErrandPart => _requestStore.Request!;
@@ -69,14 +69,15 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
             }
         }
         public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
-        public AddOfferViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices)
+        public AddOfferViewModel(NavigationService navigationService, SelectedRequestStore selectedRequestStore, ErrandPartStore errandPartStore, SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, CurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, Notifier notifier)
         {
-            _mainServices = mainServices;
-            Task.Run(() => LoadData(databaseServices));
-            _requestStore = _mainServices.GetRequiredService<SelectedRequestStore>();
+            _requestStore = selectedRequestStore;
+            _errandPartStore = errandPartStore;
 
-            //ReturnCommand = new NavigateCommand<OffersViewModel>(_mainServices.GetRequiredService<NavigationService<OffersViewModel>>());
-            ConfirmCommand = new ConfrmOfferCommand(_requestStore, this, databaseServices, userServices, mainServices);
+            Task.Run(LoadData);
+
+            ReturnCommand = new RelayCommand(o => { navigationService.NavigateTo<OffersViewModel>(); }, o => true);
+            ConfirmCommand = new ConfrmOfferCommand(_requestStore, this, currentUserStore, errandPartProvider, errandPartStatusProvider, errandPartStatusStore, notifier);
 
             _errandPartValidation = new(this);
         }
@@ -85,17 +86,12 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
             get => _requestStore.Request;
             set => _requestStore.Request = value;
         }
-        private async Task LoadData(IServiceProvider databaseServices)
+        private Task LoadData()
         {
-            SuppliersStore suppliers = databaseServices.GetRequiredService<SuppliersStore>();
-            UserStore users = databaseServices.GetRequiredService<UserStore>();
-            PartStore parts = databaseServices.GetRequiredService<PartStore>();
-            ErrandPartStatusStore errandPartStatuses = databaseServices.GetRequiredService<ErrandPartStatusStore>();
-            ErrandStore errands = databaseServices.GetRequiredService<ErrandStore>();
-            ErrandTypeStore errandTypes = databaseServices.GetRequiredService<ErrandTypeStore>();
-            ErrandPartStore errandPartStore = databaseServices.GetRequiredService<ErrandPartStore>();
+            ErrandPartStore errandPartStore = _errandPartStore;
 
             LoadHistoricalData(errandPartStore);
+            return Task.CompletedTask;
         }
 
         private void LoadHistoricalData(ErrandPartStore errandParts)

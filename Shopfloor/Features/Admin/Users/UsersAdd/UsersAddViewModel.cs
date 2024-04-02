@@ -1,10 +1,11 @@
-using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Features.Admin.UsersList.Commands;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
@@ -13,29 +14,29 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Admin.Users.Add
+namespace Shopfloor.Features.Admin.Users
 {
     internal sealed class UsersAddViewModel : ViewModelBase, IInputForm<User>
     {
-        private readonly IServiceProvider _database;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         private readonly RolesStore _rolesValueStore;
+        private readonly RoleProvider _roleProvider;
         private string _name = string.Empty;
         private List<Role> _rolesStorage = [];
         private string _surname = string.Empty;
         private string _username = string.Empty;
-        public UsersAddViewModel(IServiceProvider mainServices, IServiceProvider databasServices)
+        public UsersAddViewModel(NavigationService navigationService, UserProvider userProvider, RoleUserProvider roleUserProvider, RoleProvider roleProvider)
         {
-            _database = databasServices;
             _rolesValueStore = new();
             SetRoles();
-            //BackToListCommand = new NavigateCommand<UsersListViewModel>(mainServices.GetRequiredService<NavigationService<UsersListViewModel>>());
+            BackToListCommand = new RelayCommand(o => { navigationService.NavigateTo<UsersListViewModel>(); }, o => true);
             AddNewUserCommand = new UserAddCommand(
                 this,
                 _rolesValueStore,
-                databasServices.GetRequiredService<UserProvider>(),
-                databasServices.GetRequiredService<RoleUserProvider>()
+                userProvider,
+                roleUserProvider
             );
+            _roleProvider = roleProvider;
         }
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public ICommand AddNewUserCommand { get; }
@@ -114,7 +115,7 @@ namespace Shopfloor.Features.Admin.Users.Add
         }
         private void SetRoles()
         {
-            _rolesStorage = new(_database.GetRequiredService<RoleProvider>().GetAll().Result);
+            _rolesStorage = new(_roleProvider.GetAll().Result);
             UpdateRoles();
         }
     }

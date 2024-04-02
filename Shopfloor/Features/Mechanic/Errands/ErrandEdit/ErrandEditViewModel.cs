@@ -1,15 +1,19 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Mechanic.Errands.Commands;
+﻿using Shopfloor.Features.Mechanic.Errands.Commands;
 using Shopfloor.Features.Mechanic.Errands.Interfaces;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Interfaces;
-using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandModel;
+using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.ErrandPartModel.Store;
+using Shopfloor.Models.ErrandPartStatusModel;
+using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System;
@@ -22,31 +26,39 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using Shopfloor.Models.ErrandPartModel.Store;
 
 namespace Shopfloor.Features.Mechanic.Errands
 {
     internal sealed partial class ErrandEditViewModel : ViewModelBase
     {
-        private readonly IServiceProvider _databaseServices;
         private readonly ObservableCollection<ErrandType> _errandTypes = [];
         private readonly ErrandValidation _errandValidation;
         private readonly ObservableCollection<Machine> _machines = [];
-        private readonly IServiceProvider _mainServices;
+        private readonly ErrandPartsListViewModel _errandPartsListViewModel;
         private readonly SelectedErrandStore _selectedErrand;
+        private readonly ErrandStore _errandStore;
+        private readonly MachineStore _machineStore;
+        private readonly UserStore _userStore;
+        private readonly ErrandTypeStore _errandTypeStore;
+        private readonly ErrandPartStore _errandPartStore;
+        private readonly PartStore _partStore;
         private readonly ObservableCollection<User> _users = [];
         private ErrandDTO _errandDTO = new();
-        public ErrandEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userServices, ErrandPartsListViewModel partsViewModel)
+        public ErrandEditViewModel(NavigationService navigationService, ErrandPartsListViewModel errandPartsListViewModel, SelectedErrandStore selectedErrandStore, CurrentUserStore currentUserStore, ErrandStore errandStore, MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore, ErrandPartStore errandPartStore, PartStore partStore, ErrandProvider errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStatusProvider errandPartStatusProvider)
         {
-            _mainServices = mainServices;
-            _databaseServices = databaseServices;
+            _errandPartsListViewModel = errandPartsListViewModel;
+            _selectedErrand = selectedErrandStore;
+            _errandStore = errandStore;
+            _machineStore = machineStore;
+            _userStore = userStore;
+            _errandTypeStore = errandTypeStore;
+            _errandPartStore = errandPartStore;
+            _partStore = partStore;
 
-            _selectedErrand = mainServices.GetRequiredService<SelectedErrandStore>();
-
-            EditErrandCommand = new ErrandEditCommand(this, _databaseServices, userServices.GetRequiredService<CurrentUserStore>(), _selectedErrand);
-            //ReturnCommand = new NavigateCommand<ErrandsListViewModel>(_mainServices.GetRequiredService<NavigationService<ErrandsListViewModel>>());
+            EditErrandCommand = new ErrandEditCommand(this, currentUserStore, _selectedErrand, errandProvider, errandPartProvider, errandStatusProvider, errandPartStore, errandPartStatusProvider);
+            ReturnCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandsListViewModel>(); }, o => true);
             PrioritySetCommand = new PrioritySetCommand(this);
-            ShowPartsListCommand = new ErrandsShowPartsList(this, partsViewModel);
+            ShowPartsListCommand = new ErrandsShowPartsList(this, _errandPartsListViewModel);
 
             _errandValidation = new(this);
 
@@ -138,8 +150,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
         public async Task RefreshData()
         {
-            ErrandStore errandStore = _databaseServices.GetRequiredService<ErrandStore>();
-            await errandStore.Reload();
+            await _errandStore.Reload();
             RefreshLists();
         }
         private void ClearLists()
@@ -217,16 +228,10 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             ClearLists();
 
-            MachineStore machineStore = _databaseServices.GetRequiredService<MachineStore>();
-            UserStore userStore = _databaseServices.GetRequiredService<UserStore>();
-            ErrandTypeStore errandTypeStore = _databaseServices.GetRequiredService<ErrandTypeStore>();
-            ErrandPartStore errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
-            PartStore partsStore = _databaseServices.GetRequiredService<PartStore>();
-
-            await FillLists(machineStore, userStore, errandTypeStore, errandPartStore, partsStore);
+            await FillLists(_machineStore, _userStore, _errandTypeStore, _errandPartStore, _partStore);
 
             RefreshLists();
-            SetupForm(errandTypeStore, machineStore, userStore, errandPartStore);
+            SetupForm(_errandTypeStore, _machineStore, _userStore, _errandPartStore);
         }
 
         private void SetupForm(ErrandTypeStore errandTypeStore, MachineStore machineStore, UserStore userStore, ErrandPartStore errandPartStore)
@@ -246,7 +251,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         }
         public void SetupParts(ErrandPartStore errandPartStore)
         {
-            if (_selectedErrand.ErrandParts.Count > 0) PartsList = _mainServices.GetRequiredService<ErrandPartsListViewModel>();
+            if (_selectedErrand.ErrandParts.Count > 0) PartsList = _errandPartsListViewModel;
         }
         private void SetupPriority(Errand errand)
         {
@@ -320,8 +325,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         }
         public void ReloadData()
         {
-            ErrandStore errandStore = _databaseServices.GetRequiredService<ErrandStore>();
-            Task.Run(errandStore.Reload);
+            Task.Run(_errandStore.Reload);
             RefreshLists();
         }
         private void OnErrorsChanged(string propertyName)

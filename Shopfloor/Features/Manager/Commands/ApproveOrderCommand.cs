@@ -1,9 +1,9 @@
-using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Manager.OrderApprove;
 using Shopfloor.Features.Manager.Stores;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Stores;
 using System;
@@ -16,20 +16,22 @@ namespace Shopfloor.Features.Manager.Commands
 {
     internal sealed class ApproveOrderCommand : CommandBase
     {
+        private readonly NavigationService _navigationService;
+        private readonly ErrandPartStatusStore _errandPartStatusStore;
+        private readonly Notifier _notifier;
         private readonly SelectedRequestStore _requestStore;
         private readonly OrderApproveViewModel _viewModel;
-        private readonly IServiceProvider _services;
-        private readonly IServiceProvider _databaseServices;
         private readonly ErrandPartStatusProvider _provider;
         private readonly User _currentUser;
-        public ApproveOrderCommand(SelectedRequestStore requestStore, OrderApproveViewModel viewModel, IServiceProvider databaseServices, IServiceProvider userServices, IServiceProvider mainServices)
+        public ApproveOrderCommand(NavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, Notifier notifier, SelectedRequestStore requestStore, OrderApproveViewModel viewModel, CurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
         {
+            _navigationService = navigationService;
+            _errandPartStatusStore = errandPartStatusStore;
+            _notifier = notifier;
             _requestStore = requestStore;
             _viewModel = viewModel;
-            _services = mainServices;
-            _currentUser = userServices.GetRequiredService<CurrentUserStore>().User!;
-            _databaseServices = databaseServices;
-            _provider = _databaseServices.GetRequiredService<ErrandPartStatusProvider>();
+            _currentUser = currentUserStore.User!;
+            _provider = errandPartStatusProvider;
         }
         public override void Execute(object? parameter)
         {
@@ -47,9 +49,8 @@ namespace Shopfloor.Features.Manager.Commands
         }
         private void ReturnToApprovals()
         {
-            _services.GetRequiredService<Notifier>().ShowSuccess("Dodano ofertę i przekazano do zatwierdzenia!");
-            //NavigationService<OrderApproveViewModel> navigationService = _services.GetRequiredService<NavigationService<OrderApproveViewModel>>();
-            //navigationService.Navigate();
+            _notifier.ShowSuccess("Dodano ofertę i przekazano do zatwierdzenia!");
+            _navigationService.NavigateTo<OrderApproveViewModel>();
         }
         private async Task ErrandPartUpdateStatus(ErrandPartStatus requestStatus)
         {
@@ -85,8 +86,7 @@ namespace Shopfloor.Features.Manager.Commands
         }
         private void AddToStore(ErrandPartStatus status)
         {
-            ErrandPartStatusStore store = _databaseServices.GetRequiredService<ErrandPartStatusStore>();
-            List<ErrandPartStatus> errandPartStatuses = store.Data;
+            List<ErrandPartStatus> errandPartStatuses = _errandPartStatusStore.Data;
             errandPartStatuses.Add(status);
         }
     }

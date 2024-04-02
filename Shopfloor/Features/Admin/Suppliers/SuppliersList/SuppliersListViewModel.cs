@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Suppliers.Commands;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.SupplierModel;
@@ -14,11 +13,10 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Admin.Suppliers.List
+namespace Shopfloor.Features.Admin.Suppliers
 {
     internal sealed class SuppliersListViewModel : ViewModelBase, IInputForm<Supplier>
     {
-        private readonly IServiceProvider _databaseServices;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         private readonly ObservableCollection<Supplier> _suppliers = [];
         private readonly SuppliersStore _suppliersStore;
@@ -26,17 +24,17 @@ namespace Shopfloor.Features.Admin.Suppliers.List
         private string _name = string.Empty;
         private string _searchText = string.Empty;
         private Supplier? _selectedSupplier;
-        public SuppliersListViewModel(IServiceProvider databaseServices)
+        private readonly SupplierProvider _supplierProvider;
+        public SuppliersListViewModel(SupplierProvider supplierProvider, SuppliersStore suppliersStore)
         {
-            _databaseServices = databaseServices;
-            SupplierProvider provider = _databaseServices.GetRequiredService<SupplierProvider>();
+            _supplierProvider = supplierProvider;
 
-            SupplierAddCommand = new SupplierAddCommand(this, provider);
-            SupplierEditCommand = new SupplierEditCommand(this, provider);
+            SupplierAddCommand = new SupplierAddCommand(this, _supplierProvider);
+            SupplierEditCommand = new SupplierEditCommand(this, _supplierProvider);
             CleanFormCommand = new CleanFormCommand(this);
 
-            _suppliersStore = _databaseServices.GetRequiredService<SuppliersStore>();
-            Task.Run(() => LoadData(_databaseServices));
+            _suppliersStore = suppliersStore;
+            Task.Run(LoadData);
         }
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public ICommand CleanFormCommand { get; }
@@ -117,10 +115,9 @@ namespace Shopfloor.Features.Admin.Suppliers.List
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public bool IsDataValidate => !HasErrors;
-        public Task LoadData(IServiceProvider databaseServices)
+        public Task LoadData()
         {
             Application.Current.Dispatcher.Invoke(_suppliers.Clear);
-
 
             List<Supplier> suppliers = _suppliersStore.Data;
             foreach (Supplier supplier in suppliers)
@@ -135,14 +132,13 @@ namespace Shopfloor.Features.Admin.Suppliers.List
         }
         public void ReloadData()
         {
-            _databaseServices.GetRequiredService<SuppliersStore>().Reload();
+            _suppliersStore.Reload().Wait();
         }
         //Updates the list if value didn't exist, ie. after add
         public async Task UpdateData()
         {
             //await Task.Delay(5000);
-            SupplierProvider provider = _databaseServices.GetRequiredService<SupplierProvider>();
-            IEnumerable<Supplier> suppliers = await provider.GetAll();
+            IEnumerable<Supplier> suppliers = await _supplierProvider.GetAll();
             foreach (Supplier supplier in suppliers)
             {
                 if (_suppliers.FirstOrDefault(s => s.Id == supplier.Id) is null)
@@ -159,8 +155,7 @@ namespace Shopfloor.Features.Admin.Suppliers.List
         public async Task UpdateData(Supplier supplierToRemove)
         {
             if (supplierToRemove.Id is null) return;
-            SupplierProvider provider = _databaseServices.GetRequiredService<SupplierProvider>();
-            Supplier supplierToAdd = await provider.GetById((int)supplierToRemove.Id);
+            Supplier supplierToAdd = await _supplierProvider.GetById((int)supplierToRemove.Id);
             if (_suppliers.FirstOrDefault(s => s.Id == supplierToRemove.Id) is not null)
             {
                 Application.Current.Dispatcher.Invoke(() =>

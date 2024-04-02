@@ -1,4 +1,4 @@
-using Shopfloor.Features.Admin.Users.List;
+using Shopfloor.Features.Admin.Users;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using System.Linq;

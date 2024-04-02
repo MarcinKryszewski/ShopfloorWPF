@@ -1,5 +1,5 @@
 ﻿using Shopfloor.Features.Login;
-using Shopfloor.Features.Mechanic.MechanicDashboard;
+using Shopfloor.Features.Mechanic;
 using Shopfloor.Layout.TopPanel.Commands;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;

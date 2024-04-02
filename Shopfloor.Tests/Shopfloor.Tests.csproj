@@ -12,8 +12,26 @@
 
   <ItemGroup>
     <Compile Remove="DatabaseTests\**" />
+    <Compile Remove="Features\**" />
+    <Compile Remove="Hosts\**" />
+    <Compile Remove="Interfaces\**" />
+    <Compile Remove="Layout\**" />
+    <Compile Remove="Services\**" />
+    <Compile Remove="Stores\**" />
     <EmbeddedResource Remove="DatabaseTests\**" />
+    <EmbeddedResource Remove="Features\**" />
+    <EmbeddedResource Remove="Hosts\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Layout\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <EmbeddedResource Remove="Stores\**" />
     <None Remove="DatabaseTests\**" />
+    <None Remove="Features\**" />
+    <None Remove="Hosts\**" />
+    <None Remove="Interfaces\**" />
+    <None Remove="Layout\**" />
+    <None Remove="Services\**" />
+    <None Remove="Stores\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,53 +51,6 @@
 
   <ItemGroup>
     <Folder Include="Database\Initializers\" />
-    <Folder Include="Features\Admin\Machines\Commands\" />
-    <Folder Include="Features\Admin\Machines\Hosts\" />
-    <Folder Include="Features\Admin\Machines\MachinesList\" />
-    <Folder Include="Features\Admin\Machines\Services\" />
-    <Folder Include="Features\Admin\Machines\Stores\" />
-    <Folder Include="Features\Admin\Parts\Commands\" />
-    <Folder Include="Features\Admin\Parts\Hosts\" />
-    <Folder Include="Features\Admin\Parts\PartsAdd\" />
-    <Folder Include="Features\Admin\Parts\PartsEdit\" />
-    <Folder Include="Features\Admin\Parts\PartsList\" />
-    <Folder Include="Features\Admin\Parts\Services\" />
-    <Folder Include="Features\Admin\Parts\Stores\" />
-    <Folder Include="Features\Admin\PartTypes\Commands\" />
-    <Folder Include="Features\Admin\PartTypes\Hosts\" />
-    <Folder Include="Features\Admin\PartTypes\PartTypesList\" />
-    <Folder Include="Features\Admin\PartTypes\Services\" />
-    <Folder Include="Features\Admin\Suppliers\Commands\" />
-    <Folder Include="Features\Admin\Suppliers\Hosts\" />
-    <Folder Include="Features\Admin\Suppliers\Services\" />
-    <Folder Include="Features\Admin\Suppliers\SuppliersList\" />
-    <Folder Include="Features\Admin\Users\Commands\" />
-    <Folder Include="Features\Admin\Users\Hosts\" />
-    <Folder Include="Features\Admin\Users\Services\" />
-    <Folder Include="Features\Admin\Users\Stores\" />
-    <Folder Include="Features\Admin\Users\UsersAdd\" />
-    <Folder Include="Features\Admin\Users\UsersEdit\" />
-    <Folder Include="Features\Admin\Users\UsersList\" />
-    <Folder Include="Features\Dashboard\Commands\" />
-    <Folder Include="Features\Login\Commands\" />
-    <Folder Include="Features\Manager\Tasks\" />
-    <Folder Include="Features\Mechanic\MinimalStates\" />
-    <Folder Include="Features\Mechanic\Requests\" />
-    <Folder Include="Features\Mechanic\Tasks\" />
-    <Folder Include="Features\Plannist\PlannistDashboardMain\" />
-    <Folder Include="Features\Plannist\Deploys\" />
-    <Folder Include="Features\Plannist\Orders\" />
-    <Folder Include="Features\Plannist\Reports\" />
-    <Folder Include="Features\Plannist\Reservations\" />
-    <Folder Include="Hosts\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Layout\Content\" />
-    <Folder Include="Layout\MainWindow\" />
-    <Folder Include="Layout\SidePanel\" />
-    <Folder Include="Layout\TopPanel\Commands\" />
-    <Folder Include="Services\NavigationServices\" />
-    <Folder Include="Services\Providers\" />
-    <Folder Include="Stores\DatabaseDataStores\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Errands.Commands;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Interfaces;
@@ -22,9 +21,9 @@ namespace Shopfloor.Features.Mechanic.Errands
     internal sealed partial class ErrandPartsListViewModel : ViewModelBase
     {
         private readonly List<Part> _parts = [];
-        private readonly IServiceProvider _databaseServices;
         private readonly SelectedErrandStore _errandStore;
-
+        private readonly PartStore _partStore;
+        private readonly ErrandPartStore _errandPartStore;
         private string _searchText = string.Empty;
         public string SearchText
         {
@@ -59,10 +58,12 @@ namespace Shopfloor.Features.Mechanic.Errands
         public ICommand AddPartToListCommand { get; }
         public ICommand RemovePartFromListCommand { get; }
         public Part? SelectedPart { get; set; }
-        public ErrandPartsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public ErrandPartsListViewModel(SelectedErrandStore selectedErrandStore, PartStore partStore, ErrandPartStore errandPartStore)
         {
-            _databaseServices = databaseServices;
-            _errandStore = mainServices.GetRequiredService<SelectedErrandStore>();
+            _errandStore = selectedErrandStore;
+            _partStore = partStore;
+            _errandPartStore = errandPartStore;
+
             AddPartToListCommand = new ErrandAddPartCommand(this, _errandStore);
             RemovePartFromListCommand = new ErrandRemovePartCommand(this, _errandStore);
             _errandPartValidation = new(this);
@@ -78,8 +79,8 @@ namespace Shopfloor.Features.Mechanic.Errands
                 _errandStore.ErrandParts.Clear();
             });
 
-            PartStore partsStore = _databaseServices.GetRequiredService<PartStore>();
-            ErrandPartStore errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
+            PartStore partsStore = _partStore;
+            ErrandPartStore errandPartStore = _errandPartStore;
 
             //await LoadStores(partsStore, errandPartStore);
             //await CombineData(partsStore, errandPartStore);

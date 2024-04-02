@@ -1,8 +1,9 @@
-using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Parts.Stores;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
+using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,23 +15,18 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Admin.Parts.List
+namespace Shopfloor.Features.Admin.Parts
 {
     internal sealed class PartsListViewModel : ViewModelBase
     {
-        private readonly IServiceProvider _databaseServices;
-        private readonly IServiceProvider _mainServices;
         private string _searchText = string.Empty;
         private readonly ObservableCollection<Part> _parts;
         private readonly SelectedPartStore _selectedPart;
-
         private readonly PartStore _partsStore;
         private readonly SuppliersStore _suppliersStore;
         private readonly PartTypeStore _partTypesStore;
-
         public Visibility IsSelected => SelectedPart is null ? Visibility.Collapsed : Visibility.Visible;
         public ICollectionView Parts { get; }
-
         public Part? SelectedPart
         {
             get => _selectedPart.Part;
@@ -44,7 +40,6 @@ namespace Shopfloor.Features.Admin.Parts.List
                 OnPropertyChanged(nameof(SelectedPart));
             }
         }
-
         public string SearchText
         {
             get => _searchText;
@@ -55,25 +50,22 @@ namespace Shopfloor.Features.Admin.Parts.List
                 OnPropertyChanged(nameof(SearchText));
             }
         }
-
         public ICommand AddPartCommand { get; }
         public ICommand EditPartCommand { get; }
 
-        public PartsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public PartsListViewModel(NavigationService navigationService, PartTypeStore partTypeStore, SuppliersStore suppliersStore, PartStore partStore, SelectedPartStore selectedPartStore)
         {
-            _databaseServices = databaseServices;
-            _mainServices = mainServices;
             _parts = new();
-            _selectedPart = _mainServices.GetRequiredService<SelectedPartStore>();
+            _selectedPart = selectedPartStore;
 
-            //AddPartCommand = new NavigateCommand<PartsAddViewModel>(mainServices.GetRequiredService<NavigationService<PartsAddViewModel>>());
-            //EditPartCommand = new NavigateCommand<PartsEditViewModel>(mainServices.GetRequiredService<NavigationService<PartsEditViewModel>>());
+            AddPartCommand = new RelayCommand(o => { navigationService.NavigateTo<PartsAddViewModel>(); }, o => true);
+            EditPartCommand = new RelayCommand(o => { navigationService.NavigateTo<PartsEditViewModel>(); }, o => true);
 
             Parts = CollectionViewSource.GetDefaultView(_parts);
 
-            _partsStore = _databaseServices.GetRequiredService<PartStore>();
-            _suppliersStore = _databaseServices.GetRequiredService<SuppliersStore>();
-            _partTypesStore = _databaseServices.GetRequiredService<PartTypeStore>();
+            _partsStore = partStore;
+            _suppliersStore = suppliersStore;
+            _partTypesStore = partTypeStore;
 
             Task.Run(LoadData);
             Parts.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Part.TypeName)));

@@ -1,7 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Mechanic;
 using Shopfloor.Features.Mechanic.Errands;
 using Shopfloor.Features.Mechanic.Errands.Stores;
-using Shopfloor.Features.Mechanic.MechanicDashboard;
+using Shopfloor.Features.Mechanic.PartsStock;
 using Shopfloor.Features.Mechanic.Requests;
 using Shopfloor.Features.Mechanic.Requests.Stores;
 
@@ -12,6 +13,7 @@ namespace Shopfloor.Hosts.Features.Mechanic
         public static void Get(IServiceCollection services)
         {
             services.AddSingleton<MechanicDashboardViewModel>();
+            services.AddSingleton<PartsStockListViewModel>();
             GetErrand(services);
             GetRequest(services);
         }

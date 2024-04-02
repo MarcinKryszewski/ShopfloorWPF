@@ -1,4 +1,4 @@
-﻿using Shopfloor.Features.Admin.Users.Add;
+﻿using Shopfloor.Features.Admin.Users;
 using Shopfloor.Features.Admin.Users.Stores;
 
 using Shopfloor.Models.RoleModel;
