@@ -5,6 +5,7 @@ using Shopfloor.Hosts.Features.Login;
 using Shopfloor.Hosts.Features.Manager;
 using Shopfloor.Hosts.Features.Mechanic;
 using Shopfloor.Hosts.Features.Plannist;
+using Shopfloor.Services;
 using Shopfloor.Services.NotificationServices;
 
 namespace Shopfloor.Hosts.Features
@@ -15,6 +16,7 @@ namespace Shopfloor.Hosts.Features
         {
             LayoutHost.Get(services);
             NotifierServices.Get(services);
+            services.AddTransient<IAuthService, AuthService>();
             LoginHost.Get(services);
 
             AdminHost.Get(services);

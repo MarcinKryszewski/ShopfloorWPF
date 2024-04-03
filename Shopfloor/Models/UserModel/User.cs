@@ -11,10 +11,10 @@ namespace Shopfloor.Models.UserModel
     {
         private readonly HashSet<Role> _roles = [];
         private readonly UserDTO _data;
-        private const string _defaultImagePath = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
+        private const string DEFAULT_IMAGE_PATH = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
         public int? Id => _data.Id;
         public string Username => _data.Username;
-        public string Image => _data.ImagePath.Length > 0 ? _data.ImagePath : _defaultImagePath;
+        public string Image => _data.ImagePath.Length > 0 ? _data.ImagePath : DEFAULT_IMAGE_PATH;
         public string Name => _data.Name;
         public string Surname => _data.Surname;
         public string FullName => $"{_data.Name} {_data.Surname}";
@@ -24,7 +24,7 @@ namespace Shopfloor.Models.UserModel
             string username,
             string name,
             string surname,
-            string imagePath = _defaultImagePath,
+            string imagePath = DEFAULT_IMAGE_PATH,
             bool isActive = true)
         {
             _data = new()

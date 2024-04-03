@@ -53,14 +53,13 @@ namespace Shopfloor
             };
             MainWindow.Show();
 
-            AutoLogin(_currentUser, _userProvider);
+            AutoLogin(_currentUser);
             DashboardNavigate(_currentUser, _navigationService);
         }
-        //tries to login user automatically
-        private static void AutoLogin(CurrentUserStore currentUserStore, UserProvider userProvider)
+        private static void AutoLogin(CurrentUserStore currentUserStore)
         {
             string userName = Environment.UserName;
-            currentUserStore.AutoLogin(userName, userProvider);
+            currentUserStore.Login(userName, true);
         }
         private static void DashboardNavigate(CurrentUserStore currentUserStore, NavigationService navigationService)
         {

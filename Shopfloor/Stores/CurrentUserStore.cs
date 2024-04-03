@@ -2,6 +2,7 @@ using Shopfloor.Interfaces;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Services;
 using Shopfloor.Services.NotificationServices;
 using System;
 using System.Collections;
@@ -13,42 +14,52 @@ namespace Shopfloor.Stores
 {
     internal sealed partial class CurrentUserStore
     {
+        private const string DEFAULT_USERNAME = "GOŚĆ";
+        private const string AUTOLOGIN_FAILED = "Nieudane logowanie automatyczne. Zaloguj się samodzielnie";
+        private const string LOGIN_SUCCESSFUL = "ZALOGOWANO POPRAWNIE";
+        private const string LOGIN_FAILED = "NIEUDANE LOGOWANIE";
         private readonly IProvider<Role> _roleProvider;
         private readonly IRoleUserProvider _roleUserProvider;
         private readonly INotifier _notifier;
-        private readonly UserValidation _userValidation;
+        private readonly IAuthService _auth;
         private bool _isUserLoggedIn;
         private User? _user;
-        public CurrentUserStore(IProvider<Role> roleProvider, IRoleUserProvider roleUserProvider, INotifier notifier)
+        public CurrentUserStore(IProvider<Role> roleProvider, IRoleUserProvider roleUserProvider, INotifier notifier, IAuthService auth)
         {
-            _user = new("GOŚĆ");
+            _user = new(DEFAULT_USERNAME);
             _isUserLoggedIn = false;
             _roleProvider = roleProvider;
             _roleUserProvider = roleUserProvider;
             _notifier = notifier;
-            _userValidation = new(this);
+            _auth = auth;
             _propertyErrors = [];
         }
         public bool IsUserLoggedIn => _isUserLoggedIn;
         public User? User => _user;
-        public void Login(string username, UserProvider provider, IInputForm<User> inputForm)
+        public void Login(string username, bool isAuto = false)
         {
-            _user = provider.GetByUsername(username.ToLower()).Result ?? null;
-            _userValidation.ValidateLogin(_user, inputForm);
 
-            if (inputForm.HasErrors)
+            _user = _auth.Login(username);
+
+            if (_user is null)
             {
+                _notifier.ShowError(GetFailedText(isAuto));
                 return;
             }
 
             _isUserLoggedIn = true;
-            SetUserRoles(_user!);
-            LoginNotification();
-            OnPropertyChanged(nameof(IsUserLoggedIn));
+
+            LoginSuccessNotification();
+            UserLoginStatusChanged();
+        }
+        private static string GetFailedText(bool isAuto)
+        {
+            if (isAuto) return AUTOLOGIN_FAILED;
+            return LOGIN_FAILED;
         }
         public void Logout()
         {
-            _user = new("GOŚĆ");
+            _user = new(DEFAULT_USERNAME);
 
             _isUserLoggedIn = false;
             OnPropertyChanged(nameof(IsUserLoggedIn));
@@ -62,18 +73,11 @@ namespace Shopfloor.Stores
             IEnumerable<RoleUser> roleUsers = _roleUserProvider.GetAllForUser((int)User.Id).Result;
             return roleUsers;
         }
-        public bool HasRole(Role role)
+
+        private void SetUserRoles(User? user)
         {
-            if (GetRoles().FirstOrDefault(role) is null) return false;
-            return true;
-        }
-        public bool HasRole(int roleValue)
-        {
-            if (GetRoles().FirstOrDefault((r) => r.Value == roleValue) is null) return false;
-            return true;
-        }
-        private void SetUserRoles(User user)
-        {
+            if (user is null) return;
+
             IEnumerable<Role> roles = GetRoles();
             IEnumerable<RoleUser> roleUsers = GetRoleUsers();
 
@@ -84,24 +88,10 @@ namespace Shopfloor.Stores
                 user.AddRole(role);
             }
         }
-        private void LoginNotification() => _notifier.ShowInformation("ZALOGOWANO POPRAWNIE");
-    }
-    internal sealed partial class CurrentUserStore
-    {
-        public void AutoLogin(string username, UserProvider provider)
+        private void LoginSuccessNotification() => _notifier.ShowInformation(LOGIN_SUCCESSFUL);
+        private void UserLoginStatusChanged()
         {
-            _user = provider.GetByUsername(username.ToLower()).Result ?? null;
-            _userValidation.ValidateAutoLogin(_user, _propertyErrors);
-            if (HasErrors)
-            {
-                _propertyErrors.Remove("LoginFailed");
-                _notifier.ShowError("Nie udane logowanie automatyczne. Zaloguj się samodzielnie.");
-                return;
-            }
-
-            _isUserLoggedIn = true;
-            SetUserRoles(_user!);
-            _notifier.ShowSuccess("Zalogowano automatycznie!");
+            SetUserRoles(_user);
             OnPropertyChanged(nameof(IsUserLoggedIn));
         }
     }
