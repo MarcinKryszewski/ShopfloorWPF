@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.RoleModel
 {
-    internal sealed class RoleProvider : IProvider<Role>
+    internal class RoleProvider : IProvider<Role>
     {
         private readonly DatabaseConnectionFactory _database;
 

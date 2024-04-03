@@ -5,14 +5,14 @@ namespace Shopfloor.Interfaces
 {
     internal interface IProvider<T>
     {
-        Task<T> GetById(int id);
+        public Task<T> GetById(int id);
 
-        Task<IEnumerable<T>> GetAll();
+        public Task<IEnumerable<T>> GetAll();
 
-        Task<int> Create(T item);
+        public Task<int> Create(T item);
 
-        Task Update(T item);
+        public Task Update(T item);
 
-        Task Delete(int id);
+        public Task Delete(int id);
     }
 }
