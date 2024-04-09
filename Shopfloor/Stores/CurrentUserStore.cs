@@ -73,7 +73,6 @@ namespace Shopfloor.Stores
             IEnumerable<RoleUser> roleUsers = _roleUserProvider.GetAllForUser((int)User.Id).Result;
             return roleUsers;
         }
-
         private void SetUserRoles(User? user)
         {
             if (user is null) return;

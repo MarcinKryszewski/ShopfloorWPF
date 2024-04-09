@@ -11,19 +11,21 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
         private readonly ErrandToErrandType _errandType;
         private readonly ErrandToUser _user;
         private readonly ErrandToMachine _machine;
-        private readonly List<Errand> _data;
-
-        public ErrandCombiner(ErrandStore store, ErrandToErrandPart errandPart, ErrandToErrandStatus errandStatus, ErrandToErrandType errandType, ErrandToUser user, ErrandToMachine machine)
+        public ErrandCombiner(ErrandToErrandPart errandPart, ErrandToErrandStatus errandStatus, ErrandToErrandType errandType, ErrandToUser user, ErrandToMachine machine)
         {
             _errandPart = errandPart;
             _errandStatus = errandStatus;
             _errandType = errandType;
             _user = user;
             _machine = machine;
-            _data = store.Data;
         }
-        public async Task Combine()
+
+        public bool IsCombined { get; private set; }
+
+        public async Task Combine(bool shouldForce = false)
         {
+            if (IsCombined || !shouldForce) return;
+
             List<Task> tasks = [];
 
             tasks.Add(_errandPart.Combine());
@@ -33,6 +35,7 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
             tasks.Add(_machine.Combine());
 
             await Task.WhenAll(tasks);
+            IsCombined = true;
         }
     }
 }

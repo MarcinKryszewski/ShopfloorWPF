@@ -9,7 +9,6 @@ namespace Shopfloor.Models.UserModel
 {
     internal sealed partial class User : DataModel
     {
-        private readonly HashSet<Role> _roles = [];
         private readonly UserDTO _data;
         private const string DEFAULT_IMAGE_PATH = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
         public int? Id => _data.Id;
@@ -57,8 +56,9 @@ namespace Shopfloor.Models.UserModel
         }
 
         public void SetActive(bool isActive) => _data.IsActive = isActive;
-        public void AddRole(Role role) => _roles.Add(role);
-        public bool IsAuthorized(int roleValue) => _roles.Any(role => role.Value == roleValue);
+        public void AddRole(Role role) => _data.Roles.Add(role);
+        public void ClearRoles() => _data.Roles.Clear();
+        public bool IsAuthorized(int roleValue) => _data.Roles.Any(role => role.Value == roleValue);
     }
     internal sealed partial class User : IEquatable<User>
     {

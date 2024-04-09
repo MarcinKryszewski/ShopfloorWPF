@@ -63,12 +63,17 @@ namespace Shopfloor
         }
         private static void DashboardNavigate(CurrentUserStore currentUserStore, NavigationService navigationService)
         {
-            if (currentUserStore.HasRole(777))
+            if (currentUserStore.User is null)
+            {
+                navigationService.NavigateTo<MechanicDashboardViewModel>();
+                return;
+            }
+            if (currentUserStore.User.IsAuthorized(777))
             {
                 navigationService.NavigateTo<ManagerDashboardViewModel>();
                 return;
             }
-            if (currentUserStore.HasRole(460))
+            if (currentUserStore.User.IsAuthorized(460))
             {
                 navigationService.NavigateTo<PlannistDashboardViewModel>();
                 return;
