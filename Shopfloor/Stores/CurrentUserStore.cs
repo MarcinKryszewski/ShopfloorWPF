@@ -38,7 +38,6 @@ namespace Shopfloor.Stores
         public User? User => _user;
         public void Login(string username, bool isAuto = false)
         {
-
             _user = _auth.Login(username);
 
             if (_user is null)

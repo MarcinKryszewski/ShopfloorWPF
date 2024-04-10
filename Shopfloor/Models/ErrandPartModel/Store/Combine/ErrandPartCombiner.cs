@@ -17,8 +17,10 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
             _errandToErrandPart = errandToErrandPart;
             _errandPartStatusToErrandPart = errandPartStatusToErrandPart;
         }
-        public async Task Combine()
+        public bool IsCombined { get; private set; }
+        public async Task Combine(bool shouldForce = false)
         {
+            if (IsCombined || !shouldForce) return;
             List<Task> tasks = [];
 
             tasks.Add(_userToErrandPart.Combine());
@@ -27,6 +29,7 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
             tasks.Add(_errandPartStatusToErrandPart.Combine());
 
             await Task.WhenAll(tasks);
+            IsCombined = true;
         }
     }
 }

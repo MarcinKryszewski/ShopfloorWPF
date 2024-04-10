@@ -9,8 +9,11 @@ namespace Shopfloor.Models.ErrandPartOfferModel.Store
         public ErrandPartOfferCombiner()
         {
         }
-        public Task Combine()
+        public bool IsCombined { get; private set; }
+        public Task Combine(bool shouldForce = false)
         {
+            if (IsCombined || !shouldForce) return Task.CompletedTask;
+            IsCombined = true;
             return Task.CompletedTask;
         }
     }

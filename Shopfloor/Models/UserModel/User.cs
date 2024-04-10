@@ -58,6 +58,7 @@ namespace Shopfloor.Models.UserModel
         public void SetActive(bool isActive) => _data.IsActive = isActive;
         public void AddRole(Role role) => _data.Roles.Add(role);
         public void ClearRoles() => _data.Roles.Clear();
+        public IReadOnlyCollection<Role> GetRoles() => _data.Roles.ToList();
         public bool IsAuthorized(int roleValue) => _data.Roles.Any(role => role.Value == roleValue);
     }
     internal sealed partial class User : IEquatable<User>

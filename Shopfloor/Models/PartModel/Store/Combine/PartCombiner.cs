@@ -11,13 +11,16 @@ namespace Shopfloor.Models.PartModel.Store.Combine
         {
             _partType = partType;
         }
-        public async Task Combine()
+        public bool IsCombined { get; private set; }
+        public async Task Combine(bool shouldForce = false)
         {
+            if (IsCombined || !shouldForce) return;
             List<Task> tasks = [];
 
             tasks.Add(_partType.Combine());
 
             await Task.WhenAll(tasks);
+            IsCombined = true;
         }
     }
 }

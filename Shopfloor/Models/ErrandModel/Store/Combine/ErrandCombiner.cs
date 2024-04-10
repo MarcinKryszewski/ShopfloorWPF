@@ -19,9 +19,7 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
             _user = user;
             _machine = machine;
         }
-
         public bool IsCombined { get; private set; }
-
         public async Task Combine(bool shouldForce = false)
         {
             if (IsCombined || !shouldForce) return;

@@ -81,5 +81,51 @@ namespace Shopfloor.Tests
             // Assert
             result.Should().NotBe(user);
         }
+        [Fact]
+        public void SetUserRoles_WithRolesAndRoleUsers_RolesAddedToUser()
+        {
+            // Arrange
+            string username = "test";
+            User user = new(1, username, "name", "surname");
+            IEnumerable<Role> roles = [new Role(1, "test", 5)];
+            IEnumerable<RoleUser> roleUsers = [new RoleUser() { RoleId = 1, UserId = 1 }];
+
+            _auth.Login(username).Returns(user);
+            _roleProvider.GetAll().Returns(roles);
+            _roleUserProvider.GetAllForUser(1).Returns(roleUsers);
+
+            // Act
+            _sut.Login(username);
+            int rolesAmount = _sut.User!.GetRoles().Count;
+            bool result = rolesAmount == roleUsers.Count();
+
+            // Assert
+            result.Should().BeTrue();
+            rolesAmount.Should().BeGreaterThan(0);
+        }
+
+        [Fact]
+        public void SetUserRoles_RoleNotFound_NoRoleAdded()
+        {
+            // Arrange
+            string username = "test";
+            User user = new(1, username, "name", "surname");
+            IEnumerable<Role> roles = [new Role(2, "test", 5)];
+            IEnumerable<RoleUser> roleUsers = [new RoleUser() { RoleId = 1, UserId = 1 }];
+
+            _auth.Login(username).Returns(user);
+            _roleProvider.GetAll().Returns(roles);
+            _roleUserProvider.GetAllForUser(1).Returns(roleUsers);
+            _sut.Login(username);
+
+            // Act
+            _sut.Login(username);
+            int rolesAmount = _sut.User!.GetRoles().Count;
+            bool result = rolesAmount != roleUsers.Count();
+
+            // Assert
+            result.Should().BeTrue();
+            rolesAmount.Should().Be(0);
+        }
     }
 }
