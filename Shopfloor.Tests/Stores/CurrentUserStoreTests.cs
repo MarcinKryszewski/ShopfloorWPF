@@ -30,8 +30,10 @@ namespace Shopfloor.Tests
             User user = new(1, username, "name", "surname");
 
             _auth.Login(username).Returns(user);
+
             // Act
             _sut.Login(username);
+
             // Assert
             _sut.User.Should().Be(user);
             _sut.IsUserLoggedIn.Should().BeTrue();
@@ -43,8 +45,10 @@ namespace Shopfloor.Tests
             string username = "test";
 
             _auth.Login(username).ReturnsNull();
+
             // Act
             _sut.Login(username);
+
             // Assert
             _sut.User.Should().Be(null);
             _sut.IsUserLoggedIn.Should().BeFalse();

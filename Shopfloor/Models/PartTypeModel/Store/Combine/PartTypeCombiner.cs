@@ -6,8 +6,11 @@ namespace Shopfloor.Models.PartTypeModel.Store.Combine
 {
     internal sealed class PartTypeCombiner : ICombinerManager<PartType>
     {
-        public Task Combine()
+        public bool IsCombined { get; private set; }
+        public Task Combine(bool shouldForce = false)
         {
+            if (IsCombined || !shouldForce) return Task.CompletedTask;
+            IsCombined = true;
             return Task.CompletedTask;
         }
     }

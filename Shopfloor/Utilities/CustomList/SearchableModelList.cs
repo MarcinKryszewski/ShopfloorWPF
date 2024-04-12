@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Utilities.CustomList
 {
-    internal sealed class SearchableModelList : INotifyPropertyChanged
+    internal sealed partial class SearchableModelList
     {
         private readonly IEnumerable<ISearchableModel> _dataSource = [];
         private readonly int _pageSize;
@@ -20,7 +20,6 @@ namespace Shopfloor.Utilities.CustomList
             _dataSource = dataSource;
             _dataFiltered = new(dataSource);
         }
-        public event PropertyChangedEventHandler? PropertyChanged;
         public int CurrentPage
         {
             get => _currentPage;
@@ -37,7 +36,7 @@ namespace Shopfloor.Utilities.CustomList
             _filterText = string.Empty;
             await FilterList();
         }
-        public Task PageChanged()
+        private Task PageChanged()
         {
             int maxPage = MaxPage();
             if (_currentPage > maxPage) _currentPage = maxPage;
@@ -50,10 +49,6 @@ namespace Shopfloor.Utilities.CustomList
             OnPropertyChanged(nameof(CurrentPageText));
 
             return Task.CompletedTask;
-        }
-        public void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public void PageNext()
         {
@@ -121,6 +116,14 @@ namespace Shopfloor.Utilities.CustomList
                 _filterText = value;
                 _ = FilterList();
             }
+        }
+    }
+    internal sealed partial class SearchableModelList : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
