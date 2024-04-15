@@ -11,19 +11,19 @@ namespace Shopfloor.Tests.Utilities.CustomList
         {
             ISearchableModel model1 = Substitute.For<ISearchableModel>();
             model1.Id.Returns(1);
-            model1.SearchValue.Returns("");
+            model1.SearchValue.Returns("test1");
 
             ISearchableModel model2 = Substitute.For<ISearchableModel>();
             model2.Id.Returns(2);
-            model2.SearchValue.Returns("");
+            model2.SearchValue.Returns("test11");
 
             ISearchableModel model3 = Substitute.For<ISearchableModel>();
             model3.Id.Returns(3);
-            model3.SearchValue.Returns("");
+            model3.SearchValue.Returns("test2");
 
             ISearchableModel model4 = Substitute.For<ISearchableModel>();
             model4.Id.Returns(4);
-            model4.SearchValue.Returns("");
+            model4.SearchValue.Returns("test22");
 
             return [model1, model2, model3, model4];
         }
@@ -31,14 +31,14 @@ namespace Shopfloor.Tests.Utilities.CustomList
         public void CurrentPageText_ShouldReturnCorrectString()
         {
             // Arrange
+            int pageSize = 1;
             IEnumerable<ISearchableModel> data = GetData();
-            SearchableModelList sut = new(data, 1);
-
+            int dataSampleSize = data.Count();
+            SearchableModelList sut = new(data, pageSize);
             // Act
             string currentPageText = sut.CurrentPageText;
-            string correctString = $"1 z {data.Count()}";
+            string correctString = $"1 z {dataSampleSize}";
             bool result = correctString.Equals(currentPageText);
-
             // Assert
             result.Should().BeTrue();
             currentPageText.Should().NotBeNullOrEmpty();
@@ -48,11 +48,10 @@ namespace Shopfloor.Tests.Utilities.CustomList
         public void CurrentPage_ShouldBeSetToFirst_AfterObjectCreate()
         {
             // Arrange
-            SearchableModelList sut = new(GetData(), 1);
-
+            int pageSize = 1;
+            SearchableModelList sut = new(GetData(), pageSize);
             // Act
             int result = sut.CurrentPage;
-
             // Assert
             result.Should().Be(1);
             result.Should().BePositive();
@@ -75,22 +74,56 @@ namespace Shopfloor.Tests.Utilities.CustomList
             result.Should().BeGreaterThanOrEqualTo(startingPageNumber);
             result.Should().BeLessThanOrEqualTo(maxPage);
         }
-        [Theory]
-        [InlineData(null)]
-        [InlineData(1)]
-        [InlineData(4)]
-        public void PagePrev_ShouldChangeCurrentPage(int? value)
+        [Fact]
+        public void PageNext_PageShouldNotChange_WhenCurrentPageIsBiggerThanMax()
         {
             // Arrange
             IEnumerable<ISearchableModel> data = GetData();
-            SearchableModelList sut = value is null ? new(data) : new(data, (int)value);
+            int pageSize = 1;
+            int currentPage;
+            SearchableModelList sut = new(data, pageSize);
+            int maxPage = (int)Math.Ceiling((double)data.Count() / pageSize);
+            // Act
+            sut.PageSet(maxPage);
+            currentPage = sut.CurrentPage;
+            sut.PageNext();
+            int result = sut.CurrentPage;
+            // Assert
+            result.Should().Be(maxPage);
+            result.Should().Be(currentPage);
+        }
+        [Fact]
+        public void PagePrev_ShouldChangeCurrentPage()
+        {
+            // Arrange
+            int pageSize = 1;
+            IEnumerable<ISearchableModel> data = GetData();
+            SearchableModelList sut = new(data, pageSize);
             int startingPageNumber = sut.CurrentPage;
             // Act
+            sut.PageSet(2);
             sut.PagePrev();
             int result = sut.CurrentPage;
             // Assert
             result.Should().BeLessThanOrEqualTo(startingPageNumber);
             result.Should().BeGreaterThanOrEqualTo(1);
+        }
+        [Fact]
+        public void PagePrev_PageShouldNotChange_WhenCurrentPageIsFirst()
+        {
+            // Arrange
+            IEnumerable<ISearchableModel> data = GetData();
+            int pageSize = 1;
+            int currentPage;
+            SearchableModelList sut = new(data, pageSize);
+            // Act
+            sut.PageSet(1);
+            currentPage = sut.CurrentPage;
+            sut.PagePrev();
+            int result = sut.CurrentPage;
+            // Assert
+            result.Should().Be(1);
+            result.Should().Be(currentPage);
         }
         [Theory]
         [InlineData(1)]
@@ -169,20 +202,55 @@ namespace Shopfloor.Tests.Utilities.CustomList
             // Assert
             result.Should().Be(maxPage);
         }
-        /*[Fact]
+        [Fact]
         public void CurrentPageText_ShouldUpdateWithCurrentPageChange()
         {
             // Arrange
-            var searchableModelList = new SearchableModelList();
-            searchableModelList.SetDataFiltered(new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
-            searchableModelList.PageSize = 3;
-
+            int pageSize = 1;
+            IEnumerable<ISearchableModel> data = GetData();
+            SearchableModelList sut = new(data, pageSize);
+            int maxPage = data.Count();
             // Act
-            searchableModelList.CurrentPage = 3;
-            string currentPageTextAfterChange = searchableModelList.CurrentPageText;
-
+            string currentPageText = sut.CurrentPageText;
+            sut.PageNext();
+            string result = sut.CurrentPageText;
             // Assert
-            Assert.Equal("3 z 4", currentPageTextAfterChange); // Assuming there are 4 total pages
-        }*/
+            result.Should().NotBe(currentPageText);
+            result.Should().Be($"2 z {maxPage}");
+        }
+        [Fact]
+        public void FilterText_ShouldFilterData_WhenSet()
+        {
+            // Arrange
+            int pageSize = 1;
+            IEnumerable<ISearchableModel> data = GetData();
+            SearchableModelList sut = new(data, pageSize);
+            string filterText = "test1";
+            int dataSampleSize = data.Count();
+            // Act
+            sut.FilterText = filterText;
+            int result = sut.DataDisplay.Count;
+            // Assert
+            result.Should().Be(2);
+            result.Should().NotBe(dataSampleSize);
+        }
+        [Fact]
+        public void FilterText_ShouldReturnWholeSetData_WhenSetToEmpty()
+        {
+            // Arrange
+            int pageSize = 1;
+            IEnumerable<ISearchableModel> data = GetData();
+            SearchableModelList sut = new(data, pageSize);
+            string filterText = "test1";
+            int dataSampleSize = data.Count();
+            // Act
+            sut.FilterText = filterText;
+            int filteredDataAmount = sut.DataDisplay.Count;
+            sut.FilterText = "";
+            int result = sut.DataDisplay.Count;
+            // Assert
+            result.Should().Be(dataSampleSize);
+            result.Should().NotBe(filteredDataAmount);
+        }
     }
 }

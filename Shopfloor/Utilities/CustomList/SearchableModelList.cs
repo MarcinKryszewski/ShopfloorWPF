@@ -114,7 +114,7 @@ namespace Shopfloor.Utilities.CustomList
             set
             {
                 _filterText = value;
-                _ = FilterList();
+                FilterList().Wait();
             }
         }
     }
