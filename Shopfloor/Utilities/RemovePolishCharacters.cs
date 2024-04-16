@@ -4,8 +4,8 @@ namespace Shopfloor.Utilities
     {
         public static string Remove(string input)
         {
-            string polishChars = "ąćęłńóśźż";
-            string englishChars = "acelnoszz";
+            string polishChars = "ąćęłńóśźżĄĆĘŁŃÓŚŹŻ";
+            string englishChars = "acelnoszzACELNOSZZ";
 
             for (int i = 0; i < polishChars.Length; i++)
             {

@@ -222,9 +222,8 @@ namespace Shopfloor.Tests.Utilities.CustomList
         public void FilterText_ShouldFilterData_WhenSet()
         {
             // Arrange
-            int pageSize = 1;
             IEnumerable<ISearchableModel> data = GetData();
-            SearchableModelList sut = new(data, pageSize);
+            SearchableModelList sut = new(data, data.Count());
             string filterText = "test1";
             int dataSampleSize = data.Count();
             // Act
@@ -238,15 +237,31 @@ namespace Shopfloor.Tests.Utilities.CustomList
         public void FilterText_ShouldReturnWholeSetData_WhenSetToEmpty()
         {
             // Arrange
-            int pageSize = 1;
             IEnumerable<ISearchableModel> data = GetData();
-            SearchableModelList sut = new(data, pageSize);
+            SearchableModelList sut = new(data, data.Count());
             string filterText = "test1";
             int dataSampleSize = data.Count();
             // Act
             sut.FilterText = filterText;
             int filteredDataAmount = sut.DataDisplay.Count;
             sut.FilterText = "";
+            int result = sut.DataDisplay.Count;
+            // Assert
+            result.Should().Be(dataSampleSize);
+            result.Should().NotBe(filteredDataAmount);
+        }
+        [Fact]
+        public async Task ReloadSourceData_ShouldReturnWholeSetData()
+        {
+            // Arrange
+            IEnumerable<ISearchableModel> data = GetData();
+            SearchableModelList sut = new(data, data.Count());
+            string filterText = "test1";
+            int dataSampleSize = data.Count();
+            // Act
+            sut.FilterText = filterText;
+            int filteredDataAmount = sut.DataDisplay.Count;
+            await sut.ReloadSourceData();
             int result = sut.DataDisplay.Count;
             // Assert
             result.Should().Be(dataSampleSize);
