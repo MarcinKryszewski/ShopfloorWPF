@@ -1,5 +1,6 @@
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Models.ErrandPartStatusModel;
+using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 using System;
 using ToastNotifications;
@@ -10,10 +11,10 @@ namespace Shopfloor.Features.Plannist.Commands
     internal sealed class PlannistConfirmCommand : CommandBase
     {
         private readonly SelectedRequestStore _selectedRequest;
-        private readonly Notifier _notifier;
+        private readonly INotifier _notifier;
         private readonly ErrandPartStatusProvider _errandPartStatusProvider;
 
-        public PlannistConfirmCommand(SelectedRequestStore selectedRequest, Notifier notifier, ErrandPartStatusProvider errandPartStatusProvider)
+        public PlannistConfirmCommand(SelectedRequestStore selectedRequest, INotifier notifier, ErrandPartStatusProvider errandPartStatusProvider)
         {
             _selectedRequest = selectedRequest;
             _notifier = notifier;

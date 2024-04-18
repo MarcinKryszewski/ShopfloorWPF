@@ -2,7 +2,9 @@ using Shopfloor.Features.Plannist.Commands;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
+using Shopfloor.Models.ErrandPartModel.Store.Combine;
 using Shopfloor.Models.ErrandPartStatusModel;
+using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,15 +13,15 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using ToastNotifications;
 
 namespace Shopfloor.Features.Plannist
 {
     internal sealed class PlannistPartsListViewModel : ViewModelBase
     {
-        private readonly List<ErrandPart> _parts = [];
+        private List<ErrandPart> _parts = [];
         private readonly SelectedRequestStore _requestStore;
         private readonly ErrandPartStore _errandPartStore;
+        private readonly ErrandPartCombiner _errandPartCombiner;
         private string? _filterText;
         public ErrandPart? SelectedRow
         {
@@ -45,13 +47,14 @@ namespace Shopfloor.Features.Plannist
         public PlannistAbortCommand AbortCommand { get; }
         public ICommand DetailsCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public PlannistPartsListViewModel(Notifier notifier, SelectedRequestStore selectedRequestStore, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStore errandPartStore)
+        public PlannistPartsListViewModel(INotifier notifier, SelectedRequestStore selectedRequestStore, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStore errandPartStore, ErrandPartCombiner errandPartCombiner)
         {
-            Task.Run(LoadData);
-
             _requestStore = selectedRequestStore;
             _errandPartStore = errandPartStore;
+            _errandPartCombiner = errandPartCombiner;
             SelectedRow = null;
+
+            LoadData();
 
             ConfirmCommand = new PlannistConfirmCommand(_requestStore, notifier, errandPartStatusProvider);
             CancelCommand = new PlannistCancelCommand();
@@ -60,42 +63,19 @@ namespace Shopfloor.Features.Plannist
 
             ConfirmCommand.RequestConfirmed += OnRequestChanged;
             AbortCommand.RequestAborted += OnRequestChanged;
-
-            /*PropertyGroupDescription groupDescription = new("Errand");
-            Parts.GroupDescriptions.Clear();
-            Parts.GroupDescriptions.Add(groupDescription);*/
         }
         private void OnRequestChanged() => Parts.Refresh();
-        private async Task LoadData()
+        private Task LoadData()
         {
-            Application.Current.Dispatcher.Invoke(_parts.Clear);
+            _errandPartCombiner.Combine().Wait();
+            _parts = _errandPartStore.Data;
 
-            await FillLists(_errandPartStore);
 
-            RefreshView();
-        }
-        private void RefreshView()
-        {
-            /*PropertyGroupDescription groupDescription = new("Errand");
-            Parts.GroupDescriptions.Clear();
-            Parts.GroupDescriptions.Add(groupDescription);*/
-
-            Application.Current.Dispatcher.Invoke(() => Parts.Refresh);
-            OnPropertyChanged(nameof(Parts));
-        }
-
-        private async Task FillLists(ErrandPartStore errandPartStore)
-        {
-            List<Task> tasks = [];
-            tasks.Add(FillPartList(errandPartStore));
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
-        }
-        private Task FillPartList(ErrandPartStore errandPartStore)
-        {
-            foreach (ErrandPart errandPart in errandPartStore.Data)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                _parts.Add(errandPart);
-            }
+                Parts.Refresh();
+            });
+
             return Task.CompletedTask;
         }
         private bool FilterParts(object obj)

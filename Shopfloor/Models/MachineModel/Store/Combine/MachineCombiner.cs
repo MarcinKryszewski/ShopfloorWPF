@@ -17,7 +17,7 @@ namespace Shopfloor.Models.MachineModel.Store
         }
         public async Task Combine(bool shouldForce = false)
         {
-            if (IsCombined || !shouldForce) return;
+            if (IsCombined && !shouldForce) return;
             List<Task> tasks = [];
 
             tasks.Add(_machineToMachine.Combine());

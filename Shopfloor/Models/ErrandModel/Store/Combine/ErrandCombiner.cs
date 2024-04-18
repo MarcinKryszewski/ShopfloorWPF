@@ -22,7 +22,7 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
         public bool IsCombined { get; private set; }
         public async Task Combine(bool shouldForce = false)
         {
-            if (IsCombined || !shouldForce) return;
+            if (IsCombined && !shouldForce) return;
 
             List<Task> tasks = [];
 

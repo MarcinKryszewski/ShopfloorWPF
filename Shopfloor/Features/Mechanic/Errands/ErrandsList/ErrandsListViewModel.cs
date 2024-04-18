@@ -32,26 +32,22 @@ namespace Shopfloor.Features.Mechanic.Errands
             _errandStore = errandStore;
             _errandCombiner = errandCombiner;
             _errandPartCombiner = errandPartCombiner;
-            Task.Run(LoadData);
+            LoadData();
             ErrandsAddNavigateCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandNewViewModel>(); }, o => true);
             EditErrandCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandEditViewModel>(); }, o => true);
             if (currentUserStore.User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
         }
-        private async Task LoadData()
+        private Task LoadData()
         {
             Application.Current.Dispatcher.Invoke(_errands.Clear);
 
-            await FillErrandList(_errandStore);
-
-            Application.Current.Dispatcher.Invoke(Errands.Refresh);
-        }
-
-        private Task FillErrandList(ErrandStore errandStore)
-        {
             _errandPartCombiner.Combine().Wait();
             _errandCombiner.Combine().Wait();
 
-            _errands = errandStore.Data;
+            _errands = _errandStore.Data;
+
+            Application.Current.Dispatcher.Invoke(Errands.Refresh);
+
             return Task.CompletedTask;
         }
     }
