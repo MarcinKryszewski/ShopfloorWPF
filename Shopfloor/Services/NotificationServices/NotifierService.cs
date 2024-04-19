@@ -4,6 +4,7 @@ using ToastNotifications.Core;
 using ToastNotifications.Messages.Error;
 using ToastNotifications.Messages.Information;
 using ToastNotifications.Messages.Success;
+using ToastNotifications.Messages.Warning;
 
 namespace Shopfloor.Services.NotificationServices
 {
@@ -25,6 +26,10 @@ namespace Shopfloor.Services.NotificationServices
             public void ShowInformation(string message)
             {
                 Notify(() => new InformationMessage(message));
+            }
+            public void ShowWarning(string message)
+            {
+                Notify(() => new WarningMessage(message));
             }
         }
     }

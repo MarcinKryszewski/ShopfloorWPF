@@ -7,19 +7,19 @@ namespace Shopfloor.Features.Login.Commands
 {
     internal class LoginCommand : CommandBase
     {
-        private readonly UserProvider _userProvider;
+        private readonly IUserProvider _IUserProvider;
         private readonly CurrentUserStore _store;
         private readonly LoginViewModel _viewModel;
         private readonly ICommand _naviagateCommand;
 
         public LoginCommand(
-            UserProvider userProvider,
+            IUserProvider IUserProvider,
             CurrentUserStore store,
             LoginViewModel viewModel,
             ICommand naviagateCommand
             )
         {
-            _userProvider = userProvider;
+            _IUserProvider = IUserProvider;
             _store = store;
             _viewModel = viewModel;
             _naviagateCommand = naviagateCommand;

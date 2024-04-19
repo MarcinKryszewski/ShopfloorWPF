@@ -41,13 +41,13 @@ namespace Shopfloor.Features.Login
         }
 
         public ICommand LoginCommand { get; }
-        public LoginViewModel(NavigationService navigationService, CurrentUserStore userStore, UserProvider userProvider)
+        public LoginViewModel(NavigationService navigationService, CurrentUserStore userStore, IUserProvider IUserProvider)
         {
             ICommand NavigateDashboardCommand = new RelayCommand(o => { navigationService.NavigateTo<MechanicDashboardViewModel>(); }, o => true);
             _userStore = userStore;
             _userStore.PropertyChanged += OnUserLogin;
             LoginCommand = new LoginCommand(
-                userProvider,
+                IUserProvider,
                 _userStore,
                 this,
                NavigateDashboardCommand);

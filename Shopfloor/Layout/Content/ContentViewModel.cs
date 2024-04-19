@@ -7,12 +7,12 @@ namespace Shopfloor.Layout.Content
     internal sealed class ContentViewModel : ViewModelBase
     {
         private readonly TopPanelViewModel _topPanelViewModel;
-        private readonly NavigationStore _navigationStore;
+        private readonly INavigationStore _navigationStore;
 
         public TopPanelViewModel TopPanelViewModel => _topPanelViewModel;
         public ViewModelBase? Content => _navigationStore.CurrentViewModel;
 
-        public ContentViewModel(TopPanelViewModel topPanelViewModel, NavigationStore navigationStore)
+        public ContentViewModel(TopPanelViewModel topPanelViewModel, INavigationStore navigationStore)
         {
             _topPanelViewModel = topPanelViewModel;
 

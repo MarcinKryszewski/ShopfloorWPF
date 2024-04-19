@@ -4,8 +4,8 @@ namespace Shopfloor.Services
 {
     internal sealed class AuthService : IAuthService
     {
-        private readonly UserProvider _provider;
-        public AuthService(UserProvider provider)
+        private readonly IUserProvider _provider;
+        public AuthService(IUserProvider provider)
         {
             _provider = provider;
         }

@@ -9,12 +9,12 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
     internal sealed class UserSetActivityCommand : AsyncCommandBase
     {
         private readonly UsersListViewModel _viewModel;
-        private readonly UserProvider _userProvider;
+        private readonly IUserProvider _IUserProvider;
 
-        public UserSetActivityCommand(UsersListViewModel viewModel, UserProvider userProvider)
+        public UserSetActivityCommand(UsersListViewModel viewModel, IUserProvider IUserProvider)
         {
             _viewModel = viewModel;
-            _userProvider = userProvider;
+            _IUserProvider = IUserProvider;
         }
 
         public override async Task ExecuteAsync(object? parameter)
@@ -32,7 +32,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
             User modifiedUser = _viewModel.Users.SourceCollection.OfType<User>().First(p => p.Id == userId);
             modifiedUser.SetActive(isActive);
-            await _userProvider.SetUserActive(userId, isActive);
+            await _IUserProvider.SetUserActive(userId, isActive);
             _ = _viewModel.UpdateUsers();
 
             //watch.Stop();

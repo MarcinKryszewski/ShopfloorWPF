@@ -19,7 +19,7 @@ namespace Shopfloor.Features.Admin.Users
     {
         private readonly ObservableCollection<User> _users = [];
         private readonly SelectedUserStore _selectedUser;
-        private readonly UserProvider _userProvider;
+        private readonly IUserProvider _IUserProvider;
         private string _searchText = string.Empty;
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
         public User? SelectedUser
@@ -47,21 +47,21 @@ namespace Shopfloor.Features.Admin.Users
         public ICommand AddNewUserCommand { get; }
         public ICommand SetActivityUserCommand { get; }
         public ICommand EditUserCommand { get; }
-        public UsersListViewModel(NavigationService navigationService, UserProvider userProvider, SelectedUserStore selectedUserStore)
+        public UsersListViewModel(NavigationService navigationService, IUserProvider IUserProvider, SelectedUserStore selectedUserStore)
         {
-            _userProvider = userProvider;
-            Task.Run(() => LoadData(_userProvider));
+            _IUserProvider = IUserProvider;
+            Task.Run(() => LoadData(_IUserProvider));
 
             _selectedUser = selectedUserStore;
 
             AddNewUserCommand = new RelayCommand(o => { navigationService.NavigateTo<UsersAddViewModel>(); }, o => true);
             EditUserCommand = new RelayCommand(o => { navigationService.NavigateTo<UsersEditViewModel>(); }, o => true);
-            SetActivityUserCommand = new UserSetActivityCommand(this, _userProvider);
+            SetActivityUserCommand = new UserSetActivityCommand(this, _IUserProvider);
         }
-        public async Task LoadData(UserProvider provider)
+        public async Task LoadData(IUserProvider provider)
         {
             _users.Clear();
-            IEnumerable<User> users = await _userProvider.GetAll();
+            IEnumerable<User> users = await _IUserProvider.GetAll();
             foreach (User user in users)
             {
                 //await Task.Delay(350);

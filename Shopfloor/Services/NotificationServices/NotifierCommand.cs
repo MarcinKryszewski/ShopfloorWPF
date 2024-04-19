@@ -1,17 +1,15 @@
 ﻿using Shopfloor.Shared.Commands;
-using ToastNotifications;
-using ToastNotifications.Messages;
-using static Shopfloor.Services.NotificationServices.NotifierServices;
+using static Shopfloor.Services.NotificationServices.NotifierSetup;
 
 namespace Shopfloor.Services.NotificationServices
 {
     internal sealed class NotifierCommand : CommandBase
     {
-        private readonly Notifier _notifier;
+        private readonly INotifier _notifier;
         private readonly ToastMessageStyles _style;
         private readonly string _message;
 
-        public NotifierCommand(Notifier notifier, string message, ToastMessageStyles style)
+        public NotifierCommand(INotifier notifier, string message, ToastMessageStyles style)
         {
             _notifier = notifier;
             _message = message;

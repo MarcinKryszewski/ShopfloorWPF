@@ -11,8 +11,8 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 {
     internal sealed class UserEditCommand : CommandBase
     {
-        private readonly UserProvider _userProvider;
-        private readonly IRoleUserProvider _roleUserProvider;
+        private readonly IUserProvider _IUserProvider;
+        private readonly IRoleIUserProvider _roleIUserProvider;
         private readonly RolesStore _rolesStore;
         private readonly UsersEditViewModel _viewModel;
         private readonly int _userId;
@@ -21,16 +21,16 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
         public UserEditCommand(
             UsersEditViewModel viewModel,
-            UserProvider userProvider,
-            IRoleUserProvider roleUserProvider,
+            IUserProvider IUserProvider,
+            IRoleIUserProvider roleIUserProvider,
             RolesStore rolesStore,
             int userId,
             string imagePath,
             bool isActive)
         {
             _viewModel = viewModel;
-            _userProvider = userProvider;
-            _roleUserProvider = roleUserProvider;
+            _IUserProvider = IUserProvider;
+            _roleIUserProvider = roleIUserProvider;
             _rolesStore = rolesStore;
             _userId = userId;
             _imagePath = imagePath;
@@ -53,7 +53,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
                 _isActive
             );
             if (!_viewModel.IsDataValidate) return;
-            _ = _userProvider.Update(user);
+            _ = _IUserProvider.Update(user);
             _viewModel.CleanForm();
             AddRoles();
             RemoveRoles();
@@ -66,7 +66,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
             foreach (Role role in roles)
             {
                 if (role.Id is null) continue;
-                _ = _roleUserProvider.Create((int)role.Id, _userId);
+                _ = _roleIUserProvider.Create((int)role.Id, _userId);
             }
         }
 
@@ -77,7 +77,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
             foreach (Role role in roles)
             {
                 if (role.Id is null) continue;
-                _ = _roleUserProvider.Delete((int)role.Id, _userId);
+                _ = _roleIUserProvider.Delete((int)role.Id, _userId);
             }
         }
     }

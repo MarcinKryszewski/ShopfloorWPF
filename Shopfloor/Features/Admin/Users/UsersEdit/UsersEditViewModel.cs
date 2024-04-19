@@ -27,14 +27,14 @@ namespace Shopfloor.Features.Admin.Users
         private string _name = string.Empty;
         private string _surname = string.Empty;
         private string _username = string.Empty;
-        private readonly IRoleUserProvider _roleUserProvider;
-        public UsersEditViewModel(NavigationService navigationService, SelectedUserStore selectedUserStore, UserProvider userProvider, IRoleUserProvider roleUserProvider, IProvider<Role> roleProvider)
+        private readonly IRoleIUserProvider _roleIUserProvider;
+        public UsersEditViewModel(NavigationService navigationService, SelectedUserStore selectedUserStore, IUserProvider IUserProvider, IRoleIUserProvider roleIUserProvider, IProvider<Role> roleProvider)
         {
             _selectedUser = selectedUserStore;
             _roleProvider = roleProvider;
             _selectedUserId = _selectedUser.SelectedUser?.Id == null ? 0 : (int)_selectedUser.SelectedUser.Id;
             _rolesValueStore = new();
-            _roleUserProvider = roleUserProvider;
+            _roleIUserProvider = roleIUserProvider;
 
             FillForm();
 
@@ -44,8 +44,8 @@ namespace Shopfloor.Features.Admin.Users
             bool isActive = _selectedUser.SelectedUser?.IsActive ?? false;
             EditUserCommand = new UserEditCommand(
                 this,
-                userProvider,
-                _roleUserProvider,
+                IUserProvider,
+                _roleIUserProvider,
                 _rolesValueStore,
                 _selectedUserId,
                 imagePath,
@@ -125,7 +125,7 @@ namespace Shopfloor.Features.Admin.Users
         private void SetRoles()
         {
             IEnumerable<Role> roles = _roleProvider.GetAll().Result;
-            IEnumerable<RoleUser> roleUsers = _roleUserProvider.GetAllForUser(_selectedUserId).Result;
+            IEnumerable<RoleUser> roleUsers = _roleIUserProvider.GetAllForUser(_selectedUserId).Result;
 
             foreach (Role role in roles)
             {

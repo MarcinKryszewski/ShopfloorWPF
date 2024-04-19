@@ -23,7 +23,6 @@ namespace Shopfloor
     {
         private readonly IHost _appHost;
         private readonly CurrentUserStore _currentUser;
-        private readonly UserProvider _userProvider;
         private readonly NavigationService _navigationService;
         private readonly IServiceProvider _services;
 
@@ -35,7 +34,6 @@ namespace Shopfloor
             _services = _appHost.Services;
 
             _currentUser = _services.GetRequiredService<CurrentUserStore>();
-            _userProvider = _services.GetRequiredService<UserProvider>();
             _navigationService = _services.GetRequiredService<NavigationService>();
         }
         private void ApplicationStart(object sender, StartupEventArgs e)

@@ -15,16 +15,16 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
     {
         private readonly UsersAddViewModel _viewModel;
         private readonly RolesStore _rolesStore;
-        private readonly UserProvider _userProvider;
-        private readonly IRoleUserProvider _roleUserProvider;
+        private readonly IUserProvider _IUserProvider;
+        private readonly IRoleIUserProvider _roleIUserProvider;
 
-        public UserAddCommand(UsersAddViewModel viewModel, RolesStore rolesStore, UserProvider userProvider, IRoleUserProvider roleUserProvider)
+        public UserAddCommand(UsersAddViewModel viewModel, RolesStore rolesStore, IUserProvider IUserProvider, IRoleIUserProvider roleIUserProvider)
         {
             _viewModel = viewModel;
             _rolesStore = rolesStore;
 
-            _userProvider = userProvider;
-            _roleUserProvider = roleUserProvider;
+            _IUserProvider = IUserProvider;
+            _roleIUserProvider = roleIUserProvider;
         }
 
         public override void Execute(object? parameter)
@@ -32,7 +32,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
             User newUser = new(_viewModel.Username.ToLower(), _viewModel.Name, _viewModel.Surname, string.Empty, true);
             if (!_viewModel.IsDataValidate) return;
             //TODO: To move to validation on _viewModel
-            int newUserId = _userProvider.Create(newUser).Result;
+            int newUserId = _IUserProvider.Create(newUser).Result;
             if (newUserId < 0)
             {
                 //_viewModel.ErrorMassage = $"Użytkownik o loginie {_viewModel.Username} istnieje";
@@ -51,7 +51,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
             foreach (Role role in roles)
             {
                 if (role.Id == null) continue;
-                tasks.Add(Task.Run(() => _roleUserProvider.Create((int)role.Id, userId)));
+                tasks.Add(Task.Run(() => _roleIUserProvider.Create((int)role.Id, userId)));
             }
             Task.WaitAll(tasks.ToArray());
         }

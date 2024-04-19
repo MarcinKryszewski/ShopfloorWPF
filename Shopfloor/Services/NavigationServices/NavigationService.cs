@@ -8,8 +8,8 @@ namespace Shopfloor.Services.NavigationServices
     internal sealed class NavigationService : ObservableObject, INavigationService
     {
         private readonly Func<Type, ViewModelBase> _viewModelFactory;
-        private readonly NavigationStore _navigationStore;
-        public NavigationService(NavigationStore navigationStore, Func<Type, ViewModelBase> viewModelFactory)
+        private readonly INavigationStore _navigationStore;
+        public NavigationService(INavigationStore navigationStore, Func<Type, ViewModelBase> viewModelFactory)
         {
             _viewModelFactory = viewModelFactory;
             _navigationStore = navigationStore;

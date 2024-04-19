@@ -1,20 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows;
 using ToastNotifications.Lifetime;
-using ToastNotifications.Messages;
 using ToastNotifications.Position;
+using static Shopfloor.Services.NotificationServices.NotifierServices;
 
 namespace Shopfloor.Services.NotificationServices
 {
-    internal sealed partial class NotifierServices
+    internal class NotifierSetup
     {
-        public static void Get(IServiceCollection services)
-        {
-            NotifierService notifier = SetupNotifier();
-            services.AddSingleton<INotifier>(notifier);
-        }
-        private static NotifierService SetupNotifier()
+        public static NotifierService GetSetup()
         {
             return new NotifierService(cfg =>
             {

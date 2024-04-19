@@ -25,7 +25,7 @@ namespace Shopfloor.Features.Admin.Users
         private List<Role> _rolesStorage = [];
         private string _surname = string.Empty;
         private string _username = string.Empty;
-        public UsersAddViewModel(NavigationService navigationService, UserProvider userProvider, RoleUserProvider roleUserProvider, IProvider<Role> roleProvider)
+        public UsersAddViewModel(NavigationService navigationService, IUserProvider IUserProvider, RoleIUserProvider roleIUserProvider, IProvider<Role> roleProvider)
         {
             _rolesValueStore = new();
             SetRoles();
@@ -33,8 +33,8 @@ namespace Shopfloor.Features.Admin.Users
             AddNewUserCommand = new UserAddCommand(
                 this,
                 _rolesValueStore,
-                userProvider,
-                roleUserProvider
+                IUserProvider,
+                roleIUserProvider
             );
             _roleProvider = roleProvider;
         }

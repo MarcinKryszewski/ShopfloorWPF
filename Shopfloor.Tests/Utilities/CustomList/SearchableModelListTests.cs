@@ -1,5 +1,3 @@
-using FluentAssertions;
-using NSubstitute;
 using Shopfloor.Interfaces;
 using Shopfloor.Utilities.CustomList;
 

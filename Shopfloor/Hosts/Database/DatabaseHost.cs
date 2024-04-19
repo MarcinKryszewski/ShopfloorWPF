@@ -188,8 +188,8 @@ namespace Shopfloor.Hosts.Database
         }
         private static void RoleUserServices(IServiceCollection services)
         {
-            services.AddTransient<IProvider<RoleUser>, RoleUserProvider>();
-            services.AddTransient<IRoleUserProvider, RoleUserProvider>();
+            services.AddTransient<IProvider<RoleUser>, RoleIUserProvider>();
+            services.AddTransient<IRoleIUserProvider, RoleIUserProvider>();
             services.AddSingleton<RoleUserStore>();
         }
         private static void SupplierServices(IServiceCollection services)
@@ -201,7 +201,7 @@ namespace Shopfloor.Hosts.Database
         private static void UserServices(IServiceCollection services)
         {
             services.AddSingleton<UserStore>();
-            services.AddSingleton<UserProvider>();
+            services.AddSingleton<IUserProvider, UserProvider>();
             services.AddSingleton<UserCombiner>();
         }
     }

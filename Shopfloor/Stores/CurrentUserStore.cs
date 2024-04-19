@@ -19,17 +19,17 @@ namespace Shopfloor.Stores
         private const string LOGIN_SUCCESSFUL = "ZALOGOWANO POPRAWNIE";
         private const string LOGIN_FAILED = "NIEUDANE LOGOWANIE";
         private readonly IProvider<Role> _roleProvider;
-        private readonly IRoleUserProvider _roleUserProvider;
+        private readonly IRoleIUserProvider _roleIUserProvider;
         private readonly INotifier _notifier;
         private readonly IAuthService _auth;
         private bool _isUserLoggedIn;
         private User? _user;
-        public CurrentUserStore(IProvider<Role> roleProvider, IRoleUserProvider roleUserProvider, INotifier notifier, IAuthService auth)
+        public CurrentUserStore(IProvider<Role> roleProvider, IRoleIUserProvider roleIUserProvider, INotifier notifier, IAuthService auth)
         {
             _user = new(DEFAULT_USERNAME);
             _isUserLoggedIn = false;
             _roleProvider = roleProvider;
-            _roleUserProvider = roleUserProvider;
+            _roleIUserProvider = roleIUserProvider;
             _notifier = notifier;
             _auth = auth;
             _propertyErrors = [];
@@ -69,7 +69,7 @@ namespace Shopfloor.Stores
             if (User == null) return [];
             if (User.Id is null) return [];
 
-            IEnumerable<RoleUser> roleUsers = _roleUserProvider.GetAllForUser((int)User.Id).Result;
+            IEnumerable<RoleUser> roleUsers = _roleIUserProvider.GetAllForUser((int)User.Id).Result;
             return roleUsers;
         }
         private void SetUserRoles(User? user)

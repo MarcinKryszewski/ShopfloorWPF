@@ -12,7 +12,6 @@ namespace Shopfloor.Hosts.Core
         {
             services.AddSingleton<Func<Type, ViewModelBase>>(serviceProvider => viewModelType => (ViewModelBase)serviceProvider.GetRequiredService(viewModelType));
             services.AddSingleton<INavigationStore, NavigationStore>();
-            services.AddSingleton<NavigationStore>();
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<NavigationService>();
         }

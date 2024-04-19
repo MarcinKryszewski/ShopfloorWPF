@@ -35,6 +35,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="Services\AuthService\AuthServiceTests.cs" />
+    <Compile Include="Services\NavigationServices\NavigationServiceTests.cs" />
     <Compile Include="Stores\CurrentUserStoreTests.cs" />
   </ItemGroup>
 
