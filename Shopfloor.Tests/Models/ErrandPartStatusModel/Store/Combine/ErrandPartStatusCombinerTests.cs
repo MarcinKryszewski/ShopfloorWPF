@@ -10,29 +10,5 @@ namespace Shopfloor.Tests.Models.ErrandPartStatusModel.Store.Combine
     {
 
 
-        public ErrandPartStatusCombinerTests()
-        {
-
-        }
-
-        private ErrandPartStatusCombiner CreateErrandPartStatusCombiner()
-        {
-            return new ErrandPartStatusCombiner();
-        }
-
-        [Fact]
-        public async Task Combine_StateUnderTest_ExpectedBehavior()
-        {
-            // Arrange
-            var errandPartStatusCombiner = this.CreateErrandPartStatusCombiner();
-            bool shouldForce = false;
-
-            // Act
-            await errandPartStatusCombiner.Combine(
-                shouldForce);
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }

@@ -9,27 +9,5 @@ namespace Shopfloor.Tests.Models.MessageModel
     {
 
 
-        public MessageDTOTests()
-        {
-
-        }
-
-        private MessageDTO CreateMessageDTO()
-        {
-            return new MessageDTO();
-        }
-
-        [Fact]
-        public void TestMethod1()
-        {
-            // Arrange
-            var messageDTO = this.CreateMessageDTO();
-
-            // Act
-
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }

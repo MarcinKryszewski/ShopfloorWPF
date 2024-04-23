@@ -9,27 +9,5 @@ namespace Shopfloor.Tests.Features.Plannist.PlannistDashboard
     {
 
 
-        public PlannistDashboardViewModelTests()
-        {
-
-        }
-
-        private PlannistDashboardViewModel CreateViewModel()
-        {
-            return new PlannistDashboardViewModel();
-        }
-
-        [Fact]
-        public void TestMethod1()
-        {
-            // Arrange
-            var viewModel = this.CreateViewModel();
-
-            // Act
-
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }

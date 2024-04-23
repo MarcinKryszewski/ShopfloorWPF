@@ -9,27 +9,5 @@ namespace Shopfloor.Tests.Models.OrderModel
     {
 
 
-        public OrderDTOTests()
-        {
-
-        }
-
-        private OrderDTO CreateOrderDTO()
-        {
-            return new OrderDTO();
-        }
-
-        [Fact]
-        public void TestMethod1()
-        {
-            // Arrange
-            var orderDTO = this.CreateOrderDTO();
-
-            // Act
-
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }

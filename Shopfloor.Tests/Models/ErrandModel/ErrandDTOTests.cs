@@ -9,27 +9,5 @@ namespace Shopfloor.Tests.Models.ErrandModel
     {
 
 
-        public ErrandDTOTests()
-        {
-
-        }
-
-        private ErrandDTO CreateErrandDTO()
-        {
-            return new ErrandDTO();
-        }
-
-        [Fact]
-        public void TestMethod1()
-        {
-            // Arrange
-            var errandDTO = this.CreateErrandDTO();
-
-            // Act
-
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }

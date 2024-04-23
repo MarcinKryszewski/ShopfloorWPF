@@ -9,29 +9,5 @@ namespace Shopfloor.Tests.Features.Plannist.Commands
     {
 
 
-        public PlannistOfferCommandTests()
-        {
-
-        }
-
-        private PlannistOfferCommand CreatePlannistOfferCommand()
-        {
-            return new PlannistOfferCommand();
-        }
-
-        [Fact]
-        public void Execute_StateUnderTest_ExpectedBehavior()
-        {
-            // Arrange
-            var plannistOfferCommand = this.CreatePlannistOfferCommand();
-            object? parameter = null;
-
-            // Act
-            plannistOfferCommand.Execute(
-                parameter);
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }

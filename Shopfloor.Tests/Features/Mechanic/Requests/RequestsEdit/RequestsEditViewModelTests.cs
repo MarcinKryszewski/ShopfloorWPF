@@ -9,27 +9,5 @@ namespace Shopfloor.Tests.Features.Mechanic.Requests.RequestsEdit
     {
 
 
-        public RequestsEditViewModelTests()
-        {
-
-        }
-
-        private RequestsEditViewModel CreateViewModel()
-        {
-            return new RequestsEditViewModel();
-        }
-
-        [Fact]
-        public void TestMethod1()
-        {
-            // Arrange
-            var viewModel = this.CreateViewModel();
-
-            // Act
-
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }

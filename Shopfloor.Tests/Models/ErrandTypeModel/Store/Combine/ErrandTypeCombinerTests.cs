@@ -10,29 +10,5 @@ namespace Shopfloor.Tests.Models.ErrandTypeModel.Store.Combine
     {
 
 
-        public ErrandTypeCombinerTests()
-        {
-
-        }
-
-        private ErrandTypeCombiner CreateErrandTypeCombiner()
-        {
-            return new ErrandTypeCombiner();
-        }
-
-        [Fact]
-        public async Task Combine_StateUnderTest_ExpectedBehavior()
-        {
-            // Arrange
-            var errandTypeCombiner = this.CreateErrandTypeCombiner();
-            bool shouldForce = false;
-
-            // Act
-            await errandTypeCombiner.Combine(
-                shouldForce);
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }

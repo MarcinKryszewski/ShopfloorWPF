@@ -9,27 +9,5 @@ namespace Shopfloor.Tests.Models.ErrandPartOrderModel
     {
 
 
-        public ErrandPartOrderDTOTests()
-        {
-
-        }
-
-        private ErrandPartOrderDTO CreateErrandPartOrderDTO()
-        {
-            return new ErrandPartOrderDTO();
-        }
-
-        [Fact]
-        public void TestMethod1()
-        {
-            // Arrange
-            var errandPartOrderDTO = this.CreateErrandPartOrderDTO();
-
-            // Act
-
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }

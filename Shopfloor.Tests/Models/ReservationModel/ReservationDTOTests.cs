@@ -9,27 +9,5 @@ namespace Shopfloor.Tests.Models.ReservationModel
     {
 
 
-        public ReservationDTOTests()
-        {
-
-        }
-
-        private ReservationDTO CreateReservationDTO()
-        {
-            return new ReservationDTO();
-        }
-
-        [Fact]
-        public void TestMethod1()
-        {
-            // Arrange
-            var reservationDTO = this.CreateReservationDTO();
-
-            // Act
-
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }

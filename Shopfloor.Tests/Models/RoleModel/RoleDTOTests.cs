@@ -9,27 +9,5 @@ namespace Shopfloor.Tests.Models.RoleModel
     {
 
 
-        public RoleDTOTests()
-        {
-
-        }
-
-        private RoleDTO CreateRoleDTO()
-        {
-            return new RoleDTO();
-        }
-
-        [Fact]
-        public void TestMethod1()
-        {
-            // Arrange
-            var roleDTO = this.CreateRoleDTO();
-
-            // Act
-
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }
