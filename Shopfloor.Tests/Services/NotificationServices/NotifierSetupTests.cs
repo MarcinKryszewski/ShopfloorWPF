@@ -9,27 +9,5 @@ namespace Shopfloor.Tests.Services.NotificationServices
     {
 
 
-        public NotifierSetupTests()
-        {
-
-        }
-
-        private NotifierSetup CreateNotifierSetup()
-        {
-            return new NotifierSetup();
-        }
-
-        [Fact]
-        public void GetSetup_StateUnderTest_ExpectedBehavior()
-        {
-            // Arrange
-            var notifierSetup = this.CreateNotifierSetup();
-
-            // Act
-            var result = notifierSetup.GetSetup();
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }

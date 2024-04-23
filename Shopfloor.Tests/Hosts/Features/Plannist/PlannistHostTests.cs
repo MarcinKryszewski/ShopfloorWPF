@@ -9,29 +9,5 @@ namespace Shopfloor.Tests.Hosts.Features.Plannist
     {
 
 
-        public PlannistHostTests()
-        {
-
-        }
-
-        private PlannistHost CreatePlannistHost()
-        {
-            return new PlannistHost();
-        }
-
-        [Fact]
-        public void Get_StateUnderTest_ExpectedBehavior()
-        {
-            // Arrange
-            var plannistHost = this.CreatePlannistHost();
-            IServiceCollection services = null;
-
-            // Act
-            plannistHost.Get(
-                services);
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }

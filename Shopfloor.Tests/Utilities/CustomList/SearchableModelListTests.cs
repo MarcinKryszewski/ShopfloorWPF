@@ -5,7 +5,7 @@ namespace Shopfloor.Tests.Utilities.CustomList
 {
     public class SearchableModelListTests
     {
-        private IEnumerable<ISearchableModel> GetData()
+        private static IEnumerable<ISearchableModel> GetData()
         {
             ISearchableModel model1 = Substitute.For<ISearchableModel>();
             model1.Id.Returns(1);

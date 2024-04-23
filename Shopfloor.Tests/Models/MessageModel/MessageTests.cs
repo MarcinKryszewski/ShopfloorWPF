@@ -9,27 +9,5 @@ namespace Shopfloor.Tests.Models.MessageModel
     {
 
 
-        public MessageTests()
-        {
-
-        }
-
-        private Message CreateMessage()
-        {
-            return new Message();
-        }
-
-        [Fact]
-        public void TestMethod1()
-        {
-            // Arrange
-            var message = this.CreateMessage();
-
-            // Act
-
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }

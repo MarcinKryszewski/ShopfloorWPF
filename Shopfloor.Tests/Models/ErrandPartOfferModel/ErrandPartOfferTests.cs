@@ -9,27 +9,5 @@ namespace Shopfloor.Tests.Models.ErrandPartOfferModel
     {
 
 
-        public ErrandPartOfferTests()
-        {
-
-        }
-
-        private ErrandPartOffer CreateErrandPartOffer()
-        {
-            return new ErrandPartOffer();
-        }
-
-        [Fact]
-        public void TestMethod1()
-        {
-            // Arrange
-            var errandPartOffer = this.CreateErrandPartOffer();
-
-            // Act
-
-
-            // Assert
-            Assert.True(false);
-        }
     }
 }
