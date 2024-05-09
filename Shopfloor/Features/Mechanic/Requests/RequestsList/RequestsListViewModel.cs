@@ -44,7 +44,7 @@ namespace Shopfloor.Features.Mechanic.Requests
         public ICommand EditCommand { get; }
         public ICommand DetailsCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public RequestsListViewModel(CurrentUserStore currentUserStore, SelectedRequestStore selectedRequestStore, ErrandPartCombiner errandPartCombiner, ErrandPartStore errandPartStore)
+        public RequestsListViewModel(ICurrentUserStore currentUserStore, SelectedRequestStore selectedRequestStore, ErrandPartCombiner errandPartCombiner, ErrandPartStore errandPartStore)
         {
 
             _requestStore = selectedRequestStore;

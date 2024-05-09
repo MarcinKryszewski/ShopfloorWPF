@@ -44,7 +44,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly PartStore _partStore;
         private readonly ObservableCollection<User> _users = [];
         private ErrandDTO _errandDTO = new();
-        public ErrandEditViewModel(NavigationService navigationService, ErrandPartsListViewModel errandPartsListViewModel, SelectedErrandStore selectedErrandStore, CurrentUserStore currentUserStore, ErrandStore errandStore, MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore, ErrandPartStore errandPartStore, PartStore partStore, ErrandProvider errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStatusProvider errandPartStatusProvider)
+        public ErrandEditViewModel(NavigationService navigationService, ErrandPartsListViewModel errandPartsListViewModel, SelectedErrandStore selectedErrandStore, ICurrentUserStore currentUserStore, ErrandStore errandStore, MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore, ErrandPartStore errandPartStore, PartStore partStore, ErrandProvider errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStatusProvider errandPartStatusProvider)
         {
             _errandPartsListViewModel = errandPartsListViewModel;
             _selectedErrand = selectedErrandStore;

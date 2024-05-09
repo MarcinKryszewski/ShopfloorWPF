@@ -23,7 +23,7 @@ namespace Shopfloor.Features.Manager.Commands
         private readonly OrderApproveViewModel _viewModel;
         private readonly ErrandPartStatusProvider _provider;
         private readonly User _currentUser;
-        public ApproveOrderCommand(NavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, Notifier notifier, SelectedRequestStore requestStore, OrderApproveViewModel viewModel, CurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
+        public ApproveOrderCommand(NavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, Notifier notifier, SelectedRequestStore requestStore, OrderApproveViewModel viewModel, ICurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
         {
             _navigationService = navigationService;
             _errandPartStatusStore = errandPartStatusStore;

@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace Shopfloor.Stores
 {
-    internal sealed partial class CurrentUserStore
+    internal sealed partial class CurrentUserStore : ICurrentUserStore
     {
         private const string DEFAULT_USERNAME = "GOŚĆ";
         private const string AUTOLOGIN_FAILED = "Nieudane logowanie automatyczne. Zaloguj się samodzielnie";

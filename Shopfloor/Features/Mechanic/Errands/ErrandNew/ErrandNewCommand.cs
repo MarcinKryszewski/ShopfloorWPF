@@ -23,7 +23,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
         private readonly ErrandPartStatusProvider _errandPartStatusProvider;
         private readonly ErrandStatusProvider _errandStatusProvider;
         private bool _isPartAdd;
-        public ErrandNewCommand(ErrandNewViewModel errandsNewViewModel, CurrentUserStore currentUser, SelectedErrandStore currentErrand)
+        public ErrandNewCommand(ErrandNewViewModel errandsNewViewModel, ICurrentUserStore currentUser, SelectedErrandStore currentErrand)
         {
             _viewModel = errandsNewViewModel;
             _currentUserId = currentUser.User?.Id ?? -1;

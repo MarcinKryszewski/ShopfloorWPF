@@ -13,9 +13,8 @@ namespace Shopfloor.Layout.TopPanel
 {
     internal sealed class TopPanelViewModel : ViewModelBase
     {
-        private readonly CurrentUserStore _userStore;
+        private readonly ICurrentUserStore _userStore;
         private User? User => _userStore.User;
-
         public string UserImagePath
         {
             get
@@ -24,24 +23,19 @@ namespace Shopfloor.Layout.TopPanel
                 return User.Image;
             }
         }
-
         public bool IsLoggedIn => _userStore.IsUserLoggedIn;
         public string Username => IsLoggedIn ? $"Witaj {User?.Name}!" : "Zaloguj się!";
-
         public ICommand NavigateLoginCommand { get; }
         public ICommand LogoutCommand { get; }
-
-        public TopPanelViewModel(INavigationService navigationService, CurrentUserStore userStore)
+        public TopPanelViewModel(INavigationService navigationService, ICurrentUserStore userStore)
         {
             _userStore = userStore;
             _userStore.PropertyChanged += OnUserAuthenticated;
-            //NavigateLoginCommand = new NavigateCommand<LoginViewModel>(mainServices.GetRequiredService<NavigationService<LoginViewModel>>());
             NavigateLoginCommand = new RelayCommand(o => { navigationService.NavigateTo<LoginViewModel>(); }, o => true);
 
             RelayCommand returnCommand = new(o => { navigationService.NavigateTo<MechanicDashboardViewModel>(); }, o => true);
             LogoutCommand = new LogoutCommand(_userStore, returnCommand);
         }
-
         private void OnUserAuthenticated(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(_userStore.IsUserLoggedIn))

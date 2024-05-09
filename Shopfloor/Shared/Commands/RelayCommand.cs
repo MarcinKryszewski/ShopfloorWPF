@@ -7,7 +7,7 @@ namespace Shopfloor.Shared.Commands
     {
         private readonly Predicate<object> _canExecute;
         private readonly Action<object> _execute;
-        public RelayCommand(Action<object> execute, Predicate<Object> canExecute)
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
         {
             _execute = execute;
             _canExecute = canExecute;

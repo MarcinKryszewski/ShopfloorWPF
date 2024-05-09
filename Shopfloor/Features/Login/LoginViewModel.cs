@@ -17,7 +17,7 @@ namespace Shopfloor.Features.Login
     internal sealed class LoginViewModel : ViewModelBase, IInputForm<User>
     {
         private string _username = string.Empty;
-        private readonly CurrentUserStore _userStore;
+        private readonly ICurrentUserStore _userStore;
         private readonly UserValidation _userValidation;
         public string Username
         {
@@ -41,13 +41,12 @@ namespace Shopfloor.Features.Login
         }
 
         public ICommand LoginCommand { get; }
-        public LoginViewModel(NavigationService navigationService, CurrentUserStore userStore, IUserProvider IUserProvider)
+        public LoginViewModel(NavigationService navigationService, ICurrentUserStore userStore)
         {
             ICommand NavigateDashboardCommand = new RelayCommand(o => { navigationService.NavigateTo<MechanicDashboardViewModel>(); }, o => true);
             _userStore = userStore;
             _userStore.PropertyChanged += OnUserLogin;
             LoginCommand = new LoginCommand(
-                IUserProvider,
                 _userStore,
                 this,
                NavigateDashboardCommand);

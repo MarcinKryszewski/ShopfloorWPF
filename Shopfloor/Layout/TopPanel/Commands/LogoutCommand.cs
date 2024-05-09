@@ -5,10 +5,10 @@ namespace Shopfloor.Layout.TopPanel.Commands
 {
     internal class LogoutCommand : CommandBase
     {
-        private readonly CurrentUserStore _userStore;
+        private readonly ICurrentUserStore _userStore;
         private readonly RelayCommand _returnCommand;
 
-        public LogoutCommand(CurrentUserStore userStore, RelayCommand returnCommand)
+        public LogoutCommand(ICurrentUserStore userStore, RelayCommand returnCommand)
         {
             _userStore = userStore;
             _returnCommand = returnCommand;

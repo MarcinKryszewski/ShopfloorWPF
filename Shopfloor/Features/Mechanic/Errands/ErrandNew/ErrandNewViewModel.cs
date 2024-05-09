@@ -40,7 +40,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly UserStore _userStore;
         private readonly ErrandTypeStore _errandTypeStore;
 
-        public ErrandNewViewModel(ErrandPartsListViewModel errandPartsListViewModel, NavigationService navigationService, SelectedErrandStore selectedErrandStore, CurrentUserStore currentUserStore, MachineStore machineStore, ErrandTypeStore errandTypeStore, UserStore userStore, ErrandProvider errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, ErrandPartStore errandPartStore, ErrandStatusStore errandStatusStore, ErrandStore errandStore)
+        public ErrandNewViewModel(ErrandPartsListViewModel errandPartsListViewModel, NavigationService navigationService, SelectedErrandStore selectedErrandStore, ICurrentUserStore currentUserStore, MachineStore machineStore, ErrandTypeStore errandTypeStore, UserStore userStore, ErrandProvider errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, ErrandPartStore errandPartStore, ErrandStatusStore errandStatusStore, ErrandStore errandStore)
         {
             _selectedErrand = selectedErrandStore;
 

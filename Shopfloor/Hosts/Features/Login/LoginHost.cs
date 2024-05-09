@@ -8,7 +8,7 @@ namespace Shopfloor.Hosts.Features.Login
     {
         public static void Get(IServiceCollection services)
         {
-            services.AddSingleton<CurrentUserStore>();
+            services.AddSingleton<ICurrentUserStore, CurrentUserStore>();
             services.AddSingleton<LoginViewModel>();
         }
     }

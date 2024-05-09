@@ -35,7 +35,7 @@ namespace Shopfloor.Layout.SidePanel
 {
     internal sealed partial class SidePanelViewModel : ViewModelBase
     {
-        private readonly CurrentUserStore _userStore;
+        private readonly ICurrentUserStore _userStore;
         private User? _user => _userStore.User;
 
         #region Mechanic
@@ -69,7 +69,7 @@ namespace Shopfloor.Layout.SidePanel
         public Visibility HasPlannistRole => HasAuthorization(Roles.Plannist);
         public Visibility HasManagerRole => HasAuthorization(Roles.Manager);
         public Visibility HasUserRole => HasAuthorization(Roles.User);
-        public SidePanelViewModel(INavigationService navigationService, CurrentUserStore userStore, IServiceProvider databaseServices)
+        public SidePanelViewModel(INavigationService navigationService, ICurrentUserStore userStore, IServiceProvider databaseServices)
         {
             NavigateMechanicDashboardCommand = new RelayCommand(o => { navigationService.NavigateTo<MechanicDashboardViewModel>(); }, o => true);
             NavigateTasksCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandsListViewModel>(); }, o => true);

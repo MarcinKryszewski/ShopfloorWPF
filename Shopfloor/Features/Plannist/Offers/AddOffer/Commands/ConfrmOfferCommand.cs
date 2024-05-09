@@ -21,7 +21,7 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         private readonly ErrandPartStatusStore _errandPartStatusStore;
         private readonly Notifier _notifier;
         private readonly User _currentUser;
-        public ConfrmOfferCommand(SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, CurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, Notifier notifier)
+        public ConfrmOfferCommand(SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, ICurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, Notifier notifier)
         {
             _requestStore = requestStore;
             _viewModel = addOfferViewModel;

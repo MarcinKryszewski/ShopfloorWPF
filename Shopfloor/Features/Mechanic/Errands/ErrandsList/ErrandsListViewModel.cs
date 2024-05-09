@@ -27,7 +27,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         public Errand? SelectedErrand { get; set; }
         public ICommand EditErrandCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public ErrandsListViewModel(NavigationService navigationService, CurrentUserStore currentUserStore, ErrandStore errandStore, ErrandCombiner errandCombiner, ErrandPartCombiner errandPartCombiner)
+        public ErrandsListViewModel(NavigationService navigationService, ICurrentUserStore currentUserStore, ErrandStore errandStore, ErrandCombiner errandCombiner, ErrandPartCombiner errandPartCombiner)
         {
             _errandStore = errandStore;
             _errandCombiner = errandCombiner;

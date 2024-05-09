@@ -11,7 +11,6 @@ namespace Shopfloor.Hosts.Core
         private readonly string _databaseType;
         private readonly string _databasePath;
         private readonly IConfiguration _configuration;
-
         public ConfigurationHost()
         {
             _configuration = new ConfigurationBuilder()

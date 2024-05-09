@@ -32,7 +32,7 @@ namespace Shopfloor.Features.Manager.OrderApprove
             set => ErrandPart.ExpectedDeliveryDate = value;
         }
         public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
-        public OrderApproveViewModel(SelectedRequestStore selectedRequestStore, NavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, Notifier notifier, SelectedRequestStore requestStore, CurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
+        public OrderApproveViewModel(SelectedRequestStore selectedRequestStore, NavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, Notifier notifier, SelectedRequestStore requestStore, ICurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
         {
             _requestStore = selectedRequestStore;
 

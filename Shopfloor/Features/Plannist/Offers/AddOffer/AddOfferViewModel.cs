@@ -69,7 +69,7 @@ namespace Shopfloor.Features.Plannist
             }
         }
         public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
-        public AddOfferViewModel(NavigationService navigationService, SelectedRequestStore selectedRequestStore, ErrandPartStore errandPartStore, SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, CurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, Notifier notifier)
+        public AddOfferViewModel(NavigationService navigationService, SelectedRequestStore selectedRequestStore, ErrandPartStore errandPartStore, SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, ICurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, Notifier notifier)
         {
             _requestStore = selectedRequestStore;
             _errandPartStore = errandPartStore;

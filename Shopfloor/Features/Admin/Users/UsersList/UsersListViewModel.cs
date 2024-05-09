@@ -50,7 +50,7 @@ namespace Shopfloor.Features.Admin.Users
         public UsersListViewModel(NavigationService navigationService, IUserProvider IUserProvider, SelectedUserStore selectedUserStore)
         {
             _IUserProvider = IUserProvider;
-            Task.Run(() => LoadData(_IUserProvider));
+            Task.Run(() => LoadData());
 
             _selectedUser = selectedUserStore;
 
@@ -58,7 +58,7 @@ namespace Shopfloor.Features.Admin.Users
             EditUserCommand = new RelayCommand(o => { navigationService.NavigateTo<UsersEditViewModel>(); }, o => true);
             SetActivityUserCommand = new UserSetActivityCommand(this, _IUserProvider);
         }
-        public async Task LoadData(IUserProvider provider)
+        public async Task LoadData()
         {
             _users.Clear();
             IEnumerable<User> users = await _IUserProvider.GetAll();

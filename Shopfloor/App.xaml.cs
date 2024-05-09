@@ -22,7 +22,7 @@ namespace Shopfloor
     public partial class App : Application
     {
         private readonly IHost _appHost;
-        private readonly CurrentUserStore _currentUser;
+        private readonly ICurrentUserStore _currentUser;
         private readonly NavigationService _navigationService;
         private readonly IServiceProvider _services;
 
@@ -33,7 +33,7 @@ namespace Shopfloor
 
             _services = _appHost.Services;
 
-            _currentUser = _services.GetRequiredService<CurrentUserStore>();
+            _currentUser = _services.GetRequiredService<ICurrentUserStore>();
             _navigationService = _services.GetRequiredService<NavigationService>();
         }
         private void ApplicationStart(object sender, StartupEventArgs e)
@@ -54,12 +54,12 @@ namespace Shopfloor
             AutoLogin(_currentUser);
             DashboardNavigate(_currentUser, _navigationService);
         }
-        private static void AutoLogin(CurrentUserStore currentUserStore)
+        private static void AutoLogin(ICurrentUserStore currentUserStore)
         {
             string userName = Environment.UserName;
             currentUserStore.Login(userName, true);
         }
-        private static void DashboardNavigate(CurrentUserStore currentUserStore, NavigationService navigationService)
+        private static void DashboardNavigate(ICurrentUserStore currentUserStore, NavigationService navigationService)
         {
             if (currentUserStore.User is null)
             {
