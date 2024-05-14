@@ -31,10 +31,9 @@ namespace Shopfloor.Tests.Layout.TopPanel
         {
             // Arrange
             string testImagePath = "test";
-            User user = Substitute.For<User>();
+            User user = new("test", "test", "test", "test", true);
             TopPanelViewModel sut = new(_navigationService, _userStore);
             // Act
-            user.Image.Returns(testImagePath);
             _userStore.User.Returns(user);
             string result = sut.UserImagePath;
             // Assert
@@ -43,12 +42,28 @@ namespace Shopfloor.Tests.Layout.TopPanel
         [Fact]
         public void Username_WhenUserIsLoggedIn_ReturnsWelcomeMessageWithUserName()
         {
-
+            // Arrange
+            User user = new("test", "test", "test", "test", true);
+            _userStore.User.Returns(user);
+            _userStore.IsUserLoggedIn.Returns(true);
+            TopPanelViewModel sut = new(_navigationService, _userStore);
+            // Act
+            string result = sut.Username;
+            // Assert
+            result.Should().Be("Witaj test!");
         }
         [Fact]
         public void Username_WhenUserIsNotLoggedIn_ReturnsLoginMessage()
         {
-
+            // Arrange
+            User user = new("test", "test", "test", "test", true);
+            _userStore.User.Returns(user);
+            _userStore.IsUserLoggedIn.Returns(false);
+            TopPanelViewModel sut = new(_navigationService, _userStore);
+            // Act
+            string result = sut.Username;
+            // Assert
+            result.Should().Be("Zaloguj się!");
         }
         [Fact]
         public void IsLoggedIn_WhenDefault_ReturnsFalse()
