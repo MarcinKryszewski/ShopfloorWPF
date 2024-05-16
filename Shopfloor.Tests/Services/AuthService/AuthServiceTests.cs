@@ -12,7 +12,7 @@ namespace Shopfloor.Tests.Services.AuthServices
             // Arrange
             AuthService sut = new(provider);
             string username = "test";
-            User user = new(username);
+            User user = new() { Username = username };
             provider.GetByUsername(username).Returns(user);
             // Act
             User? result = sut.Login(username);
@@ -26,7 +26,7 @@ namespace Shopfloor.Tests.Services.AuthServices
             // Arrange
             AuthService sut = new(provider);
             string username = "test";
-            User user = new(username);
+            User user = new() { Username = username };
             provider.GetByUsername(username).ReturnsNull();
             // Act
             User? result = sut.Login(username);

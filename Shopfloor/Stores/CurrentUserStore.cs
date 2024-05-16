@@ -26,7 +26,7 @@ namespace Shopfloor.Stores
         private User? _user;
         public CurrentUserStore(IProvider<Role> roleProvider, IRoleIUserProvider roleIUserProvider, INotifier notifier, IAuthService auth)
         {
-            _user = new(DEFAULT_USERNAME);
+            _user = new() { Username = DEFAULT_USERNAME };
             _isUserLoggedIn = false;
             _roleProvider = roleProvider;
             _roleIUserProvider = roleIUserProvider;
@@ -58,7 +58,7 @@ namespace Shopfloor.Stores
         }
         public void Logout()
         {
-            _user = new(DEFAULT_USERNAME);
+            _user = new() { Username = DEFAULT_USERNAME };
 
             _isUserLoggedIn = false;
             OnPropertyChanged(nameof(IsUserLoggedIn));

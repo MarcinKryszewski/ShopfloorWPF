@@ -24,7 +24,10 @@ namespace Shopfloor.Tests.Stores
         {
             // Arrange
             string username = "test";
-            User user = new(1, username, "name", "surname");
+            User user = new()
+            {
+                Username = username,
+            };
 
             _auth.Login(username).Returns(user);
 
@@ -55,7 +58,10 @@ namespace Shopfloor.Tests.Stores
         {
             // Arrange
             string username = "test";
-            User user = new(1, username, "name", "surname");
+            User user = new()
+            {
+                Username = username,
+            };
             _auth.Login(username).Returns(user);
             _sut.Login(username);
 
@@ -71,7 +77,10 @@ namespace Shopfloor.Tests.Stores
         {
             // Arrange
             string username = "test";
-            User user = new(1, username, "name", "surname");
+            User user = new()
+            {
+                Username = username,
+            };
             _auth.Login(username).Returns(user);
             _sut.Login(username);
 
@@ -87,7 +96,11 @@ namespace Shopfloor.Tests.Stores
         {
             // Arrange
             string username = "test";
-            User user = new(1, username, "name", "surname");
+            User user = new()
+            {
+                Username = username,
+                Id = 1
+            };
             IEnumerable<Role> roles = [new Role(1, "test", 5)];
             IEnumerable<RoleUser> roleUsers = [new RoleUser() { RoleId = 1, UserId = 1 }];
 
@@ -110,7 +123,10 @@ namespace Shopfloor.Tests.Stores
         {
             // Arrange
             string username = "test";
-            User user = new(1, username, "name", "surname");
+            User user = new()
+            {
+                Username = username
+            };
             IEnumerable<Role> roles = [new Role(2, "test", 5)];
             IEnumerable<RoleUser> roleUsers = [new RoleUser() { RoleId = 1, UserId = 1 }];
 

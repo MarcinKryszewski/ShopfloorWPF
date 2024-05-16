@@ -44,14 +44,15 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
         private void EditUser()
         {
-            User user = new(
-                _userId,
-                _viewModel.Username.ToLower(),
-                _viewModel.Name,
-                _viewModel.Surname,
-                _imagePath,
-                _isActive
-            );
+            User user = new()
+            {
+                Id = _userId,
+                Username = _viewModel.Username.ToLower(),
+                Name = _viewModel.Name,
+                Surname = _viewModel.Surname,
+                Image = _imagePath,
+                IsActive = _isActive
+            };
             if (!_viewModel.IsDataValidate) return;
             _ = _IUserProvider.Update(user);
             _viewModel.CleanForm();

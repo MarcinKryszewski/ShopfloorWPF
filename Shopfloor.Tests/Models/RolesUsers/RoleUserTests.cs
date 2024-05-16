@@ -15,7 +15,11 @@ namespace Shopfloor.Tests.Models.RolesUsers
         {
             // Arrange
             Role role = new(id, "test", 1);
-            User user = new(10, "test", "test", "test", "test", true);
+            User user = new()
+            {
+                Id = 10,
+                Username = "test"
+            };
             RoleUser roleUser = new()
             {
                 RoleId = (int)role.Id!,
@@ -52,7 +56,11 @@ namespace Shopfloor.Tests.Models.RolesUsers
         {
             // Arrange
             Role role = new(10, "test", 1);
-            User user = new(id, "test", "test", "test", "test", true);
+            User user = new()
+            {
+                Id = id,
+                Username = "test"
+            };
             RoleUser roleUser = new()
             {
                 RoleId = (int)role.Id!,

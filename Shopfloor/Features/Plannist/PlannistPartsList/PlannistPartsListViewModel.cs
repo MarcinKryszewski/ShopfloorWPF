@@ -47,7 +47,12 @@ namespace Shopfloor.Features.Plannist
         public PlannistAbortCommand AbortCommand { get; }
         public ICommand DetailsCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public PlannistPartsListViewModel(INotifier notifier, SelectedRequestStore selectedRequestStore, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStore errandPartStore, ErrandPartCombiner errandPartCombiner)
+        public PlannistPartsListViewModel(
+            INotifier notifier,
+            SelectedRequestStore selectedRequestStore,
+            ErrandPartStatusProvider errandPartStatusProvider,
+            ErrandPartStore errandPartStore,
+            ErrandPartCombiner errandPartCombiner)
         {
             _requestStore = selectedRequestStore;
             _errandPartStore = errandPartStore;

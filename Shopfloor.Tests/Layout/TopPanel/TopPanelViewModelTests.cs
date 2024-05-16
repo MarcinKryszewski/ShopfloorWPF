@@ -31,7 +31,11 @@ namespace Shopfloor.Tests.Layout.TopPanel
         {
             // Arrange
             string testImagePath = "test";
-            User user = new("test", "test", "test", "test", true);
+            User user = new()
+            {
+                Username = "test",
+                Image = testImagePath
+            };
             TopPanelViewModel sut = new(_navigationService, _userStore);
             // Act
             _userStore.User.Returns(user);
@@ -43,20 +47,20 @@ namespace Shopfloor.Tests.Layout.TopPanel
         public void Username_WhenUserIsLoggedIn_ReturnsWelcomeMessageWithUserName()
         {
             // Arrange
-            User user = new("test", "test", "test", "test", true);
+            User user = new() { Username = "username", Name = "name" };
             _userStore.User.Returns(user);
             _userStore.IsUserLoggedIn.Returns(true);
             TopPanelViewModel sut = new(_navigationService, _userStore);
             // Act
             string result = sut.Username;
             // Assert
-            result.Should().Be("Witaj test!");
+            result.Should().Be("Witaj name!");
         }
         [Fact]
         public void Username_WhenUserIsNotLoggedIn_ReturnsLoginMessage()
         {
             // Arrange
-            User user = new("test", "test", "test", "test", true);
+            User user = new() { Username = "test" };
             _userStore.User.Returns(user);
             _userStore.IsUserLoggedIn.Returns(false);
             TopPanelViewModel sut = new(_navigationService, _userStore);
@@ -68,12 +72,23 @@ namespace Shopfloor.Tests.Layout.TopPanel
         [Fact]
         public void IsLoggedIn_WhenDefault_ReturnsFalse()
         {
-
+            // Arrange
+            TopPanelViewModel sut = new(_navigationService, _userStore);
+            // Act
+            bool result = sut.IsLoggedIn;
+            // Assert
+            result.Should().BeFalse();
         }
         [Fact]
         public void IsLoggedIn_AfterSuccessfullLogin_ReturnsTrue()
         {
-
+            // Arrange
+            _userStore.IsUserLoggedIn.Returns(true);
+            TopPanelViewModel sut = new(_navigationService, _userStore);
+            // Act
+            bool result = sut.IsLoggedIn;
+            // Assert
+            result.Should().BeTrue();
         }
     }
 }

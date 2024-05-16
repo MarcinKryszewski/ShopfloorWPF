@@ -6,14 +6,11 @@ namespace Shopfloor.Models.UserModel
 {
     internal sealed class UserValidation
     {
-        #region AUTOLOGIN HANDLE
         private readonly INotifyDataErrorInfo? _caller;
         public UserValidation(INotifyDataErrorInfo? caller)
         {
             _caller = caller;
         }
-        #endregion AUTOLOGIN HANDLE
-        #region AUTOLOGIN
         public void ValidateAutoLogin(User? user, Dictionary<string, List<string>?> propertyErrors)
         {
             AutoLogin_ExistsInDatabase(user, propertyErrors);
@@ -29,13 +26,11 @@ namespace Shopfloor.Models.UserModel
                 }
             }
         }
-        #endregion AUTOLOGIN
         private readonly IInputForm<User>? _inputForm;
         public UserValidation(IInputForm<User>? inputForm)
         {
             _inputForm = inputForm;
         }
-        #region NAME
         public void ValidateName(string value, string propertyName)
         {
             if (_inputForm is null) return;
@@ -52,7 +47,6 @@ namespace Shopfloor.Models.UserModel
         {
             if (value == null) inputForm.AddError(propertyName, "Wprowadź nazwę użytkownika");
         }
-        #endregion NAME
         public void ValidateLogin(User? user, IInputForm<User> inputForm)
         {
             string propertyName = "LoginError";

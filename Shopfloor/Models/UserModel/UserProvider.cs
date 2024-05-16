@@ -162,15 +162,15 @@ namespace Shopfloor.Models.UserModel
         }
         private static User ToUser(UserDTO item)
         {
-            return new User
-            (
-                (int)item.Id!,
-                item.Username,
-                item.Name,
-                item.Surname,
-                item.ImagePath,
-                item.IsActive
-            );
+            return new User()
+            {
+                Id = (int)item.Id!,
+                Username = item.Username,
+                Name = item.Name,
+                Surname = item.Surname,
+                Image = item.ImagePath,
+                IsActive = item.IsActive
+            };
         }
     }
 }

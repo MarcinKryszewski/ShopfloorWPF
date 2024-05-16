@@ -11,50 +11,41 @@ namespace Shopfloor.Models.UserModel
     {
         private readonly UserDTO _data;
         private const string DEFAULT_IMAGE_PATH = "pack://application:,,,/Shopfloor;component/Resources/userDefault.png";
-        public int? Id => _data.Id;
-        public string Username => _data.Username;
-        public string Image => _data.ImagePath.Length > 0 ? _data.ImagePath : DEFAULT_IMAGE_PATH;
-        public string Name => _data.Name;
-        public string Surname => _data.Surname;
+        public int? Id
+        {
+            get => _data.Id;
+            init => _data.Id = value;
+        }
+        public required string Username
+        {
+            get => _data.Username;
+            set => _data.Username = value;
+        }
+        public string Image
+        {
+            get => _data.ImagePath.Length > 0 ? _data.ImagePath : DEFAULT_IMAGE_PATH;
+            set => _data.ImagePath = value;
+        }
+        public string Name
+        {
+            get => _data.Name;
+            set => _data.Name = value;
+        }
+        public string Surname
+        {
+            get => _data.Surname;
+            set => _data.Surname = value;
+        }
         public string FullName => $"{_data.Name} {_data.Surname}";
-        public bool IsActive => _data.IsActive;
-        public User(
-            int id,
-            string username,
-            string name,
-            string surname,
-            string imagePath = DEFAULT_IMAGE_PATH,
-            bool isActive = true)
+        public bool IsActive
         {
-            _data = new()
-            {
-                Id = id,
-                Username = username,
-                Name = name,
-                Surname = surname,
-                ImagePath = imagePath,
-                IsActive = isActive
-            };
+            get => _data.IsActive;
+            set => _data.IsActive = value;
         }
-        public User(string username, string name, string surname, string imagePath, bool isActive)
+        public User()
         {
-            _data = new()
-            {
-                Username = username,
-                Name = name,
-                Surname = surname,
-                ImagePath = imagePath,
-                IsActive = isActive
-            };
+            _data = new();
         }
-        public User(string username)
-        {
-            _data = new()
-            {
-                Username = username
-            };
-        }
-
         public void SetActive(bool isActive) => _data.IsActive = isActive;
         public void AddRole(Role role) => _data.Roles.Add(role);
         public void ClearRoles() => _data.Roles.Clear();
@@ -68,7 +59,7 @@ namespace Shopfloor.Models.UserModel
             if (other == null) return false;
             if (Id == null && other.Id == null)
             {
-                return FullName == other.FullName;
+                return Username == other.Username;
             }
 
             return Id == other.Id;

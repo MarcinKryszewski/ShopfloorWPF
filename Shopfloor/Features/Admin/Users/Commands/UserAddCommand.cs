@@ -29,7 +29,14 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
         public override void Execute(object? parameter)
         {
-            User newUser = new(_viewModel.Username.ToLower(), _viewModel.Name, _viewModel.Surname, string.Empty, true);
+            User newUser = new()
+            {
+                Username = _viewModel.Username.ToLower(),
+                Name = _viewModel.Name,
+                Surname = _viewModel.Surname,
+                Image = string.Empty,
+                IsActive = true
+            };
             if (!_viewModel.IsDataValidate) return;
             //TODO: To move to validation on _viewModel
             int newUserId = _IUserProvider.Create(newUser).Result;
