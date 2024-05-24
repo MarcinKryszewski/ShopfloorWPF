@@ -37,6 +37,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
                 Image = string.Empty,
                 IsActive = true
             };
+
             if (!_viewModel.IsDataValidate) return;
             //TODO: To move to validation on _viewModel
             int newUserId = _IUserProvider.Create(newUser).Result;

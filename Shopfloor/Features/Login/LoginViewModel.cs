@@ -18,14 +18,14 @@ namespace Shopfloor.Features.Login
     {
         private string _username = string.Empty;
         private readonly ICurrentUserStore _userStore;
-        private readonly UserValidation _userValidation;
+        //private readonly UserValidation _userValidation;
         public string Username
         {
             get => _username;
             set
             {
                 string myName = nameof(Username);
-                _userValidation.ValidateName(value, myName);
+                //_userValidation.ValidateName(value, myName);
                 _username = value;
                 OnPropertyChanged(myName);
             }
@@ -50,7 +50,7 @@ namespace Shopfloor.Features.Login
                 _userStore,
                 this,
                NavigateDashboardCommand);
-            _userValidation = new(this);
+            //_userValidation = new(this);
         }
         private void OnUserLogin(object? sender, PropertyChangedEventArgs e)
         {

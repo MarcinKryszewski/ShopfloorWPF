@@ -1,39 +1,63 @@
-﻿using System.ComponentModel;
-using Shopfloor.Interfaces;
-using Shopfloor.Models.UserModel;
+﻿using Shopfloor.Models.UserModel;
 
 namespace Shopfloor.Tests.Models.UserModel
 {
     public class UserValidationTests
     {
-        IInputForm<User> _inputForm = Substitute.For<IInputForm<User>>();
-        [Fact]
-        public void ValidateName_UsernameIsNull_AddErrorToList()
+        [Theory]
+        [InlineData("test ")]
+        [InlineData("test1")]
+        [InlineData("test#")]
+        public void ValidateName_ShouldAddError_WhenNameContainsSpecialCharacter(string testedValue)
         {
-            // Arrange
-            string? name = null;
-            UserValidation sut = new(_inputForm);
+            // Arrange            
+            string propertyName = nameof(User.Name);
+            User user = new() { Username = "test" };
+            UserValidation validation = new(user);
             // Act
-            sut.ValidateName(name, "name");
-            bool result = _inputForm.HasErrors;
+            user.ClearErrors(propertyName);
+            user.Name = testedValue;
+            validation.ValidateName();
+            bool result = user.GetErrors(propertyName).Cast<object>().Any();
             // Assert
             result.Should().BeTrue();
         }
-        [Fact]
-        public void ValidateName_CorrectUsername_ReturnsEmptyErrorList()
+        [Theory]
+        [InlineData("")]
+        [InlineData("t")]
+        [InlineData("te")]
+        public void ValidateName_ShouldAddError_WhenNameIsTooSort(string testedValue)
         {
             // Arrange
-            UserValidation sut = new(_inputForm);
+            string propertyName = nameof(User.Name);
+            User user = new() { Username = "test" };
+            UserValidation validation = new(user);
             // Act
+            user.ClearErrors(propertyName);
+            user.Name = testedValue;
+            validation.ValidateName();
+            bool result = user.GetErrors(propertyName).Cast<object>().Any();
             // Assert
+            result.Should().BeTrue();
         }
-        [Fact]
-        public void ValidateName_UsernameLengthIsZero_AddErrorToList()
+        [Theory]
+        [InlineData("test")]
+        [InlineData("Test")]
+        [InlineData("tEst")]
+        [InlineData("teSt")]
+        public void ValidateName_ShouldNotAddError_WhenNameIsCorrect(string testedValue)
         {
             // Arrange
-            UserValidation sut = new(_inputForm);
+            string propertyName = nameof(User.Name);
+            User user = new() { Username = "test" };
+            UserValidation validation = new(user);
             // Act
+            user.ClearErrors(propertyName);
+            user.Name = testedValue;
+            validation.ValidateName();
+            bool result = user.GetErrors(propertyName).Cast<object>().Any();
             // Assert
+            result.Should().BeFalse();
         }
     }
 }

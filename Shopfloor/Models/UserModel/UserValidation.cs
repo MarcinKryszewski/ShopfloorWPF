@@ -1,61 +1,68 @@
-﻿using Shopfloor.Interfaces;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Text.RegularExpressions;
 
 namespace Shopfloor.Models.UserModel
 {
-    internal sealed class UserValidation
+    internal sealed partial class UserValidation
     {
-        private readonly INotifyDataErrorInfo? _caller;
-        public UserValidation(INotifyDataErrorInfo? caller)
+        public UserValidation(User user)
         {
-            _caller = caller;
+            _user = user;
         }
-        public void ValidateAutoLogin(User? user, Dictionary<string, List<string>?> propertyErrors)
+        private readonly User _user;
+        public void ValidateAll()
         {
-            AutoLogin_ExistsInDatabase(user, propertyErrors);
+            ValidateName();
+            ValidateSurname();
+            ValidateUsername();
         }
-        private void AutoLogin_ExistsInDatabase(User? user, Dictionary<string, List<string>?> propertyErrors)
+        public void ValidateName()
         {
-            if (_caller is null) return;
-            if (user is null)
-            {
-                if (!propertyErrors.ContainsKey("LoginFailed"))
-                {
-                    propertyErrors.Add("LoginFailed", []);
-                }
-            }
+            string propertyName = nameof(User.Name);
+            _user.ClearErrors(propertyName);
+            Name_CheckCharacters(propertyName, _user.Name);
+            Name_CheckLength(propertyName, _user.Name);
         }
-        private readonly IInputForm<User>? _inputForm;
-        public UserValidation(IInputForm<User>? inputForm)
+        public void ValidateSurname()
         {
-            _inputForm = inputForm;
+            string propertyName = nameof(User.Surname);
+            _user.ClearErrors(propertyName);
+            Surname_CheckLength(propertyName, _user.Surname);
         }
-        public void ValidateName(string value, string propertyName)
+        public void ValidateUsername()
         {
-            if (_inputForm is null) return;
-            IInputForm<User> inputForm = _inputForm;
-            inputForm.ClearErrors(propertyName);
-            Name_CheckNull(inputForm, value, propertyName);
-            Name_CheckEmpty(inputForm, value, propertyName);
+            string propertyName = nameof(User.Username);
+            _user.ClearErrors(propertyName);
+            Username_CheckLength(propertyName, _user.Username);
+            Username_CheckCharacters(propertyName, _user.Username);
         }
-        private static void Name_CheckEmpty(IInputForm<User> inputForm, string value, string propertyName)
+        private void Name_CheckCharacters(string propertyName, string propertyValue)
         {
-            if (value.Trim().Length == 0) inputForm.AddError(propertyName, "Nazwa użytkownika nie może być pusta");
+            string errorText = "Imię nie może zawierać spacji, liczb ani znaków specjalnych";
+            if (PunctuationMathCurrencyWhitespaceDigit().IsMatch(propertyValue)) _user.AddError(propertyName, errorText);
         }
-        private static void Name_CheckNull(IInputForm<User> inputForm, string value, string propertyName)
+        private void Name_CheckLength(string propertyName, string propertyValue)
         {
-            if (value == null) inputForm.AddError(propertyName, "Wprowadź nazwę użytkownika");
+            string errorText = "Imię za krótkie";
+            if (propertyValue.Trim().Length < 3) _user.AddError(propertyName, errorText);
         }
-        public void ValidateLogin(User? user, IInputForm<User> inputForm)
+        private void Surname_CheckLength(string propertyName, string propertyValue)
         {
-            string propertyName = "LoginError";
-            inputForm.ClearErrors(propertyName);
-            Login_ExistsInDatabase(inputForm, user, propertyName);
+            string errorText = "Nazwisko jest za krótkie";
+            if (propertyValue.Trim().Length < 2) _user.AddError(propertyName, errorText);
         }
-        private static void Login_ExistsInDatabase(IInputForm<User> inputForm, User? value, string propertyName)
+        private void Username_CheckCharacters(string propertyName, string propertyValue)
         {
-            if (value == null) inputForm.AddError(propertyName, "Nie znaleziono użytkownika o takim loginie");
+            string errorText = "Login nie może zawierać polskich liter, znaków specjalnych i spacji";
+            if (WhitespaceNonWord().IsMatch(propertyValue)) _user.AddError(propertyName, errorText);
         }
+        private void Username_CheckLength(string propertyName, string propertyValue)
+        {
+            string errorText = "Login musi być dłuższy niż 5 znaków";
+            if (propertyValue.Length < 6) _user.AddError(propertyName, errorText);
+        }
+        [GeneratedRegex(@"[\p{P}\p{S}\s\d]")]
+        private static partial Regex PunctuationMathCurrencyWhitespaceDigit();
+        [GeneratedRegex(@"[\s\W]")]
+        private static partial Regex WhitespaceNonWord();
     }
 }
