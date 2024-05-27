@@ -2,6 +2,7 @@ using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Stores;
 using System;
@@ -19,9 +20,9 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         private readonly ErrandPartProvider _errandPartProvider;
         private readonly ErrandPartStatusProvider _errandPartStatusProvider;
         private readonly ErrandPartStatusStore _errandPartStatusStore;
-        private readonly Notifier _notifier;
+        private readonly INotifier _notifier;
         private readonly User _currentUser;
-        public ConfrmOfferCommand(SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, ICurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, Notifier notifier)
+        public ConfrmOfferCommand(SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, ICurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, INotifier notifier)
         {
             _requestStore = requestStore;
             _viewModel = addOfferViewModel;

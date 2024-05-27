@@ -4,6 +4,7 @@ using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;
+using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Stores;
 using System;
@@ -18,12 +19,12 @@ namespace Shopfloor.Features.Manager.Commands
     {
         private readonly NavigationService _navigationService;
         private readonly ErrandPartStatusStore _errandPartStatusStore;
-        private readonly Notifier _notifier;
+        private readonly INotifier _notifier;
         private readonly SelectedRequestStore _requestStore;
         private readonly OrderApproveViewModel _viewModel;
         private readonly ErrandPartStatusProvider _provider;
         private readonly User _currentUser;
-        public ApproveOrderCommand(NavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, Notifier notifier, SelectedRequestStore requestStore, OrderApproveViewModel viewModel, ICurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
+        public ApproveOrderCommand(NavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, INotifier notifier, SelectedRequestStore requestStore, OrderApproveViewModel viewModel, ICurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
         {
             _navigationService = navigationService;
             _errandPartStatusStore = errandPartStatusStore;

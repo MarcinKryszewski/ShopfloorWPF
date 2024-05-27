@@ -20,14 +20,10 @@ namespace Shopfloor.Models.RoleUserModel
     internal sealed class RoleIUserProvider : IRoleIUserProvider
     {
         private readonly DatabaseConnectionFactory _database;
-
-        #region SQLCommands
-
         private const string _createSQL = @"
             INSERT INTO roles_users (role_id, user_id)
             VALUES (@RoleId, @UserId)
             ";
-
         private const string _getAllSQL = @"
             SELECT
                 id AS Id,
@@ -35,13 +31,11 @@ namespace Shopfloor.Models.RoleUserModel
                 user_id AS UserId
             FROM roles_users
             ";
-
         private const string _deleteSQL = @"
             DELETE
             FROM roles_users
             WHERE role_id = @RoleId AND user_id = @UserId
             ";
-
         private const string _getAllForUser = @"
             SELECT
                 id AS Id,
@@ -50,7 +44,6 @@ namespace Shopfloor.Models.RoleUserModel
             FROM roles_users
             WHERE user_id = @UserId
             ";
-
         private const string _getAllForRole = @"
             SELECT
                 id AS Id,
@@ -59,16 +52,10 @@ namespace Shopfloor.Models.RoleUserModel
             FROM roles_users
             WHERE role_id = @RoleId
             ";
-
-        #endregion SQLCommands
-
         public RoleIUserProvider(DatabaseConnectionFactory database)
         {
             _database = database;
         }
-
-        #region CRUD
-
         public async Task<int> Create(RoleUser item)
         {
             using IDbConnection connection = _database.Connect();
@@ -81,7 +68,6 @@ namespace Shopfloor.Models.RoleUserModel
 
             return 0;
         }
-
         public async Task<int> Create(int RoleId, int UserId)
         {
             using IDbConnection connection = _database.Connect();
@@ -94,7 +80,6 @@ namespace Shopfloor.Models.RoleUserModel
 
             return 0;
         }
-
         public async Task Delete(int roleId, int userId)
         {
             using IDbConnection connection = _database.Connect();
@@ -105,14 +90,12 @@ namespace Shopfloor.Models.RoleUserModel
             };
             await connection.ExecuteAsync(_deleteSQL, parameters);
         }
-
         public async Task<IEnumerable<RoleUser>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
             IEnumerable<RoleUserDTO> roleUserDTOs = await connection.QueryAsync<RoleUserDTO>(_getAllSQL);
             return roleUserDTOs.Select(ToRoleUser);
         }
-
         public async Task<IEnumerable<RoleUser>> GetAllForUser(int userId)
         {
             using IDbConnection connection = _database.Connect();
@@ -123,7 +106,6 @@ namespace Shopfloor.Models.RoleUserModel
             IEnumerable<RoleUserDTO> roleUserDTOs = await connection.QueryAsync<RoleUserDTO>(_getAllForUser, parameters);
             return roleUserDTOs.Select(ToRoleUser);
         }
-
         public async Task<IEnumerable<RoleUser>> GetAllForRole(int roleId)
         {
             using IDbConnection connection = _database.Connect();
@@ -134,24 +116,18 @@ namespace Shopfloor.Models.RoleUserModel
             IEnumerable<RoleUserDTO> roleUserDTOs = await connection.QueryAsync<RoleUserDTO>(_getAllForRole, parameters);
             return roleUserDTOs.Select(ToRoleUser);
         }
-
         public Task<RoleUser> GetById(int id)
         {
             throw new NotImplementedException();
         }
-
         public Task Update(RoleUser item)
         {
             throw new NotImplementedException();
         }
-
         public Task Delete(int id)
         {
             throw new NotImplementedException();
         }
-
-        #endregion CRUD
-
         private static RoleUser ToRoleUser(RoleUserDTO item)
         {
             return new RoleUser()

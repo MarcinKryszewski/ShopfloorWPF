@@ -5,6 +5,7 @@ using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Services.NavigationServices;
+using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
@@ -69,7 +70,7 @@ namespace Shopfloor.Features.Plannist
             }
         }
         public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
-        public AddOfferViewModel(NavigationService navigationService, SelectedRequestStore selectedRequestStore, ErrandPartStore errandPartStore, SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, ICurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, Notifier notifier)
+        public AddOfferViewModel(NavigationService navigationService, SelectedRequestStore selectedRequestStore, ErrandPartStore errandPartStore, ICurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, INotifier notifier)
         {
             _requestStore = selectedRequestStore;
             _errandPartStore = errandPartStore;
