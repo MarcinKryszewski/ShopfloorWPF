@@ -120,6 +120,9 @@
                                     <Style TargetType="Border">
                                         <Setter Property="Background" Value="White" />
                                         <Style.Triggers>
+                                            <DataTrigger Binding="{Binding LastStatusText}" Value="ANULOWANE">
+                                                <Setter Property="Background" Value="#ED4CFC" />
+                                            </DataTrigger>
                                             <DataTrigger Binding="{Binding LastStatusText}" Value="OFERTOWANIE">
                                                 <Setter Property="Background" Value="#D64E12" />
                                             </DataTrigger>

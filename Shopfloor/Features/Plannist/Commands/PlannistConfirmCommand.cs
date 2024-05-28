@@ -3,8 +3,6 @@ using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 using System;
-using ToastNotifications;
-using ToastNotifications.Messages;
 
 namespace Shopfloor.Features.Plannist.Commands
 {
@@ -13,7 +11,6 @@ namespace Shopfloor.Features.Plannist.Commands
         private readonly SelectedRequestStore _selectedRequest;
         private readonly INotifier _notifier;
         private readonly ErrandPartStatusProvider _errandPartStatusProvider;
-
         public PlannistConfirmCommand(SelectedRequestStore selectedRequest, INotifier notifier, ErrandPartStatusProvider errandPartStatusProvider)
         {
             _selectedRequest = selectedRequest;

@@ -76,10 +76,7 @@ namespace Shopfloor.Features.Plannist
             _parts = _errandPartStore.Data;
 
 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Parts.Refresh();
-            });
+            Application.Current.Dispatcher.Invoke(Parts.Refresh);
 
             return Task.CompletedTask;
         }

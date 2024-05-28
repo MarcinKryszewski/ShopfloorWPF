@@ -6,6 +6,7 @@ using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Services.NavigationServices;
+using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
@@ -32,7 +33,7 @@ namespace Shopfloor.Features.Manager.OrderApprove
             set => ErrandPart.ExpectedDeliveryDate = value;
         }
         public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
-        public OrderApproveViewModel(SelectedRequestStore selectedRequestStore, NavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, Notifier notifier, SelectedRequestStore requestStore, ICurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
+        public OrderApproveViewModel(SelectedRequestStore selectedRequestStore, NavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, INotifier notifier, SelectedRequestStore requestStore, ICurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
         {
             _requestStore = selectedRequestStore;
 

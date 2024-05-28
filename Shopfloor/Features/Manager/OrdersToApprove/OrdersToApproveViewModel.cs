@@ -2,6 +2,7 @@ using Shopfloor.Features.Manager.OrderApprove;
 using Shopfloor.Features.Manager.Stores;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
+using Shopfloor.Models.ErrandPartModel.Store.Combine;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.Commands;
@@ -9,6 +10,7 @@ using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -18,9 +20,10 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
 {
     internal sealed class OrdersToApproveViewModel : ViewModelBase
     {
-        private readonly List<ErrandPart> _orders = [];
+        private List<ErrandPart> _orders = [];
         private readonly SelectedRequestStore _requestStore;
         private readonly ErrandPartStore _errandPartStore;
+        private readonly ErrandPartCombiner _errandPartCombiner;
         private string? _filterText;
         public ErrandPart? SelectedRow
         {
@@ -40,45 +43,26 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
         public ICommand ApproveCommand { get; }
         //public ICommand DetailsCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public OrdersToApproveViewModel(NavigationService navigationService, SelectedRequestStore selectedRequestStore, ErrandPartStore errandPartStore)
+        public OrdersToApproveViewModel(NavigationService navigationService, SelectedRequestStore selectedRequestStore, ErrandPartStore errandPartStore, ErrandPartCombiner errandPartCombiner)
         {
-            Task.Run(LoadData);
-
             _requestStore = selectedRequestStore;
             _errandPartStore = errandPartStore;
+            _errandPartCombiner = errandPartCombiner;
             SelectedRow = null;
 
             ApproveCommand = new RelayCommand(o => { navigationService.NavigateTo<OrderApproveViewModel>(); }, o => true);
             //DetailsCommand = new PlannistDetailsCommand();
+            Task.Run(LoadData);
         }
         private void OnRequestChanged() => Orders.Refresh();
-        private async Task LoadData()
+        private Task LoadData()
         {
-            Application.Current.Dispatcher.Invoke(_orders.Clear);
+            _errandPartCombiner.Combine().Wait();
+            _orders = _errandPartStore.Data.Where(part => part.LastStatusText == ErrandPartStatus.Status[1]).ToList();
 
-            ErrandPartStore errandPartStore = _errandPartStore;
 
-            await FillLists(errandPartStore);
+            Application.Current.Dispatcher.Invoke(Orders.Refresh);
 
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Orders.Refresh();
-                System.Diagnostics.Debug.WriteLine("TEST");
-            });
-        }
-        private async Task FillLists(ErrandPartStore errandPartStore)
-        {
-            List<Task> tasks = [];
-            tasks.Add(FillPartList(errandPartStore));
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
-            //await Task.Delay(2000);
-        }
-        private Task FillPartList(ErrandPartStore errandPartStore)
-        {
-            foreach (ErrandPart errandPart in errandPartStore.Data)
-            {
-                if (errandPart.LastStatusText == ErrandPartStatus.Status[1]) _orders.Add(errandPart);
-            }
             return Task.CompletedTask;
         }
         private bool FilterParts(object obj)

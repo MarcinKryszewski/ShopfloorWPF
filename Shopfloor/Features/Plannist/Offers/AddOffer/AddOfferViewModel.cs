@@ -24,7 +24,6 @@ namespace Shopfloor.Features.Plannist
     {
         private readonly SelectedRequestStore _requestStore;
         private readonly ErrandPartStore _errandPartStore;
-
         public ICommand ReturnCommand { get; }
         public ICommand ConfirmCommand { get; }
         public ErrandPart ErrandPart => _requestStore.Request!;
@@ -94,7 +93,6 @@ namespace Shopfloor.Features.Plannist
             LoadHistoricalData(errandPartStore);
             return Task.CompletedTask;
         }
-
         private void LoadHistoricalData(ErrandPartStore errandParts)
         {
             HistoricalData = errandParts.Data.Where(part => part.PartId == ErrandPart.PartId);
