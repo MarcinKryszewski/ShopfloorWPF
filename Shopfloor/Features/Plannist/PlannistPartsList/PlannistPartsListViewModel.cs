@@ -75,7 +75,6 @@ namespace Shopfloor.Features.Plannist
             _errandPartCombiner.Combine().Wait();
             _parts = _errandPartStore.Data;
 
-
             Application.Current.Dispatcher.Invoke(Parts.Refresh);
 
             return Task.CompletedTask;

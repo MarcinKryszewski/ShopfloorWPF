@@ -10,16 +10,16 @@ namespace Shopfloor.Hosts.Features.Plannist
         {
             services.AddSingleton<PlannistDashboardViewModel>();
 
-            services.AddSingleton<PlannistPartsListViewModel>();
+            services.AddTransient<PlannistPartsListViewModel>();
 
-            services.AddSingleton<DeploysViewModel>();
+            services.AddTransient<DeploysViewModel>();
 
-            services.AddSingleton<OffersViewModel>();
-            services.AddSingleton<AddOfferViewModel>();
+            services.AddTransient<OffersViewModel>();
+            services.AddTransient<AddOfferViewModel>();
 
-            services.AddSingleton<PartsOrdersViewModel>();
+            services.AddTransient<PartsOrdersViewModel>();
 
-            services.AddSingleton<ReservationsViewModel>();
+            services.AddTransient<ReservationsViewModel>();
 
             services.AddSingleton<SelectedRequestStore>();
         }

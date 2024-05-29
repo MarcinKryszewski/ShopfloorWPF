@@ -11,8 +11,8 @@ namespace Shopfloor.Hosts.Features.Manager
         public static void Get(IServiceCollection services)
         {
             services.AddSingleton<ManagerDashboardViewModel>();
-            services.AddSingleton<OrderApproveViewModel>();
-            services.AddSingleton<OrdersToApproveViewModel>();
+            services.AddTransient<OrderApproveViewModel>();
+            services.AddTransient<OrdersToApproveViewModel>();
 
             services.AddSingleton<SelectedRequestStore>();
         }
