@@ -1,3 +1,5 @@
+using Shopfloor.Shared.BaseClasses;
+
 namespace Shopfloor.Models.ErrandPartStatusModel
 {
     internal sealed class ErrandPartStatusStore : StoreBase<ErrandPartStatus>

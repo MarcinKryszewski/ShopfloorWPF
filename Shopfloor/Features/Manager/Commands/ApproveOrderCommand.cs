@@ -10,13 +10,13 @@ using Shopfloor.Stores;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ToastNotifications;
-using ToastNotifications.Messages;
 
 namespace Shopfloor.Features.Manager.Commands
 {
     internal sealed class ApproveOrderCommand : CommandBase
     {
+        private const string _orderApproved = "Dodano ofertę i przekazano do zatwierdzenia!";
+
         private readonly NavigationService _navigationService;
         private readonly ErrandPartStatusStore _errandPartStatusStore;
         private readonly INotifier _notifier;
@@ -50,7 +50,7 @@ namespace Shopfloor.Features.Manager.Commands
         }
         private void ReturnToApprovals()
         {
-            _notifier.ShowSuccess("Dodano ofertę i przekazano do zatwierdzenia!");
+            _notifier.ShowSuccess(_orderApproved);
             _navigationService.NavigateTo<OrderApproveViewModel>();
         }
         private async Task ErrandPartUpdateStatus(ErrandPartStatus requestStatus)

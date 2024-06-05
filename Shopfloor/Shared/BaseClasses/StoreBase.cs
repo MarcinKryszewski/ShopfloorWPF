@@ -2,33 +2,35 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-internal abstract class StoreBase<T> : IDataStore<T>
+namespace Shopfloor.Shared.BaseClasses
 {
-    protected List<T> _data;
-    protected readonly IProvider<T> _provider;
-    public StoreBase(IProvider<T> provider)
+    internal abstract class StoreBase<T> : IDataStore<T>
     {
-        _data = [];
-        _provider = provider;
-    }
-    public List<T> Data
-    {
-        get
+        protected List<T> _data;
+        protected readonly IProvider<T> _provider;
+        public StoreBase(IProvider<T> provider)
         {
-            if (!IsLoaded) Load();
-            return _data;
+            _data = [];
+            _provider = provider;
         }
-
-    }
-    public bool IsLoaded { get; protected set; }
-    protected Task Load()
-    {
-        _data = new(_provider.GetAll().Result);
-        IsLoaded = true;
-        return Task.CompletedTask;
-    }
-    public async Task Reload()
-    {
-        _data = new(await _provider.GetAll());
+        public List<T> Data
+        {
+            get
+            {
+                if (!IsLoaded) Load();
+                return _data;
+            }
+        }
+        public bool IsLoaded { get; protected set; }
+        protected Task Load()
+        {
+            _data = new(_provider.GetAll().Result);
+            IsLoaded = true;
+            return Task.CompletedTask;
+        }
+        public async Task Reload()
+        {
+            _data = new(await _provider.GetAll());
+        }
     }
 }

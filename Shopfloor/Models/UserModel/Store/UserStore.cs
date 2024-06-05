@@ -1,3 +1,5 @@
+using Shopfloor.Shared.BaseClasses;
+
 namespace Shopfloor.Models.UserModel
 {
     internal sealed class UserStore : StoreBase<User>

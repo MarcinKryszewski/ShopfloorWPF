@@ -1,3 +1,5 @@
+using Shopfloor.Shared.BaseClasses;
+
 namespace Shopfloor.Models.ReservationModel
 {
     internal sealed class ReservationStore : StoreBase<Reservation>

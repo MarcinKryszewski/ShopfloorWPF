@@ -1,3 +1,5 @@
+using Shopfloor.Shared.BaseClasses;
+
 namespace Shopfloor.Models.ErrandPartOfferModel
 {
     internal sealed class ErrandPartOfferStore : StoreBase<ErrandPartOffer>

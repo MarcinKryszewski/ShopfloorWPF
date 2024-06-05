@@ -1,3 +1,5 @@
+using Shopfloor.Shared.BaseClasses;
+
 namespace Shopfloor.Models.OfferModel
 {
     internal sealed class OfferStore : StoreBase<Offer>
