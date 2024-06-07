@@ -71,24 +71,25 @@ namespace Shopfloor.Layout.SidePanel
         public Visibility HasUserRole => HasAuthorization(Roles.User);
         public SidePanelViewModel(INavigationService navigationService, ICurrentUserStore userStore, IServiceProvider databaseServices)
         {
-            NavigateMechanicDashboardCommand = new RelayCommand(o => { navigationService.NavigateTo<MechanicDashboardViewModel>(); }, o => true);
-            NavigateTasksCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandsListViewModel>(); }, o => true);
-            NavigateRequestsCommand = new RelayCommand(o => { navigationService.NavigateTo<RequestsListViewModel>(); }, o => true);
-            NavigatePartStockCommand = new RelayCommand(o => { navigationService.NavigateTo<PartsStockListViewModel>(); }, o => true);
+            NavigateMechanicDashboardCommand = new NavigationCommand<MechanicDashboardViewModel>(navigationService).Navigate();
 
-            NavigateDeploysCommand = new RelayCommand(o => { navigationService.NavigateTo<DeploysViewModel>(); }, o => true);
-            NavigateOffersCommand = new RelayCommand(o => { navigationService.NavigateTo<OffersViewModel>(); }, o => true);
-            NavigateOrdersCommand = new RelayCommand(o => { navigationService.NavigateTo<PartsOrdersViewModel>(); }, o => true);
-            NavigatePlannistDashboardCommand = new RelayCommand(o => { navigationService.NavigateTo<PlannistPartsListViewModel>(); }, o => true);
+            NavigateTasksCommand = new NavigationCommand<ErrandsListViewModel>(navigationService).Navigate();
+            NavigateRequestsCommand = new NavigationCommand<RequestsListViewModel>(navigationService).Navigate();
+            NavigatePartStockCommand = new NavigationCommand<PartsStockListViewModel>(navigationService).Navigate();
 
-            NavigateManagerDashboardCommand = new RelayCommand(o => { navigationService.NavigateTo<ManagerDashboardViewModel>(); }, o => true);
-            NavigateOrdersToApproveCommand = new RelayCommand(o => { navigationService.NavigateTo<OrdersToApproveViewModel>(); }, o => true);
+            NavigateDeploysCommand = new NavigationCommand<DeploysViewModel>(navigationService).Navigate();
+            NavigateOffersCommand = new NavigationCommand<OffersViewModel>(navigationService).Navigate();
+            NavigateOrdersCommand = new NavigationCommand<PartsOrdersViewModel>(navigationService).Navigate();
+            NavigatePlannistDashboardCommand = new NavigationCommand<PlannistPartsListViewModel>(navigationService).Navigate();
 
-            NavigateUsersCommand = new RelayCommand(o => { navigationService.NavigateTo<UsersListViewModel>(); }, o => true);
-            NavigateMachinesCommand = new RelayCommand(o => { navigationService.NavigateTo<MachinesListViewModel>(); }, o => true);
-            NavigatePartsCommand = new RelayCommand(o => { navigationService.NavigateTo<PartsListViewModel>(); }, o => true);
-            NavigateSuppliersCommand = new RelayCommand(o => { navigationService.NavigateTo<SuppliersListViewModel>(); }, o => true);
-            NavigatePartTypesCommand = new RelayCommand(o => { navigationService.NavigateTo<PartTypesListViewModel>(); }, o => true);
+            NavigateManagerDashboardCommand = new NavigationCommand<ManagerDashboardViewModel>(navigationService).Navigate();
+            NavigateOrdersToApproveCommand = new NavigationCommand<OrdersToApproveViewModel>(navigationService).Navigate();
+
+            NavigateUsersCommand = new NavigationCommand<UsersListViewModel>(navigationService).Navigate();
+            NavigateMachinesCommand = new NavigationCommand<MachinesListViewModel>(navigationService).Navigate();
+            NavigatePartsCommand = new NavigationCommand<PartsListViewModel>(navigationService).Navigate();
+            NavigateSuppliersCommand = new NavigationCommand<SuppliersListViewModel>(navigationService).Navigate();
+            NavigatePartTypesCommand = new NavigationCommand<PartTypesListViewModel>(navigationService).Navigate();
 
             _userStore = userStore;
             _userStore.PropertyChanged += OnUserAuthenticated;
@@ -111,7 +112,6 @@ namespace Shopfloor.Layout.SidePanel
             if (_user is null) return Visibility.Collapsed;
             if (_user.IsAuthorized(authVal)) return Visibility.Visible;
             return Visibility.Collapsed;
-            //return Visibility.Visible;
         }
     }
     internal sealed partial class SidePanelViewModel

@@ -32,12 +32,12 @@ namespace Shopfloor.Features.Admin.Parts
         private PartType? _type;
         private string _unit = "SZT";
         private readonly PartStore _partStore;
-        public PartsEditViewModel(NavigationService navigationService, SelectedPartStore selectedPartStore, PartTypeStore partTypeStore, SuppliersStore suppliersStore, PartStore partStore, PartProvider partProvider)
+        public PartsEditViewModel(INavigationCommand<PartsListViewModel> returnCommand, SelectedPartStore selectedPartStore, PartTypeStore partTypeStore, SuppliersStore suppliersStore, PartStore partStore, PartProvider partProvider)
         {
             _selectedPart = selectedPartStore.Part;
             _partStore = partStore;
 
-            ReturnCommand = new RelayCommand(o => { navigationService.NavigateTo<PartsListViewModel>(); }, o => true);
+            ReturnCommand = returnCommand.Navigate();
             CleanFormCommand = new PartCleanFormCommand(this);
             EditPartCommand = new PartEditCommand(this, partProvider);
 
@@ -59,7 +59,6 @@ namespace Shopfloor.Features.Admin.Parts
         public ICommand ReturnCommand { get; }
         public Part? SelectedPart => _selectedPart;
         public ICollectionView Suppliers { get; }
-        #region model properties
         public string Details
         {
             get => _details;
@@ -145,7 +144,6 @@ namespace Shopfloor.Features.Admin.Parts
         }
         public int? SupplierId => Supplier?.Id;
         public int? TypeId => PartType?.Id;
-        #endregion model properties
         public void AddError(string propertyName, string errorMassage)
         {
             if (!_propertyErrors.ContainsKey(propertyName))

@@ -31,11 +31,11 @@ namespace Shopfloor.Features.Admin.Parts
         private Supplier? _supplier;
         private PartType? _type;
         private string? _unit;
-        public PartsAddViewModel(NavigationService navigationService, PartTypeStore partTypeStore, SuppliersStore suppliersStore, PartStore partStore, PartProvider partProvider)
+        public PartsAddViewModel(PartTypeStore partTypeStore, SuppliersStore suppliersStore, PartStore partStore, PartProvider partProvider, INavigationCommand<PartsListViewModel> returnCommand)
         {
             _partStore = partStore;
 
-            ReturnCommand = new RelayCommand(o => { navigationService.NavigateTo<PartsListViewModel>(); }, o => true);
+            ReturnCommand = returnCommand.Navigate();
             CleanFormCommand = new PartCleanFormCommand(this);
             AddPartCommand = new PartAddCommand(this, partProvider);
 

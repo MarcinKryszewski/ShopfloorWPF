@@ -51,6 +51,7 @@ namespace Shopfloor.Features.Plannist
             SelectedRow = null;
 
             OfferCommand = new RelayCommand(o => { navigationService.NavigateTo<AddOfferViewModel>(); }, o => true);
+            //OfferCommand = new NavigateCommand<AddOfferViewModel>(navigationService).Navigate();
             DetailsCommand = new PlannistDetailsCommand();
 
             Task.Run(LoadData);

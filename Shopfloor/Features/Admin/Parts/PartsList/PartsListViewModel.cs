@@ -55,11 +55,11 @@ namespace Shopfloor.Features.Admin.Parts
 
         public PartsListViewModel(NavigationService navigationService, PartTypeStore partTypeStore, SuppliersStore suppliersStore, PartStore partStore, SelectedPartStore selectedPartStore)
         {
-            _parts = new();
+            _parts = [];
             _selectedPart = selectedPartStore;
 
-            AddPartCommand = new RelayCommand(o => { navigationService.NavigateTo<PartsAddViewModel>(); }, o => true);
-            EditPartCommand = new RelayCommand(o => { navigationService.NavigateTo<PartsEditViewModel>(); }, o => true);
+            AddPartCommand = new NavigationCommand<PartsAddViewModel>(navigationService).Navigate();
+            EditPartCommand = new NavigationCommand<PartsEditViewModel>(navigationService).Navigate();
 
             Parts = CollectionViewSource.GetDefaultView(_parts);
 
