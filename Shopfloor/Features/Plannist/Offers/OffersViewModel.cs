@@ -5,7 +5,6 @@ using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartModel.Store.Combine;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -50,7 +49,7 @@ namespace Shopfloor.Features.Plannist
             _errandPartCombiner = errandPartCombiner;
             SelectedRow = null;
 
-            OfferCommand = new RelayCommand(o => { navigationService.NavigateTo<AddOfferViewModel>(); }, o => true);
+            OfferCommand = new NavigationCommand<AddOfferViewModel>(navigationService).Navigate();
             //OfferCommand = new NavigateCommand<AddOfferViewModel>(navigationService).Navigate();
             DetailsCommand = new PlannistDetailsCommand();
 

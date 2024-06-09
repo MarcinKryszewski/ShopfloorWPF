@@ -3,7 +3,6 @@ using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandModel.Store.Combine;
 using Shopfloor.Models.ErrandPartModel.Store.Combine;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System.Collections.Generic;
@@ -33,8 +32,8 @@ namespace Shopfloor.Features.Mechanic.Errands
             _errandCombiner = errandCombiner;
             _errandPartCombiner = errandPartCombiner;
             LoadData();
-            ErrandsAddNavigateCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandNewViewModel>(); }, o => true);
-            EditErrandCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandEditViewModel>(); }, o => true);
+            ErrandsAddNavigateCommand = new NavigationCommand<ErrandNewViewModel>(navigationService).Navigate();
+            EditErrandCommand = new NavigationCommand<ErrandEditViewModel>(navigationService).Navigate();
             if (currentUserStore.User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
         }
         private Task LoadData()

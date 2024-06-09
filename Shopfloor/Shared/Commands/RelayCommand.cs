@@ -17,13 +17,7 @@ namespace Shopfloor.Shared.Commands
             add => CommandManager.RequerySuggested += value;
             remove => CommandManager.RequerySuggested -= value;
         }
-        public bool CanExecute(object? parameter)
-        {
-            return _canExecute(parameter ?? true);
-        }
-        public void Execute(object? parameter)
-        {
-            _execute(parameter ?? true);
-        }
+        public bool CanExecute(object? parameter) => _canExecute(parameter ?? true);
+        public void Execute(object? parameter) => _execute(parameter ?? true);
     }
 }

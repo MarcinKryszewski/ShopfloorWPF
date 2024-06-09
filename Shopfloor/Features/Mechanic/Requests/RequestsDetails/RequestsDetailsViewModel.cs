@@ -2,7 +2,6 @@ using Shopfloor.Features.Mechanic.Requests.Stores;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +23,7 @@ namespace Shopfloor.Features.Mechanic.Requests
             Task.Run(() => LoadData());
             _selectedRequest = selectedRequestStore;
             _errandPartStore = errandPartStore;
-            ReturnCommand = new RelayCommand(o => { navigationService.NavigateTo<RequestsListViewModel>(); }, o => true);
+            ReturnCommand = new NavigationCommand<RequestsListViewModel>(navigationService).Navigate();
         }
         private Task LoadData()
         {

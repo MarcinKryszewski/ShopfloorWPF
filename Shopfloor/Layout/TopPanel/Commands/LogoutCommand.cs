@@ -1,13 +1,14 @@
 ﻿using Shopfloor.Shared.Commands;
 using Shopfloor.Stores;
+using System.Windows.Input;
 
 namespace Shopfloor.Layout.TopPanel.Commands
 {
     internal class LogoutCommand : CommandBase
     {
         private readonly ICurrentUserStore _userStore;
-        private readonly RelayCommand _returnCommand;
-        public LogoutCommand(ICurrentUserStore userStore, RelayCommand returnCommand)
+        private readonly ICommand _returnCommand;
+        public LogoutCommand(ICurrentUserStore userStore, ICommand returnCommand)
         {
             _userStore = userStore;
             _returnCommand = returnCommand;

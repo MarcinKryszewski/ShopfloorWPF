@@ -7,7 +7,6 @@ using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Services.NotificationServices;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System;
@@ -16,7 +15,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
-using ToastNotifications;
 
 namespace Shopfloor.Features.Manager.OrderApprove
 {
@@ -33,11 +31,11 @@ namespace Shopfloor.Features.Manager.OrderApprove
             set => ErrandPart.ExpectedDeliveryDate = value;
         }
         public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
-        public OrderApproveViewModel(SelectedRequestStore selectedRequestStore, NavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, INotifier notifier, SelectedRequestStore requestStore, ICurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
+        public OrderApproveViewModel(SelectedRequestStore selectedRequestStore, INavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, INotifier notifier, SelectedRequestStore requestStore, ICurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
         {
             _requestStore = selectedRequestStore;
 
-            ReturnCommand = new RelayCommand(o => { navigationService.NavigateTo<OrdersToApproveViewModel>(); }, o => true);
+            ReturnCommand = new NavigationCommand<OrdersToApproveViewModel>(navigationService).Navigate();
             ConfirmCommand = new ApproveOrderCommand(navigationService, errandPartStatusStore, notifier, requestStore, this, currentUserStore, errandPartStatusProvider);
 
             _errandPartValidation = new(this);

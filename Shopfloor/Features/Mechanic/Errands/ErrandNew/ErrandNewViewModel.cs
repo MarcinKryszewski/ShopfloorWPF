@@ -13,7 +13,6 @@ using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System;
@@ -55,7 +54,7 @@ namespace Shopfloor.Features.Mechanic.Errands
                 ErrandStatusStore = errandStatusStore,
                 ErrandStore = errandStore
             };
-            ReturnCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandsListViewModel>(); }, o => true);
+            ReturnCommand = new NavigationCommand<ErrandsListViewModel>(navigationService).Navigate();
             PrioritySetCommand = new PrioritySetCommand(this);
             ShowPartsListCommand = new ErrandsShowPartsList(this, errandPartsListViewModel);
 

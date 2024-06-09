@@ -5,7 +5,6 @@ using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
@@ -28,7 +27,7 @@ namespace Shopfloor.Features.Admin.Users
         private string _surname = string.Empty;
         private string _username = string.Empty;
         private readonly IRoleIUserProvider _roleIUserProvider;
-        public UsersEditViewModel(NavigationService navigationService, SelectedUserStore selectedUserStore, IUserProvider IUserProvider, IRoleIUserProvider roleIUserProvider, IProvider<Role> roleProvider)
+        public UsersEditViewModel(INavigationCommand<UsersListViewModel> navigationService, SelectedUserStore selectedUserStore, IUserProvider IUserProvider, IRoleIUserProvider roleIUserProvider, IProvider<Role> roleProvider)
         {
             _selectedUser = selectedUserStore;
             _roleProvider = roleProvider;
@@ -38,7 +37,7 @@ namespace Shopfloor.Features.Admin.Users
 
             FillForm();
 
-            BackToListCommand = new RelayCommand(o => { navigationService.NavigateTo<UsersListViewModel>(); }, o => true);
+            BackToListCommand = navigationService.Navigate();
 
             string imagePath = _selectedUser.SelectedUser?.Image ?? string.Empty;
             bool isActive = _selectedUser.SelectedUser?.IsActive ?? false;

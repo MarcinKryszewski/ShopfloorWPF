@@ -3,7 +3,6 @@ using Shopfloor.Features.Mechanic;
 using Shopfloor.Layout.TopPanel.Commands;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System.ComponentModel;
@@ -31,9 +30,9 @@ namespace Shopfloor.Layout.TopPanel
         {
             _userStore = userStore;
             _userStore.PropertyChanged += OnUserAuthenticated;
-            NavigateLoginCommand = new RelayCommand(o => { navigationService.NavigateTo<LoginViewModel>(); }, o => true);
+            NavigateLoginCommand = new NavigationCommand<LoginViewModel>(navigationService).Navigate();
 
-            RelayCommand returnCommand = new(o => { navigationService.NavigateTo<MechanicDashboardViewModel>(); }, o => true);
+            ICommand returnCommand = new NavigationCommand<MechanicDashboardViewModel>(navigationService).Navigate();
             LogoutCommand = new LogoutCommand(_userStore, returnCommand);
         }
         private void OnUserAuthenticated(object? sender, PropertyChangedEventArgs e)

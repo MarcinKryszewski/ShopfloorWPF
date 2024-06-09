@@ -5,7 +5,6 @@ using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
@@ -25,13 +24,13 @@ namespace Shopfloor.Features.Admin.Users
         private List<Role> _rolesStorage = [];
         private string _surname = string.Empty;
         private string _username = string.Empty;
-        public UsersAddViewModel(NavigationService navigationService, IUserProvider IUserProvider, IRoleIUserProvider roleIUserProvider, IProvider<Role> roleProvider)
+        public UsersAddViewModel(INavigationCommand<UsersListViewModel> navigationService, IUserProvider IUserProvider, IRoleIUserProvider roleIUserProvider, IProvider<Role> roleProvider)
         {
             _rolesValueStore = new();
             _roleProvider = roleProvider;
 
             SetRoles();
-            BackToListCommand = new RelayCommand(o => { navigationService.NavigateTo<UsersListViewModel>(); }, o => true);
+            BackToListCommand = navigationService.Navigate();
             AddNewUserCommand = new UserAddCommand(
                 this,
                 _rolesValueStore,

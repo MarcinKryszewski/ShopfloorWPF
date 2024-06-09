@@ -6,7 +6,6 @@ using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Services.NotificationServices;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System;
@@ -16,7 +15,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ToastNotifications;
 
 namespace Shopfloor.Features.Plannist
 {
@@ -76,7 +74,7 @@ namespace Shopfloor.Features.Plannist
 
             Task.Run(LoadData);
 
-            ReturnCommand = new RelayCommand(o => { navigationService.NavigateTo<OffersViewModel>(); }, o => true);
+            ReturnCommand = new NavigationCommand<OffersViewModel>(navigationService).Navigate();
             ConfirmCommand = new ConfrmOfferCommand(_requestStore, this, currentUserStore, errandPartProvider, errandPartStatusProvider, errandPartStatusStore, notifier);
 
             _errandPartValidation = new(this);

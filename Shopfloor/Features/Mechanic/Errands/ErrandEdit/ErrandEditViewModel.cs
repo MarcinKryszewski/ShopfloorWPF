@@ -13,7 +13,6 @@ using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System;
@@ -44,7 +43,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly PartStore _partStore;
         private readonly ObservableCollection<User> _users = [];
         private ErrandDTO _errandDTO = new();
-        public ErrandEditViewModel(NavigationService navigationService, ErrandPartsListViewModel errandPartsListViewModel, SelectedErrandStore selectedErrandStore, ICurrentUserStore currentUserStore, ErrandStore errandStore, MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore, ErrandPartStore errandPartStore, PartStore partStore, ErrandProvider errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStatusProvider errandPartStatusProvider)
+        public ErrandEditViewModel(INavigationCommand<ErrandsListViewModel> navigateService, ErrandPartsListViewModel errandPartsListViewModel, SelectedErrandStore selectedErrandStore, ICurrentUserStore currentUserStore, ErrandStore errandStore, MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore, ErrandPartStore errandPartStore, PartStore partStore, ErrandProvider errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStatusProvider errandPartStatusProvider)
         {
             _errandPartsListViewModel = errandPartsListViewModel;
             _selectedErrand = selectedErrandStore;
@@ -56,7 +55,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             _partStore = partStore;
 
             EditErrandCommand = new ErrandEditCommand(this, currentUserStore, _selectedErrand, errandProvider, errandPartProvider, errandStatusProvider, errandPartStore, errandPartStatusProvider);
-            ReturnCommand = new RelayCommand(o => { navigationService.NavigateTo<ErrandsListViewModel>(); }, o => true);
+            ReturnCommand = navigateService.Navigate();
             PrioritySetCommand = new PrioritySetCommand(this);
             ShowPartsListCommand = new ErrandsShowPartsList(this, _errandPartsListViewModel);
 

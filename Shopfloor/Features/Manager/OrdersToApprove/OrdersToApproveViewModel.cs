@@ -5,7 +5,6 @@ using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartModel.Store.Combine;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -50,7 +49,7 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
             _errandPartCombiner = errandPartCombiner;
             SelectedRow = null;
 
-            ApproveCommand = new RelayCommand(o => { navigationService.NavigateTo<OrderApproveViewModel>(); }, o => true);
+            ApproveCommand = new NavigationCommand<OrderApproveViewModel>(navigationService).Navigate();
             //DetailsCommand = new PlannistDetailsCommand();
             Task.Run(LoadData);
         }
@@ -59,7 +58,6 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
         {
             _errandPartCombiner.Combine().Wait();
             _orders = _errandPartStore.Data.Where(part => part.LastStatusText == ErrandPartStatus.Status[1]).ToList();
-
 
             Application.Current.Dispatcher.Invoke(Orders.Refresh);
 

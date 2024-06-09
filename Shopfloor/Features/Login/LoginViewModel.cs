@@ -3,7 +3,6 @@ using Shopfloor.Features.Mechanic;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System;
@@ -41,9 +40,9 @@ namespace Shopfloor.Features.Login
         }
 
         public ICommand LoginCommand { get; }
-        public LoginViewModel(NavigationService navigationService, ICurrentUserStore userStore)
+        public LoginViewModel(NavigationCommand<MechanicDashboardViewModel> navigationService, ICurrentUserStore userStore)
         {
-            ICommand NavigateDashboardCommand = new RelayCommand(o => { navigationService.NavigateTo<MechanicDashboardViewModel>(); }, o => true);
+            ICommand NavigateDashboardCommand = navigationService.Navigate();
             _userStore = userStore;
             _userStore.PropertyChanged += OnUserLogin;
             LoginCommand = new LoginCommand(

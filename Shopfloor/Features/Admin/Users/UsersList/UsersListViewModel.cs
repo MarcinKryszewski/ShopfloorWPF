@@ -2,7 +2,6 @@ using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Features.Admin.UsersList.Commands;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -47,15 +46,15 @@ namespace Shopfloor.Features.Admin.Users
         public ICommand AddNewUserCommand { get; }
         public ICommand SetActivityUserCommand { get; }
         public ICommand EditUserCommand { get; }
-        public UsersListViewModel(NavigationService navigationService, IUserProvider IUserProvider, SelectedUserStore selectedUserStore)
+        public UsersListViewModel(INavigationService navigationService, IUserProvider IUserProvider, SelectedUserStore selectedUserStore)
         {
             _IUserProvider = IUserProvider;
             Task.Run(() => LoadData());
 
             _selectedUser = selectedUserStore;
 
-            AddNewUserCommand = new RelayCommand(o => { navigationService.NavigateTo<UsersAddViewModel>(); }, o => true);
-            EditUserCommand = new RelayCommand(o => { navigationService.NavigateTo<UsersEditViewModel>(); }, o => true);
+            AddNewUserCommand = new NavigationCommand<UsersAddViewModel>(navigationService).Navigate();
+            EditUserCommand = new NavigationCommand<UsersEditViewModel>(navigationService).Navigate();
             SetActivityUserCommand = new UserSetActivityCommand(this, _IUserProvider);
         }
         public async Task LoadData()

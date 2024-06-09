@@ -129,6 +129,7 @@
     <Compile Include="Layout\TopPanel\Commands\LogoutCommandTests.cs" />
     <Compile Include="Layout\TopPanel\TopPanelViewModelTests.cs" />
     <Compile Include="Services\AuthService\AuthServiceTests.cs" />
+    <Compile Include="Services\NavigationServices\NavigationCommandTests.cs" />
     <Compile Include="Services\NavigationServices\NavigationServiceTests.cs" />
     <Compile Include="Services\NotificationServices\NotifierCommandTests.cs" />
     <Compile Include="Services\NotificationServices\NotifierServicesTests.cs" />
