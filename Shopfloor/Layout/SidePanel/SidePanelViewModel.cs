@@ -28,6 +28,7 @@ using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Input;
 
@@ -114,6 +115,7 @@ namespace Shopfloor.Layout.SidePanel
             return Visibility.Collapsed;
         }
     }
+    [ExcludeFromCodeCoverage]
     internal sealed partial class SidePanelViewModel
     {
         public ICommand AddTestData => new TestDataCommand(this, _dbServices);
