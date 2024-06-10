@@ -13,6 +13,7 @@ namespace Shopfloor.Models.ErrandModel
     internal sealed partial class Errand : DataModel
     {
         public const string DefaultPriority = "C";
+        private const string noDescription = "BRAK OPISU";
         private readonly ErrandDisplay _display;
         private readonly List<ErrandStatus> _errandStatuses = [];
         private readonly List<ErrandPart> _parts = [];
@@ -29,6 +30,7 @@ namespace Shopfloor.Models.ErrandModel
     }
     internal sealed partial class Errand
     {
+
         private readonly ErrandDTO _data;
         public required int CreatedById
         {
@@ -51,7 +53,7 @@ namespace Shopfloor.Models.ErrandModel
         }
         public required string Description
         {
-            get => _data.Description ?? "BRAK OPISU";
+            get => _data.Description ?? noDescription;
             set
             {
                 if (value == null) return;

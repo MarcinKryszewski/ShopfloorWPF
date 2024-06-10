@@ -22,7 +22,7 @@ namespace Shopfloor.Models.PartModel.Store.Combine
 
             foreach (Part part in parts)
             {
-                part.SetType(types.FirstOrDefault(type => type.Id == part.TypeId));
+                part.PartType = types.FirstOrDefault(type => type.Id == part.TypeId);
             }
             return Task.CompletedTask;
         }

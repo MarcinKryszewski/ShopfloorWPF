@@ -157,8 +157,26 @@ namespace Shopfloor.Layout.SidePanel
                 _ = supplierProvider.Create(new Supplier("Krones", true));
 
                 PartProvider partProvider = _dbServices.GetRequiredService<PartProvider>();
-                _ = partProvider.Create(new Part("3002", "bearing 3002", 1, 50004413, "9453210", null, 1, 1));
-                _ = partProvider.Create(new Part("21Z D30", "sprocket", 2, 215463, "ZA12354fd", null, 1, 1));
+                _ = partProvider.Create(new Part()
+                {
+                    NamePl = "3002",
+                    NameOriginal = "bearing 3002",
+                    TypeId = 1,
+                    Index = 50004413,
+                    ProducerNumber = "9453210",
+                    ProducerId = 1,
+                    SupplierId = 1
+                });
+                _ = partProvider.Create(new Part()
+                {
+                    NamePl = "21Z D30",
+                    NameOriginal = "sprocket",
+                    TypeId = 2,
+                    Index = 215463,
+                    ProducerNumber = "ZA12354fd",
+                    ProducerId = 1,
+                    SupplierId = 1
+                });
 
                 MachinePartProvider machinePartProvider = _dbServices.GetRequiredService<MachinePartProvider>();
                 _ = machinePartProvider.Create(new MachinePart()

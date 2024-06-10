@@ -43,8 +43,13 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
                 double storageAmount = (double)(item.ItemArray[2] ?? 0);
                 double storageValue = storageAmount == 0 ? 0 : (double)(item.ItemArray[4] ?? 0) / storageAmount;
 
-                Part part = new(namePl, nameOriginal, null, Convert.ToInt32(index), null, null, null, null, details)
+                Part part = new()
                 {
+                    NamePl = namePl,
+                    TypeId = 0,
+                    NameOriginal = nameOriginal ?? string.Empty,
+                    Index = (int?)index,
+                    Details = details,
                     StorageAmount = storageAmount,
                     StorageValue = storageValue
                 };

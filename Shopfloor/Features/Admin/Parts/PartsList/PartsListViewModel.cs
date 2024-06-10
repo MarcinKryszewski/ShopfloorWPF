@@ -68,7 +68,7 @@ namespace Shopfloor.Features.Admin.Parts
             _partTypesStore = partTypeStore;
 
             Task.Run(LoadData);
-            Parts.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Part.TypeName)));
+            Parts.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Part.PartType.Name)));
         }
 
         public Task LoadData()
@@ -80,13 +80,13 @@ namespace Shopfloor.Features.Admin.Parts
             foreach (Part part in parts)
             {
                 PartType? partType = partTypes.FirstOrDefault(pt => pt.Id == part.TypeId);
-                if (partType is not null) part.SetType(partType);
+                if (partType is not null) part.PartType = partType;
 
                 Supplier? producer = suppliers.FirstOrDefault(p => p.Id == part.ProducerId);
-                if (producer is not null) part.SetProducer(producer);
+                if (producer is not null) part.Producer = producer;
 
                 Supplier? supplier = suppliers.FirstOrDefault(s => s.Id == part.SupplierId);
-                if (supplier is not null) part.SetSupplier(supplier);
+                if (supplier is not null) part.Supplier = supplier;
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {

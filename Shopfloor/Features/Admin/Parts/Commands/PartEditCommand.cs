@@ -16,17 +16,20 @@ namespace Shopfloor.Features.Admin.Parts.Commands
 
         public override void Execute(object? parameter)
         {
-            Part part = new(
-                _viewModel.Id,
-                _viewModel.NamePl,
-                _viewModel.NameOriginal,
-                _viewModel.TypeId,
-                _viewModel.Index,
-                _viewModel.Number,
-                _viewModel.Details,
-                _viewModel.ProducerId,
-                _viewModel.SupplierId
-            );
+            Part part = new()
+            {
+                Id = _viewModel.Id,
+                NamePl = _viewModel.NamePl,
+                NameOriginal = _viewModel.NameOriginal,
+                TypeId = _viewModel.TypeId ?? 0,
+                Index = _viewModel.Index,
+                ProducerNumber = _viewModel.Number,
+                Details = _viewModel.Details,
+                ProducerId = _viewModel.ProducerId ?? 0,
+                SupplierId = _viewModel.SupplierId
+            };
+
+
             if (!_viewModel.IsDataValidate) return;
 
             _partProvider.Update(part).Wait();

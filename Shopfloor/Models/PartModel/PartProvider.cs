@@ -112,7 +112,7 @@ namespace Shopfloor.Models.PartModel
                 NameOriginal = item.NameOriginal,
                 TypeId = item.TypeId,
                 Index = item.Index,
-                Number = item.Number,
+                Number = item.ProducerNumber,
                 Details = item.Details,
                 ProducerId = item.ProducerId,
                 SupplierId = item.SupplierId,
@@ -158,7 +158,7 @@ namespace Shopfloor.Models.PartModel
                 NameOriginal = item.NameOriginal,
                 TypeId = item.TypeId,
                 Index = item.Index,
-                Number = item.Number,
+                Number = item.ProducerNumber,
                 Details = item.Details,
                 ProducerId = item.ProducerId,
                 SupplierId = item.SupplierId
@@ -213,8 +213,8 @@ namespace Shopfloor.Models.PartModel
                 int index = (int)part.Index;
 
                 string indexText = index.ToString();
-                string value = part.StorageValue.ToString();
-                string amount = part.StorageAmount.ToString();
+                string value = part.StorageValue?.ToString() ?? "";
+                string amount = part.StorageAmount?.ToString() ?? "";
 
                 amounts += $"WHEN [indeks] = {indexText} THEN '{amount}' ";
                 values += $"WHEN [indeks] = {indexText} THEN '{value}' ";
@@ -239,17 +239,19 @@ namespace Shopfloor.Models.PartModel
 
         private static Part ToPart(PartDTO item)
         {
-            return new Part(
-                item.Id,
-                item.NamePl,
-                item.NameOriginal,
-                item.TypeId,
-                item.Index,
-                item.Number,
-                item.Details,
-                item.ProducerId,
-                item.SupplierId,
-                item.Unit);
+            return new Part()
+            {
+                Id = item.Id,
+                NamePl = item.NamePl,
+                NameOriginal = item.NameOriginal,
+                TypeId = item.TypeId,
+                Index = item.Index,
+                ProducerNumber = item.Number,
+                Details = item.Details,
+                ProducerId = item.ProducerId,
+                SupplierId = item.SupplierId,
+                Unit = item.Unit,
+            };
         }
     }
 }

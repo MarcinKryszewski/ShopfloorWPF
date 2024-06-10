@@ -5,7 +5,7 @@ using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.Commands;
+using Shopfloor.Shared;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
@@ -30,7 +30,7 @@ namespace Shopfloor.Features.Admin.Parts
         private Supplier? _producer;
         private Supplier? _supplier;
         private PartType? _type;
-        private string _unit = "SZT";
+        private string _unit = GlobalConstants.DefaultPartUnit;
         private readonly PartStore _partStore;
         public PartsEditViewModel(INavigationCommand<PartsListViewModel> returnCommand, SelectedPartStore selectedPartStore, PartTypeStore partTypeStore, SuppliersStore suppliersStore, PartStore partStore, PartProvider partProvider)
         {
@@ -176,15 +176,15 @@ namespace Shopfloor.Features.Admin.Parts
             //Part? selectedPart = _mainServices.GetRequiredService<SelectedPartStore>().Part;
             if (_selectedPart is null) return;
 
-            NamePl = _selectedPart.NamePl;
+            NamePl = _selectedPart.NamePl ?? string.Empty;
             NameOriginal = _selectedPart.NameOriginal;
             Index = _selectedPart.Index;
-            Number = _selectedPart.Number;
+            Number = _selectedPart.ProducerNumber;
             Details = _selectedPart.Details;
-            PartType = _selectedPart.Type;
+            PartType = _selectedPart.PartType;
             Producer = _selectedPart.Producer;
             Supplier = _selectedPart.Supplier;
-            Unit = _selectedPart.Unit;
+            Unit = _selectedPart.Unit ?? GlobalConstants.DefaultPartUnit;
         }
         private void OnErrorsChanged(string propertyName)
         {

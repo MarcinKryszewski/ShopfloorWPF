@@ -4,6 +4,7 @@ using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
 using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using System;
@@ -118,7 +119,7 @@ namespace Shopfloor.Features.Admin.Parts
                 OnPropertyChanged(nameof(Producer));
             }
         }
-        public int? ProducerId => Producer?.Id;
+        public int ProducerId => Producer?.Id ?? 0;
         public Supplier? Supplier
         {
             get => _supplier;
@@ -138,7 +139,7 @@ namespace Shopfloor.Features.Admin.Parts
                 OnPropertyChanged(nameof(Type));
             }
         }
-        public int? TypeId => Type?.Id;
+        public int TypeId => Type?.Id ?? 0;
         public void AddError(string propertyName, string errorMassage)
         {
             if (!_propertyErrors.ContainsKey(propertyName))
@@ -158,7 +159,7 @@ namespace Shopfloor.Features.Admin.Parts
             Details = string.Empty;
             Producer = null;
             Supplier = null;
-            Unit = "SZT";
+            Unit = GlobalConstants.DefaultPartUnit;
         }
         /*public bool IsDataValidate(Part inputValue)
         {
