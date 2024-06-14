@@ -1,9 +1,9 @@
 <UserControl
-    x:Class="Shopfloor.Features.Admin.Users.UsersEditView"
+    x:Class="Shopfloor.Features.Admin.Users.Edit.UsersEditView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Shopfloor.Features.Admin.Users"
+    xmlns:local="clr-namespace:Shopfloor.Features.Admin.Users.Edit"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=local:UsersEditViewModel}"
     d:DesignHeight="450"

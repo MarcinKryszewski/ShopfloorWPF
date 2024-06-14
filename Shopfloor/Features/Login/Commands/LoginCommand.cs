@@ -1,31 +1,38 @@
-﻿using Shopfloor.Models.UserModel;
+﻿
+using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Stores;
 using System.Windows.Input;
+using ToastNotifications;
 
 namespace Shopfloor.Features.Login.Commands
 {
     internal class LoginCommand : CommandBase
     {
-        private readonly ICurrentUserStore _store;
+        private readonly UserProvider _userProvider;
+        private readonly CurrentUserStore _store;
         private readonly LoginViewModel _viewModel;
         private readonly ICommand _naviagateCommand;
+        private readonly Notifier _notifier;
 
         public LoginCommand(
-            ICurrentUserStore store,
+            UserProvider userProvider,
+            CurrentUserStore store,
             LoginViewModel viewModel,
-            ICommand naviagateCommand
+            ICommand naviagateCommand,
+            Notifier notifier
             )
         {
+            _userProvider = userProvider;
             _store = store;
             _viewModel = viewModel;
             _naviagateCommand = naviagateCommand;
+            _notifier = notifier;
         }
 
         public override void Execute(object? parameter)
         {
-            if (_viewModel.HasErrors) return;
-            _store.Login(_viewModel.Username);
+            _store.Login(_viewModel.Username, _userProvider, _viewModel, _notifier);
             if (_store.IsUserLoggedIn)
             {
                 _naviagateCommand.Execute(this);

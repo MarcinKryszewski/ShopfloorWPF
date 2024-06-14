@@ -1,9 +1,10 @@
-﻿using Shopfloor.Features.Admin.Users;
+﻿using Shopfloor.Features.Admin.Users.Add;
 using Shopfloor.Features.Admin.Users.Stores;
-using Shopfloor.Interfaces;
+
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
+
 using Shopfloor.Shared.Commands;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,32 +16,25 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
     {
         private readonly UsersAddViewModel _viewModel;
         private readonly RolesStore _rolesStore;
-        private readonly IUserProvider _IUserProvider;
-        private readonly IRoleIUserProvider _roleIUserProvider;
 
-        public UserAddCommand(UsersAddViewModel viewModel, RolesStore rolesStore, IUserProvider IUserProvider, IRoleIUserProvider roleIUserProvider)
+        private readonly UserProvider _userProvider;
+        private readonly RoleUserProvider _roleUserProvider;
+
+        public UserAddCommand(UsersAddViewModel viewModel, RolesStore rolesStore, UserProvider userProvider, RoleUserProvider roleUserProvider)
         {
             _viewModel = viewModel;
             _rolesStore = rolesStore;
 
-            _IUserProvider = IUserProvider;
-            _roleIUserProvider = roleIUserProvider;
+            _userProvider = userProvider;
+            _roleUserProvider = roleUserProvider;
         }
 
         public override void Execute(object? parameter)
         {
-            User newUser = new()
-            {
-                Username = _viewModel.Username.ToLower(),
-                Name = _viewModel.Name,
-                Surname = _viewModel.Surname,
-                Image = string.Empty,
-                IsActive = true
-            };
-
+            User newUser = new(_viewModel.Username.ToLower(), _viewModel.Name, _viewModel.Surname, string.Empty, true);
             if (!_viewModel.IsDataValidate) return;
             //TODO: To move to validation on _viewModel
-            int newUserId = _IUserProvider.Create(newUser).Result;
+            int newUserId = _userProvider.Create(newUser).Result;
             if (newUserId < 0)
             {
                 //_viewModel.ErrorMassage = $"Użytkownik o loginie {_viewModel.Username} istnieje";
@@ -59,7 +53,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
             foreach (Role role in roles)
             {
                 if (role.Id == null) continue;
-                tasks.Add(Task.Run(() => _roleIUserProvider.Create((int)role.Id, userId)));
+                tasks.Add(Task.Run(() => _roleUserProvider.Create((int)role.Id, userId)));
             }
             Task.WaitAll(tasks.ToArray());
         }

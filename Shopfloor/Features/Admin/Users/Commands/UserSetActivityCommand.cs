@@ -1,4 +1,4 @@
-using Shopfloor.Features.Admin.Users;
+using Shopfloor.Features.Admin.Users.List;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
 using System.Linq;
@@ -9,12 +9,12 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
     internal sealed class UserSetActivityCommand : AsyncCommandBase
     {
         private readonly UsersListViewModel _viewModel;
-        private readonly IUserProvider _IUserProvider;
+        private readonly UserProvider _userProvider;
 
-        public UserSetActivityCommand(UsersListViewModel viewModel, IUserProvider IUserProvider)
+        public UserSetActivityCommand(UsersListViewModel viewModel, UserProvider userProvider)
         {
             _viewModel = viewModel;
-            _IUserProvider = IUserProvider;
+            _userProvider = userProvider;
         }
 
         public override async Task ExecuteAsync(object? parameter)
@@ -32,7 +32,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
             User modifiedUser = _viewModel.Users.SourceCollection.OfType<User>().First(p => p.Id == userId);
             modifiedUser.SetActive(isActive);
-            await _IUserProvider.SetUserActive(userId, isActive);
+            await _userProvider.SetUserActive(userId, isActive);
             _ = _viewModel.UpdateUsers();
 
             //watch.Stop();

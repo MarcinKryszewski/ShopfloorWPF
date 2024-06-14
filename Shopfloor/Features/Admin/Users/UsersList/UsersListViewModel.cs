@@ -1,7 +1,11 @@
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Admin.Users.Add;
+using Shopfloor.Features.Admin.Users.Edit;
 using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Features.Admin.UsersList.Commands;
 using Shopfloor.Models.UserModel;
-using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared.Commands;
+using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,15 +16,17 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Admin.Users
+namespace Shopfloor.Features.Admin.Users.List
 {
     internal sealed class UsersListViewModel : ViewModelBase
     {
-        private readonly ObservableCollection<User> _users = [];
+        private readonly IServiceProvider _database;
+        private readonly ObservableCollection<User> _users = new();
         private readonly SelectedUserStore _selectedUser;
-        private readonly IUserProvider _IUserProvider;
         private string _searchText = string.Empty;
+
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
+
         public User? SelectedUser
         {
             get => _selectedUser.SelectedUser;
@@ -33,6 +39,7 @@ namespace Shopfloor.Features.Admin.Users
                 }
             }
         }
+
         public string SearchText
         {
             get => _searchText;
@@ -43,24 +50,29 @@ namespace Shopfloor.Features.Admin.Users
                 OnPropertyChanged(nameof(SearchText));
             }
         }
+
         public ICommand AddNewUserCommand { get; }
         public ICommand SetActivityUserCommand { get; }
         public ICommand EditUserCommand { get; }
-        public UsersListViewModel(INavigationService navigationService, IUserProvider IUserProvider, SelectedUserStore selectedUserStore)
+
+        public UsersListViewModel(IServiceProvider mainServices, IServiceProvider databasServices)
         {
-            _IUserProvider = IUserProvider;
-            Task.Run(() => LoadData());
+            _database = databasServices;
+            UserProvider userProvider = databasServices.GetRequiredService<UserProvider>();
 
-            _selectedUser = selectedUserStore;
+            Task.Run(() => LoadData(userProvider));
 
-            AddNewUserCommand = new NavigationCommand<UsersAddViewModel>(navigationService).Navigate();
-            EditUserCommand = new NavigationCommand<UsersEditViewModel>(navigationService).Navigate();
-            SetActivityUserCommand = new UserSetActivityCommand(this, _IUserProvider);
+            _selectedUser = mainServices.GetRequiredService<SelectedUserStore>();
+
+            AddNewUserCommand = new NavigateCommand<UsersAddViewModel>(mainServices.GetRequiredService<NavigationService<UsersAddViewModel>>());
+            EditUserCommand = new NavigateCommand<UsersEditViewModel>(mainServices.GetRequiredService<NavigationService<UsersEditViewModel>>());
+            SetActivityUserCommand = new UserSetActivityCommand(this, userProvider);
         }
-        public async Task LoadData()
+
+        public async Task LoadData(UserProvider provider)
         {
             _users.Clear();
-            IEnumerable<User> users = await _IUserProvider.GetAll();
+            IEnumerable<User> users = await _database.GetRequiredService<UserProvider>().GetAll();
             foreach (User user in users)
             {
                 //await Task.Delay(350);
@@ -71,12 +83,14 @@ namespace Shopfloor.Features.Admin.Users
                 });
             }
         }
+
         public Task? UpdateUsers()
         {
             Users.Refresh();
             OnPropertyChanged(nameof(Users));
             return null;
         }
+
         private bool FilterUsers(object obj)
         {
             if (obj is User user)

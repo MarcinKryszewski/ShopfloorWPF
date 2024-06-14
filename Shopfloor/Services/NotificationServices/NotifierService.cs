@@ -1,36 +1,42 @@
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Windows;
 using ToastNotifications;
-using ToastNotifications.Core;
-using ToastNotifications.Messages.Error;
-using ToastNotifications.Messages.Information;
-using ToastNotifications.Messages.Success;
-using ToastNotifications.Messages.Warning;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
 
 namespace Shopfloor.Services.NotificationServices
 {
-    internal sealed partial class NotifierServices
+    internal sealed class NotifierServices
     {
-        internal sealed class NotifierService : Notifier, INotifier
+        public static void Get(IServiceCollection services)
         {
-            public NotifierService(Action<NotifierConfiguration> configureAction) : base(configureAction)
+            Notifier notifier = SetupNotifier();
+            services.AddSingleton(notifier);
+        }
+        private static Notifier SetupNotifier()
+        {
+            return new Notifier(cfg =>
             {
-            }
-            public void ShowError(string message)
-            {
-                Notify(() => new ErrorMessage(message));
-            }
-            public void ShowSuccess(string message)
-            {
-                Notify(() => new SuccessMessage(message));
-            }
-            public void ShowInformation(string message)
-            {
-                Notify(() => new InformationMessage(message));
-            }
-            public void ShowWarning(string message)
-            {
-                Notify(() => new WarningMessage(message));
-            }
+                cfg.PositionProvider = new WindowPositionProvider(
+                    parentWindow: Application.Current.MainWindow,
+                    corner: Corner.BottomRight,
+                    offsetX: 10,
+                    offsetY: 10);
+
+                cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                    notificationLifetime: TimeSpan.FromSeconds(3),
+                    maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                cfg.Dispatcher = Application.Current.Dispatcher;
+            });
+        }
+        public enum ToastMessageStyles
+        {
+            Information,
+            Warning,
+            Error,
+            Success
         }
     }
 }

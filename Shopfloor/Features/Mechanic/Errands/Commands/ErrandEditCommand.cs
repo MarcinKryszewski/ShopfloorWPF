@@ -1,7 +1,8 @@
+using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Mechanic.Errands.ErrandsEdit;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
-using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Shared.Commands;
@@ -15,7 +16,8 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
 {
     internal sealed class ErrandEditCommand : CommandBase
     {
-        private readonly ErrandEditViewModel _viewModel;
+        private readonly ErrandsEditViewModel _viewModel;
+        private readonly IServiceProvider _databaseServices;
         private readonly int _currentUserId;
         private readonly SelectedErrandStore _currentErrand;
         private readonly ErrandProvider _errandProvider;
@@ -23,17 +25,18 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         private readonly ErrandPartStore _errandPartStore;
         private readonly ErrandStatusProvider _errandStatus;
         private readonly ErrandPartStatusProvider _errandPartStatusProvider;
-        public ErrandEditCommand(ErrandEditViewModel viewModel, ICurrentUserStore currentUser, SelectedErrandStore selectedErrand, ErrandProvider errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStore errandPartStore, ErrandPartStatusProvider errandPartStatusProvider)
+        public ErrandEditCommand(ErrandsEditViewModel viewModel, IServiceProvider databaseServices, CurrentUserStore currentUser, SelectedErrandStore selectedErrand)
         {
             _viewModel = viewModel;
+            _databaseServices = databaseServices;
             _currentUserId = currentUser.User?.Id ?? -1;
             _currentErrand = selectedErrand;
 
-            _errandProvider = errandProvider;
-            _errandPartProvider = errandPartProvider;
-            _errandStatus = errandStatusProvider;
-            _errandPartStore = errandPartStore;
-            _errandPartStatusProvider = errandPartStatusProvider;
+            _errandProvider = _databaseServices.GetRequiredService<ErrandProvider>();
+            _errandPartProvider = _databaseServices.GetRequiredService<ErrandPartProvider>();
+            _errandStatus = _databaseServices.GetRequiredService<ErrandStatusProvider>();
+            _errandPartStore = _databaseServices.GetRequiredService<ErrandPartStore>();
+            _errandPartStatusProvider = _databaseServices.GetRequiredService<ErrandPartStatusProvider>();
         }
         public override void Execute(object? parameter)
         {
@@ -77,7 +80,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
                 SapNumber = errandDTO.SapNumber,
                 ExpectedDate = errandDTO.ExpectedDate,
                 OwnerId = errandDTO.Responsible?.Id,
-                CreatedById = -1,
+                CreatedById = null,
             };
             _ = _errandProvider.Update(errand);
         }

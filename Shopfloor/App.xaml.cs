@@ -1,89 +1,71 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
-using Shopfloor.Database.Configuration;
 using Shopfloor.Database.Initializers;
-using Shopfloor.Features.Manager.ManagerDashboard;
-using Shopfloor.Features.Mechanic;
-using Shopfloor.Features.Plannist;
+using Shopfloor.Features.Dashboard;
 using Shopfloor.Hosts;
-using Shopfloor.Layout.Content;
+using Shopfloor.Hosts.ConfigurationHost;
+using Shopfloor.Hosts.DatabaseHost;
+using Shopfloor.Hosts.MainHost;
 using Shopfloor.Layout.MainWindow;
-using Shopfloor.Layout.SidePanel;
 using Shopfloor.Models.UserModel;
-using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared.Services;
 using Shopfloor.Stores;
 using System;
 using System.Data;
 using System.Windows;
+using ToastNotifications;
 
 namespace Shopfloor
 {
     public partial class App : Application
     {
-        private readonly IHost _appHost;
-        private readonly ICurrentUserStore _currentUser;
-        private readonly NavigationService _navigationService;
-        private readonly IServiceProvider _services;
+        private readonly IHost _configurationHost;
+        private readonly IHost _databaseHost;
+        private readonly IHost _mainHost;
+        private readonly IHost _userHost;
 
         public App()
         {
-            _appHost = AppHost.Get();
-            _appHost.Start();
+            ConfigurationHost configuration = new();
+            _configurationHost = configuration.GetHost();
+            _configurationHost.Start();
 
-            _services = _appHost.Services;
+            _databaseHost = DatabaseHost.GetHost(_configurationHost.Services);
+            _databaseHost.Start();
 
-            _currentUser = _services.GetRequiredService<ICurrentUserStore>();
-            _navigationService = _services.GetRequiredService<NavigationService>();
+            _userHost = UserHost.GetHost(_databaseHost.Services);
+            _userHost.Start();
+
+            _mainHost = MainHost.GetHost(_databaseHost.Services, _userHost.Services);
+            _mainHost.Start();
+
+            NavigationService<DashboardViewModel> navigationService = _mainHost.Services.GetRequiredService<NavigationService<DashboardViewModel>>();
+            navigationService.Navigate();
         }
+
         private void ApplicationStart(object sender, StartupEventArgs e)
         {
-            DatabaseConnectionFactory dbConnection = _services.GetRequiredService<DatabaseConnectionFactory>();
-            DatabaseConfiguration dbConfig = _services.GetRequiredService<DatabaseConfiguration>();
-            DatabaseInit(dbConnection, dbConfig);
+            using IDbConnection connection = _databaseHost.Services.GetRequiredService<DatabaseConnectionFactory>().Connect();
+            DatabaseInitializerFactory initializer = new(_configurationHost.Services, connection);
+            IDatabaseInitializer databaseInitializer = initializer.CreateInitializer();
+            databaseInitializer.Initialize();
 
-            SidePanelViewModel sidePanel = _services.GetRequiredService<SidePanelViewModel>();
-            ContentViewModel content = _services.GetRequiredService<ContentViewModel>();
+            //tries to login user automatically
+            _userHost.Services.GetRequiredService<CurrentUserStore>().AutoLogin(
+                Environment.UserName,
+                _databaseHost.Services.GetRequiredService<UserProvider>(),
+                _mainHost.Services.GetRequiredService<Notifier>()
+            );
 
             MainWindow = new MainWindow()
             {
-                DataContext = new MainWindowViewModel(sidePanel, content)
+                DataContext = new MainWindowViewModel(_mainHost.Services)
             };
-            MainWindow.Show();
 
-            AutoLogin(_currentUser);
-            DashboardNavigate(_currentUser, _navigationService);
-        }
-        private static void AutoLogin(ICurrentUserStore currentUserStore)
-        {
-            string userName = Environment.UserName;
-            currentUserStore.Login(userName, true);
-        }
-        private static void DashboardNavigate(ICurrentUserStore currentUserStore, NavigationService navigationService)
-        {
-            if (currentUserStore.User is null)
-            {
-                navigationService.NavigateTo<MechanicDashboardViewModel>();
-                return;
-            }
-            if (currentUserStore.User.IsAuthorized(777))
-            {
-                navigationService.NavigateTo<ManagerDashboardViewModel>();
-                return;
-            }
-            if (currentUserStore.User.IsAuthorized(460))
-            {
-                navigationService.NavigateTo<PlannistDashboardViewModel>();
-                return;
-            }
-            navigationService.NavigateTo<MechanicDashboardViewModel>();
-        }
-        private static void DatabaseInit(DatabaseConnectionFactory dbConnectionFactory, DatabaseConfiguration dbConfiguration)
-        {
-            using IDbConnection connection = dbConnectionFactory.Connect();
-            DatabaseInitializerFactory initializer = new(dbConfiguration, connection);
-            IDatabaseInitializer databaseInitializer = initializer.CreateInitializer();
-            databaseInitializer.Initialize();
+
+
+            MainWindow.Show();
         }
     }
 }

@@ -1,5 +1,5 @@
 using ExcelDataReader;
-using Shopfloor.Features.Mechanic.PartsStock;
+using Shopfloor.Features.Mechanic.PartsStock.PartsStockList;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.Commands;
 using System;
@@ -43,13 +43,8 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
                 double storageAmount = (double)(item.ItemArray[2] ?? 0);
                 double storageValue = storageAmount == 0 ? 0 : (double)(item.ItemArray[4] ?? 0) / storageAmount;
 
-                Part part = new()
+                Part part = new(namePl, nameOriginal, null, Convert.ToInt32(index), null, null, null, null, details)
                 {
-                    NamePl = namePl,
-                    TypeId = 0,
-                    NameOriginal = nameOriginal ?? string.Empty,
-                    Index = (int?)index,
-                    Details = details,
                     StorageAmount = storageAmount,
                     StorageValue = storageValue
                 };

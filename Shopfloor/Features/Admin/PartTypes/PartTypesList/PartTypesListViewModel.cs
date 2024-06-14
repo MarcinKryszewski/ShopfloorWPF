@@ -1,4 +1,5 @@
-﻿using Shopfloor.Features.Admin.PartTypes.Commands;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Admin.PartTypes.Commands;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Shared.ViewModels;
@@ -14,28 +15,29 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Admin.PartTypes
+namespace Shopfloor.Features.Admin.PartTypes.List
 {
     internal sealed class PartTypesListViewModel : ViewModelBase, IInputForm<PartType>
     {
+        private readonly IServiceProvider _databaseServices;
         private readonly ObservableCollection<PartType> _partTypes = [];
-        private readonly PartTypeStore _partTypesStore;
+        private readonly PartTypesStore _partTypesStore;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         private bool _isEdit;
         private string _name = string.Empty;
         private string _searchText = string.Empty;
         private PartType? _selectedPartType;
-        private readonly PartTypeProvider _partTypeProvider;
-        public PartTypesListViewModel(PartTypeProvider partTypeProvider, PartTypeStore partTypeStore)
+        public PartTypesListViewModel(IServiceProvider databaseServices)
         {
-            _partTypeProvider = partTypeProvider;
+            _databaseServices = databaseServices;
+            PartTypeProvider provider = _databaseServices.GetRequiredService<PartTypeProvider>();
 
-            AddCommand = new PartTypeAddCommand(this, _partTypeProvider);
-            EditCommand = new PartTypeEditCommand(this, _partTypeProvider);
+            AddCommand = new PartTypeAddCommand(this, provider);
+            EditCommand = new PartTypeEditCommand(this, provider);
             CleanFormCommand = new CleanFormCommand(this);
 
-            _partTypesStore = partTypeStore;
-            Task.Run(LoadData);
+            _partTypesStore = _databaseServices.GetRequiredService<PartTypesStore>();
+            Task.Run(() => LoadData(_databaseServices));
         }
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public ICommand AddCommand { get; }
@@ -116,11 +118,15 @@ namespace Shopfloor.Features.Admin.PartTypes
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
         public bool IsDataValidate => !HasErrors;
-        public Task LoadData()
+        public async Task LoadData(IServiceProvider databaseServices)
         {
+            List<Task> tasks = [];
             Application.Current.Dispatcher.Invoke(_partTypes.Clear);
+            if (!_partTypesStore.IsLoaded) tasks.Add(LoadPartTypes());
 
-            List<PartType> partTypes = _partTypesStore.Data;
+            if (tasks.Count > 0) await Task.WhenAll(tasks);
+
+            IEnumerable<PartType> partTypes = _partTypesStore.Data;
             foreach (PartType partType in partTypes)
             {
                 Application.Current.Dispatcher.Invoke(() =>
@@ -129,19 +135,23 @@ namespace Shopfloor.Features.Admin.PartTypes
                     OnPropertyChanged(nameof(PartTypes));
                 });
             }
+        }
+        public Task LoadPartTypes()
+        {
+            _partTypesStore.Load();
             return Task.CompletedTask;
         }
         public void ReloadData()
         {
-            _partTypesStore.Reload().Wait();
+            _databaseServices.GetRequiredService<PartTypesStore>().Load();
         }
         //Updates the list if value didn't exist, ie. after add
         public async Task UpdateData()
         {
             //await Task.Delay(5000);
-            PartTypeProvider provider = _partTypeProvider;
+            PartTypeProvider provider = _databaseServices.GetRequiredService<PartTypeProvider>();
             IEnumerable<PartType> partTypes = await provider.GetAll();
-            _partTypesStore.Reload().Wait();
+            _ = _databaseServices.GetRequiredService<PartTypesStore>().Reload();
             foreach (PartType partType in partTypes)
             {
                 if (_partTypes.FirstOrDefault(s => s.Id == partType.Id) is null)
@@ -158,7 +168,7 @@ namespace Shopfloor.Features.Admin.PartTypes
         public async Task UpdateData(PartType partTypeToRemove)
         {
             if (partTypeToRemove.Id is null) return;
-            PartTypeProvider provider = _partTypeProvider;
+            PartTypeProvider provider = _databaseServices.GetRequiredService<PartTypeProvider>();
             PartType partTypeToAdd = await provider.GetById((int)partTypeToRemove.Id);
             if (_partTypes.FirstOrDefault(s => s.Id == partTypeToRemove.Id) is not null)
             {

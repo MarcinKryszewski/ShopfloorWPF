@@ -4,13 +4,15 @@ namespace Shopfloor.Utilities
     {
         public static string Remove(string input)
         {
-            string polishChars = "ąćęłńóśźżĄĆĘŁŃÓŚŹŻ";
-            string englishChars = "acelnoszzACELNOSZZ";
+            //System.Diagnostics.Debug.WriteLine("PL: " + DateTime.Now);
+            string polishChars = "ąćęłńóśźż";
+            string englishChars = "acelnoszz";
 
             for (int i = 0; i < polishChars.Length; i++)
             {
                 input = input.Replace(polishChars[i], englishChars[i]);
             }
+            //System.Diagnostics.Debug.WriteLine("PL: " + DateTime.Now);
             return input;
         }
     }

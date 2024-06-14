@@ -1,4 +1,5 @@
-﻿using Shopfloor.Database.Configuration;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Database.Configuration;
 using System;
 using System.Data;
 
@@ -9,10 +10,10 @@ namespace Shopfloor.Database.Initializers
         private readonly IDbConnection _connection;
         private readonly DatabaseConfiguration _configuration;
 
-        public DatabaseInitializerFactory(DatabaseConfiguration configuration, IDbConnection connection)
+        public DatabaseInitializerFactory(IServiceProvider service, IDbConnection connection)
         {
             _connection = connection;
-            _configuration = configuration;
+            _configuration = service.GetRequiredService<DatabaseConfiguration>();
         }
 
         public IDatabaseInitializer CreateInitializer()
