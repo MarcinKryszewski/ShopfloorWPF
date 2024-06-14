@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 
-namespace Shopfloor.Features.Plannist.Reservations
+namespace Shopfloor.Features.Plannist
 {
     public sealed partial class ReservationsView : UserControl
     {

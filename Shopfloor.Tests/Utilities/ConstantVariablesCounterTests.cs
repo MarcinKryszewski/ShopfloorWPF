@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Shopfloor.Utilities;
 
 namespace Shopfloor.Tests.Utilities

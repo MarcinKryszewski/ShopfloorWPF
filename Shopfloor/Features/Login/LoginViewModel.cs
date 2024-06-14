@@ -1,10 +1,8 @@
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Dashboard;
 using Shopfloor.Features.Login.Commands;
+using Shopfloor.Features.Mechanic;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.UserModel;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
+using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System;
@@ -12,22 +10,21 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
-using ToastNotifications;
 
 namespace Shopfloor.Features.Login
 {
     internal sealed class LoginViewModel : ViewModelBase, IInputForm<User>
     {
         private string _username = string.Empty;
-        private readonly CurrentUserStore _userStore;
-        private readonly UserValidation _userValidation;
+        private readonly ICurrentUserStore _userStore;
+        //private readonly UserValidation _userValidation;
         public string Username
         {
             get => _username;
             set
             {
                 string myName = nameof(Username);
-                _userValidation.ValidateName(value, myName);
+                //_userValidation.ValidateName(value, myName);
                 _username = value;
                 OnPropertyChanged(myName);
             }
@@ -43,18 +40,16 @@ namespace Shopfloor.Features.Login
         }
 
         public ICommand LoginCommand { get; }
-        public LoginViewModel(IServiceProvider mainServices, IServiceProvider databaseServices, IServiceProvider userProvider)
+        public LoginViewModel(NavigationCommand<MechanicDashboardViewModel> navigationService, ICurrentUserStore userStore)
         {
-            ICommand NavigateDashboardCommand = new NavigateCommand<DashboardViewModel>(mainServices.GetRequiredService<NavigationService<DashboardViewModel>>());
-            _userStore = userProvider.GetRequiredService<CurrentUserStore>();
+            ICommand NavigateDashboardCommand = navigationService.Navigate();
+            _userStore = userStore;
             _userStore.PropertyChanged += OnUserLogin;
             LoginCommand = new LoginCommand(
-                databaseServices.GetRequiredService<UserProvider>(),
                 _userStore,
                 this,
-                NavigateDashboardCommand,
-                mainServices.GetRequiredService<Notifier>());
-            _userValidation = new(this);
+               NavigateDashboardCommand);
+            //_userValidation = new(this);
         }
         private void OnUserLogin(object? sender, PropertyChangedEventArgs e)
         {

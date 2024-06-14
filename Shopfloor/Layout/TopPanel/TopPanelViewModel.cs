@@ -1,12 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Login;
+﻿using Shopfloor.Features.Login;
+using Shopfloor.Features.Mechanic;
 using Shopfloor.Layout.TopPanel.Commands;
 using Shopfloor.Models.UserModel;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
+using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
-using System;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -14,9 +12,8 @@ namespace Shopfloor.Layout.TopPanel
 {
     internal sealed class TopPanelViewModel : ViewModelBase
     {
-        private readonly CurrentUserStore _userStore;
+        private readonly ICurrentUserStore _userStore;
         private User? User => _userStore.User;
-
         public string UserImagePath
         {
             get
@@ -25,21 +22,19 @@ namespace Shopfloor.Layout.TopPanel
                 return User.Image;
             }
         }
-
         public bool IsLoggedIn => _userStore.IsUserLoggedIn;
         public string Username => IsLoggedIn ? $"Witaj {User?.Name}!" : "Zaloguj się!";
-
         public ICommand NavigateLoginCommand { get; }
         public ICommand LogoutCommand { get; }
-
-        public TopPanelViewModel(IServiceProvider userServices, IServiceProvider mainServices)
+        public TopPanelViewModel(INavigationService navigationService, ICurrentUserStore userStore)
         {
-            _userStore = userServices.GetRequiredService<CurrentUserStore>();
+            _userStore = userStore;
             _userStore.PropertyChanged += OnUserAuthenticated;
-            NavigateLoginCommand = new NavigateCommand<LoginViewModel>(mainServices.GetRequiredService<NavigationService<LoginViewModel>>());
-            LogoutCommand = new LogoutCommand(_userStore, mainServices);
-        }
+            NavigateLoginCommand = new NavigationCommand<LoginViewModel>(navigationService).Navigate();
 
+            ICommand returnCommand = new NavigationCommand<MechanicDashboardViewModel>(navigationService).Navigate();
+            LogoutCommand = new LogoutCommand(_userStore, returnCommand);
+        }
         private void OnUserAuthenticated(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(_userStore.IsUserLoggedIn))

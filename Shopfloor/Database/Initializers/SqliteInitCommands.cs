@@ -30,9 +30,10 @@ namespace Shopfloor.Database.SQLite
             );";
         private const string _roles_users_SQLCommand = @"
             CREATE TABLE IF NOT EXISTS roles_users (
+                id INTEGER,
                 role_id INTEGER,
                 user_id INTEGER,
-                PRIMARY KEY(role_id, user_id),
+                PRIMARY KEY(id),
                 FOREIGN KEY(user_id) REFERENCES users(Id),
                 FOREIGN KEY(role_id) REFERENCES roles(Id)
             );";
@@ -177,7 +178,7 @@ namespace Shopfloor.Database.SQLite
                 errand_part_id INTEGER,
                 errand_status_name TEXT,
                 create_date TEXT,
-                completed_by INTEGER,
+                completed_by_id INTEGER,
                 comment TEXT,
                 reason TEXT,
                 confirmed INTEGER,
@@ -185,31 +186,46 @@ namespace Shopfloor.Database.SQLite
                 completed_date TEXT,
                 PRIMARY KEY(id),
                 FOREIGN KEY(errand_part_id) REFERENCES errands_parts(id),
-                FOREIGN KEY(completed_by) REFERENCES users(id),
+                FOREIGN KEY(completed_by_id) REFERENCES users(id)
             );";
         private const string _messages_SQLCommand = @"
             CREATE TABLE messages (
                 id INTEGER,
                 text TEXT,
-                receiver INTEGER,
+                receiver_id INTEGER,
                 read INTEGER,
-                PRIMARY KEY(id)
+                PRIMARY KEY(id),
+                FOREIGN KEY(receiver_id) REFERENCES users(id)
             );";
         private const string _orders_SQLCommand = @"
-        CREATE TABLE orders (
-            id INTEGER,
-            delivery_date TEXT,
-            creation_date TEXT,
-            delivered INTEGER DEFAULT 0,
-            PRIMARY KEY(id)
-        );";
+            CREATE TABLE orders (
+                id INTEGER,
+                delivery_date TEXT,
+                creation_date TEXT,
+                delivered INTEGER DEFAULT 0,
+                PRIMARY KEY(id)
+            );";
         private const string _errand_parts_orders_SQLCommand = @"
-        CREATE TABLE errand_parts_orders (
-            id INTEGER,
-            errand_part INTEGER,
-            order INTEGER,
-            PRIMARY KEY(id)
-        );";
+            CREATE TABLE errand_parts_orders (
+                id INTEGER,
+                errand_part_id INTEGER,
+                order_id INTEGER,
+                PRIMARY KEY(id),
+                FOREIGN KEY(errand_part_id) REFERENCES errands_parts(id),
+                FOREIGN KEY(order_id) REFERENCES orders(id)
+            );";
+        private const string _reservations_SQLCommand = @"
+            CREATE TABLE reservations (
+                id INTEGER,
+                errand_part_id INTEGER,
+                amount REAL,
+                create_date TEXT,
+                expiration_date TEXT,
+                completed INTEGER DEFAULT 0,
+                FOREIGN KEY(errand_part_id) REFERENCES errands_parts(id),
+                PRIMARY KEY(id)
+            );
+        ";
         public SqliteInitCommands()
         {
             InitCommands =
@@ -233,6 +249,7 @@ namespace Shopfloor.Database.SQLite
                 _errand_parts_orders_SQLCommand,
 
                 _messages_SQLCommand,
+                _reservations_SQLCommand,
 
                 _init_admin_SQLCommand,
                 _init_roles_SQLCommand,

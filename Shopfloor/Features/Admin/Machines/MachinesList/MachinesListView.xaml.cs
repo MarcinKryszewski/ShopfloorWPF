@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Shopfloor.Features.Admin.Machines.List
+namespace Shopfloor.Features.Admin.Machines
 {
     /// <summary>
     /// Interaction logic for MachinesListView.xaml

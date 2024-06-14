@@ -4,14 +4,14 @@ namespace Shopfloor.Shared.ViewModels
 {
     internal sealed class MainViewModel : ViewModelBase
     {
-        private readonly NavigationStore _navigationStore;
+        private readonly INavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
 
         public ViewModelBase? CurrentViewModel => _navigationStore.CurrentViewModel;
         public ViewModelBase? CurrentModalViewModel => _modalNavigationStore.CurrentViewModel;
         public bool IsOpen => _modalNavigationStore.IsOpen;
 
-        public MainViewModel(NavigationStore navigationStore, ModalNavigationStore modalNavigationStore)
+        public MainViewModel(INavigationStore navigationStore, ModalNavigationStore modalNavigationStore)
         {
             _navigationStore = navigationStore;
             _modalNavigationStore = modalNavigationStore;

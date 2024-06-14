@@ -12,8 +12,129 @@
 
   <ItemGroup>
     <Compile Remove="DatabaseTests\**" />
+    <Compile Remove="Features\**" />
+    <Compile Remove="Hosts\**" />
+    <Compile Remove="Interfaces\**" />
+    <Compile Remove="Layout\**" />
+    <Compile Remove="Services\**" />
+    <Compile Remove="Stores\**" />
     <EmbeddedResource Remove="DatabaseTests\**" />
+    <EmbeddedResource Remove="Features\**" />
+    <EmbeddedResource Remove="Hosts\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Layout\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <EmbeddedResource Remove="Stores\**" />
     <None Remove="DatabaseTests\**" />
+    <None Remove="Features\**" />
+    <None Remove="Hosts\**" />
+    <None Remove="Interfaces\**" />
+    <None Remove="Layout\**" />
+    <None Remove="Services\**" />
+    <None Remove="Stores\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Features\Admin\Machines\Commands\CleanFormCommandTests.cs" />
+    <Compile Include="Features\Admin\Machines\Commands\MachineAddCommandTests.cs" />
+    <Compile Include="Features\Admin\Machines\Commands\MachineDeleteCommandTests.cs" />
+    <Compile Include="Features\Admin\Machines\Commands\MachineEditCommandTests.cs" />
+    <Compile Include="Features\Admin\Machines\Commands\MachineSelectedCommandTests.cs" />
+    <Compile Include="Features\Admin\Machines\Commands\MachineSetCurrentCommandTests.cs" />
+    <Compile Include="Features\Admin\Machines\Commands\MachineSetParentCommandTests.cs" />
+    <Compile Include="Features\Admin\Machines\MachinesList\MachinesListViewModelTests.cs" />
+    <Compile Include="Features\Admin\Machines\Stores\SelectedMachineStoreTests.cs" />
+    <Compile Include="Features\Admin\Parts\Commands\PartAddCommandTests.cs" />
+    <Compile Include="Features\Admin\Parts\Commands\PartCleanFormCommandTests.cs" />
+    <Compile Include="Features\Admin\Parts\Commands\PartEditCommandTests.cs" />
+    <Compile Include="Features\Admin\Parts\PartsAdd\PartsAddViewModelTests.cs" />
+    <Compile Include="Features\Admin\Parts\PartsEdit\PartsEditViewModelTests.cs" />
+    <Compile Include="Features\Admin\Parts\PartsList\PartsListViewModelTests.cs" />
+    <Compile Include="Features\Admin\Parts\Stores\SelectedPartStoreTests.cs" />
+    <Compile Include="Features\Admin\PartTypes\Commands\CleanFormCommandTests.cs" />
+    <Compile Include="Features\Admin\PartTypes\Commands\PartTypeAddCommandTests.cs" />
+    <Compile Include="Features\Admin\PartTypes\Commands\PartTypeEditCommandTests.cs" />
+    <Compile Include="Features\Admin\PartTypes\PartTypesList\PartTypesListViewModelTests.cs" />
+    <Compile Include="Features\Admin\Suppliers\Commands\CleanFormCommandTests.cs" />
+    <Compile Include="Features\Admin\Suppliers\Commands\SupplierAddCommandTests.cs" />
+    <Compile Include="Features\Admin\Suppliers\Commands\SupplierEditCommandTests.cs" />
+    <Compile Include="Features\Admin\Suppliers\SuppliersList\SuppliersListViewModelTests.cs" />
+    <Compile Include="Features\Admin\Users\Commands\UserAddCommandTests.cs" />
+    <Compile Include="Features\Admin\Users\Commands\UserEditCommandTests.cs" />
+    <Compile Include="Features\Admin\Users\Commands\UserSetActivityCommandTests.cs" />
+    <Compile Include="Features\Admin\Users\Stores\RolesStoreTests.cs" />
+    <Compile Include="Features\Admin\Users\Stores\RoleValueTests.cs" />
+    <Compile Include="Features\Admin\Users\Stores\SelectedUserStoreTests.cs" />
+    <Compile Include="Features\Admin\Users\UsersAdd\UsersAddViewModelTests.cs" />
+    <Compile Include="Features\Admin\Users\UsersEdit\UsersEditViewModelTests.cs" />
+    <Compile Include="Features\Admin\Users\UsersList\UsersListViewModelTests.cs" />
+    <Compile Include="Features\Login\Commands\LoginCommandTests.cs" />
+    <Compile Include="Features\Login\LoginViewModelTests.cs" />
+    <Compile Include="Features\Manager\Commands\ApproveOrderCommandTests.cs" />
+    <Compile Include="Features\Manager\ManagerDashboard\ManagerDashboardViewModelTests.cs" />
+    <Compile Include="Features\Manager\OrderApprove\OrderApproveViewModelTests.cs" />
+    <Compile Include="Features\Manager\OrdersToApprove\OrdersToApproveViewModelTests.cs" />
+    <Compile Include="Features\Manager\Stores\SelectedRequestStoreTests.cs" />
+    <Compile Include="Features\Mechanic\Errands\Commands\ErrandAddPartCommandTests.cs" />
+    <Compile Include="Features\Mechanic\Errands\Commands\ErrandEditCommandTests.cs" />
+    <Compile Include="Features\Mechanic\Errands\Commands\ErrandRemovePartCommandTests.cs" />
+    <Compile Include="Features\Mechanic\Errands\Commands\ErrandSetCommandTests.cs" />
+    <Compile Include="Features\Mechanic\Errands\Commands\ErrandsShowPartsListTests.cs" />
+    <Compile Include="Features\Mechanic\Errands\Commands\PrioritySetCommandTests.cs" />
+    <Compile Include="Features\Mechanic\Errands\ErrandEdit\ErrandEditViewModelTests.cs" />
+    <Compile Include="Features\Mechanic\Errands\ErrandNew\ErrandNewCommandTests.cs" />
+    <Compile Include="Features\Mechanic\Errands\ErrandNew\ErrandNewStoreTests.cs" />
+    <Compile Include="Features\Mechanic\Errands\ErrandNew\ErrandNewViewModelTests.cs" />
+    <Compile Include="Features\Mechanic\Errands\ErrandPartsList\ErrandPartsListViewModelTests.cs" />
+    <Compile Include="Features\Mechanic\Errands\ErrandsList\ErrandsListViewModelTests.cs" />
+    <Compile Include="Features\Mechanic\Errands\Stores\SelectedErrandStoreTests.cs" />
+    <Compile Include="Features\Mechanic\MechanicDashboard\MechanicDashboardViewModelTests.cs" />
+    <Compile Include="Features\Mechanic\PartsStock\Commands\LoadExcelDataCommandTests.cs" />
+    <Compile Include="Features\Mechanic\PartsStock\PartsStockList\PartsStockListViewModelTests.cs" />
+    <Compile Include="Features\Mechanic\Requests\Commands\RequestDetailsCommandTests.cs" />
+    <Compile Include="Features\Mechanic\Requests\Commands\RequestEditCommandTests.cs" />
+    <Compile Include="Features\Mechanic\Requests\RequestsDetails\RequestsDetailsViewModelTests.cs" />
+    <Compile Include="Features\Mechanic\Requests\RequestsEdit\RequestsEditViewModelTests.cs" />
+    <Compile Include="Features\Mechanic\Requests\RequestsList\RequestsListViewModelTests.cs" />
+    <Compile Include="Features\Mechanic\Requests\Stores\SelectedRequestStoreTests.cs" />
+    <Compile Include="Features\Plannist\Commands\PlannistAbortCommandTests.cs" />
+    <Compile Include="Features\Plannist\Commands\PlannistCancelCommandTests.cs" />
+    <Compile Include="Features\Plannist\Commands\PlannistConfirmCommandTests.cs" />
+    <Compile Include="Features\Plannist\Commands\PlannistDetailsCommandTests.cs" />
+    <Compile Include="Features\Plannist\Commands\PlannistOfferCommandTests.cs" />
+    <Compile Include="Features\Plannist\Deploys\DeploysViewModelTests.cs" />
+    <Compile Include="Features\Plannist\Offers\AddOffer\AddOfferViewModelTests.cs" />
+    <Compile Include="Features\Plannist\Offers\AddOffer\Commands\ConfrmOfferCommandTests.cs" />
+    <Compile Include="Features\Plannist\Offers\OffersViewModelTests.cs" />
+    <Compile Include="Features\Plannist\PartsOrders\PartsOrdersViewModelTests.cs" />
+    <Compile Include="Features\Plannist\PlannistDashboard\PlannistDashboardViewModelTests.cs" />
+    <Compile Include="Features\Plannist\PlannistPartsList\PlannistPartsListViewModelTests.cs" />
+    <Compile Include="Features\Plannist\Reservations\ReservationsViewModelTests.cs" />
+    <Compile Include="Features\Plannist\Stores\SelectedRequestStoreTests.cs" />
+    <Compile Include="Hosts\AppHostTests.cs" />
+    <Compile Include="Hosts\Core\ConfigurationHostTests.cs" />
+    <Compile Include="Hosts\Core\NavigationHostTests.cs" />
+    <Compile Include="Hosts\Database\DatabaseHostTests.cs" />
+    <Compile Include="Hosts\Features\Admin\AdminHostTests.cs" />
+    <Compile Include="Hosts\Features\FeaturesHostTests.cs" />
+    <Compile Include="Hosts\Features\Layout\LayoutHostTests.cs" />
+    <Compile Include="Hosts\Features\Login\LoginHostTests.cs" />
+    <Compile Include="Hosts\Features\Manager\ManagerHostTests.cs" />
+    <Compile Include="Hosts\Features\Mechanic\MechanicHostTests.cs" />
+    <Compile Include="Hosts\Features\Notifier\NotifierServicesTests.cs" />
+    <Compile Include="Hosts\Features\Plannist\PlannistHostTests.cs" />
+    <Compile Include="Layout\Content\ContentViewModelTests.cs" />
+    <Compile Include="Layout\MainWindow\MainWindowViewModelTests.cs" />
+    <Compile Include="Layout\SidePanel\SidePanelViewModelTests.cs" />
+    <Compile Include="Layout\TopPanel\Commands\LogoutCommandTests.cs" />
+    <Compile Include="Layout\TopPanel\TopPanelViewModelTests.cs" />
+    <Compile Include="Services\AuthService\AuthServiceTests.cs" />
+    <Compile Include="Services\NavigationServices\NavigationCommandTests.cs" />
+    <Compile Include="Services\NavigationServices\NavigationServiceTests.cs" />
+    <Compile Include="Services\NotificationServices\NotifierCommandTests.cs" />
+    <Compile Include="Services\NotificationServices\NotifierServicesTests.cs" />
+    <Compile Include="Services\NotificationServices\NotifierSetupTests.cs" />
+    <Compile Include="Stores\CurrentUserStoreTests.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,57 +150,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Database\Initializers\" />
-    <Folder Include="Features\Admin\Machines\Commands\" />
-    <Folder Include="Features\Admin\Machines\Hosts\" />
-    <Folder Include="Features\Admin\Machines\MachinesList\" />
-    <Folder Include="Features\Admin\Machines\Services\" />
-    <Folder Include="Features\Admin\Machines\Stores\" />
-    <Folder Include="Features\Admin\Parts\Commands\" />
-    <Folder Include="Features\Admin\Parts\Hosts\" />
-    <Folder Include="Features\Admin\Parts\PartsAdd\" />
-    <Folder Include="Features\Admin\Parts\PartsEdit\" />
-    <Folder Include="Features\Admin\Parts\PartsList\" />
-    <Folder Include="Features\Admin\Parts\Services\" />
-    <Folder Include="Features\Admin\Parts\Stores\" />
-    <Folder Include="Features\Admin\PartTypes\Commands\" />
-    <Folder Include="Features\Admin\PartTypes\Hosts\" />
-    <Folder Include="Features\Admin\PartTypes\PartTypesList\" />
-    <Folder Include="Features\Admin\PartTypes\Services\" />
-    <Folder Include="Features\Admin\Suppliers\Commands\" />
-    <Folder Include="Features\Admin\Suppliers\Hosts\" />
-    <Folder Include="Features\Admin\Suppliers\Services\" />
-    <Folder Include="Features\Admin\Suppliers\SuppliersList\" />
-    <Folder Include="Features\Admin\Users\Commands\" />
-    <Folder Include="Features\Admin\Users\Hosts\" />
-    <Folder Include="Features\Admin\Users\Services\" />
-    <Folder Include="Features\Admin\Users\Stores\" />
-    <Folder Include="Features\Admin\Users\UsersAdd\" />
-    <Folder Include="Features\Admin\Users\UsersEdit\" />
-    <Folder Include="Features\Admin\Users\UsersList\" />
-    <Folder Include="Features\Dashboard\Commands\" />
-    <Folder Include="Features\Login\Commands\" />
-    <Folder Include="Features\Manager\Tasks\" />
-    <Folder Include="Features\Mechanic\MinimalStates\" />
-    <Folder Include="Features\Mechanic\Requests\" />
-    <Folder Include="Features\Mechanic\Tasks\" />
-    <Folder Include="Features\Plannist\PlannistDashboardMain\" />
-    <Folder Include="Features\Plannist\Deploys\" />
-    <Folder Include="Features\Plannist\Orders\" />
-    <Folder Include="Features\Plannist\Reports\" />
-    <Folder Include="Features\Plannist\Reservations\" />
-    <Folder Include="Hosts\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Layout\Content\" />
-    <Folder Include="Layout\MainWindow\" />
-    <Folder Include="Layout\SidePanel\" />
-    <Folder Include="Layout\TopPanel\Commands\" />
-    <Folder Include="Services\NavigationServices\" />
-    <Folder Include="Services\Providers\" />
-    <Folder Include="Stores\DatabaseDataStores\" />
   </ItemGroup>
 
   <ItemGroup>

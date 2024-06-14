@@ -15,7 +15,6 @@ namespace Shopfloor.Converters
 
             return value;
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

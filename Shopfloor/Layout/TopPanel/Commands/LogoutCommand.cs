@@ -1,29 +1,22 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Dashboard;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
+﻿using Shopfloor.Shared.Commands;
 using Shopfloor.Stores;
-using System;
+using System.Windows.Input;
 
 namespace Shopfloor.Layout.TopPanel.Commands
 {
     internal class LogoutCommand : CommandBase
     {
-        private readonly CurrentUserStore _userStore;
-        private readonly IServiceProvider _mainServices;
-
-        public LogoutCommand(CurrentUserStore userStore, IServiceProvider mainServices)
+        private readonly ICurrentUserStore _userStore;
+        private readonly ICommand _returnCommand;
+        public LogoutCommand(ICurrentUserStore userStore, ICommand returnCommand)
         {
             _userStore = userStore;
-            _mainServices = mainServices;
+            _returnCommand = returnCommand;
         }
-
         public override void Execute(object? parameter)
         {
             _userStore.Logout();
-
-            NavigationService<DashboardViewModel> navigationService = _mainServices.GetRequiredService<NavigationService<DashboardViewModel>>();
-            navigationService.Navigate();
+            _returnCommand.Execute(true);
         }
     }
 }

@@ -1,12 +1,9 @@
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Parts.Add;
-using Shopfloor.Features.Admin.Parts.Edit;
 using Shopfloor.Features.Admin.Parts.Stores;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
+using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,23 +15,18 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Admin.Parts.List
+namespace Shopfloor.Features.Admin.Parts
 {
     internal sealed class PartsListViewModel : ViewModelBase
     {
-        private readonly IServiceProvider _databaseServices;
-        private readonly IServiceProvider _mainServices;
         private string _searchText = string.Empty;
         private readonly ObservableCollection<Part> _parts;
         private readonly SelectedPartStore _selectedPart;
-
-        private readonly PartsStore _partsStore;
+        private readonly PartStore _partsStore;
         private readonly SuppliersStore _suppliersStore;
-        private readonly PartTypesStore _partTypesStore;
-
+        private readonly PartTypeStore _partTypesStore;
         public Visibility IsSelected => SelectedPart is null ? Visibility.Collapsed : Visibility.Visible;
         public ICollectionView Parts { get; }
-
         public Part? SelectedPart
         {
             get => _selectedPart.Part;
@@ -48,7 +40,6 @@ namespace Shopfloor.Features.Admin.Parts.List
                 OnPropertyChanged(nameof(SelectedPart));
             }
         }
-
         public string SearchText
         {
             get => _searchText;
@@ -59,56 +50,43 @@ namespace Shopfloor.Features.Admin.Parts.List
                 OnPropertyChanged(nameof(SearchText));
             }
         }
-
         public ICommand AddPartCommand { get; }
         public ICommand EditPartCommand { get; }
 
-        public PartsListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        public PartsListViewModel(NavigationService navigationService, PartTypeStore partTypeStore, SuppliersStore suppliersStore, PartStore partStore, SelectedPartStore selectedPartStore)
         {
-            _databaseServices = databaseServices;
-            _mainServices = mainServices;
-            _parts = new();
-            _selectedPart = _mainServices.GetRequiredService<SelectedPartStore>();
+            _parts = [];
+            _selectedPart = selectedPartStore;
 
-            AddPartCommand = new NavigateCommand<PartsAddViewModel>(mainServices.GetRequiredService<NavigationService<PartsAddViewModel>>());
-            EditPartCommand = new NavigateCommand<PartsEditViewModel>(mainServices.GetRequiredService<NavigationService<PartsEditViewModel>>());
+            AddPartCommand = new NavigationCommand<PartsAddViewModel>(navigationService).Navigate();
+            EditPartCommand = new NavigationCommand<PartsEditViewModel>(navigationService).Navigate();
 
             Parts = CollectionViewSource.GetDefaultView(_parts);
 
-            _partsStore = _databaseServices.GetRequiredService<PartsStore>();
-            _suppliersStore = _databaseServices.GetRequiredService<SuppliersStore>();
-            _partTypesStore = _databaseServices.GetRequiredService<PartTypesStore>();
+            _partsStore = partStore;
+            _suppliersStore = suppliersStore;
+            _partTypesStore = partTypeStore;
 
             Task.Run(LoadData);
-            Parts.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Part.TypeName)));
+            Parts.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Part.PartType.Name)));
         }
 
-        public async Task LoadData()
+        public Task LoadData()
         {
-            //Stopwatch stopwatch = Stopwatch.StartNew();
-
-            List<Task> tasks = new();
-
-            if (!_partsStore.IsLoaded) tasks.Add(LoadParts());
-            if (!_suppliersStore.IsLoaded) tasks.Add(LoadSuppliers());
-            if (!_partTypesStore.IsLoaded) tasks.Add(LoadPartTypes());
-
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
-
-            IEnumerable<Part> parts = _partsStore.Data;
-            IEnumerable<Supplier> suppliers = _suppliersStore.Data;
-            IEnumerable<PartType> partTypes = _partTypesStore.Data;
+            List<Part> parts = _partsStore.Data;
+            List<Supplier> suppliers = _suppliersStore.Data;
+            List<PartType> partTypes = _partTypesStore.Data;
 
             foreach (Part part in parts)
             {
                 PartType? partType = partTypes.FirstOrDefault(pt => pt.Id == part.TypeId);
-                if (partType is not null) part.SetType(partType);
+                if (partType is not null) part.PartType = partType;
 
                 Supplier? producer = suppliers.FirstOrDefault(p => p.Id == part.ProducerId);
-                if (producer is not null) part.SetProducer(producer);
+                if (producer is not null) part.Producer = producer;
 
                 Supplier? supplier = suppliers.FirstOrDefault(s => s.Id == part.SupplierId);
-                if (supplier is not null) part.SetSupplier(supplier);
+                if (supplier is not null) part.Supplier = supplier;
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
@@ -117,28 +95,8 @@ namespace Shopfloor.Features.Admin.Parts.List
                 });
             }
 
-            //stopwatch.Stop();
-            //Debug.WriteLine(stopwatch.ElapsedTicks);
-        }
-
-        public Task LoadParts()
-        {
-            _partsStore.Load();
             return Task.CompletedTask;
         }
-
-        public Task LoadPartTypes()
-        {
-            _partTypesStore.Load();
-            return Task.CompletedTask;
-        }
-
-        public Task LoadSuppliers()
-        {
-            _suppliersStore.Load();
-            return Task.CompletedTask;
-        }
-
         private bool FilterParts(object obj)
         {
             if (obj is Part part)

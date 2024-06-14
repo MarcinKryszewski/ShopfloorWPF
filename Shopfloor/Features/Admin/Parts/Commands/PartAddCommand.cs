@@ -1,8 +1,5 @@
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Parts.Add;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.Commands;
-using System;
 
 namespace Shopfloor.Features.Admin.Parts.Commands
 {
@@ -11,25 +8,27 @@ namespace Shopfloor.Features.Admin.Parts.Commands
         private readonly PartsAddViewModel _viewModel;
         private readonly PartProvider _partProvider;
 
-        public PartAddCommand(PartsAddViewModel partsAddViewModel, IServiceProvider databaseServices)
+        public PartAddCommand(PartsAddViewModel partsAddViewModel, PartProvider provider)
         {
             _viewModel = partsAddViewModel;
-            _partProvider = databaseServices.GetRequiredService<PartProvider>();
+            _partProvider = provider;
         }
 
         public override void Execute(object? parameter)
         {
-            Part part = new(
-                _viewModel.NamePl,
-                _viewModel.NameOriginal,
-                _viewModel.TypeId,
-                _viewModel.Index,
-                _viewModel.Number,
-                _viewModel.Details,
-                _viewModel.ProducerId,
-                _viewModel.SupplierId,
-                _viewModel.Unit
-            );
+            Part part = new()
+            {
+                NamePl = _viewModel.NamePl,
+                NameOriginal = _viewModel.NameOriginal,
+                TypeId = _viewModel.TypeId,
+                Index = _viewModel.Index,
+                ProducerNumber = _viewModel.Number,
+                Details = _viewModel.Details,
+                ProducerId = _viewModel.ProducerId,
+                SupplierId = _viewModel.SupplierId,
+                Unit = _viewModel.Unit
+            };
+
             if (!_viewModel.IsDataValidate) return;
 
             _ = _partProvider.Create(part);

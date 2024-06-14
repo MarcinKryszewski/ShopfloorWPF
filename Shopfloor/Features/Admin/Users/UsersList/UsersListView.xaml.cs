@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 
-namespace Shopfloor.Features.Admin.Users.List
+namespace Shopfloor.Features.Admin.Users
 {
     public sealed partial class UsersListView : UserControl
     {

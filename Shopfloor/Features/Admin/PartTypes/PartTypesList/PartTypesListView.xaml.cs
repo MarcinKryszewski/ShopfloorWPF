@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Shopfloor.Features.Admin.PartTypes.List
+namespace Shopfloor.Features.Admin.PartTypes
 {
     /// <summary>
     /// Interaction logic for PartTypesListView.xaml

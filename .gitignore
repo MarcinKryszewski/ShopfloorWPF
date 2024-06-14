@@ -364,7 +364,9 @@ FodyWeavers.xsd
 
 obj/
 *.laccdb
+.vscode/
 .vscode/launch.json
 Shopfloor/db.db
 .vscode/task.json
 .vscode/tasks.json
+.vscode/settings.json

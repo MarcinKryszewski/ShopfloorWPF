@@ -7,9 +7,6 @@ namespace Shopfloor.Interfaces
     {
         public List<T> Data { get; }
         public bool IsLoaded { get; }
-
-        public Task Load();
         public Task Reload();
-        public Task CombineData();
     }
 }

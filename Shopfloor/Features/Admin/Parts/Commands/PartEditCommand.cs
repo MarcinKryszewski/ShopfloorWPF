@@ -1,38 +1,38 @@
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Parts.Edit;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.Commands;
-using System;
 
 namespace Shopfloor.Features.Admin.Parts.Commands
 {
     internal sealed class PartEditCommand : CommandBase
     {
         private readonly PartsEditViewModel _viewModel;
-        private readonly IServiceProvider _databaseServices;
+        private readonly PartProvider _partProvider;
 
-        public PartEditCommand(PartsEditViewModel partsEditViewModel, IServiceProvider databaseServices)
+        public PartEditCommand(PartsEditViewModel partsEditViewModel, PartProvider partProvider)
         {
             _viewModel = partsEditViewModel;
-            _databaseServices = databaseServices;
+            _partProvider = partProvider;
         }
 
         public override void Execute(object? parameter)
         {
-            Part part = new(
-                _viewModel.Id,
-                _viewModel.NamePl,
-                _viewModel.NameOriginal,
-                _viewModel.TypeId,
-                _viewModel.Index,
-                _viewModel.Number,
-                _viewModel.Details,
-                _viewModel.ProducerId,
-                _viewModel.SupplierId
-            );
+            Part part = new()
+            {
+                Id = _viewModel.Id,
+                NamePl = _viewModel.NamePl,
+                NameOriginal = _viewModel.NameOriginal,
+                TypeId = _viewModel.TypeId ?? 0,
+                Index = _viewModel.Index,
+                ProducerNumber = _viewModel.Number,
+                Details = _viewModel.Details,
+                ProducerId = _viewModel.ProducerId ?? 0,
+                SupplierId = _viewModel.SupplierId
+            };
+
+
             if (!_viewModel.IsDataValidate) return;
 
-            _ = _databaseServices.GetRequiredService<PartProvider>().Update(part);
+            _partProvider.Update(part).Wait();
             _viewModel.ReloadData();
             //_viewModel.CleanForm();
         }

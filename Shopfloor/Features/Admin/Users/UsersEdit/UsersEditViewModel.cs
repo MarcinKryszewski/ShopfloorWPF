@@ -1,13 +1,10 @@
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Admin.Users.List;
 using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Features.Admin.UsersList.Commands;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
+using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
@@ -17,35 +14,37 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Admin.Users.Edit
+namespace Shopfloor.Features.Admin.Users
 {
     internal sealed class UsersEditViewModel : ViewModelBase, IInputForm<User>
     {
-        private readonly IServiceProvider _database;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         private readonly RolesStore _rolesValueStore;
         private readonly SelectedUserStore _selectedUser;
+        private readonly IProvider<Role> _roleProvider;
         private readonly int _selectedUserId;
         private string _name = string.Empty;
         private string _surname = string.Empty;
         private string _username = string.Empty;
-        public UsersEditViewModel(IServiceProvider mainServices, IServiceProvider databasServices)
+        private readonly IRoleIUserProvider _roleIUserProvider;
+        public UsersEditViewModel(INavigationCommand<UsersListViewModel> navigationService, SelectedUserStore selectedUserStore, IUserProvider IUserProvider, IRoleIUserProvider roleIUserProvider, IProvider<Role> roleProvider)
         {
-            _database = databasServices;
-            _selectedUser = mainServices.GetRequiredService<SelectedUserStore>();
+            _selectedUser = selectedUserStore;
+            _roleProvider = roleProvider;
             _selectedUserId = _selectedUser.SelectedUser?.Id == null ? 0 : (int)_selectedUser.SelectedUser.Id;
             _rolesValueStore = new();
+            _roleIUserProvider = roleIUserProvider;
 
             FillForm();
 
-            BackToListCommand = new NavigateCommand<UsersListViewModel>(mainServices.GetRequiredService<NavigationService<UsersListViewModel>>());
+            BackToListCommand = navigationService.Navigate();
 
             string imagePath = _selectedUser.SelectedUser?.Image ?? string.Empty;
             bool isActive = _selectedUser.SelectedUser?.IsActive ?? false;
             EditUserCommand = new UserEditCommand(
                 this,
-                _database.GetRequiredService<UserProvider>(),
-                _database.GetRequiredService<RoleUserProvider>(),
+                IUserProvider,
+                _roleIUserProvider,
                 _rolesValueStore,
                 _selectedUserId,
                 imagePath,
@@ -124,8 +123,8 @@ namespace Shopfloor.Features.Admin.Users.Edit
         }
         private void SetRoles()
         {
-            IEnumerable<Role> roles = _database.GetRequiredService<RoleProvider>().GetAll().Result;
-            IEnumerable<RoleUser> roleUsers = _database.GetRequiredService<RoleUserProvider>().GetAllForUser(_selectedUserId).Result;
+            IEnumerable<Role> roles = _roleProvider.GetAll().Result;
+            IEnumerable<RoleUser> roleUsers = _roleIUserProvider.GetAllForUser(_selectedUserId).Result;
 
             foreach (Role role in roles)
             {

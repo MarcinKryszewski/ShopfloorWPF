@@ -1,26 +1,22 @@
-
-using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Mechanic.Errands.ErrandPartsList;
 using Shopfloor.Features.Mechanic.Errands.Interfaces;
 using Shopfloor.Shared.Commands;
-using System;
 
 namespace Shopfloor.Features.Mechanic.Errands.Commands
 {
     internal sealed class ErrandsShowPartsList : CommandBase
     {
         private readonly IPartsList _viewModel;
-        private readonly IServiceProvider _mainServices;
+        private readonly ErrandPartsListViewModel _partsViewModel;
 
-        public ErrandsShowPartsList(IPartsList viewModel, IServiceProvider mainServices)
+        public ErrandsShowPartsList(IPartsList viewModel, ErrandPartsListViewModel partsViewModel)
         {
             _viewModel = viewModel;
-            _mainServices = mainServices;
+            _partsViewModel = partsViewModel;
         }
 
         public override void Execute(object? parameter)
         {
-            _viewModel.PartsList = _viewModel.PartsList is null ? _mainServices.GetRequiredService<ErrandPartsListViewModel>() : null;
+            _viewModel.PartsList = _viewModel.PartsList is null ? _partsViewModel : null;
         }
     }
 }

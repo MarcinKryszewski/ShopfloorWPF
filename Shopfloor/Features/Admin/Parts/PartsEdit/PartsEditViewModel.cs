@@ -1,34 +1,27 @@
-using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Parts.Commands;
-using Shopfloor.Features.Admin.Parts.List;
 using Shopfloor.Features.Admin.Parts.Stores;
 using Shopfloor.Interfaces;
-
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
-using Shopfloor.Shared.Commands;
-using Shopfloor.Shared.Services;
+using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Admin.Parts.Edit
+namespace Shopfloor.Features.Admin.Parts
 {
     internal sealed class PartsEditViewModel : ViewModelBase, IInputForm<Part>
     {
-        private readonly IServiceProvider _databaseServices;
-        private readonly IServiceProvider _mainServices;
-        private readonly ObservableCollection<PartType> _partTypes = [];
+        private readonly List<PartType> _partTypes = [];
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         private readonly Part? _selectedPart;
-        private readonly ObservableCollection<Supplier> _suppliers = [];
-        #region modelFields
+        private readonly List<Supplier> _suppliers = [];
         private string _details = string.Empty;
         private int? _index;
         private string _nameOriginal = string.Empty;
@@ -37,21 +30,19 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         private Supplier? _producer;
         private Supplier? _supplier;
         private PartType? _type;
-        private string _unit = "SZT";
-        #endregion modelFields
-        public PartsEditViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
+        private string _unit = GlobalConstants.DefaultPartUnit;
+        private readonly PartStore _partStore;
+        public PartsEditViewModel(INavigationCommand<PartsListViewModel> returnCommand, SelectedPartStore selectedPartStore, PartTypeStore partTypeStore, SuppliersStore suppliersStore, PartStore partStore, PartProvider partProvider)
         {
-            _mainServices = mainServices;
-            _databaseServices = databaseServices;
+            _selectedPart = selectedPartStore.Part;
+            _partStore = partStore;
 
-            _selectedPart = _mainServices.GetRequiredService<SelectedPartStore>().Part;
-
-            ReturnCommand = new NavigateCommand<PartsListViewModel>(_mainServices.GetRequiredService<NavigationService<PartsListViewModel>>());
+            ReturnCommand = returnCommand.Navigate();
             CleanFormCommand = new PartCleanFormCommand(this);
-            EditPartCommand = new PartEditCommand(this, _databaseServices);
+            EditPartCommand = new PartEditCommand(this, partProvider);
 
-            _partTypes = new(_databaseServices.GetRequiredService<PartTypesStore>().Data);
-            _suppliers = new(_databaseServices.GetRequiredService<SuppliersStore>().Data);
+            _partTypes = partTypeStore.Data;
+            _suppliers = suppliersStore.Data;
 
             Suppliers = CollectionViewSource.GetDefaultView(_suppliers);
             Producers = CollectionViewSource.GetDefaultView(_suppliers);
@@ -68,7 +59,6 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         public ICommand ReturnCommand { get; }
         public Part? SelectedPart => _selectedPart;
         public ICollectionView Suppliers { get; }
-        #region model properties
         public string Details
         {
             get => _details;
@@ -154,7 +144,6 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         }
         public int? SupplierId => Supplier?.Id;
         public int? TypeId => PartType?.Id;
-        #endregion model properties
         public void AddError(string propertyName, string errorMassage)
         {
             if (!_propertyErrors.ContainsKey(propertyName))
@@ -180,22 +169,22 @@ namespace Shopfloor.Features.Admin.Parts.Edit
         public bool IsDataValidate => !HasErrors;
         public void ReloadData()
         {
-            _databaseServices.GetRequiredService<PartsStore>().Load();
+            _partStore.Reload().Wait();
         }
         public void SetupForm()
         {
             //Part? selectedPart = _mainServices.GetRequiredService<SelectedPartStore>().Part;
             if (_selectedPart is null) return;
 
-            NamePl = _selectedPart.NamePl;
+            NamePl = _selectedPart.NamePl ?? string.Empty;
             NameOriginal = _selectedPart.NameOriginal;
             Index = _selectedPart.Index;
-            Number = _selectedPart.Number;
+            Number = _selectedPart.ProducerNumber;
             Details = _selectedPart.Details;
-            PartType = _selectedPart.Type;
+            PartType = _selectedPart.PartType;
             Producer = _selectedPart.Producer;
             Supplier = _selectedPart.Supplier;
-            Unit = _selectedPart.Unit;
+            Unit = _selectedPart.Unit ?? GlobalConstants.DefaultPartUnit;
         }
         private void OnErrorsChanged(string propertyName)
         {

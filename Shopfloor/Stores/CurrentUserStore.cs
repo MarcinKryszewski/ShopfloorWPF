@@ -1,102 +1,96 @@
-using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Services;
+using Shopfloor.Services.NotificationServices;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using ToastNotifications;
-using ToastNotifications.Messages;
 
 namespace Shopfloor.Stores
 {
-    internal sealed partial class CurrentUserStore
+    internal sealed partial class CurrentUserStore : ICurrentUserStore
     {
-        private readonly IServiceProvider _databaseServices;
-        private readonly RoleProvider _roleProvider;
-        private readonly RoleUserProvider _roleUserProvider;
-        private readonly UserValidation _userValidation;
+        private const string DEFAULT_USERNAME = "GOŚĆ";
+        private const string AUTOLOGIN_FAILED = "Nieudane logowanie automatyczne. Zaloguj się samodzielnie";
+        private const string LOGIN_SUCCESSFUL = "ZALOGOWANO POPRAWNIE";
+        private const string LOGIN_FAILED = "NIEUDANE LOGOWANIE";
+        private readonly IProvider<Role> _roleProvider;
+        private readonly IRoleIUserProvider _roleIUserProvider;
+        private readonly INotifier _notifier;
+        private readonly IAuthService _auth;
         private bool _isUserLoggedIn;
         private User? _user;
-        public CurrentUserStore(IServiceProvider databaseServices)
+        public CurrentUserStore(IProvider<Role> roleProvider, IRoleIUserProvider roleIUserProvider, INotifier notifier, IAuthService auth)
         {
-            _databaseServices = databaseServices;
-            _user = new("GOŚĆ");
+            _user = new() { Username = DEFAULT_USERNAME };
             _isUserLoggedIn = false;
-            _roleProvider = databaseServices.GetRequiredService<RoleProvider>();
-            _roleUserProvider = databaseServices.GetRequiredService<RoleUserProvider>();
-            _userValidation = new(this);
+            _roleProvider = roleProvider;
+            _roleIUserProvider = roleIUserProvider;
+            _notifier = notifier;
+            _auth = auth;
             _propertyErrors = [];
         }
         public bool IsUserLoggedIn => _isUserLoggedIn;
         public User? User => _user;
-
-        public void Login(string username, UserProvider provider, IInputForm<User> inputForm, Notifier notifier)
+        public void Login(string username, bool isAuto = false)
         {
-            _user = provider.GetByUsername(username.ToLower()).Result ?? null;
-            _userValidation.ValidateLogin(_user, inputForm);
+            _user = _auth.Login(username);
 
-            if (inputForm.HasErrors)
+            if (_user is null)
             {
+                _notifier.ShowError(GetFailedText(isAuto));
                 return;
             }
 
             _isUserLoggedIn = true;
-            SetUserRoles(_user!);
-            LoginNotification(notifier);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
+
+            LoginSuccessNotification();
+            UserLoginStatusChanged();
+        }
+        private static string GetFailedText(bool isAuto)
+        {
+            if (isAuto) return AUTOLOGIN_FAILED;
+            return LOGIN_FAILED;
         }
         public void Logout()
         {
-            _user = new("GOŚĆ");
+            _user = new() { Username = DEFAULT_USERNAME };
 
             _isUserLoggedIn = false;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
+            OnPropertyChanged(nameof(IsUserLoggedIn));
         }
-        private IEnumerable<Role> GetRoles()
-        {
-            return _roleProvider.GetAll().Result;
-        }
+        private IEnumerable<Role> GetRoles() => _roleProvider.GetAll().Result;
         private IEnumerable<RoleUser> GetRoleUsers()
         {
             if (User == null) return [];
             if (User.Id is null) return [];
 
-            IEnumerable<RoleUser> roleUsers = _roleUserProvider.GetAllForUser((int)User.Id).Result;
-
+            IEnumerable<RoleUser> roleUsers = _roleIUserProvider.GetAllForUser((int)User.Id).Result;
             return roleUsers;
         }
-        private void SetUserRoles(User user)
+        private void SetUserRoles(User? user)
         {
+            if (user is null) return;
+
             IEnumerable<Role> roles = GetRoles();
             IEnumerable<RoleUser> roleUsers = GetRoleUsers();
 
             foreach (RoleUser roleUser in roleUsers)
             {
-                Role role = roles.First(r => r.Id == roleUser.RoleId);
+                Role? role = roles.FirstOrDefault(r => r.Id == roleUser.RoleId);
+                if (role == null) continue;
                 user.AddRole(role);
             }
         }
-        private static void LoginNotification(Notifier notifier) => notifier.ShowInformation("ZALOGOWANO POPRAWNIE");
-    }
-    internal sealed partial class CurrentUserStore
-    {
-        public void AutoLogin(string username, UserProvider provider, Notifier notifier)
+        private void LoginSuccessNotification() => _notifier.ShowInformation(LOGIN_SUCCESSFUL);
+        private void UserLoginStatusChanged()
         {
-            _user = provider.GetByUsername(username.ToLower()).Result ?? null;
-            _userValidation.ValidateAutoLogin(_user, _propertyErrors);
-            if (HasErrors)
-            {
-                _propertyErrors.Remove("LoginFailed");
-                return;
-            }
-
-            _isUserLoggedIn = true;
-            SetUserRoles(_user!);
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsUserLoggedIn)));
+            SetUserRoles(_user);
+            OnPropertyChanged(nameof(IsUserLoggedIn));
         }
     }
     internal sealed partial class CurrentUserStore : INotifyDataErrorInfo
@@ -109,5 +103,9 @@ namespace Shopfloor.Stores
     internal sealed partial class CurrentUserStore : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
