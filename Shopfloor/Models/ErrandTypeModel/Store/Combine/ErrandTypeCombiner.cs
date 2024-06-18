@@ -7,7 +7,7 @@ namespace Shopfloor.Models.ErrandTypeModel.Store.Combine
     internal sealed class ErrandTypeCombiner : ICombinerManager<ErrandType>
     {
         public bool IsCombined { get; private set; }
-        public Task Combine(bool shouldForce = false)
+        public Task CombineAll(bool shouldForce = false)
         {
             if (IsCombined && !shouldForce) return Task.CompletedTask;
             IsCombined = true;

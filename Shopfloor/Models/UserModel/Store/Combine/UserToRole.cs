@@ -18,24 +18,37 @@ namespace Shopfloor.Models.UserModel.Store.Combine
             _roleStore = roleStore;
             _roleUserStore = roleUserStore;
         }
-        public Task Combine()
+        public Task CombineAll()
         {
             List<Role> roles = GetRoles();
             List<User> users = GetUsers();
             List<RoleUser> roleUsers = GetRoleUsers();
 
-            foreach (User user in users)
+            foreach (User item in users)
             {
-                user.ClearRoles();
-                foreach (RoleUser roleUser in roleUsers)
-                {
-                    Role? role = roles.FirstOrDefault(r => r.Id == roleUser.RoleId);
-                    if (role == null) continue;
-                    user.AddRole(role);
-                }
+                Combine(roles, roleUsers, item);
             }
 
             return Task.CompletedTask;
+        }
+        public Task CombineOne(User user)
+        {
+            List<Role> roles = GetRoles();
+            List<RoleUser> roleUsers = GetRoleUsers();
+
+            Combine(roles, roleUsers, item);
+
+            return Task.CompletedTask;
+        }
+        private static void Combine(List<Role> roles, List<RoleUser> roleUsers, User item)
+        {
+            item.ClearRoles();
+            foreach (RoleUser roleUser in roleUsers)
+            {
+                Role? role = roles.FirstOrDefault(r => r.Id == roleUser.RoleId);
+                if (role == null) continue;
+                item.AddRole(role);
+            }
         }
         List<User> GetUsers() => _userStore.Data;
         List<Role> GetRoles() => _roleStore.Data;

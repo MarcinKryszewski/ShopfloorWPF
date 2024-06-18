@@ -15,12 +15,12 @@ namespace Shopfloor.Models.MachineModel.Store
             _machineToMachine = machineToMachine;
             _data = store.Data;
         }
-        public async Task Combine(bool shouldForce = false)
+        public async Task CombineAll(bool shouldForce = false)
         {
             if (IsCombined && !shouldForce) return;
             List<Task> tasks = [];
 
-            tasks.Add(_machineToMachine.Combine());
+            tasks.Add(_machineToMachine.CombineAll());
 
             await Task.WhenAll(tasks);
             IsCombined = true;

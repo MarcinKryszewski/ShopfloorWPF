@@ -40,8 +40,8 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             Application.Current.Dispatcher.Invoke(_errands.Clear);
 
-            _errandPartCombiner.Combine().Wait();
-            _errandCombiner.Combine().Wait();
+            _errandPartCombiner.CombineAll().Wait();
+            _errandCombiner.CombineAll().Wait();
 
             _errands = _errandStore.Data;
 

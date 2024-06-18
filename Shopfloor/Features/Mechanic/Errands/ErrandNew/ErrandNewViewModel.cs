@@ -29,7 +29,7 @@ namespace Shopfloor.Features.Mechanic.Errands
 {
     internal sealed partial class ErrandNewViewModel : ViewModelBase
     {
-        private ErrandDTO _errandDTO = new();
+        private Errand _errand;
         private readonly ObservableCollection<ErrandType> _errandTypes = [];
         private readonly ObservableCollection<Machine> _machines = [];
         private readonly ObservableCollection<User> _users = [];
@@ -42,6 +42,11 @@ namespace Shopfloor.Features.Mechanic.Errands
         public ErrandNewViewModel(ErrandPartsListViewModel errandPartsListViewModel, NavigationService navigationService, SelectedErrandStore selectedErrandStore, ICurrentUserStore currentUserStore, MachineStore machineStore, ErrandTypeStore errandTypeStore, UserStore userStore, ErrandProvider errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, ErrandPartStore errandPartStore, ErrandStatusStore errandStatusStore, ErrandStore errandStore)
         {
             _selectedErrand = selectedErrandStore;
+
+            _errand = new()
+            {
+                CreatedById = (int)currentUserStore.User!.Id!,
+            };
 
             NewErrandCommand = new ErrandNewCommand(this, currentUserStore, _selectedErrand)
             {
@@ -56,7 +61,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             };
             ReturnCommand = new NavigationCommand<ErrandsListViewModel>(navigationService).Navigate();
             PrioritySetCommand = new PrioritySetCommand(this);
-            ShowPartsListCommand = new ErrandsShowPartsList(this, errandPartsListViewModel);
+            //ShowPartsListCommand = new ErrandsShowPartsList(this, errandPartsListViewModel);
 
             _errandValidation = new(this);
 
@@ -65,12 +70,13 @@ namespace Shopfloor.Features.Mechanic.Errands
             _errandTypeStore = errandTypeStore;
             _userStore = userStore;
         }
-        public ErrandDTO ErrandDTO
+
+        public Errand Errand
         {
-            get => _errandDTO;
+            get => _errand;
             private set
             {
-                _errandDTO = value;
+                _errand = value;
                 OnPropertyChanged(nameof(SapNumber));
                 OnPropertyChanged(nameof(SelectedDate));
                 OnPropertyChanged(nameof(SelectedMachine));
@@ -80,72 +86,77 @@ namespace Shopfloor.Features.Mechanic.Errands
                 OnPropertyChanged(nameof(SapNumber));
             }
         }
+
         public ICollectionView ErrandTypes => CollectionViewSource.GetDefaultView(_errandTypes);
         public ICollectionView Machines => CollectionViewSource.GetDefaultView(_machines);
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
+
         public ICommand NewErrandCommand { get; }
         public ICommand ReturnCommand { get; }
+
         public string? SapNumber
         {
-            get => _errandDTO.SapNumber;
+            get => _errand.SapNumber;
             set
             {
-                _errandDTO.SapNumber = value;
+                _errand.SapNumber = value;
                 OnPropertyChanged(nameof(SapNumber));
             }
         }
         public DateTime? SelectedDate
         {
-            get => _errandDTO.ExpectedDate;
+            get => _errand.ExpectedDate;
             set
             {
-                _errandDTO.ExpectedDate = value;
+                _errand.ExpectedDate = value;
                 OnPropertyChanged(nameof(SelectedDate));
             }
         }
         public Machine? SelectedMachine
         {
-            get => _errandDTO.Machine;
+            get => _errand.Machine;
             set
             {
                 string myName = nameof(SelectedMachine);
                 _errandValidation.ValidateMachine(myName, value);
-                _errandDTO.Machine = value;
+                _errand.Machine = value;
                 if (value != null) _selectedErrand.MachineId = value.Id;
                 OnPropertyChanged(myName);
             }
         }
         public User? SelectedResponsible
         {
-            get => _errandDTO.Responsible;
+            get => _errand.Responsible;
             set
             {
-                _errandDTO.Responsible = value;
+                _errand.Responsible = value;
                 OnPropertyChanged(nameof(SelectedResponsible));
             }
         }
         public ErrandType? SelectedType
         {
-            get => _errandDTO.ErrandType;
+            get => _errand.Type;
             set
             {
                 string myName = nameof(SelectedType);
                 _errandValidation.ValidateType(myName, value);
-                _errandDTO.ErrandType = value;
+                _errand.Type = value;
                 OnPropertyChanged(myName);
             }
         }
         public string? Description
         {
-            get => _errandDTO.Description;
+            get => _errand.Description;
             set
             {
+                if (value == null) return;
                 string myName = nameof(Description);
                 _errandValidation.ValidateDescription(myName, value);
-                _errandDTO.Description = value;
+                _errand.Description = value;
                 OnPropertyChanged(myName);
             }
         }
+
         private Task FillMachinesList(MachineStore machineStore)
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -273,7 +284,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         }
         public void CleanForm()
         {
-            ErrandDTO = new();
+            Errand = new();
         }
         public void ClearErrors(string? propertyName)
         {
@@ -292,10 +303,10 @@ namespace Shopfloor.Features.Mechanic.Errands
     {
         public string SelectedPriority
         {
-            get => _errandDTO.Priority ?? "C";
+            get => _errand.Priority ?? "C";
             set
             {
-                _errandDTO.Priority = value;
+                _errand.Priority = value;
                 OnPropertyChanged(nameof(SelectedPriority));
             }
         }

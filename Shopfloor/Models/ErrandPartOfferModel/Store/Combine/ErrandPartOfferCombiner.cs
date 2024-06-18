@@ -10,7 +10,7 @@ namespace Shopfloor.Models.ErrandPartOfferModel.Store
         {
         }
         public bool IsCombined { get; private set; }
-        public Task Combine(bool shouldForce = false)
+        public Task CombineAll(bool shouldForce = false)
         {
             if (IsCombined && !shouldForce) return Task.CompletedTask;
             IsCombined = true;

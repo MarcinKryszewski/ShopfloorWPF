@@ -58,7 +58,7 @@ namespace Shopfloor.Features.Plannist
         private void OnRequestChanged() => Parts.Refresh();
         private Task LoadData()
         {
-            _errandPartCombiner.Combine().Wait();
+            _errandPartCombiner.CombineAll().Wait();
             _parts = _errandPartStore.Data.Where(part => part.LastStatusText == ErrandPartStatus.Status[0] && part.LastStatus.Confirmed == true).ToList();
 
             Application.Current.Dispatcher.Invoke(Parts.Refresh);

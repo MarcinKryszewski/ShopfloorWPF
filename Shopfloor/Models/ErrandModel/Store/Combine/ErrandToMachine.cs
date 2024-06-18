@@ -15,16 +15,28 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
             _machineStore = machineStore;
             _errandStore = errandStore;
         }
-        public Task Combine()
+        public Task CombineAll()
         {
             List<Errand> errands = GetErrands();
             List<Machine> machines = LoadMachines();
 
-            foreach (Errand errand in errands)
+            foreach (Errand item in errands)
             {
-                errand.Machine = machines.FirstOrDefault(machine => machine.Id == errand.MachineId);
+                Combine(item, machines);
             }
             return Task.CompletedTask;
+        }
+        public Task CombineOne(Errand item)
+        {
+            List<Machine> machines = LoadMachines();
+
+            Combine(item, machines);
+
+            return Task.CompletedTask;
+        }
+        private static void Combine(Errand errand, List<Machine> machines)
+        {
+            errand.Machine = machines.FirstOrDefault(machine => machine.Id == errand.MachineId);
         }
         private List<Errand> GetErrands() => _errandStore.Data;
         private List<Machine> LoadMachines() => _machineStore.Data;

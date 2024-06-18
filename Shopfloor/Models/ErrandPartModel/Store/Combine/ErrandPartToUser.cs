@@ -15,7 +15,7 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
             _userStore = userStore;
             _errandPartStore = errandPartStore;
         }
-        public Task Combine()
+        public Task CombineAll()
         {
             List<User> users = GetUsers();
 

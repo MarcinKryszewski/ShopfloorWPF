@@ -18,10 +18,11 @@ namespace Shopfloor.Models.ErrandModel
         private readonly List<ErrandStatus> _errandStatuses = [];
         private readonly List<ErrandPart> _parts = [];
         private User? _createdByUser;
-        public Errand()
+        public Errand(int id = 0)
         {
             _display = new(this);
             _data = new();
+            Id = id;
         }
         public ErrandDisplay Display => _display;
         public List<ErrandStatus> Statuses => _errandStatuses;
@@ -30,7 +31,7 @@ namespace Shopfloor.Models.ErrandModel
     }
     internal sealed partial class Errand
     {
-
+        private const string ExistingIdErrorMassage = "Id already exists";
         private readonly ErrandDTO _data;
         public required int CreatedById
         {
@@ -46,12 +47,12 @@ namespace Shopfloor.Models.ErrandModel
                 if (value.Id == _data.CreatedById) _createdByUser = value;
             }
         }
-        public required DateTime CreatedDate
+        public DateTime CreatedDate
         {
             get => _data.CreatedDate;
             init => _data.CreatedDate = value;
         }
-        public required string Description
+        public string Description
         {
             get => _data.Description ?? noDescription;
             set
@@ -60,7 +61,7 @@ namespace Shopfloor.Models.ErrandModel
                 _data.Description = value;
             }
         }
-        public required int? TypeId
+        public int? TypeId
         {
             get => _data.ErrandTypeId;
             init => _data.ErrandTypeId = value;
@@ -77,7 +78,15 @@ namespace Shopfloor.Models.ErrandModel
         public int? Id
         {
             get => _data.Id;
-            init => _data.Id = value;
+            set
+            {
+                string myName = nameof(Id);
+                ClearErrors(myName);
+
+                if (value == null || _data.Id == 0) _data.Id = value;
+
+                AddError(myName, ExistingIdErrorMassage);
+            }
         }
         public Machine? Machine
         {
@@ -88,7 +97,7 @@ namespace Shopfloor.Models.ErrandModel
                 _data.Machine = value;
             }
         }
-        public required int? MachineId
+        public int? MachineId
         {
             get => _data.MachineId;
             init => _data.MachineId = value;
@@ -125,6 +134,10 @@ namespace Shopfloor.Models.ErrandModel
                 if (value?.Id is not null) _data.ErrandTypeId = (int)value.Id;
                 _data.ErrandType = value;
             }
+        }
+        public void SetId(int id)
+        {
+            _data.Id = id;
         }
     }
     internal sealed partial class Errand : ISearchableModel

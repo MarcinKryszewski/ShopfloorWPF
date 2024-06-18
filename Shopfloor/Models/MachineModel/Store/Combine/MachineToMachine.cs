@@ -12,7 +12,7 @@ namespace Shopfloor.Models.MachineModel.Store.Combine
         {
             _machineStore = machineStore;
         }
-        public Task Combine()
+        public Task CombineAll()
         {
             List<Machine> machines = GetMachines();
 

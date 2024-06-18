@@ -61,7 +61,7 @@ namespace Shopfloor.Features.Mechanic.Requests
         }
         private Task FillPartList()
         {
-            _errandPartCombiner.Combine().Wait();
+            _errandPartCombiner.CombineAll().Wait();
             _parts = _errandPartStore.Data;
 
             Application.Current.Dispatcher.Invoke(() =>

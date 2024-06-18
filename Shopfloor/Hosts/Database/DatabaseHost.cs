@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Shopfloor.Database;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
@@ -40,6 +41,7 @@ using Shopfloor.Models.SupplierModel;
 using Shopfloor.Models.SupplierModel.Store.Combine;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Models.UserModel.Store.Combine;
+using Shopfloor.Shared.BaseClasses;
 
 namespace Shopfloor.Hosts.Database
 {

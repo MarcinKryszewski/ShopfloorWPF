@@ -15,7 +15,11 @@ namespace Shopfloor.Features.Mechanic.Errands.Stores
             set
             {
                 _selectedErrand = value;
-                if (value is not null) ErrandId = value.Id;
+                if (value is not null)
+                {
+                    ErrandId = value.Id;
+                    MachineId = value.MachineId;
+                }
             }
         }
         public ObservableCollection<ErrandPart> ErrandParts = [];

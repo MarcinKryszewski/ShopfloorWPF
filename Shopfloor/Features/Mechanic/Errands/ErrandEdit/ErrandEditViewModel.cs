@@ -147,11 +147,6 @@ namespace Shopfloor.Features.Mechanic.Errands
             }
         }
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
-        public async Task RefreshData()
-        {
-            await _errandStore.Reload();
-            RefreshLists();
-        }
         private void ClearLists()
         {
             Application.Current.Dispatcher.Invoke(() =>

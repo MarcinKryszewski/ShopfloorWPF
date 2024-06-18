@@ -56,7 +56,7 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
         private void OnRequestChanged() => Orders.Refresh();
         private Task LoadData()
         {
-            _errandPartCombiner.Combine().Wait();
+            _errandPartCombiner.CombineAll().Wait();
             _orders = _errandPartStore.Data.Where(part => part.LastStatusText == ErrandPartStatus.Status[1]).ToList();
 
             Application.Current.Dispatcher.Invoke(Orders.Refresh);

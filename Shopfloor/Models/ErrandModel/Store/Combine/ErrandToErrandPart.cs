@@ -17,17 +17,29 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
             _errandPartStore = errandPartStore;
             _errandStore = errandStore;
         }
-        public Task Combine()
+        public Task CombineAll()
         {
             List<ErrandPart> errandParts = GetErrandParts();
             List<Errand> errands = GetErrands();
 
-            foreach (Errand errand in errands)
+            foreach (Errand item in errands)
             {
-                errand.Parts.Clear();
-                errand.Parts.AddRange(errandParts.Where(errandPart => errandPart.ErrandId == errand.Id));
+                Combine(item, errandParts);
             }
             return Task.CompletedTask;
+        }
+        public Task CombineOne(Errand item)
+        {
+            List<ErrandPart> errandParts = GetErrandParts();
+
+            Combine(item, errandParts);
+
+            return Task.CompletedTask;
+        }
+        private static void Combine(Errand errand, List<ErrandPart> errandParts)
+        {
+            errand.Parts.Clear();
+            errand.Parts.AddRange(errandParts.Where(errandPart => errandPart.ErrandId == errand.Id));
         }
         private List<ErrandPart> GetErrandParts() => _errandPartStore.Data;
         private List<Errand> GetErrands() => _errandStore.Data;

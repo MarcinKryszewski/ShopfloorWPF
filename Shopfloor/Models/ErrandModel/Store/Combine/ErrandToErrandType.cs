@@ -15,16 +15,28 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
             _errandTypeStore = errandTypeStore;
             _errandStore = errandStore;
         }
-        public Task Combine()
+        public Task CombineAll()
         {
             List<Errand> errands = GetErrands();
             List<ErrandType> types = LoadErrandTypes();
 
-            foreach (Errand errand in errands)
+            foreach (Errand item in errands)
             {
-                errand.Type = types.FirstOrDefault(type => type.Id == errand.TypeId);
+                Combine(item, types);
             }
             return Task.CompletedTask;
+        }
+        public Task CombineOne(Errand item)
+        {
+            List<ErrandType> types = LoadErrandTypes();
+
+            Combine(item, types);
+
+            return Task.CompletedTask;
+        }
+        private static void Combine(Errand errand, List<ErrandType> types)
+        {
+            errand.Type = types.FirstOrDefault(type => type.Id == errand.TypeId);
         }
         private List<Errand> GetErrands() => _errandStore.Data;
         private List<ErrandType> LoadErrandTypes() => _errandTypeStore.Data;

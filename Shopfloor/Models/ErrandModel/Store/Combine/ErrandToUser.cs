@@ -15,17 +15,29 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
             _userStore = userStore;
             _errandStore = errandStore;
         }
-        public Task Combine()
+        public Task CombineOne(Errand item)
+        {
+            List<User> users = GetUsers();
+
+            Combine(item, users);
+
+            return Task.CompletedTask;
+        }
+        public Task CombineAll()
         {
             List<Errand> errands = GetErrands();
             List<User> users = GetUsers();
 
-            foreach (Errand errand in errands)
+            foreach (Errand item in errands)
             {
-                errand.CreatedByUser = users.FirstOrDefault(user => user.Id == errand.CreatedById);
-                errand.Responsible = users.FirstOrDefault(user => user.Id == errand.OwnerId);
+                Combine(item, users);
             }
             return Task.CompletedTask;
+        }
+        private static void Combine(Errand errand, List<User> users)
+        {
+            errand.CreatedByUser = users.FirstOrDefault(user => user.Id == errand.CreatedById);
+            errand.Responsible = users.FirstOrDefault(user => user.Id == errand.OwnerId);
         }
         private List<Errand> GetErrands() => _errandStore.Data;
         private List<User> GetUsers() => _userStore.Data;

@@ -15,7 +15,7 @@ namespace Shopfloor.Models.PartModel.Store.Combine
             _typesStore = typesStore;
             _partsStore = partsStore;
         }
-        public Task Combine()
+        public Task CombineAll()
         {
             List<PartType> types = GetTypes();
             List<Part> parts = GetParts();
