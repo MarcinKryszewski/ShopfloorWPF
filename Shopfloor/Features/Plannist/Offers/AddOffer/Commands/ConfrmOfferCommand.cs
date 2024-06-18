@@ -1,13 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.UserModel;
-using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
+using Shopfloor.Shared.Services;
 using Shopfloor.Stores;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using ToastNotifications;
 using ToastNotifications.Messages;
 
@@ -17,20 +18,16 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
     {
         private readonly SelectedRequestStore _requestStore;
         private readonly AddOfferViewModel _viewModel;
-        private readonly ErrandPartProvider _errandPartProvider;
-        private readonly ErrandPartStatusProvider _errandPartStatusProvider;
-        private readonly ErrandPartStatusStore _errandPartStatusStore;
-        private readonly INotifier _notifier;
+        private readonly IServiceProvider _database;
+        private readonly IServiceProvider _services;
         private readonly User _currentUser;
-        public ConfrmOfferCommand(SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, ICurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, INotifier notifier)
+        public ConfrmOfferCommand(SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, IServiceProvider databaseServices, IServiceProvider userServices, IServiceProvider mainServices)
         {
             _requestStore = requestStore;
             _viewModel = addOfferViewModel;
-            _errandPartProvider = errandPartProvider;
-            _errandPartStatusProvider = errandPartStatusProvider;
-            _errandPartStatusStore = errandPartStatusStore;
-            _notifier = notifier;
-            _currentUser = currentUserStore.User!;
+            _database = databaseServices;
+            _services = mainServices;
+            _currentUser = userServices.GetRequiredService<CurrentUserStore>().User!;
         }
         public override void Execute(object? parameter)
         {
@@ -80,30 +77,34 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         }
         private async Task UpdateErrandPart(ErrandPart request)
         {
+            ErrandPartProvider errandPartProvider = _database.GetRequiredService<ErrandPartProvider>();
             double price = _viewModel.PricePerUnit;
             DateTime? deliveryDate = request.ExpectedDeliveryDate;
             request.SetPrice(price);
-            await _errandPartProvider.UpdatePrice((int)request.Id!, price);
-            await _errandPartProvider.UpdateDeliveryDate((int)request.Id!, deliveryDate);
+            await errandPartProvider.UpdatePrice((int)request.Id!, price);
+            await errandPartProvider.UpdateDeliveryDate((int)request.Id!, deliveryDate);
         }
         private async Task ErrandPartStatusConfirm(ErrandPartStatus status)
         {
-            await _errandPartStatusProvider.ConfirmStatus((int)status.Id!, status.Comment, (int)_currentUser.Id!);
+            ErrandPartStatusProvider provider = _database.GetRequiredService<ErrandPartStatusProvider>();
+            await provider.ConfirmStatus((int)status.Id!, status.Comment, (int)_currentUser.Id!);
         }
         private async Task ErrandPartStatusNew(ErrandPartStatus status)
         {
-            status.Id = await _errandPartStatusProvider.Create(status);
+            ErrandPartStatusProvider provider = _database.GetRequiredService<ErrandPartStatusProvider>();
+            status.Id = await provider.Create(status);
             AddToStatusStore(status);
         }
         private void AddToStatusStore(ErrandPartStatus status)
         {
-            _errandPartStatusStore.Data.Add(status);
+            ErrandPartStatusStore store = _database.GetRequiredService<ErrandPartStatusStore>();
+            store.Data.Add(status);
         }
         private void ReturnToOffer()
         {
-            _notifier.ShowSuccess("Dodano ofertę i przekazano do zatwierdzenia!");
-            //NavigationService<OffersViewModel> navigationService = _services.GetRequiredService<NavigationService<OffersViewModel>>();
-            //navigationService.Navigate();
+            _services.GetRequiredService<Notifier>().ShowSuccess("Dodano ofertę i przekazano do zatwierdzenia!");
+            NavigationService<OffersViewModel> navigationService = _services.GetRequiredService<NavigationService<OffersViewModel>>();
+            navigationService.Navigate();
         }
     }
 }

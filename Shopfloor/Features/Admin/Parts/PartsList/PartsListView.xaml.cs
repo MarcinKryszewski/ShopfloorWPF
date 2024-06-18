@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 
-namespace Shopfloor.Features.Admin.Parts
+namespace Shopfloor.Features.Admin.Parts.List
 {
     public sealed partial class PartsListView : UserControl
     {

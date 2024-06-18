@@ -1,4 +1,5 @@
-﻿using Shopfloor.Features.Admin.Machines.Commands;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Admin.Machines.Commands;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Shared.ViewModels;
@@ -13,10 +14,11 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.Admin.Machines
+namespace Shopfloor.Features.Admin.Machines.List
 {
     internal sealed partial class MachinesListViewModel
     {
+        private readonly IServiceProvider _databaseServices;
         //treeview needs separate collection, which has only root nodes in it
         //this one is for combobox
         private readonly ObservableCollection<Machine> _machines;
@@ -33,17 +35,19 @@ namespace Shopfloor.Features.Admin.Machines
         private Machine? _selectedMachine;
         private Machine? _selectedParent;
         private readonly MachineValidation _machineValidation;
-        public MachinesListViewModel(MachineStore machineStore, MachineProvider machineProvider)
+        public MachinesListViewModel(IServiceProvider mainServices, IServiceProvider databaseServices)
         {
+            _databaseServices = databaseServices;
+
             _machines = [];
             _machinesAll = [];
 
             IsEdit = false;
 
-            _machineStore = machineStore;
+            _machineStore = _databaseServices.GetRequiredService<MachineStore>();
             Task.Run(LoadData);
 
-            MachineProvider provider = machineProvider;
+            MachineProvider provider = databaseServices.GetRequiredService<MachineProvider>();
 
             MachineDeleteCommand = new MachineDeleteCommand();
             MachineAddCommand = new MachineAddCommand(this, provider);
@@ -176,6 +180,11 @@ namespace Shopfloor.Features.Admin.Machines
                 if (item.ParentId is null) AddRoot(item);
             }
         }
+        public Task LoadMachines()
+        {
+            _machineStore.Load();
+            return Task.CompletedTask;
+        }
         public void UpdateList()
         {
             Task.Run(LoadData);
@@ -204,7 +213,7 @@ namespace Shopfloor.Features.Admin.Machines
             }
             return false;
         }
-        private Task LoadData()
+        private async Task LoadData()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -212,11 +221,11 @@ namespace Shopfloor.Features.Admin.Machines
                 _machinesAll.Clear();
             });
 
-            //List<Task> tasks = [];
-            //if (!_machineStore.IsLoaded) tasks.Add(LoadMachines());
-            //if (tasks.Count > 0) await Task.WhenAll(tasks);
+            List<Task> tasks = [];
+            if (!_machineStore.IsLoaded) tasks.Add(LoadMachines());
+            if (tasks.Count > 0) await Task.WhenAll(tasks);
 
-            List<Machine> machines = _machineStore.Data;
+            IEnumerable<Machine> machines = _machineStore.Data;
 
             foreach (Machine machine in machines)
             {
@@ -230,7 +239,6 @@ namespace Shopfloor.Features.Admin.Machines
                 AddChild(machine, _machinesAll);
             }
             MachinesList.Refresh();
-            return Task.CompletedTask;
         }
     }
     internal sealed partial class MachinesListViewModel : ViewModelBase
@@ -256,7 +264,7 @@ namespace Shopfloor.Features.Admin.Machines
         }
         public void ReloadData()
         {
-            _machineStore.Reload().Wait();
+            _databaseServices.GetRequiredService<MachineStore>().Load();
         }
     }
     internal sealed partial class MachinesListViewModel : IInputForm<Machine>

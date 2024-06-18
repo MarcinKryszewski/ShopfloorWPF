@@ -80,8 +80,7 @@
                 <!--#region Mechanik-->
                 <StackPanel>
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Mechanik" />
-
-                    <Button Command="{Binding Path=NavigateMechanicDashboardCommand}">
+                    <Button Command="{Binding Path=NavigateDashboardCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}" Background="Transparent">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
                                 <TextBlock Style="{StaticResource IconBlock}" Text="&#xF404;"/>
@@ -89,7 +88,6 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dashboard mechanika" Background="Transparent" />
                         </StackPanel>
                     </Button>
-
                     <Button Command="{Binding Path=NavigateTasksCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
@@ -98,7 +96,6 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zadania" />
                         </StackPanel>
                     </Button>
-
                     <Button Command="{Binding Path=NavigateRequestsCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
@@ -107,7 +104,14 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zapotrzebowanie" />
                         </StackPanel>
                     </Button>
-
+                    <Button Command="{Binding Path=NavigateMinimalStatesCommand}" Visibility="{Binding Path=HasAdminRole}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
+                                <TextBlock Text="&#xE898;" Style="{StaticResource IconBlock}"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Stany minimalne" />
+                        </StackPanel>
+                    </Button>
                     <Button Visibility="{Binding Path=HasAdminRole}" Command="{Binding NavigatePartStockCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
@@ -116,14 +120,13 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Stany magazynowe" />
                         </StackPanel>
                     </Button>
-
                 </StackPanel>
                 <!--#endregion-->
                 <!--#region Planista-->
                 <StackPanel Visibility="{Binding Path=HasPlannistRole}">
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Planista" />
 
-                    <Button Command="{Binding Path=NavigatePlannistDashboardCommand}">
+                    <Button Command="{Binding Path=NavigateDashboardCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}" Background="Transparent">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
                                 <TextBlock Style="{StaticResource IconBlock}" Text="&#xF404;"/>
@@ -131,7 +134,14 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dashboard planisty" Background="Transparent" />
                         </StackPanel>
                     </Button>
-
+                    <Button Command="{Binding Path=NavigatePlannistDashboardMainCommand}" Visibility="{Binding Path=HasPlannistRole}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
+                                <TextBlock Text="&#xF246;" Style="{StaticResource IconBlock}"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Panel kontrolny" />
+                        </StackPanel>
+                    </Button>
                     <Button Command="{Binding Path=NavigateOffersCommand}" Visibility="{Binding Path=HasPlannistRole}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
@@ -140,7 +150,6 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Oferty" />
                         </StackPanel>
                     </Button>
-
                     <Button Command="{Binding Path=NavigateOrdersCommand}" Visibility="{Binding Path=HasAdminRole}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
@@ -149,13 +158,28 @@
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zamówienia" />
                         </StackPanel>
                     </Button>
-
+                    <Button Command="{Binding Path=NavigateReservationsCommand}" Visibility="{Binding Path=HasAdminRole}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
+                                <TextBlock Text="&#xE72E;" Style="{StaticResource IconBlock}"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Rezerwacje" />
+                        </StackPanel>
+                    </Button>
                     <Button Command="{Binding Path=NavigateDeploysCommand}" Visibility="{Binding Path=HasAdminRole}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
                                 <TextBlock Text="&#xE72D;" Style="{StaticResource IconBlock}"/>
                             </Border>
                             <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Pobrania" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding Path=NavigateReportsCommand}" Visibility="{Binding Path=HasAdminRole}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
+                                <TextBlock Text="&#xE9F9;" Style="{StaticResource IconBlock}"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Raporty" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -165,7 +189,7 @@
                 <StackPanel Visibility="{Binding Path=HasManagerRole}">
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Kierownik" />
 
-                    <Button Command="{Binding Path=NavigateManagerDashboardCommand}">
+                    <Button Command="{Binding Path=NavigateDashboardCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}" Background="Transparent">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
                                 <TextBlock Style="{StaticResource IconBlock}" Text="&#xF404;"/>
@@ -184,6 +208,17 @@
                             </StackPanel>
                         </StackPanel>
                     </Button>
+                    <Button Command="" Visibility="{Binding Path=HasAdminRole}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}">
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
+                                <TextBlock Text="&#xE898;" Style="{StaticResource IconBlock}"/>
+                            </Border>
+                            <StackPanel>
+                                <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Stany minimalne" />
+                                <TextBlock Style="{StaticResource ButtonTextBlock}" FontSize="10" Text="Do zatwierdzenia" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
                 <!--#endregion-->
 
@@ -191,6 +226,14 @@
                 <StackPanel Visibility="{Binding Path=HasAdminRole}">
                     <TextBlock Style="{StaticResource TitleTextBlock}" Text="Admin" />
 
+                    <Button Command="{Binding Path=NavigateDashboardCommand}">
+                        <StackPanel Style="{StaticResource ButtonStackPanel}" Background="Transparent">
+                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
+                                <TextBlock Style="{StaticResource IconBlock}" Text="&#xF404;"/>
+                            </Border>
+                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dashboard admina" Background="Transparent" />
+                        </StackPanel>
+                    </Button>
                     <Button Command="{Binding Path=NavigateUsersCommand}">
                         <StackPanel Style="{StaticResource ButtonStackPanel}">
                             <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">

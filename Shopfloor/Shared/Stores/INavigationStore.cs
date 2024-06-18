@@ -1,5 +1,4 @@
-﻿using System;
-using Shopfloor.Shared.ViewModels;
+﻿using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Shared.Stores
 {
@@ -7,9 +6,7 @@ namespace Shopfloor.Shared.Stores
     {
         ViewModelBase CurrentViewModel
         {
-            get;
             set;
         }
-        public event Action? CurrentViewModelChanged;
     }
 }

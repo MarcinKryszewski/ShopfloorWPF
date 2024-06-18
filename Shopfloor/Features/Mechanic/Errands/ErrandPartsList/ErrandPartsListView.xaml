@@ -1,11 +1,11 @@
 <UserControl
-    x:Class="Shopfloor.Features.Mechanic.Errands.ErrandPartsListView"
+    x:Class="Shopfloor.Features.Mechanic.Errands.ErrandPartsList.ErrandPartsListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:custom="clr-namespace:Shopfloor.Controls.PlaceholderTextBox"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-    xmlns:local="clr-namespace:Shopfloor.Features.Mechanic.Errands"
+    xmlns:local="clr-namespace:Shopfloor.Features.Mechanic.Errands.ErrandPartsList"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=local:ErrandPartsListViewModel}"
     d:DesignHeight="800"
@@ -142,15 +142,15 @@
                 x:Name="PartsList"
                 Grid.Row="3"
                 MinHeight="274"
-                CellStyle="{DynamicResource DataGridCellMain}"
-                ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
-                IsReadOnly="True"
                 ItemsSource="{Binding Path=DisplayList.DataDisplay}"
-                RowStyle="{StaticResource DataGridRowMain}"
                 SelectedItem="{Binding Path=SelectedPart, Mode=TwoWay}"
                 SelectionMode="Single"
+                CellStyle="{DynamicResource DataGridCellMain}"
+                RowStyle="{StaticResource DataGridRowMain}"
+                Style="{DynamicResource DataGridMain}"
                 SelectionUnit="FullRow"
-                Style="{DynamicResource DataGridMain}">
+                IsReadOnly = "True"
+                ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}">
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
@@ -159,43 +159,43 @@
                 </i:Interaction.Triggers>
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding NamePl}"
-                        Header="Nazwa PL" />
-                    <DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding Path=NameOriginal}"
-                        Header="Nazwa katalogowa" />
-                    <DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding Path=TypeName}"
-                        Header="Rodzaj" />
-                    <DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding Path=Index}"
-                        Header="Indeks" />
-                    <DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding Path=Number, Mode=OneWay}"
-                        Header="Numer" />
-                    <DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding Path=Details}"
-                        Header="Szczegóły" />
-                    <DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding Path=Producer.Name}"
-                        Header="Producent" />
-                    <DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding Path=Supplier.Name}"
-                        Header="Dostawca" />
-                    <DataGridTextColumn
-                        Width="120"
-                        Binding="{Binding Path=Unit}"
-                        Header="Jednostka" />
-                </DataGrid.Columns>
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding NamePl}"
+                            Header="Nazwa PL" />
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding Path=NameOriginal}"
+                            Header="Nazwa katalogowa" />
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding Path=TypeName}"
+                            Header="Rodzaj" />
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding Path=Index}"
+                            Header="Indeks" />
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding Path=Number, Mode=OneWay}"
+                            Header="Numer" />
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding Path=Details}"
+                            Header="Szczegóły" />
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding Path=Producer.Name}"
+                            Header="Producent" />
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding Path=Supplier.Name}"
+                            Header="Dostawca" />
+                        <DataGridTextColumn
+                            Width="120"
+                            Binding="{Binding Path=Unit}"
+                            Header="Jednostka" />
+                    </DataGrid.Columns>
             </DataGrid>
         </Grid>
 

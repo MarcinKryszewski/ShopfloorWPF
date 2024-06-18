@@ -1,10 +1,10 @@
 <UserControl
-    x:Class="Shopfloor.Features.Admin.Parts.PartsListView"
+    x:Class="Shopfloor.Features.Admin.Parts.List.PartsListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:custom="clr-namespace:Shopfloor.Controls.PlaceholderTextBox"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Shopfloor.Features.Admin.Parts"
+    xmlns:local="clr-namespace:Shopfloor.Features.Admin.Parts.List"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=local:PartsListViewModel}"
     d:DesignHeight="450"

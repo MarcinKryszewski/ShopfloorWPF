@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 
-namespace Shopfloor.Features.Mechanic.PartsStock
+namespace Shopfloor.Features.Mechanic.PartsStock.PartsStockList
 {
     /// <summary>
     /// Interaction logic for PartsStockListView.xaml

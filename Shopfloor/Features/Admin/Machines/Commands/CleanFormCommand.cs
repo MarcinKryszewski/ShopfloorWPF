@@ -1,3 +1,4 @@
+using Shopfloor.Features.Admin.Machines.List;
 using Shopfloor.Shared.Commands;
 
 namespace Shopfloor.Features.Admin.Machines.Commands

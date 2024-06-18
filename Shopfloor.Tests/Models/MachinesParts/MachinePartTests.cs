@@ -11,11 +11,7 @@ namespace Shopfloor.Tests.Models.MachinesParts
         public void Part_WhenUsed_ShouldReturnPartType()
         {
             // Arrange
-            Part part = new()
-            {
-                NameOriginal = "test",
-                TypeId = 1
-            };
+            Part part = new("test", null, null, null, null, null, null, null);
             Machine machine = new()
             {
                 Name = "test",
@@ -32,11 +28,7 @@ namespace Shopfloor.Tests.Models.MachinesParts
         public void Part_WhenUsed_ShouldNotBeNull()
         {
             // Arrange
-            Part part = new()
-            {
-                NameOriginal = "test",
-                TypeId = 1
-            };
+            Part part = new("test", null, null, null, null, null, null, null);
             Machine machine = new()
             {
                 Name = "test",
@@ -53,11 +45,7 @@ namespace Shopfloor.Tests.Models.MachinesParts
         public void Part_WhenUsed_ShouldBeEqualToPart()
         {
             // Arrange
-            Part part = new()
-            {
-                NameOriginal = "test",
-                TypeId = 1
-            };
+            Part part = new("test", null, null, null, null, null, null, null);
             Machine machine = new()
             {
                 Name = "test",
@@ -75,11 +63,7 @@ namespace Shopfloor.Tests.Models.MachinesParts
         public void Machine_WhenUsed_ShouldNotBeNull()
         {
             // Arrange
-            Part part = new()
-            {
-                NameOriginal = "test",
-                TypeId = 1
-            };
+            Part part = new("test", null, null, null, null, null, null, null);
             Machine machine = new()
             {
                 Name = "test",
@@ -96,11 +80,7 @@ namespace Shopfloor.Tests.Models.MachinesParts
         public void Machine_WhenUsed_ShouldBeEqualToPart()
         {
             // Arrange
-            Part part = new()
-            {
-                NameOriginal = "test",
-                TypeId = 1
-            };
+            Part part = new("test", null, null, null, null, null, null, null);
             Machine machine = new()
             {
                 Name = "test",

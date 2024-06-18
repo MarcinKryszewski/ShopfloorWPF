@@ -1,9 +1,9 @@
 <UserControl
-    x:Class="Shopfloor.Features.Admin.Parts.PartsEditView"
+    x:Class="Shopfloor.Features.Admin.Parts.Edit.PartsEditView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Shopfloor.Features.Admin.Parts"
+    xmlns:local="clr-namespace:Shopfloor.Features.Admin.Parts.Edit"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=local:PartsEditViewModel}"
     d:DesignHeight="450"
@@ -72,11 +72,11 @@
                             Grid.Row="1"
                             Height="28"
                             Margin="0,0,0,20"
-                            SelectedIndex="0"
-                            SelectedItem="{Binding Path=Unit, Mode=TwoWay}">
-                            <ComboBoxItem Content="SZT" />
-                            <ComboBoxItem Content="M" />
-                            <ComboBoxItem Content="L" />
+                            SelectedItem="{Binding Path=Unit, Mode=TwoWay}"
+                            SelectedIndex="0">
+                            <ComboBoxItem Content="SZT"/>
+                            <ComboBoxItem Content="M"/>
+                            <ComboBoxItem Content="L"/>
                         </ComboBox>
 
                         <TextBlock Foreground="{StaticResource ResourceKey=BrushPurple400}" Text="Indeks SAP" />
