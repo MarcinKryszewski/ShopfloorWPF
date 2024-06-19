@@ -25,5 +25,14 @@ namespace Shopfloor.Models.MachineModel.Store
             await Task.WhenAll(tasks);
             IsCombined = true;
         }
+
+        public async Task CombineOne(Machine item)
+        {
+            List<Task> tasks = [];
+
+            tasks.Add(_machineToMachine.CombineOne(item));
+
+            await Task.WhenAll(tasks);
+        }
     }
 }

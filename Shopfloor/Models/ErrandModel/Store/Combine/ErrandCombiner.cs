@@ -46,7 +46,6 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
             tasks.Add(_machine.CombineOne(item));
 
             await Task.WhenAll(tasks);
-            IsCombined = true;
         }
     }
 }

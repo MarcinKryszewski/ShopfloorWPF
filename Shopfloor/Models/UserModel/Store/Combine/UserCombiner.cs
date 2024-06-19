@@ -23,5 +23,13 @@ namespace Shopfloor.Models.UserModel.Store.Combine
             await Task.WhenAll(tasks);
             IsCombined = true;
         }
+        public async Task CombineOne(User item)
+        {
+            List<Task> tasks = [];
+
+            tasks.Add(_role.CombineAll());
+
+            await Task.WhenAll(tasks);
+        }
     }
 }

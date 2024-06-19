@@ -265,7 +265,7 @@
                 </DataGridCheckBoxColumn>-->
                 <DataGridTextColumn
                     Width="auto"
-                    Binding="{Binding Path=Id}"
+                    Binding="{Binding Display.IdText}"
                     CanUserResize="False"
                     Header="#"
                     IsReadOnly="True" />

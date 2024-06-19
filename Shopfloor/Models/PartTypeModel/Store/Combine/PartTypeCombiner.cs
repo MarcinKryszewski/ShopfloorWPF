@@ -13,5 +13,9 @@ namespace Shopfloor.Models.PartTypeModel.Store.Combine
             IsCombined = true;
             return Task.CompletedTask;
         }
+        public Task CombineOne(PartType item)
+        {
+            return Task.CompletedTask;
+        }
     }
 }

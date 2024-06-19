@@ -13,5 +13,9 @@ namespace Shopfloor.Models.ReservationModel.Store.Combine
             IsCombined = true;
             return Task.CompletedTask;
         }
+        public Task CombineOne(Reservation item)
+        {
+            return Task.CompletedTask;
+        }
     }
 }

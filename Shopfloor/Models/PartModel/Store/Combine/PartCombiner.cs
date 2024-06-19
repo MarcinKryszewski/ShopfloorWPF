@@ -22,5 +22,13 @@ namespace Shopfloor.Models.PartModel.Store.Combine
             await Task.WhenAll(tasks);
             IsCombined = true;
         }
+        public async Task CombineOne(Part item)
+        {
+            List<Task> tasks = [];
+
+            tasks.Add(_partType.CombineOne(item));
+
+            await Task.WhenAll(tasks);
+        }
     }
 }

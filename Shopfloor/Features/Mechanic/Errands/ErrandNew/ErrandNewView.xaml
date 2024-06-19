@@ -226,6 +226,7 @@
                 Height="50"
                 Margin="5,0"
                 Command="{Binding Path=NewErrandCommand}"
+                CommandParameter="{Binding Path=Errand}"
                 Content="STWÓRZ"
                 Style="{StaticResource ResourceKey=ButtonMain}" />
             <Button

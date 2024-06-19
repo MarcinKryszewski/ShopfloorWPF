@@ -13,16 +13,20 @@ namespace Shopfloor.Models.ErrandModel
     internal sealed partial class Errand : DataModel
     {
         public const string DefaultPriority = "C";
-        private const string noDescription = "BRAK OPISU";
         private readonly ErrandDisplay _display;
         private readonly List<ErrandStatus> _errandStatuses = [];
         private readonly List<ErrandPart> _parts = [];
         private User? _createdByUser;
+        private readonly ErrandValidation _validation;
         public Errand(int id = 0)
         {
             _display = new(this);
-            _data = new();
-            Id = id;
+            _data = new()
+            {
+                Id = id
+            };
+            _validation = new(this);
+            _validation.Validate();
         }
         public ErrandDisplay Display => _display;
         public List<ErrandStatus> Statuses => _errandStatuses;
@@ -54,11 +58,12 @@ namespace Shopfloor.Models.ErrandModel
         }
         public string Description
         {
-            get => _data.Description ?? noDescription;
+            get => _data.Description ?? string.Empty;
             set
             {
                 if (value == null) return;
                 _data.Description = value;
+                _validation.ValidateDescription();
             }
         }
         public int? TypeId
@@ -95,6 +100,7 @@ namespace Shopfloor.Models.ErrandModel
             {
                 if (value?.Id is not null) _data.MachineId = (int)value.Id;
                 _data.Machine = value;
+                _validation.ValidateMachine();
             }
         }
         public int? MachineId
@@ -133,6 +139,7 @@ namespace Shopfloor.Models.ErrandModel
             {
                 if (value?.Id is not null) _data.ErrandTypeId = (int)value.Id;
                 _data.ErrandType = value;
+                _validation.ValidateType();
             }
         }
         public void SetId(int id)

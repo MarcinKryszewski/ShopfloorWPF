@@ -153,9 +153,8 @@ namespace Shopfloor.Models.ErrandModel
         #endregion CRUD
         private static Errand ToErrand(ErrandDTO item)
         {
-            return new Errand()
+            return new Errand((int)item.Id!)
             {
-                Id = (int)item.Id!,
                 CreatedById = item.CreatedById,
                 CreatedDate = item.CreatedDate!,
                 Description = item.Description!,

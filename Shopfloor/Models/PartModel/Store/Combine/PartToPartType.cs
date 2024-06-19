@@ -1,5 +1,6 @@
 using Shopfloor.Interfaces;
 using Shopfloor.Models.PartTypeModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,13 +21,23 @@ namespace Shopfloor.Models.PartModel.Store.Combine
             List<PartType> types = GetTypes();
             List<Part> parts = GetParts();
 
-            foreach (Part part in parts)
+            foreach (Part item in parts)
             {
-                part.PartType = types.FirstOrDefault(type => type.Id == part.TypeId);
+                Combine(types, item);
             }
             return Task.CompletedTask;
         }
+        private static void Combine(List<PartType> types, Part item)
+        {
+            item.PartType = types.FirstOrDefault(type => type.Id == item.TypeId);
+        }
         private List<PartType> GetTypes() => _typesStore.Data;
         private List<Part> GetParts() => _partsStore.Data;
+        public Task CombineOne(Part item)
+        {
+            List<PartType> types = GetTypes();
+            Combine(types, item);
+            return Task.CompletedTask;
+        }
     }
 }

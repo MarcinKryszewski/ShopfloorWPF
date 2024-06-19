@@ -31,7 +31,7 @@ namespace Shopfloor.Models.UserModel.Store.Combine
 
             return Task.CompletedTask;
         }
-        public Task CombineOne(User user)
+        public Task CombineOne(User item)
         {
             List<Role> roles = GetRoles();
             List<RoleUser> roleUsers = GetRoleUsers();

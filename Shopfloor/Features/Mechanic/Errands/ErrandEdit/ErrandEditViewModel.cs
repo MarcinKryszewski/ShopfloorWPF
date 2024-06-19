@@ -31,7 +31,7 @@ namespace Shopfloor.Features.Mechanic.Errands
     internal sealed partial class ErrandEditViewModel : ViewModelBase
     {
         private readonly ObservableCollection<ErrandType> _errandTypes = [];
-        private readonly ErrandValidation _errandValidation;
+        //private readonly ErrandValidation _errandValidation;
         private readonly ObservableCollection<Machine> _machines = [];
         private readonly ErrandPartsListViewModel _errandPartsListViewModel;
         private readonly SelectedErrandStore _selectedErrand;
@@ -59,7 +59,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             PrioritySetCommand = new PrioritySetCommand(this);
             ShowPartsListCommand = new ErrandsShowPartsList(this, _errandPartsListViewModel);
 
-            _errandValidation = new(this);
+            //_errandValidation = new(this);
 
             Task.Run(LoadData);
         }
@@ -109,7 +109,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             set
             {
                 string myName = nameof(SelectedMachine);
-                _errandValidation.ValidateMachine(myName, value);
+                //_errandValidation.ValidateMachine(myName, value);
                 _errandDTO.Machine = value;
                 if (value != null) _selectedErrand.MachineId = value.Id;
                 OnPropertyChanged(myName);
@@ -130,7 +130,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             set
             {
                 string myName = nameof(SelectedType);
-                _errandValidation.ValidateType(myName, value);
+                //_errandValidation.ValidateType(myName, value);
                 _errandDTO.ErrandType = value;
                 OnPropertyChanged(myName);
             }
@@ -141,7 +141,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             set
             {
                 string myName = nameof(TaskDescription);
-                _errandValidation.ValidateDescription(myName, value);
+                //_errandValidation.ValidateDescription(myName, value);
                 _errandDTO.Description = value;
                 OnPropertyChanged(myName);
             }
@@ -285,9 +285,9 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             get
             {
-                _errandValidation.ValidateMachine(nameof(SelectedMachine), SelectedMachine);
-                _errandValidation.ValidateType(nameof(SelectedType), SelectedType);
-                _errandValidation.ValidateDescription(nameof(TaskDescription), TaskDescription);
+                //_errandValidation.ValidateMachine(nameof(SelectedMachine), SelectedMachine);
+                //_errandValidation.ValidateType(nameof(SelectedType), SelectedType);
+                //_errandValidation.ValidateDescription(nameof(TaskDescription), TaskDescription);
                 return !HasErrors;
             }
         }

@@ -13,5 +13,9 @@ namespace Shopfloor.Models.SupplierModel.Store.Combine
             IsCombined = true;
             return Task.CompletedTask;
         }
+        public Task CombineOne(Supplier item)
+        {
+            return Task.CompletedTask;
+        }
     }
 }

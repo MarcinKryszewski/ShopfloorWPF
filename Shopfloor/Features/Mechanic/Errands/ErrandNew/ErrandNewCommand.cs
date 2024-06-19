@@ -1,14 +1,15 @@
 using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Shared.Commands;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
 {
     internal sealed partial class ErrandNewCommand : CommandBase
     {
         private readonly ErrandStore _errandStore;
-        private readonly ErrandProvider _errandProvider;
-        public ErrandNewCommand(ErrandStore errandStore, ErrandProvider errandProvider)
+        private readonly IProvider<Errand> _errandProvider;
+        public ErrandNewCommand(ErrandStore errandStore, IProvider<Errand> errandProvider)
         {
             _errandStore = errandStore;
             _errandProvider = errandProvider;

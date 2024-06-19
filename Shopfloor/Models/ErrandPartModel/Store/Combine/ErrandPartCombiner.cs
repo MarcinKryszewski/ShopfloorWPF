@@ -31,5 +31,16 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
             await Task.WhenAll(tasks);
             IsCombined = true;
         }
+        public async Task CombineOne(ErrandPart item)
+        {
+            List<Task> tasks = [];
+
+            tasks.Add(_userToErrandPart.CombineOne(item));
+            tasks.Add(_partToErrandPart.CombineOne(item));
+            tasks.Add(_errandToErrandPart.CombineOne(item));
+            tasks.Add(_errandPartStatusToErrandPart.CombineOne(item));
+
+            await Task.WhenAll(tasks);
+        }
     }
 }

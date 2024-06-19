@@ -14,5 +14,10 @@ namespace Shopfloor.Models.ErrandTypeModel.Store.Combine
             //throw new NotImplementedException();
             return Task.CompletedTask;
         }
+
+        public Task CombineOne(ErrandType item)
+        {
+            return Task.CompletedTask;
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Shopfloor.Interfaces;
 using Shopfloor.Models.UserModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,12 +20,27 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
         {
             List<User> users = GetUsers();
 
-            foreach (ErrandPart errandPart in _errandPartStore.Data)
+            foreach (ErrandPart item in _errandPartStore.Data)
             {
-                errandPart.OrderedByUser = users.FirstOrDefault(user => user.Id == errandPart.OrderedById);
+                Combine(users, item);
             }
             return Task.CompletedTask;
         }
+
+        private static void Combine(List<User> users, ErrandPart item)
+        {
+            item.OrderedByUser = users.FirstOrDefault(user => user.Id == item.OrderedById);
+        }
+
+        public Task CombineOne(ErrandPart item)
+        {
+            List<User> users = GetUsers();
+
+            Combine(users, item);
+
+            return Task.CompletedTask;
+        }
+
         private List<ErrandPart> GetErrandParts() => _errandPartStore.Data;
         private List<User> GetUsers() => _userStore.Data;
     }

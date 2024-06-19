@@ -31,6 +31,7 @@ namespace Shopfloor.Models.ErrandModel
         public string DescriptionShort => _errand.Description.Length > _maxDescriptionLength ? _errand.Description[.._maxDescriptionLength] + "..." : _errand.Description;
         public string CreatedDateShortString => _errand.CreatedDate.Date.ToString("dd.MM.yyyy");
         public string ErrandTypeName => _errand.Type?.Name ?? _typeNotAssigned;
+        public string IdText => _errand.Id?.ToString() ?? "";
         private string GetPartsStatus()
         {
             int partsAmount = _errand.Parts.Count;

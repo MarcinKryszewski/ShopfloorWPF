@@ -16,5 +16,10 @@ namespace Shopfloor.Models.ErrandPartOfferModel.Store
             IsCombined = true;
             return Task.CompletedTask;
         }
+
+        public Task CombineOne(ErrandPartOffer item)
+        {
+            return Task.CompletedTask;
+        }
     }
 }

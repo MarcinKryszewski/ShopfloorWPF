@@ -38,32 +38,24 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly MachineStore _machineStore;
         private readonly UserStore _userStore;
         private readonly ErrandTypeStore _errandTypeStore;
+        private readonly int _currentUserId;
 
         public ErrandNewViewModel(ErrandPartsListViewModel errandPartsListViewModel, NavigationService navigationService, SelectedErrandStore selectedErrandStore, ICurrentUserStore currentUserStore, MachineStore machineStore, ErrandTypeStore errandTypeStore, UserStore userStore, ErrandProvider errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, ErrandPartStore errandPartStore, ErrandStatusStore errandStatusStore, ErrandStore errandStore)
         {
             _selectedErrand = selectedErrandStore;
+            _currentUserId = (int)currentUserStore.User!.Id!;
 
             _errand = new()
             {
-                CreatedById = (int)currentUserStore.User!.Id!,
+                CreatedById = _currentUserId,
             };
 
-            NewErrandCommand = new ErrandNewCommand(this, currentUserStore, _selectedErrand)
-            {
-                ErrandPartProvider = errandPartProvider,
-                ErrandPartStatusProvider = errandPartStatusProvider,
-                ErrandProvider = errandProvider,
-                ErrandStatusProvider = errandStatusProvider,
-                ErrandPartStatusStore = errandPartStatusStore,
-                ErrandPartStore = errandPartStore,
-                ErrandStatusStore = errandStatusStore,
-                ErrandStore = errandStore
-            };
+            NewErrandCommand = new ErrandNewCommand(errandStore, errandProvider);
             ReturnCommand = new NavigationCommand<ErrandsListViewModel>(navigationService).Navigate();
             PrioritySetCommand = new PrioritySetCommand(this);
             //ShowPartsListCommand = new ErrandsShowPartsList(this, errandPartsListViewModel);
 
-            _errandValidation = new(this);
+            //_errandValidation = new(this);
 
             Task.Run(LoadData);
             _machineStore = machineStore;
@@ -118,7 +110,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             set
             {
                 string myName = nameof(SelectedMachine);
-                _errandValidation.ValidateMachine(myName, value);
+                //_errandValidation.ValidateMachine(myName, value);
                 _errand.Machine = value;
                 if (value != null) _selectedErrand.MachineId = value.Id;
                 OnPropertyChanged(myName);
@@ -139,7 +131,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             set
             {
                 string myName = nameof(SelectedType);
-                _errandValidation.ValidateType(myName, value);
+                //_errandValidation.ValidateType(myName, value);
                 _errand.Type = value;
                 OnPropertyChanged(myName);
             }
@@ -151,7 +143,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             {
                 if (value == null) return;
                 string myName = nameof(Description);
-                _errandValidation.ValidateDescription(myName, value);
+                //_errandValidation.ValidateDescription(myName, value);
                 _errand.Description = value;
                 OnPropertyChanged(myName);
             }
@@ -261,9 +253,9 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             get
             {
-                _errandValidation.ValidateMachine(nameof(SelectedMachine), SelectedMachine);
-                _errandValidation.ValidateType(nameof(SelectedType), SelectedType);
-                _errandValidation.ValidateDescription(nameof(Description), Description);
+                //_errandValidation.ValidateMachine(nameof(SelectedMachine), SelectedMachine);
+                //_errandValidation.ValidateType(nameof(SelectedType), SelectedType);
+                //_errandValidation.ValidateDescription(nameof(Description), Description);
                 return !HasErrors;
             }
         }
@@ -284,7 +276,10 @@ namespace Shopfloor.Features.Mechanic.Errands
         }
         public void CleanForm()
         {
-            Errand = new();
+            Errand = new()
+            {
+                CreatedById = _currentUserId
+            };
         }
         public void ClearErrors(string? propertyName)
         {

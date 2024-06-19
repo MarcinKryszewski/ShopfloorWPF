@@ -19,14 +19,28 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
         public Task CombineAll()
         {
             List<Errand> errands = GetErrands();
+            List<ErrandPart> errandParts = GetErrandParts();
 
-            foreach (ErrandPart errandPart in _errandPartStore.Data)
+            foreach (ErrandPart item in errandParts)
             {
-                errandPart.Errand = errands.FirstOrDefault(errand => errand.Id == errandPart.ErrandId);
+                Combine(errands, item);
             }
             return Task.CompletedTask;
         }
+        public Task CombineOne(ErrandPart item)
+        {
+            List<Errand> errands = GetErrands();
+
+            Combine(errands, item);
+
+            return Task.CompletedTask;
+        }
+        private static void Combine(List<Errand> errands, ErrandPart item)
+        {
+            item.Errand = errands.FirstOrDefault(errand => errand.Id == item.ErrandId);
+        }
         private List<ErrandPart> GetErrandParts() => _errandPartStore.Data;
         private List<Errand> GetErrands() => _errandStore.Data;
+
     }
 }

@@ -13,5 +13,10 @@ namespace Shopfloor.Models.MessageModel.Store.Combine
             IsCombined = true;
             return Task.CompletedTask;
         }
+        public Task CombineOne(Message item)
+        {
+            return Task.CompletedTask;
+
+        }
     }
 }

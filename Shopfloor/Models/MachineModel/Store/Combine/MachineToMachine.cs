@@ -16,14 +16,26 @@ namespace Shopfloor.Models.MachineModel.Store.Combine
         {
             List<Machine> machines = GetMachines();
 
-            foreach (Machine machine in machines)
+            foreach (Machine item in machines)
             {
-                if (machine.ParentId is not null)
+                if (item.ParentId is not null)
                 {
-                    Machine? parent = machines.FirstOrDefault(m => m.Id == machine.ParentId);
-                    if (parent is not null) machine.SetParent(parent);
+                    Combine(machines, item);
                 }
             }
+            return Task.CompletedTask;
+        }
+        private static void Combine(List<Machine> machines, Machine item)
+        {
+            Machine? parent = machines.FirstOrDefault(m => m.Id == item.ParentId);
+            if (parent is not null) item.SetParent(parent);
+        }
+        public Task CombineOne(Machine item)
+        {
+            List<Machine> machines = GetMachines();
+
+            Combine(machines, item);
+
             return Task.CompletedTask;
         }
         private List<Machine> GetMachines() => _machineStore.Data;
