@@ -6,7 +6,7 @@ namespace Shopfloor.Services.NavigationServices
 {
     internal class NavigationCommand<T> : INavigationCommand<T> where T : ViewModelBase
     {
-        private INavigationService _navigationService;
+        private readonly INavigationService _navigationService;
         public NavigationCommand(INavigationService navigationService)
         {
             _navigationService = navigationService;

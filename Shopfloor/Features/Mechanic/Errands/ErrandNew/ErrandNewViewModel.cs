@@ -11,6 +11,7 @@ using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
+using Shopfloor.Models.PartModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
@@ -27,6 +28,11 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Mechanic.Errands
 {
+    internal sealed class ErrandCreator
+    {
+        public required Errand Errand { get; set; }
+        public List<Part> Parts { get; set; } = [];
+    }
     internal sealed partial class ErrandNewViewModel : ViewModelBase
     {
         private Errand _errand;
@@ -38,6 +44,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly UserStore _userStore;
         private readonly ErrandTypeStore _errandTypeStore;
         private readonly int _currentUserId;
+        private readonly ErrandCreator _errandCreator;
 
         public ErrandNewViewModel(
             ErrandPartsListViewModel errandPartsListViewModel,
@@ -63,6 +70,10 @@ namespace Shopfloor.Features.Mechanic.Errands
             {
                 CreatedById = _currentUserId,
             };
+            _errandCreator = new()
+            {
+                Errand = _errand
+            };
 
             NewErrandCommand = new ErrandNewCommand(errandStore, errandProvider);
             ReturnCommand = new NavigationCommand<ErrandsListViewModel>(navigationService).Navigate();
@@ -82,6 +93,7 @@ namespace Shopfloor.Features.Mechanic.Errands
                 _errand = value;
             }
         }
+        public ErrandCreator ErrandCreator => _errandCreator;
         public ICollectionView ErrandTypes => CollectionViewSource.GetDefaultView(_errandTypes);
         public ICollectionView Machines => CollectionViewSource.GetDefaultView(_machines);
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);

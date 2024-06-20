@@ -14,7 +14,14 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
     {
         private readonly ErrandStore _errandStore;
         private readonly IProvider<Errand> _errandProvider;
-        public ErrandNewCommand(ErrandStore errandStore, IProvider<Errand> errandProvider, List<Part> parts, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStore errandPartStore, ErrandStatusStore errandStatusStore)
+        public ErrandNewCommand(
+            ErrandStore errandStore,
+            IProvider<Errand> errandProvider,
+            List<Part> parts,
+            ErrandPartProvider errandPartProvider,
+            ErrandPartStore errandPartStore,
+            ErrandStatusProvider errandStatusProvider,
+            ErrandStatusStore errandStatusStore)
         {
             _errandStore = errandStore;
             _errandProvider = errandProvider;
@@ -22,8 +29,8 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
         public override void Execute(object? parameter)
         {
             if (parameter is null) return;
-            Errand errand = (Errand)parameter;
-            AddErrand(errand);
+            ErrandCreator creator = (ErrandCreator)parameter;
+            AddErrand(creator.Errand);
         }
         private void AddErrand(Errand errand)
         {
