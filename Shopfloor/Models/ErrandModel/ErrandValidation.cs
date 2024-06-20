@@ -1,3 +1,4 @@
+using System;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
@@ -52,16 +53,24 @@ namespace Shopfloor.Models.ErrandModel
             _item.ClearErrors(propertyName);
             Description_CheckNull(propertyName, value);
             Description_CheckEmpty(propertyName, value);
+            Description_CheckLength(propertyName, value);
+        }
+
+        private void Description_CheckLength(string propertyName, string value)
+        {
+            int minDescriptionLength = 5;
+            string lengthErrorMessage = "Opis jest za krótki. Minimum 5 znaków.";
+            if (value?.Trim().Length < minDescriptionLength) _item.AddError(propertyName, lengthErrorMessage);
         }
 
         private void Description_CheckNull(string propertyName, string? value)
         {
-            if (value?.Trim().Length == 0) _item.AddError(propertyName, "Opis nie może być pusty");
+            if (value?.Trim().Length == 0) _item.AddError(propertyName, "Opis nie może być pusty.");
         }
 
         private void Description_CheckEmpty(string propertyName, string? value)
         {
-            if (value == null) _item.AddError(propertyName, "Wprowadź opis");
+            if (value == null) _item.AddError(propertyName, "Wprowadź opis.");
         }
     }
 }

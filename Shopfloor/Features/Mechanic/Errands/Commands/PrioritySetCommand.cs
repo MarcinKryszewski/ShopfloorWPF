@@ -5,7 +5,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
 {
     internal sealed class PrioritySetCommand : CommandBase
     {
-        private IErrandPriority _viewModel;
+        private readonly IErrandPriority _viewModel;
 
         public PrioritySetCommand(IErrandPriority viewModel)
         {

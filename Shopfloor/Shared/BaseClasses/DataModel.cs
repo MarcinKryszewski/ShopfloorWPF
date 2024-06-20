@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Shopfloor.Shared.BaseClasses
 {
@@ -14,12 +15,12 @@ namespace Shopfloor.Shared.BaseClasses
         private void OnErrorsChanged(string propertyName) => ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         public void AddError(string propertyName, string errorMassage)
         {
-            if (!_propertyErrors.TryGetValue(propertyName, out List<string>? value))
+            if (!_propertyErrors.TryGetValue(propertyName, out List<string>? errorsList))
             {
-                value = [];
-                _propertyErrors.Add(propertyName, value);
+                errorsList = [];
+                _propertyErrors.Add(propertyName, errorsList);
             }
-            value?.Add(errorMassage);
+            if (errorsList!.Count == 0) errorsList?.Add(errorMassage);
             OnErrorsChanged(propertyName);
         }
         public void ClearErrors(string propertyName)

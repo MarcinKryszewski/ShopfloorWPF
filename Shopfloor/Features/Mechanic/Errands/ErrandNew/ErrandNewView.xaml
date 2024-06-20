@@ -62,7 +62,7 @@
                     IsEditable="true"
                     IsReadOnly="false"
                     ItemsSource="{Binding Path=ErrandTypes}"
-                    SelectedItem="{Binding Path=SelectedType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Path=Errand.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource ComboBoxMain}" />
             </StackPanel>
 
@@ -83,7 +83,7 @@
                     IsEditable="true"
                     IsReadOnly="false"
                     ItemsSource="{Binding Path=Machines}"
-                    SelectedItem="{Binding Path=SelectedMachine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Path=Errand.Machine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource ComboBoxMain}" />
             </StackPanel>
 
@@ -96,7 +96,7 @@
                     Height="40"
                     FirstDayOfWeek="Monday"
                     Language="Pl"
-                    SelectedDate="{Binding SelectedDate, Mode=TwoWay}"
+                    SelectedDate="{Binding Errand.ExpectedDate, Mode=TwoWay}"
                     SelectedDateFormat="Long"
                     Style="{DynamicResource DatePickerMain}" />
             </StackPanel>
@@ -112,7 +112,7 @@
                     VerticalContentAlignment="Center"
                     FontSize="16"
                     Style="{StaticResource TextBoxMain}"
-                    Text="{Binding Path=SapNumber}" />
+                    Text="{Binding Path=Errand.SapNumber}" />
             </StackPanel>
 
             <StackPanel
@@ -127,7 +127,7 @@
                     IsEditable="true"
                     IsReadOnly="false"
                     ItemsSource="{Binding Path=Users}"
-                    SelectedItem="{Binding Path=SelectedResponsible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Path=Errand.Responsible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource ResourceKey=ComboBoxMain}" />
             </StackPanel>
 
@@ -198,7 +198,7 @@
                     FontSize="16"
                     MinLines="3"
                     Style="{StaticResource TextBoxMain}"
-                    Text="{Binding Path=Description, UpdateSourceTrigger=LostFocus}"
+                    Text="{Binding Path=Errand.Description, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                     TextWrapping="Wrap" />
             </StackPanel>
         </Grid>

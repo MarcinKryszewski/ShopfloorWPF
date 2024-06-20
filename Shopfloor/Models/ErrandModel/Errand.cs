@@ -26,12 +26,12 @@ namespace Shopfloor.Models.ErrandModel
                 Id = id
             };
             _validation = new(this);
-            _validation.Validate();
         }
         public ErrandDisplay Display => _display;
         public List<ErrandStatus> Statuses => _errandStatuses;
         public void AddStatus(ErrandStatus status) => _errandStatuses.Add(status);
         public List<ErrandPart> Parts => _parts;
+        public void Validate() => _validation.Validate();
     }
     internal sealed partial class Errand
     {
@@ -63,7 +63,6 @@ namespace Shopfloor.Models.ErrandModel
             {
                 if (value == null) return;
                 _data.Description = value;
-                _validation.ValidateDescription();
             }
         }
         public int? TypeId
@@ -100,7 +99,6 @@ namespace Shopfloor.Models.ErrandModel
             {
                 if (value?.Id is not null) _data.MachineId = (int)value.Id;
                 _data.Machine = value;
-                _validation.ValidateMachine();
             }
         }
         public int? MachineId
@@ -139,7 +137,6 @@ namespace Shopfloor.Models.ErrandModel
             {
                 if (value?.Id is not null) _data.ErrandTypeId = (int)value.Id;
                 _data.ErrandType = value;
-                _validation.ValidateType();
             }
         }
         public void SetId(int id)
