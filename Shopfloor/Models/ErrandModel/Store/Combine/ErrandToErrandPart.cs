@@ -10,9 +10,9 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
     internal sealed class ErrandToErrandPart : ICombiner<Errand>
     {
         private readonly ErrandPartStore _errandPartStore;
-        private readonly ErrandStore _errandStore;
+        private readonly IDataStore<Errand> _errandStore;
 
-        public ErrandToErrandPart(ErrandPartStore errandPartStore, ErrandStore errandStore)
+        public ErrandToErrandPart(ErrandPartStore errandPartStore, IDataStore<Errand> errandStore)
         {
             _errandPartStore = errandPartStore;
             _errandStore = errandStore;

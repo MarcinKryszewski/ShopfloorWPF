@@ -8,7 +8,7 @@ namespace Shopfloor.Utilities.CustomList
 {
     internal sealed partial class SearchableModelList
     {
-        private readonly IEnumerable<ISearchableModel> _dataSource = [];
+        private IEnumerable<ISearchableModel> _dataSource = [];
         private readonly int _pageSize;
         private int _currentPage = 1;
         private List<ISearchableModel> _dataDisplay = [];
@@ -19,6 +19,11 @@ namespace Shopfloor.Utilities.CustomList
             _pageSize = pageSize;
             _dataSource = dataSource;
             _dataFiltered = new(dataSource);
+        }
+        public IEnumerable<ISearchableModel> Data
+        {
+            get => _dataSource;
+            set => _dataSource = value;
         }
         public int CurrentPage
         {

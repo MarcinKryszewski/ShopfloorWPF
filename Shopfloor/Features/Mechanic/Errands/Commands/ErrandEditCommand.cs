@@ -1,4 +1,5 @@
 using Shopfloor.Features.Mechanic.Errands.Stores;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
@@ -18,12 +19,12 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         private readonly ErrandEditViewModel _viewModel;
         private readonly int _currentUserId;
         private readonly SelectedErrandStore _currentErrand;
-        private readonly ErrandProvider _errandProvider;
+        private readonly IProvider<Errand> _errandProvider;
         private readonly ErrandPartProvider _errandPartProvider;
         private readonly ErrandPartStore _errandPartStore;
         private readonly ErrandStatusProvider _errandStatus;
         private readonly ErrandPartStatusProvider _errandPartStatusProvider;
-        public ErrandEditCommand(ErrandEditViewModel viewModel, ICurrentUserStore currentUser, SelectedErrandStore selectedErrand, ErrandProvider errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStore errandPartStore, ErrandPartStatusProvider errandPartStatusProvider)
+        public ErrandEditCommand(ErrandEditViewModel viewModel, ICurrentUserStore currentUser, SelectedErrandStore selectedErrand, IProvider<Errand> errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStore errandPartStore, ErrandPartStatusProvider errandPartStatusProvider)
         {
             _viewModel = viewModel;
             _currentUserId = currentUser.User?.Id ?? -1;

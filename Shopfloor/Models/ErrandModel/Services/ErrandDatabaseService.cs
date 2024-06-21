@@ -1,9 +1,15 @@
-﻿namespace Shopfloor.Models.ErrandModel.Services
+﻿using Shopfloor.Interfaces;
+
+namespace Shopfloor.Models.ErrandModel.Services
 {
-    internal class ErrandDatabaseService
+    internal interface IErrandDatabaseService
     {
-        private readonly ErrandProvider _errandProvider;
-        public ErrandDatabaseService(ErrandProvider errandProvider)
+        public int AddErrandToDatabase(Errand item);
+    }
+    internal class ErrandDatabaseService : IErrandDatabaseService
+    {
+        private readonly IProvider<Errand> _errandProvider;
+        public ErrandDatabaseService(IProvider<Errand> errandProvider)
         {
             _errandProvider = errandProvider;
         }

@@ -4,17 +4,21 @@ using System;
 
 namespace Shopfloor.Models.ErrandModel.Services
 {
-    internal class ErrandCreatorService
+    internal interface IErrandCreatorService
     {
-        private readonly ErrandDatabaseService _databaseService;
-        private readonly ErrandStoreService _storeService;
-        private readonly ErrandStatusDatabaseService _statusDatabaseService;
-        private readonly ErrandStatusStoreService _statusStoreService;
+        public void Create(Errand item);
+    }
+    internal class ErrandCreatorService : IErrandCreatorService
+    {
+        private readonly IErrandDatabaseService _databaseService;
+        private readonly IErrandStoreService _storeService;
+        private readonly IErrandStatusDatabaseService _statusDatabaseService;
+        private readonly IErrandStatusStoreService _statusStoreService;
         public ErrandCreatorService(
-            ErrandDatabaseService errandDatabaseService,
-            ErrandStoreService errandStoreService,
-            ErrandStatusDatabaseService errandStatusDatabaseService,
-            ErrandStatusStoreService errandStatusStoreService)
+            IErrandDatabaseService errandDatabaseService,
+            IErrandStoreService errandStoreService,
+            IErrandStatusDatabaseService errandStatusDatabaseService,
+            IErrandStatusStoreService errandStatusStoreService)
         {
             _databaseService = errandDatabaseService;
             _storeService = errandStoreService;

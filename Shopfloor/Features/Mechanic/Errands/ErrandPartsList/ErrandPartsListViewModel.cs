@@ -4,6 +4,7 @@ using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.PartModel;
+using Shopfloor.Models.PartModel.Store.Combine;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Utilities.CustomList;
 using System;
@@ -20,10 +21,11 @@ namespace Shopfloor.Features.Mechanic.Errands
 {
     internal sealed partial class ErrandPartsListViewModel : ViewModelBase
     {
-        private readonly List<Part> _parts = [];
+        private List<Part> _parts = [];
         private readonly SelectedErrandStore _errandStore;
         private readonly PartStore _partStore;
         private readonly ErrandPartStore _errandPartStore;
+        private readonly PartCombiner _partCombiner;
         private string _searchText = string.Empty;
         public string SearchText
         {
@@ -58,19 +60,21 @@ namespace Shopfloor.Features.Mechanic.Errands
         public ICommand AddPartToListCommand { get; }
         public ICommand RemovePartFromListCommand { get; }
         public Part? SelectedPart { get; set; }
-        public ErrandPartsListViewModel(SelectedErrandStore selectedErrandStore, PartStore partStore, ErrandPartStore errandPartStore)
+        public ErrandPartsListViewModel(SelectedErrandStore selectedErrandStore, PartStore partStore, ErrandPartStore errandPartStore, PartCombiner partCombiner)
         {
             _errandStore = selectedErrandStore;
             _partStore = partStore;
             _errandPartStore = errandPartStore;
+            _partCombiner = partCombiner;
 
             AddPartToListCommand = new ErrandAddPartCommand(this, _errandStore);
             RemovePartFromListCommand = new ErrandRemovePartCommand(this, _errandStore);
             _errandPartValidation = new(this);
-            DisplayList = new(_parts, 15);
             Task.Run(LoadData);
+
+            DisplayList = new(_parts, 15);
         }
-        private async Task LoadData()
+        private Task LoadData()
         {
             Application.Current.Dispatcher.Invoke
             (() =>
@@ -79,22 +83,47 @@ namespace Shopfloor.Features.Mechanic.Errands
                 _errandStore.ErrandParts.Clear();
             });
 
-            PartStore partsStore = _partStore;
-            ErrandPartStore errandPartStore = _errandPartStore;
+            _partCombiner.CombineAll().Wait();
 
-            //await LoadStores(partsStore, errandPartStore);
-            //await CombineData(partsStore, errandPartStore);
-            await FillLists(partsStore, errandPartStore);
+            _parts = _partStore.Data;
+            DisplayList.Data = _parts;
 
             Application.Current.Dispatcher.Invoke
             (() =>
             {
-                //PartsAll.Refresh();
+                PartsAll.Refresh();
                 PartsMachine.Refresh();
                 ErrandParts.Refresh();
             });
-            await DisplayList.ReloadSourceData();
+
+            return Task.CompletedTask;
         }
+
+        // private async Task LoadData()
+        // {
+        //     Application.Current.Dispatcher.Invoke
+        //     (() =>
+        //     {
+        //         _parts.Clear();
+        //         _errandStore.ErrandParts.Clear();
+        //     });
+
+        //     PartStore partsStore = _partStore;
+        //     ErrandPartStore errandPartStore = _errandPartStore;
+
+        //     //await LoadStores(partsStore, errandPartStore);
+        //     //await CombineData(partsStore, errandPartStore);
+        //     await FillLists(partsStore, errandPartStore);
+
+        //     Application.Current.Dispatcher.Invoke
+        //     (() =>
+        //     {
+        //         //PartsAll.Refresh();
+        //         PartsMachine.Refresh();
+        //         ErrandParts.Refresh();
+        //     });
+        //     await DisplayList.ReloadSourceData();
+        // }
         public async Task FillLists(PartStore partsStore, ErrandPartStore errandPartStore)
         {
             List<Task> tasks = [];

@@ -1,3 +1,4 @@
+using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandModel.Store.Combine;
@@ -17,7 +18,7 @@ namespace Shopfloor.Features.Mechanic.Errands
     internal sealed class ErrandsListViewModel : ViewModelBase
     {
         private List<Errand> _errands = [];
-        private readonly ErrandStore _errandStore;
+        private readonly IDataStore<Errand> _errandStore;
         private readonly ErrandCombiner _errandCombiner;
         private readonly ErrandPartCombiner _errandPartCombiner;
 
@@ -26,7 +27,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         public Errand? SelectedErrand { get; set; }
         public ICommand EditErrandCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public ErrandsListViewModel(NavigationService navigationService, ICurrentUserStore currentUserStore, ErrandStore errandStore, ErrandCombiner errandCombiner, ErrandPartCombiner errandPartCombiner)
+        public ErrandsListViewModel(NavigationService navigationService, ICurrentUserStore currentUserStore, IDataStore<Errand> errandStore, ErrandCombiner errandCombiner, ErrandPartCombiner errandPartCombiner)
         {
             _errandStore = errandStore;
             _errandCombiner = errandCombiner;

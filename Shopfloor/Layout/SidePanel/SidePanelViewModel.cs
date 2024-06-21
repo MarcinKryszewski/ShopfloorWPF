@@ -11,6 +11,7 @@ using Shopfloor.Features.Mechanic.Errands;
 using Shopfloor.Features.Mechanic.PartsStock;
 using Shopfloor.Features.Mechanic.Requests;
 using Shopfloor.Features.Plannist;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
@@ -198,7 +199,7 @@ namespace Shopfloor.Layout.SidePanel
                     MachineId = 1,
                 });
 
-                ErrandProvider errandProvider = _dbServices.GetRequiredService<ErrandProvider>();
+                IProvider<Errand> errandProvider = _dbServices.GetRequiredService<IProvider<Errand>>();
                 _ = errandProvider.Create(new Errand()
                 {
                     CreatedDate = DateTime.Now,

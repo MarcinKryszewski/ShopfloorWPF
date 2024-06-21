@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Shopfloor.Database;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
+using Shopfloor.Models.ErrandModel.Services;
 using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandModel.Store.Combine;
 using Shopfloor.Models.ErrandPartModel;
@@ -15,6 +15,7 @@ using Shopfloor.Models.ErrandPartOrderModel.Store.Combine;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.ErrandPartStatusModel.Store.Combine;
 using Shopfloor.Models.ErrandStatusModel;
+using Shopfloor.Models.ErrandStatusModel.Services;
 using Shopfloor.Models.ErrandStatusModel.Store.Combine;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.ErrandTypeModel.Store.Combine;
@@ -41,7 +42,6 @@ using Shopfloor.Models.SupplierModel;
 using Shopfloor.Models.SupplierModel.Store.Combine;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Models.UserModel.Store.Combine;
-using Shopfloor.Shared.BaseClasses;
 
 namespace Shopfloor.Hosts.Database
 {
@@ -80,8 +80,8 @@ namespace Shopfloor.Hosts.Database
         private static void ErrandServices(IServiceCollection services)
         {
             services.AddSingleton<ErrandStore, ErrandStore>();
-            services.AddSingleton<ErrandStore>();
-            services.AddSingleton<ErrandProvider>();
+            services.AddSingleton<IDataStore<Errand>, ErrandStore>();
+            services.AddSingleton<IProvider<Errand>, ErrandProvider>();
             services.AddSingleton<ErrandCombiner>();
 
             services.AddSingleton<ErrandToErrandPart>();
@@ -89,6 +89,10 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<ErrandToUser>();
             services.AddSingleton<ErrandToMachine>();
             services.AddSingleton<ErrandToErrandType>();
+
+            services.AddSingleton<IErrandCreatorService, ErrandCreatorService>();
+            services.AddSingleton<IErrandDatabaseService, ErrandDatabaseService>();
+            services.AddSingleton<IErrandStoreService, ErrandStoreService>();
         }
         private static void ErrandPartServices(IServiceCollection services)
         {
@@ -124,6 +128,9 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<ErrandStatusProvider>();
             services.AddSingleton<ErrandStatusStore>();
             services.AddSingleton<ErrandStatusCombiner>();
+
+            services.AddSingleton<IErrandStatusDatabaseService, ErrandStatusDatabaseService>();
+            services.AddSingleton<IErrandStatusStoreService, ErrandStatusStoreService>();
         }
         private static void ErrandTypeServices(IServiceCollection services)
         {

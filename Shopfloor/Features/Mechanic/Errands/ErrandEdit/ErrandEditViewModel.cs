@@ -35,7 +35,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly ObservableCollection<Machine> _machines = [];
         private readonly ErrandPartsListViewModel _errandPartsListViewModel;
         private readonly SelectedErrandStore _selectedErrand;
-        private readonly ErrandStore _errandStore;
+        private readonly IDataStore<Errand> _errandStore;
         private readonly MachineStore _machineStore;
         private readonly UserStore _userStore;
         private readonly ErrandTypeStore _errandTypeStore;
@@ -43,7 +43,21 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly PartStore _partStore;
         private readonly ObservableCollection<User> _users = [];
         private ErrandDTO _errandDTO = new();
-        public ErrandEditViewModel(INavigationCommand<ErrandsListViewModel> navigateService, ErrandPartsListViewModel errandPartsListViewModel, SelectedErrandStore selectedErrandStore, ICurrentUserStore currentUserStore, ErrandStore errandStore, MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore, ErrandPartStore errandPartStore, PartStore partStore, ErrandProvider errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStatusProvider errandPartStatusProvider)
+        public ErrandEditViewModel(
+            INavigationCommand<ErrandsListViewModel> navigateService,
+            ErrandPartsListViewModel errandPartsListViewModel,
+            SelectedErrandStore selectedErrandStore,
+            ICurrentUserStore currentUserStore,
+            IDataStore<Errand> errandStore,
+            MachineStore machineStore,
+            UserStore userStore,
+            ErrandTypeStore errandTypeStore,
+            ErrandPartStore errandPartStore,
+            PartStore partStore,
+            IProvider<Errand> errandProvider,
+            ErrandPartProvider errandPartProvider,
+            ErrandStatusProvider errandStatusProvider,
+            ErrandPartStatusProvider errandPartStatusProvider)
         {
             _errandPartsListViewModel = errandPartsListViewModel;
             _selectedErrand = selectedErrandStore;

@@ -4,6 +4,7 @@ using Shopfloor.Features.Mechanic.Errands.Interfaces;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
+using Shopfloor.Models.ErrandModel.Services;
 using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
@@ -28,7 +29,7 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Mechanic.Errands
 {
-    internal sealed class ErrandCreator
+    internal sealed class ErrandCreatorData
     {
         public required Errand Errand { get; set; }
         public List<Part> Parts { get; set; } = [];
@@ -44,24 +45,17 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly UserStore _userStore;
         private readonly ErrandTypeStore _errandTypeStore;
         private readonly int _currentUserId;
-        private readonly ErrandCreator _errandCreator;
+        private readonly ErrandCreatorData _errandCreatorData;
 
         public ErrandNewViewModel(
-            ErrandPartsListViewModel errandPartsListViewModel,
             NavigationService navigationService,
             SelectedErrandStore selectedErrandStore,
             ICurrentUserStore currentUserStore,
             MachineStore machineStore,
             ErrandTypeStore errandTypeStore,
             UserStore userStore,
-            ErrandProvider errandProvider,
-            ErrandPartProvider errandPartProvider,
-            ErrandStatusProvider errandStatusProvider,
-            ErrandPartStatusProvider errandPartStatusProvider,
-            ErrandPartStatusStore errandPartStatusStore,
-            ErrandPartStore errandPartStore,
-            ErrandStatusStore errandStatusStore,
-            ErrandStore errandStore)
+            IErrandCreatorService errandCreator,
+            ErrandPartsListViewModel errandPartsListViewModel)
         {
             _selectedErrand = selectedErrandStore;
             _currentUserId = (int)currentUserStore.User!.Id!;
@@ -70,35 +64,39 @@ namespace Shopfloor.Features.Mechanic.Errands
             {
                 CreatedById = _currentUserId,
             };
-            _errandCreator = new()
+            _errandCreatorData = new()
             {
                 Errand = _errand
             };
 
-            NewErrandCommand = new ErrandNewCommand(errandStore, errandProvider);
+            NewErrandCommand = new ErrandNewCommand(errandCreator);
             ReturnCommand = new NavigationCommand<ErrandsListViewModel>(navigationService).Navigate();
             PrioritySetCommand = new PrioritySetCommand(this);
-            //ShowPartsListCommand = new ErrandsShowPartsList(this, errandPartsListViewModel);
+            ShowPartsListCommand = new ErrandsShowPartsList(this, errandPartsListViewModel);
+
+            NewErrandCommand.ErrandCreated += OnErrandCreated;
 
             Task.Run(LoadData);
             _machineStore = machineStore;
             _errandTypeStore = errandTypeStore;
             _userStore = userStore;
         }
+        private void OnErrandCreated() => CleanForm();
         public Errand Errand
         {
             get => _errand;
             private set
             {
                 _errand = value;
+                OnPropertyChanged(nameof(Errand));
             }
         }
-        public ErrandCreator ErrandCreator => _errandCreator;
+        public ErrandCreatorData ErrandCreator => _errandCreatorData;
         public ICollectionView ErrandTypes => CollectionViewSource.GetDefaultView(_errandTypes);
         public ICollectionView Machines => CollectionViewSource.GetDefaultView(_machines);
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
 
-        public ICommand NewErrandCommand { get; }
+        public ErrandNewCommand NewErrandCommand { get; }
         public ICommand ReturnCommand { get; }
         private Task FillMachinesList(MachineStore machineStore)
         {
@@ -207,6 +205,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             {
                 CreatedById = _currentUserId
             };
+            _errandCreatorData.Errand = Errand;
         }
         public void ClearErrors(string? propertyName)
         {
