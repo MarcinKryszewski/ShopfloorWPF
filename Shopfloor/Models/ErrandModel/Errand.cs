@@ -35,7 +35,7 @@ namespace Shopfloor.Models.ErrandModel
     }
     internal sealed partial class Errand
     {
-        private const string ExistingIdErrorMassage = "Id already exists";
+        private const string _existingIdErrorMassage = "Id already exists";
         private readonly ErrandDTO _data;
         public required int CreatedById
         {
@@ -89,7 +89,7 @@ namespace Shopfloor.Models.ErrandModel
 
                 if (value == null || _data.Id == 0) _data.Id = value;
 
-                AddError(myName, ExistingIdErrorMassage);
+                AddError(myName, _existingIdErrorMassage);
             }
         }
         public Machine? Machine

@@ -7,6 +7,11 @@ namespace Shopfloor.Database
 {
     internal sealed class DatabaseConnectionFactory : IDisposable
     {
+        private const string _databaseTypeKey = "DatabaseType";
+        private const string _sqlliteConnectionKey = "SQLiteConnection";
+        private const string _sqliteDbName = "SQLite";
+        private const string _invalidDbError = "Invalid or unsupported database type.";
+
         private readonly string _databaseType;
         private readonly IConfiguration _configuration;
         private DbConnection? _connection;
@@ -14,7 +19,7 @@ namespace Shopfloor.Database
         public DatabaseConnectionFactory(IConfiguration configuration)
         {
             _configuration = configuration;
-            _databaseType = _configuration["DatabaseType"] ?? string.Empty;
+            _databaseType = _configuration[_databaseTypeKey] ?? string.Empty;
         }
         public DbConnection Connect()
         {
@@ -22,13 +27,13 @@ namespace Shopfloor.Database
 
             switch (_databaseType)
             {
-                case "SQLite":
-                    connectionString = _configuration.GetConnectionString("SQLiteConnection") ?? string.Empty;
+                case _sqliteDbName:
+                    connectionString = _configuration.GetConnectionString(_sqlliteConnectionKey) ?? string.Empty;
                     _connection = new SqliteConnection(connectionString);
                     break;
 
                 default:
-                    throw new InvalidOperationException("Invalid or unsupported database type.");
+                    throw new InvalidOperationException(_invalidDbError);
             }
             return _connection;
         }

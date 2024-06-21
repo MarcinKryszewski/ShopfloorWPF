@@ -1,19 +1,31 @@
-﻿using System;
-using Shopfloor.Shared.BaseClasses;
+﻿using Shopfloor.Shared.BaseClasses;
+using System;
 
 namespace Shopfloor.Models.ErrandStatusModel
 {
     internal sealed class ErrandStatus : DataModel
     {
         private readonly ErrandStatusDTO _data;
-        public ErrandStatus()
+        private const string _existingIdErrorMassage = "Id already exists";
+        public ErrandStatus(int id = 0)
         {
-            _data = new();
+            _data = new()
+            {
+                Id = id
+            };
         }
-        public int Id
+        public int? Id
         {
             get => _data.Id;
-            init => _data.Id = value;
+            set
+            {
+                string myName = nameof(Id);
+                ClearErrors(myName);
+
+                if (value == null || _data.Id == 0) _data.Id = value;
+
+                AddError(myName, _existingIdErrorMassage);
+            }
         }
         public required int ErrandId
         {
