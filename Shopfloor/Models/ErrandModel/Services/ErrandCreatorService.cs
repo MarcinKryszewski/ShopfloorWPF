@@ -1,37 +1,31 @@
-﻿using Shopfloor.Models.ErrandStatusModel;
-using Shopfloor.Models.ErrandStatusModel.Services;
+﻿using Shopfloor.Interfaces;
+using Shopfloor.Models.ErrandStatusModel;
 using System;
 
 namespace Shopfloor.Models.ErrandModel.Services
 {
-    internal interface IErrandCreatorService
+    internal class ErrandCreatorService : IModelCreatorService<Errand>
     {
-        public void Create(Errand item);
-    }
-    internal class ErrandCreatorService : IErrandCreatorService
-    {
-        private readonly IErrandDatabaseService _databaseService;
-        private readonly IErrandStoreService _storeService;
-        private readonly IErrandStatusDatabaseService _statusDatabaseService;
-        private readonly IErrandStatusStoreService _statusStoreService;
+        private readonly IDataModelDatabaseService<Errand> _databaseService;
+        private readonly IDataModelStoreService<Errand> _storeService;
+        private readonly IModelCreatorService<ErrandStatus> _statusCreator;
         public ErrandCreatorService(
-            IErrandDatabaseService errandDatabaseService,
-            IErrandStoreService errandStoreService,
-            IErrandStatusDatabaseService errandStatusDatabaseService,
-            IErrandStatusStoreService errandStatusStoreService)
+            IDataModelDatabaseService<Errand> errandDatabaseService,
+            IDataModelStoreService<Errand> errandStoreService,
+            IModelCreatorService<ErrandStatus> statusCreator)
         {
             _databaseService = errandDatabaseService;
             _storeService = errandStoreService;
-            _statusDatabaseService = errandStatusDatabaseService;
-            _statusStoreService = errandStatusStoreService;
+            _statusCreator = statusCreator;
         }
-        public void Create(Errand errand)
+        public void Create(Errand item)
         {
-            int errandId = _databaseService.AddErrandToDatabase(errand);
-            errand.Id = errandId;
-            _storeService.AddErrandToStore(errand);
+            int errandId = _databaseService.AddToDatabase(item);
+            item.Id = errandId;
+            _storeService.AddToStore(item);
             CreateErrandStatus(errandId);
         }
+
         private void CreateErrandStatus(int errandId)
         {
             string defaultReason = "SYSTEM";
@@ -42,10 +36,7 @@ namespace Shopfloor.Models.ErrandModel.Services
                 SetDate = DateTime.Now,
                 Reason = defaultReason
             };
-
-            int statusId = _statusDatabaseService.AddErrandStatusToDatabase(status);
-            status.Id = statusId;
-            _statusStoreService.AddErrandStatusToStore(status);
+            _statusCreator.Create(status);
         }
     }
 }

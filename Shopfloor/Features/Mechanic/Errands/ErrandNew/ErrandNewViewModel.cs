@@ -4,7 +4,6 @@ using Shopfloor.Features.Mechanic.Errands.Interfaces;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
-using Shopfloor.Models.ErrandModel.Services;
 using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
@@ -54,7 +53,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             MachineStore machineStore,
             ErrandTypeStore errandTypeStore,
             UserStore userStore,
-            IErrandCreatorService errandCreator,
+            IModelCreatorService<Errand> errandCreator,
             ErrandPartsListViewModel errandPartsListViewModel)
         {
             _selectedErrand = selectedErrandStore;

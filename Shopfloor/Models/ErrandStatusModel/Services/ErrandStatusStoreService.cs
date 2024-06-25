@@ -1,17 +1,14 @@
-﻿namespace Shopfloor.Models.ErrandStatusModel.Services
+﻿using Shopfloor.Interfaces;
+
+namespace Shopfloor.Models.ErrandStatusModel.Services
 {
-    internal class ErrandStatusStoreService : IErrandStatusStoreService
+    internal class ErrandStatusStoreService : IDataModelStoreService<ErrandStatus>
     {
         private readonly ErrandStatusStore _errandStatusStore;
         public ErrandStatusStoreService(ErrandStatusStore errandStatusStore)
         {
             _errandStatusStore = errandStatusStore;
         }
-        public void AddErrandStatusToStore(ErrandStatus status) => _errandStatusStore.Data.Add(status);
-    }
-
-    internal interface IErrandStatusStoreService
-    {
-        public void AddErrandStatusToStore(ErrandStatus item);
+        public void AddToStore(ErrandStatus status) => _errandStatusStore.Data.Add(status);
     }
 }

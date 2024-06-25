@@ -14,10 +14,14 @@ namespace Shopfloor.Models.ErrandPartModel
 {
     internal sealed partial class ErrandPart : DataModel
     {
+        private const string _existingIdErrorMassage = "Id already exists";
         private readonly ErrandPartDTO _data;
-        public ErrandPart()
+        public ErrandPart(int id = 0)
         {
-            _data = new();
+            _data = new()
+            {
+                Id = id
+            };
         }
         public double PricePerUnit => _data.PricePerUnit;
         public required int ErrandId
@@ -38,7 +42,15 @@ namespace Shopfloor.Models.ErrandPartModel
         public int? Id
         {
             get => _data.Id;
-            init => _data.Id = value;
+            set
+            {
+                string myName = nameof(Id);
+                ClearErrors(myName);
+
+                if (value == null || _data.Id == 0) _data.Id = value;
+
+                AddError(myName, _existingIdErrorMassage);
+            }
         }
         public DateTime? ExpectedDeliveryDate
         {

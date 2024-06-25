@@ -22,7 +22,7 @@ namespace Shopfloor.Tests.Models.ErrandModel.Services
             ErrandDatabaseService service = new(provider);
 
             // Act
-            int result = await Task.Run(() => service.AddErrandToDatabase(errand));
+            int result = await Task.Run(() => service.AddToDatabase(errand));
 
             // Assert
             result.Should().Be(errandId);

@@ -2,17 +2,13 @@
 
 namespace Shopfloor.Models.ErrandModel.Services
 {
-    internal interface IErrandDatabaseService
+    internal class ErrandDatabaseService : IDataModelDatabaseService<Errand>
     {
-        public int AddErrandToDatabase(Errand item);
-    }
-    internal class ErrandDatabaseService : IErrandDatabaseService
-    {
-        private readonly IProvider<Errand> _errandProvider;
-        public ErrandDatabaseService(IProvider<Errand> errandProvider)
+        private readonly IProvider<Errand> _provider;
+        public ErrandDatabaseService(IProvider<Errand> provider)
         {
-            _errandProvider = errandProvider;
+            _provider = provider;
         }
-        public int AddErrandToDatabase(Errand errand) => _errandProvider.Create(errand).Result;
+        public int AddToDatabase(Errand item) => _provider.Create(item).Result;
     }
 }

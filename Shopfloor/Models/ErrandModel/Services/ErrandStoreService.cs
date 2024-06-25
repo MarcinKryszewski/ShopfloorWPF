@@ -3,18 +3,13 @@ using Shopfloor.Models.ErrandModel.Store;
 
 namespace Shopfloor.Models.ErrandModel.Services
 {
-    internal class ErrandStoreService : IErrandStoreService
+    internal class ErrandStoreService : IDataModelStoreService<Errand>
     {
-        private readonly IDataStore<Errand> _errandStore;
-        public ErrandStoreService(IDataStore<Errand> errandStore)
+        private readonly IDataStore<Errand> _store;
+        public ErrandStoreService(IDataStore<Errand> store)
         {
-            _errandStore = errandStore;
+            _store = store;
         }
-        public void AddErrandToStore(Errand errand) => _errandStore.Data.Add(errand);
-    }
-
-    internal interface IErrandStoreService
-    {
-        public void AddErrandToStore(Errand item);
+        public void AddToStore(Errand item) => _store.Data.Add(item);
     }
 }
