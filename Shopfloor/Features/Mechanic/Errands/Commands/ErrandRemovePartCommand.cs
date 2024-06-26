@@ -1,6 +1,8 @@
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Models.ErrandPartModel;
+using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.Commands;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Shopfloor.Features.Mechanic.Errands.Commands
@@ -20,8 +22,13 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         {
             if (parameter is null) return;
             if (parameter.GetType() != typeof(int)) return;
-            ErrandPart errandPart = _errandStore.ErrandParts.First((ep) => ep.PartId == (int)parameter);
-            _errandStore.ErrandParts.Remove(errandPart);
+            if (_viewModel.ErrandData is null) return;
+
+            int partId = (int)parameter;
+            List<ErrandPart> parts = _viewModel.ErrandData.Parts;
+            ErrandPart? errandPart = parts.FirstOrDefault((p) => p.PartId == partId);
+            if (errandPart != null) parts.Remove(errandPart);
+
             _viewModel.ErrandParts.Refresh();
         }
     }

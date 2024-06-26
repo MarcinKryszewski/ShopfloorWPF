@@ -23,7 +23,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
             if (parameter is null) return;
             ErrandCreatorData creatorData = (ErrandCreatorData)parameter;
             AddErrand(creatorData.Errand);
-            AddErrandParts(creatorData.Parts, (int)creatorData.Errand.Id!);
+            AddErrandParts(creatorData.Parts);
         }
         private void AddErrand(Errand errand)
         {
@@ -33,16 +33,15 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
             _errandCreator.Create(errand);
             ErrandCreated?.Invoke();
         }
-        private void AddErrandParts(List<Part> parts, int id)
+        private void AddErrandParts(List<ErrandPart> parts)
         {
-            foreach (Part part in parts)
+            if (parts.Count == 0) return;
+            foreach (ErrandPart part in parts)
             {
-                _partCreator.Create(new()
-                {
-                    ErrandId = id,
-                    PartId = (int)part.Id!,
-                });
+                _partCreator.Create(part);
             }
+            //TODO
+
         }
     }
 }

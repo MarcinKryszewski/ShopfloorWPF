@@ -28,7 +28,7 @@ namespace Shopfloor.Models.ErrandModel.Services
 
         private void CreateErrandStatus(int errandId)
         {
-            string defaultReason = "SYSTEM";
+            string defaultReason = "NEW ERRAND CREATED";
             ErrandStatus status = new()
             {
                 ErrandId = errandId,

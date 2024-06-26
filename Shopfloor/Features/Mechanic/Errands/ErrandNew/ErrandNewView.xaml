@@ -236,6 +236,7 @@
                 Height="50"
                 Margin="5,0"
                 Command="{Binding Path=ShowPartsListCommand}"
+                CommandParameter="{Binding Path=ErrandCreator}"
                 Content="DODAJ CZĘŚCI"
                 Style="{StaticResource ResourceKey=ButtonMain}"
                 Visibility="{Binding IsPartsListVisible}" />

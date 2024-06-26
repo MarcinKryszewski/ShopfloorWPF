@@ -99,7 +99,9 @@ namespace Shopfloor.Hosts.Database
         private static void ErrandPartServices(IServiceCollection services)
         {
             services.AddSingleton<ErrandPartStore>();
+            services.AddSingleton<IDataStore<ErrandPart>, ErrandPartStore>();
             services.AddSingleton<ErrandPartProvider>();
+            services.AddSingleton<IProvider<ErrandPart>, ErrandPartProvider>();
             services.AddSingleton<ErrandPartCombiner>();
 
             services.AddSingleton<ErrandPartToErrandPartStatus>();
@@ -126,7 +128,9 @@ namespace Shopfloor.Hosts.Database
         private static void ErrandPartStatusServices(IServiceCollection services)
         {
             services.AddSingleton<ErrandPartStatusStore>();
+            services.AddSingleton<IDataStore<ErrandPartStatus>, ErrandPartStatusStore>();
             services.AddSingleton<ErrandPartStatusProvider>();
+            services.AddSingleton<IProvider<ErrandPartStatus>, ErrandPartStatusProvider>();
             services.AddSingleton<ErrandPartStatusCombiner>();
 
             services.AddSingleton<IModelCreatorService<ErrandPartStatus>, ErrandPartStatusCreatorService>();

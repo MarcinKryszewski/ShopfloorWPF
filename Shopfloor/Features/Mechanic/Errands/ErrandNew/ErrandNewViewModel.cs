@@ -4,14 +4,9 @@ using Shopfloor.Features.Mechanic.Errands.Interfaces;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
-using Shopfloor.Models.ErrandModel.Store;
 using Shopfloor.Models.ErrandPartModel;
-using Shopfloor.Models.ErrandPartModel.Store;
-using Shopfloor.Models.ErrandPartStatusModel;
-using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
-using Shopfloor.Models.PartModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
@@ -28,11 +23,6 @@ using System.Windows.Input;
 
 namespace Shopfloor.Features.Mechanic.Errands
 {
-    internal sealed class ErrandCreatorData
-    {
-        public required Errand Errand { get; set; }
-        public List<Part> Parts { get; set; } = [];
-    }
     internal sealed partial class ErrandNewViewModel : ViewModelBase
     {
         private Errand _errand;
@@ -54,23 +44,19 @@ namespace Shopfloor.Features.Mechanic.Errands
             ErrandTypeStore errandTypeStore,
             UserStore userStore,
             IModelCreatorService<Errand> errandCreator,
-            ErrandPartsListViewModel errandPartsListViewModel)
+            ErrandPartsListViewModel errandPartsListViewModel,
+            IModelCreatorService<ErrandPart> partCreator)
         {
             _selectedErrand = selectedErrandStore;
             _currentUserId = (int)currentUserStore.User!.Id!;
 
-            _errand = new()
-            {
-                CreatedById = _currentUserId,
-            };
-            _errandCreatorData = new()
-            {
-                Errand = _errand
-            };
+            _errand = new() { CreatedById = _currentUserId, };
+            _errandCreatorData = new() { Errand = _errand, UserId = _currentUserId };
 
-            NewErrandCommand = new ErrandNewCommand(errandCreator);
+            NewErrandCommand = new ErrandNewCommand(errandCreator, partCreator);
             ReturnCommand = new NavigationCommand<ErrandsListViewModel>(navigationService).Navigate();
             PrioritySetCommand = new PrioritySetCommand(this);
+
             ShowPartsListCommand = new ErrandsShowPartsList(this, errandPartsListViewModel);
 
             NewErrandCommand.ErrandCreated += OnErrandCreated;
@@ -240,6 +226,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             set
             {
                 _partsList = value;
+                if (_partsList is not null) _partsList.ErrandData = _errandCreatorData;
                 OnPropertyChanged(nameof(PartsList));
                 OnPropertyChanged(nameof(IsPartsListVisible));
             }

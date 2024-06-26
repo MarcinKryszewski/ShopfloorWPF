@@ -10,31 +10,33 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
     internal sealed class ErrandAddPartCommand : CommandBase
     {
         private readonly ErrandPartsListViewModel _viewModel;
-        private readonly SelectedErrandStore _errandStore;
+        //private ErrandCreatorData _errandCreatorData;
 
-        public ErrandAddPartCommand(ErrandPartsListViewModel viewModel, SelectedErrandStore errandStore)
+        public ErrandAddPartCommand(ErrandPartsListViewModel viewModel)
         {
             _viewModel = viewModel;
-            _errandStore = errandStore;
         }
 
         public override void Execute(object? parameter)
         {
+            if (parameter is null) return;
+            ErrandCreatorData creatorData = (ErrandCreatorData)parameter;
+
             Part? selectedPart = _viewModel.SelectedPart;
-            ObservableCollection<ErrandPart> errandParts = _errandStore.ErrandParts;
 
             if (selectedPart is null) return;
             if (selectedPart.Id is null) return;
 
-            if (errandParts.FirstOrDefault((p) => p.PartId == selectedPart.Id) == null)
+            if (creatorData.Parts.FirstOrDefault((ep) => ep.PartId == selectedPart.Id) == null)
             {
                 ErrandPart errandPart = new()
                 {
+                    PartId = (int)selectedPart.Id,
                     Part = selectedPart,
                     ErrandId = 0,
-                    PartId = (int)selectedPart.Id
+                    OrderedById = creatorData.UserId
                 };
-                errandParts.Add(errandPart);
+                creatorData.Parts.Add(errandPart);
                 _viewModel.ErrandParts.Refresh();
             }
         }
