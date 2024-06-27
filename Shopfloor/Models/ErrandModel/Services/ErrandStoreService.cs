@@ -11,5 +11,10 @@ namespace Shopfloor.Models.ErrandModel.Services
             _store = store;
         }
         public void AddToStore(Errand item) => _store.Data.Add(item);
+
+        public void EditInStore(Errand item)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

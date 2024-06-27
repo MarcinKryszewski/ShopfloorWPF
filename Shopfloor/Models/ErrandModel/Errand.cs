@@ -7,6 +7,7 @@ using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.BaseClasses;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Shopfloor.Models.ErrandModel
 {
@@ -29,6 +30,7 @@ namespace Shopfloor.Models.ErrandModel
         }
         public ErrandDisplay Display => _display;
         public List<ErrandStatus> Statuses => _errandStatuses;
+        public ErrandStatus LatestStatus => _errandStatuses.Last();
         public void AddStatus(ErrandStatus status) => _errandStatuses.Add(status);
         public List<ErrandPart> Parts => _parts;
         public void Validate() => _validation.Validate();

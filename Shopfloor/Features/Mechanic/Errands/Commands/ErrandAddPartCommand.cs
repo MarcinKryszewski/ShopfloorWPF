@@ -33,7 +33,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
                 {
                     PartId = (int)selectedPart.Id,
                     Part = selectedPart,
-                    ErrandId = 0,
+                    ErrandId = (int)creatorData.Errand.Id!,
                     OrderedById = creatorData.UserId
                 };
                 creatorData.Parts.Add(errandPart);

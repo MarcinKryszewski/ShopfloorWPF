@@ -27,7 +27,15 @@ namespace Shopfloor.Models.ErrandPartModel
         public required int ErrandId
         {
             get => _data.ErrandId;
-            init => _data.ErrandId = value;
+            set
+            {
+                string myName = nameof(ErrandId);
+                ClearErrors(myName);
+
+                if (_data.ErrandId == 0) _data.ErrandId = value;
+
+                AddError(myName, _existingIdErrorMassage);
+            }
         }
         public bool Canceled
         {

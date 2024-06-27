@@ -146,6 +146,7 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<IModelCreatorService<ErrandStatus>, ErrandStatusCreatorService>();
             services.AddSingleton<IDataModelDatabaseService<ErrandStatus>, ErrandStatusDatabaseService>();
             services.AddSingleton<IDataModelStoreService<ErrandStatus>, ErrandStatusStoreService>();
+            services.AddSingleton<IModelEditorService<ErrandStatus>, ErrandStatusEditorService>();
         }
         private static void ErrandTypeServices(IServiceCollection services)
         {

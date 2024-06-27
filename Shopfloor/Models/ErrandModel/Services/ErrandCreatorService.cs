@@ -23,19 +23,22 @@ namespace Shopfloor.Models.ErrandModel.Services
             int errandId = _databaseService.AddToDatabase(item);
             item.Id = errandId;
             _storeService.AddToStore(item);
-            CreateErrandStatus(errandId);
+            CreateErrandStatus(item);
         }
 
-        private void CreateErrandStatus(int errandId)
+        private void CreateErrandStatus(Errand errand)
         {
             string defaultReason = "NEW ERRAND CREATED";
+            if (errand.Id is null) return;
+
             ErrandStatus status = new()
             {
-                ErrandId = errandId,
+                ErrandId = (int)errand.Id,
                 StatusName = ErrandStatusList.NoPartsList,
                 SetDate = DateTime.Now,
                 Reason = defaultReason
             };
+            errand.AddStatus(status);
             _statusCreator.Create(status);
         }
     }

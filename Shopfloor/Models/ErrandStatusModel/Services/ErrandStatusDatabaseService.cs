@@ -1,4 +1,5 @@
-﻿using Shopfloor.Interfaces;
+﻿using System.Threading.Tasks;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandStatusModel.Services
 {
@@ -10,5 +11,6 @@ namespace Shopfloor.Models.ErrandStatusModel.Services
             _errandStatusProvider = errandStatusProvider;
         }
         public int AddToDatabase(ErrandStatus item) => _errandStatusProvider.Create(item).Result;
+        public void EditInDatabase(ErrandStatus item) => Task.Run(() => _errandStatusProvider.Update(item));
     }
 }

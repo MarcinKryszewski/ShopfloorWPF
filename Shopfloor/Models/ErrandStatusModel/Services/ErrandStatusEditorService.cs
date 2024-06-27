@@ -1,8 +1,9 @@
 using Shopfloor.Interfaces;
+using Shopfloor.Shared.BaseClasses;
 
 namespace Shopfloor.Models.ErrandStatusModel.Services
 {
-    internal class ErrandStatusEditorService
+    internal class ErrandStatusEditorService : IModelEditorService<ErrandStatus>
     {
         private readonly IDataModelDatabaseService<ErrandStatus> _databaseService;
         private readonly IDataModelStoreService<ErrandStatus> _storeService;
@@ -15,6 +16,11 @@ namespace Shopfloor.Models.ErrandStatusModel.Services
         public void Edit(ErrandStatus item)
         {
             _storeService.EditInStore(item);
+            _databaseService.EditInDatabase(item);
         }
+    }
+    internal interface IModelEditorService<T> where T : DataModel
+    {
+        public void Edit(T item);
     }
 }

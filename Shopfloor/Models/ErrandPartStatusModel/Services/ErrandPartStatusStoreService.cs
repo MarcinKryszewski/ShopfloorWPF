@@ -10,5 +10,10 @@ namespace Shopfloor.Models.ErrandPartStatusModel.Services
             _store = store;
         }
         public void AddToStore(ErrandPartStatus item) => _store.Data.Add(item);
+
+        public void EditInStore(ErrandPartStatus item)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
