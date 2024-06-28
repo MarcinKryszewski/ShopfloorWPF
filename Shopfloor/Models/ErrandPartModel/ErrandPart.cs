@@ -16,7 +16,7 @@ namespace Shopfloor.Models.ErrandPartModel
     {
         private const string _existingIdErrorMassage = "Id already exists";
         private readonly ErrandPartDTO _data;
-        public ErrandPart(int id = 0)
+        public ErrandPart(int? id = 0)
         {
             _data = new()
             {
@@ -32,9 +32,13 @@ namespace Shopfloor.Models.ErrandPartModel
                 string myName = nameof(ErrandId);
                 ClearErrors(myName);
 
-                if (_data.ErrandId == 0) _data.ErrandId = value;
+                if (_data.ErrandId != 0)
+                {
+                    AddError(myName, _existingIdErrorMassage);
+                    return;
+                }
 
-                AddError(myName, _existingIdErrorMassage);
+                _data.ErrandId = value;
             }
         }
         public bool Canceled
@@ -55,9 +59,14 @@ namespace Shopfloor.Models.ErrandPartModel
                 string myName = nameof(Id);
                 ClearErrors(myName);
 
-                if (value == null || _data.Id == 0) _data.Id = value;
+                if (_data.Id != 0 && _data.Id is not null)
+                {
+                    AddError(myName, _existingIdErrorMassage);
+                    return;
+                }
 
-                AddError(myName, _existingIdErrorMassage);
+                _data.Id = value;
+
             }
         }
         public DateTime? ExpectedDeliveryDate

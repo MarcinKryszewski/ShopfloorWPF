@@ -27,5 +27,10 @@ namespace Shopfloor.Shared.BaseClasses
         {
             if (_propertyErrors.Remove(propertyName)) OnErrorsChanged(propertyName);
         }
+        public int CountErrors(string propertyName)
+        {
+            if (!_propertyErrors.TryGetValue(propertyName, out _)) return 0;
+            return _propertyErrors[propertyName]?.Count ?? 0;
+        }
     }
 }

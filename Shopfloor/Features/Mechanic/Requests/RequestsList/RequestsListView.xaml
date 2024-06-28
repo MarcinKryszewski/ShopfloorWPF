@@ -12,15 +12,15 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </UserControl.Resources>
 
     <Grid Margin="30,20,20,20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <TextBlock
@@ -30,7 +30,7 @@
             FontSize="32"
             FontWeight="SemiBold"
             Foreground="{StaticResource BrushPurple400}"
-            Text="Zamówienia / pobrania" />
+            Text="Zamówienia / pobrania"/>
 
         <TextBlock
             Grid.Row="1"
@@ -40,7 +40,7 @@
             FontSize="13"
             FontWeight="SemiBold"
             Foreground="{StaticResource BrushPurple400}"
-            Text="Filtr" />
+            Text="Filtr"/>
 
         <Grid
             Grid.Row="1"
@@ -54,19 +54,19 @@
                 Foreground="#FF8B8F96"
                 IsHitTestVisible="False"
                 Text="Szukaj ..."
-                Visibility="{Binding ElementName=textBoxFilter, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}" />
+                Visibility="{Binding ElementName=textBoxFilter, Path=Text.IsEmpty, Converter={StaticResource BoolToVis}}"/>
 
             <TextBox
                 Name="textBoxFilter"
                 Style="{StaticResource filterTextBox}"
-                Text="{Binding FilterText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding FilterText, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
 
         <Separator
             Grid.Row="2"
             Height="1"
             Margin="0,-3,0,5"
-            Background="#DAE2EA" />
+            Background="#DAE2EA"/>
 
         <StackPanel
             Grid.Row="1"
@@ -75,9 +75,11 @@
             <Button
                 BorderBrush="{StaticResource BrushPurple700}"
                 Content="Wszystkie"
-                Style="{StaticResource tabButton}" />
-            <Button Content="Moje" Style="{StaticResource tabButton}" />
-            <Button Content="Nieprzypisane" Style="{StaticResource tabButton}" />
+                Style="{StaticResource tabButton}"/>
+            <Button Content="Moje"
+                    Style="{StaticResource tabButton}"/>
+            <Button Content="Nieprzypisane"
+                    Style="{StaticResource tabButton}"/>
         </StackPanel>
 
         <DataGrid
@@ -90,7 +92,8 @@
             SelectedItem="{Binding Path=SelectedRow, Mode=TwoWay}"
             Style="{DynamicResource DataGridMain}">
             <DataGrid.RowStyle>
-                <Style BasedOn="{StaticResource DataGridRowMain}" TargetType="DataGridRow" />
+                <Style BasedOn="{StaticResource DataGridRowMain}"
+                        TargetType="DataGridRow"/>
             </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn
@@ -98,7 +101,7 @@
                     Binding="{Binding Path=Id}"
                     CanUserResize="False"
                     Header="ID"
-                    IsReadOnly="True" />
+                    IsReadOnly="True"/>
                 <DataGridTemplateColumn
                     Width="auto"
                     CanUserResize="False"
@@ -115,28 +118,41 @@
                                     HorizontalContentAlignment="Center"
                                     Content="{Binding LastStatusText}"
                                     FontSize="12"
-                                    FontWeight="SemiBold" />
+                                    FontWeight="SemiBold"/>
                                 <Border.Style>
                                     <Style TargetType="Border">
-                                        <Setter Property="Background" Value="White" />
+                                        <Setter Property="Background"
+                                                Value="White"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding LastStatusText}" Value="OFERTOWANIE">
-                                                <Setter Property="Background" Value="#D64E12" />
+                                            <DataTrigger Binding="{Binding LastStatusText}"
+                                                    Value="OFERTOWANIE">
+                                                <Setter Property="Background"
+                                                        Value="#D64E12"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding LastStatusText}" Value="ZATWIERDZANIE">
-                                                <Setter Property="Background" Value="#F9A52C" />
+                                            <DataTrigger Binding="{Binding LastStatusText}"
+                                                    Value="ZATWIERDZANIE">
+                                                <Setter Property="Background"
+                                                        Value="#F9A52C"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding LastStatusText}" Value="ZAMAWIANIE">
-                                                <Setter Property="Background" Value="#EFDF48" />
+                                            <DataTrigger Binding="{Binding LastStatusText}"
+                                                    Value="ZAMAWIANIE">
+                                                <Setter Property="Background"
+                                                        Value="#EFDF48"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding LastStatusText}" Value="DOSTARCZANIE">
-                                                <Setter Property="Background" Value="#60DBE8" />
+                                            <DataTrigger Binding="{Binding LastStatusText}"
+                                                    Value="DOSTARCZANIE">
+                                                <Setter Property="Background"
+                                                        Value="#60DBE8"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding LastStatusText}" Value="POBIERANIE">
-                                                <Setter Property="Background" Value="#16A4D8" />
+                                            <DataTrigger Binding="{Binding LastStatusText}"
+                                                    Value="POBIERANIE">
+                                                <Setter Property="Background"
+                                                        Value="#16A4D8"/>
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding LastStatusText}" Value="ZAKOŃCZONE">
-                                                <Setter Property="Background" Value="#8BD346" />
+                                            <DataTrigger Binding="{Binding LastStatusText}"
+                                                    Value="ZAKOŃCZONE">
+                                                <Setter Property="Background"
+                                                        Value="#8BD346"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -147,40 +163,40 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn
                     Width="auto"
-                    Binding="{Binding Path=Part.Type.Name}"
+                    Binding="{Binding Path=Part.PartType.Name}"
                     CanUserResize="False"
                     Header="RODZAJ CZĘŚCI"
-                    IsReadOnly="True" />
+                    IsReadOnly="True"/>
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding Path=Part.NamePl}"
                     CanUserResize="False"
                     Header="NAZWA CZĘŚCI"
-                    IsReadOnly="True" />
+                    IsReadOnly="True"/>
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding Path=AmountText}"
                     CanUserResize="False"
                     Header="ILOŚĆ"
-                    IsReadOnly="True" />
+                    IsReadOnly="True"/>
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding Path=OrderedByUser.FullName}"
                     CanUserResize="False"
                     Header="ZAMAWIAJĄCY"
-                    IsReadOnly="True" />
+                    IsReadOnly="True"/>
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding Path=Errand.Display.MachineText}"
                     CanUserResize="False"
                     Header="MASZYNA"
-                    IsReadOnly="True" />
+                    IsReadOnly="True"/>
                 <DataGridTextColumn
                     Width="*"
                     Binding="{Binding Path=Errand.Display.DescriptionShort}"
                     CanUserResize="False"
                     Header="DZIAŁANIE"
-                    IsReadOnly="True" />
+                    IsReadOnly="True"/>
                 <DataGridTemplateColumn
                     Width="auto"
                     Header="AKCJE"
@@ -188,11 +204,12 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Command="{Binding Path=DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Style="{StaticResource gridInfoButton}">
+                                <Button Command="{Binding Path=DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        Style="{StaticResource gridInfoButton}">
                                     <TextBlock
                                         FontFamily="Segoe MDL2 Assets"
                                         Style="{StaticResource gridButtonIcon}"
-                                        Text="&#xE7B3;" />
+                                        Text="&#xE7B3;"/>
                                 </Button>
                                 <Button
                                     Margin="5,0,0,0"
@@ -202,7 +219,7 @@
                                     <TextBlock
                                         FontFamily="Segoe MDL2 Assets"
                                         Style="{StaticResource gridButtonIcon}"
-                                        Text="&#xE70F;" />
+                                        Text="&#xE70F;"/>
                                 </Button>
                             </StackPanel>
                         </DataTemplate>
