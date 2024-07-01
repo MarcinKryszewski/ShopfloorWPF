@@ -9,7 +9,7 @@ namespace Shopfloor.Interfaces
     }
     internal interface ICombinerManager<T>
     {
-        public Task CombineAll(bool shouldForce);
+        public Task CombineAll(bool shouldForce = false);
         public Task CombineOne(T item);
         public bool IsCombined { get; }
     }

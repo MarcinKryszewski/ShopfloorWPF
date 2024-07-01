@@ -19,14 +19,14 @@ namespace Shopfloor.Features.Admin.PartTypes
     internal sealed class PartTypesListViewModel : ViewModelBase, IInputForm<PartType>
     {
         private readonly ObservableCollection<PartType> _partTypes = [];
-        private readonly PartTypeStore _partTypesStore;
+        private readonly IDataStore<PartType> _partTypesStore;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         private bool _isEdit;
         private string _name = string.Empty;
         private string _searchText = string.Empty;
         private PartType? _selectedPartType;
         private readonly PartTypeProvider _partTypeProvider;
-        public PartTypesListViewModel(PartTypeProvider partTypeProvider, PartTypeStore partTypeStore)
+        public PartTypesListViewModel(PartTypeProvider partTypeProvider, IDataStore<PartType> partTypeStore)
         {
             _partTypeProvider = partTypeProvider;
 

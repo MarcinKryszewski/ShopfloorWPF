@@ -1,5 +1,6 @@
 using Shopfloor.Features.Plannist.Commands;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartModel.Store.Combine;
@@ -20,8 +21,8 @@ namespace Shopfloor.Features.Plannist
     {
         private List<ErrandPart> _parts = [];
         private readonly SelectedRequestStore _requestStore;
-        private readonly ErrandPartStore _errandPartStore;
-        private readonly ErrandPartCombiner _errandPartCombiner;
+        private readonly IDataStore<ErrandPart> _errandPartStore;
+        private readonly ICombinerManager<ErrandPart> _errandPartCombiner;
         private string? _filterText;
         public ErrandPart? SelectedRow
         {
@@ -51,8 +52,8 @@ namespace Shopfloor.Features.Plannist
             INotifier notifier,
             SelectedRequestStore selectedRequestStore,
             ErrandPartStatusProvider errandPartStatusProvider,
-            ErrandPartStore errandPartStore,
-            ErrandPartCombiner errandPartCombiner)
+            IDataStore<ErrandPart> errandPartStore,
+            ICombinerManager<ErrandPart> errandPartCombiner)
         {
             _requestStore = selectedRequestStore;
             _errandPartStore = errandPartStore;

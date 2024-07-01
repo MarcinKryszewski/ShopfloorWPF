@@ -5,8 +5,8 @@ namespace Shopfloor.Models.ErrandStatusModel.Services
 {
     internal class ErrandStatusStoreService : IDataModelStoreService<ErrandStatus>
     {
-        private readonly ErrandStatusStore _store;
-        public ErrandStatusStoreService(ErrandStatusStore errandStatusStore)
+        private readonly IDataStore<ErrandStatus> _store;
+        public ErrandStatusStoreService(IDataStore<ErrandStatus> errandStatusStore)
         {
             _store = errandStatusStore;
         }

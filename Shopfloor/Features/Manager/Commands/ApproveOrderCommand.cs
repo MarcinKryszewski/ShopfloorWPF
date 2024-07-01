@@ -1,5 +1,6 @@
 using Shopfloor.Features.Manager.OrderApprove;
 using Shopfloor.Features.Manager.Stores;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.UserModel;
@@ -18,13 +19,13 @@ namespace Shopfloor.Features.Manager.Commands
         private const string _orderApproved = "Dodano ofertę i przekazano do zatwierdzenia!";
 
         private readonly INavigationService _navigationService;
-        private readonly ErrandPartStatusStore _errandPartStatusStore;
+        private readonly IDataStore<ErrandPartStatus> _errandPartStatusStore;
         private readonly INotifier _notifier;
         private readonly SelectedRequestStore _requestStore;
         private readonly OrderApproveViewModel _viewModel;
         private readonly ErrandPartStatusProvider _provider;
         private readonly User _currentUser;
-        public ApproveOrderCommand(INavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, INotifier notifier, SelectedRequestStore requestStore, OrderApproveViewModel viewModel, ICurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
+        public ApproveOrderCommand(INavigationService navigationService, IDataStore<ErrandPartStatus> errandPartStatusStore, INotifier notifier, SelectedRequestStore requestStore, OrderApproveViewModel viewModel, ICurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
         {
             _navigationService = navigationService;
             _errandPartStatusStore = errandPartStatusStore;

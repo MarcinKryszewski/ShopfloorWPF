@@ -9,10 +9,10 @@ namespace Shopfloor.Models.UserModel.Store.Combine
 {
     internal sealed class UserToRole : ICombiner<User>
     {
-        private readonly UserStore _userStore;
-        private readonly RoleStore _roleStore;
-        private readonly RoleUserStore _roleUserStore;
-        public UserToRole(UserStore userStore, RoleStore roleStore, RoleUserStore roleUserStore)
+        private readonly IDataStore<User> _userStore;
+        private readonly IDataStore<Role> _roleStore;
+        private readonly IDataStore<RoleUser> _roleUserStore;
+        public UserToRole(IDataStore<User> userStore, IDataStore<Role> roleStore, IDataStore<RoleUser> roleUserStore)
         {
             _userStore = userStore;
             _roleStore = roleStore;

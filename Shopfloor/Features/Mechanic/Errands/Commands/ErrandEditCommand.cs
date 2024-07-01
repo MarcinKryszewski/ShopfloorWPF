@@ -21,10 +21,10 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         private readonly SelectedErrandStore _currentErrand;
         private readonly IProvider<Errand> _errandProvider;
         private readonly ErrandPartProvider _errandPartProvider;
-        private readonly ErrandPartStore _errandPartStore;
+        private readonly IDataStore<ErrandPart> _errandPartStore;
         private readonly ErrandStatusProvider _errandStatus;
         private readonly ErrandPartStatusProvider _errandPartStatusProvider;
-        public ErrandEditCommand(ErrandEditViewModel viewModel, ICurrentUserStore currentUser, SelectedErrandStore selectedErrand, IProvider<Errand> errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, ErrandPartStore errandPartStore, ErrandPartStatusProvider errandPartStatusProvider)
+        public ErrandEditCommand(ErrandEditViewModel viewModel, ICurrentUserStore currentUser, SelectedErrandStore selectedErrand, IProvider<Errand> errandProvider, ErrandPartProvider errandPartProvider, ErrandStatusProvider errandStatusProvider, IDataStore<ErrandPart> errandPartStore, ErrandPartStatusProvider errandPartStatusProvider)
         {
             _viewModel = viewModel;
             _currentUserId = currentUser.User?.Id ?? -1;

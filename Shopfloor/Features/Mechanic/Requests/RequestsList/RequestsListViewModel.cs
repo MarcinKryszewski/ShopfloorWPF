@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Mechanic.Requests.Stores;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartModel.Store.Combine;
@@ -19,8 +20,8 @@ namespace Shopfloor.Features.Mechanic.Requests
     {
         private List<ErrandPart> _parts = [];
         private readonly SelectedRequestStore _requestStore;
-        private readonly ErrandPartCombiner _errandPartCombiner;
-        private readonly ErrandPartStore _errandPartStore;
+        private readonly ICombinerManager<ErrandPart> _errandPartCombiner;
+        private readonly IDataStore<ErrandPart> _errandPartStore;
         private string? _filterText;
         public ErrandPart? SelectedRow
         {
@@ -44,7 +45,7 @@ namespace Shopfloor.Features.Mechanic.Requests
         public ICommand EditCommand { get; }
         public ICommand DetailsCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public RequestsListViewModel(ICurrentUserStore currentUserStore, SelectedRequestStore selectedRequestStore, ErrandPartCombiner errandPartCombiner, ErrandPartStore errandPartStore)
+        public RequestsListViewModel(ICurrentUserStore currentUserStore, SelectedRequestStore selectedRequestStore, ICombinerManager<ErrandPart> errandPartCombiner, IDataStore<ErrandPart> errandPartStore)
         {
 
             _requestStore = selectedRequestStore;

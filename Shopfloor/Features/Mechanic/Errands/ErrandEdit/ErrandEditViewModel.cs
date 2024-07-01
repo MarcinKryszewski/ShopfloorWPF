@@ -36,11 +36,11 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly ErrandPartsListViewModel _errandPartsListViewModel;
         private readonly SelectedErrandStore _selectedErrand;
         private readonly IDataStore<Errand> _errandStore;
-        private readonly MachineStore _machineStore;
-        private readonly UserStore _userStore;
-        private readonly ErrandTypeStore _errandTypeStore;
-        private readonly ErrandPartStore _errandPartStore;
-        private readonly PartStore _partStore;
+        private readonly IDataStore<Machine> _machineStore;
+        private readonly IDataStore<User> _userStore;
+        private readonly IDataStore<ErrandType> _errandTypeStore;
+        private readonly IDataStore<ErrandPart> _errandPartStore;
+        private readonly IDataStore<Part> _partStore;
         private readonly ObservableCollection<User> _users = [];
         private ErrandDTO _errandDTO = new();
         public ErrandEditViewModel(
@@ -49,11 +49,11 @@ namespace Shopfloor.Features.Mechanic.Errands
             SelectedErrandStore selectedErrandStore,
             ICurrentUserStore currentUserStore,
             IDataStore<Errand> errandStore,
-            MachineStore machineStore,
-            UserStore userStore,
-            ErrandTypeStore errandTypeStore,
-            ErrandPartStore errandPartStore,
-            PartStore partStore,
+            IDataStore<Machine> machineStore,
+            IDataStore<User> userStore,
+            IDataStore<ErrandType> errandTypeStore,
+            IDataStore<ErrandPart> errandPartStore,
+            IDataStore<Part> partStore,
             IProvider<Errand> errandProvider,
             ErrandPartProvider errandPartProvider,
             ErrandStatusProvider errandStatusProvider,
@@ -174,58 +174,58 @@ namespace Shopfloor.Features.Mechanic.Errands
                 _machines.Clear();
             });
         }
-        private async Task FillLists(MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore, ErrandPartStore errandPartStore, PartStore partsStore)
+        private async Task FillLists()
         {
             List<Task> tasks = [];
-            tasks.Add(FillMachinesList(machineStore));
-            tasks.Add(FillUsersList(userStore));
-            tasks.Add(FillTypesList(errandTypeStore));
-            tasks.Add(FillPartsList(errandPartStore, partsStore));
+            tasks.Add(FillMachinesList());
+            tasks.Add(FillUsersList());
+            tasks.Add(FillTypesList());
+            tasks.Add(FillPartsList());
             await Task.WhenAll(tasks);
         }
-        private Task FillPartsList(ErrandPartStore errandPartStore, PartStore partsStore)
+        private Task FillPartsList()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
                 _selectedErrand.ErrandParts.Clear();
-                foreach (ErrandPart part in errandPartStore.Data)
+                foreach (ErrandPart part in _errandPartStore.Data)
                 {
                     if (part.ErrandId == _selectedErrand.SelectedErrand?.Id)
                     {
-                        part.Part = partsStore.Data.First(p => p.Id == part.PartId);
+                        part.Part = _partStore.Data.First(p => p.Id == part.PartId);
                         _selectedErrand.ErrandParts.Add(part);
                     }
                 }
             });
             return Task.CompletedTask;
         }
-        private Task FillMachinesList(MachineStore machineStore)
+        private Task FillMachinesList()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (Machine machine in machineStore.Data)
+                foreach (Machine machine in _machineStore.Data)
                 {
                     _machines.Add(machine);
                 }
             });
             return Task.CompletedTask;
         }
-        private Task FillTypesList(ErrandTypeStore errandTypeStore)
+        private Task FillTypesList()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (ErrandType type in errandTypeStore.Data)
+                foreach (ErrandType type in _errandTypeStore.Data)
                 {
                     _errandTypes.Add(type);
                 }
             });
             return Task.CompletedTask;
         }
-        private Task FillUsersList(UserStore userStore)
+        private Task FillUsersList()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (User user in userStore.Data)
+                foreach (User user in _userStore.Data)
                 {
                     _users.Add(user);
                 }
@@ -236,13 +236,13 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             ClearLists();
 
-            await FillLists(_machineStore, _userStore, _errandTypeStore, _errandPartStore, _partStore);
+            await FillLists();
 
             RefreshLists();
             SetupForm(_errandTypeStore, _machineStore, _userStore, _errandPartStore);
         }
 
-        private void SetupForm(ErrandTypeStore errandTypeStore, MachineStore machineStore, UserStore userStore, ErrandPartStore errandPartStore)
+        private void SetupForm(IDataStore<ErrandType> errandTypeStore, IDataStore<Machine> machineStore, IDataStore<User> userStore, IDataStore<ErrandPart> errandPartStore)
         {
             Errand? errand = _selectedErrand.SelectedErrand;
             if (errand == null) return;
@@ -257,7 +257,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             SetupPriority(errand);
             SetupParts(errandPartStore);
         }
-        public void SetupParts(ErrandPartStore errandPartStore)
+        public void SetupParts(IDataStore<ErrandPart> errandPartStore)
         {
             if (_selectedErrand.ErrandParts.Count > 0) PartsList = _errandPartsListViewModel;
         }

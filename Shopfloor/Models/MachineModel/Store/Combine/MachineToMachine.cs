@@ -7,8 +7,8 @@ namespace Shopfloor.Models.MachineModel.Store.Combine
 {
     internal sealed class MachineToMachine : ICombiner<Machine>
     {
-        private readonly MachineStore _machineStore;
-        public MachineToMachine(MachineStore machineStore)
+        private readonly IDataStore<Machine> _machineStore;
+        public MachineToMachine(IDataStore<Machine> machineStore)
         {
             _machineStore = machineStore;
         }

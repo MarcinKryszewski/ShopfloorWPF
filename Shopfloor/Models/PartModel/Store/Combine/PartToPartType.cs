@@ -9,9 +9,9 @@ namespace Shopfloor.Models.PartModel.Store.Combine
 {
     internal sealed class PartToPartType : ICombiner<Part>
     {
-        private readonly PartTypeStore _typesStore;
-        private readonly PartStore _partsStore;
-        public PartToPartType(PartTypeStore typesStore, PartStore partsStore)
+        private readonly IDataStore<PartType> _typesStore;
+        private readonly IDataStore<Part> _partsStore;
+        public PartToPartType(IDataStore<PartType> typesStore, IDataStore<Part> partsStore)
         {
             _typesStore = typesStore;
             _partsStore = partsStore;

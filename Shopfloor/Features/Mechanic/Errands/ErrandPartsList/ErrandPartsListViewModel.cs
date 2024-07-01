@@ -23,9 +23,9 @@ namespace Shopfloor.Features.Mechanic.Errands
     {
         private List<Part> _parts = [];
         private readonly SelectedErrandStore _errandStore;
-        private readonly PartStore _partStore;
-        private readonly ErrandPartStore _errandPartStore;
-        private readonly PartCombiner _partCombiner;
+        private readonly IDataStore<Part> _partStore;
+        private readonly IDataStore<ErrandPart> _errandPartStore;
+        private readonly ICombinerManager<Part> _partCombiner;
         private string _searchText = string.Empty;
         private ErrandCreatorData? _errandCreatorData;
         public string SearchText
@@ -67,7 +67,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         public ICommand AddPartToListCommand { get; }
         public ICommand RemovePartFromListCommand { get; }
         public Part? SelectedPart { get; set; }
-        public ErrandPartsListViewModel(SelectedErrandStore selectedErrandStore, PartStore partStore, ErrandPartStore errandPartStore, PartCombiner partCombiner)
+        public ErrandPartsListViewModel(SelectedErrandStore selectedErrandStore, IDataStore<Part> partStore, IDataStore<ErrandPart> errandPartStore, ICombinerManager<Part> partCombiner)
         {
             _errandStore = selectedErrandStore;
             _partStore = partStore;
@@ -115,8 +115,8 @@ namespace Shopfloor.Features.Mechanic.Errands
         //         _errandStore.ErrandParts.Clear();
         //     });
 
-        //     PartStore partsStore = _partStore;
-        //     ErrandPartStore errandPartStore = _errandPartStore;
+        //     IDataStore<Part> partsStore = _partStore;
+        //     IDataStore<ErrandPart> errandPartStore = _errandPartStore;
 
         //     //await LoadStores(partsStore, errandPartStore);
         //     //await CombineData(partsStore, errandPartStore);
@@ -131,30 +131,30 @@ namespace Shopfloor.Features.Mechanic.Errands
         //     });
         //     await DisplayList.ReloadSourceData();
         // }
-        public async Task FillLists(PartStore partsStore, ErrandPartStore errandPartStore)
+        public async Task FillLists()
         {
             List<Task> tasks = [];
-            tasks.Add(FillPartsList(partsStore));
-            tasks.Add(FillErrandPartsList(errandPartStore, partsStore));
+            tasks.Add(FillPartsList());
+            tasks.Add(FillErrandPartsList());
             if (tasks.Count > 0) await Task.WhenAll(tasks);
         }
-        private Task FillPartsList(PartStore partsStore)
+        private Task FillPartsList()
         {
-            _parts.AddRange(partsStore.Data);
+            _parts.AddRange(_partStore.Data);
             /*foreach (Part part in partsStore.Data)
             {
                 _parts.Add(part);
             }*/
             return Task.CompletedTask;
         }
-        private Task FillErrandPartsList(ErrandPartStore errandPartStore, PartStore partsStore)
+        private Task FillErrandPartsList()
         {
-            foreach (ErrandPart errandPart in errandPartStore.Data)
+            foreach (ErrandPart errandPart in _errandPartStore.Data)
             {
                 if (errandPart.LastStatusValue == 6) continue;
                 if (errandPart.ErrandId == _errandStore.SelectedErrand?.Id)
                 {
-                    errandPart.Part = partsStore.Data.First(p => p.Id == errandPart.PartId);
+                    errandPart.Part = _partStore.Data.First(p => p.Id == errandPart.PartId);
                     _errandStore.ErrandParts.Add(errandPart);
                 }
             }

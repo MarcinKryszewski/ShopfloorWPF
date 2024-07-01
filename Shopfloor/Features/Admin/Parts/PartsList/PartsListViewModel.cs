@@ -1,4 +1,5 @@
 using Shopfloor.Features.Admin.Parts.Stores;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
@@ -22,9 +23,9 @@ namespace Shopfloor.Features.Admin.Parts
         private string _searchText = string.Empty;
         private readonly ObservableCollection<Part> _parts;
         private readonly SelectedPartStore _selectedPart;
-        private readonly PartStore _partsStore;
-        private readonly SuppliersStore _suppliersStore;
-        private readonly PartTypeStore _partTypesStore;
+        private readonly IDataStore<Part> _partsStore;
+        private readonly IDataStore<Supplier> _suppliersStore;
+        private readonly IDataStore<PartType> _partTypesStore;
         public Visibility IsSelected => SelectedPart is null ? Visibility.Collapsed : Visibility.Visible;
         public ICollectionView Parts { get; }
         public Part? SelectedPart
@@ -53,7 +54,7 @@ namespace Shopfloor.Features.Admin.Parts
         public ICommand AddPartCommand { get; }
         public ICommand EditPartCommand { get; }
 
-        public PartsListViewModel(NavigationService navigationService, PartTypeStore partTypeStore, SuppliersStore suppliersStore, PartStore partStore, SelectedPartStore selectedPartStore)
+        public PartsListViewModel(NavigationService navigationService, IDataStore<PartType> partTypeStore, IDataStore<Supplier> suppliersStore, IDataStore<Part> partStore, SelectedPartStore selectedPartStore)
         {
             _parts = [];
             _selectedPart = selectedPartStore;

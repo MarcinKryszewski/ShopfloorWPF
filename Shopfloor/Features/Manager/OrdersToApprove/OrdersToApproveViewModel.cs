@@ -1,5 +1,6 @@
 using Shopfloor.Features.Manager.OrderApprove;
 using Shopfloor.Features.Manager.Stores;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartModel.Store.Combine;
@@ -21,8 +22,8 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
     {
         private List<ErrandPart> _orders = [];
         private readonly SelectedRequestStore _requestStore;
-        private readonly ErrandPartStore _errandPartStore;
-        private readonly ErrandPartCombiner _errandPartCombiner;
+        private readonly IDataStore<ErrandPart> _errandPartStore;
+        private readonly ICombinerManager<ErrandPart> _errandPartCombiner;
         private string? _filterText;
         public ErrandPart? SelectedRow
         {
@@ -42,7 +43,11 @@ namespace Shopfloor.Features.Manager.OrdersToApprove
         public ICommand ApproveCommand { get; }
         //public ICommand DetailsCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public OrdersToApproveViewModel(NavigationService navigationService, SelectedRequestStore selectedRequestStore, ErrandPartStore errandPartStore, ErrandPartCombiner errandPartCombiner)
+        public OrdersToApproveViewModel(
+            NavigationService navigationService,
+            SelectedRequestStore selectedRequestStore,
+            IDataStore<ErrandPart> errandPartStore,
+            ICombinerManager<ErrandPart> errandPartCombiner)
         {
             _requestStore = selectedRequestStore;
             _errandPartStore = errandPartStore;

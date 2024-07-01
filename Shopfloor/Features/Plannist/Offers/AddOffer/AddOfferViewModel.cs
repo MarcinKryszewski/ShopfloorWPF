@@ -21,7 +21,7 @@ namespace Shopfloor.Features.Plannist
     internal sealed partial class AddOfferViewModel : ViewModelBase
     {
         private readonly SelectedRequestStore _requestStore;
-        private readonly ErrandPartStore _errandPartStore;
+        private readonly IDataStore<ErrandPart> _errandPartStore;
         public ICommand ReturnCommand { get; }
         public ICommand ConfirmCommand { get; }
         public ErrandPart ErrandPart => _requestStore.Request!;
@@ -67,7 +67,7 @@ namespace Shopfloor.Features.Plannist
             }
         }
         public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
-        public AddOfferViewModel(NavigationService navigationService, SelectedRequestStore selectedRequestStore, ErrandPartStore errandPartStore, ICurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, INotifier notifier)
+        public AddOfferViewModel(NavigationService navigationService, SelectedRequestStore selectedRequestStore, IDataStore<ErrandPart> errandPartStore, ICurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, INotifier notifier)
         {
             _requestStore = selectedRequestStore;
             _errandPartStore = errandPartStore;
@@ -86,12 +86,12 @@ namespace Shopfloor.Features.Plannist
         }
         private Task LoadData()
         {
-            ErrandPartStore errandPartStore = _errandPartStore;
+            IDataStore<ErrandPart> errandPartStore = _errandPartStore;
 
             LoadHistoricalData(errandPartStore);
             return Task.CompletedTask;
         }
-        private void LoadHistoricalData(ErrandPartStore errandParts)
+        private void LoadHistoricalData(IDataStore<ErrandPart> errandParts)
         {
             HistoricalData = errandParts.Data.Where(part => part.PartId == ErrandPart.PartId);
         }

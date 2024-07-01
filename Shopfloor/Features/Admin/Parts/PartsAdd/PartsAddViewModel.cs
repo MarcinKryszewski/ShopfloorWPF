@@ -22,7 +22,7 @@ namespace Shopfloor.Features.Admin.Parts
         private readonly List<PartType> _partTypes;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         private readonly List<Supplier> _suppliers = [];
-        private readonly PartStore _partStore;
+        private readonly IDataStore<Part> _partStore;
         private string _details = string.Empty;
         private int? _index;
         private string _nameOriginal = string.Empty;
@@ -32,7 +32,7 @@ namespace Shopfloor.Features.Admin.Parts
         private Supplier? _supplier;
         private PartType? _type;
         private string? _unit;
-        public PartsAddViewModel(PartTypeStore partTypeStore, SuppliersStore suppliersStore, PartStore partStore, PartProvider partProvider, INavigationCommand<PartsListViewModel> returnCommand)
+        public PartsAddViewModel(IDataStore<PartType> partTypeStore, IDataStore<Supplier> suppliersStore, IDataStore<Part> partStore, PartProvider partProvider, INavigationCommand<PartsListViewModel> returnCommand)
         {
             _partStore = partStore;
 

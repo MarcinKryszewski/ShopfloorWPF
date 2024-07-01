@@ -44,6 +44,7 @@ using Shopfloor.Models.SupplierModel;
 using Shopfloor.Models.SupplierModel.Store.Combine;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Models.UserModel.Store.Combine;
+using Shopfloor.Services;
 
 namespace Shopfloor.Hosts.Database
 {
@@ -56,6 +57,7 @@ namespace Shopfloor.Hosts.Database
         {
             services.AddSingleton<DatabaseConnectionFactory>();
             ModelServices(services);
+            StoresServices(services);
         }
         public static void ModelServices(IServiceCollection services)
         {
@@ -74,17 +76,16 @@ namespace Shopfloor.Hosts.Database
             PartServices(services);
             PartTypeServices(services);
             ReservationServices(services);
-            RolePServices(services);
+            RoleServices(services);
             RoleUserServices(services);
             SupplierServices(services);
             UserServices(services);
         }
         private static void ErrandServices(IServiceCollection services)
         {
-            services.AddSingleton<ErrandStore, ErrandStore>();
             services.AddSingleton<IDataStore<Errand>, ErrandStore>();
             services.AddSingleton<IProvider<Errand>, ErrandProvider>();
-            services.AddSingleton<ErrandCombiner>();
+            services.AddSingleton<ICombinerManager<Errand>, ErrandCombiner>();
 
             services.AddSingleton<ErrandToErrandPart>();
             services.AddSingleton<ErrandToErrandStatus>();
@@ -98,11 +99,9 @@ namespace Shopfloor.Hosts.Database
         }
         private static void ErrandPartServices(IServiceCollection services)
         {
-            services.AddSingleton<ErrandPartStore>();
             services.AddSingleton<IDataStore<ErrandPart>, ErrandPartStore>();
-            services.AddSingleton<ErrandPartProvider>();
             services.AddSingleton<IProvider<ErrandPart>, ErrandPartProvider>();
-            services.AddSingleton<ErrandPartCombiner>();
+            services.AddSingleton<ICombinerManager<ErrandPart>, ErrandPartCombiner>();
 
             services.AddSingleton<ErrandPartToErrandPartStatus>();
             services.AddSingleton<ErrandPartToErrand>();
@@ -115,23 +114,21 @@ namespace Shopfloor.Hosts.Database
         }
         private static void ErrandPartOfferServices(IServiceCollection services)
         {
-            services.AddSingleton<ErrandPartOfferProvider>();
-            services.AddSingleton<ErrandPartOfferStore>();
-            services.AddSingleton<ErrandPartOfferCombiner>();
+            services.AddSingleton<IDataStore<ErrandPartOffer>, ErrandPartOfferStore>();
+            services.AddSingleton<IProvider<ErrandPartOffer>, ErrandPartOfferProvider>();
+            services.AddSingleton<ICombinerManager<ErrandPartOffer>, ErrandPartOfferCombiner>();
         }
         private static void ErrandPartOrderServices(IServiceCollection services)
         {
-            services.AddSingleton<ErrandPartOrderProvider>();
-            services.AddSingleton<ErrandPartOrderStore>();
-            services.AddSingleton<ErrandPartOrderCombiner>();
+            services.AddSingleton<IProvider<ErrandPartOrder>, ErrandPartOrderProvider>();
+            services.AddSingleton<IDataStore<ErrandPartOrder>, ErrandPartOrderStore>();
+            services.AddSingleton<ICombinerManager<ErrandPartOrder>, ErrandPartOrderCombiner>();
         }
         private static void ErrandPartStatusServices(IServiceCollection services)
         {
-            services.AddSingleton<ErrandPartStatusStore>();
             services.AddSingleton<IDataStore<ErrandPartStatus>, ErrandPartStatusStore>();
-            services.AddSingleton<ErrandPartStatusProvider>();
             services.AddSingleton<IProvider<ErrandPartStatus>, ErrandPartStatusProvider>();
-            services.AddSingleton<ErrandPartStatusCombiner>();
+            services.AddSingleton<ICombinerManager<ErrandPartStatus>, ErrandPartStatusCombiner>();
 
             services.AddSingleton<IModelCreatorService<ErrandPartStatus>, ErrandPartStatusCreatorService>();
             services.AddSingleton<IDataModelDatabaseService<ErrandPartStatus>, ErrandPartStatusDatabaseService>();
@@ -139,9 +136,9 @@ namespace Shopfloor.Hosts.Database
         }
         private static void ErrandStatusServices(IServiceCollection services)
         {
-            services.AddSingleton<ErrandStatusProvider>();
-            services.AddSingleton<ErrandStatusStore>();
-            services.AddSingleton<ErrandStatusCombiner>();
+            services.AddSingleton<IProvider<ErrandStatus>, ErrandStatusProvider>();
+            services.AddSingleton<IDataStore<ErrandStatus>, ErrandStatusStore>();
+            services.AddSingleton<ICombinerManager<ErrandStatus>, ErrandStatusCombiner>();
 
             services.AddSingleton<IModelCreatorService<ErrandStatus>, ErrandStatusCreatorService>();
             services.AddSingleton<IDataModelDatabaseService<ErrandStatus>, ErrandStatusDatabaseService>();
@@ -150,84 +147,95 @@ namespace Shopfloor.Hosts.Database
         }
         private static void ErrandTypeServices(IServiceCollection services)
         {
-            services.AddSingleton<ErrandTypeStore>();
-            services.AddSingleton<ErrandTypeProvider>();
-            services.AddSingleton<ErrandTypeCombiner>();
+            services.AddSingleton<IProvider<ErrandType>, ErrandTypeProvider>();
+            services.AddSingleton<IDataStore<ErrandType>, ErrandTypeStore>();
+            services.AddSingleton<ICombinerManager<ErrandType>, ErrandTypeCombiner>();
         }
         private static void MachineServices(IServiceCollection services)
         {
-            services.AddSingleton<MachineProvider>();
-            services.AddSingleton<MachineStore>();
-            services.AddSingleton<MachineCombiner>();
+            services.AddSingleton<IProvider<Machine>, MachineProvider>();
+            services.AddSingleton<IDataStore<Machine>, MachineStore>();
+            services.AddSingleton<ICombinerManager<Machine>, MachineCombiner>();
 
             services.AddSingleton<MachineToMachine>();
         }
         private static void MachinePartServices(IServiceCollection services)
         {
-            services.AddSingleton<MachinePartProvider>();
-            services.AddSingleton<MachinePartStore>();
-            services.AddSingleton<MachinePartCombiner>();
+            services.AddSingleton<IProvider<MachinePart>, MachinePartProvider>();
+            services.AddSingleton<IDataStore<MachinePart>, MachinePartStore>();
+            services.AddSingleton<ICombinerManager<MachinePart>, MachinePartCombiner>();
         }
         private static void MessageServices(IServiceCollection services)
         {
-            services.AddSingleton<MessageProvider>();
-            services.AddSingleton<MessageStore>();
-            services.AddSingleton<MessageCombiner>();
+            services.AddSingleton<IProvider<Message>, MessageProvider>();
+            services.AddSingleton<IDataStore<Message>, MessageStore>();
+            services.AddSingleton<ICombinerManager<Message>, MessageCombiner>();
         }
         private static void OfferServices(IServiceCollection services)
         {
-            services.AddSingleton<OfferProvider>();
-            services.AddSingleton<OfferStore>();
-            services.AddSingleton<OfferCombiner>();
+            services.AddSingleton<IProvider<Offer>, OfferProvider>();
+            services.AddSingleton<IDataStore<Offer>, OfferStore>();
+            services.AddSingleton<ICombinerManager<Offer>, OfferCombiner>();
         }
         private static void OrderServices(IServiceCollection services)
         {
-            services.AddSingleton<OrderProvider>();
-            services.AddSingleton<OrderCombiner>();
-            services.AddSingleton<OrderStore>();
+            services.AddSingleton<IProvider<Order>, OrderProvider>();
+            services.AddSingleton<IDataStore<Order>, OrderStore>();
+            services.AddSingleton<ICombinerManager<Order>, OrderCombiner>();
         }
         private static void PartServices(IServiceCollection services)
         {
-            services.AddSingleton<PartProvider>();
-            services.AddSingleton<PartStore>();
-            services.AddSingleton<PartCombiner>();
+            services.AddSingleton<IProvider<Part>, PartProvider>();
+            services.AddSingleton<IDataStore<Part>, PartStore>();
+            services.AddSingleton<ICombinerManager<Part>, PartCombiner>();
 
             services.AddSingleton<PartToPartType>();
         }
         private static void PartTypeServices(IServiceCollection services)
         {
-            services.AddSingleton<PartTypeProvider>();
-            services.AddSingleton<PartTypeStore>();
-            services.AddSingleton<PartTypeCombiner>();
+            services.AddSingleton<IProvider<PartType>, PartTypeProvider>();
+            services.AddSingleton<IDataStore<PartType>, PartTypeStore>();
+            services.AddSingleton<ICombinerManager<PartType>, PartTypeCombiner>();
         }
         private static void ReservationServices(IServiceCollection services)
         {
-            services.AddSingleton<ReservationProvider>();
-            services.AddSingleton<ReservationStore>();
-            services.AddSingleton<ReservationCombiner>();
+            services.AddSingleton<IProvider<Reservation>, ReservationProvider>();
+            services.AddSingleton<IDataStore<Reservation>, ReservationStore>();
+            services.AddSingleton<ICombinerManager<Reservation>, ReservationCombiner>();
         }
-        private static void RolePServices(IServiceCollection services)
+        private static void RoleServices(IServiceCollection services)
         {
-            services.AddSingleton<RoleStore>();
             services.AddSingleton<IProvider<Role>, RoleProvider>();
+            services.AddSingleton<IDataStore<Role>, RoleStore>();
+            // services.AddSingleton<ICombinerManager<Role>, RoleCombiner>();
         }
         private static void RoleUserServices(IServiceCollection services)
         {
+            // services.AddSingleton<IProvider<RoleUser>, RoleUserProvider>();
+            services.AddSingleton<IDataStore<RoleUser>, RoleUserStore>();
+            // services.AddSingleton<ICombinerManager<RoleUser>, RoleUserCombiner>();
+
             services.AddTransient<IProvider<RoleUser>, RoleIUserProvider>();
             services.AddTransient<IRoleIUserProvider, RoleIUserProvider>();
-            services.AddSingleton<RoleUserStore>();
+
         }
         private static void SupplierServices(IServiceCollection services)
         {
-            services.AddSingleton<SuppliersStore>();
-            services.AddSingleton<SupplierProvider>();
-            services.AddSingleton<SupplierCombiner>();
+            services.AddSingleton<IProvider<Supplier>, SupplierProvider>();
+            services.AddSingleton<IDataStore<Supplier>, SuppliersStore>();
+            services.AddSingleton<ICombinerManager<Supplier>, SupplierCombiner>();
         }
         private static void UserServices(IServiceCollection services)
         {
-            services.AddSingleton<UserStore>();
+            services.AddSingleton<IProvider<User>, UserProvider>();
+            services.AddSingleton<IDataStore<User>, UserStore>();
+            services.AddSingleton<ICombinerManager<User>, UserCombiner>();
+
             services.AddSingleton<IUserProvider, UserProvider>();
-            services.AddSingleton<UserCombiner>();
+        }
+        private static void StoresServices(IServiceCollection services)
+        {
+            services.AddSingleton<StoreRepository>();
         }
     }
 }

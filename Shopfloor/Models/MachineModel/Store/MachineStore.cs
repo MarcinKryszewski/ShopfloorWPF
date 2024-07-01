@@ -1,10 +1,11 @@
-﻿using Shopfloor.Shared.BaseClasses;
+﻿using Shopfloor.Interfaces;
+using Shopfloor.Shared.BaseClasses;
 
 namespace Shopfloor.Models.MachineModel
 {
     internal sealed class MachineStore : StoreBase<Machine>
     {
-        public MachineStore(MachineProvider provider) : base(provider)
+        public MachineStore(IProvider<Machine> provider) : base(provider)
         {
         }
     }

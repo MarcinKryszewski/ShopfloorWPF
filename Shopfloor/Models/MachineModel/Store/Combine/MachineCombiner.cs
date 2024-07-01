@@ -10,7 +10,7 @@ namespace Shopfloor.Models.MachineModel.Store
         private readonly MachineToMachine _machineToMachine;
         private readonly List<Machine> _data;
         public bool IsCombined { get; private set; }
-        public MachineCombiner(MachineStore store, MachineToMachine machineToMachine)
+        public MachineCombiner(IDataStore<Machine> store, MachineToMachine machineToMachine)
         {
             _machineToMachine = machineToMachine;
             _data = store.Data;

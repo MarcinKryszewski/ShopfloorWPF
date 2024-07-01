@@ -19,13 +19,13 @@ namespace Shopfloor.Features.Admin.Suppliers
     {
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         private readonly ObservableCollection<Supplier> _suppliers = [];
-        private readonly SuppliersStore _suppliersStore;
+        private readonly IDataStore<Supplier> _suppliersStore;
         private bool _isEdit;
         private string _name = string.Empty;
         private string _searchText = string.Empty;
         private Supplier? _selectedSupplier;
         private readonly SupplierProvider _supplierProvider;
-        public SuppliersListViewModel(SupplierProvider supplierProvider, SuppliersStore suppliersStore)
+        public SuppliersListViewModel(SupplierProvider supplierProvider, IDataStore<Supplier> suppliersStore)
         {
             _supplierProvider = supplierProvider;
 

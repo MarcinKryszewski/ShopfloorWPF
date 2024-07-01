@@ -5,10 +5,10 @@ using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
+using Shopfloor.Services;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.ViewModels;
-using Shopfloor.Stores;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,12 +31,18 @@ namespace Shopfloor.Features.Manager.OrderApprove
             set => ErrandPart.ExpectedDeliveryDate = value;
         }
         public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
-        public OrderApproveViewModel(SelectedRequestStore selectedRequestStore, INavigationService navigationService, ErrandPartStatusStore errandPartStatusStore, INotifier notifier, SelectedRequestStore requestStore, ICurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
+        public OrderApproveViewModel(
+            StoreRepository stores,
+            SelectedRequestStore selectedRequestStore,
+            INavigationService navigationService,
+            INotifier notifier,
+            SelectedRequestStore requestStore,
+            ErrandPartStatusProvider errandPartStatusProvider)
         {
             _requestStore = selectedRequestStore;
 
             ReturnCommand = new NavigationCommand<OrdersToApproveViewModel>(navigationService).Navigate();
-            ConfirmCommand = new ApproveOrderCommand(navigationService, errandPartStatusStore, notifier, requestStore, this, currentUserStore, errandPartStatusProvider);
+            ConfirmCommand = new ApproveOrderCommand(navigationService, stores.ErrandPartStatus, notifier, requestStore, this, stores.CurrentUser, errandPartStatusProvider);
 
             _errandPartValidation = new(this);
         }
@@ -46,7 +52,7 @@ namespace Shopfloor.Features.Manager.OrderApprove
             get => _requestStore.Request;
             set => _requestStore.Request = value;
         }
-        private void LoadHistoricalData(ErrandPartStore errandParts)
+        private void LoadHistoricalData(IDataStore<ErrandPart> errandParts)
         {
             HistoricalData = errandParts.Data.Where(part => part.PartId == ErrandPart.PartId);
         }

@@ -28,12 +28,12 @@ namespace Shopfloor.Features.Admin.Machines
         private string _machineNumber = string.Empty;
         private string _sapNumber = string.Empty;
         private string _machineSearchText = string.Empty;
-        private readonly MachineStore _machineStore;
+        private readonly IDataStore<Machine> _machineStore;
         private int _parentId;
         private Machine? _selectedMachine;
         private Machine? _selectedParent;
         private readonly MachineValidation _machineValidation;
-        public MachinesListViewModel(MachineStore machineStore, MachineProvider machineProvider)
+        public MachinesListViewModel(IDataStore<Machine> machineStore, MachineProvider machineProvider)
         {
             _machines = [];
             _machinesAll = [];

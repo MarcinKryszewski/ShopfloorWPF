@@ -10,7 +10,9 @@ using Shopfloor.Models.ErrandStatusModel.Services;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.UserModel;
+using Shopfloor.Services;
 using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared.BaseClasses;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
 using System;
@@ -32,27 +34,23 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly ObservableCollection<Machine> _machines = [];
         private readonly ObservableCollection<User> _users = [];
         private readonly SelectedErrandStore _selectedErrand;
-        private readonly MachineStore _machineStore;
-        private readonly UserStore _userStore;
-        private readonly ErrandTypeStore _errandTypeStore;
+        private readonly IDataStore<Machine> _machineStore;
+        private readonly IDataStore<User> _userStore;
+        private readonly IDataStore<ErrandType> _errandTypeStore;
         private readonly int _currentUserId;
         private readonly ErrandCreatorData _errandCreatorData;
 
         public ErrandNewViewModel(
             NavigationService navigationService,
-            SelectedErrandStore selectedErrandStore,
-            ICurrentUserStore currentUserStore,
-            MachineStore machineStore,
-            ErrandTypeStore errandTypeStore,
-            UserStore userStore,
+            StoreRepository stores,
             IModelCreatorService<Errand> errandCreator,
             ErrandPartsListViewModel errandPartsListViewModel,
             IModelCreatorService<ErrandPart> partCreator,
             IModelEditorService<ErrandStatus> errandStatusEditorService,
             IModelCreatorService<ErrandStatus> statusCreator)
         {
-            _selectedErrand = selectedErrandStore;
-            _currentUserId = (int)currentUserStore.User!.Id!;
+            _selectedErrand = stores.SelectedErrand;
+            _currentUserId = (int)stores.CurrentUser.User!.Id!;
 
             _errand = new() { CreatedById = _currentUserId, };
             _errandCreatorData = new() { Errand = _errand, UserId = _currentUserId };
@@ -66,9 +64,9 @@ namespace Shopfloor.Features.Mechanic.Errands
             NewErrandCommand.ErrandCreated += OnErrandCreated;
 
             Task.Run(LoadData);
-            _machineStore = machineStore;
-            _errandTypeStore = errandTypeStore;
-            _userStore = userStore;
+            _machineStore = stores.Machine;
+            _errandTypeStore = stores.ErrandType;
+            _userStore = stores.User;
         }
         private void OnErrandCreated() => CleanForm();
         public Errand Errand
@@ -87,33 +85,33 @@ namespace Shopfloor.Features.Mechanic.Errands
 
         public ErrandNewCommand NewErrandCommand { get; }
         public ICommand ReturnCommand { get; }
-        private Task FillMachinesList(MachineStore machineStore)
+        private Task FillMachinesList()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (Machine machine in machineStore.Data)
+                foreach (Machine machine in _machineStore.Data)
                 {
                     _machines.Add(machine);
                 }
             });
             return Task.CompletedTask;
         }
-        private Task FillTypesList(ErrandTypeStore errandTypeStore)
+        private Task FillTypesList()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (ErrandType type in errandTypeStore.Data)
+                foreach (ErrandType type in _errandTypeStore.Data)
                 {
                     _errandTypes.Add(type);
                 }
             });
             return Task.CompletedTask;
         }
-        private Task FillUsersList(UserStore userStore)
+        private Task FillUsersList()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                foreach (User user in userStore.Data)
+                foreach (User user in _userStore.Data)
                 {
                     _users.Add(user);
                 }
@@ -124,15 +122,15 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             ClearLists();
 
-            await FillLists(_machineStore, _userStore, _errandTypeStore);
+            await FillLists();
             RefreshLists();
         }
-        private async Task FillLists(MachineStore machineStore, UserStore userStore, ErrandTypeStore errandTypeStore)
+        private async Task FillLists()
         {
             List<Task> tasks = [];
-            tasks.Add(FillMachinesList(machineStore));
-            tasks.Add(FillUsersList(userStore));
-            tasks.Add(FillTypesList(errandTypeStore));
+            tasks.Add(FillMachinesList());
+            tasks.Add(FillUsersList());
+            tasks.Add(FillTypesList());
             await Task.WhenAll(tasks);
         }
         private void ClearLists()
