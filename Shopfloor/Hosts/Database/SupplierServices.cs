@@ -13,6 +13,5 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<IDataStore<Supplier>, SuppliersStore>();
             services.AddSingleton<ICombinerManager<Supplier>, SupplierCombiner>();
         }
-        s
     }
 }

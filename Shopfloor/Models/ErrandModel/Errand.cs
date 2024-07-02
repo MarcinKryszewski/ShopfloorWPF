@@ -169,4 +169,11 @@ namespace Shopfloor.Models.ErrandModel
             return CreatedDate.GetHashCode();
         }
     }
+    internal sealed partial class Errand : ICloneable
+    {
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
+    }
 }

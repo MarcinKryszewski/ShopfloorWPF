@@ -12,12 +12,12 @@ namespace Shopfloor.Tests.Stores
     {
         private readonly CurrentUserStore _sut;
         private readonly IProvider<Role> _roleProvider = Substitute.For<IProvider<Role>>();
-        private readonly IProvider<RoleUser> _roleIUserProvider = Substitute.For<IProvider<RoleUser>>();
+        private readonly IRoleUserProvider _roleUserProvider = Substitute.For<IRoleUserProvider>();
         private readonly INotifier _notifier = Substitute.For<INotifier>();
         private readonly IAuthService _auth = Substitute.For<IAuthService>();
         public CurrentUserStoreTests()
         {
-            _sut = new(_roleProvider, _roleIUserProvider, _notifier, _auth);
+            _sut = new(_roleProvider, _roleUserProvider, _notifier, _auth);
         }
         [Fact]
         public void Login_WhenUsernameExists_ShouldSetUser()
@@ -106,7 +106,7 @@ namespace Shopfloor.Tests.Stores
 
             _auth.Login(username).Returns(user);
             _roleProvider.GetAll().Returns(roles);
-            _roleIUserProvider.GetAllForUser(1).Returns(roleUsers);
+            _roleUserProvider.GetAllForUser(1).Returns(roleUsers);
 
             // Act
             _sut.Login(username);
@@ -132,7 +132,7 @@ namespace Shopfloor.Tests.Stores
 
             _auth.Login(username).Returns(user);
             _roleProvider.GetAll().Returns(roles);
-            _roleIUserProvider.GetAllForUser(1).Returns(roleUsers);
+            _roleUserProvider.GetAllForUser(1).Returns(roleUsers);
             _sut.Login(username);
 
             // Act

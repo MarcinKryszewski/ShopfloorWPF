@@ -1,4 +1,5 @@
-﻿using Shopfloor.Interfaces;
+﻿using System.Threading.Tasks;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandModel.Services
 {
@@ -13,7 +14,7 @@ namespace Shopfloor.Models.ErrandModel.Services
 
         public void EditInDatabase(Errand item)
         {
-            throw new System.NotImplementedException();
+            Task.Run(() => _provider.Update(item));
         }
     }
 }

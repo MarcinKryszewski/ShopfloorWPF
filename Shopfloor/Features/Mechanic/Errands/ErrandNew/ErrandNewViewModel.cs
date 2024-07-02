@@ -3,6 +3,7 @@ using Shopfloor.Features.Mechanic.Errands.ErrandNew;
 using Shopfloor.Features.Mechanic.Errands.Interfaces;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Interfaces;
+using Shopfloor.Interfaces.Models;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandStatusModel;
@@ -55,7 +56,11 @@ namespace Shopfloor.Features.Mechanic.Errands
             _errand = new() { CreatedById = _currentUserId, };
             _errandCreatorData = new() { Errand = _errand, UserId = _currentUserId };
 
-            NewErrandCommand = new ErrandNewCommand(errandCreator, partCreator, errandStatusEditorService, statusCreator);
+            NewErrandCommand = new ErrandNewCommand(
+                errandCreator,
+                partCreator,
+                errandStatusEditorService,
+                statusCreator);
             ReturnCommand = new NavigationCommand<ErrandsListViewModel>(navigationService).Navigate();
             PrioritySetCommand = new PrioritySetCommand(this);
 

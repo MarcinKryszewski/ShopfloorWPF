@@ -1,4 +1,6 @@
+using System.Linq;
 using Shopfloor.Interfaces;
+using Shopfloor.Interfaces.Models;
 
 namespace Shopfloor.Models.ErrandPartModel.Services
 {
@@ -14,6 +16,11 @@ namespace Shopfloor.Models.ErrandPartModel.Services
         public void EditInStore(ErrandPart item)
         {
             throw new System.NotImplementedException();
+        }
+
+        public ErrandPart? FindItem(ErrandPart item)
+        {
+            return _store.Data.FirstOrDefault(t => t.Id == item.Id);
         }
     }
 }

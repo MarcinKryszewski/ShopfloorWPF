@@ -40,7 +40,9 @@ namespace Shopfloor.Features.Login
         }
 
         public ICommand LoginCommand { get; }
-        public LoginViewModel(NavigationCommand<MechanicDashboardViewModel> navigationService, ICurrentUserStore userStore)
+        public LoginViewModel(
+            NavigationCommand<MechanicDashboardViewModel> navigationService,
+            ICurrentUserStore userStore)
         {
             ICommand NavigateDashboardCommand = navigationService.Navigate();
             _userStore = userStore;

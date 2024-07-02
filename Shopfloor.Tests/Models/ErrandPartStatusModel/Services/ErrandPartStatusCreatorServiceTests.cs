@@ -1,4 +1,5 @@
 using Shopfloor.Interfaces;
+using Shopfloor.Interfaces.Models;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.ErrandPartStatusModel.Services;
 

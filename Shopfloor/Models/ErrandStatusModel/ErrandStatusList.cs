@@ -8,5 +8,6 @@ namespace Shopfloor.Models.ErrandStatusModel
         public const string PartsReady = "CZĘŚCI DOSTĘPNE"; //Części gotowe do dostarczenia dla mechanika, wszystkie są zarezerwowane na magazynie, można pobrać
         public const string TaskFinished = "ZAKOŃCZONO"; //Części dostarczone na warsztat
         public const string PartDeclined = "ODMOWA CZĘŚCI"; //Jakaś część została odrzucona
+        public const string ErrandEdited = "ZMODYFIKOWANO"; //Edytowano zadanie
     }
 }

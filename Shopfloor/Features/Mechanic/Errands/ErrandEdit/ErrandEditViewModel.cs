@@ -2,16 +2,19 @@
 using Shopfloor.Features.Mechanic.Errands.Interfaces;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Interfaces;
+using Shopfloor.Interfaces.Models;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.ErrandStatusModel;
+using Shopfloor.Models.ErrandStatusModel.Services;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services;
 using Shopfloor.Services.NavigationServices;
+using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
@@ -28,168 +31,85 @@ namespace Shopfloor.Features.Mechanic.Errands
 {
     internal sealed partial class ErrandEditViewModel : ViewModelBase
     {
+        private Errand _errand;
         private readonly ObservableCollection<ErrandType> _errandTypes = [];
-        //private readonly ErrandValidation _errandValidation;
         private readonly ObservableCollection<Machine> _machines = [];
-        private readonly ErrandPartsListViewModel _errandPartsListViewModel;
+        private readonly ObservableCollection<User> _users = [];
         private readonly SelectedErrandStore _selectedErrand;
-        private readonly IDataStore<Errand> _errandStore;
         private readonly IDataStore<Machine> _machineStore;
         private readonly IDataStore<User> _userStore;
         private readonly IDataStore<ErrandType> _errandTypeStore;
-        private readonly IDataStore<ErrandPart> _errandPartStore;
-        private readonly IDataStore<Part> _partStore;
-        private readonly ObservableCollection<User> _users = [];
-        private ErrandDTO _errandDTO = new();
+        private readonly int _currentUserId;
+        private readonly ErrandCreatorData _errandCreatorData;
+        private readonly INotifier _notifier;
+
         public ErrandEditViewModel(
-            INavigationCommand<ErrandsListViewModel> navigateService,
-            ErrandPartsListViewModel errandPartsListViewModel,
+            NavigationService navigationService,
             StoreRepository stores,
-            IProvider<Errand> errandProvider,
-            IProvider<ErrandPart> errandPartProvider,
-            IProvider<ErrandStatus> errandStatusProvider,
-            IProvider<ErrandPartStatus> errandPartStatusProvider)
+            IModelCreatorService<Errand> errandCreator,
+            ErrandPartsListViewModel errandPartsListViewModel,
+            IModelCreatorService<ErrandPart> partCreator,
+            IModelEditorService<ErrandStatus> errandStatusEditorService,
+            IModelCreatorService<ErrandStatus> statusCreator,
+            INotifier notifier,
+            IModelEditorService<Errand> errandEditor)
         {
-            _errandPartsListViewModel = errandPartsListViewModel;
             _selectedErrand = stores.SelectedErrand;
-            _errandStore = stores.Errand;
-            _machineStore = stores.Machine;
-            _userStore = stores.User;
-            _errandTypeStore = stores.ErrandType;
-            _errandPartStore = stores.ErrandPart;
-            _partStore = stores.Part;
+            _currentUserId = (int)stores.CurrentUser.User!.Id!;
 
-            EditErrandCommand = new ErrandEditCommand(this, stores.CurrentUser, _selectedErrand, errandProvider, errandPartProvider, errandStatusProvider, stores.ErrandPart, errandPartStatusProvider);
-            ReturnCommand = navigateService.Navigate();
+            _errand = (Errand)_selectedErrand.SelectedErrand!.Clone();
+            _errandCreatorData = new() { Errand = _errand, UserId = _currentUserId };
+
+            EditErrandCommand = new ErrandEditCommand(errandEditor);
+            ReturnCommand = new NavigationCommand<ErrandsListViewModel>(navigationService).Navigate();
             PrioritySetCommand = new PrioritySetCommand(this);
-            ShowPartsListCommand = new ErrandsShowPartsList(this, _errandPartsListViewModel);
 
-            //_errandValidation = new(this);
+            ShowPartsListCommand = new ErrandsShowPartsList(this, errandPartsListViewModel);
+
+            EditErrandCommand.ErrandEdited += OnErrandEdited;
 
             Task.Run(LoadData);
+            _machineStore = stores.Machine;
+            _errandTypeStore = stores.ErrandType;
+            _userStore = stores.User;
+
+            _notifier = notifier;
         }
-        public ICommand EditErrandCommand { get; }
-        public ErrandDTO ErrandDTO
+        private void OnErrandEdited(bool edited)
         {
-            get => _errandDTO;
+            if (!edited)
+            {
+                string errorText = "BŁĄD";
+                _notifier.ShowError(errorText);
+                return;
+            }
+
+            string successText = "Edycja powiodła się!";
+            _notifier.ShowSuccess(successText);
+            ReturnCommand.Execute(null);
+        }
+
+        public Errand Errand
+        {
+            get => _errand;
             private set
             {
-                _errandDTO = value;
-                OnPropertyChanged(nameof(SapNumber));
-                OnPropertyChanged(nameof(SelectedDate));
-                OnPropertyChanged(nameof(SelectedMachine));
-                OnPropertyChanged(nameof(SelectedResponsible));
-                OnPropertyChanged(nameof(SelectedType));
-                OnPropertyChanged(nameof(TaskDescription));
-                OnPropertyChanged(nameof(SapNumber));
+                _errand = value;
+                OnPropertyChanged(nameof(Errand));
             }
         }
-        public bool PrioA { get; set; }
-        public bool PrioB { get; set; }
-        public bool PrioC { get; set; }
+        public ErrandCreatorData ErrandCreator => _errandCreatorData;
+
+
+        public ErrandEditCommand EditErrandCommand { get; }
+        public ICommand ReturnCommand { get; }
+    }
+    internal sealed partial class ErrandEditViewModel
+    {
         public ICollectionView ErrandTypes => CollectionViewSource.GetDefaultView(_errandTypes);
         public ICollectionView Machines => CollectionViewSource.GetDefaultView(_machines);
-        public ICommand ReturnCommand { get; }
-        public string? SapNumber
-        {
-            get => _errandDTO.SapNumber;
-            set
-            {
-                _errandDTO.SapNumber = value;
-                OnPropertyChanged(nameof(SapNumber));
-            }
-        }
-        public DateTime? SelectedDate
-        {
-            get => _errandDTO.ExpectedDate;
-            set
-            {
-                _errandDTO.ExpectedDate = value;
-                OnPropertyChanged(nameof(SelectedDate));
-            }
-        }
-        public Machine? SelectedMachine
-        {
-            get => _errandDTO.Machine;
-            set
-            {
-                string myName = nameof(SelectedMachine);
-                //_errandValidation.ValidateMachine(myName, value);
-                _errandDTO.Machine = value;
-                if (value != null) _selectedErrand.MachineId = value.Id;
-                OnPropertyChanged(myName);
-            }
-        }
-        public User? SelectedResponsible
-        {
-            get => _errandDTO.Responsible;
-            set
-            {
-                _errandDTO.Responsible = value;
-                OnPropertyChanged(nameof(SelectedResponsible));
-            }
-        }
-        public ErrandType? SelectedType
-        {
-            get => _errandDTO.ErrandType;
-            set
-            {
-                string myName = nameof(SelectedType);
-                //_errandValidation.ValidateType(myName, value);
-                _errandDTO.ErrandType = value;
-                OnPropertyChanged(myName);
-            }
-        }
-        public string? TaskDescription
-        {
-            get => _errandDTO.Description;
-            set
-            {
-                string myName = nameof(TaskDescription);
-                //_errandValidation.ValidateDescription(myName, value);
-                _errandDTO.Description = value;
-                OnPropertyChanged(myName);
-            }
-        }
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
-        private void ClearLists()
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                _selectedErrand.ErrandParts.Clear();
-                _selectedErrand.ErrandId = null;
-                _selectedErrand.MachineId = null;
 
-                _errandTypes.Clear();
-                _users.Clear();
-                _machines.Clear();
-            });
-        }
-        private async Task FillLists()
-        {
-            List<Task> tasks = [];
-            tasks.Add(FillMachinesList());
-            tasks.Add(FillUsersList());
-            tasks.Add(FillTypesList());
-            tasks.Add(FillPartsList());
-            await Task.WhenAll(tasks);
-        }
-        private Task FillPartsList()
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                _selectedErrand.ErrandParts.Clear();
-                foreach (ErrandPart part in _errandPartStore.Data)
-                {
-                    if (part.ErrandId == _selectedErrand.SelectedErrand?.Id)
-                    {
-                        part.Part = _partStore.Data.First(p => p.Id == part.PartId);
-                        _selectedErrand.ErrandParts.Add(part);
-                    }
-                }
-            });
-            return Task.CompletedTask;
-        }
         private Task FillMachinesList()
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -228,48 +148,30 @@ namespace Shopfloor.Features.Mechanic.Errands
             ClearLists();
 
             await FillLists();
-
             RefreshLists();
-            SetupForm(_errandTypeStore, _machineStore, _errandPartStore);
+            SetupPriority(_errand);
+            if (_errand.Parts.Count > 0) ShowPartsListCommand.Execute(ErrandCreator);
         }
-
-        private void SetupForm(IDataStore<ErrandType> errandTypeStore, IDataStore<Machine> machineStore, IDataStore<ErrandPart> errandPartStore)
+        private async Task FillLists()
         {
-            Errand? errand = _selectedErrand.SelectedErrand;
-            if (errand == null) return;
-
-            SelectedType = errandTypeStore.Data.First((t) => t.Id == errand.TypeId);
-            SelectedMachine = machineStore.Data.First((m) => m.Id == errand.MachineId);
-            SelectedDate = errand.ExpectedDate;
-            SapNumber = errand.SapNumber;
-            SelectedResponsible = errand.Responsible;
-            SelectedPriority = errand.Priority ?? "C";
-            TaskDescription = errand.Description;
-            SetupPriority(errand);
-            SetupParts();
+            List<Task> tasks = [];
+            tasks.Add(FillMachinesList());
+            tasks.Add(FillUsersList());
+            tasks.Add(FillTypesList());
+            await Task.WhenAll(tasks);
         }
-        public void SetupParts()
+        private void ClearLists()
         {
-            if (_selectedErrand.ErrandParts.Count > 0) PartsList = _errandPartsListViewModel;
-        }
-        private void SetupPriority(Errand errand)
-        {
-            switch (errand.Priority)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                case "A":
-                    PrioA = true;
-                    OnPropertyChanged(nameof(PrioA));
-                    break;
-                case "B":
-                    PrioB = true;
-                    OnPropertyChanged(nameof(PrioB));
-                    break;
-                case "C":
-                default:
-                    PrioC = true;
-                    OnPropertyChanged(nameof(PrioC));
-                    break;
-            }
+                _selectedErrand.ErrandParts.Clear();
+                _selectedErrand.ErrandId = null;
+                _selectedErrand.MachineId = null;
+
+                _errandTypes.Clear();
+                _users.Clear();
+                _machines.Clear();
+            });
         }
         private void RefreshLists()
         {
@@ -292,7 +194,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             {
                 //_errandValidation.ValidateMachine(nameof(SelectedMachine), SelectedMachine);
                 //_errandValidation.ValidateType(nameof(SelectedType), SelectedType);
-                //_errandValidation.ValidateDescription(nameof(TaskDescription), TaskDescription);
+                //_errandValidation.ValidateDescription(nameof(Description), Description);
                 return !HasErrors;
             }
         }
@@ -306,9 +208,15 @@ namespace Shopfloor.Features.Mechanic.Errands
             value?.Add(errorMassage);
             OnErrorsChanged(propertyName);
         }
+        private void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            OnPropertyChanged(nameof(IsDataValidate));
+        }
         public void CleanForm()
         {
-            ErrandDTO = new();
+            Errand = (Errand)_selectedErrand.SelectedErrand!.Clone();
+            _errandCreatorData.Errand = Errand;
         }
         public void ClearErrors(string? propertyName)
         {
@@ -322,44 +230,57 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
-        public void ReloadData()
-        {
-            Task.Run(_errandStore.Reload);
-            RefreshLists();
-        }
-        private void OnErrorsChanged(string propertyName)
-        {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-            OnPropertyChanged(nameof(IsDataValidate));
-        }
     }
     internal sealed partial class ErrandEditViewModel : IErrandPriority
     {
         public ICommand PrioritySetCommand { get; }
         public string SelectedPriority
         {
-            get => _errandDTO.Priority ?? "C";
+            get => _errand.Priority ?? "C";
             set
             {
-                _errandDTO.Priority = value;
+                _errand.Priority = value;
                 OnPropertyChanged(nameof(SelectedPriority));
+            }
+        }
+        public bool PrioA { get; set; }
+        public bool PrioB { get; set; }
+        public bool PrioC { get; set; }
+        private void SetupPriority(Errand errand)
+        {
+            switch (errand.Priority)
+            {
+                case "A":
+                    PrioA = true;
+                    OnPropertyChanged(nameof(PrioA));
+                    break;
+                case "B":
+                    PrioB = true;
+                    OnPropertyChanged(nameof(PrioB));
+                    break;
+                case "C":
+                default:
+                    PrioC = true;
+                    OnPropertyChanged(nameof(PrioC));
+                    break;
             }
         }
     }
     internal sealed partial class ErrandEditViewModel : IPartsList
     {
-        private ErrandPartsListViewModel? _partsList;
-        public Visibility IsPartsListVisible => PartsList == null ? Visibility.Visible : Visibility.Collapsed;
         public ErrandPartsListViewModel? PartsList
         {
             get => _partsList;
             set
             {
                 _partsList = value;
+                if (_partsList is not null) _partsList.ErrandData = _errandCreatorData;
                 OnPropertyChanged(nameof(PartsList));
                 OnPropertyChanged(nameof(IsPartsListVisible));
             }
         }
+        public Visibility IsPartsListVisible => PartsList == null ? Visibility.Visible : Visibility.Collapsed;
+        private ErrandPartsListViewModel? _partsList;
         public ICommand ShowPartsListCommand { get; }
     }
 }

@@ -1,5 +1,5 @@
 using Shopfloor.Interfaces;
-using Shopfloor.Shared.BaseClasses;
+using Shopfloor.Interfaces.Models;
 
 namespace Shopfloor.Models.ErrandStatusModel.Services
 {
@@ -18,9 +18,5 @@ namespace Shopfloor.Models.ErrandStatusModel.Services
             _storeService.EditInStore(item);
             _databaseService.EditInDatabase(item);
         }
-    }
-    internal interface IModelEditorService<T> where T : DataModel
-    {
-        public void Edit(T item);
     }
 }

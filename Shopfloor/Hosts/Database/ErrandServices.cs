@@ -23,6 +23,7 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<ErrandToErrandType>();
 
             services.AddSingleton<IModelCreatorService<Errand>, ErrandCreatorService>();
+            services.AddSingleton<IModelEditorService<Errand>, ErrandEditorService>();
             services.AddSingleton<IDataModelDatabaseService<Errand>, ErrandDatabaseService>();
             services.AddSingleton<IDataModelStoreService<Errand>, ErrandStoreService>();
         }

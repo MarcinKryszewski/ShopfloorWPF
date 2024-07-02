@@ -1,5 +1,6 @@
 using System;
 using Shopfloor.Interfaces;
+using Shopfloor.Interfaces.Models;
 using Shopfloor.Models.ErrandPartStatusModel;
 
 namespace Shopfloor.Models.ErrandPartModel.Services

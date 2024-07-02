@@ -10,17 +10,19 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <Style x:Key="GridCell" TargetType="StackPanel">
-            <Setter Property="Margin" Value="10,10,10,5" />
+        <Style x:Key="GridCell"
+               TargetType="StackPanel">
+            <Setter Property="Margin"
+                    Value="10,10,10,5"/>
         </Style>
     </UserControl.Resources>
     <Grid Margin="30,20,20,20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock
             Grid.Row="0"
@@ -29,20 +31,26 @@
             FontSize="32"
             FontWeight="SemiBold"
             Foreground="{StaticResource BrushPurple400}"
-            Text="DCS zadania - edycja" />
+            Text="DCS zadania - edycja"/>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" MinWidth="350" />
-                <ColumnDefinition Width="50" />
-                <ColumnDefinition Width="auto" MinWidth="350" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"
+                                  MinWidth="350"/>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="auto"
+                                  MinWidth="350"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" MinHeight="80" />
-                <RowDefinition Height="auto" MinHeight="80" />
-                <RowDefinition Height="auto" MinHeight="80" />
-                <RowDefinition Height="auto" MinHeight="80" />
+                <RowDefinition Height="auto"
+                               MinHeight="80"/>
+                <RowDefinition Height="auto"
+                               MinHeight="80"/>
+                <RowDefinition Height="auto"
+                               MinHeight="80"/>
+                <RowDefinition Height="auto"
+                               MinHeight="80"/>
             </Grid.RowDefinitions>
 
             <StackPanel
@@ -50,11 +58,12 @@
                 Grid.Column="1"
                 Style="{StaticResource GridCell}">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TooltipText}" Text="Rodzaj" />
+                    <TextBlock Style="{StaticResource TooltipText}"
+                               Text="Rodzaj"/>
                     <TextBlock
                         FontSize="14"
                         Foreground="Red"
-                        Text=" *" />
+                        Text=" *"/>
                 </StackPanel>
                 <ComboBox
                     MinHeight="40"
@@ -63,8 +72,8 @@
                     IsReadOnly="false"
                     IsSynchronizedWithCurrentItem="True"
                     ItemsSource="{Binding Path=ErrandTypes}"
-                    SelectedItem="{Binding Path=SelectedType, Mode=TwoWay}"
-                    Style="{StaticResource ComboBoxMain}" />
+                    SelectedItem="{Binding Path=Errand.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource ComboBoxMain}"/>
             </StackPanel>
 
             <StackPanel
@@ -72,11 +81,12 @@
                 Grid.Column="3"
                 Style="{StaticResource GridCell}">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TooltipText}" Text="Maszyna" />
+                    <TextBlock Style="{StaticResource TooltipText}"
+                               Text="Maszyna"/>
                     <TextBlock
                         FontSize="14"
                         Foreground="Red"
-                        Text=" *" />
+                        Text=" *"/>
                 </StackPanel>
                 <ComboBox
                     MinHeight="40"
@@ -84,36 +94,38 @@
                     IsEditable="true"
                     IsReadOnly="false"
                     ItemsSource="{Binding Path=Machines}"
-                    SelectedItem="{Binding Path=SelectedMachine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource ComboBoxMain}" />
+                    SelectedItem="{Binding Path=Errand.Machine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource ComboBoxMain}"/>
             </StackPanel>
 
             <StackPanel
                 Grid.Row="1"
                 Grid.Column="1"
                 Style="{StaticResource GridCell}">
-                <TextBlock Style="{StaticResource TooltipText}" Text="Data wykonania" />
+                <TextBlock Style="{StaticResource TooltipText}"
+                           Text="Data wykonania"/>
                 <DatePicker
                     Height="40"
                     FirstDayOfWeek="Monday"
                     Language="Pl"
-                    SelectedDate="{Binding SelectedDate, Mode=TwoWay}"
+                    SelectedDate="{Binding Errand.ExpectedDate, Mode=TwoWay}"
                     SelectedDateFormat="Long"
-                    Style="{DynamicResource DatePickerMain}" />
+                    Style="{DynamicResource DatePickerMain}"/>
             </StackPanel>
 
             <StackPanel
                 Grid.Row="1"
                 Grid.Column="3"
                 Style="{StaticResource GridCell}">
-                <TextBlock Style="{StaticResource TooltipText}" Text="Numer SAP" />
+                <TextBlock Style="{StaticResource TooltipText}"
+                           Text="Numer SAP"/>
                 <TextBox
                     MinHeight="40"
                     Padding="5,0"
                     VerticalContentAlignment="Center"
                     FontSize="16"
                     Style="{StaticResource TextBoxMain}"
-                    Text="{Binding Path=SapNumber}" />
+                    Text="{Binding Path=Errand.SapNumber}"/>
             </StackPanel>
 
             <StackPanel
@@ -121,15 +133,16 @@
                 Grid.Column="1"
                 Margin="10,10,10,0"
                 Style="{StaticResource GridCell}">
-                <TextBlock Style="{StaticResource TooltipText}" Text="Odpowiedzialny" />
+                <TextBlock Style="{StaticResource TooltipText}"
+                           Text="Odpowiedzialny"/>
                 <ComboBox
                     MinHeight="40"
                     DisplayMemberPath="FullName"
                     IsEditable="true"
                     IsReadOnly="false"
                     ItemsSource="{Binding Path=Users}"
-                    SelectedItem="{Binding Path=SelectedResponsible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource ResourceKey=ComboBoxMain}" />
+                    SelectedItem="{Binding Path=Errand.Responsible, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Style="{StaticResource ResourceKey=ComboBoxMain}"/>
             </StackPanel>
 
             <Border
@@ -141,7 +154,8 @@
                 BorderThickness="2"
                 CornerRadius="8">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource TooltipText}" Text="Priorytet" />
+                    <TextBlock Style="{StaticResource TooltipText}"
+                               Text="Priorytet"/>
                     <StackPanel>
                         <RadioButton
                             Name="A"
@@ -154,7 +168,7 @@
                             Foreground="#D32F2F"
                             GroupName="Priority"
                             IsChecked="{Binding PrioA, Mode=TwoWay}"
-                            Style="{DynamicResource RadioButtonMain}" />
+                            Style="{DynamicResource RadioButtonMain}"/>
                         <RadioButton
                             Name="B"
                             Margin="0,0,0,2"
@@ -166,7 +180,7 @@
                             Foreground="#d3d32f"
                             GroupName="Priority"
                             IsChecked="{Binding PrioB, Mode=TwoWay}"
-                            Style="{StaticResource RadioButtonMain}" />
+                            Style="{StaticResource RadioButtonMain}"/>
                         <RadioButton
                             Name="C"
                             Command="{Binding Path=PrioritySetCommand}"
@@ -177,7 +191,7 @@
                             Foreground="#2fd353"
                             GroupName="Priority"
                             IsChecked="{Binding PrioC, Mode=TwoWay}"
-                            Style="{StaticResource RadioButtonMain}" />
+                            Style="{StaticResource RadioButtonMain}"/>
                     </StackPanel>
                 </StackPanel>
             </Border>
@@ -188,11 +202,12 @@
                 Grid.ColumnSpan="3"
                 Margin="10,-10,10,5">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TooltipText}" Text="Opis" />
+                    <TextBlock Style="{StaticResource TooltipText}"
+                               Text="Opis"/>
                     <TextBlock
                         FontSize="14"
                         Foreground="Red"
-                        Text=" *" />
+                        Text=" *"/>
                 </StackPanel>
                 <TextBox
                     MaxWidth="730"
@@ -201,26 +216,28 @@
                     FontSize="16"
                     MinLines="3"
                     Style="{StaticResource TextBoxMain}"
-                    Text="{Binding Path=TaskDescription, UpdateSourceTrigger=PropertyChanged}"
-                    TextWrapping="Wrap" />
+                    Text="{Binding Path=Errand.Description, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                    TextWrapping="Wrap"/>
             </StackPanel>
         </Grid>
 
-        <ContentControl Grid.Row="2" Content="{Binding PartsList}">
+        <ContentControl Grid.Row="2"
+                        Content="{Binding PartsList}">
             <ContentControl.Resources>
                 <DataTemplate DataType="{x:Type local:ErrandPartsListViewModel}">
-                    <local:ErrandPartsListView />
+                    <local:ErrandPartsListView/>
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
 
-        <Grid Grid.Row="3" Margin="0,15,0,0">
+        <Grid Grid.Row="3"
+              Margin="0,15,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button
                 Grid.Row="0"
@@ -229,8 +246,9 @@
                 Height="50"
                 Margin="5,0"
                 Command="{Binding Path=EditErrandCommand}"
+                CommandParameter="{Binding Path=ErrandCreator}"
                 Content="ZAPISZ"
-                Style="{StaticResource ResourceKey=ButtonMain}" />
+                Style="{StaticResource ResourceKey=ButtonMain}"/>
             <Button
                 Grid.Row="0"
                 Grid.Column="2"
@@ -238,9 +256,10 @@
                 Height="50"
                 Margin="5,0"
                 Command="{Binding Path=ShowPartsListCommand}"
+                CommandParameter="{Binding Path=ErrandCreator}"
                 Content="DODAJ CZĘŚCI"
                 Style="{StaticResource ResourceKey=ButtonMain}"
-                Visibility="{Binding IsPartsListVisible}" />
+                Visibility="{Binding IsPartsListVisible}"/>
             <Button
                 Grid.Row="4"
                 Grid.Column="3"
@@ -249,7 +268,7 @@
                 Margin="5,0"
                 Command="{Binding Path=ReturnCommand}"
                 Content="WRÓĆ"
-                Style="{StaticResource ResourceKey=ButtonSide}" />
+                Style="{StaticResource ResourceKey=ButtonSide}"/>
         </Grid>
     </Grid>
 </UserControl>

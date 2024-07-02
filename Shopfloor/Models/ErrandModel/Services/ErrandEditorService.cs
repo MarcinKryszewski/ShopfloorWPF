@@ -1,40 +1,43 @@
-﻿using Shopfloor.Interfaces;
+using System;
+using Shopfloor.Interfaces;
 using Shopfloor.Interfaces.Models;
 using Shopfloor.Models.ErrandStatusModel;
-using System;
 
 namespace Shopfloor.Models.ErrandModel.Services
 {
-    internal class ErrandCreatorService : IModelCreatorService<Errand>
+    internal class ErrandEditorService : IModelEditorService<Errand>
     {
         private readonly IDataModelDatabaseService<Errand> _databaseService;
         private readonly IDataModelStoreService<Errand> _storeService;
         private readonly IModelCreatorService<ErrandStatus> _statusCreator;
-        public ErrandCreatorService(
-            IDataModelDatabaseService<Errand> errandDatabaseService,
-            IDataModelStoreService<Errand> errandStoreService,
+        public ErrandEditorService(
+            IDataModelStoreService<Errand> storeService,
+            IDataModelDatabaseService<Errand> databaseService,
             IModelCreatorService<ErrandStatus> statusCreator)
         {
-            _databaseService = errandDatabaseService;
-            _storeService = errandStoreService;
+            _storeService = storeService;
+            _databaseService = databaseService;
             _statusCreator = statusCreator;
         }
-        public void Create(Errand item)
+        public void Edit(Errand item)
         {
-            int errandId = _databaseService.AddToDatabase(item);
-            item.Id = errandId;
-            _storeService.AddToStore(item);
+            _databaseService.EditInDatabase(item);
+            ReplaceInStore(item);
             CreateErrandStatus(item);
+        }
+        private void ReplaceInStore(Errand item)
+        {
+            _storeService.EditInStore(item);
         }
         private void CreateErrandStatus(Errand errand)
         {
-            string defaultReason = "NEW ERRAND CREATED";
+            string defaultReason = "ERRAND EDITED";
             if (errand.Id is null) return;
 
             ErrandStatus status = new()
             {
                 ErrandId = (int)errand.Id,
-                StatusName = ErrandStatusList.NoPartsList,
+                StatusName = ErrandStatusList.ErrandEdited,
                 SetDate = DateTime.Now,
                 Reason = defaultReason
             };

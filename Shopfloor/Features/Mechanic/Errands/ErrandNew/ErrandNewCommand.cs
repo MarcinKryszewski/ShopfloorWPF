@@ -3,11 +3,9 @@ using Shopfloor.Shared.Commands;
 using Shopfloor.Interfaces;
 using System;
 using System.Collections.Generic;
-using Shopfloor.Models.PartModel;
 using Shopfloor.Models.ErrandPartModel;
-using Shopfloor.Models.ErrandPartStatusModel;
-using Shopfloor.Models.ErrandStatusModel.Services;
 using Shopfloor.Models.ErrandStatusModel;
+using Shopfloor.Interfaces.Models;
 
 namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
 {
@@ -15,15 +13,17 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
     {
         private readonly IModelCreatorService<Errand> _errandCreator;
         private readonly IModelCreatorService<ErrandPart> _partCreator;
-        private readonly IModelEditorService<ErrandStatus> _statusEditorService;
         private readonly IModelCreatorService<ErrandStatus> _statusCreator;
 
         public event Action? ErrandCreated;
-        public ErrandNewCommand(IModelCreatorService<Errand> errandCreator, IModelCreatorService<ErrandPart> partCreator, IModelEditorService<ErrandStatus> errandStatusEditorService, IModelCreatorService<ErrandStatus> statusCreator)
+        public ErrandNewCommand(
+            IModelCreatorService<Errand> errandCreator,
+            IModelCreatorService<ErrandPart> partCreator,
+            IModelEditorService<ErrandStatus> errandStatusEditorService,
+            IModelCreatorService<ErrandStatus> statusCreator)
         {
             _errandCreator = errandCreator;
             _partCreator = partCreator;
-            _statusEditorService = errandStatusEditorService;
             _statusCreator = statusCreator;
         }
         public override void Execute(object? parameter)

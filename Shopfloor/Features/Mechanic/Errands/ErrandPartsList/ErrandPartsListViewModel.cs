@@ -46,7 +46,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             }
             return false;
         }
-        public int PartsAmount => ErrandData?.Parts.Count ?? 0;
+        public int PartsAmount => ErrandData?.Errand.Parts.Count ?? 0;
         public SearchableModelList DisplayList { get; }
         public ICollectionView PartsAll => CollectionViewSource.GetDefaultView(_parts);
         public ICollectionView PartsMachine => CollectionViewSource.GetDefaultView(_parts);
@@ -61,13 +61,17 @@ namespace Shopfloor.Features.Mechanic.Errands
             {
                 OnPropertyChanged(nameof(PartsAmount));
                 // return CollectionViewSource.GetDefaultView(_errandStore.ErrandParts);
-                return CollectionViewSource.GetDefaultView(ErrandData?.Parts ?? []);
+                return CollectionViewSource.GetDefaultView(ErrandData?.Errand.Parts ?? []);
             }
         }
         public ICommand AddPartToListCommand { get; }
         public ICommand RemovePartFromListCommand { get; }
         public Part? SelectedPart { get; set; }
-        public ErrandPartsListViewModel(SelectedErrandStore selectedErrandStore, IDataStore<Part> partStore, IDataStore<ErrandPart> errandPartStore, ICombinerManager<Part> partCombiner)
+        public ErrandPartsListViewModel(
+            SelectedErrandStore selectedErrandStore,
+            IDataStore<Part> partStore,
+            IDataStore<ErrandPart> errandPartStore,
+            ICombinerManager<Part> partCombiner)
         {
             _errandStore = selectedErrandStore;
             _partStore = partStore;
@@ -94,6 +98,7 @@ namespace Shopfloor.Features.Mechanic.Errands
 
             _parts = _partStore.Data;
             DisplayList.Data = _parts;
+
 
             Application.Current.Dispatcher.Invoke
             (() =>
