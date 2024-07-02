@@ -5,12 +5,9 @@ using Shopfloor.Interfaces;
 using Shopfloor.Interfaces.Models;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
-using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.ErrandStatusModel;
-using Shopfloor.Models.ErrandStatusModel.Services;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
-using Shopfloor.Models.PartModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services;
 using Shopfloor.Services.NavigationServices;
@@ -21,7 +18,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -88,7 +84,6 @@ namespace Shopfloor.Features.Mechanic.Errands
             _notifier.ShowSuccess(successText);
             ReturnCommand.Execute(null);
         }
-
         public Errand Errand
         {
             get => _errand;
@@ -99,8 +94,6 @@ namespace Shopfloor.Features.Mechanic.Errands
             }
         }
         public ErrandCreatorData ErrandCreator => _errandCreatorData;
-
-
         public ErrandEditCommand EditErrandCommand { get; }
         public ICommand ReturnCommand { get; }
     }
@@ -109,7 +102,6 @@ namespace Shopfloor.Features.Mechanic.Errands
         public ICollectionView ErrandTypes => CollectionViewSource.GetDefaultView(_errandTypes);
         public ICollectionView Machines => CollectionViewSource.GetDefaultView(_machines);
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
-
         private Task FillMachinesList()
         {
             Application.Current.Dispatcher.Invoke(() =>
