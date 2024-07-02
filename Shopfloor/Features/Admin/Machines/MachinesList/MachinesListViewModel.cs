@@ -33,7 +33,7 @@ namespace Shopfloor.Features.Admin.Machines
         private Machine? _selectedMachine;
         private Machine? _selectedParent;
         private readonly MachineValidation _machineValidation;
-        public MachinesListViewModel(IDataStore<Machine> machineStore, MachineProvider machineProvider)
+        public MachinesListViewModel(IDataStore<Machine> machineStore, IProvider<Machine> machineProvider)
         {
             _machines = [];
             _machinesAll = [];
@@ -43,7 +43,7 @@ namespace Shopfloor.Features.Admin.Machines
             _machineStore = machineStore;
             Task.Run(LoadData);
 
-            MachineProvider provider = machineProvider;
+            IProvider<Machine> provider = machineProvider;
 
             MachineDeleteCommand = new MachineDeleteCommand();
             MachineAddCommand = new MachineAddCommand(this, provider);

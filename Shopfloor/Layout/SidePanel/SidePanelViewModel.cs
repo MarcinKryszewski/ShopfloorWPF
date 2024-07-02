@@ -135,11 +135,11 @@ namespace Shopfloor.Layout.SidePanel
             {
                 System.Diagnostics.Debug.Write("TEST");
 
-                PartTypeProvider partTypesProvider = _dbServices.GetRequiredService<PartTypeProvider>();
+                IProvider<PartType> partTypesProvider = _dbServices.GetRequiredService<IProvider<PartType>>();
                 _ = partTypesProvider.Create(new PartType("Łożysko"));
                 _ = partTypesProvider.Create(new PartType("Koło"));
 
-                MachineProvider machineProvider = _dbServices.GetRequiredService<MachineProvider>();
+                IProvider<Machine> machineProvider = _dbServices.GetRequiredService<IProvider<Machine>>();
                 //string name, string number, string? sapNumber, int? parent, bool isActive
                 _ = machineProvider.Create(new Machine()
                 {
@@ -154,10 +154,10 @@ namespace Shopfloor.Layout.SidePanel
                     IsActive = true,
                 });
 
-                SupplierProvider supplierProvider = _dbServices.GetRequiredService<SupplierProvider>();
+                IProvider<Supplier> supplierProvider = _dbServices.GetRequiredService<IProvider<Supplier>>();
                 _ = supplierProvider.Create(new Supplier("Krones", true));
 
-                PartProvider partProvider = _dbServices.GetRequiredService<PartProvider>();
+                IProvider<Part> partProvider = _dbServices.GetRequiredService<IProvider<Part>>();
                 _ = partProvider.Create(new Part()
                 {
                     NamePl = "3002",
@@ -179,7 +179,7 @@ namespace Shopfloor.Layout.SidePanel
                     SupplierId = 1
                 });
 
-                MachinePartProvider machinePartProvider = _dbServices.GetRequiredService<MachinePartProvider>();
+                IProvider<MachinePart> machinePartProvider = _dbServices.GetRequiredService<IProvider<MachinePart>>();
                 _ = machinePartProvider.Create(new MachinePart()
                 {
                     Amount = 5,
@@ -236,7 +236,7 @@ namespace Shopfloor.Layout.SidePanel
                     TypeId = 3,
                 });
 
-                ErrandStatusProvider errandStatusProvider = _dbServices.GetRequiredService<ErrandStatusProvider>();
+                IProvider<ErrandStatus> errandStatusProvider = _dbServices.GetRequiredService<IProvider<ErrandStatus>>();
                 //int errandId, string statusName, string? comment, string? reason, DateTime? setDate
                 _ = errandStatusProvider.Create(new ErrandStatus()
                 {
@@ -283,7 +283,7 @@ namespace Shopfloor.Layout.SidePanel
                     SetDate = new DateTime(2024, 2, 17),
                 });
 
-                ErrandPartProvider errandPartProvider = _dbServices.GetRequiredService<ErrandPartProvider>();
+                IProvider<ErrandPart> errandPartProvider = _dbServices.GetRequiredService<IProvider<ErrandPart>>();
                 _ = errandPartProvider.Create(new ErrandPart() { ErrandId = 1, PartId = 1, Amount = 10.5, OrderedById = 1 });
                 _ = errandPartProvider.Create(new ErrandPart() { ErrandId = 1, PartId = 2, Amount = null, OrderedById = 2 });
                 _ = errandPartProvider.Create(new ErrandPart() { ErrandId = 4, PartId = 1, Amount = 7.25, OrderedById = 1 });
@@ -292,7 +292,7 @@ namespace Shopfloor.Layout.SidePanel
                 _ = errandPartProvider.Create(new ErrandPart() { ErrandId = 2, PartId = 1, Amount = 5.0, OrderedById = 3 });
                 _ = errandPartProvider.Create(new ErrandPart() { ErrandId = 3, PartId = 2, Amount = 8.0, OrderedById = 2 });
 
-                ErrandPartStatusProvider errandPartStatusProvider = _dbServices.GetRequiredService<ErrandPartStatusProvider>();
+                IProvider<ErrandPartStatus> errandPartStatusProvider = _dbServices.GetRequiredService<IProvider<ErrandPartStatus>>();
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(0)
                 {
                     ErrandPartId = 7,

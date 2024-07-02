@@ -1,4 +1,5 @@
-﻿using Shopfloor.Models.PartTypeModel;
+﻿using Shopfloor.Interfaces;
+using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Shared.Commands;
 using System.Threading.Tasks;
 
@@ -7,9 +8,9 @@ namespace Shopfloor.Features.Admin.PartTypes.Commands
     internal sealed class PartTypeEditCommand : CommandBase
     {
         private readonly PartTypesListViewModel _viewModel;
-        private readonly PartTypeProvider _provider;
+        private readonly IProvider<PartType> _provider;
 
-        public PartTypeEditCommand(PartTypesListViewModel viewModel, PartTypeProvider provider)
+        public PartTypeEditCommand(PartTypesListViewModel viewModel, IProvider<PartType> provider)
         {
             _viewModel = viewModel;
             _provider = provider;

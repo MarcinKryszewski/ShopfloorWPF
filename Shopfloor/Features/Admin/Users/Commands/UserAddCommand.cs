@@ -15,15 +15,15 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
     {
         private readonly UsersAddViewModel _viewModel;
         private readonly RolesStore _rolesStore;
-        private readonly IUserProvider _IUserProvider;
-        private readonly IRoleIUserProvider _roleIUserProvider;
+        private readonly IProvider<User> _userProvider;
+        private readonly IProvider<RoleUser> _roleIUserProvider;
 
-        public UserAddCommand(UsersAddViewModel viewModel, RolesStore rolesStore, IUserProvider IUserProvider, IRoleIUserProvider roleIUserProvider)
+        public UserAddCommand(UsersAddViewModel viewModel, RolesStore rolesStore, IProvider<User> userProvider, IProvider<RoleUser> roleIUserProvider)
         {
             _viewModel = viewModel;
             _rolesStore = rolesStore;
 
-            _IUserProvider = IUserProvider;
+            _userProvider = userProvider;
             _roleIUserProvider = roleIUserProvider;
         }
 
@@ -40,7 +40,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
             if (!_viewModel.IsDataValidate) return;
             //TODO: To move to validation on _viewModel
-            int newUserId = _IUserProvider.Create(newUser).Result;
+            int newUserId = _userProvider.Create(newUser).Result;
             if (newUserId < 0)
             {
                 //_viewModel.ErrorMassage = $"Użytkownik o loginie {_viewModel.Username} istnieje";
@@ -59,7 +59,12 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
             foreach (Role role in roles)
             {
                 if (role.Id == null) continue;
-                tasks.Add(Task.Run(() => _roleIUserProvider.Create((int)role.Id, userId)));
+                RoleUser roleUser = new()
+                {
+                    RoleId = (int)role.Id,
+                    UserId = userId
+                };
+                tasks.Add(Task.Run(() => _roleIUserProvider.Create(roleUser)));
             }
             Task.WaitAll(tasks.ToArray());
         }

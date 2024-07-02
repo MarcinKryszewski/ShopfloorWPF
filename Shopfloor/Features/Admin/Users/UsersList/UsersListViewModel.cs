@@ -18,7 +18,7 @@ namespace Shopfloor.Features.Admin.Users
     {
         private readonly ObservableCollection<User> _users = [];
         private readonly SelectedUserStore _selectedUser;
-        private readonly IUserProvider _IUserProvider;
+        private readonly IUserProvider _userProvider;
         private string _searchText = string.Empty;
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
         public User? SelectedUser
@@ -46,21 +46,21 @@ namespace Shopfloor.Features.Admin.Users
         public ICommand AddNewUserCommand { get; }
         public ICommand SetActivityUserCommand { get; }
         public ICommand EditUserCommand { get; }
-        public UsersListViewModel(INavigationService navigationService, IUserProvider IUserProvider, SelectedUserStore selectedUserStore)
+        public UsersListViewModel(INavigationService navigationService, IUserProvider userProvider, SelectedUserStore selectedUserStore)
         {
-            _IUserProvider = IUserProvider;
+            _userProvider = userProvider;
             Task.Run(() => LoadData());
 
             _selectedUser = selectedUserStore;
 
             AddNewUserCommand = new NavigationCommand<UsersAddViewModel>(navigationService).Navigate();
             EditUserCommand = new NavigationCommand<UsersEditViewModel>(navigationService).Navigate();
-            SetActivityUserCommand = new UserSetActivityCommand(this, _IUserProvider);
+            SetActivityUserCommand = new UserSetActivityCommand(this, _userProvider);
         }
         public async Task LoadData()
         {
             _users.Clear();
-            IEnumerable<User> users = await _IUserProvider.GetAll();
+            IEnumerable<User> users = await _userProvider.GetAll();
             foreach (User user in users)
             {
                 //await Task.Delay(350);

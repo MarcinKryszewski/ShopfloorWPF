@@ -25,8 +25,8 @@ namespace Shopfloor.Features.Admin.PartTypes
         private string _name = string.Empty;
         private string _searchText = string.Empty;
         private PartType? _selectedPartType;
-        private readonly PartTypeProvider _partTypeProvider;
-        public PartTypesListViewModel(PartTypeProvider partTypeProvider, IDataStore<PartType> partTypeStore)
+        private readonly IProvider<PartType> _partTypeProvider;
+        public PartTypesListViewModel(IProvider<PartType> partTypeProvider, IDataStore<PartType> partTypeStore)
         {
             _partTypeProvider = partTypeProvider;
 
@@ -139,8 +139,7 @@ namespace Shopfloor.Features.Admin.PartTypes
         public async Task UpdateData()
         {
             //await Task.Delay(5000);
-            PartTypeProvider provider = _partTypeProvider;
-            IEnumerable<PartType> partTypes = await provider.GetAll();
+            IEnumerable<PartType> partTypes = await _partTypeProvider.GetAll();
             _partTypesStore.Reload().Wait();
             foreach (PartType partType in partTypes)
             {
@@ -158,8 +157,7 @@ namespace Shopfloor.Features.Admin.PartTypes
         public async Task UpdateData(PartType partTypeToRemove)
         {
             if (partTypeToRemove.Id is null) return;
-            PartTypeProvider provider = _partTypeProvider;
-            PartType partTypeToAdd = await provider.GetById((int)partTypeToRemove.Id);
+            PartType partTypeToAdd = await _partTypeProvider.GetById((int)partTypeToRemove.Id);
             if (_partTypes.FirstOrDefault(s => s.Id == partTypeToRemove.Id) is not null)
             {
                 Application.Current.Dispatcher.Invoke(() =>

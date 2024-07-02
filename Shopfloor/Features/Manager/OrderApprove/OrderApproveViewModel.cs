@@ -3,7 +3,6 @@ using Shopfloor.Features.Manager.OrdersToApprove;
 using Shopfloor.Features.Manager.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandPartModel;
-using Shopfloor.Models.ErrandPartModel.Store;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Services;
 using Shopfloor.Services.NavigationServices;
@@ -37,7 +36,7 @@ namespace Shopfloor.Features.Manager.OrderApprove
             INavigationService navigationService,
             INotifier notifier,
             SelectedRequestStore requestStore,
-            ErrandPartStatusProvider errandPartStatusProvider)
+            IProvider<ErrandPartStatus> errandPartStatusProvider)
         {
             _requestStore = selectedRequestStore;
 

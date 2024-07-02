@@ -26,8 +26,13 @@ namespace Shopfloor.Features.Admin.Users
         private string _name = string.Empty;
         private string _surname = string.Empty;
         private string _username = string.Empty;
-        private readonly IRoleIUserProvider _roleIUserProvider;
-        public UsersEditViewModel(INavigationCommand<UsersListViewModel> navigationService, SelectedUserStore selectedUserStore, IUserProvider IUserProvider, IRoleIUserProvider roleIUserProvider, IProvider<Role> roleProvider)
+        private readonly RoleUserProvider _roleIUserProvider;
+        public UsersEditViewModel(
+            INavigationCommand<UsersListViewModel> navigationService,
+            SelectedUserStore selectedUserStore,
+            IProvider<User> userProvider,
+            RoleUserProvider roleIUserProvider,
+            IProvider<Role> roleProvider)
         {
             _selectedUser = selectedUserStore;
             _roleProvider = roleProvider;
@@ -43,7 +48,7 @@ namespace Shopfloor.Features.Admin.Users
             bool isActive = _selectedUser.SelectedUser?.IsActive ?? false;
             EditUserCommand = new UserEditCommand(
                 this,
-                IUserProvider,
+                userProvider,
                 _roleIUserProvider,
                 _rolesValueStore,
                 _selectedUserId,

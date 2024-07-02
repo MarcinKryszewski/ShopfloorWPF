@@ -1,12 +1,10 @@
+using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
-using Shopfloor.Models.ErrandModel.Store;
-using Shopfloor.Models.ErrandModel.Store.Combine;
 using Shopfloor.Models.ErrandPartModel;
-using Shopfloor.Models.ErrandPartModel.Store.Combine;
+using Shopfloor.Services;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
-using Shopfloor.Stores;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -22,21 +20,33 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly IDataStore<Errand> _errandStore;
         private readonly ICombinerManager<Errand> _errandCombiner;
         private readonly ICombinerManager<ErrandPart> _errandPartCombiner;
+        private readonly SelectedErrandStore _selectedErrandStore;
 
         public ICollectionView Errands => CollectionViewSource.GetDefaultView(_errands);
         public ICommand ErrandsAddNavigateCommand { get; }
-        public Errand? SelectedErrand { get; set; }
+        public Errand? SelectedErrand
+        {
+            get => _selectedErrandStore.SelectedErrand;
+            set => _selectedErrandStore.SelectedErrand = value;
+        }
+
         public ICommand EditErrandCommand { get; }
         public Visibility HasAccess { get; } = Visibility.Collapsed;
-        public ErrandsListViewModel(NavigationService navigationService, ICurrentUserStore currentUserStore, IDataStore<Errand> errandStore, ICombinerManager<Errand> errandCombiner, ICombinerManager<ErrandPart> errandPartCombiner)
+        public ErrandsListViewModel(
+            NavigationService navigationService,
+            StoreRepository stores,
+            ICombinerManager<Errand> errandCombiner,
+            ICombinerManager<ErrandPart> errandPartCombiner)
         {
-            _errandStore = errandStore;
+            _errandStore = stores.Errand;
             _errandCombiner = errandCombiner;
             _errandPartCombiner = errandPartCombiner;
+            _selectedErrandStore = stores.SelectedErrand;
             LoadData();
+
             ErrandsAddNavigateCommand = new NavigationCommand<ErrandNewViewModel>(navigationService).Navigate();
             EditErrandCommand = new NavigationCommand<ErrandEditViewModel>(navigationService).Navigate();
-            if (currentUserStore.User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
+            if (stores.CurrentUser.User?.IsAuthorized(568) ?? false) HasAccess = Visibility.Visible;
         }
         private Task LoadData()
         {

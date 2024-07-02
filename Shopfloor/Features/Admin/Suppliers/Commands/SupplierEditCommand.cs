@@ -1,3 +1,4 @@
+using Shopfloor.Interfaces;
 using Shopfloor.Models.SupplierModel;
 using Shopfloor.Shared.Commands;
 using System.Threading.Tasks;
@@ -7,9 +8,9 @@ namespace Shopfloor.Features.Admin.Suppliers.Commands
     internal sealed class SupplierEditCommand : CommandBase
     {
         private readonly SuppliersListViewModel _viewModel;
-        private readonly SupplierProvider _provider;
+        private readonly IProvider<Supplier> _provider;
 
-        public SupplierEditCommand(SuppliersListViewModel viewModel, SupplierProvider provider)
+        public SupplierEditCommand(SuppliersListViewModel viewModel, IProvider<Supplier> provider)
         {
             _viewModel = viewModel;
             _provider = provider;

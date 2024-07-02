@@ -47,7 +47,28 @@ namespace Shopfloor.Services
         public SelectedErrandStore SelectedErrand { get; init; }
         public ICurrentUserStore CurrentUser { get; init; }
 
-        public StoreRepository(IDataStore<User> userStore, IDataStore<Supplier> supplierStore, IDataStore<RoleUser> roleUserStore, IDataStore<Role> roleStore, IDataStore<Reservation> reservationStore, IDataStore<PartType> partTypeStore, IDataStore<Part> partStore, IDataStore<Order> orderStore, IDataStore<Offer> offerStore, IDataStore<Message> messageStore, IDataStore<MachinePart> machinePartStore, IDataStore<Machine> machineStore, IDataStore<ErrandType> errandTypeStore, IDataStore<ErrandStatus> errandStatusStore, IDataStore<ErrandPartStatus> errandPartStatusStore, IDataStore<ErrandPartOrder> errandPartOrderStore, IDataStore<ErrandPartOffer> errandPartOfferStore, IDataStore<ErrandPart> errandPartStore, IDataStore<Errand> errandStore, SelectedErrandStore selectedErrand, ICurrentUserStore currentUser)
+        public StoreRepository(
+            IDataStore<User> userStore,
+            IDataStore<Supplier> supplierStore,
+            IDataStore<RoleUser> roleUserStore,
+            IDataStore<Role> roleStore,
+            IDataStore<Reservation> reservationStore,
+            IDataStore<PartType> partTypeStore,
+            IDataStore<Part> partStore,
+            IDataStore<Order> orderStore,
+            IDataStore<Offer> offerStore,
+            IDataStore<Message> messageStore,
+            IDataStore<MachinePart> machinePartStore,
+            IDataStore<Machine> machineStore,
+            IDataStore<ErrandType> errandTypeStore,
+            IDataStore<ErrandStatus> errandStatusStore,
+            IDataStore<ErrandPartStatus> errandPartStatusStore,
+            IDataStore<ErrandPartOrder> errandPartOrderStore,
+            IDataStore<ErrandPartOffer> errandPartOfferStore,
+            IDataStore<ErrandPart> errandPartStore,
+            IDataStore<Errand> errandStore,
+            SelectedErrandStore selectedErrand,
+            ICurrentUserStore currentUser)
         {
             ErrandPartOffer = errandPartOfferStore;
             ErrandPartOrder = errandPartOrderStore;

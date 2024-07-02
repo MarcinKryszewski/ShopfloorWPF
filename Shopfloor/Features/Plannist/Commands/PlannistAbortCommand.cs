@@ -1,4 +1,5 @@
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Shared.Commands;
 using System;
@@ -10,10 +11,10 @@ namespace Shopfloor.Features.Plannist.Commands
         private readonly SelectedRequestStore _selectedRequest;
         private readonly ErrandPartStatusProvider _errandPartStatusProvider;
 
-        public PlannistAbortCommand(SelectedRequestStore selectedRequest, ErrandPartStatusProvider errandPartStatusProvider)
+        public PlannistAbortCommand(SelectedRequestStore selectedRequest, IProvider<ErrandPartStatus> errandPartStatusProvider)
         {
             _selectedRequest = selectedRequest;
-            _errandPartStatusProvider = errandPartStatusProvider;
+            _errandPartStatusProvider = (ErrandPartStatusProvider)errandPartStatusProvider; //temporary fix
         }
         public override void Execute(object? parameter)
         {

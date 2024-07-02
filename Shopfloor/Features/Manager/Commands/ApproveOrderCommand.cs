@@ -25,7 +25,7 @@ namespace Shopfloor.Features.Manager.Commands
         private readonly OrderApproveViewModel _viewModel;
         private readonly ErrandPartStatusProvider _provider;
         private readonly User _currentUser;
-        public ApproveOrderCommand(INavigationService navigationService, IDataStore<ErrandPartStatus> errandPartStatusStore, INotifier notifier, SelectedRequestStore requestStore, OrderApproveViewModel viewModel, ICurrentUserStore currentUserStore, ErrandPartStatusProvider errandPartStatusProvider)
+        public ApproveOrderCommand(INavigationService navigationService, IDataStore<ErrandPartStatus> errandPartStatusStore, INotifier notifier, SelectedRequestStore requestStore, OrderApproveViewModel viewModel, ICurrentUserStore currentUserStore, IProvider<ErrandPartStatus> errandPartStatusProvider)
         {
             _navigationService = navigationService;
             _errandPartStatusStore = errandPartStatusStore;
@@ -33,7 +33,7 @@ namespace Shopfloor.Features.Manager.Commands
             _requestStore = requestStore;
             _viewModel = viewModel;
             _currentUser = currentUserStore.User!;
-            _provider = errandPartStatusProvider;
+            _provider = (ErrandPartStatusProvider)errandPartStatusProvider;
         }
         public override void Execute(object? parameter)
         {

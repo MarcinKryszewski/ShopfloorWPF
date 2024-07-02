@@ -5,15 +5,15 @@ namespace Shopfloor.Tests.Services.AuthServices
 {
     public class AuthServiceTests
     {
-        private readonly IUserProvider provider = Substitute.For<IUserProvider>();
+        private readonly IUserProvider _provider = Substitute.For<IUserProvider>();
         [Fact]
         public void Login_ShouldReturnUser_WhenUsernameFound()
         {
             // Arrange
-            AuthService sut = new(provider);
+            AuthService sut = new(_provider);
             string username = "test";
             User user = new() { Username = username };
-            provider.GetByUsername(username).Returns(user);
+            _provider.GetByUsername(username).Returns(user);
             // Act
             User? result = sut.Login(username);
             // Assert
@@ -24,10 +24,10 @@ namespace Shopfloor.Tests.Services.AuthServices
         public void Login_ShouldReturnNull_WhenUsernameNotFound()
         {
             // Arrange
-            AuthService sut = new(provider);
+            AuthService sut = new(_provider);
             string username = "test";
             User user = new() { Username = username };
-            provider.GetByUsername(username).ReturnsNull();
+            _provider.GetByUsername(username).ReturnsNull();
             // Act
             User? result = sut.Login(username);
             // Assert

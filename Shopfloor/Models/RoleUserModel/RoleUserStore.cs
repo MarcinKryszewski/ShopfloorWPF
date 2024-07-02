@@ -1,10 +1,11 @@
+using Shopfloor.Interfaces;
 using Shopfloor.Shared.BaseClasses;
 
 namespace Shopfloor.Models.RoleUserModel
 {
     internal sealed class RoleUserStore : StoreBase<RoleUser>
     {
-        public RoleUserStore(RoleIUserProvider provider) : base(provider)
+        public RoleUserStore(IProvider<RoleUser> provider) : base(provider)
         {
         }
     }

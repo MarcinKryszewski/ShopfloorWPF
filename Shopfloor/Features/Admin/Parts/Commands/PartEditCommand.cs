@@ -1,3 +1,4 @@
+using Shopfloor.Interfaces;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.Commands;
 
@@ -6,9 +7,9 @@ namespace Shopfloor.Features.Admin.Parts.Commands
     internal sealed class PartEditCommand : CommandBase
     {
         private readonly PartsEditViewModel _viewModel;
-        private readonly PartProvider _partProvider;
+        private readonly IProvider<Part> _partProvider;
 
-        public PartEditCommand(PartsEditViewModel partsEditViewModel, PartProvider partProvider)
+        public PartEditCommand(PartsEditViewModel partsEditViewModel, IProvider<Part> partProvider)
         {
             _viewModel = partsEditViewModel;
             _partProvider = partProvider;
@@ -28,7 +29,6 @@ namespace Shopfloor.Features.Admin.Parts.Commands
                 ProducerId = _viewModel.ProducerId ?? 0,
                 SupplierId = _viewModel.SupplierId
             };
-
 
             if (!_viewModel.IsDataValidate) return;
 

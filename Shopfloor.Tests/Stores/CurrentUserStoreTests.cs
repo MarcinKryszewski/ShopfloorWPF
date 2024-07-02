@@ -12,7 +12,7 @@ namespace Shopfloor.Tests.Stores
     {
         private readonly CurrentUserStore _sut;
         private readonly IProvider<Role> _roleProvider = Substitute.For<IProvider<Role>>();
-        private readonly IRoleIUserProvider _roleIUserProvider = Substitute.For<IRoleIUserProvider>();
+        private readonly IProvider<RoleUser> _roleIUserProvider = Substitute.For<IProvider<RoleUser>>();
         private readonly INotifier _notifier = Substitute.For<INotifier>();
         private readonly IAuthService _auth = Substitute.For<IAuthService>();
         public CurrentUserStoreTests()

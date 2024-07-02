@@ -1,4 +1,5 @@
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.UserModel;
@@ -8,8 +9,6 @@ using Shopfloor.Stores;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ToastNotifications;
-using ToastNotifications.Messages;
 
 namespace Shopfloor.Features.Plannist.Offers.AddOffer
 {
@@ -19,15 +18,22 @@ namespace Shopfloor.Features.Plannist.Offers.AddOffer
         private readonly AddOfferViewModel _viewModel;
         private readonly ErrandPartProvider _errandPartProvider;
         private readonly ErrandPartStatusProvider _errandPartStatusProvider;
-        private readonly ErrandPartStatusStore _errandPartStatusStore;
+        private readonly IDataStore<ErrandPartStatus> _errandPartStatusStore;
         private readonly INotifier _notifier;
         private readonly User _currentUser;
-        public ConfrmOfferCommand(SelectedRequestStore requestStore, AddOfferViewModel addOfferViewModel, ICurrentUserStore currentUserStore, ErrandPartProvider errandPartProvider, ErrandPartStatusProvider errandPartStatusProvider, ErrandPartStatusStore errandPartStatusStore, INotifier notifier)
+        public ConfrmOfferCommand(
+            SelectedRequestStore requestStore,
+            AddOfferViewModel addOfferViewModel,
+            ICurrentUserStore currentUserStore,
+            IProvider<ErrandPart> errandPartProvider,
+            IProvider<ErrandPartStatus> errandPartStatusProvider,
+            IDataStore<ErrandPartStatus> errandPartStatusStore,
+            INotifier notifier)
         {
             _requestStore = requestStore;
             _viewModel = addOfferViewModel;
-            _errandPartProvider = errandPartProvider;
-            _errandPartStatusProvider = errandPartStatusProvider;
+            _errandPartProvider = (ErrandPartProvider)errandPartProvider; //Temporary fix
+            _errandPartStatusProvider = (ErrandPartStatusProvider)errandPartStatusProvider; //Temporary fix
             _errandPartStatusStore = errandPartStatusStore;
             _notifier = notifier;
             _currentUser = currentUserStore.User!;

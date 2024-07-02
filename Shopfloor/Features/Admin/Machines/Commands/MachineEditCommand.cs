@@ -1,3 +1,4 @@
+using Shopfloor.Interfaces;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Shared.Commands;
 
@@ -6,9 +7,9 @@ namespace Shopfloor.Features.Admin.Machines.Commands
     internal sealed class MachineEditCommand : CommandBase
     {
         private readonly MachinesListViewModel _viewModel;
-        private readonly MachineProvider _provider;
+        private readonly IProvider<Machine> _provider;
 
-        public MachineEditCommand(MachinesListViewModel viewModel, MachineProvider provider)
+        public MachineEditCommand(MachinesListViewModel viewModel, IProvider<Machine> provider)
         {
             _viewModel = viewModel;
             _provider = provider;

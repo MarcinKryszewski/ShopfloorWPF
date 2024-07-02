@@ -5,7 +5,6 @@ using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Models.SupplierModel;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
@@ -32,7 +31,12 @@ namespace Shopfloor.Features.Admin.Parts
         private Supplier? _supplier;
         private PartType? _type;
         private string? _unit;
-        public PartsAddViewModel(IDataStore<PartType> partTypeStore, IDataStore<Supplier> suppliersStore, IDataStore<Part> partStore, PartProvider partProvider, INavigationCommand<PartsListViewModel> returnCommand)
+        public PartsAddViewModel(
+            IDataStore<PartType> partTypeStore,
+            IDataStore<Supplier> suppliersStore,
+            IDataStore<Part> partStore,
+            IProvider<Part> partProvider,
+            INavigationCommand<PartsListViewModel> returnCommand)
         {
             _partStore = partStore;
 

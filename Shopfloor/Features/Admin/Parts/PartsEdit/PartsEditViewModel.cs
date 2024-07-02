@@ -32,7 +32,13 @@ namespace Shopfloor.Features.Admin.Parts
         private PartType? _type;
         private string _unit = GlobalConstants.DefaultPartUnit;
         private readonly IDataStore<Part> _partStore;
-        public PartsEditViewModel(INavigationCommand<PartsListViewModel> returnCommand, SelectedPartStore selectedPartStore, IDataStore<PartType> partTypeStore, IDataStore<Supplier> suppliersStore, IDataStore<Part> partStore, PartProvider partProvider)
+        public PartsEditViewModel(
+            INavigationCommand<PartsListViewModel> returnCommand,
+            SelectedPartStore selectedPartStore,
+            IDataStore<PartType> partTypeStore,
+            IDataStore<Supplier> suppliersStore,
+            IDataStore<Part> partStore,
+            IProvider<Part> partProvider)
         {
             _selectedPart = selectedPartStore.Part;
             _partStore = partStore;

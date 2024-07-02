@@ -2,8 +2,6 @@ using Shopfloor.Features.Plannist.Commands;
 using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandPartModel;
-using Shopfloor.Models.ErrandPartModel.Store;
-using Shopfloor.Models.ErrandPartModel.Store.Combine;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.ViewModels;
@@ -51,7 +49,7 @@ namespace Shopfloor.Features.Plannist
         public PlannistPartsListViewModel(
             INotifier notifier,
             SelectedRequestStore selectedRequestStore,
-            ErrandPartStatusProvider errandPartStatusProvider,
+            IProvider<ErrandPartStatus> errandPartStatusProvider,
             IDataStore<ErrandPart> errandPartStore,
             ICombinerManager<ErrandPart> errandPartCombiner)
         {
@@ -62,7 +60,7 @@ namespace Shopfloor.Features.Plannist
 
             LoadData();
 
-            ConfirmCommand = new PlannistConfirmCommand(_requestStore, notifier, errandPartStatusProvider);
+            ConfirmCommand = new PlannistConfirmCommand(_requestStore, notifier, (ErrandPartStatusProvider)errandPartStatusProvider);
             CancelCommand = new PlannistCancelCommand();
             AbortCommand = new PlannistAbortCommand(_requestStore, errandPartStatusProvider);
             DetailsCommand = new PlannistDetailsCommand();

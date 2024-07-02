@@ -24,8 +24,8 @@ namespace Shopfloor.Features.Admin.Suppliers
         private string _name = string.Empty;
         private string _searchText = string.Empty;
         private Supplier? _selectedSupplier;
-        private readonly SupplierProvider _supplierProvider;
-        public SuppliersListViewModel(SupplierProvider supplierProvider, IDataStore<Supplier> suppliersStore)
+        private readonly IProvider<Supplier> _supplierProvider;
+        public SuppliersListViewModel(IProvider<Supplier> supplierProvider, IDataStore<Supplier> suppliersStore)
         {
             _supplierProvider = supplierProvider;
 

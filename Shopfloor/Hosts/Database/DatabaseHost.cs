@@ -211,13 +211,11 @@ namespace Shopfloor.Hosts.Database
         }
         private static void RoleUserServices(IServiceCollection services)
         {
-            // services.AddSingleton<IProvider<RoleUser>, RoleUserProvider>();
+            services.AddTransient<IProvider<RoleUser>, RoleUserProvider>();
             services.AddSingleton<IDataStore<RoleUser>, RoleUserStore>();
             // services.AddSingleton<ICombinerManager<RoleUser>, RoleUserCombiner>();
 
-            services.AddTransient<IProvider<RoleUser>, RoleIUserProvider>();
-            services.AddTransient<IRoleIUserProvider, RoleIUserProvider>();
-
+            services.AddSingleton<IRoleUserProvider, RoleUserProvider>();
         }
         private static void SupplierServices(IServiceCollection services)
         {

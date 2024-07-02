@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.RoleUserModel
 {
-    internal interface IRoleIUserProvider : IProvider<RoleUser>
+    internal interface IRoleUserProvider : IProvider<RoleUser>
     {
         Task<IEnumerable<RoleUser>> GetAllForUser(int userId);
         Task<int> Create(int RoleId, int UserId);
         Task Delete(int roleId, int userId);
     }
-    internal sealed class RoleIUserProvider : IRoleIUserProvider
+    internal sealed class RoleUserProvider : IRoleUserProvider
     {
         private readonly DatabaseConnectionFactory _database;
         private const string _createSQL = @"
@@ -52,7 +52,7 @@ namespace Shopfloor.Models.RoleUserModel
             FROM roles_users
             WHERE role_id = @RoleId
             ";
-        public RoleIUserProvider(DatabaseConnectionFactory database)
+        public RoleUserProvider(DatabaseConnectionFactory database)
         {
             _database = database;
         }

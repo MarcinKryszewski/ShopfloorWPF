@@ -1,12 +1,12 @@
-﻿using System.Threading.Tasks;
-using Shopfloor.Interfaces;
+﻿using Shopfloor.Interfaces;
+using System.Threading.Tasks;
 
 namespace Shopfloor.Models.ErrandStatusModel.Services
 {
     internal class ErrandStatusDatabaseService : IDataModelDatabaseService<ErrandStatus>
     {
-        private readonly ErrandStatusProvider _errandStatusProvider;
-        public ErrandStatusDatabaseService(ErrandStatusProvider errandStatusProvider)
+        private readonly IProvider<ErrandStatus> _errandStatusProvider;
+        public ErrandStatusDatabaseService(IProvider<ErrandStatus> errandStatusProvider)
         {
             _errandStatusProvider = errandStatusProvider;
         }
