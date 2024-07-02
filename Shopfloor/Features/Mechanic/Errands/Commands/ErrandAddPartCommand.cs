@@ -1,8 +1,6 @@
-using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.Commands;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Shopfloor.Features.Mechanic.Errands.Commands
@@ -36,7 +34,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
                     ErrandId = (int)creatorData.Errand.Id!,
                     OrderedById = creatorData.UserId
                 };
-                creatorData.Parts.Add(errandPart);
+                creatorData.Errand.Parts.Add(errandPart);
                 _viewModel.ErrandParts.Refresh();
             }
         }

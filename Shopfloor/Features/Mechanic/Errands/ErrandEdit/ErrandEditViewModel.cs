@@ -56,7 +56,7 @@ namespace Shopfloor.Features.Mechanic.Errands
             _errand = (Errand)_selectedErrand.SelectedErrand!.Clone();
             _errandCreatorData = new() { Errand = _errand, UserId = _currentUserId };
 
-            EditErrandCommand = new ErrandEditCommand(errandEditor);
+            EditErrandCommand = new ErrandEditCommand(errandEditor, _selectedErrand.SelectedErrand);
             ReturnCommand = new NavigationCommand<ErrandsListViewModel>(navigationService).Navigate();
             PrioritySetCommand = new PrioritySetCommand(this);
 

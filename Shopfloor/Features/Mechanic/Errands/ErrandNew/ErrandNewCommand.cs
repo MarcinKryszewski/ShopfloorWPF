@@ -1,11 +1,10 @@
-using Shopfloor.Models.ErrandModel;
-using Shopfloor.Shared.Commands;
 using Shopfloor.Interfaces;
-using System;
-using System.Collections.Generic;
+using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandStatusModel;
-using Shopfloor.Interfaces.Models;
+using Shopfloor.Shared.Commands;
+using System;
+using System.Collections.Generic;
 
 namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
 {
@@ -16,10 +15,10 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
         private readonly IModelCreatorService<ErrandStatus> _statusCreator;
 
         public event Action? ErrandCreated;
+
         public ErrandNewCommand(
             IModelCreatorService<Errand> errandCreator,
             IModelCreatorService<ErrandPart> partCreator,
-            IModelEditorService<ErrandStatus> errandStatusEditorService,
             IModelCreatorService<ErrandStatus> statusCreator)
         {
             _errandCreator = errandCreator;
