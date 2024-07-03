@@ -21,9 +21,9 @@ namespace Shopfloor.Models.ErrandPartModel.Services
         }
         public void Create(ErrandPart item)
         {
-            int id = _databaseService.AddToDatabase(item);
+            int id = _databaseService.Add(item);
             item.Id = id;
-            _storeService.AddToStore(item);
+            _storeService.Add(item);
             CreateErrandPartStatus(id);
         }
         private void CreateErrandPartStatus(int id)

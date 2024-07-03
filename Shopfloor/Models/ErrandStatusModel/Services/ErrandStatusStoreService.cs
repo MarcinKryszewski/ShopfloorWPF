@@ -11,8 +11,8 @@ namespace Shopfloor.Models.ErrandStatusModel.Services
         {
             _store = errandStatusStore;
         }
-        public void AddToStore(ErrandStatus status) => _store.Data.Add(status);
-        public void EditInStore(ErrandStatus status)
+        public void Add(ErrandStatus status) => _store.Data.Add(status);
+        public void Edit(ErrandStatus status)
         {
             int index = _store.Data.FindIndex(es => es.Id == status.Id);
             if (index != -1) _store.Data[index] = status;

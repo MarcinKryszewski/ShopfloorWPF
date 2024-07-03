@@ -9,9 +9,15 @@ namespace Shopfloor.Models.ErrandPartModel.Services
         {
             _provider = provider;
         }
-        public int AddToDatabase(ErrandPart item) => _provider.Create(item).Result;
+        public int Add(ErrandPart item) => _provider.Create(item).Result;
 
-        public void EditInDatabase(ErrandPart item)
+        public void Delete(ErrandPart item)
+        {
+            if (item.Id is null) return;
+            _provider.Delete((int)item.Id);
+        }
+
+        public void Edit(ErrandPart item)
         {
             throw new System.NotImplementedException();
         }

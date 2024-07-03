@@ -15,8 +15,8 @@ namespace Shopfloor.Models.ErrandStatusModel.Services
         }
         public void Edit(ErrandStatus item)
         {
-            _storeService.EditInStore(item);
-            _databaseService.EditInDatabase(item);
+            _storeService.Edit(item);
+            _databaseService.Edit(item);
         }
     }
 }

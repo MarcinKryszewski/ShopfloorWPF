@@ -11,16 +11,20 @@ namespace Shopfloor.Models.ErrandPartModel.Services
         {
             _store = store;
         }
-        public void AddToStore(ErrandPart item) => _store.Data.Add(item);
+        public void Add(ErrandPart item) => _store.Data.Add(item);
 
-        public void EditInStore(ErrandPart item)
+        public void Edit(ErrandPart item)
         {
-            throw new System.NotImplementedException();
+            int index = _store.Data.FindIndex(t => t.Id == item.Id);
+            if (index != -1) _store.Data[index] = item;
         }
 
-        public ErrandPart? FindItem(ErrandPart item)
+        public ErrandPart? FindItem(ErrandPart item) => _store.Data.FirstOrDefault(t => t.Id == item.Id);
+
+        public void Remove(ErrandPart item)
         {
-            return _store.Data.FirstOrDefault(t => t.Id == item.Id);
+            int index = _store.Data.FindIndex(t => t.Id == item.Id);
+            _store.Data.RemoveAt(index);
         }
     }
 }

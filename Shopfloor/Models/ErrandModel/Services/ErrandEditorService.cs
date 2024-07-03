@@ -21,14 +21,11 @@ namespace Shopfloor.Models.ErrandModel.Services
         }
         public void Edit(Errand item)
         {
-            _databaseService.EditInDatabase(item);
+            _databaseService.Edit(item);
             ReplaceInStore(item);
             CreateErrandStatus(item);
         }
-        private void ReplaceInStore(Errand item)
-        {
-            _storeService.EditInStore(item);
-        }
+        private void ReplaceInStore(Errand item) => _storeService.Edit(item);
         private void CreateErrandStatus(Errand errand)
         {
             string defaultReason = "ERRAND EDITED";

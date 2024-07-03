@@ -28,7 +28,7 @@ namespace Shopfloor.Tests.Models.ErrandPartModel.Services
             _provider.Create(errandPart).Returns(Task.FromResult(generatedId));
 
             // Act
-            int result = _service.AddToDatabase(errandPart);
+            int result = _service.Add(errandPart);
 
             // Assert
             result.Should().Be(generatedId);

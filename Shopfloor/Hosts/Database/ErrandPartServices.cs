@@ -22,8 +22,14 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<ErrandPartToUser>();
 
             services.AddSingleton<IModelCreatorService<ErrandPart>, ErrandPartCreatorService>();
+            services.AddSingleton<IModelEditorService<ErrandPart>, ErrandPartEditorService>();
+            services.AddSingleton<IModelDeleterService<ErrandPart>, ErrandPartDeleterService>();
+
+
             services.AddSingleton<IDataModelDatabaseService<ErrandPart>, ErrandPartDatabaseService>();
             services.AddSingleton<IDataModelStoreService<ErrandPart>, ErrandPartStoreService>();
+            services.AddSingleton<IModelCrudService<ErrandPart>, ErrandPartCrudService>();
+
         }
     }
 }

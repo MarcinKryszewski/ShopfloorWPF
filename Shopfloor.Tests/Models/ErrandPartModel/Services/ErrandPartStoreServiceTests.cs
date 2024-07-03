@@ -27,7 +27,7 @@ namespace Shopfloor.Tests.Models.ErrandPartModel.Services
             _store.Data.Returns([]);
 
             // Act
-            _service.AddToStore(errandPart);
+            _service.Add(errandPart);
 
             // Assert
             _store.Data.Should().Contain(errandPart);

@@ -19,7 +19,7 @@ namespace Shopfloor.Tests.Models.ErrandModel.Services
             IDataModelDatabaseService<Errand> databaseService = Substitute.For<IDataModelDatabaseService<Errand>>();
             IDataModelStoreService<Errand> storeService = Substitute.For<IDataModelStoreService<Errand>>();
             IModelCreatorService<ErrandStatus> statusCreator = Substitute.For<IModelCreatorService<ErrandStatus>>();
-            databaseService.AddToDatabase(errand).Returns(testId);
+            databaseService.Add(errand).Returns(testId);
 
             ErrandCreatorService sut = new(databaseService, storeService, statusCreator);
 

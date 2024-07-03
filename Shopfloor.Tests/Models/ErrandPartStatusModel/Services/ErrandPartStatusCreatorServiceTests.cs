@@ -31,7 +31,7 @@ namespace Shopfloor.Tests.Models.ErrandPartStatusModel.Services
                 CreatedDate = DateTime.Now,
             };
             int generatedId = 123;
-            _databaseService.AddToDatabase(errandPartStatus).Returns(generatedId);
+            _databaseService.Add(errandPartStatus).Returns(generatedId);
 
             // Act
             _service.Create(errandPartStatus);
@@ -55,8 +55,8 @@ namespace Shopfloor.Tests.Models.ErrandPartStatusModel.Services
             _service.Create(errandPartStatus);
 
             // Assert
-            _databaseService.Received(1).AddToDatabase(errandPartStatus);
-            _storeService.Received(1).AddToStore(errandPartStatus);
+            _databaseService.Received(1).Add(errandPartStatus);
+            _storeService.Received(1).Add(errandPartStatus);
         }
         [Fact]
         public void Create_ShouldAddToStoreWithPersistedId()
@@ -68,13 +68,13 @@ namespace Shopfloor.Tests.Models.ErrandPartStatusModel.Services
                 CreatedDate = DateTime.Now,
             };
             int generatedId = 123;
-            _databaseService.AddToDatabase(errandPartStatus).Returns(generatedId);
+            _databaseService.Add(errandPartStatus).Returns(generatedId);
 
             // Act
             _service.Create(errandPartStatus);
 
             // Assert
-            _storeService.Received(1).AddToStore(Arg.Is<ErrandPartStatus>(e => e.Id == generatedId));
+            _storeService.Received(1).Add(Arg.Is<ErrandPartStatus>(e => e.Id == generatedId));
         }
     }
 }

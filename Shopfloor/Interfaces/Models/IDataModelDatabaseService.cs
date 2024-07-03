@@ -4,7 +4,8 @@ namespace Shopfloor.Interfaces
 {
     internal interface IDataModelDatabaseService<T> where T : DataModel
     {
-        public int AddToDatabase(T item);
-        public void EditInDatabase(T item);
+        public int Add(T item);
+        public void Edit(T item);
+        public void Delete(T item);
     }
 }

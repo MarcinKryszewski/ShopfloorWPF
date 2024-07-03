@@ -22,7 +22,7 @@ namespace Shopfloor.Tests.Models.ErrandModel.Services
             ErrandStoreService service = new(dataStore);
 
             // Act
-            service.AddToStore(errand);
+            service.Add(errand);
             int result = dataStore.Data.Count;
 
             // Assert
