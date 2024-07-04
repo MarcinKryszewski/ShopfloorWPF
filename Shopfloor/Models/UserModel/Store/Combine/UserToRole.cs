@@ -1,17 +1,16 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Shopfloor.Models.UserModel.Store.Combine
 {
     internal sealed class UserToRole : ICombiner<User>
     {
-        private readonly IDataStore<User> _userStore;
         private readonly IDataStore<Role> _roleStore;
         private readonly IDataStore<RoleUser> _roleUserStore;
+        private readonly IDataStore<User> _userStore;
         public UserToRole(IDataStore<User> userStore, IDataStore<Role> roleStore, IDataStore<RoleUser> roleUserStore)
         {
             _userStore = userStore;
@@ -45,13 +44,17 @@ namespace Shopfloor.Models.UserModel.Store.Combine
             item.ClearRoles();
             foreach (RoleUser roleUser in roleUsers)
             {
-                Role? role = roles.FirstOrDefault(r => r.Id == roleUser.RoleId);
-                if (role == null) continue;
+                Role? role = roles.Find(r => r.Id == roleUser.RoleId);
+                if (role == null)
+                {
+                    continue;
+                }
+
                 item.AddRole(role);
             }
         }
-        List<User> GetUsers() => _userStore.Data;
-        List<Role> GetRoles() => _roleStore.Data;
-        List<RoleUser> GetRoleUsers() => _roleUserStore.Data;
+        private List<Role> GetRoles() => _roleStore.Data;
+        private List<RoleUser> GetRoleUsers() => _roleUserStore.Data;
+        private List<User> GetUsers() => _userStore.Data;
     }
 }

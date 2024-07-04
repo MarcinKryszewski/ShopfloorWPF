@@ -1,6 +1,6 @@
+using System.Collections.ObjectModel;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartModel;
-using System.Collections.ObjectModel;
 
 namespace Shopfloor.Features.Mechanic.Errands.Stores
 {
@@ -8,6 +8,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Stores
     {
         private Errand? _selectedErrand;
         public int? ErrandId { get; set; }
+        public ObservableCollection<ErrandPart> ErrandParts { get; } = [];
         public int? MachineId { get; set; }
         public Errand? SelectedErrand
         {
@@ -22,6 +23,5 @@ namespace Shopfloor.Features.Mechanic.Errands.Stores
                 }
             }
         }
-        public ObservableCollection<ErrandPart> ErrandParts = [];
     }
 }

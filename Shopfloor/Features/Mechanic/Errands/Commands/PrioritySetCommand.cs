@@ -14,8 +14,16 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
 
         public override void Execute(object? parameter)
         {
-            if (parameter is null) return;
-            if (parameter.GetType() != typeof(string)) return;
+            if (parameter is null)
+            {
+                return;
+            }
+
+            if (!(parameter is string))
+            {
+                return;
+            }
+
             _viewModel.SelectedPriority = (string)parameter;
         }
     }

@@ -6,7 +6,26 @@ namespace Shopfloor.Models.OfferModel
 {
     internal sealed partial class Offer : DataModel
     {
-        private readonly OfferDTO _data;
+        private readonly OfferDto _data;
+        public Offer()
+        {
+            _data = new();
+        }
+        required public int CreateById
+        {
+            get => _data.CreateById;
+            init => _data.CreateById = value;
+        }
+        required public DateTime CreateDate
+        {
+            get => _data.CreateDate;
+            init => _data.CreateDate = value;
+        }
+        public User? CreatedBy
+        {
+            get => _data.CreateBy;
+            set => _data.CreateBy = value;
+        }
         public int? Id
         {
             get => _data.Id;
@@ -19,25 +38,6 @@ namespace Shopfloor.Models.OfferModel
                 }
                 _data.Id = value;
             }
-        }
-        public required DateTime CreateDate
-        {
-            get => _data.CreateDate;
-            init => _data.CreateDate = value;
-        }
-        public required int CreateById
-        {
-            get => _data.CreateById;
-            init => _data.CreateById = value;
-        }
-        public User? CreatedBy
-        {
-            get => _data.CreateBy;
-            set => _data.CreateBy = value;
-        }
-        public Offer()
-        {
-            _data = new();
         }
     }
 }

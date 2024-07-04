@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.OfferModel;
 using Shopfloor.Shared.BaseClasses;
@@ -10,19 +6,10 @@ namespace Shopfloor.Models.ErrandPartOfferModel
 {
     internal sealed partial class ErrandPartOffer : DataModel
     {
-        private readonly ErrandPartOfferDTO _data;
-        public int? Id
+        private readonly ErrandPartOfferDto _data;
+        public ErrandPartOffer()
         {
-            get => _data.Id;
-            set
-            {
-                if (_data.Id is not null)
-                {
-                    AddError(nameof(Id), "Id already assigned");
-                    return;
-                }
-                _data.Id = value;
-            }
+            _data = new();
         }
         public ErrandPart? ErrandPart
         {
@@ -42,10 +29,23 @@ namespace Shopfloor.Models.ErrandPartOfferModel
                 AddError(nameof(ErrandPart), "ErrandPartId do not match");
             }
         }
-        public required int ErrandPartId
+        required public int ErrandPartId
         {
             get => _data.ErrandPartId;
             init => _data.ErrandPartId = value;
+        }
+        public int? Id
+        {
+            get => _data.Id;
+            set
+            {
+                if (_data.Id is not null)
+                {
+                    AddError(nameof(Id), "Id already assigned");
+                    return;
+                }
+                _data.Id = value;
+            }
         }
         public Offer? Offer
         {
@@ -65,14 +65,10 @@ namespace Shopfloor.Models.ErrandPartOfferModel
                 AddError(nameof(Offer), "OfferId do not match");
             }
         }
-        public required int OfferId
+        required public int OfferId
         {
             get => _data.OfferId;
             init => _data.OfferId = value;
-        }
-        public ErrandPartOffer()
-        {
-            _data = new();
         }
     }
 }

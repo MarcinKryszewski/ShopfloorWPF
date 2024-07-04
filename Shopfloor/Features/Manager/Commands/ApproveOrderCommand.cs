@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Shopfloor.Features.Manager.OrderApprove;
 using Shopfloor.Features.Manager.Stores;
 using Shopfloor.Interfaces;
@@ -8,9 +11,6 @@ using Shopfloor.Services.NavigationServices;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Stores;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Shopfloor.Features.Manager.Commands
 {
@@ -18,13 +18,13 @@ namespace Shopfloor.Features.Manager.Commands
     {
         private const string _orderApproved = "Dodano ofertę i przekazano do zatwierdzenia!";
 
-        private readonly INavigationService _navigationService;
+        private readonly User _currentUser;
         private readonly IDataStore<ErrandPartStatus> _errandPartStatusStore;
+        private readonly INavigationService _navigationService;
         private readonly INotifier _notifier;
+        private readonly ErrandPartStatusProvider _provider;
         private readonly SelectedRequestStore _requestStore;
         private readonly OrderApproveViewModel _viewModel;
-        private readonly ErrandPartStatusProvider _provider;
-        private readonly User _currentUser;
         public ApproveOrderCommand(INavigationService navigationService, IDataStore<ErrandPartStatus> errandPartStatusStore, INotifier notifier, SelectedRequestStore requestStore, OrderApproveViewModel viewModel, ICurrentUserStore currentUserStore, IProvider<ErrandPartStatus> errandPartStatusProvider)
         {
             _navigationService = navigationService;
@@ -37,11 +37,21 @@ namespace Shopfloor.Features.Manager.Commands
         }
         public override void Execute(object? parameter)
         {
-            if (_requestStore.Request is null) return;
+            if (_requestStore.Request is null)
+            {
+                return;
+            }
 
             ErrandPart request = _requestStore.Request;
-            if (!_viewModel.IsDataValidate) return;
-            if (request.Id is null) return;
+            if (!_viewModel.IsDataValidate)
+            {
+                return;
+            }
+
+            if (request.Id is null)
+            {
+                return;
+            }
 
             List<Task> tasks = [];
             tasks.Add(ErrandPartUpdateStatus(request.LastStatus));
@@ -49,22 +59,23 @@ namespace Shopfloor.Features.Manager.Commands
             Task.WhenAll(tasks);
             ReturnToApprovals();
         }
-        private void ReturnToApprovals()
+        private void AddToStore(ErrandPartStatus status)
         {
-            _notifier.ShowSuccess(_orderApproved);
-            _navigationService.NavigateTo<OrderApproveViewModel>();
-        }
-        private async Task ErrandPartUpdateStatus(ErrandPartStatus requestStatus)
-        {
-            requestStatus.Comment = _viewModel.Comment;
-            requestStatus.CompletedById = (int)_currentUser.Id!;
-
-            await _provider.ConfirmStatus((int)requestStatus.Id!, _viewModel.Comment, (int)_currentUser.Id!);
+            List<ErrandPartStatus> errandPartStatuses = _errandPartStatusStore.Data;
+            errandPartStatuses.Add(status);
         }
         private async Task ErrandPartNewStatus(ErrandPart request, object? parameter)
         {
-            if (parameter is null) return;
-            if (parameter is not string) return;
+            if (parameter is null)
+            {
+                return;
+            }
+
+            if (parameter is not string)
+            {
+                return;
+            }
+
             string nextStatusName = parameter switch
             {
                 "CONFIRM" => ErrandPartStatus.Status[3],
@@ -76,20 +87,27 @@ namespace Shopfloor.Features.Manager.Commands
             {
                 ErrandPartId = (int)request.Id!,
                 CreatedDate = DateTime.Now,
-                Reason = "APPROVAL STATUS CHANGED"
+                Reason = "APPROVAL STATUS CHANGED",
             };
             AddToStore(newStatus);
             newStatus.Id = await _provider.Create(newStatus);
 
-            if ((nextStatusName == ErrandPartStatus.Status[8]) | (nextStatusName == ErrandPartStatus.Status[9]))
+            if ((nextStatusName == ErrandPartStatus.Status[8]) || (nextStatusName == ErrandPartStatus.Status[9]))
             {
                 await _provider.ConfirmStatus((int)newStatus.Id!, _viewModel.Comment, (int)_currentUser.Id!);
             }
         }
-        private void AddToStore(ErrandPartStatus status)
+        private async Task ErrandPartUpdateStatus(ErrandPartStatus requestStatus)
         {
-            List<ErrandPartStatus> errandPartStatuses = _errandPartStatusStore.Data;
-            errandPartStatuses.Add(status);
+            requestStatus.Comment = _viewModel.Comment;
+            requestStatus.CompletedById = (int)_currentUser.Id!;
+
+            await _provider.ConfirmStatus((int)requestStatus.Id!, _viewModel.Comment, (int)_currentUser.Id!);
+        }
+        private void ReturnToApprovals()
+        {
+            _notifier.ShowSuccess(_orderApproved);
+            _navigationService.NavigateTo<OrderApproveViewModel>();
         }
     }
 }

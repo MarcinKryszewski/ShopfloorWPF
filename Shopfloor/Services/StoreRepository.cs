@@ -25,28 +25,6 @@ namespace Shopfloor.Services
 {
     internal class StoreRepository
     {
-        public IDataStore<Errand> Errand { get; init; }
-        public IDataStore<ErrandPart> ErrandPart { get; init; }
-        public IDataStore<ErrandPartOffer> ErrandPartOffer { get; init; }
-        public IDataStore<ErrandPartOrder> ErrandPartOrder { get; init; }
-        public IDataStore<ErrandPartStatus> ErrandPartStatus { get; init; }
-        public IDataStore<ErrandStatus> ErrandStatus { get; init; }
-        public IDataStore<ErrandType> ErrandType { get; init; }
-        public IDataStore<Machine> Machine { get; init; }
-        public IDataStore<MachinePart> MachinePart { get; init; }
-        public IDataStore<Message> Message { get; init; }
-        public IDataStore<Offer> Offer { get; init; }
-        public IDataStore<Order> Order { get; init; }
-        public IDataStore<Part> Part { get; init; }
-        public IDataStore<PartType> PartType { get; init; }
-        public IDataStore<Reservation> Reservation { get; init; }
-        public IDataStore<Role> Role { get; init; }
-        public IDataStore<RoleUser> RoleUser { get; init; }
-        public IDataStore<Supplier> Supplier { get; init; }
-        public IDataStore<User> User { get; init; }
-        public SelectedErrandStore SelectedErrand { get; init; }
-        public ICurrentUserStore CurrentUser { get; init; }
-
         public StoreRepository(
             IDataStore<User> userStore,
             IDataStore<Supplier> supplierStore,
@@ -92,5 +70,26 @@ namespace Shopfloor.Services
             SelectedErrand = selectedErrand;
             CurrentUser = currentUser;
         }
+        public ICurrentUserStore CurrentUser { get; init; }
+        public IDataStore<Errand> Errand { get; init; }
+        public IDataStore<ErrandPart> ErrandPart { get; init; }
+        public IDataStore<ErrandPartOffer> ErrandPartOffer { get; init; }
+        public IDataStore<ErrandPartOrder> ErrandPartOrder { get; init; }
+        public IDataStore<ErrandPartStatus> ErrandPartStatus { get; init; }
+        public IDataStore<ErrandStatus> ErrandStatus { get; init; }
+        public IDataStore<ErrandType> ErrandType { get; init; }
+        public IDataStore<Machine> Machine { get; init; }
+        public IDataStore<MachinePart> MachinePart { get; init; }
+        public IDataStore<Message> Message { get; init; }
+        public IDataStore<Offer> Offer { get; init; }
+        public IDataStore<Order> Order { get; init; }
+        public IDataStore<Part> Part { get; init; }
+        public IDataStore<PartType> PartType { get; init; }
+        public IDataStore<Reservation> Reservation { get; init; }
+        public IDataStore<Role> Role { get; init; }
+        public IDataStore<RoleUser> RoleUser { get; init; }
+        public SelectedErrandStore SelectedErrand { get; init; }
+        public IDataStore<Supplier> Supplier { get; init; }
+        public IDataStore<User> User { get; init; }
     }
 }

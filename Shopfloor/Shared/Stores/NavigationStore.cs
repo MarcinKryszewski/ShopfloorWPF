@@ -1,13 +1,14 @@
-﻿using Shopfloor.Features;
+﻿using System;
+using Shopfloor.Features;
 using Shopfloor.Shared.ViewModels;
-using System;
 
 namespace Shopfloor.Shared.Stores
 {
     internal sealed class NavigationStore : INavigationStore
     {
-        private ViewModelBase? _currentViewModel;
         private readonly WorkInProgressViewModel wipViewModel = new();
+        private ViewModelBase? _currentViewModel;
+        public event Action? CurrentViewModelChanged;
         public ViewModelBase CurrentViewModel
         {
             get => _currentViewModel ?? wipViewModel;
@@ -18,7 +19,6 @@ namespace Shopfloor.Shared.Stores
                 OnCurrentViewModelChanged();
             }
         }
-        public event Action? CurrentViewModelChanged;
         private void OnCurrentViewModelChanged()
         {
             CurrentViewModelChanged?.Invoke();

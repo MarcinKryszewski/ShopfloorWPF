@@ -5,7 +5,7 @@ using Shopfloor.Hosts.Features;
 
 namespace Shopfloor.Hosts
 {
-    internal class AppHost
+    internal static class AppHost
     {
         public static IHost Get()
         {

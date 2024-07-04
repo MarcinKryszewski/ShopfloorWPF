@@ -1,5 +1,5 @@
-﻿using Shopfloor.Interfaces;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandStatusModel.Services
 {

@@ -1,27 +1,46 @@
-using Dapper;
-using Shopfloor.Database;
-using Shopfloor.Interfaces;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
+using Shopfloor.Database;
 
 namespace Shopfloor.Models.UserModel
 {
-    internal interface IUserProvider : IProvider<User>
-    {
-        public Task<User?> GetByUsername(string username);
-        public Task SetUserActive(int id, bool isActive);
-    }
     internal sealed class UserProvider : IUserProvider
     {
-        private readonly DatabaseConnectionFactory _database;
         private const string _createSQL = @"
             INSERT INTO users (username, user_name, user_surname, image_path)
             VALUES (@Username, @Name, @Surname, @ImagePath)
             ";
+        private const string _deleteSQL = @"
+            DELETE
+            FROM users
+            WHERE id = @Id
+            ";
+        private const string _getAllSQL = @"
+            SELECT
+                id AS Id,
+                username AS Username,
+                user_name AS Name,
+                user_surname AS Surname,
+                image_path AS ImagePath,
+                active AS IsActive
+            FROM users
+            ";
+        private const string _getByUsername = @"
+            SELECT
+                id AS Id,
+                username AS Username,
+                user_name AS Name,
+                user_surname AS Surname,
+                image_path AS ImagePath,
+                active AS IsActive
+            FROM users
+            WHERE username = @Username AND active = 1
+            ";
         private const string _getOneSQL = @"
-            SELECT 
+            SELECT
                 id AS Id,
                 username AS Username,
                 user_name AS Name,
@@ -31,16 +50,12 @@ namespace Shopfloor.Models.UserModel
             FROM users
             WHERE id = @Id
             ";
-        private const string _getAllSQL = @"
-            SELECT 
-                id AS Id,
-                username AS Username,
-                user_name AS Name,
-                user_surname AS Surname,
-                image_path AS ImagePath,
-                active AS IsActive
-            FROM users
-            ";
+        private const string _setUserActive = @"
+            UPDATE users
+            SET
+                active = @Active
+            WHERE id = @Id
+        ";
         private const string _updateSQL = @"
             UPDATE users
             SET
@@ -51,28 +66,7 @@ namespace Shopfloor.Models.UserModel
                 active = @Active
             WHERE id = @Id
             ";
-        private const string _deleteSQL = @"
-            DELETE
-            FROM users
-            WHERE id = @Id
-            ";
-        private const string _getByUsername = @"
-            SELECT 
-                id AS Id,
-                username AS Username,
-                user_name AS Name,
-                user_surname AS Surname,
-                image_path AS ImagePath,
-                active AS IsActive
-            FROM users
-            WHERE username = @Username AND active = 1
-            ";
-        private const string _setUserActive = @"
-            UPDATE users
-            SET
-                active = @Active
-            WHERE id = @Id
-        ";
+        private readonly DatabaseConnectionFactory _database;
         public UserProvider(DatabaseConnectionFactory database)
         {
             _database = database;
@@ -80,7 +74,10 @@ namespace Shopfloor.Models.UserModel
         public async Task<int> Create(User item)
         {
             User? existingUser = await GetByUsername(item.Username);
-            if (existingUser is not null) return -1;
+            if (existingUser is not null)
+            {
+                return -1;
+            }
 
             using IDbConnection connection = _database.Connect();
             object parameters = new
@@ -88,7 +85,7 @@ namespace Shopfloor.Models.UserModel
                 Username = item.Username,
                 Name = item.Name,
                 Surname = item.Surname,
-                ImagePath = item.Image
+                ImagePath = item.Image,
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
@@ -98,12 +95,21 @@ namespace Shopfloor.Models.UserModel
                 _ => string.Empty,
             };
 
-            return connection.Query<int>(lastIdSQL).Single();
+            return await connection.QueryFirstAsync<int>(lastIdSQL);
+        }
+        public async Task Delete(int id)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                Id = id,
+            };
+            await connection.ExecuteAsync(_deleteSQL, parameters);
         }
         public async Task<IEnumerable<User>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
-            IEnumerable<UserDTO> userDTOs = await connection.QueryAsync<UserDTO>(_getAllSQL);
+            IEnumerable<UserDto> userDTOs = await connection.QueryAsync<UserDto>(_getAllSQL);
             return userDTOs.Select(ToUser);
         }
         public async Task<User> GetById(int id)
@@ -111,9 +117,9 @@ namespace Shopfloor.Models.UserModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Id = id
+                Id = id,
             };
-            UserDTO? userDTO = await connection.QuerySingleAsync<UserDTO>(_getOneSQL, parameters);
+            UserDto? userDTO = await connection.QuerySingleAsync<UserDto>(_getOneSQL, parameters);
             return ToUser(userDTO);
         }
         public async Task<User?> GetByUsername(string username)
@@ -121,11 +127,25 @@ namespace Shopfloor.Models.UserModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Username = username
+                Username = username,
             };
-            UserDTO? userDTO = await connection.QuerySingleOrDefaultAsync<UserDTO>(_getByUsername, parameters);
-            if (userDTO == null) return null;
+            UserDto? userDTO = await connection.QuerySingleOrDefaultAsync<UserDto>(_getByUsername, parameters);
+            if (userDTO == null)
+            {
+                return null;
+            }
+
             return ToUser(userDTO);
+        }
+        public async Task SetUserActive(int id, bool isActive)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                Id = id,
+                Active = isActive,
+            };
+            await connection.ExecuteAsync(_setUserActive, parameters);
         }
         public async Task Update(User item)
         {
@@ -137,30 +157,11 @@ namespace Shopfloor.Models.UserModel
                 Name = item.Name,
                 Surname = item.Surname,
                 ImagePath = item.Image,
-                Active = item.IsActive
+                Active = item.IsActive,
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
-        public async Task Delete(int id)
-        {
-            using IDbConnection connection = _database.Connect();
-            object parameters = new
-            {
-                Id = id
-            };
-            await connection.ExecuteAsync(_deleteSQL, parameters);
-        }
-        public async Task SetUserActive(int id, bool isActive)
-        {
-            using IDbConnection connection = _database.Connect();
-            object parameters = new
-            {
-                Id = id,
-                Active = isActive
-            };
-            await connection.ExecuteAsync(_setUserActive, parameters);
-        }
-        private static User ToUser(UserDTO item)
+        private static User ToUser(UserDto item)
         {
             return new User()
             {
@@ -169,7 +170,7 @@ namespace Shopfloor.Models.UserModel
                 Name = item.Name,
                 Surname = item.Surname,
                 Image = item.ImagePath,
-                IsActive = item.IsActive
+                IsActive = item.IsActive,
             };
         }
     }

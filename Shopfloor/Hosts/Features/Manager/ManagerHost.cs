@@ -6,7 +6,7 @@ using Shopfloor.Features.Manager.Stores;
 
 namespace Shopfloor.Hosts.Features.Manager
 {
-    internal sealed class ManagerHost
+    internal static class ManagerHost
     {
         public static void Get(IServiceCollection services)
         {

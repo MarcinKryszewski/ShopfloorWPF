@@ -1,18 +1,22 @@
-using Dapper;
-using Shopfloor.Database;
-using Shopfloor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
+using Shopfloor.Database;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandPartModel
 {
     internal sealed class ErrandPartProvider : IProvider<ErrandPart>
     {
-        private readonly DatabaseConnectionFactory _database;
-        private const string _dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+        private const string _cancelPartSQL = @"
+            UPDATE errands_parts
+            SET
+                canceled = @Canceled
+            WHERE id = @Id
+            ";
         private const string _createSQL = @"
             INSERT INTO errands_parts (
                 errand_id,
@@ -30,8 +34,10 @@ namespace Shopfloor.Models.ErrandPartModel
                 @Price,
                 @ExpectedDeliveryDate
             )";
-        private const string _getOneSQL = @"
+        private const string _dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+        private const string _getAllSQL = @"
             SELECT
+                id as Id,
                 errand_id AS ErrandId,
                 part_id AS PartId,
                 amount AS Amount,
@@ -40,7 +46,6 @@ namespace Shopfloor.Models.ErrandPartModel
                 expected_delivery_date as ExpectedDeliveryDate,
                 canceled as Canceled
             FROM errands_parts
-            WHERE id = @Id
             ";
         private const string _getForErrandSQL = @"
             SELECT
@@ -54,9 +59,8 @@ namespace Shopfloor.Models.ErrandPartModel
             FROM errands_parts
             WHERE errand_id = @ErrandId
             ";
-        private const string _getAllSQL = @"
+        private const string _getOneSQL = @"
             SELECT
-                id as Id,
                 errand_id AS ErrandId,
                 part_id AS PartId,
                 amount AS Amount,
@@ -65,6 +69,7 @@ namespace Shopfloor.Models.ErrandPartModel
                 expected_delivery_date as ExpectedDeliveryDate,
                 canceled as Canceled
             FROM errands_parts
+            WHERE id = @Id
             ";
         private const string _updateAmountSQL = @"
             UPDATE errands_parts
@@ -72,24 +77,19 @@ namespace Shopfloor.Models.ErrandPartModel
                 amount = @Amount
             WHERE errand_id = @ErrandId AND part_id = @PartId
             ";
-        private const string _updatePriceSQL = @"
-            UPDATE errands_parts
-            SET
-                price_per_unit = @Price
-            WHERE id = @Id
-            ";
         private const string _updateDeliveryDateSQL = @"
             UPDATE errands_parts
             SET
                 expected_delivery_date = @ExpectedDeliveryDate
             WHERE id = @Id
             ";
-        private const string _cancelPartSQL = @"
+        private const string _updatePriceSQL = @"
             UPDATE errands_parts
             SET
-                canceled = @Canceled
+                price_per_unit = @Price
             WHERE id = @Id
             ";
+        private readonly DatabaseConnectionFactory _database;
         public ErrandPartProvider(DatabaseConnectionFactory database)
         {
             _database = database;
@@ -109,12 +109,14 @@ namespace Shopfloor.Models.ErrandPartModel
             await connection.ExecuteAsync(_createSQL, parameters);
 
             string lastIdSQL = "SELECT last_insert_rowid()";
-            return connection.Query<int>(lastIdSQL).Single();
+            return await connection.QueryFirstAsync<int>(lastIdSQL);
         }
+        public Task Delete(int id) => throw new NotImplementedException();
+        public Task Delete(int errandId, int partId) => throw new NotImplementedException();
         public async Task<IEnumerable<ErrandPart>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
-            IEnumerable<ErrandPartDTO> errandPartDTOs = await connection.QueryAsync<ErrandPartDTO>(_getAllSQL);
+            IEnumerable<ErrandPartDto> errandPartDTOs = await connection.QueryAsync<ErrandPartDto>(_getAllSQL);
             return errandPartDTOs.Select(ToErrandPart);
         }
         public async Task<IEnumerable<ErrandPart>> GetByErrandId(int errandId)
@@ -122,9 +124,9 @@ namespace Shopfloor.Models.ErrandPartModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                ErrandId = errandId
+                ErrandId = errandId,
             };
-            IEnumerable<ErrandPartDTO> errandPartDTOs = await connection.QueryAsync<ErrandPartDTO>(_getForErrandSQL, parameters);
+            IEnumerable<ErrandPartDto> errandPartDTOs = await connection.QueryAsync<ErrandPartDto>(_getForErrandSQL, parameters);
             return errandPartDTOs.Select(ToErrandPart);
         }
         public Task<ErrandPart> GetById(int id) => throw new NotImplementedException();
@@ -135,19 +137,9 @@ namespace Shopfloor.Models.ErrandPartModel
             {
                 ErrandId = item.ErrandId,
                 PartId = item.PartId,
-                Amount = item.Amount
+                Amount = item.Amount,
             };
             await connection.ExecuteAsync(_updateAmountSQL, parameters);
-        }
-        public async Task UpdatePrice(int id, double pricePerUnit)
-        {
-            using IDbConnection connection = _database.Connect();
-            object parameters = new
-            {
-                Id = id,
-                Price = pricePerUnit
-            };
-            await connection.ExecuteAsync(_updatePriceSQL, parameters);
         }
         public async Task UpdateDeliveryDate(int id, DateTime? expectedDeliveryDate)
         {
@@ -155,7 +147,7 @@ namespace Shopfloor.Models.ErrandPartModel
             object parameters = new
             {
                 Id = id,
-                ExpectedDeliveryDate = expectedDeliveryDate
+                ExpectedDeliveryDate = expectedDeliveryDate,
             };
             await connection.ExecuteAsync(_updateDeliveryDateSQL, parameters);
         }
@@ -165,13 +157,21 @@ namespace Shopfloor.Models.ErrandPartModel
             object parameters = new
             {
                 ErrandId = id,
-                Canceled = cancel
+                Canceled = cancel,
             };
             await connection.ExecuteAsync(_cancelPartSQL, parameters);
         }
-        public Task Delete(int id) => throw new NotImplementedException();
-        public Task Delete(int errandId, int partId) => throw new NotImplementedException();
-        private static ErrandPart ToErrandPart(ErrandPartDTO item)
+        public async Task UpdatePrice(int id, double pricePerUnit)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                Id = id,
+                Price = pricePerUnit,
+            };
+            await connection.ExecuteAsync(_updatePriceSQL, parameters);
+        }
+        private static ErrandPart ToErrandPart(ErrandPartDto item)
         {
             return new ErrandPart()
             {
@@ -180,7 +180,7 @@ namespace Shopfloor.Models.ErrandPartModel
                 ErrandId = item.ErrandId,
                 ExpectedDeliveryDate = item.ExpectedDeliveryDate,
                 OrderedById = item.OrderedById,
-                PartId = item.PartId
+                PartId = item.PartId,
             };
         }
     }

@@ -1,13 +1,12 @@
-﻿using Shopfloor.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.ErrandStatusModel;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.BaseClasses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Shopfloor.Models.ErrandModel
 {
@@ -17,29 +16,29 @@ namespace Shopfloor.Models.ErrandModel
         private readonly ErrandDisplay _display;
         private readonly List<ErrandStatus> _errandStatuses = [];
         private readonly List<ErrandPart> _parts = [];
-        private User? _createdByUser;
         private readonly ErrandValidation _validation;
+        private User? _createdByUser;
         public Errand(int id = 0)
         {
             _display = new(this);
             _data = new()
             {
-                Id = id
+                Id = id,
             };
             _validation = new(this);
         }
         public ErrandDisplay Display => _display;
-        public List<ErrandStatus> Statuses => _errandStatuses;
-        public ErrandStatus LatestStatus => _errandStatuses.Last();
-        public void AddStatus(ErrandStatus status) => _errandStatuses.Add(status);
+        public ErrandStatus LatestStatus => _errandStatuses[^1];
         public List<ErrandPart> Parts => _parts;
+        public List<ErrandStatus> Statuses => _errandStatuses;
+        public void AddStatus(ErrandStatus status) => _errandStatuses.Add(status);
         public void Validate() => _validation.Validate();
     }
     internal sealed partial class Errand
     {
         private const string _existingIdErrorMassage = "Id already exists";
-        private readonly ErrandDTO _data;
-        public required int CreatedById
+        private readonly ErrandDto _data;
+        required public int CreatedById
         {
             get => _data.CreatedById;
             init => _data.CreatedById = value;
@@ -49,8 +48,15 @@ namespace Shopfloor.Models.ErrandModel
             get => _createdByUser;
             set
             {
-                if (value == null) return;
-                if (value.Id == _data.CreatedById) _createdByUser = value;
+                if (value == null)
+                {
+                    return;
+                }
+
+                if (value.Id == _data.CreatedById)
+                {
+                    _createdByUser = value;
+                }
             }
         }
         public DateTime CreatedDate
@@ -63,21 +69,24 @@ namespace Shopfloor.Models.ErrandModel
             get => _data.Description ?? string.Empty;
             set
             {
-                if (value == null) return;
+                if (value == null)
+                {
+                    return;
+                }
+
                 _data.Description = value;
             }
-        }
-        public int? TypeId
-        {
-            get => _data.ErrandTypeId;
-            init => _data.ErrandTypeId = value;
         }
         public DateTime? ExpectedDate
         {
             get => _data.ExpectedDate;
             set
             {
-                if (value == null) return;
+                if (value == null)
+                {
+                    return;
+                }
+
                 _data.ExpectedDate = value;
             }
         }
@@ -89,7 +98,10 @@ namespace Shopfloor.Models.ErrandModel
                 string myName = nameof(Id);
                 ClearErrors(myName);
 
-                if (value == null || _data.Id == 0) _data.Id = value;
+                if (value == null || _data.Id == 0)
+                {
+                    _data.Id = value;
+                }
 
                 AddError(myName, _existingIdErrorMassage);
             }
@@ -99,7 +111,11 @@ namespace Shopfloor.Models.ErrandModel
             get => _data.Machine;
             set
             {
-                if (value?.Id is not null) _data.MachineId = (int)value.Id;
+                if (value?.Id is not null)
+                {
+                    _data.MachineId = (int)value.Id;
+                }
+
                 _data.Machine = value;
             }
         }
@@ -123,7 +139,11 @@ namespace Shopfloor.Models.ErrandModel
             get => _data.Responsible;
             set
             {
-                if (value?.Id is not null) _data.OwnerId = value.Id;
+                if (value?.Id is not null)
+                {
+                    _data.OwnerId = value.Id;
+                }
+
                 _data.Responsible = value;
             }
         }
@@ -137,9 +157,18 @@ namespace Shopfloor.Models.ErrandModel
             get => _data.ErrandType;
             set
             {
-                if (value?.Id is not null) _data.ErrandTypeId = (int)value.Id;
+                if (value?.Id is not null)
+                {
+                    _data.ErrandTypeId = (int)value.Id;
+                }
+
                 _data.ErrandType = value;
             }
+        }
+        public int? TypeId
+        {
+            get => _data.ErrandTypeId;
+            init => _data.ErrandTypeId = value;
         }
         public void SetId(int id)
         {
@@ -154,7 +183,11 @@ namespace Shopfloor.Models.ErrandModel
     {
         public bool Equals(Errand? other)
         {
-            if (other == null) return false;
+            if (other == null)
+            {
+                return false;
+            }
+
             if (Id == null && other.Id == null)
             {
                 return CreatedDate == other.CreatedDate;
@@ -165,7 +198,11 @@ namespace Shopfloor.Models.ErrandModel
         public override bool Equals(object? obj) => obj is Errand objErrand && Equals(objErrand);
         public override int GetHashCode()
         {
-            if (Id != null) return Id.GetHashCode();
+            if (Id != null)
+            {
+                return Id.GetHashCode();
+            }
+
             return CreatedDate.GetHashCode();
         }
     }
@@ -173,37 +210,7 @@ namespace Shopfloor.Models.ErrandModel
     {
         public object Clone()
         {
-            Errand clone = new()
-            {
-                CreatedById = CreatedById,
-                CreatedByUser = CreatedByUser,
-                CreatedDate = CreatedDate,
-                Description = Description,
-                ExpectedDate = ExpectedDate,
-                Id = Id,
-                Machine = Machine,
-                MachineId = MachineId,
-                Priority = Priority,
-                OwnerId = OwnerId,
-                Responsible = Responsible,
-                SapNumber = SapNumber,
-                Type = Type,
-                TypeId = TypeId,
-            };
-
-            foreach (ErrandStatus status in Statuses)
-            {
-                clone.AddStatus(status);
-            }
-            foreach (ErrandPart part in Parts)
-            {
-                ErrandPart partClone = (ErrandPart)part.Clone();
-                partClone.Errand = clone;
-
-                clone.Parts.Add(partClone);
-            }
-
-            return clone;
+            return MemberwiseClone();
         }
     }
 }

@@ -1,6 +1,5 @@
-using Shopfloor.Interfaces;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandTypeModel.Store.Combine
 {
@@ -9,9 +8,13 @@ namespace Shopfloor.Models.ErrandTypeModel.Store.Combine
         public bool IsCombined { get; private set; }
         public Task CombineAll(bool shouldForce = false)
         {
-            if (IsCombined && !shouldForce) return Task.CompletedTask;
+            if (IsCombined && !shouldForce)
+            {
+                return Task.CompletedTask;
+            }
+
             IsCombined = true;
-            //throw new NotImplementedException();
+            // throw new NotImplementedException();
             return Task.CompletedTask;
         }
 

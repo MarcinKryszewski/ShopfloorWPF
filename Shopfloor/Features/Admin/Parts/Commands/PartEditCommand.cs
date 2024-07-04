@@ -17,7 +17,7 @@ namespace Shopfloor.Features.Admin.Parts.Commands
 
         public override void Execute(object? parameter)
         {
-            Part part = new()
+            Part part = new ()
             {
                 Id = _viewModel.Id,
                 NamePl = _viewModel.NamePl,
@@ -27,10 +27,13 @@ namespace Shopfloor.Features.Admin.Parts.Commands
                 ProducerNumber = _viewModel.Number,
                 Details = _viewModel.Details,
                 ProducerId = _viewModel.ProducerId ?? 0,
-                SupplierId = _viewModel.SupplierId
+                SupplierId = _viewModel.SupplierId,
             };
 
-            if (!_viewModel.IsDataValidate) return;
+            if (!_viewModel.IsDataValidate)
+            {
+                return;
+            }
 
             _partProvider.Update(part).Wait();
             _viewModel.ReloadData();

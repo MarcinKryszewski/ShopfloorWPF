@@ -6,12 +6,8 @@ namespace Shopfloor.Layout.Content
 {
     internal sealed class ContentViewModel : ViewModelBase
     {
-        private readonly TopPanelViewModel _topPanelViewModel;
         private readonly INavigationStore _navigationStore;
-
-        public TopPanelViewModel TopPanelViewModel => _topPanelViewModel;
-        public ViewModelBase? Content => _navigationStore.CurrentViewModel;
-
+        private readonly TopPanelViewModel _topPanelViewModel;
         public ContentViewModel(TopPanelViewModel topPanelViewModel, INavigationStore navigationStore)
         {
             _topPanelViewModel = topPanelViewModel;
@@ -19,7 +15,8 @@ namespace Shopfloor.Layout.Content
             _navigationStore = navigationStore;
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
-
+        public ViewModelBase? Content => _navigationStore.CurrentViewModel;
+        public TopPanelViewModel TopPanelViewModel => _topPanelViewModel;
         private void OnCurrentViewModelChanged()
         {
             OnPropertyChanged(nameof(Content));

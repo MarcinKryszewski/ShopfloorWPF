@@ -17,7 +17,7 @@ namespace Shopfloor.Features.Admin.Machines.Commands
         {
             int? parentId = _viewModel.SelectedParent?.Id;
 
-            Machine machine = new()
+            Machine machine = new ()
             {
                 Name = _viewModel.MachineName,
                 Number = _viewModel.MachineNumber,
@@ -26,7 +26,10 @@ namespace Shopfloor.Features.Admin.Machines.Commands
                 IsActive = true,
             };
 
-            if (!_viewModel.IsDataValidate) return;
+            if (!_viewModel.IsDataValidate)
+            {
+                return;
+            }
 
             _ = _provider.Create(machine);
             _viewModel.ReloadData();

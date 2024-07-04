@@ -1,7 +1,7 @@
-using Shopfloor.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.MachineModel.Store.Combine
 {
@@ -15,20 +15,12 @@ namespace Shopfloor.Models.MachineModel.Store.Combine
         public Task CombineAll()
         {
             List<Machine> machines = GetMachines();
-
-            foreach (Machine item in machines)
+            foreach (var item in machines.Where(item => item.ParentId is not null))
             {
-                if (item.ParentId is not null)
-                {
-                    Combine(machines, item);
-                }
+                Combine(machines, item);
             }
+
             return Task.CompletedTask;
-        }
-        private static void Combine(List<Machine> machines, Machine item)
-        {
-            Machine? parent = machines.FirstOrDefault(m => m.Id == item.ParentId);
-            if (parent is not null) item.SetParent(parent);
         }
         public Task CombineOne(Machine item)
         {
@@ -37,6 +29,14 @@ namespace Shopfloor.Models.MachineModel.Store.Combine
             Combine(machines, item);
 
             return Task.CompletedTask;
+        }
+        private static void Combine(List<Machine> machines, Machine item)
+        {
+            Machine? parent = machines.Find(m => m.Id == item.ParentId);
+            if (parent is not null)
+            {
+                item.SetParent(parent);
+            }
         }
         private List<Machine> GetMachines() => _machineStore.Data;
     }

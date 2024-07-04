@@ -13,13 +13,21 @@ namespace Shopfloor.Models.ErrandPartModel.Services
 
         public void Delete(ErrandPart item)
         {
-            if (item.Id is null) return;
+            if (item.Id is null)
+            {
+                return;
+            }
+
             _provider.Delete((int)item.Id);
         }
 
         public void Edit(ErrandPart item)
         {
-            if (item.Id is null) return;
+            if (item.Id is null)
+            {
+                return;
+            }
+
             _provider.Update(item);
         }
     }

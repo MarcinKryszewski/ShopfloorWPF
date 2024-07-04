@@ -1,3 +1,9 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Input;
 using Shopfloor.Features.Manager.Commands;
 using Shopfloor.Features.Manager.OrdersToApprove;
 using Shopfloor.Features.Manager.Stores;
@@ -8,28 +14,12 @@ using Shopfloor.Services;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.ViewModels;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Input;
 
 namespace Shopfloor.Features.Manager.OrderApprove
 {
     internal sealed partial class OrderApproveViewModel : ViewModelBase
     {
         private readonly SelectedRequestStore _requestStore;
-        public ICommand ReturnCommand { get; }
-        public ICommand ConfirmCommand { get; }
-        public ErrandPart ErrandPart => _requestStore.Request!;
-        public string Comment { get; set; } = string.Empty;
-        public DateTime? SelectedDate
-        {
-            get => ErrandPart.ExpectedDeliveryDate;
-            set => ErrandPart.ExpectedDeliveryDate = value;
-        }
-        public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
         public OrderApproveViewModel(
             StoreRepository stores,
             SelectedRequestStore selectedRequestStore,
@@ -45,7 +35,16 @@ namespace Shopfloor.Features.Manager.OrderApprove
 
             _errandPartValidation = new(this);
         }
-
+        public string Comment { get; set; } = string.Empty;
+        public ICommand ConfirmCommand { get; }
+        public ErrandPart ErrandPart => _requestStore.Request!;
+        public IEnumerable<ErrandPart> HistoricalData { get; private set; } = [];
+        public ICommand ReturnCommand { get; }
+        public DateTime? SelectedDate
+        {
+            get => ErrandPart.ExpectedDeliveryDate;
+            set => ErrandPart.ExpectedDeliveryDate = value;
+        }
         public ErrandPart? SelectedRow
         {
             get => _requestStore.Request;
@@ -60,6 +59,8 @@ namespace Shopfloor.Features.Manager.OrderApprove
     {
         private readonly ErrandPartValidation _errandPartValidation;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+        public bool HasErrors => _propertyErrors.Count != 0;
         public bool IsDataValidate
         {
             get
@@ -67,8 +68,6 @@ namespace Shopfloor.Features.Manager.OrderApprove
                 return !HasErrors;
             }
         }
-        public bool HasErrors => _propertyErrors.Count != 0;
-        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public void AddError(string propertyName, string errorMassage)
         {
             if (!_propertyErrors.TryGetValue(propertyName, out List<string>? value))
@@ -78,11 +77,6 @@ namespace Shopfloor.Features.Manager.OrderApprove
             }
             value?.Add(errorMassage);
             OnErrorsChanged(propertyName);
-        }
-        private void OnErrorsChanged(string propertyName)
-        {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-            OnPropertyChanged(nameof(IsDataValidate));
         }
         public void CleanForm()
         {
@@ -107,6 +101,11 @@ namespace Shopfloor.Features.Manager.OrderApprove
         public void ReloadData()
         {
             throw new NotImplementedException();
+        }
+        private void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            OnPropertyChanged(nameof(IsDataValidate));
         }
     }
 }

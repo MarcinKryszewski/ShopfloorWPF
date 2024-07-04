@@ -1,9 +1,8 @@
-﻿using Shopfloor.Interfaces;
-using Shopfloor.Models.ErrandPartStatusModel;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Shopfloor.Interfaces;
+using Shopfloor.Models.ErrandPartStatusModel;
 
 namespace Shopfloor.Models.ErrandPartModel.Store.Combine
 {
@@ -27,12 +26,6 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
             return Task.CompletedTask;
         }
 
-        private static void Combine(List<ErrandPartStatus> statuses, ErrandPart item)
-        {
-            item.StatusList.Clear();
-            item.StatusList.AddRange(statuses.Where(status => status.ErrandPartId == item.Id));
-        }
-
         public Task CombineOne(ErrandPart item)
         {
             List<ErrandPartStatus> statuses = GetErrandPartStatuses();
@@ -41,8 +34,12 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
 
             return Task.CompletedTask;
         }
-        private List<ErrandPartStatus> GetErrandPartStatuses() => _errandPartStatusStore.Data;
+        private static void Combine(List<ErrandPartStatus> statuses, ErrandPart item)
+        {
+            item.StatusList.Clear();
+            item.StatusList.AddRange(statuses.Where(status => status.ErrandPartId == item.Id));
+        }
         private List<ErrandPart> GetErrandParts() => _errandPartStore.Data;
-
+        private List<ErrandPartStatus> GetErrandPartStatuses() => _errandPartStatusStore.Data;
     }
 }

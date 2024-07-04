@@ -1,13 +1,12 @@
-using ExcelDataReader;
-using Shopfloor.Features.Mechanic.PartsStock;
-using Shopfloor.Interfaces;
-using Shopfloor.Models.PartModel;
-using Shopfloor.Shared.Commands;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Threading.Tasks;
+using ExcelDataReader;
+using Shopfloor.Features.Mechanic.PartsStock;
+using Shopfloor.Models.PartModel;
+using Shopfloor.Shared.Commands;
 
 namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
 {
@@ -24,6 +23,26 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
             List<Part> parts = await Task.Run(FillList);
             await _viewModel.LoadData(parts);
         }
+        private static ExcelDataSetConfiguration ReaderConfiguration()
+        {
+            return new()
+            {
+                ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
+                {
+                    UseHeaderRow = true,
+                    FilterColumn = (rowReader, columnIndex) =>
+                    {
+                        if (columnIndex > 11)
+                        {
+                            return false;
+                        }
+
+                        return true;
+                    },
+                },
+                FilterSheet = (tableReader, sheetIndex) => tableReader.Name == "data",
+            };
+        }
         private async Task<List<Part>> FillList()
         {
             DataSet dataSet = await LoadExcel();
@@ -31,14 +50,28 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
 
             foreach (DataRow item in dataSet.Tables["data"]!.Rows)
             {
-                if (item is null) continue;
-                if (item.ItemArray[0] is DBNull) continue;
-                if (item.ItemArray[0] is null) continue;
+                if (item is null)
+                {
+                    continue;
+                }
+
+                if (item.ItemArray[0] is DBNull)
+                {
+                    continue;
+                }
+
+                if (item.ItemArray[0] is null)
+                {
+                    continue;
+                }
 
                 double index = (double)(item.ItemArray[0] ?? 0);
-                if (index == 0) continue;
+                if (index == 0)
+                {
+                    continue;
+                }
 
-                string? namePl = (item.ItemArray[1] ?? "").ToString();
+                string? namePl = (item.ItemArray[1] ?? string.Empty).ToString();
                 string? nameOriginal = (item.ItemArray[10] ?? string.Empty).ToString();
                 string? details = (item.ItemArray[3] ?? string.Empty).ToString();
                 double storageAmount = (double)(item.ItemArray[2] ?? 0);
@@ -52,7 +85,7 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
                     Index = (int?)index,
                     Details = details,
                     StorageAmount = storageAmount,
-                    StorageValue = storageValue
+                    StorageValue = storageValue,
                 };
 
                 parts.Add(part);
@@ -70,37 +103,6 @@ namespace Shopfloor.Features.Plannist.PlannistDashboard.Commands
                 dataSet = await Task.Run(() => reader.AsDataSet(configuration: ReaderConfiguration()));
             }
             return dataSet;
-        }
-        private static ExcelDataSetConfiguration ReaderConfiguration()
-        {
-            return new()
-            {
-                ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
-                {
-                    UseHeaderRow = true,
-                    FilterColumn = (rowReader, columnIndex) =>
-                    {
-                        if (columnIndex > 11) return false;
-                        return true;
-                    }
-                },
-                FilterSheet = (tableReader, sheetIndex) => tableReader.Name == "data",
-            };
-        }
-    }
-    internal sealed class UpdateDataCommand : AsyncCommandBase
-    {
-        private readonly IProvider<Part> _provider;
-        private readonly PartsStockListViewModel _viewModel;
-        public UpdateDataCommand(PartsStockListViewModel viewModel, IProvider<Part> provider)
-        {
-            _viewModel = viewModel;
-            _provider = provider;
-        }
-        public override async Task ExecuteAsync(object? parameter)
-        {
-            PartProvider partProvider = (PartProvider)_provider; //That's nasty AF, but...
-            await partProvider.StorageUpdate(_viewModel.DataSource);
         }
     }
 }

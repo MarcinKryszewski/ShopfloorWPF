@@ -1,61 +1,25 @@
-﻿using Dapper;
-using Shopfloor.Database;
-
-using Shopfloor.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
+using Shopfloor.Database;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.PartModel
 {
     internal sealed class PartProvider : IProvider<Part>
     {
-        private readonly DatabaseConnectionFactory _database;
-
-        #region SQLCommands
-
         private const string _createSQL = @"
             INSERT INTO parts (name_pl, name_original, type_id, indeks, number, details, producer_id, supplier_id, unit)
             VALUES (@NamePl, @NameOriginal, @TypeId, @Index, @Number, @Details, @ProducerId, @SupplierId, @Unit)
             ";
-
-        private const string _getOneSQL = @"
-            SELECT
-                id AS Id,
-                name_pl AS NamePl,
-                name_original AS NameOriginal,
-                type_id AS TypeId,
-                indeks AS [Index],
-                number AS Number,
-                details AS Details,
-                producer_id AS ProducerId,
-                supplier_id AS SupplierId,
-                unit AS Unit,
-                storage_amount as StorageAmount,
-                storage_value as StorageValue
+        private const string _deleteSQL = @"
+            DELETE
             FROM parts
             WHERE id = @Id
             ";
-
-        private const string _getAllSQL = @"
-            SELECT
-                id AS Id,
-                name_pl AS NamePl,
-                name_original AS NameOriginal,
-                type_id AS TypeId,
-                indeks AS [Index],
-                number AS Number,
-                details AS Details,
-                producer_id AS ProducerId,
-                supplier_id AS SupplierId,
-                unit AS Unit,
-                storage_amount as StorageAmount,
-                storage_value as StorageValue
-            FROM parts
-            ";
-
         private const string _getAllActiveSQL = @"
             SELECT
                 id AS Id,
@@ -73,7 +37,39 @@ namespace Shopfloor.Models.PartModel
             FROM parts
             WHERE active = TRUE
             ";
-
+        private const string _getAllSQL = @"
+            SELECT
+                id AS Id,
+                name_pl AS NamePl,
+                name_original AS NameOriginal,
+                type_id AS TypeId,
+                indeks AS [Index],
+                number AS Number,
+                details AS Details,
+                producer_id AS ProducerId,
+                supplier_id AS SupplierId,
+                unit AS Unit,
+                storage_amount as StorageAmount,
+                storage_value as StorageValue
+            FROM parts
+            ";
+        private const string _getOneSQL = @"
+            SELECT
+                id AS Id,
+                name_pl AS NamePl,
+                name_original AS NameOriginal,
+                type_id AS TypeId,
+                indeks AS [Index],
+                number AS Number,
+                details AS Details,
+                producer_id AS ProducerId,
+                supplier_id AS SupplierId,
+                unit AS Unit,
+                storage_amount as StorageAmount,
+                storage_value as StorageValue
+            FROM parts
+            WHERE id = @Id
+            ";
         private const string _updateSQL = @"
             UPDATE parts
             SET
@@ -87,21 +83,11 @@ namespace Shopfloor.Models.PartModel
                 supplier_id = @SupplierId
             WHERE id = @Id
             ";
-
-        private const string _deleteSQL = @"
-            DELETE
-            FROM parts
-            WHERE id = @Id
-            ";
-
-        #endregion SQLCommands
-
+        private readonly DatabaseConnectionFactory _database;
         public PartProvider(DatabaseConnectionFactory database)
         {
             _database = database;
         }
-
-        #region CRUD
 
         public async Task<int> Create(Part item)
         {
@@ -116,24 +102,33 @@ namespace Shopfloor.Models.PartModel
                 Details = item.Details,
                 ProducerId = item.ProducerId,
                 SupplierId = item.SupplierId,
-                Unit = item.Unit
+                Unit = item.Unit,
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
             return 0;
         }
 
+        public async Task Delete(int id)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                Id = id,
+            };
+            await connection.ExecuteAsync(_deleteSQL, parameters);
+        }
         public async Task<IEnumerable<Part>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
-            IEnumerable<PartDTO> partDTOs = await connection.QueryAsync<PartDTO>(_getAllSQL);
+            IEnumerable<PartDto> partDTOs = await connection.QueryAsync<PartDto>(_getAllSQL);
             return partDTOs.Select(ToPart);
         }
 
         public async Task<IEnumerable<Part>> GetAllActive()
         {
             using IDbConnection connection = _database.Connect();
-            IEnumerable<PartDTO> partDTOs = await connection.QueryAsync<PartDTO>(_getAllActiveSQL);
+            IEnumerable<PartDto> partDTOs = await connection.QueryAsync<PartDto>(_getAllActiveSQL);
             return partDTOs.Select(ToPart);
         }
 
@@ -142,44 +137,18 @@ namespace Shopfloor.Models.PartModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Id = id
+                Id = id,
             };
-            PartDTO? partDTO = await connection.QuerySingleAsync<PartDTO>(_getOneSQL, parameters);
+            PartDto? partDTO = await connection.QuerySingleAsync<PartDto>(_getOneSQL, parameters);
             return ToPart(partDTO);
         }
 
-        public async Task Update(Part item)
-        {
-            using IDbConnection connection = _database.Connect();
-            object parameters = new
-            {
-                Id = item.Id,
-                NamePl = item.NamePl,
-                NameOriginal = item.NameOriginal,
-                TypeId = item.TypeId,
-                Index = item.Index,
-                Number = item.ProducerNumber,
-                Details = item.Details,
-                ProducerId = item.ProducerId,
-                SupplierId = item.SupplierId
-            };
-            await connection.ExecuteAsync(_updateSQL, parameters);
-        }
-
-        public async Task Delete(int id)
-        {
-            using IDbConnection connection = _database.Connect();
-            object parameters = new
-            {
-                Id = id
-            };
-            await connection.ExecuteAsync(_deleteSQL, parameters);
-        }
-        #endregion CRUD
-
         public async Task StorageUpdate(List<Part> parts)
         {
-            if (parts.Count == 0) return;
+            if (parts.Count == 0)
+            {
+                return;
+            }
 
             string sqlCommand;
             int batchSize = 100;
@@ -194,27 +163,51 @@ namespace Shopfloor.Models.PartModel
                 sqlCommand = GetStorageUpdateBulkCommand(parts.GetRange(minIndex, maxIndex));
                 tasks.Add(ExecuteUpdate(sqlCommand, connection));
             }
-            if (tasks.Count > 0) await Task.WhenAll(tasks);
+            if (tasks.Count > 0)
+            {
+                await Task.WhenAll(tasks);
+            }
         }
-        private async Task ExecuteUpdate(string command, IDbConnection connection)
+        public async Task Update(Part item)
         {
-            await connection.ExecuteAsync(command, connection);
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                Id = item.Id,
+                NamePl = item.NamePl,
+                NameOriginal = item.NameOriginal,
+                TypeId = item.TypeId,
+                Index = item.Index,
+                Number = item.ProducerNumber,
+                Details = item.Details,
+                ProducerId = item.ProducerId,
+                SupplierId = item.SupplierId,
+            };
+            await connection.ExecuteAsync(_updateSQL, parameters);
         }
         private static string GetStorageUpdateBulkCommand(IEnumerable<Part> parts)
         {
-            string amounts = "";
-            string values = "";
-            string indexes = "";
+            string amounts = string.Empty;
+            string values = string.Empty;
+            string indexes = string.Empty;
 
             foreach (Part part in parts)
             {
-                if (part.Index is null) continue;
-                if (part.Index == 0) continue;
+                if (part.Index is null)
+                {
+                    continue;
+                }
+
+                if (part.Index == 0)
+                {
+                    continue;
+                }
+
                 int index = (int)part.Index;
 
                 string indexText = index.ToString();
-                string value = part.StorageValue?.ToString() ?? "";
-                string amount = part.StorageAmount?.ToString() ?? "";
+                string value = part.StorageValue?.ToString() ?? string.Empty;
+                string amount = part.StorageAmount?.ToString() ?? string.Empty;
 
                 amounts += $"WHEN [indeks] = {indexText} THEN '{amount}' ";
                 values += $"WHEN [indeks] = {indexText} THEN '{value}' ";
@@ -236,8 +229,7 @@ namespace Shopfloor.Models.PartModel
             WHERE [indeks] IN ({indexes});
             ";
         }
-
-        private static Part ToPart(PartDTO item)
+        private static Part ToPart(PartDto item)
         {
             return new Part()
             {
@@ -252,6 +244,10 @@ namespace Shopfloor.Models.PartModel
                 SupplierId = item.SupplierId,
                 Unit = item.Unit,
             };
+        }
+        private async Task ExecuteUpdate(string command, IDbConnection connection)
+        {
+            await connection.ExecuteAsync(command, connection);
         }
     }
 }

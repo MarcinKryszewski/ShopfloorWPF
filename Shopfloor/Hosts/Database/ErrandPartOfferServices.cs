@@ -5,7 +5,7 @@ using Shopfloor.Models.ErrandPartOfferModel.Store;
 
 namespace Shopfloor.Hosts.Database
 {
-    public class ErrandPartOfferServices
+    public static class ErrandPartOfferServices
     {
         public static void Get(IServiceCollection services)
         {

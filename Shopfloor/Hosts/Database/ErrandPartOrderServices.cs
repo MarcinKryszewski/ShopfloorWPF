@@ -5,7 +5,7 @@ using Shopfloor.Models.ErrandPartOrderModel.Store.Combine;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal class ErrandPartOrderServices
+    internal static class ErrandPartOrderServices
     {
         public static void Get(IServiceCollection services)
         {
@@ -14,5 +14,4 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<ICombinerManager<ErrandPartOrder>, ErrandPartOrderCombiner>();
         }
     }
-
 }

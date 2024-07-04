@@ -4,7 +4,7 @@ using static Shopfloor.Services.NotificationServices.NotifierServices;
 
 namespace Shopfloor.Hosts.Features
 {
-    internal sealed partial class NotifierServices
+    internal static partial class NotifierServices
     {
         public static void Get(IServiceCollection services)
         {

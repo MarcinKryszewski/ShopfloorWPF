@@ -4,7 +4,8 @@ using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Services.NavigationServices
 {
-    internal class NavigationCommand<T> : INavigationCommand<T> where T : ViewModelBase
+    internal class NavigationCommand<T> : INavigationCommand<T>
+        where T : ViewModelBase
     {
         private readonly INavigationService _navigationService;
         public NavigationCommand(INavigationService navigationService)

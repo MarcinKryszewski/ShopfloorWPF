@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -11,14 +10,28 @@ namespace Shopfloor.Models.ReservationModel
 {
     internal sealed class ReservationProvider : IProvider<Reservation>
     {
-        private readonly DatabaseConnectionFactory _database;
-        private const string _dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
         private const string _createSQL = @"
             INSERT INTO reservations (errand_part_id, amount, create_date, expiration_date, completed)
             VALUES @ErrandPartId, @Amount, @CreateDate, @ExpirationDate, @Completed)
             ";
+        private const string _dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+        private const string _deleteSQL = @"
+            DELETE
+            FROM reservations
+            WHERE id = @Id
+            ";
+        private const string _getAllSQL = @"
+            SELECT
+                id AS Id,
+                errand_part_id AS ErrandPartId,
+                amount AS Amount,
+                create_date AS CreateDate,
+                expiration_date AS ExpirationDate,
+                completed AS Completed
+            FROM reservations
+            ";
         private const string _getOneSQL = @"
-            SELECT 
+            SELECT
                 id AS Id,
                 errand_part_id AS ErrandPartId,
                 amount AS Amount,
@@ -28,19 +41,9 @@ namespace Shopfloor.Models.ReservationModel
             FROM reservations
             WHERE id = @Id
             ";
-        private const string _getAllSQL = @"
-            SELECT 
-                id AS Id,
-                errand_part_id AS ErrandPartId,
-                amount AS Amount,
-                create_date AS CreateDate,
-                expiration_date AS ExpirationDate,
-                completed AS Completed
-            FROM reservations
-            ";
         private const string _updateSQL = @"
             UPDATE reservations
-            SET 
+            SET
                 errand_part_id = @ErrandPartId,
                 amount = @Amount,
                 create_date = @CreateDate,
@@ -48,11 +51,7 @@ namespace Shopfloor.Models.ReservationModel
                 completed = @Completed
             WHERE id = @Id
             ";
-        private const string _deleteSQL = @"
-            DELETE
-            FROM reservations
-            WHERE id = @Id
-            ";
+        private readonly DatabaseConnectionFactory _database;
         public ReservationProvider(DatabaseConnectionFactory database)
         {
             _database = database;
@@ -66,16 +65,25 @@ namespace Shopfloor.Models.ReservationModel
                 Amount = item.Amount,
                 CreateDate = item.CreateDate.ToString(_dateTimeFormat),
                 ExpirationDate = item.ExpirationDate.ToString(_dateTimeFormat),
-                Completed = item.Completed
+                Completed = item.Completed,
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
             return 0;
         }
+        public async Task Delete(int id)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                Id = id,
+            };
+            await connection.ExecuteAsync(_deleteSQL, parameters);
+        }
         public async Task<IEnumerable<Reservation>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
-            IEnumerable<ReservationDTO> reservationDTOs = await connection.QueryAsync<ReservationDTO>(_getAllSQL);
+            IEnumerable<ReservationDto> reservationDTOs = await connection.QueryAsync<ReservationDto>(_getAllSQL);
             return reservationDTOs.Select(ToModel);
         }
         public async Task<Reservation> GetById(int id)
@@ -83,9 +91,9 @@ namespace Shopfloor.Models.ReservationModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Id = id
+                Id = id,
             };
-            ReservationDTO? reservationDTO = await connection.QuerySingleAsync<ReservationDTO>(_getOneSQL, parameters);
+            ReservationDto? reservationDTO = await connection.QuerySingleAsync<ReservationDto>(_getOneSQL, parameters);
             return ToModel(reservationDTO);
         }
         public async Task Update(Reservation item)
@@ -98,20 +106,11 @@ namespace Shopfloor.Models.ReservationModel
                 Amount = item.Amount,
                 CreateDate = item.CreateDate,
                 ExpirationDate = item.ExpirationDate,
-                Completed = item.Completed
+                Completed = item.Completed,
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
-        public async Task Delete(int id)
-        {
-            using IDbConnection connection = _database.Connect();
-            object parameters = new
-            {
-                Id = id
-            };
-            await connection.ExecuteAsync(_deleteSQL, parameters);
-        }
-        private static Reservation ToModel(ReservationDTO item)
+        private static Reservation ToModel(ReservationDto item)
         {
             return new Reservation()
             {
@@ -120,7 +119,7 @@ namespace Shopfloor.Models.ReservationModel
                 Amount = item.Amount,
                 CreateDate = item.CreateDate,
                 ExpirationDate = item.ExpirationDate,
-                Completed = item.Completed
+                Completed = item.Completed,
             };
         }
     }

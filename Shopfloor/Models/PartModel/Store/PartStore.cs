@@ -5,7 +5,8 @@ namespace Shopfloor.Models.PartModel
 {
     internal sealed class PartStore : StoreBase<Part>
     {
-        public PartStore(IProvider<Part> provider) : base(provider)
+        public PartStore(IProvider<Part> provider)
+            : base(provider)
         {
         }
     }

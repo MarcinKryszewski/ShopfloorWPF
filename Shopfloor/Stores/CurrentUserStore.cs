@@ -1,27 +1,27 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services;
 using Shopfloor.Services.NotificationServices;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 
 namespace Shopfloor.Stores
 {
     internal sealed partial class CurrentUserStore : ICurrentUserStore
     {
-        private const string _defaultUsername = "GOŚĆ";
         private const string _autologinFailed = "Nieudane logowanie automatyczne. Zaloguj się samodzielnie";
-        private const string _loginSuccessfull = "ZALOGOWANO POPRAWNIE";
+        private const string _defaultUsername = "GOŚĆ";
         private const string _loginFailed = "NIEUDANE LOGOWANIE";
-        private readonly IProvider<Role> _roleProvider;
-        private readonly RoleUserProvider _roleIUserProvider;
-        private readonly INotifier _notifier;
+        private const string _loginSuccessfull = "ZALOGOWANO POPRAWNIE";
         private readonly IAuthService _auth;
+        private readonly INotifier _notifier;
+        private readonly RoleUserProvider _roleIUserProvider;
+        private readonly IProvider<Role> _roleProvider;
         private bool _isUserLoggedIn;
         private User? _user;
         public CurrentUserStore(IProvider<Role> roleProvider, IProvider<RoleUser> roleIUserProvider, INotifier notifier, IAuthService auth)
@@ -51,11 +51,6 @@ namespace Shopfloor.Stores
             LoginSuccessNotification();
             UserLoginStatusChanged();
         }
-        private static string GetFailedText(bool isAuto)
-        {
-            if (isAuto) return _autologinFailed;
-            return _loginFailed;
-        }
         public void Logout()
         {
             _user = new() { Username = _defaultUsername };
@@ -63,18 +58,38 @@ namespace Shopfloor.Stores
             _isUserLoggedIn = false;
             OnPropertyChanged(nameof(IsUserLoggedIn));
         }
+        private static string GetFailedText(bool isAuto)
+        {
+            if (isAuto)
+            {
+                return _autologinFailed;
+            }
+
+            return _loginFailed;
+        }
         private IEnumerable<Role> GetRoles() => _roleProvider.GetAll().Result;
         private IEnumerable<RoleUser> GetRoleUsers()
         {
-            if (User == null) return [];
-            if (User.Id is null) return [];
+            if (User == null)
+            {
+                return [];
+            }
+
+            if (User.Id is null)
+            {
+                return [];
+            }
 
             IEnumerable<RoleUser> roleUsers = _roleIUserProvider.GetAllForUser((int)User.Id).Result;
             return roleUsers;
         }
+        private void LoginSuccessNotification() => _notifier.ShowInformation(_loginSuccessfull);
         private void SetUserRoles(User? user)
         {
-            if (user is null) return;
+            if (user is null)
+            {
+                return;
+            }
 
             IEnumerable<Role> roles = GetRoles();
             IEnumerable<RoleUser> roleUsers = GetRoleUsers();
@@ -82,11 +97,14 @@ namespace Shopfloor.Stores
             foreach (RoleUser roleUser in roleUsers)
             {
                 Role? role = roles.FirstOrDefault(r => r.Id == roleUser.RoleId);
-                if (role == null) continue;
+                if (role == null)
+                {
+                    continue;
+                }
+
                 user.AddRole(role);
             }
         }
-        private void LoginSuccessNotification() => _notifier.ShowInformation(_loginSuccessfull);
         private void UserLoginStatusChanged()
         {
             SetUserRoles(_user);

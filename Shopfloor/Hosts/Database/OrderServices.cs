@@ -5,7 +5,7 @@ using Shopfloor.Models.OrderModel.Store.Combine;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal class OrderServices
+    internal static class OrderServices
     {
         public static void Get(IServiceCollection services)
         {

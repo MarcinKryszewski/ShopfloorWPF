@@ -4,6 +4,5 @@ namespace Shopfloor.Features.Manager.ManagerDashboard
 {
     internal sealed class ManagerDashboardViewModel : ViewModelBase
     {
-
     }
 }

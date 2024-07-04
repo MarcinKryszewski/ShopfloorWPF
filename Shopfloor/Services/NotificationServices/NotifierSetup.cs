@@ -6,7 +6,7 @@ using static Shopfloor.Services.NotificationServices.NotifierServices;
 
 namespace Shopfloor.Services.NotificationServices
 {
-    internal class NotifierSetup
+    internal partial class NotifierSetup
     {
         public static NotifierService GetSetup()
         {
@@ -24,13 +24,6 @@ namespace Shopfloor.Services.NotificationServices
 
                 cfg.Dispatcher = Application.Current.Dispatcher;
             });
-        }
-        public enum ToastMessageStyles
-        {
-            Information,
-            Warning,
-            Error,
-            Success
         }
     }
 }

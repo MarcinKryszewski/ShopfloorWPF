@@ -1,23 +1,23 @@
-﻿using Shopfloor.Features.Admin.Users;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
+using Shopfloor.Features.Admin.Users;
 using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.RoleModel;
 using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace Shopfloor.Features.Admin.UsersList.Commands
 {
     internal sealed class UserAddCommand : CommandBase
     {
-        private readonly UsersAddViewModel _viewModel;
+        private readonly IProvider<RoleUser> _roleIUserProvider;
         private readonly RolesStore _rolesStore;
         private readonly IProvider<User> _userProvider;
-        private readonly IProvider<RoleUser> _roleIUserProvider;
-
+        private readonly UsersAddViewModel _viewModel;
         public UserAddCommand(UsersAddViewModel viewModel, RolesStore rolesStore, IProvider<User> userProvider, IProvider<RoleUser> roleIUserProvider)
         {
             _viewModel = viewModel;
@@ -35,10 +35,13 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
                 Name = _viewModel.Name,
                 Surname = _viewModel.Surname,
                 Image = string.Empty,
-                IsActive = true
+                IsActive = true,
             };
 
-            if (!_viewModel.IsDataValidate) return;
+            if (!_viewModel.IsDataValidate)
+            {
+                return;
+            }
             //TODO: To move to validation on _viewModel
             int newUserId = _userProvider.Create(newUser).Result;
             if (newUserId < 0)
@@ -56,16 +59,41 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
         {
             List<Task<int>> tasks = [];
 
-            foreach (Role role in roles)
+            //foreach (Role role in roles)
+            //{
+            //    if (role.Id == null)
+            //    {
+            //        continue;
+            //    }
+
+            //    RoleUser roleUser = new()
+            //    {
+            //        RoleId = (int)role.Id,
+            //        UserId = userId,
+            //    };
+            //    tasks.Add(Task.Run(() => _roleIUserProvider.Create(roleUser)));
+            //}
+
+            foreach (RoleUser roleUser in roles
+            .Where(role => role.Id != null)
+            .Select(role => new RoleUser
             {
-                if (role.Id == null) continue;
-                RoleUser roleUser = new()
-                {
-                    RoleId = (int)role.Id,
-                    UserId = userId
-                };
+                RoleId = (int)role.Id!,
+                UserId = userId,
+            }))
+            {
                 tasks.Add(Task.Run(() => _roleIUserProvider.Create(roleUser)));
             }
+
+            tasks.AddRange(
+            roles.Where(role => role.Id != null)
+            .Select(role => new RoleUser
+            {
+                RoleId = (int)role.Id!,
+                UserId = userId,
+            })
+            .Select(roleUser => Task.Run(() => _roleIUserProvider.Create(roleUser))));
+
             Task.WaitAll(tasks.ToArray());
         }
     }

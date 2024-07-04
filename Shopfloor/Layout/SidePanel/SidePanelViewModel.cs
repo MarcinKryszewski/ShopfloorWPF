@@ -1,4 +1,9 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Windows;
+using System.Windows.Input;
+using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Admin.Machines;
 using Shopfloor.Features.Admin.Parts;
 using Shopfloor.Features.Admin.PartTypes;
@@ -27,50 +32,12 @@ using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.Commands;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.Stores;
-using System;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Windows;
-using System.Windows.Input;
 
 namespace Shopfloor.Layout.SidePanel
 {
     internal sealed partial class SidePanelViewModel : ViewModelBase
     {
         private readonly ICurrentUserStore _userStore;
-        private User? _user => _userStore.User;
-
-        #region Mechanic
-        public ICommand NavigateMechanicDashboardCommand { get; }
-        public ICommand NavigateTasksCommand { get; }
-        public ICommand NavigateRequestsCommand { get; }
-        public ICommand NavigatePartStockCommand { get; }
-        #endregion Mechanic
-
-        #region Plannist
-        public ICommand NavigatePlannistDashboardCommand { get; }
-        public ICommand NavigateOffersCommand { get; }
-        public ICommand NavigateOrdersCommand { get; }
-        public ICommand NavigateDeploysCommand { get; }
-        #endregion Plannist
-
-        #region Manager
-        public ICommand NavigateManagerDashboardCommand { get; }
-        public ICommand NavigateOrdersToApproveCommand { get; }
-        #endregion Manager
-
-        #region Admin
-        public ICommand NavigateUsersCommand { get; }
-        public ICommand NavigateMachinesCommand { get; }
-        public ICommand NavigatePartsCommand { get; }
-        public ICommand NavigateSuppliersCommand { get; }
-        public ICommand NavigatePartTypesCommand { get; }
-        #endregion Admin
-
-        public Visibility HasAdminRole => HasAuthorization(Roles.Admin);
-        public Visibility HasPlannistRole => HasAuthorization(Roles.Plannist);
-        public Visibility HasManagerRole => HasAuthorization(Roles.Manager);
-        public Visibility HasUserRole => HasAuthorization(Roles.User);
         public SidePanelViewModel(INavigationService navigationService, ICurrentUserStore userStore, IServiceProvider databaseServices)
         {
             NavigateMechanicDashboardCommand = new NavigationCommand<MechanicDashboardViewModel>(navigationService).Navigate();
@@ -98,7 +65,40 @@ namespace Shopfloor.Layout.SidePanel
 
             _dbServices = databaseServices;
         }
+        public Visibility HasAdminRole => HasAuthorization(Roles.Admin);
+        public Visibility HasManagerRole => HasAuthorization(Roles.Manager);
+        public Visibility HasPlannistRole => HasAuthorization(Roles.Plannist);
+        public Visibility HasUserRole => HasAuthorization(Roles.User);
+        public ICommand NavigateDeploysCommand { get; }
+        public ICommand NavigateMachinesCommand { get; }
+        public ICommand NavigateManagerDashboardCommand { get; }
+        public ICommand NavigateMechanicDashboardCommand { get; }
+        public ICommand NavigateOffersCommand { get; }
+        public ICommand NavigateOrdersCommand { get; }
+        public ICommand NavigateOrdersToApproveCommand { get; }
+        public ICommand NavigatePartsCommand { get; }
+        public ICommand NavigatePartStockCommand { get; }
+        public ICommand NavigatePartTypesCommand { get; }
+        public ICommand NavigatePlannistDashboardCommand { get; }
+        public ICommand NavigateRequestsCommand { get; }
+        public ICommand NavigateSuppliersCommand { get; }
+        public ICommand NavigateTasksCommand { get; }
+        public ICommand NavigateUsersCommand { get; }
+        private User? User => _userStore.User;
+        private Visibility HasAuthorization(int authVal)
+        {
+            if (User is null)
+            {
+                return Visibility.Collapsed;
+            }
 
+            if (User.IsAuthorized(authVal))
+            {
+                return Visibility.Visible;
+            }
+
+            return Visibility.Collapsed;
+        }
         private void OnUserAuthenticated(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(_userStore.IsUserLoggedIn))
@@ -109,23 +109,17 @@ namespace Shopfloor.Layout.SidePanel
                 OnPropertyChanged(nameof(HasUserRole));
             }
         }
-        private Visibility HasAuthorization(int authVal)
-        {
-            if (_user is null) return Visibility.Collapsed;
-            if (_user.IsAuthorized(authVal)) return Visibility.Visible;
-            return Visibility.Collapsed;
-        }
     }
     [ExcludeFromCodeCoverage]
     internal sealed partial class SidePanelViewModel
     {
-        public ICommand AddTestData => new TestDataCommand(this, _dbServices);
         private readonly IServiceProvider _dbServices;
+        public ICommand AddTestData => new TestDataCommand(this, _dbServices);
         public Visibility HasDataInside { get; private set; } = Visibility.Visible;
-        private class TestDataCommand : CommandBase
+        private sealed class TestDataCommand : CommandBase
         {
-            private readonly SidePanelViewModel _sidePanelViewModel;
             private readonly IServiceProvider _dbServices;
+            private readonly SidePanelViewModel _sidePanelViewModel;
             public TestDataCommand(SidePanelViewModel sidePanelViewModel, IServiceProvider dbServices)
             {
                 _sidePanelViewModel = sidePanelViewModel;
@@ -166,7 +160,7 @@ namespace Shopfloor.Layout.SidePanel
                     Index = 50004413,
                     ProducerNumber = "9453210",
                     ProducerId = 1,
-                    SupplierId = 1
+                    SupplierId = 1,
                 });
                 _ = partProvider.Create(new Part()
                 {
@@ -176,7 +170,7 @@ namespace Shopfloor.Layout.SidePanel
                     Index = 215463,
                     ProducerNumber = "ZA12354fd",
                     ProducerId = 1,
-                    SupplierId = 1
+                    SupplierId = 1,
                 });
 
                 IProvider<MachinePart> machinePartProvider = _dbServices.GetRequiredService<IProvider<MachinePart>>();
@@ -272,7 +266,7 @@ namespace Shopfloor.Layout.SidePanel
                     StatusName = "Delayed",
                     Comment = "Task postponed due to inclement weather",
                     Reason = "Weather conditions",
-                    SetDate = DateTime.Now
+                    SetDate = DateTime.Now,
                 });
                 _ = errandStatusProvider.Create(new ErrandStatus()
                 {
@@ -318,7 +312,7 @@ namespace Shopfloor.Layout.SidePanel
                 {
                     ErrandPartId = 5,
                     CompletedById = 1,
-                    CreatedDate = DateTime.Now.AddDays(-12)
+                    CreatedDate = DateTime.Now.AddDays(-12),
                 });
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(1)
                 {
@@ -377,7 +371,7 @@ namespace Shopfloor.Layout.SidePanel
                     CreatedDate = DateTime.Now.AddDays(-9),
                     Comment = "In progress",
                     Reason = "Technical issue",
-                }); ;
+                });
                 _ = errandPartStatusProvider.Create(new ErrandPartStatus(0)
                 {
                     ErrandPartId = 6,

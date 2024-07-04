@@ -1,5 +1,5 @@
-using Shopfloor.Models.UserModel;
 using System.ComponentModel;
+using Shopfloor.Models.UserModel;
 
 namespace Shopfloor.Stores
 {

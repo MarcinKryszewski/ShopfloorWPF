@@ -9,6 +9,10 @@ namespace Shopfloor.Shared.Commands
 
         private bool _isExecuting;
 
+        protected AsyncCommandBase(Action<Exception>? onException = null)
+        {
+            _onException = onException;
+        }
         public bool IsExecuting
         {
             get
@@ -21,12 +25,6 @@ namespace Shopfloor.Shared.Commands
                 OnCanExecuteChanged();
             }
         }
-
-        public AsyncCommandBase(Action<Exception>? onException = null)
-        {
-            _onException = onException;
-        }
-
         public override bool CanExecute(object? parameter)
         {
             return !IsExecuting && base.CanExecute(parameter);

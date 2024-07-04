@@ -1,8 +1,7 @@
-﻿using Shopfloor.Interfaces;
-using Shopfloor.Models.ErrandTypeModel;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shopfloor.Interfaces;
+using Shopfloor.Models.ErrandTypeModel;
 
 namespace Shopfloor.Models.ErrandModel.Store.Combine
 {
@@ -36,7 +35,7 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
         }
         private static void Combine(Errand errand, List<ErrandType> types)
         {
-            errand.Type = types.FirstOrDefault(type => type.Id == errand.TypeId);
+            errand.Type = types.Find(type => type.Id == errand.TypeId);
         }
         private List<Errand> GetErrands() => _errandStore.Data;
         private List<ErrandType> LoadErrandTypes() => _errandTypeStore.Data;

@@ -4,10 +4,11 @@ using Shopfloor.Shared.BaseClasses;
 
 namespace Shopfloor.Models.ErrandPartModel.Services
 {
-    internal interface IModelCrudService<T> where T : DataModel
+    internal interface IModelCrudService<in T>
+        where T : DataModel
     {
         public IModelCreatorService<T> Creator { get; }
-        public IModelEditorService<T> Editor { get; }
         public IModelDeleterService<T> Deleter { get; }
+        public IModelEditorService<T> Editor { get; }
     }
 }

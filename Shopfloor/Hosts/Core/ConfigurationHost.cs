@@ -1,16 +1,16 @@
+using System;
+using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Database.Configuration;
-using System;
-using System.IO;
 
 namespace Shopfloor.Hosts.Core
 {
     internal sealed class ConfigurationHost
     {
-        private readonly string _databaseType;
-        private readonly string _databasePath;
         private readonly IConfiguration _configuration;
+        private readonly string _databasePath;
+        private readonly string _databaseType;
         public ConfigurationHost()
         {
             _configuration = new ConfigurationBuilder()
@@ -27,7 +27,7 @@ namespace Shopfloor.Hosts.Core
             {
                 Type = _databaseType,
                 Path = _databasePath,
-                ConnectionString = GetConnectionString()
+                ConnectionString = GetConnectionString(),
             };
 
             services.AddSingleton(_configuration);

@@ -2,15 +2,15 @@
 
 namespace Shopfloor.Interfaces
 {
-    internal interface ICombiner<T>
+    internal interface ICombiner<in T>
     {
         public Task CombineAll();
         public Task CombineOne(T item);
     }
-    internal interface ICombinerManager<T>
+    internal interface ICombinerManager<in T>
     {
+        public bool IsCombined { get; }
         public Task CombineAll(bool shouldForce = false);
         public Task CombineOne(T item);
-        public bool IsCombined { get; }
     }
 }

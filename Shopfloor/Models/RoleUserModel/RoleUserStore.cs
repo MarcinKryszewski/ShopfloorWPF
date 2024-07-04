@@ -5,7 +5,8 @@ namespace Shopfloor.Models.RoleUserModel
 {
     internal sealed class RoleUserStore : StoreBase<RoleUser>
     {
-        public RoleUserStore(IProvider<RoleUser> provider) : base(provider)
+        public RoleUserStore(IProvider<RoleUser> provider)
+            : base(provider)
         {
         }
     }

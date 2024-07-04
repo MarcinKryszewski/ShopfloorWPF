@@ -5,7 +5,8 @@ namespace Shopfloor.Models.OrderModel
 {
     internal sealed class OrderStore : StoreBase<Order>
     {
-        public OrderStore(IProvider<Order> provider) : base(provider)
+        public OrderStore(IProvider<Order> provider)
+            : base(provider)
         {
         }
     }

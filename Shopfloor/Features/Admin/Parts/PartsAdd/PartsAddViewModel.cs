@@ -1,3 +1,10 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
 using Shopfloor.Features.Admin.Parts.Commands;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.PartModel;
@@ -6,22 +13,15 @@ using Shopfloor.Models.SupplierModel;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared;
 using Shopfloor.Shared.ViewModels;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Parts
 {
     internal sealed class PartsAddViewModel : ViewModelBase, IInputForm<Part>
     {
+        private readonly IDataStore<Part> _partStore;
         private readonly List<PartType> _partTypes;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
-        private readonly List<Supplier> _suppliers = [];
-        private readonly IDataStore<Part> _partStore;
+        private readonly List<Supplier> _suppliers;
         private string _details = string.Empty;
         private int? _index;
         private string _nameOriginal = string.Empty;
@@ -54,12 +54,6 @@ namespace Shopfloor.Features.Admin.Parts
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public ICommand AddPartCommand { get; }
         public ICommand CleanFormCommand { get; }
-        public bool HasErrors => _propertyErrors.Count != 0;
-        public Visibility HasErrorVisibility => HasErrors ? Visibility.Collapsed : Visibility.Visible;
-        public ICollectionView PartTypes { get; }
-        public ICollectionView Producers { get; }
-        public ICommand ReturnCommand { get; }
-        public ICollectionView Suppliers { get; }
         public string Details
         {
             get => _details;
@@ -69,15 +63,8 @@ namespace Shopfloor.Features.Admin.Parts
                 OnPropertyChanged(nameof(Details));
             }
         }
-        public string? Unit
-        {
-            get => _unit;
-            set
-            {
-                _unit = value;
-                OnPropertyChanged(nameof(Unit));
-            }
-        }
+        public bool HasErrors => _propertyErrors.Count != 0;
+        public Visibility HasErrorVisibility => HasErrors ? Visibility.Collapsed : Visibility.Visible;
         public int? Index
         {
             get => _index;
@@ -87,6 +74,7 @@ namespace Shopfloor.Features.Admin.Parts
                 OnPropertyChanged(nameof(Index));
             }
         }
+        public bool IsDataValidate => !HasErrors;
         public string NameOriginal
         {
             get => _nameOriginal;
@@ -114,6 +102,7 @@ namespace Shopfloor.Features.Admin.Parts
                 OnPropertyChanged(nameof(Number));
             }
         }
+        public ICollectionView PartTypes { get; }
         public Supplier? Producer
         {
             get => _producer;
@@ -124,6 +113,8 @@ namespace Shopfloor.Features.Admin.Parts
             }
         }
         public int ProducerId => Producer?.Id ?? 0;
+        public ICollectionView Producers { get; }
+        public ICommand ReturnCommand { get; }
         public Supplier? Supplier
         {
             get => _supplier;
@@ -134,6 +125,7 @@ namespace Shopfloor.Features.Admin.Parts
             }
         }
         public int? SupplierId => Supplier?.Id;
+        public ICollectionView Suppliers { get; }
         public PartType? Type
         {
             get => _type;
@@ -144,6 +136,15 @@ namespace Shopfloor.Features.Admin.Parts
             }
         }
         public int TypeId => Type?.Id ?? 0;
+        public string? Unit
+        {
+            get => _unit;
+            set
+            {
+                _unit = value;
+                OnPropertyChanged(nameof(Unit));
+            }
+        }
         public void AddError(string propertyName, string errorMassage)
         {
             if (!_propertyErrors.ContainsKey(propertyName))
@@ -165,6 +166,28 @@ namespace Shopfloor.Features.Admin.Parts
             Supplier = null;
             Unit = GlobalConstants.DefaultPartUnit;
         }
+        public void ClearErrors(string? propertyName)
+        {
+            if (propertyName is null)
+            {
+                return;
+            }
+
+            _propertyErrors.Remove(propertyName);
+        }
+        public IEnumerable GetErrors(string? propertyName)
+        {
+            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
+        }
+        public void ReloadData()
+        {
+            _partStore.Reload().Wait();
+        }
+        private void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            OnPropertyChanged(nameof(IsDataValidate));
+        }
         /*public bool IsDataValidate(Part inputValue)
         {
             if (inputValue.RequiredInputValue.Length == 0)
@@ -185,24 +208,5 @@ namespace Shopfloor.Features.Admin.Parts
             }
             return true;
         }*/
-        public void ClearErrors(string? propertyName)
-        {
-            if (propertyName is null) return;
-            _propertyErrors.Remove(propertyName);
-        }
-        public IEnumerable GetErrors(string? propertyName)
-        {
-            return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
-        }
-        public bool IsDataValidate => !HasErrors;
-        public void ReloadData()
-        {
-            _partStore.Reload().Wait();
-        }
-        private void OnErrorsChanged(string propertyName)
-        {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-            OnPropertyChanged(nameof(IsDataValidate));
-        }
     }
 }

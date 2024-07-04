@@ -4,7 +4,7 @@ using Shopfloor.Features.Plannist.PlannistDashboard.Stores;
 
 namespace Shopfloor.Hosts.Features.Plannist
 {
-    internal sealed class PlannistHost
+    internal static class PlannistHost
     {
         public static void Get(IServiceCollection services)
         {

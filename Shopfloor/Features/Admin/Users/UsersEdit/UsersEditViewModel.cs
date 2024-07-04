@@ -1,3 +1,10 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Input;
 using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Features.Admin.UsersList.Commands;
 using Shopfloor.Interfaces;
@@ -6,27 +13,20 @@ using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Users
 {
     internal sealed class UsersEditViewModel : ViewModelBase, IInputForm<User>
     {
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
+        private readonly RoleUserProvider _roleIUserProvider;
+        private readonly IProvider<Role> _roleProvider;
         private readonly RolesStore _rolesValueStore;
         private readonly SelectedUserStore _selectedUser;
-        private readonly IProvider<Role> _roleProvider;
         private readonly int _selectedUserId;
         private string _name = string.Empty;
         private string _surname = string.Empty;
         private string _username = string.Empty;
-        private readonly RoleUserProvider _roleIUserProvider;
         public UsersEditViewModel(
             INavigationCommand<UsersListViewModel> navigationService,
             SelectedUserStore selectedUserStore,
@@ -98,7 +98,11 @@ namespace Shopfloor.Features.Admin.Users
         }
         public void ClearErrors(string? propertyName)
         {
-            if (propertyName is null) return;
+            if (propertyName is null)
+            {
+                return;
+            }
+
             _propertyErrors.Remove(propertyName);
         }
         public void FillForm()

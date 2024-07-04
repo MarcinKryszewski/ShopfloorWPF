@@ -1,15 +1,14 @@
-﻿using Shopfloor.Interfaces;
+﻿using System.Threading.Tasks;
+using Shopfloor.Interfaces;
 using Shopfloor.Models.PartTypeModel;
 using Shopfloor.Shared.Commands;
-using System.Threading.Tasks;
 
 namespace Shopfloor.Features.Admin.PartTypes.Commands
 {
     internal sealed class PartTypeEditCommand : CommandBase
     {
-        private readonly PartTypesListViewModel _viewModel;
         private readonly IProvider<PartType> _provider;
-
+        private readonly PartTypesListViewModel _viewModel;
         public PartTypeEditCommand(PartTypesListViewModel viewModel, IProvider<PartType> provider)
         {
             _viewModel = viewModel;
@@ -18,9 +17,16 @@ namespace Shopfloor.Features.Admin.PartTypes.Commands
 
         public override void Execute(object? parameter)
         {
-            if (_viewModel.SelectedPartType is null) return;
+            if (_viewModel.SelectedPartType is null)
+            {
+                return;
+            }
+
             PartType selectedPartType = _viewModel.SelectedPartType;
-            if (selectedPartType.Id is null) return;
+            if (selectedPartType.Id is null)
+            {
+                return;
+            }
 
             PartType partType = new(
                 (int)selectedPartType.Id,

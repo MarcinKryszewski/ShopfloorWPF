@@ -1,7 +1,5 @@
-﻿using System.Linq;
-using Shopfloor.Interfaces;
+﻿using Shopfloor.Interfaces;
 using Shopfloor.Interfaces.Models;
-using Shopfloor.Models.ErrandModel.Store;
 
 namespace Shopfloor.Models.ErrandModel.Services
 {
@@ -17,12 +15,15 @@ namespace Shopfloor.Models.ErrandModel.Services
         public void Edit(Errand item)
         {
             int index = _store.Data.FindIndex(t => t.Id == item.Id);
-            if (index != -1) _store.Data[index] = item;
+            if (index != -1)
+            {
+                _store.Data[index] = item;
+            }
         }
 
         public Errand? FindItem(Errand item)
         {
-            return _store.Data.FirstOrDefault(t => t.Id == item.Id);
+            return _store.Data.Find(t => t.Id == item.Id);
         }
 
         public void Remove(Errand item)

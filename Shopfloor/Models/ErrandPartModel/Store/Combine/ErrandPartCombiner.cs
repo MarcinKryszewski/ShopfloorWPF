@@ -1,6 +1,6 @@
-﻿using Shopfloor.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandPartModel.Store.Combine
 {
@@ -20,7 +20,11 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
         public bool IsCombined { get; private set; }
         public async Task CombineAll(bool shouldForce = false)
         {
-            if (IsCombined && !shouldForce) return;
+            if (IsCombined && !shouldForce)
+            {
+                return;
+            }
+
             List<Task> tasks = [];
 
             tasks.Add(_userToErrandPart.CombineAll());

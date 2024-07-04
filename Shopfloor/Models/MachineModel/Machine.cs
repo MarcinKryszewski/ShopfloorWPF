@@ -1,20 +1,29 @@
+using System;
+using System.Collections.Generic;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.MachinePartModel;
 using Shopfloor.Shared.BaseClasses;
-using System;
-using System.Collections.Generic;
 
 namespace Shopfloor.Models.MachineModel
 {
     internal sealed partial class Machine : DataModel
     {
-        private readonly MachineDTO _data;
+        private readonly MachineDto _data;
+        public Machine()
+        {
+            _data = new();
+        }
         public int? Id
         {
             get => _data.Id;
             init => _data.Id = value;
         }
-        public required string Name
+        public bool IsActive
+        {
+            get => _data.Active;
+            set => _data.Active = value;
+        }
+        required public string Name
         {
             get => _data.Name;
             init
@@ -28,24 +37,15 @@ namespace Shopfloor.Models.MachineModel
             get => _data.Number ?? string.Empty;
             init => _data.Number = value;
         }
-        public string? SapNumber
-        {
-            get => _data.SapNumber ?? string.Empty;
-            init => _data.SapNumber = value;
-        }
-        public bool IsActive
-        {
-            get => _data.Active;
-            set => _data.Active = value;
-        }
         public int? ParentId
         {
             get => _data.Parent;
             init => _data.Parent = value;
         }
-        public Machine()
+        public string? SapNumber
         {
-            _data = new();
+            get => _data.SapNumber ?? string.Empty;
+            init => _data.SapNumber = value;
         }
     }
     internal sealed partial class Machine
@@ -77,7 +77,11 @@ namespace Shopfloor.Models.MachineModel
     {
         public bool Equals(Machine? other)
         {
-            if (other == null) return false;
+            if (other == null)
+            {
+                return false;
+            }
+
             if (_data.Id == null && other._data.Id == null)
             {
                 return _data.Name == other.Name && _data.Number == other.Number;
@@ -88,7 +92,11 @@ namespace Shopfloor.Models.MachineModel
         public override bool Equals(object? obj) => obj is Machine objMachine && Equals(objMachine);
         public override int GetHashCode()
         {
-            if (_data.Id != null) return _data.Id.GetHashCode();
+            if (_data.Id != null)
+            {
+                return _data.Id.GetHashCode();
+            }
+
             return Path.GetHashCode();
         }
     }

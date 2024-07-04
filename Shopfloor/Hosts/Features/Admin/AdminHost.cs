@@ -9,7 +9,7 @@ using Shopfloor.Features.Admin.Users.Stores;
 
 namespace Shopfloor.Hosts.Features.Admin
 {
-    internal sealed class AdminHost
+    internal static class AdminHost
     {
         public static void Get(IServiceCollection services)
         {

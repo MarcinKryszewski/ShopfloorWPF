@@ -1,20 +1,19 @@
+using System.Linq;
+using System.Threading.Tasks;
 using Shopfloor.Features.Admin.Users;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.Commands;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Shopfloor.Features.Admin.UsersList.Commands
 {
     internal sealed class UserSetActivityCommand : AsyncCommandBase
     {
-        private readonly UsersListViewModel _viewModel;
         private readonly IUserProvider _userProvider;
-
-        public UserSetActivityCommand(UsersListViewModel viewModel, IUserProvider IUserProvider)
+        private readonly UsersListViewModel _viewModel;
+        public UserSetActivityCommand(UsersListViewModel viewModel, IUserProvider userProvider)
         {
             _viewModel = viewModel;
-            _userProvider = IUserProvider;
+            _userProvider = userProvider;
         }
 
         public override async Task ExecuteAsync(object? parameter)
@@ -23,9 +22,20 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 
             User? user = _viewModel.SelectedUser;
 
-            if (user is null) return;
-            if (user.Username == "@dm1n") return;
-            if (parameter is null) return;
+            if (user is null)
+            {
+                return;
+            }
+
+            if (user.Username == "@dm1n")
+            {
+                return;
+            }
+
+            if (parameter is null)
+            {
+                return;
+            }
 
             bool isActive = bool.Parse((string)parameter);
             int userId = user.Id == null ? 0 : (int)user.Id;

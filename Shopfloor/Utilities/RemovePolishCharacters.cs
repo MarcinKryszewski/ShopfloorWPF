@@ -1,6 +1,6 @@
 namespace Shopfloor.Utilities
 {
-    internal sealed class RemovePolishCharacters
+    internal static class RemovePolishCharacters
     {
         public static string Remove(string input)
         {

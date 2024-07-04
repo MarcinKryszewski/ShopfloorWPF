@@ -4,7 +4,7 @@ using Shopfloor.Services;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal sealed class DatabaseHost
+    internal static class DatabaseHost
     {
         public static void Get(IServiceCollection services)
         {
@@ -39,5 +39,4 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<StoreRepository>();
         }
     }
-
 }

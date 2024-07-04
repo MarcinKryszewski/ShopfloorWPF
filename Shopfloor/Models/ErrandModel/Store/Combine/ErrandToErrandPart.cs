@@ -1,9 +1,8 @@
-﻿using Shopfloor.Interfaces;
-using Shopfloor.Models.ErrandPartModel;
-using Shopfloor.Models.ErrandPartModel.Store;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Shopfloor.Interfaces;
+using Shopfloor.Models.ErrandPartModel;
 
 namespace Shopfloor.Models.ErrandModel.Store.Combine
 {

@@ -2,3 +2,90 @@
 
 # IDE0290: Use primary constructor
 csharp_style_prefer_primary_constructors = false
+
+# SA1516: Elements should be separated by blank line
+dotnet_diagnostic.SA1516.severity = none
+
+# SA1309: Field names should not begin with underscore
+dotnet_diagnostic.SA1309.severity = none
+
+# SA1600: Elements should be documented
+dotnet_diagnostic.SA1600.severity = none
+
+# SA1200: Using directives should be placed correctly
+dotnet_diagnostic.SA1200.severity = none
+
+# SA1633: File should have header
+dotnet_diagnostic.SA1633.severity = none
+
+# S125: Sections of code should not be commented out
+dotnet_diagnostic.S125.severity = suggestion
+
+# SA1515: Single-line comment should be preceded by blank line
+dotnet_diagnostic.SA1515.severity = none
+
+# SA1101: Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = none
+
+# SA1601: Partial elements should be documented
+dotnet_diagnostic.SA1601.severity = none
+
+# SA1513: Closing brace should be followed by blank line
+dotnet_diagnostic.SA1513.severity = none
+
+# SA1602: Enumeration items should be documented
+dotnet_diagnostic.SA1602.severity = suggestion
+
+# SA1000: Keywords should be spaced correctly
+dotnet_diagnostic.SA1000.severity = none
+
+# SA1010: Opening square brackets should be spaced correctly
+dotnet_diagnostic.SA1010.severity = none
+
+# SA1005: Single line comments should begin with single space
+dotnet_diagnostic.SA1005.severity = none
+
+# SA1512: Single-line comments should not be followed by blank line
+dotnet_diagnostic.SA1512.severity = none
+
+# S1144: Unused private types or members should be removed
+dotnet_diagnostic.S1144.severity = suggestion
+
+# S1135: Track uses of "TODO" tags
+dotnet_diagnostic.S1135.severity = suggestion
+
+# S4487: Unread "private" fields should be removed
+dotnet_diagnostic.S4487.severity = suggestion
+
+# S1450: Private fields only used as local variables in methods should become local variables
+dotnet_diagnostic.S1450.severity = suggestion
+
+# S1244: Floating point numbers should not be tested for equality
+dotnet_diagnostic.S1244.severity = suggestion
+
+# S1075: URIs should not be hardcoded
+dotnet_diagnostic.S1075.severity = suggestion
+
+# SA1011: Closing square brackets should be spaced correctly
+dotnet_diagnostic.SA1011.severity = none
+
+# S3261: Namespaces should not be empty
+dotnet_diagnostic.S3261.severity = suggestion
+
+# S2589: Boolean expressions should not be gratuitous
+dotnet_diagnostic.S2589.severity = suggestion
+
+# S2326: Unused type parameters should be removed
+dotnet_diagnostic.S2326.severity = suggestion
+
+# S2094: Classes should not be empty
+dotnet_diagnostic.S2094.severity = suggestion
+
+# S1481: Unused local variables should be removed
+dotnet_diagnostic.S1481.severity = suggestion
+
+# S3241: Methods should not return values that are never used
+dotnet_diagnostic.S3241.severity = suggestion
+
+# S2953: Methods named "Dispose" should implement "IDisposable.Dispose"
+dotnet_diagnostic.S2953.severity = suggestion

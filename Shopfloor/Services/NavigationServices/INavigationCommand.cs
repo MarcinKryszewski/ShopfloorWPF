@@ -3,7 +3,8 @@ using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Services.NavigationServices
 {
-    internal interface INavigationCommand<T> where T : ViewModelBase
+    internal interface INavigationCommand<T>
+        where T : ViewModelBase
     {
         public ICommand Navigate();
     }

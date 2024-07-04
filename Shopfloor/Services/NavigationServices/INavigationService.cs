@@ -4,6 +4,7 @@ namespace Shopfloor.Services.NavigationServices
 {
     internal interface INavigationService
     {
-        void NavigateTo<T>() where T : ViewModelBase;
+        void NavigateTo<T>()
+            where T : ViewModelBase;
     }
 }

@@ -1,4 +1,13 @@
-﻿using Shopfloor.Features.Mechanic.Errands.Commands;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
+using System.Windows.Input;
+using Shopfloor.Features.Mechanic.Errands.Commands;
 using Shopfloor.Features.Mechanic.Errands.Interfaces;
 using Shopfloor.Features.Mechanic.Errands.Stores;
 using Shopfloor.Interfaces;
@@ -14,32 +23,22 @@ using Shopfloor.Services;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.ViewModels;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Input;
 
 namespace Shopfloor.Features.Mechanic.Errands
 {
     internal sealed partial class ErrandEditViewModel : ViewModelBase
     {
-        private Errand _errand;
-        private readonly ObservableCollection<ErrandType> _errandTypes = [];
-        private readonly ObservableCollection<Machine> _machines = [];
-        private readonly ObservableCollection<User> _users = [];
-        private readonly SelectedErrandStore _selectedErrand;
-        private readonly IDataStore<Machine> _machineStore;
-        private readonly IDataStore<User> _userStore;
-        private readonly IDataStore<ErrandType> _errandTypeStore;
         private readonly int _currentUserId;
         private readonly ErrandCreatorData _errandCreatorData;
+        private readonly ObservableCollection<ErrandType> _errandTypes = [];
+        private readonly IDataStore<ErrandType> _errandTypeStore;
+        private readonly ObservableCollection<Machine> _machines = [];
+        private readonly IDataStore<Machine> _machineStore;
         private readonly INotifier _notifier;
-
+        private readonly SelectedErrandStore _selectedErrand;
+        private readonly ObservableCollection<User> _users = [];
+        private readonly IDataStore<User> _userStore;
+        private Errand _errand;
         public ErrandEditViewModel(
             NavigationService navigationService,
             StoreRepository stores,
@@ -77,6 +76,18 @@ namespace Shopfloor.Features.Mechanic.Errands
 
             _notifier = notifier;
         }
+        public ErrandEditCommand EditErrandCommand { get; }
+        public Errand Errand
+        {
+            get => _errand;
+            private set
+            {
+                _errand = value;
+                OnPropertyChanged(nameof(Errand));
+            }
+        }
+        public ErrandCreatorData ErrandCreator => _errandCreatorData;
+        public ICommand ReturnCommand { get; }
         private void OnErrandEdited(bool edited)
         {
             if (!edited)
@@ -90,24 +101,33 @@ namespace Shopfloor.Features.Mechanic.Errands
             _notifier.ShowSuccess(successText);
             ReturnCommand.Execute(null);
         }
-        public Errand Errand
-        {
-            get => _errand;
-            private set
-            {
-                _errand = value;
-                OnPropertyChanged(nameof(Errand));
-            }
-        }
-        public ErrandCreatorData ErrandCreator => _errandCreatorData;
-        public ErrandEditCommand EditErrandCommand { get; }
-        public ICommand ReturnCommand { get; }
     }
     internal sealed partial class ErrandEditViewModel
     {
         public ICollectionView ErrandTypes => CollectionViewSource.GetDefaultView(_errandTypes);
         public ICollectionView Machines => CollectionViewSource.GetDefaultView(_machines);
         public ICollectionView Users => CollectionViewSource.GetDefaultView(_users);
+        private void ClearLists()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _selectedErrand.ErrandParts.Clear();
+                _selectedErrand.ErrandId = null;
+                _selectedErrand.MachineId = null;
+
+                _errandTypes.Clear();
+                _users.Clear();
+                _machines.Clear();
+            });
+        }
+        private async Task FillLists()
+        {
+            List<Task> tasks = [];
+            tasks.Add(FillMachinesList());
+            tasks.Add(FillUsersList());
+            tasks.Add(FillTypesList());
+            await Task.WhenAll(tasks);
+        }
         private Task FillMachinesList()
         {
             Application.Current.Dispatcher.Invoke(() =>
@@ -148,28 +168,10 @@ namespace Shopfloor.Features.Mechanic.Errands
             await FillLists();
             RefreshLists();
             SetupPriority(_errand);
-            if (_errand.Parts.Count > 0) ShowPartsListCommand.Execute(ErrandCreator);
-        }
-        private async Task FillLists()
-        {
-            List<Task> tasks = [];
-            tasks.Add(FillMachinesList());
-            tasks.Add(FillUsersList());
-            tasks.Add(FillTypesList());
-            await Task.WhenAll(tasks);
-        }
-        private void ClearLists()
-        {
-            Application.Current.Dispatcher.Invoke(() =>
+            if (_errand.Parts.Count > 0)
             {
-                _selectedErrand.ErrandParts.Clear();
-                _selectedErrand.ErrandId = null;
-                _selectedErrand.MachineId = null;
-
-                _errandTypes.Clear();
-                _users.Clear();
-                _machines.Clear();
-            });
+                ShowPartsListCommand.Execute(ErrandCreator);
+            }
         }
         private void RefreshLists()
         {
@@ -206,11 +208,6 @@ namespace Shopfloor.Features.Mechanic.Errands
             value?.Add(errorMassage);
             OnErrorsChanged(propertyName);
         }
-        private void OnErrorsChanged(string propertyName)
-        {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-            OnPropertyChanged(nameof(IsDataValidate));
-        }
         public void CleanForm()
         {
             Errand = (Errand)_selectedErrand.SelectedErrand!.Clone();
@@ -218,7 +215,11 @@ namespace Shopfloor.Features.Mechanic.Errands
         }
         public void ClearErrors(string? propertyName)
         {
-            if (propertyName is null) return;
+            if (propertyName is null)
+            {
+                return;
+            }
+
             if (_propertyErrors.Remove(propertyName))
             {
                 OnErrorsChanged(propertyName);
@@ -228,9 +229,17 @@ namespace Shopfloor.Features.Mechanic.Errands
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
+        private void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            OnPropertyChanged(nameof(IsDataValidate));
+        }
     }
     internal sealed partial class ErrandEditViewModel : IErrandPriority
     {
+        public bool PrioA { get; set; }
+        public bool PrioB { get; set; }
+        public bool PrioC { get; set; }
         public ICommand PrioritySetCommand { get; }
         public string SelectedPriority
         {
@@ -241,9 +250,6 @@ namespace Shopfloor.Features.Mechanic.Errands
                 OnPropertyChanged(nameof(SelectedPriority));
             }
         }
-        public bool PrioA { get; set; }
-        public bool PrioB { get; set; }
-        public bool PrioC { get; set; }
         private void SetupPriority(Errand errand)
         {
             switch (errand.Priority)
@@ -256,7 +262,6 @@ namespace Shopfloor.Features.Mechanic.Errands
                     PrioB = true;
                     OnPropertyChanged(nameof(PrioB));
                     break;
-                case "C":
                 default:
                     PrioC = true;
                     OnPropertyChanged(nameof(PrioC));
@@ -266,19 +271,23 @@ namespace Shopfloor.Features.Mechanic.Errands
     }
     internal sealed partial class ErrandEditViewModel : IPartsList
     {
+        private ErrandPartsListViewModel? _partsList;
+        public Visibility IsPartsListVisible => PartsList == null ? Visibility.Visible : Visibility.Collapsed;
         public ErrandPartsListViewModel? PartsList
         {
             get => _partsList;
             set
             {
                 _partsList = value;
-                if (_partsList is not null) _partsList.ErrandData = _errandCreatorData;
+                if (_partsList is not null)
+                {
+                    _partsList.ErrandData = _errandCreatorData;
+                }
+
                 OnPropertyChanged(nameof(PartsList));
                 OnPropertyChanged(nameof(IsPartsListVisible));
             }
         }
-        public Visibility IsPartsListVisible => PartsList == null ? Visibility.Visible : Visibility.Collapsed;
-        private ErrandPartsListViewModel? _partsList;
         public ICommand ShowPartsListCommand { get; }
     }
 }

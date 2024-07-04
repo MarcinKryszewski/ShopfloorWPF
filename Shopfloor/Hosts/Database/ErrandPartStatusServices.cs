@@ -7,7 +7,7 @@ using Shopfloor.Models.ErrandPartStatusModel.Store.Combine;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal class ErrandPartStatusServices
+    internal static class ErrandPartStatusServices
     {
         public static void Get(IServiceCollection services)
         {
@@ -20,5 +20,4 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<IDataModelStoreService<ErrandPartStatus>, ErrandPartStatusStoreService>();
         }
     }
-
 }

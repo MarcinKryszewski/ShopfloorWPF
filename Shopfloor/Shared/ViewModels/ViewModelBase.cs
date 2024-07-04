@@ -6,13 +6,12 @@ namespace Shopfloor.Shared.ViewModels
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        public virtual void Dispose()
+        {
+        }
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public virtual void Dispose()
-        {
         }
     }
 }

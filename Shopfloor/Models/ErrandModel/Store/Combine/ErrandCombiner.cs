@@ -1,6 +1,6 @@
-﻿using Shopfloor.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.ErrandModel.Store.Combine
 {
@@ -9,8 +9,8 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
         private readonly ErrandToErrandPart _errandPart;
         private readonly ErrandToErrandStatus _errandStatus;
         private readonly ErrandToErrandType _errandType;
-        private readonly ErrandToUser _user;
         private readonly ErrandToMachine _machine;
+        private readonly ErrandToUser _user;
         public ErrandCombiner(ErrandToErrandPart errandPart, ErrandToErrandStatus errandStatus, ErrandToErrandType errandType, ErrandToUser user, ErrandToMachine machine)
         {
             _errandPart = errandPart;
@@ -22,7 +22,10 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
         public bool IsCombined { get; private set; }
         public async Task CombineAll(bool shouldForce = false)
         {
-            if (IsCombined && !shouldForce) return;
+            if (IsCombined && !shouldForce)
+            {
+                return;
+            }
 
             List<Task> tasks = [];
 

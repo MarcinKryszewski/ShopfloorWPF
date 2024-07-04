@@ -8,7 +8,7 @@ using Shopfloor.Features.Mechanic.Requests.Stores;
 
 namespace Shopfloor.Hosts.Features.Mechanic
 {
-    internal sealed class MechanicHost
+    internal static class MechanicHost
     {
         public static void Get(IServiceCollection services)
         {

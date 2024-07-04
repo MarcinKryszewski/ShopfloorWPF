@@ -5,7 +5,7 @@ using Shopfloor.Models.OfferModel.Store.Combine;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal class OfferServices
+    internal static class OfferServices
     {
         public static void Get(IServiceCollection services)
         {
@@ -14,5 +14,4 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<ICombinerManager<Offer>, OfferCombiner>();
         }
     }
-
 }

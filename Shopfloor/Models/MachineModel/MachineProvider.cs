@@ -1,28 +1,21 @@
-using Dapper;
-using Shopfloor.Database;
-using Shopfloor.Interfaces;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
+using Shopfloor.Database;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.MachineModel
 {
     internal sealed class MachineProvider : IProvider<Machine>
     {
-        private readonly DatabaseConnectionFactory _database;
         private const string _createSQL = @"
             INSERT INTO machines (machine_name, machine_number, parent)
             VALUES (@Name, @Number, @Parent)
             ";
-        private const string _getOneSQL = @"
-            SELECT
-                id AS Id,
-                machine_name AS Name,
-                machine_number AS Number,
-                sap_number AS SapNumber,
-                parent AS Parent,
-                active AS Active
+        private const string _deleteSQL = @"
+            DELETE
             FROM machines
             WHERE id = @Id
             ";
@@ -36,6 +29,17 @@ namespace Shopfloor.Models.MachineModel
                 active AS Active
             FROM machines
             ";
+        private const string _getOneSQL = @"
+            SELECT
+                id AS Id,
+                machine_name AS Name,
+                machine_number AS Number,
+                sap_number AS SapNumber,
+                parent AS Parent,
+                active AS Active
+            FROM machines
+            WHERE id = @Id
+            ";
         private const string _updateSQL = @"
             UPDATE machines
             SET
@@ -45,16 +49,12 @@ namespace Shopfloor.Models.MachineModel
                 active = @Active
             WHERE id = @Id
             ";
-        private const string _deleteSQL = @"
-            DELETE
-            FROM machines
-            WHERE id = @Id
-            ";
+        private readonly DatabaseConnectionFactory _database;
         public MachineProvider(DatabaseConnectionFactory database)
         {
             _database = database;
         }
-        #region CRUD
+
         public async Task<int> Create(Machine item)
         {
             using IDbConnection connection = _database.Connect();
@@ -62,16 +62,25 @@ namespace Shopfloor.Models.MachineModel
             {
                 Name = item.Name,
                 Number = item.Number,
-                Parent = item.ParentId
+                Parent = item.ParentId,
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
             return 0;
         }
+        public async Task Delete(int id)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                Id = id,
+            };
+            await connection.ExecuteAsync(_deleteSQL, parameters);
+        }
         public async Task<IEnumerable<Machine>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
-            IEnumerable<MachineDTO> machineDTOs = await connection.QueryAsync<MachineDTO>(_getAllSQL);
+            IEnumerable<MachineDto> machineDTOs = await connection.QueryAsync<MachineDto>(_getAllSQL);
             return machineDTOs.Select(ToModel);
         }
         public async Task<Machine> GetById(int id)
@@ -79,9 +88,9 @@ namespace Shopfloor.Models.MachineModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Id = id
+                Id = id,
             };
-            MachineDTO? machineDTO = await connection.QuerySingleAsync<MachineDTO>(_getOneSQL, parameters);
+            MachineDto? machineDTO = await connection.QuerySingleAsync<MachineDto>(_getOneSQL, parameters);
             return ToModel(machineDTO);
         }
         public async Task Update(Machine item)
@@ -93,21 +102,11 @@ namespace Shopfloor.Models.MachineModel
                 Name = item.Name,
                 Number = item.Number,
                 Parent = item.ParentId,
-                Active = item.IsActive
+                Active = item.IsActive,
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
-        public async Task Delete(int id)
-        {
-            using IDbConnection connection = _database.Connect();
-            object parameters = new
-            {
-                Id = id
-            };
-            await connection.ExecuteAsync(_deleteSQL, parameters);
-        }
-        #endregion CRUD
-        private static Machine ToModel(MachineDTO item)
+        private static Machine ToModel(MachineDto item)
         {
             return new Machine()
             {
@@ -116,7 +115,7 @@ namespace Shopfloor.Models.MachineModel
                 Number = item.Number,
                 SapNumber = item.SapNumber,
                 ParentId = item.Parent,
-                IsActive = item.Active
+                IsActive = item.Active,
             };
         }
     }

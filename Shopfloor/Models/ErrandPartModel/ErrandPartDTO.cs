@@ -5,7 +5,7 @@ using Shopfloor.Models.UserModel;
 
 namespace Shopfloor.Models.ErrandPartModel
 {
-    internal sealed class ErrandPartDTO
+    internal sealed class ErrandPartDto
     {
         public int? Id { get; set; }
         public int ErrandId { get; set; }

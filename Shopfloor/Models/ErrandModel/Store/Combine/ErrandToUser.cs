@@ -1,8 +1,7 @@
-﻿using Shopfloor.Interfaces;
-using Shopfloor.Models.UserModel;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shopfloor.Interfaces;
+using Shopfloor.Models.UserModel;
 
 namespace Shopfloor.Models.ErrandModel.Store.Combine
 {
@@ -15,14 +14,6 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
             _userStore = userStore;
             _errandStore = errandStore;
         }
-        public Task CombineOne(Errand item)
-        {
-            List<User> users = GetUsers();
-
-            Combine(item, users);
-
-            return Task.CompletedTask;
-        }
         public Task CombineAll()
         {
             List<Errand> errands = GetErrands();
@@ -34,10 +25,18 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
             }
             return Task.CompletedTask;
         }
+        public Task CombineOne(Errand item)
+        {
+            List<User> users = GetUsers();
+
+            Combine(item, users);
+
+            return Task.CompletedTask;
+        }
         private static void Combine(Errand errand, List<User> users)
         {
-            errand.CreatedByUser = users.FirstOrDefault(user => user.Id == errand.CreatedById);
-            errand.Responsible = users.FirstOrDefault(user => user.Id == errand.OwnerId);
+            errand.CreatedByUser = users.Find(user => user.Id == errand.CreatedById);
+            errand.Responsible = users.Find(user => user.Id == errand.OwnerId);
         }
         private List<Errand> GetErrands() => _errandStore.Data;
         private List<User> GetUsers() => _userStore.Data;

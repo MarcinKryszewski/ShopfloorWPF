@@ -6,7 +6,7 @@ using Shopfloor.Models.MachineModel.Store.Combine;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal class MachineServices
+    internal static class MachineServices
     {
         public static void Get(IServiceCollection services)
         {
@@ -17,5 +17,4 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<MachineToMachine>();
         }
     }
-
 }

@@ -4,6 +4,5 @@ namespace Shopfloor.Features
 {
     internal sealed class WorkInProgressViewModel : ViewModelBase
     {
-
     }
 }

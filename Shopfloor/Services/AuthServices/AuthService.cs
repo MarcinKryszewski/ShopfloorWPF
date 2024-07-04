@@ -14,9 +14,4 @@ namespace Shopfloor.Services
             return _provider.GetByUsername(username.ToLower()).Result ?? null;
         }
     }
-
-    internal interface IAuthService
-    {
-        public User? Login(string username);
-    }
 }

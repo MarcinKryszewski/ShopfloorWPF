@@ -1,14 +1,31 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using Shopfloor.Shared.BaseClasses;
 
 namespace Shopfloor.Models.OrderModel
 {
     internal sealed partial class Order : DataModel
     {
-        private readonly OrderDTO _data;
+        private readonly OrderDto _data;
+        public Order()
+        {
+            _data = new();
+            Delivered = false;
+        }
+        required public DateTime CreationDate
+        {
+            get => _data.CreationDate;
+            init => _data.CreationDate = value;
+        }
+        public bool Delivered
+        {
+            get => _data.Delivered;
+            set => _data.Delivered = value;
+        }
+        public DateTime? DeliveryDate
+        {
+            get => _data.DeliveryDate;
+            set => _data.DeliveryDate = value;
+        }
         public int? Id
         {
             get => _data.Id;
@@ -21,26 +38,6 @@ namespace Shopfloor.Models.OrderModel
                 }
                 _data.Id = value;
             }
-        }
-        public required DateTime CreationDate
-        {
-            get => _data.CreationDate;
-            init => _data.CreationDate = value;
-        }
-        public DateTime? DeliveryDate
-        {
-            get => _data.DeliveryDate;
-            set => _data.DeliveryDate = value;
-        }
-        public bool Delivered
-        {
-            get => _data.Delivered;
-            set => _data.Delivered = value;
-        }
-        public Order()
-        {
-            _data = new();
-            Delivered = false;
         }
     }
 }

@@ -1,13 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
-using System;
 
 namespace Shopfloor.Hosts.Core
 {
-    internal class NavigationHost
+    internal static class NavigationHost
     {
         public static void Get(IServiceCollection services)
         {

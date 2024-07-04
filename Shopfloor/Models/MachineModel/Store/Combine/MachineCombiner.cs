@@ -1,23 +1,27 @@
-using Shopfloor.Interfaces;
-using Shopfloor.Models.MachineModel.Store.Combine;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shopfloor.Interfaces;
+using Shopfloor.Models.MachineModel.Store.Combine;
 
 namespace Shopfloor.Models.MachineModel.Store
 {
     internal sealed class MachineCombiner : ICombinerManager<Machine>
     {
-        private readonly MachineToMachine _machineToMachine;
         private readonly List<Machine> _data;
-        public bool IsCombined { get; private set; }
+        private readonly MachineToMachine _machineToMachine;
         public MachineCombiner(IDataStore<Machine> store, MachineToMachine machineToMachine)
         {
             _machineToMachine = machineToMachine;
             _data = store.Data;
         }
+        public bool IsCombined { get; private set; }
         public async Task CombineAll(bool shouldForce = false)
         {
-            if (IsCombined && !shouldForce) return;
+            if (IsCombined && !shouldForce)
+            {
+                return;
+            }
+
             List<Task> tasks = [];
 
             tasks.Add(_machineToMachine.CombineAll());

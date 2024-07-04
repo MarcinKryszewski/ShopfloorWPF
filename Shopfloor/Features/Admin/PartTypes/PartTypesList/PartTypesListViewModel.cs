@@ -1,9 +1,4 @@
-﻿using Shopfloor.Features.Admin.PartTypes.Commands;
-using Shopfloor.Interfaces;
-using Shopfloor.Models.PartTypeModel;
-using Shopfloor.Shared.ViewModels;
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,11 +8,16 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using Shopfloor.Features.Admin.PartTypes.Commands;
+using Shopfloor.Interfaces;
+using Shopfloor.Models.PartTypeModel;
+using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Admin.PartTypes
 {
     internal sealed class PartTypesListViewModel : ViewModelBase, IInputForm<PartType>
     {
+        private readonly IProvider<PartType> _partTypeProvider;
         private readonly ObservableCollection<PartType> _partTypes = [];
         private readonly IDataStore<PartType> _partTypesStore;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
@@ -25,7 +25,6 @@ namespace Shopfloor.Features.Admin.PartTypes
         private string _name = string.Empty;
         private string _searchText = string.Empty;
         private PartType? _selectedPartType;
-        private readonly IProvider<PartType> _partTypeProvider;
         public PartTypesListViewModel(IProvider<PartType> partTypeProvider, IDataStore<PartType> partTypeStore)
         {
             _partTypeProvider = partTypeProvider;
@@ -42,6 +41,7 @@ namespace Shopfloor.Features.Admin.PartTypes
         public ICommand CleanFormCommand { get; }
         public ICommand EditCommand { get; }
         public bool HasErrors => _propertyErrors.Count != 0;
+        public bool IsDataValidate => !HasErrors;
         public bool IsEdit
         {
             get => _isEdit;
@@ -108,14 +108,17 @@ namespace Shopfloor.Features.Admin.PartTypes
         }
         public void ClearErrors(string? propertyName)
         {
-            if (propertyName is null) return;
+            if (propertyName is null)
+            {
+                return;
+            }
+
             _propertyErrors.Remove(propertyName);
         }
         public IEnumerable GetErrors(string? propertyName)
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
-        public bool IsDataValidate => !HasErrors;
         public Task LoadData()
         {
             Application.Current.Dispatcher.Invoke(_partTypes.Clear);
@@ -141,26 +144,29 @@ namespace Shopfloor.Features.Admin.PartTypes
             //await Task.Delay(5000);
             IEnumerable<PartType> partTypes = await _partTypeProvider.GetAll();
             _partTypesStore.Reload().Wait();
-            foreach (PartType partType in partTypes)
+            foreach (PartType partType in from partType in partTypes
+                                          where _partTypes.FirstOrDefault(s => s.Id == partType.Id) is null
+                                          select partType)
             {
-                if (_partTypes.FirstOrDefault(s => s.Id == partType.Id) is null)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _partTypes.Add(partType);
-                        OnPropertyChanged(nameof(PartTypes));
-                    });
-                }
+                await Application.Current.Dispatcher.InvokeAsync(() =>
+                                {
+                                    _partTypes.Add(partType);
+                                    OnPropertyChanged(nameof(PartTypes));
+                                });
             }
         }
         //Updates the list if value existed, ie. after edit
         public async Task UpdateData(PartType partTypeToRemove)
         {
-            if (partTypeToRemove.Id is null) return;
+            if (partTypeToRemove.Id is null)
+            {
+                return;
+            }
+
             PartType partTypeToAdd = await _partTypeProvider.GetById((int)partTypeToRemove.Id);
             if (_partTypes.FirstOrDefault(s => s.Id == partTypeToRemove.Id) is not null)
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                await Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     _partTypes.Remove(partTypeToRemove);
                     _partTypes.Add(partTypeToAdd);
@@ -175,6 +181,11 @@ namespace Shopfloor.Features.Admin.PartTypes
                 return partType.SearchValue.Contains(_searchText, StringComparison.InvariantCultureIgnoreCase);
             }
             return false;
+        }
+        private void OnErrorsChanged(string propertyName)
+        {
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            OnPropertyChanged(nameof(IsDataValidate));
         }
         /*public bool IsDataValidate(PartType? partType)
         {
@@ -199,10 +210,5 @@ namespace Shopfloor.Features.Admin.PartTypes
             ErrorMassage = string.Empty;
             return true;
         }*/
-        private void OnErrorsChanged(string propertyName)
-        {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-            OnPropertyChanged(nameof(IsDataValidate));
-        }
     }
 }

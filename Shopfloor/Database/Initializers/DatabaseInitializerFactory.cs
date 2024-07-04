@@ -1,14 +1,13 @@
-﻿using Shopfloor.Database.Configuration;
-using System;
+﻿using System;
 using System.Data;
+using Shopfloor.Database.Configuration;
 
 namespace Shopfloor.Database.Initializers
 {
     internal sealed class DatabaseInitializerFactory
     {
-        private readonly IDbConnection _connection;
         private readonly DatabaseConfiguration _configuration;
-
+        private readonly IDbConnection _connection;
         public DatabaseInitializerFactory(DatabaseConfiguration configuration, IDbConnection connection)
         {
             _connection = connection;

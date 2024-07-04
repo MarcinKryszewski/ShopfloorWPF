@@ -1,5 +1,5 @@
-﻿using Shopfloor.Shared.ViewModels;
-using System;
+﻿using System;
+using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Shared.Stores
 {
@@ -7,6 +7,7 @@ namespace Shopfloor.Shared.Stores
     {
         private ViewModelBase? _currentViewModel;
 
+        public event Action? CurrentViewModelChanged;
         public ViewModelBase? CurrentViewModel
         {
             get => _currentViewModel;
@@ -19,14 +20,10 @@ namespace Shopfloor.Shared.Stores
         }
 
         public bool IsOpen => CurrentViewModel != null;
-
-        public event Action? CurrentViewModelChanged;
-
         public void Close()
         {
             CurrentViewModel = null;
         }
-
         private void OnCurrentViewModelChanged()
         {
             CurrentViewModelChanged?.Invoke();

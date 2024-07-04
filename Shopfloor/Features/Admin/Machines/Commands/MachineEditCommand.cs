@@ -18,11 +18,19 @@ namespace Shopfloor.Features.Admin.Machines.Commands
         public override void Execute(object? parameter)
         {
             Machine? selectedMachine = _viewModel.SelectedMachine;
-            if (selectedMachine == null) return;
-            if (_viewModel.Id == null) return;
+            if (selectedMachine == null)
+            {
+                return;
+            }
+
+            if (_viewModel.Id == null)
+            {
+                return;
+            }
+
             int? parentId = _viewModel.SelectedParent?.Id;
 
-            Machine machine = new()
+            Machine machine = new ()
             {
                 Id = (int)_viewModel.Id,
                 Name = _viewModel.MachineName,
@@ -32,7 +40,10 @@ namespace Shopfloor.Features.Admin.Machines.Commands
                 IsActive = selectedMachine.IsActive,
             };
 
-            if (_viewModel.HasErrors) return;
+            if (_viewModel.HasErrors)
+            {
+                return;
+            }
 
             _ = _provider.Update(machine);
             _viewModel.ReloadData();

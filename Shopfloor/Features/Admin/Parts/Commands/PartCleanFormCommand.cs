@@ -6,7 +6,7 @@ namespace Shopfloor.Features.Admin.Parts.Commands
 {
     internal sealed class PartCleanFormCommand : CommandBase
     {
-        private IInputForm<Part> _viewModel;
+        private readonly IInputForm<Part> _viewModel;
 
         public PartCleanFormCommand(IInputForm<Part> viewModel)
         {

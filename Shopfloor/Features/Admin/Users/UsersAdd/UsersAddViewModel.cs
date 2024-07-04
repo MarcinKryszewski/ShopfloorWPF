@@ -1,3 +1,9 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Input;
 using Shopfloor.Features.Admin.Users.Stores;
 using Shopfloor.Features.Admin.UsersList.Commands;
 using Shopfloor.Interfaces;
@@ -6,20 +12,14 @@ using Shopfloor.Models.RoleUserModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Users
 {
     internal sealed class UsersAddViewModel : ViewModelBase, IInputForm<User>
     {
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
-        private readonly RolesStore _rolesValueStore;
         private readonly IProvider<Role> _roleProvider;
+        private readonly RolesStore _rolesValueStore;
         private string _name = string.Empty;
         private List<Role> _rolesStorage = [];
         private string _surname = string.Empty;
@@ -39,13 +39,13 @@ namespace Shopfloor.Features.Admin.Users
                 this,
                 _rolesValueStore,
                 userProvider,
-                roleIUserProvider
-            );
+                roleIUserProvider);
         }
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public ICommand AddNewUserCommand { get; }
         public ICommand BackToListCommand { get; }
         public bool HasErrors => _propertyErrors.Count != 0;
+        public bool IsDataValidate => !HasErrors;
         public string Name
         {
             get => _name;
@@ -92,14 +92,17 @@ namespace Shopfloor.Features.Admin.Users
         }
         public void ClearErrors(string? propertyName)
         {
-            if (propertyName is null) return;
+            if (propertyName is null)
+            {
+                return;
+            }
+
             _propertyErrors.Remove(propertyName);
         }
         public IEnumerable GetErrors(string? propertyName)
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
-        public bool IsDataValidate => !HasErrors;
         public void ReloadData()
         {
             throw new NotImplementedException();

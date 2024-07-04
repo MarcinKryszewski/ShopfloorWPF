@@ -2,7 +2,8 @@ using Shopfloor.Shared.BaseClasses;
 
 namespace Shopfloor.Interfaces.Models
 {
-    internal interface IDataModelStoreService<T> where T : DataModel
+    internal interface IDataModelStoreService<T>
+        where T : DataModel
     {
         public void Add(T item);
         public void Edit(T item);

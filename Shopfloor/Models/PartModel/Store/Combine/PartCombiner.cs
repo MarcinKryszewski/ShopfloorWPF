@@ -1,6 +1,6 @@
-using Shopfloor.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Models.PartModel.Store.Combine
 {
@@ -14,7 +14,11 @@ namespace Shopfloor.Models.PartModel.Store.Combine
         public bool IsCombined { get; private set; }
         public async Task CombineAll(bool shouldForce = false)
         {
-            if (IsCombined && !shouldForce) return;
+            if (IsCombined && !shouldForce)
+            {
+                return;
+            }
+
             List<Task> tasks = [];
 
             tasks.Add(_partType.CombineAll());

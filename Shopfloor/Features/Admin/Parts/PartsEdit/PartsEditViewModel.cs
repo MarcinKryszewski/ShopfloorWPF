@@ -1,3 +1,9 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Data;
+using System.Windows.Input;
 using Shopfloor.Features.Admin.Parts.Commands;
 using Shopfloor.Features.Admin.Parts.Stores;
 using Shopfloor.Interfaces;
@@ -7,21 +13,16 @@ using Shopfloor.Models.SupplierModel;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared;
 using Shopfloor.Shared.ViewModels;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Data;
-using System.Windows.Input;
 
 namespace Shopfloor.Features.Admin.Parts
 {
     internal sealed class PartsEditViewModel : ViewModelBase, IInputForm<Part>
     {
-        private readonly List<PartType> _partTypes = [];
+        private readonly IDataStore<Part> _partStore;
+        private readonly List<PartType> _partTypes;
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
         private readonly Part? _selectedPart;
-        private readonly List<Supplier> _suppliers = [];
+        private readonly List<Supplier> _suppliers;
         private string _details = string.Empty;
         private int? _index;
         private string _nameOriginal = string.Empty;
@@ -31,7 +32,6 @@ namespace Shopfloor.Features.Admin.Parts
         private Supplier? _supplier;
         private PartType? _type;
         private string _unit = GlobalConstants.DefaultPartUnit;
-        private readonly IDataStore<Part> _partStore;
         public PartsEditViewModel(
             INavigationCommand<PartsListViewModel> returnCommand,
             SelectedPartStore selectedPartStore,
@@ -58,13 +58,6 @@ namespace Shopfloor.Features.Admin.Parts
         }
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public ICommand CleanFormCommand { get; }
-        public ICommand EditPartCommand { get; }
-        public bool HasErrors => _propertyErrors.Count != 0;
-        public ICollectionView PartTypes { get; }
-        public ICollectionView Producers { get; }
-        public ICommand ReturnCommand { get; }
-        public Part? SelectedPart => _selectedPart;
-        public ICollectionView Suppliers { get; }
         public string Details
         {
             get => _details;
@@ -74,15 +67,8 @@ namespace Shopfloor.Features.Admin.Parts
                 OnPropertyChanged(nameof(Details));
             }
         }
-        public string Unit
-        {
-            get => _unit;
-            set
-            {
-                _unit = value;
-                OnPropertyChanged(nameof(Unit));
-            }
-        }
+        public ICommand EditPartCommand { get; }
+        public bool HasErrors => _propertyErrors.Count != 0;
         public int? Id => _selectedPart?.Id;
         public int? Index
         {
@@ -93,6 +79,7 @@ namespace Shopfloor.Features.Admin.Parts
                 OnPropertyChanged(nameof(Index));
             }
         }
+        public bool IsDataValidate => !HasErrors;
         public string NameOriginal
         {
             get => _nameOriginal;
@@ -129,6 +116,7 @@ namespace Shopfloor.Features.Admin.Parts
                 OnPropertyChanged(nameof(PartType));
             }
         }
+        public ICollectionView PartTypes { get; }
         public Supplier? Producer
         {
             get => _producer;
@@ -139,6 +127,9 @@ namespace Shopfloor.Features.Admin.Parts
             }
         }
         public int? ProducerId => Producer?.Id;
+        public ICollectionView Producers { get; }
+        public ICommand ReturnCommand { get; }
+        public Part? SelectedPart => _selectedPart;
         public Supplier? Supplier
         {
             get => _supplier;
@@ -149,7 +140,17 @@ namespace Shopfloor.Features.Admin.Parts
             }
         }
         public int? SupplierId => Supplier?.Id;
+        public ICollectionView Suppliers { get; }
         public int? TypeId => PartType?.Id;
+        public string Unit
+        {
+            get => _unit;
+            set
+            {
+                _unit = value;
+                OnPropertyChanged(nameof(Unit));
+            }
+        }
         public void AddError(string propertyName, string errorMassage)
         {
             if (!_propertyErrors.ContainsKey(propertyName))
@@ -165,14 +166,17 @@ namespace Shopfloor.Features.Admin.Parts
         }
         public void ClearErrors(string? propertyName)
         {
-            if (propertyName is null) return;
+            if (propertyName is null)
+            {
+                return;
+            }
+
             _propertyErrors.Remove(propertyName);
         }
         public IEnumerable GetErrors(string? propertyName)
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
-        public bool IsDataValidate => !HasErrors;
         public void ReloadData()
         {
             _partStore.Reload().Wait();
@@ -180,7 +184,10 @@ namespace Shopfloor.Features.Admin.Parts
         public void SetupForm()
         {
             //Part? selectedPart = _mainServices.GetRequiredService<SelectedPartStore>().Part;
-            if (_selectedPart is null) return;
+            if (_selectedPart is null)
+            {
+                return;
+            }
 
             NamePl = _selectedPart.NamePl ?? string.Empty;
             NameOriginal = _selectedPart.NameOriginal;

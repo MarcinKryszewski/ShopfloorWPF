@@ -1,8 +1,4 @@
-﻿using Shopfloor.Features.Admin.Machines.Commands;
-using Shopfloor.Interfaces;
-using Shopfloor.Models.MachineModel;
-using Shopfloor.Shared.ViewModels;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +8,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using Shopfloor.Features.Admin.Machines.Commands;
+using Shopfloor.Interfaces;
+using Shopfloor.Models.MachineModel;
+using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Admin.Machines
 {
@@ -22,17 +22,17 @@ namespace Shopfloor.Features.Admin.Machines
         private readonly ObservableCollection<Machine> _machines;
         //this one is for treeview
         private readonly List<Machine> _machinesAll;
+        private readonly IDataStore<Machine> _machineStore;
+        private readonly MachineValidation _machineValidation;
         private int? _id;
         private bool _isEdit;
         private string _machineName = string.Empty;
         private string _machineNumber = string.Empty;
-        private string _sapNumber = string.Empty;
         private string _machineSearchText = string.Empty;
-        private readonly IDataStore<Machine> _machineStore;
         private int _parentId;
+        private string _sapNumber = string.Empty;
         private Machine? _selectedMachine;
         private Machine? _selectedParent;
-        private readonly MachineValidation _machineValidation;
         public MachinesListViewModel(IDataStore<Machine> machineStore, IProvider<Machine> machineProvider)
         {
             _machines = [];
@@ -57,6 +57,18 @@ namespace Shopfloor.Features.Admin.Machines
         }
         public ICommand CleanCommand { get; }
         public int? Id => _id;
+        public bool IsEdit
+        {
+            get => _isEdit;
+            set
+            {
+                _isEdit = value;
+                OnPropertyChanged(nameof(IsEdit));
+            }
+        }
+        public ICommand MachineAddCommand { get; }
+        public ICommand MachineDeleteCommand { get; }
+        public ICommand MachineEditCommand { get; }
         public string MachineName
         {
             get => _machineName;
@@ -77,36 +89,6 @@ namespace Shopfloor.Features.Admin.Machines
                 OnPropertyChanged(nameof(MachineNumber));
             }
         }
-        public string SapNumber
-        {
-            get => _sapNumber;
-            set
-            {
-                _sapNumber = value;
-                OnPropertyChanged(nameof(SapNumber));
-            }
-        }
-        public int ParentId
-        {
-            get => _parentId;
-            set
-            {
-                _parentId = value;
-                OnPropertyChanged(nameof(ParentId));
-            }
-        }
-        public bool IsEdit
-        {
-            get => _isEdit;
-            set
-            {
-                _isEdit = value;
-                OnPropertyChanged(nameof(IsEdit));
-            }
-        }
-        public ICommand MachineAddCommand { get; }
-        public ICommand MachineDeleteCommand { get; }
-        public ICommand MachineEditCommand { get; }
         public ObservableCollection<Machine> Machines => _machines;
         public string MachineSearchText
         {
@@ -119,7 +101,10 @@ namespace Shopfloor.Features.Admin.Machines
                 {
                     MachinesList.Filter = null;
                 }
-                else MachinesList.Filter = FilterMachines;
+                else
+                {
+                    MachinesList.Filter = FilterMachines;
+                }
 
                 OnPropertyChanged(nameof(MachineSearchText));
             }
@@ -128,17 +113,43 @@ namespace Shopfloor.Features.Admin.Machines
         public ICommand MachineSetCurrentCommand { get; }
         public ICommand MachineSetParentCommand { get; }
         public ICollectionView MachinesList => CollectionViewSource.GetDefaultView(_machinesAll);
+        public int ParentId
+        {
+            get => _parentId;
+            set
+            {
+                _parentId = value;
+                OnPropertyChanged(nameof(ParentId));
+            }
+        }
+        public string SapNumber
+        {
+            get => _sapNumber;
+            set
+            {
+                _sapNumber = value;
+                OnPropertyChanged(nameof(SapNumber));
+            }
+        }
         public Machine? SelectedMachine
         {
             get => _selectedMachine;
             set
             {
-                if (value is null) return;
-                if (MachinesList.Filter is not null) MachinesList.Filter = null;
+                if (value is null)
+                {
+                    return;
+                }
+
+                if (MachinesList.Filter is not null)
+                {
+                    MachinesList.Filter = null;
+                }
+
                 _id = value.Id;
                 MachineName = value.Name;
                 MachineNumber = value.Number ?? string.Empty;
-                SapNumber = value?.SapNumber ?? string.Empty;
+                SapNumber = value.SapNumber ?? string.Empty;
                 _selectedMachine = value;
                 IsEdit = true;
 
@@ -153,7 +164,11 @@ namespace Shopfloor.Features.Admin.Machines
             {
                 string myName = nameof(SelectedParent);
                 _selectedParent = value;
-                if (_selectedParent != null) _machineValidation.ValidateParent(_selectedParent.Id, myName, Id);
+                if (_selectedParent != null)
+                {
+                    _machineValidation.ValidateParent(_selectedParent.Id, myName, Id);
+                }
+
                 OnPropertyChanged(nameof(MachineSearchText));
                 OnPropertyChanged(myName);
             }
@@ -171,9 +186,11 @@ namespace Shopfloor.Features.Admin.Machines
             AddChild(machine, _machinesAll);
 
             _machines.Clear();
-            foreach (Machine item in _machinesAll)
+            foreach (Machine item in from Machine item in _machinesAll
+                                     where item.ParentId is null
+                                     select item)
             {
-                if (item.ParentId is null) AddRoot(item);
+                AddRoot(item);
             }
         }
         public void UpdateList()
@@ -182,8 +199,12 @@ namespace Shopfloor.Features.Admin.Machines
         }
         private static void AddChild(Machine machine, List<Machine> machinesList)
         {
-            Machine? machineParent = machinesList.FirstOrDefault(m => m.Id == machine.ParentId);
-            if (machineParent is null) return;
+            Machine? machineParent = machinesList.Find(m => m.Id == machine.ParentId);
+            if (machineParent is null)
+            {
+                return;
+            }
+
             Application.Current.Dispatcher.Invoke(() =>
             {
                 machineParent.AddChild(machine);
@@ -262,6 +283,17 @@ namespace Shopfloor.Features.Admin.Machines
     internal sealed partial class MachinesListViewModel : IInputForm<Machine>
     {
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+        public bool HasErrors => _propertyErrors.Count != 0;
+        public bool IsDataValidate
+        {
+            get
+            {
+                _machineValidation.ValidateName(MachineName, nameof(MachineName));
+                _machineValidation.ValidateParent(SelectedParent?.Id, nameof(SelectedParent), Id);
+                return !HasErrors;
+            }
+        }
         public void AddError(string propertyName, string errorMassage)
         {
             if (!_propertyErrors.TryGetValue(propertyName, out List<string>? value))
@@ -274,7 +306,11 @@ namespace Shopfloor.Features.Admin.Machines
         }
         public void ClearErrors(string? propertyName)
         {
-            if (propertyName is null) return;
+            if (propertyName is null)
+            {
+                return;
+            }
+
             if (_propertyErrors.Remove(propertyName))
             {
                 OnErrorsChanged(propertyName);
@@ -284,21 +320,10 @@ namespace Shopfloor.Features.Admin.Machines
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
-        public bool IsDataValidate
-        {
-            get
-            {
-                _machineValidation.ValidateName(MachineName, nameof(MachineName));
-                _machineValidation.ValidateParent(SelectedParent?.Id, nameof(SelectedParent), Id);
-                return !HasErrors;
-            }
-        }
         private void OnErrorsChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
             OnPropertyChanged(nameof(HasErrors));
         }
-        public bool HasErrors => _propertyErrors.Count != 0;
-        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
     }
 }

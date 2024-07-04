@@ -29,13 +29,16 @@ namespace Shopfloor.Models.ErrandPartModel.Services
         private void CreateNewStatus(ErrandPart item)
         {
             string defaultReason = "ERRAND-PART EDITED";
-            if (item.Id is null) return;
+            if (item.Id is null)
+            {
+                return;
+            }
 
-            ErrandPartStatus status = new(ErrandPartStatus.Status[2])
+            ErrandPartStatus status = new (ErrandPartStatus.Status[2])
             {
                 ErrandPartId = (int)item.Id,
                 CreatedDate = DateTime.Now,
-                Reason = defaultReason
+                Reason = defaultReason,
             };
 
             item.StatusList.Add(status);

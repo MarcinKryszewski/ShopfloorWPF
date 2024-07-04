@@ -1,4 +1,3 @@
-using System.Linq;
 using Shopfloor.Interfaces;
 using Shopfloor.Interfaces.Models;
 
@@ -15,14 +14,17 @@ namespace Shopfloor.Models.ErrandPartModel.Services
         public void Edit(ErrandPart item)
         {
             int position = FindPosition(item);
-            if (position != -1) _store.Data[position] = item;
+            if (position != -1)
+            {
+                _store.Data[position] = item;
+            }
         }
+        public ErrandPart? FindItem(ErrandPart item) => _store.Data.Find(t => t.Id == item.Id);
         public void Remove(ErrandPart item)
         {
             int position = FindPosition(item);
             _store.Data.RemoveAt(position);
         }
         private int FindPosition(ErrandPart item) => _store.Data.FindIndex(t => t.Id == item.Id);
-        public ErrandPart? FindItem(ErrandPart item) => _store.Data.FirstOrDefault(t => t.Id == item.Id);
     }
 }

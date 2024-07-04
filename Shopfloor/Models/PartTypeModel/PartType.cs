@@ -1,25 +1,25 @@
+using System;
 using Shopfloor.Interfaces;
 using Shopfloor.Shared.BaseClasses;
-using System;
 
 namespace Shopfloor.Models.PartTypeModel
 {
     internal sealed partial class PartType : DataModel
     {
-        private readonly PartTypeDTO _data;
+        private readonly PartTypeDto _data;
         public PartType(int id, string name)
         {
             _data = new()
             {
                 Id = id,
-                Name = name
+                Name = name,
             };
         }
         public PartType(string name)
         {
             _data = new()
             {
-                Name = name
+                Name = name,
             };
         }
         public int? Id => _data.Id;
@@ -29,14 +29,26 @@ namespace Shopfloor.Models.PartTypeModel
     {
         public bool Equals(PartType? other)
         {
-            if (other == null) return false;
-            if (Id == null && other.Id == null) return Name == other.Name;
+            if (other == null)
+            {
+                return false;
+            }
+
+            if (Id == null && other.Id == null)
+            {
+                return Name == other.Name;
+            }
+
             return Id == other.Id;
         }
         public override bool Equals(object? obj) => obj is PartType objPartType && Equals(objPartType);
         public override int GetHashCode()
         {
-            if (Id != null) return Id.GetHashCode();
+            if (Id != null)
+            {
+                return Id.GetHashCode();
+            }
+
             return Name.GetHashCode();
         }
     }

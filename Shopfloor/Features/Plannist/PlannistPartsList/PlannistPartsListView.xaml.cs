@@ -1,6 +1,6 @@
-using Shopfloor.Utilities;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Shopfloor.Utilities;
 
 namespace Shopfloor.Features.Plannist
 {

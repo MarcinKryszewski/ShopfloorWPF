@@ -11,41 +11,41 @@ namespace Shopfloor.Models.OrderModel
 {
     internal sealed class OrderProvider : IProvider<Order>
     {
-        private readonly DatabaseConnectionFactory _database;
-        private const string _dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
         private const string _createSQL = @"
             INSERT INTO orders (delivery_date, creation_date, delivered)
             VALUES @DeliveryDate, @CreationDate, @Delivered)
             ";
-        private const string _getOneSQL = @"
-            SELECT 
-                id AS Id,
-                delivery_date AS DeliveryDate,
-                creation_date AS CreationDate,
-                delivered AS Delivered
-            FROM orders
-            WHERE id = @Id
-            ";
-        private const string _getAllSQL = @"
-            SELECT 
-                id AS Id,
-                delivery_date AS DeliveryDate,
-                creation_date AS CreationDate,
-                delivered AS Delivered
-            FROM orders
-            ";
-        private const string _updateSQL = @"
-            UPDATE orders
-            SET 
-                delivery_date = @DeliveryDate,
-                delivered = @Delivered
-            WHERE id = @Id
-            ";
+        private const string _dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
         private const string _deleteSQL = @"
             DELETE
             FROM orders
             WHERE id = @Id
             ";
+        private const string _getAllSQL = @"
+            SELECT
+                id AS Id,
+                delivery_date AS DeliveryDate,
+                creation_date AS CreationDate,
+                delivered AS Delivered
+            FROM orders
+            ";
+        private const string _getOneSQL = @"
+            SELECT
+                id AS Id,
+                delivery_date AS DeliveryDate,
+                creation_date AS CreationDate,
+                delivered AS Delivered
+            FROM orders
+            WHERE id = @Id
+            ";
+        private const string _updateSQL = @"
+            UPDATE orders
+            SET
+                delivery_date = @DeliveryDate,
+                delivered = @Delivered
+            WHERE id = @Id
+            ";
+        private readonly DatabaseConnectionFactory _database;
         public OrderProvider(DatabaseConnectionFactory database)
         {
             _database = database;
@@ -63,10 +63,19 @@ namespace Shopfloor.Models.OrderModel
 
             return 0;
         }
+        public async Task Delete(int id)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                Id = id,
+            };
+            await connection.ExecuteAsync(_deleteSQL, parameters);
+        }
         public async Task<IEnumerable<Order>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
-            IEnumerable<OrderDTO> orderDTOs = await connection.QueryAsync<OrderDTO>(_getAllSQL);
+            IEnumerable<OrderDto> orderDTOs = await connection.QueryAsync<OrderDto>(_getAllSQL);
             return orderDTOs.Select(ToOrder);
         }
         public async Task<Order> GetById(int id)
@@ -74,9 +83,9 @@ namespace Shopfloor.Models.OrderModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                Id = id
+                Id = id,
             };
-            OrderDTO? orderDTO = await connection.QuerySingleAsync<OrderDTO>(_getOneSQL, parameters);
+            OrderDto? orderDTO = await connection.QuerySingleAsync<OrderDto>(_getOneSQL, parameters);
             return ToOrder(orderDTO);
         }
         public async Task Update(Order item)
@@ -90,23 +99,14 @@ namespace Shopfloor.Models.OrderModel
             };
             await connection.ExecuteAsync(_updateSQL, parameters);
         }
-        public async Task Delete(int id)
-        {
-            using IDbConnection connection = _database.Connect();
-            object parameters = new
-            {
-                Id = id
-            };
-            await connection.ExecuteAsync(_deleteSQL, parameters);
-        }
-        private static Order ToOrder(OrderDTO item)
+        private static Order ToOrder(OrderDto item)
         {
             return new Order()
             {
                 CreationDate = item.CreationDate,
                 Delivered = item.Delivered,
                 DeliveryDate = item.DeliveryDate,
-                Id = item.Id
+                Id = item.Id,
             };
         }
     }

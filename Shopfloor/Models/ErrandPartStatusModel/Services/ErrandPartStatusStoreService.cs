@@ -1,4 +1,3 @@
-using System.Linq;
 using Shopfloor.Interfaces;
 using Shopfloor.Interfaces.Models;
 
@@ -18,7 +17,7 @@ namespace Shopfloor.Models.ErrandPartStatusModel.Services
         }
         public ErrandPartStatus? FindItem(ErrandPartStatus item)
         {
-            return _store.Data.FirstOrDefault(t => t.Id == item.Id);
+            return _store.Data.Find(t => t.Id == item.Id);
         }
 
         public void Remove(ErrandPartStatus item)

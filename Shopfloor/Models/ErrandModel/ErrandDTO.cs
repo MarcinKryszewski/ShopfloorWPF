@@ -1,11 +1,11 @@
+using System;
 using Shopfloor.Models.ErrandTypeModel;
 using Shopfloor.Models.MachineModel;
 using Shopfloor.Models.UserModel;
-using System;
 
 namespace Shopfloor.Models.ErrandModel
 {
-    internal class ErrandDTO
+    internal class ErrandDto
     {
         public int CreatedById { get; set; }
         public DateTime CreatedDate { get; set; }

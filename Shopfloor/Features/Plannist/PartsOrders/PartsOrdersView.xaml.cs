@@ -1,11 +1,11 @@
-﻿using Shopfloor.Utilities;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Data;
+using Shopfloor.Utilities;
 
 namespace Shopfloor.Features.Plannist
 {
     /// <summary>
-    /// Interaction logic for OrdersView.xaml
+    /// Interaction logic for OrdersView.xaml.
     /// </summary>
     public partial class PartsOrdersView : UserControl
     {

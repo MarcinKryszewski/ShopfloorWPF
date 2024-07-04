@@ -1,29 +1,24 @@
-using Shopfloor.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
+using Shopfloor.Interfaces;
 
 namespace Shopfloor.Utilities.CustomList
 {
     internal sealed partial class SearchableModelList
     {
-        private IEnumerable<ISearchableModel> _dataSource = [];
         private readonly int _pageSize;
         private int _currentPage = 1;
         private List<ISearchableModel> _dataDisplay = [];
-        private List<ISearchableModel> _dataFiltered = [];
+        private List<ISearchableModel> _dataFiltered;
         private string _filterText = string.Empty;
         public SearchableModelList(IEnumerable<ISearchableModel> dataSource, int pageSize = 25)
         {
             _pageSize = pageSize;
-            _dataSource = dataSource;
+            Data = dataSource;
             _dataFiltered = new(dataSource);
-        }
-        public IEnumerable<ISearchableModel> Data
-        {
-            get => _dataSource;
-            set => _dataSource = value;
         }
         public int CurrentPage
         {
@@ -35,29 +30,30 @@ namespace Shopfloor.Utilities.CustomList
             }
         }
         public string CurrentPageText => $"{CurrentPage} z {MaxPage()}";
+        public IEnumerable<ISearchableModel> Data { get; set; }
         public List<ISearchableModel> DataDisplay => _dataDisplay;
-        public async Task ReloadSourceData()
+        public string FilterText
         {
-            _filterText = string.Empty;
-            await FilterList();
+            get => _filterText;
+            set
+            {
+                _filterText = value;
+                FilterList().Wait();
+            }
         }
-        private Task PageChanged()
+        public void PageFirst()
         {
-            int maxPage = MaxPage();
-            if (_currentPage > maxPage) _currentPage = maxPage;
-            int indexStart = (_currentPage - 1) * _pageSize;
-
-            _dataDisplay = _dataFiltered.GetRange(indexStart, Math.Min(_pageSize, _dataFiltered.Count - indexStart));
-
-            OnPropertyChanged(nameof(DataDisplay));
-            OnPropertyChanged(nameof(CurrentPage));
-            OnPropertyChanged(nameof(CurrentPageText));
-
-            return Task.CompletedTask;
+            CurrentPage = 1;
+            PageChanged();
+        }
+        public void PageLast()
+        {
+            CurrentPage = MaxPage();
+            PageChanged();
         }
         public void PageNext()
         {
-            int nextLBound = _currentPage * _pageSize + 1;
+            int nextLBound = (_currentPage * _pageSize) + 1;
             if (nextLBound <= _dataFiltered.Count)
             {
                 CurrentPage++;
@@ -72,39 +68,33 @@ namespace Shopfloor.Utilities.CustomList
                 PageChanged();
             }
         }
-        public void PageFirst()
-        {
-            CurrentPage = 1;
-            PageChanged();
-        }
-        public void PageLast()
-        {
-            CurrentPage = MaxPage();
-            PageChanged();
-        }
         public void PageSet(int pageNumber)
         {
-            if (pageNumber < 1) return;
+            if (pageNumber < 1)
+            {
+                return;
+            }
+
             CurrentPage = pageNumber > MaxPage() ? MaxPage() : pageNumber;
             PageChanged();
+        }
+        public async Task ReloadSourceData()
+        {
+            _filterText = string.Empty;
+            await FilterList();
         }
         private async Task FilterList()
         {
             if (string.IsNullOrEmpty(_filterText))
             {
-                _dataFiltered = new(_dataSource);
+                _dataFiltered = new(Data);
                 await PageChanged();
                 return;
             }
 
             List<ISearchableModel> models = [];
             string filterTextNormalized = RemovePolishCharacters.Remove(_filterText.ToLower());
-
-            // HashSet?
-            foreach (ISearchableModel model in _dataSource)
-            {
-                if (model.SearchValue.Contains(filterTextNormalized)) models.Add(model);
-            }
+            models.AddRange(Data.Where(model => model.SearchValue.Contains(filterTextNormalized)));
             _dataFiltered = models;
             await PageChanged();
         }
@@ -113,14 +103,23 @@ namespace Shopfloor.Utilities.CustomList
             int pagesAmount = (int)Math.Ceiling((double)_dataFiltered.Count / _pageSize);
             return Math.Max(pagesAmount, 1);
         }
-        public string FilterText
+        private Task PageChanged()
         {
-            get => _filterText;
-            set
+            int maxPage = MaxPage();
+            if (_currentPage > maxPage)
             {
-                _filterText = value;
-                FilterList().Wait();
+                _currentPage = maxPage;
             }
+
+            int indexStart = (_currentPage - 1) * _pageSize;
+
+            _dataDisplay = _dataFiltered.GetRange(indexStart, Math.Min(_pageSize, _dataFiltered.Count - indexStart));
+
+            OnPropertyChanged(nameof(DataDisplay));
+            OnPropertyChanged(nameof(CurrentPage));
+            OnPropertyChanged(nameof(CurrentPageText));
+
+            return Task.CompletedTask;
         }
     }
     internal sealed partial class SearchableModelList : INotifyPropertyChanged

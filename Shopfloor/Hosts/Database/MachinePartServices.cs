@@ -5,7 +5,7 @@ using Shopfloor.Models.MachinePartModel.Store.Combine;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal class MachinePartServices
+    internal static class MachinePartServices
     {
         public static void Get(IServiceCollection services)
         {
@@ -14,5 +14,4 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<ICombinerManager<MachinePart>, MachinePartCombiner>();
         }
     }
-
 }

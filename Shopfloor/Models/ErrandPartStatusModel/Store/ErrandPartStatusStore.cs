@@ -5,7 +5,8 @@ namespace Shopfloor.Models.ErrandPartStatusModel
 {
     internal sealed class ErrandPartStatusStore : StoreBase<ErrandPartStatus>
     {
-        public ErrandPartStatusStore(IProvider<ErrandPartStatus> provider) : base(provider)
+        public ErrandPartStatusStore(IProvider<ErrandPartStatus> provider)
+            : base(provider)
         {
         }
     }

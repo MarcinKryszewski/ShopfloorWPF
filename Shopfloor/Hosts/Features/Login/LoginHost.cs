@@ -4,7 +4,7 @@ using Shopfloor.Stores;
 
 namespace Shopfloor.Hosts.Features.Login
 {
-    internal sealed class LoginHost
+    internal static class LoginHost
     {
         public static void Get(IServiceCollection services)
         {

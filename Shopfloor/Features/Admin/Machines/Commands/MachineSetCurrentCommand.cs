@@ -1,7 +1,7 @@
-using Shopfloor.Models.MachineModel;
-using Shopfloor.Shared.Commands;
 using System.Collections.Generic;
 using System.Linq;
+using Shopfloor.Models.MachineModel;
+using Shopfloor.Shared.Commands;
 
 namespace Shopfloor.Features.Admin.Machines.Commands
 {
@@ -16,8 +16,16 @@ namespace Shopfloor.Features.Admin.Machines.Commands
 
         public override void Execute(object? parameter)
         {
-            if (parameter is null) return;
-            if (parameter is not Machine) return;
+            if (parameter is null)
+            {
+                return;
+            }
+
+            if (parameter is not Machine)
+            {
+                return;
+            }
+
             Machine machine = (Machine)parameter;
             _viewModel.SelectedMachine = machine;
 

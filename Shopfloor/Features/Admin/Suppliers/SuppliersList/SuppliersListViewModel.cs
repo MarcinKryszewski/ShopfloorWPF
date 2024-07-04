@@ -1,7 +1,3 @@
-using Shopfloor.Features.Admin.Suppliers.Commands;
-using Shopfloor.Interfaces;
-using Shopfloor.Models.SupplierModel;
-using Shopfloor.Shared.ViewModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,19 +8,23 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using Shopfloor.Features.Admin.Suppliers.Commands;
+using Shopfloor.Interfaces;
+using Shopfloor.Models.SupplierModel;
+using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Admin.Suppliers
 {
     internal sealed class SuppliersListViewModel : ViewModelBase, IInputForm<Supplier>
     {
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
+        private readonly IProvider<Supplier> _supplierProvider;
         private readonly ObservableCollection<Supplier> _suppliers = [];
         private readonly IDataStore<Supplier> _suppliersStore;
         private bool _isEdit;
         private string _name = string.Empty;
         private string _searchText = string.Empty;
         private Supplier? _selectedSupplier;
-        private readonly IProvider<Supplier> _supplierProvider;
         public SuppliersListViewModel(IProvider<Supplier> supplierProvider, IDataStore<Supplier> suppliersStore)
         {
             _supplierProvider = supplierProvider;
@@ -39,6 +39,7 @@ namespace Shopfloor.Features.Admin.Suppliers
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public ICommand CleanFormCommand { get; }
         public bool HasErrors => _propertyErrors.Count != 0;
+        public bool IsDataValidate => !HasErrors;
         public bool IsEdit
         {
             get => _isEdit;
@@ -107,14 +108,17 @@ namespace Shopfloor.Features.Admin.Suppliers
         }
         public void ClearErrors(string? propertyName)
         {
-            if (propertyName is null) return;
+            if (propertyName is null)
+            {
+                return;
+            }
+
             _propertyErrors.Remove(propertyName);
         }
         public IEnumerable GetErrors(string? propertyName)
         {
             return _propertyErrors.GetValueOrDefault(propertyName ?? string.Empty, null) ?? [];
         }
-        public bool IsDataValidate => !HasErrors;
         public Task LoadData()
         {
             Application.Current.Dispatcher.Invoke(_suppliers.Clear);
@@ -139,26 +143,27 @@ namespace Shopfloor.Features.Admin.Suppliers
         {
             //await Task.Delay(5000);
             IEnumerable<Supplier> suppliers = await _supplierProvider.GetAll();
-            foreach (Supplier supplier in suppliers)
+            foreach (var supplier in suppliers.Where(supplier => _suppliers.FirstOrDefault(s => s.Id == supplier.Id) is null))
             {
-                if (_suppliers.FirstOrDefault(s => s.Id == supplier.Id) is null)
-                {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        _suppliers.Add(supplier);
-                        OnPropertyChanged(nameof(Suppliers));
-                    });
-                }
+                await Application.Current.Dispatcher.InvokeAsync(() =>
+                                {
+                                    _suppliers.Add(supplier);
+                                    OnPropertyChanged(nameof(Suppliers));
+                                });
             }
         }
         //Updates the list if value existed, ie. after edit
         public async Task UpdateData(Supplier supplierToRemove)
         {
-            if (supplierToRemove.Id is null) return;
+            if (supplierToRemove.Id is null)
+            {
+                return;
+            }
+
             Supplier supplierToAdd = await _supplierProvider.GetById((int)supplierToRemove.Id);
             if (_suppliers.FirstOrDefault(s => s.Id == supplierToRemove.Id) is not null)
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                await Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     _suppliers.Remove(supplierToRemove);
                     _suppliers.Add(supplierToAdd);

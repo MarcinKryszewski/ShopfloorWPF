@@ -1,25 +1,15 @@
-using Dapper;
-using Shopfloor.Database;
-
-using Shopfloor.Interfaces;
-
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
+using Shopfloor.Database;
 
 namespace Shopfloor.Models.RoleUserModel
 {
-    internal interface IRoleUserProvider : IProvider<RoleUser>
-    {
-        Task<IEnumerable<RoleUser>> GetAllForUser(int userId);
-        Task<int> Create(int RoleId, int UserId);
-        Task Delete(int roleId, int userId);
-    }
     internal sealed class RoleUserProvider : IRoleUserProvider
     {
-        private readonly DatabaseConnectionFactory _database;
         private const string _createSQL = @"
             INSERT INTO roles_users (role_id, user_id)
             VALUES (@RoleId, @UserId)
@@ -52,6 +42,7 @@ namespace Shopfloor.Models.RoleUserModel
             FROM roles_users
             WHERE role_id = @RoleId
             ";
+        private readonly DatabaseConnectionFactory _database;
         public RoleUserProvider(DatabaseConnectionFactory database)
         {
             _database = database;
@@ -62,19 +53,19 @@ namespace Shopfloor.Models.RoleUserModel
             object parameters = new
             {
                 RoleId = item.RoleId,
-                UserId = item.UserId
+                UserId = item.UserId,
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
             return 0;
         }
-        public async Task<int> Create(int RoleId, int UserId)
+        public async Task<int> Create(int roleId, int userId)
         {
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                RoleId = RoleId,
-                UserId = UserId
+                RoleId = roleId,
+                UserId = userId,
             };
             await connection.ExecuteAsync(_createSQL, parameters);
 
@@ -86,14 +77,14 @@ namespace Shopfloor.Models.RoleUserModel
             object parameters = new
             {
                 RoleId = roleId,
-                UserId = userId
+                UserId = userId,
             };
             await connection.ExecuteAsync(_deleteSQL, parameters);
         }
         public async Task<IEnumerable<RoleUser>> GetAll()
         {
             using IDbConnection connection = _database.Connect();
-            IEnumerable<RoleUserDTO> roleUserDTOs = await connection.QueryAsync<RoleUserDTO>(_getAllSQL);
+            IEnumerable<RoleUserDto> roleUserDTOs = await connection.QueryAsync<RoleUserDto>(_getAllSQL);
             return roleUserDTOs.Select(ToRoleUser);
         }
         public async Task<IEnumerable<RoleUser>> GetAllForUser(int userId)
@@ -101,9 +92,9 @@ namespace Shopfloor.Models.RoleUserModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                UserId = userId
+                UserId = userId,
             };
-            IEnumerable<RoleUserDTO> roleUserDTOs = await connection.QueryAsync<RoleUserDTO>(_getAllForUser, parameters);
+            IEnumerable<RoleUserDto> roleUserDTOs = await connection.QueryAsync<RoleUserDto>(_getAllForUser, parameters);
             return roleUserDTOs.Select(ToRoleUser);
         }
         public async Task<IEnumerable<RoleUser>> GetAllForRole(int roleId)
@@ -111,9 +102,9 @@ namespace Shopfloor.Models.RoleUserModel
             using IDbConnection connection = _database.Connect();
             object parameters = new
             {
-                RoleId = roleId
+                RoleId = roleId,
             };
-            IEnumerable<RoleUserDTO> roleUserDTOs = await connection.QueryAsync<RoleUserDTO>(_getAllForRole, parameters);
+            IEnumerable<RoleUserDto> roleUserDTOs = await connection.QueryAsync<RoleUserDto>(_getAllForRole, parameters);
             return roleUserDTOs.Select(ToRoleUser);
         }
         public Task<RoleUser> GetById(int id)
@@ -128,13 +119,13 @@ namespace Shopfloor.Models.RoleUserModel
         {
             throw new NotImplementedException();
         }
-        private static RoleUser ToRoleUser(RoleUserDTO item)
+        private static RoleUser ToRoleUser(RoleUserDto item)
         {
             return new RoleUser()
             {
                 RoleId = item.RoleId,
-                UserId = item.UserId
-            }; ;
+                UserId = item.UserId,
+            };
         }
     }
 }

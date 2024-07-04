@@ -6,19 +6,10 @@ namespace Shopfloor.Models.ErrandPartOrderModel
 {
     internal sealed partial class ErrandPartOrder : DataModel
     {
-        private readonly ErrandPartOrderDTO _data;
-        public int? Id
+        private readonly ErrandPartOrderDto _data;
+        public ErrandPartOrder()
         {
-            get => _data.Id;
-            set
-            {
-                if (_data.Id is not null)
-                {
-                    AddError(nameof(Id), "Id already assigned");
-                    return;
-                }
-                _data.Id = value;
-            }
+            _data = new();
         }
         public ErrandPart? ErrandPart
         {
@@ -38,10 +29,23 @@ namespace Shopfloor.Models.ErrandPartOrderModel
                 AddError(nameof(ErrandPart), "ErrandPartId do not match");
             }
         }
-        public required int ErrandPartId
+        required public int ErrandPartId
         {
             get => _data.ErrandPartId;
             init => _data.ErrandPartId = value;
+        }
+        public int? Id
+        {
+            get => _data.Id;
+            set
+            {
+                if (_data.Id is not null)
+                {
+                    AddError(nameof(Id), "Id already assigned");
+                    return;
+                }
+                _data.Id = value;
+            }
         }
         public Order? Order
         {
@@ -61,14 +65,10 @@ namespace Shopfloor.Models.ErrandPartOrderModel
                 AddError(nameof(Order), "ErrandPartId do not match");
             }
         }
-        public required int OrderId
+        required public int OrderId
         {
             get => _data.OrderId;
             init => _data.OrderId = value;
-        }
-        public ErrandPartOrder()
-        {
-            _data = new();
         }
     }
 }

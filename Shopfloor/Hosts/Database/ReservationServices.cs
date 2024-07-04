@@ -5,7 +5,7 @@ using Shopfloor.Models.ReservationModel.Store.Combine;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal class ReservationServices
+    internal static class ReservationServices
     {
         public static void Get(IServiceCollection services)
         {

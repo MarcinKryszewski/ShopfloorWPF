@@ -5,7 +5,7 @@ using Shopfloor.Models.MessageModel.Store.Combine;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal class MessageServices
+    internal static class MessageServices
     {
         public static void Get(IServiceCollection services)
         {
@@ -14,5 +14,4 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<ICombinerManager<Message>, MessageCombiner>();
         }
     }
-
 }

@@ -5,7 +5,7 @@ using Shopfloor.Layout.TopPanel;
 
 namespace Shopfloor.Hosts.Features.Layout
 {
-    internal class LayoutHost
+    internal static class LayoutHost
     {
         public static void Get(IServiceCollection services)
         {

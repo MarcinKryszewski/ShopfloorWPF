@@ -5,7 +5,7 @@ using Shopfloor.Models.ErrandTypeModel.Store.Combine;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal class ErrandTypeServices
+    internal static class ErrandTypeServices
     {
         public static void Get(IServiceCollection services)
         {
@@ -14,6 +14,4 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<ICombinerManager<ErrandType>, ErrandTypeCombiner>();
         }
     }
-
-
 }

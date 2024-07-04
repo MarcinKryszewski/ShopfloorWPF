@@ -28,10 +28,10 @@ namespace Shopfloor.Models.ErrandPartModel.Services
         }
         private void CreateErrandPartStatus(ErrandPart item)
         {
-            ErrandPartStatus status = new(0)
+            ErrandPartStatus status = new (0)
             {
                 ErrandPartId = (int)item.Id!,
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.Now,
             };
             _statusCreator.Create(status);
             item.StatusList.Add(status);

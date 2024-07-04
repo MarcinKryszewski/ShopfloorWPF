@@ -1,9 +1,7 @@
-﻿using Shopfloor.Interfaces;
-using Shopfloor.Models.PartModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shopfloor.Interfaces;
+using Shopfloor.Models.PartModel;
 
 namespace Shopfloor.Models.ErrandPartModel.Store.Combine
 {
@@ -27,11 +25,6 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
             return Task.CompletedTask;
         }
 
-        private static void Combine(List<Part> parts, ErrandPart item)
-        {
-            item.Part = parts.FirstOrDefault(part => part.Id == item.PartId);
-        }
-
         public Task CombineOne(ErrandPart item)
         {
             List<Part> parts = GetParts();
@@ -40,7 +33,10 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
 
             return Task.CompletedTask;
         }
-
+        private static void Combine(List<Part> parts, ErrandPart item)
+        {
+            item.Part = parts.Find(part => part.Id == item.PartId);
+        }
         private List<ErrandPart> GetErrandParts() => _errandPartStore.Data;
         private List<Part> GetParts() => _partStore.Data;
     }

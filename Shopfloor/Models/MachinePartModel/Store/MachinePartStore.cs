@@ -5,7 +5,8 @@ namespace Shopfloor.Models.MachinePartModel
 {
     internal sealed class MachinePartStore : StoreBase<MachinePart>
     {
-        public MachinePartStore(IProvider<MachinePart> provider) : base(provider)
+        public MachinePartStore(IProvider<MachinePart> provider)
+            : base(provider)
         {
         }
     }

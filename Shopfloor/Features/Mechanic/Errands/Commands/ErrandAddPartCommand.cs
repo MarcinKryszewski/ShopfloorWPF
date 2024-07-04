@@ -1,7 +1,6 @@
 using Shopfloor.Models.ErrandPartModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Shared.Commands;
-using System.Linq;
 
 namespace Shopfloor.Features.Mechanic.Errands.Commands
 {
@@ -17,22 +16,33 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
 
         public override void Execute(object? parameter)
         {
-            if (parameter is null) return;
+            if (parameter is null)
+            {
+                return;
+            }
+
             ErrandCreatorData creatorData = (ErrandCreatorData)parameter;
 
             Part? selectedPart = _viewModel.SelectedPart;
 
-            if (selectedPart is null) return;
-            if (selectedPart.Id is null) return;
+            if (selectedPart is null)
+            {
+                return;
+            }
 
-            if (creatorData.Parts.FirstOrDefault((ep) => ep.PartId == selectedPart.Id) == null)
+            if (selectedPart.Id is null)
+            {
+                return;
+            }
+
+            if (creatorData.Parts.Find((ep) => ep.PartId == selectedPart.Id) == null)
             {
                 ErrandPart errandPart = new()
                 {
                     PartId = (int)selectedPart.Id,
                     Part = selectedPart,
                     ErrandId = (int)creatorData.Errand.Id!,
-                    OrderedById = creatorData.UserId
+                    OrderedById = creatorData.UserId,
                 };
                 creatorData.Errand.Parts.Add(errandPart);
                 _viewModel.ErrandParts.Refresh();

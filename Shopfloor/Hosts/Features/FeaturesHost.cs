@@ -6,11 +6,10 @@ using Shopfloor.Hosts.Features.Manager;
 using Shopfloor.Hosts.Features.Mechanic;
 using Shopfloor.Hosts.Features.Plannist;
 using Shopfloor.Services;
-using Shopfloor.Services.NotificationServices;
 
 namespace Shopfloor.Hosts.Features
 {
-    internal sealed class FeaturesHost
+    internal static class FeaturesHost
     {
         public static void Get(IServiceCollection services)
         {

@@ -5,7 +5,7 @@ using Shopfloor.Models.PartTypeModel.Store.Combine;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal class PartTypeServices
+    internal static class PartTypeServices
     {
         public static void Get(IServiceCollection services)
         {

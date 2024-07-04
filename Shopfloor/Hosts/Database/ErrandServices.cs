@@ -8,7 +8,7 @@ using Shopfloor.Models.ErrandModel.Store.Combine;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal class ErrandServices
+    internal static class ErrandServices
     {
         public static void Get(IServiceCollection services)
         {

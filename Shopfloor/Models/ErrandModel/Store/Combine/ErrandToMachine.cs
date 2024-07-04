@@ -1,8 +1,7 @@
-﻿using Shopfloor.Interfaces;
-using Shopfloor.Models.MachineModel;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shopfloor.Interfaces;
+using Shopfloor.Models.MachineModel;
 
 namespace Shopfloor.Models.ErrandModel.Store.Combine
 {
@@ -36,7 +35,7 @@ namespace Shopfloor.Models.ErrandModel.Store.Combine
         }
         private static void Combine(Errand errand, List<Machine> machines)
         {
-            errand.Machine = machines.FirstOrDefault(machine => machine.Id == errand.MachineId);
+            errand.Machine = machines.Find(machine => machine.Id == errand.MachineId);
         }
         private List<Errand> GetErrands() => _errandStore.Data;
         private List<Machine> LoadMachines() => _machineStore.Data;

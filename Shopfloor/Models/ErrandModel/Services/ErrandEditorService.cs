@@ -29,14 +29,17 @@ namespace Shopfloor.Models.ErrandModel.Services
         private void CreateErrandStatus(Errand errand)
         {
             string defaultReason = "ERRAND EDITED";
-            if (errand.Id is null) return;
+            if (errand.Id is null)
+            {
+                return;
+            }
 
-            ErrandStatus status = new()
+            ErrandStatus status = new ()
             {
                 ErrandId = (int)errand.Id,
                 StatusName = ErrandStatusList.ErrandEdited,
                 SetDate = DateTime.Now,
-                Reason = defaultReason
+                Reason = defaultReason,
             };
             errand.AddStatus(status);
             _statusCreator.Create(status);

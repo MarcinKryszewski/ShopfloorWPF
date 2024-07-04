@@ -4,13 +4,8 @@ namespace Shopfloor.Shared.ViewModels
 {
     internal sealed class MainViewModel : ViewModelBase
     {
-        private readonly INavigationStore _navigationStore;
         private readonly ModalNavigationStore _modalNavigationStore;
-
-        public ViewModelBase? CurrentViewModel => _navigationStore.CurrentViewModel;
-        public ViewModelBase? CurrentModalViewModel => _modalNavigationStore.CurrentViewModel;
-        public bool IsOpen => _modalNavigationStore.IsOpen;
-
+        private readonly INavigationStore _navigationStore;
         public MainViewModel(INavigationStore navigationStore, ModalNavigationStore modalNavigationStore)
         {
             _navigationStore = navigationStore;
@@ -19,16 +14,17 @@ namespace Shopfloor.Shared.ViewModels
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
             _modalNavigationStore.CurrentViewModelChanged += OnCurrentModalViewModelChanged;
         }
-
-        private void OnCurrentViewModelChanged()
-        {
-            OnPropertyChanged(nameof(CurrentViewModel));
-        }
-
+        public ViewModelBase? CurrentModalViewModel => _modalNavigationStore.CurrentViewModel;
+        public ViewModelBase? CurrentViewModel => _navigationStore.CurrentViewModel;
+        public bool IsOpen => _modalNavigationStore.IsOpen;
         private void OnCurrentModalViewModelChanged()
         {
             OnPropertyChanged(nameof(CurrentModalViewModel));
             OnPropertyChanged(nameof(IsOpen));
+        }
+        private void OnCurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentViewModel));
         }
     }
 }

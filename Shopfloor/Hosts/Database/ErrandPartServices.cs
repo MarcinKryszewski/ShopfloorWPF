@@ -8,7 +8,7 @@ using Shopfloor.Models.ErrandPartModel.Store.Combine;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal class ErrandPartServices
+    internal static class ErrandPartServices
     {
         public static void Get(IServiceCollection services)
         {
@@ -25,11 +25,9 @@ namespace Shopfloor.Hosts.Database
             services.AddSingleton<IModelEditorService<ErrandPart>, ErrandPartEditorService>();
             services.AddSingleton<IModelDeleterService<ErrandPart>, ErrandPartDeleterService>();
 
-
             services.AddSingleton<IDataModelDatabaseService<ErrandPart>, ErrandPartDatabaseService>();
             services.AddSingleton<IDataModelStoreService<ErrandPart>, ErrandPartStoreService>();
             services.AddSingleton<IModelCrudService<ErrandPart>, ErrandPartCrudService>();
-
         }
     }
 }

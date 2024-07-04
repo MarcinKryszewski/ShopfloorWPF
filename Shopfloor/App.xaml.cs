@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System;
+using System.Data;
+using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
 using Shopfloor.Database.Configuration;
@@ -10,12 +13,8 @@ using Shopfloor.Hosts;
 using Shopfloor.Layout.Content;
 using Shopfloor.Layout.MainWindow;
 using Shopfloor.Layout.SidePanel;
-using Shopfloor.Models.UserModel;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Stores;
-using System;
-using System.Data;
-using System.Windows;
 
 namespace Shopfloor
 {
@@ -35,24 +34,6 @@ namespace Shopfloor
 
             _currentUser = _services.GetRequiredService<ICurrentUserStore>();
             _navigationService = _services.GetRequiredService<NavigationService>();
-        }
-        private void ApplicationStart(object sender, StartupEventArgs e)
-        {
-            DatabaseConnectionFactory dbConnection = _services.GetRequiredService<DatabaseConnectionFactory>();
-            DatabaseConfiguration dbConfig = _services.GetRequiredService<DatabaseConfiguration>();
-            DatabaseInit(dbConnection, dbConfig);
-
-            SidePanelViewModel sidePanel = _services.GetRequiredService<SidePanelViewModel>();
-            ContentViewModel content = _services.GetRequiredService<ContentViewModel>();
-
-            MainWindow = new MainWindow()
-            {
-                DataContext = new MainWindowViewModel(sidePanel, content)
-            };
-            MainWindow.Show();
-
-            AutoLogin(_currentUser);
-            DashboardNavigate(_currentUser, _navigationService);
         }
         private static void AutoLogin(ICurrentUserStore currentUserStore)
         {
@@ -84,6 +65,24 @@ namespace Shopfloor
             DatabaseInitializerFactory initializer = new(dbConfiguration, connection);
             IDatabaseInitializer databaseInitializer = initializer.CreateInitializer();
             databaseInitializer.Initialize();
+        }
+        private void ApplicationStart(object sender, StartupEventArgs e)
+        {
+            DatabaseConnectionFactory dbConnection = _services.GetRequiredService<DatabaseConnectionFactory>();
+            DatabaseConfiguration dbConfig = _services.GetRequiredService<DatabaseConfiguration>();
+            DatabaseInit(dbConnection, dbConfig);
+
+            SidePanelViewModel sidePanel = _services.GetRequiredService<SidePanelViewModel>();
+            ContentViewModel content = _services.GetRequiredService<ContentViewModel>();
+
+            MainWindow = new MainWindow()
+            {
+                DataContext = new MainWindowViewModel(sidePanel, content),
+            };
+            MainWindow.Show();
+
+            AutoLogin(_currentUser);
+            DashboardNavigate(_currentUser, _navigationService);
         }
     }
 }

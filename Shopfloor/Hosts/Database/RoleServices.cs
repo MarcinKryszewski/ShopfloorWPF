@@ -4,7 +4,7 @@ using Shopfloor.Models.RoleModel;
 
 namespace Shopfloor.Hosts.Database
 {
-    internal class RoleServices
+    internal static class RoleServices
     {
         public static void Get(IServiceCollection services)
         {

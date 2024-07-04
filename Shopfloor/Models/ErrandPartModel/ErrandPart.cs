@@ -1,30 +1,51 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Shopfloor.Interfaces;
 using Shopfloor.Models.ErrandModel;
 using Shopfloor.Models.ErrandPartStatusModel;
 using Shopfloor.Models.PartModel;
 using Shopfloor.Models.UserModel;
 using Shopfloor.Shared.BaseClasses;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 
 namespace Shopfloor.Models.ErrandPartModel
 {
     internal sealed partial class ErrandPart : DataModel
     {
         private const string _existingIdErrorMassage = "Id already exists";
-        private readonly ErrandPartDTO _data;
+        private readonly ErrandPartDto _data;
+        private readonly List<ErrandPartStatus> _statusList = [];
         public ErrandPart(int? id = 0)
         {
             _data = new()
             {
-                Id = id
+                Id = id,
             };
         }
-        public double PricePerUnit => _data.PricePerUnit;
-        public required int ErrandId
+        public double? Amount { get => _data.Amount; set => _data.Amount = value; }
+        public string AmountText => Amount + ((Part is not null) ? " " + Part.Unit : string.Empty);
+        public bool Canceled
+        {
+            get => _data.Canceled;
+            set => _data.Canceled = value;
+        }
+        public Errand? Errand
+        {
+            get => _data.Errand;
+            set
+            {
+                if (value is null)
+                {
+                    return;
+                }
+
+                if (value.Id == ErrandId)
+                {
+                    _data.Errand = value;
+                }
+            }
+        }
+        required public int ErrandId
         {
             get => _data.ErrandId;
             set
@@ -41,15 +62,22 @@ namespace Shopfloor.Models.ErrandPartModel
                 _data.ErrandId = value;
             }
         }
-        public bool Canceled
+        public DateTime? ExpectedDeliveryDate
         {
-            get => _data.Canceled;
-            set => _data.Canceled = value;
+            get => _data.ExpectedDeliveryDate;
+            set => _data.ExpectedDeliveryDate = value;
         }
-        public required int PartId
+        public string ExpectedDeliveryDateDisplay
         {
-            get => _data.PartId;
-            init => _data.PartId = value;
+            get
+            {
+                if (_data.ExpectedDeliveryDate is null)
+                {
+                    return string.Empty;
+                }
+
+                return ((DateTime)_data.ExpectedDeliveryDate).ToShortDateString();
+            }
         }
         public int? Id
         {
@@ -66,51 +94,14 @@ namespace Shopfloor.Models.ErrandPartModel
                 }
 
                 _data.Id = value;
-
             }
         }
-        public DateTime? ExpectedDeliveryDate
-        {
-            get => _data.ExpectedDeliveryDate;
-            set => _data.ExpectedDeliveryDate = value;
-        }
-        public string ExpectedDeliveryDateDisplay
-        {
-            get
-            {
-                if (_data.ExpectedDeliveryDate is null) return string.Empty;
-                return ((DateTime)_data.ExpectedDeliveryDate).ToShortDateString();
-            }
-        }
-        public Part? Part
-        {
-            get => _data.Part;
-            set
-            {
-                if (value is null) return;
-                if (value.Id == PartId) _data.Part = value;
-            }
-        }
-        public double? Amount { get => _data.Amount; set => _data.Amount = value; }
-        public string AmountText => Amount + ((Part is not null) ? " " + Part.Unit : "");
-        public void SetPrice(double price, double? amount = null) => _data.PricePerUnit = amount is null ? price : price / (double)amount;
-        public Errand? Errand
-        {
-            get => _data.Errand;
-            set
-            {
-                if (value is null) return;
-                if (value.Id == ErrandId) _data.Errand = value;
-            }
-        }
-        public List<ErrandPartStatus> StatusList = [];
-        public IEnumerable<ErrandPartStatus> StatusListDisplay => StatusList;
         public ErrandPartStatus LastStatus => StatusList.Where(status => status.StatusValue >= 0)
                                                 .OrderByDescending(status => status.CreatedDate)
                                                 .First();
-        public int LastStatusValue => StatusList.Count > 0 ? LastStatus.StatusValue : -1;
-        public string LastStatusUpdateDate => StatusList.Count > 0 ? LastStatus.CreatedDate.ToString("dd/MM/yyyy") : "NIGDY";
         public string LastStatusText => LastStatusValue == -1 ? "ERROR" : ErrandPartStatus.Status[LastStatusValue];
+        public string LastStatusUpdateDate => StatusList.Count > 0 ? LastStatus.CreatedDate.ToString("dd/MM/yyyy") : "NIGDY";
+        public int LastStatusValue => StatusList.Count > 0 ? LastStatus.StatusValue : -1;
         public int OrderedById
         {
             get => _data.OrderedById;
@@ -121,16 +112,54 @@ namespace Shopfloor.Models.ErrandPartModel
             get => _data.OrderedByUser;
             set
             {
-                if (value is null) return;
-                if (value.Id == OrderedById) _data.OrderedByUser = value;
+                if (value is null)
+                {
+                    return;
+                }
+
+                if (value.Id == OrderedById)
+                {
+                    _data.OrderedByUser = value;
+                }
             }
         }
+        public Part? Part
+        {
+            get => _data.Part;
+            set
+            {
+                if (value is null)
+                {
+                    return;
+                }
+
+                if (value.Id == PartId)
+                {
+                    _data.Part = value;
+                }
+            }
+        }
+        required public int PartId
+        {
+            get => _data.PartId;
+            init => _data.PartId = value;
+        }
+        public double PricePerUnit => _data.PricePerUnit;
+        public IEnumerable<ErrandPartStatus> StatusListDisplay => StatusList;
+
+        internal List<ErrandPartStatus> StatusList => _statusList;
+
+        public void SetPrice(double price, double? amount = null) => _data.PricePerUnit = amount is null ? price : price / (double)amount;
     }
     internal sealed partial class ErrandPart : IEquatable<ErrandPart>
     {
         public bool Equals(ErrandPart? other)
         {
-            if (other == null) return false;
+            if (other == null)
+            {
+                return false;
+            }
+
             return ErrandId == other.ErrandId && PartId == other.PartId;
         }
         public override bool Equals(object? obj) => obj is ErrandPart objErrandPart && Equals(objErrandPart);
@@ -154,7 +183,7 @@ namespace Shopfloor.Models.ErrandPartModel
                 Id = Id,
                 OrderedById = OrderedById,
                 Part = Part,
-                OrderedByUser = OrderedByUser
+                OrderedByUser = OrderedByUser,
             };
             return clone;
         }

@@ -1,15 +1,15 @@
-﻿using Shopfloor.Interfaces;
+﻿using System;
+using Shopfloor.Interfaces;
 using Shopfloor.Interfaces.Models;
 using Shopfloor.Models.ErrandStatusModel;
-using System;
 
 namespace Shopfloor.Models.ErrandModel.Services
 {
     internal class ErrandCreatorService : IModelCreatorService<Errand>
     {
         private readonly IDataModelDatabaseService<Errand> _databaseService;
-        private readonly IDataModelStoreService<Errand> _storeService;
         private readonly IModelCreatorService<ErrandStatus> _statusCreator;
+        private readonly IDataModelStoreService<Errand> _storeService;
         public ErrandCreatorService(
             IDataModelDatabaseService<Errand> errandDatabaseService,
             IDataModelStoreService<Errand> errandStoreService,
@@ -29,14 +29,17 @@ namespace Shopfloor.Models.ErrandModel.Services
         private void CreateErrandStatus(Errand errand)
         {
             string defaultReason = "NEW ERRAND CREATED";
-            if (errand.Id is null) return;
+            if (errand.Id is null)
+            {
+                return;
+            }
 
             ErrandStatus status = new()
             {
                 ErrandId = (int)errand.Id,
                 StatusName = ErrandStatusList.NoPartsList,
                 SetDate = DateTime.Now,
-                Reason = defaultReason
+                Reason = defaultReason,
             };
             errand.AddStatus(status);
             _statusCreator.Create(status);
