@@ -17,6 +17,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
         private readonly IModelCreatorService<ErrandStatus> _statusCreator;
         private readonly IModelCreatorService<ErrandPart> _partCreator;
         private readonly IModelEditorService<ErrandPart> _partEditor;
+        private readonly IModelDeleterService<ErrandPart> _partDeleter;
         public event Action<bool>? ErrandEdited;
         private readonly Errand _originalErrand;
         public ErrandEditCommand(
@@ -30,6 +31,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
             _partCreator = errandPartCrud.Creator;
             _statusCreator = statusCreator;
             _partEditor = errandPartCrud.Editor;
+            _partDeleter = errandPartCrud.Deleter;
         }
         public override void Execute(object? parameter)
         {
@@ -56,18 +58,42 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
 
             List<ErrandPart> partsToAdd = newParts.Except(existingParts).ToList();
             List<ErrandPart> partsToRemove = existingParts.Except(newParts).ToList();
-            List<ErrandPart> partsToEdit = existingParts.Intersect(newParts).ToList();
+            // List<ErrandPart> partsToEdit = existingParts.Intersect(newParts).ToList();
 
+            List<ErrandPart> partsToEdit = existingParts
+            .Join(
+                newParts,
+                itemA => itemA.Id,
+                itemB => itemB.Id,
+                (itemA, itemB) => new { itemA, itemB }
+            )
+            .Where(joined => joined.itemB.Amount != joined.itemA.Amount)
+            .Select(joined => joined.itemB)
+            .ToList();
+
+
+            EditParts(partsToEdit, errand);
             AddParts(partsToAdd, errand);
-            RemoveParts(partsToRemove);
-            EditParts(partsToEdit);
-        }
-        private void EditParts(List<ErrandPart> parts)
-        {
+            RemoveParts(partsToRemove, errand);
 
         }
-        private void RemoveParts(List<ErrandPart> parts)
+        private void EditParts(List<ErrandPart> parts, Errand errand)
         {
+            if (parts.Count == 0) return;
+            foreach (ErrandPart item in parts)
+            {
+                _partEditor.Edit(item);
+            }
+            SetPartsStatus(errand, ErrandStatusList.ErrandEdited);
+        }
+        private void RemoveParts(List<ErrandPart> parts, Errand errand)
+        {
+            if (parts.Count == 0) return;
+            foreach (ErrandPart item in parts)
+            {
+                _partDeleter.Delete(item);
+            }
+            if (errand.Parts.Count == 0) SetPartsStatus(errand, ErrandStatusList.NoPartsList);
         }
         private void AddParts(List<ErrandPart> parts, Errand errand)
         {
@@ -77,16 +103,16 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
                 part.ErrandId = (int)errand.Id!;
                 _partCreator.Create(part);
             }
-            SetPartsSpecifiedStatus(errand);
+            SetPartsStatus(errand, ErrandStatusList.PartsListCompleted);
         }
-        private void SetPartsSpecifiedStatus(Errand errand)
+        private void SetPartsStatus(Errand errand, string status)
         {
-            string partsSpecified = "SYSTEM: PARTS SPECIFIED";
+            string partsSpecified = "SYSTEM";
             ErrandStatus errandStatus = new()
             {
                 ErrandId = (int)errand.Id!,
                 SetDate = DateTime.Now,
-                StatusName = ErrandStatusList.PartsListCompleted,
+                StatusName = status,
                 Reason = partsSpecified
             };
             errand.AddStatus(errandStatus);

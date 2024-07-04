@@ -197,7 +197,10 @@ namespace Shopfloor.Models.ErrandModel
             }
             foreach (ErrandPart part in Parts)
             {
-                clone.Parts.Add(part);
+                ErrandPart partClone = (ErrandPart)part.Clone();
+                partClone.Errand = clone;
+
+                clone.Parts.Add(partClone);
             }
 
             return clone;

@@ -20,5 +20,10 @@ namespace Shopfloor.Models.ErrandPartStatusModel.Services
         {
             return _store.Data.FirstOrDefault(t => t.Id == item.Id);
         }
+
+        public void Remove(ErrandPartStatus item)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

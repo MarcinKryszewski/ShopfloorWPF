@@ -8,6 +8,6 @@ namespace Shopfloor.Models.ErrandPartModel.Services
     {
         public IModelCreatorService<T> Creator { get; }
         public IModelEditorService<T> Editor { get; }
-        public IModelDeleterService<T> Destroyer { get; }
+        public IModelDeleterService<T> Deleter { get; }
     }
 }

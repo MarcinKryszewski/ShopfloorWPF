@@ -28,10 +28,10 @@ namespace Shopfloor.Models.ErrandPartModel.Services
         private void ReplaceInStore(ErrandPart item) => _storeService.Edit(item);
         private void CreateNewStatus(ErrandPart item)
         {
-            string defaultReason = "ERRAND_PART EDITED";
+            string defaultReason = "ERRAND-PART EDITED";
             if (item.Id is null) return;
 
-            ErrandPartStatus status = new(ErrandPartStatus.Status[0])
+            ErrandPartStatus status = new(ErrandPartStatus.Status[2])
             {
                 ErrandPartId = (int)item.Id,
                 CreatedDate = DateTime.Now,

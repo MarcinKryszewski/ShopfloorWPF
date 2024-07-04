@@ -24,16 +24,17 @@ namespace Shopfloor.Models.ErrandPartModel.Services
             int id = _databaseService.Add(item);
             item.Id = id;
             _storeService.Add(item);
-            CreateErrandPartStatus(id);
+            CreateErrandPartStatus(item);
         }
-        private void CreateErrandPartStatus(int id)
+        private void CreateErrandPartStatus(ErrandPart item)
         {
             ErrandPartStatus status = new(0)
             {
-                ErrandPartId = id,
+                ErrandPartId = (int)item.Id!,
                 CreatedDate = DateTime.Now
             };
             _statusCreator.Create(status);
+            item.StatusList.Add(status);
         }
     }
 }

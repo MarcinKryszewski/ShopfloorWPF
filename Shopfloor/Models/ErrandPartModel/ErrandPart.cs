@@ -140,4 +140,23 @@ namespace Shopfloor.Models.ErrandPartModel
     {
         public string SearchValue => LastStatusText;
     }
+    internal sealed partial class ErrandPart : ICloneable
+    {
+        public object Clone()
+        {
+            ErrandPart clone = new()
+            {
+                ErrandId = ErrandId,
+                PartId = PartId,
+                Amount = Amount,
+                Canceled = Canceled,
+                ExpectedDeliveryDate = ExpectedDeliveryDate,
+                Id = Id,
+                OrderedById = OrderedById,
+                Part = Part,
+                OrderedByUser = OrderedByUser
+            };
+            return clone;
+        }
+    }
 }

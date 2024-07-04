@@ -18,5 +18,10 @@ namespace Shopfloor.Models.ErrandStatusModel.Services
             if (index != -1) _store.Data[index] = status;
         }
         public ErrandStatus? FindItem(ErrandStatus item) => _store.Data.FirstOrDefault(t => t.Id == item.Id);
+
+        public void Remove(ErrandStatus item)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

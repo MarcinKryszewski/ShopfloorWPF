@@ -31,7 +31,7 @@ namespace Shopfloor.Features.Mechanic.Errands.ErrandNew
             ErrandCreatorData creatorData = (ErrandCreatorData)parameter;
             int userId = creatorData.UserId;
             AddErrand(creatorData.Errand);
-            AddErrandParts(creatorData.Parts, creatorData.Errand);
+            AddErrandParts(creatorData.Errand.Parts, creatorData.Errand);
             ErrandCreated?.Invoke();
         }
         private void AddErrand(Errand errand)

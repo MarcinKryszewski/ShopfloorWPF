@@ -27,7 +27,7 @@ namespace Shopfloor.Models.ErrandPartModel.Services
 
         private void RemoveFromStore(ErrandPart item)
         {
-            _storeService.
+            // _storeService.
         }
     }
 }

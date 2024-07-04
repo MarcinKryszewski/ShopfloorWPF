@@ -19,7 +19,8 @@ namespace Shopfloor.Models.ErrandPartModel.Services
 
         public void Edit(ErrandPart item)
         {
-            throw new System.NotImplementedException();
+            if (item.Id is null) return;
+            _provider.Update(item);
         }
     }
 }

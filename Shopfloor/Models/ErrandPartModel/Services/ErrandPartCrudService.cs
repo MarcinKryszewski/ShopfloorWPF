@@ -11,16 +11,16 @@ namespace Shopfloor.Models.ErrandPartModel.Services
     {
         public IModelCreatorService<ErrandPart> Creator { get; }
         public IModelEditorService<ErrandPart> Editor { get; }
-        public IModelDeleterService<ErrandPart> Destroyer { get; }
+        public IModelDeleterService<ErrandPart> Deleter { get; }
 
         public ErrandPartCrudService(
             IModelEditorService<ErrandPart> editor,
             IModelCreatorService<ErrandPart> creator,
-            IModelDeleterService<ErrandPart> destroyer)
+            IModelDeleterService<ErrandPart> deleter)
         {
             Editor = editor;
             Creator = creator;
-            Destroyer = destroyer;
+            Deleter = deleter;
         }
     }
 }
