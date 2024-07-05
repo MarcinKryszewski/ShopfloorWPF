@@ -9,7 +9,9 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
     {
         private readonly SelectedErrandStore _errandStore;
         private readonly ErrandPartsListViewModel _viewModel;
-        public ErrandRemovePartCommand(ErrandPartsListViewModel viewModel, SelectedErrandStore errandStore)
+        public ErrandRemovePartCommand(
+            ErrandPartsListViewModel viewModel,
+            SelectedErrandStore errandStore)
         {
             _viewModel = viewModel;
             _errandStore = errandStore;
@@ -22,7 +24,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
                 return;
             }
 
-            if (!(parameter is int))
+            if (parameter is not int)
             {
                 return;
             }
@@ -33,11 +35,12 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
             }
 
             int partId = (int)parameter;
-            List<ErrandPart> parts = _viewModel.ErrandData.Parts;
-            ErrandPart? errandPart = parts.Find((p) => p.PartId == partId);
-            if (errandPart != null)
+            List<ErrandPart> parts = _viewModel.ErrandData.Errand.Parts;
+
+            int position = parts.FindIndex(p => p.PartId == partId);
+            if (position != -1)
             {
-                parts.Remove(errandPart);
+                parts.RemoveAt(position);
             }
 
             _viewModel.ErrandParts.Refresh();

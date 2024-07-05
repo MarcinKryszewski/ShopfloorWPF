@@ -27,7 +27,7 @@ namespace Shopfloor.Features.Admin.Users
         public UsersAddViewModel(
             INavigationCommand<UsersListViewModel> navigationService,
             IProvider<User> userProvider,
-            IProvider<RoleUser> roleIUserProvider,
+            IProvider<RoleUser> roleUserProvider,
             IProvider<Role> roleProvider)
         {
             _rolesValueStore = new();
@@ -39,7 +39,7 @@ namespace Shopfloor.Features.Admin.Users
                 this,
                 _rolesValueStore,
                 userProvider,
-                roleIUserProvider);
+                roleUserProvider);
         }
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public ICommand AddNewUserCommand { get; }

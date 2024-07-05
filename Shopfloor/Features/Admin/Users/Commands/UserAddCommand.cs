@@ -14,17 +14,17 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
 {
     internal sealed class UserAddCommand : CommandBase
     {
-        private readonly IProvider<RoleUser> _roleIUserProvider;
+        private readonly IProvider<RoleUser> _roleUserProvider;
         private readonly RolesStore _rolesStore;
         private readonly IProvider<User> _userProvider;
         private readonly UsersAddViewModel _viewModel;
-        public UserAddCommand(UsersAddViewModel viewModel, RolesStore rolesStore, IProvider<User> userProvider, IProvider<RoleUser> roleIUserProvider)
+        public UserAddCommand(UsersAddViewModel viewModel, RolesStore rolesStore, IProvider<User> userProvider, IProvider<RoleUser> roleUserProvider)
         {
             _viewModel = viewModel;
             _rolesStore = rolesStore;
 
             _userProvider = userProvider;
-            _roleIUserProvider = roleIUserProvider;
+            _roleUserProvider = roleUserProvider;
         }
 
         public override void Execute(object? parameter)
@@ -71,7 +71,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
             //        RoleId = (int)role.Id,
             //        UserId = userId,
             //    };
-            //    tasks.Add(Task.Run(() => _roleIUserProvider.Create(roleUser)));
+            //    tasks.Add(Task.Run(() => _roleUserProvider.Create(roleUser)));
             //}
 
             foreach (RoleUser roleUser in roles
@@ -82,7 +82,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
                 UserId = userId,
             }))
             {
-                tasks.Add(Task.Run(() => _roleIUserProvider.Create(roleUser)));
+                tasks.Add(Task.Run(() => _roleUserProvider.Create(roleUser)));
             }
 
             tasks.AddRange(
@@ -92,7 +92,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
                 RoleId = (int)role.Id!,
                 UserId = userId,
             })
-            .Select(roleUser => Task.Run(() => _roleIUserProvider.Create(roleUser))));
+            .Select(roleUser => Task.Run(() => _roleUserProvider.Create(roleUser))));
 
             Task.WaitAll(tasks.ToArray());
         }

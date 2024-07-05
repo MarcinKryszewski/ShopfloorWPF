@@ -19,7 +19,7 @@ namespace Shopfloor.Features.Admin.Users
     internal sealed class UsersEditViewModel : ViewModelBase, IInputForm<User>
     {
         private readonly Dictionary<string, List<string>?> _propertyErrors = [];
-        private readonly RoleUserProvider _roleIUserProvider;
+        private readonly RoleUserProvider _roleUserProvider;
         private readonly IProvider<Role> _roleProvider;
         private readonly RolesStore _rolesValueStore;
         private readonly SelectedUserStore _selectedUser;
@@ -31,14 +31,14 @@ namespace Shopfloor.Features.Admin.Users
             INavigationCommand<UsersListViewModel> navigationService,
             SelectedUserStore selectedUserStore,
             IProvider<User> userProvider,
-            RoleUserProvider roleIUserProvider,
+            RoleUserProvider roleUserProvider,
             IProvider<Role> roleProvider)
         {
             _selectedUser = selectedUserStore;
             _roleProvider = roleProvider;
             _selectedUserId = _selectedUser.SelectedUser?.Id == null ? 0 : (int)_selectedUser.SelectedUser.Id;
             _rolesValueStore = new();
-            _roleIUserProvider = roleIUserProvider;
+            _roleUserProvider = roleUserProvider;
 
             FillForm();
 
@@ -49,7 +49,7 @@ namespace Shopfloor.Features.Admin.Users
             EditUserCommand = new UserEditCommand(
                 this,
                 userProvider,
-                _roleIUserProvider,
+                _roleUserProvider,
                 _rolesValueStore,
                 _selectedUserId,
                 imagePath,
@@ -133,7 +133,7 @@ namespace Shopfloor.Features.Admin.Users
         private void SetRoles()
         {
             IEnumerable<Role> roles = _roleProvider.GetAll().Result;
-            IEnumerable<RoleUser> roleUsers = _roleIUserProvider.GetAllForUser(_selectedUserId).Result;
+            IEnumerable<RoleUser> roleUsers = _roleUserProvider.GetAllForUser(_selectedUserId).Result;
 
             foreach (Role role in roles)
             {

@@ -183,7 +183,6 @@ namespace Shopfloor.Features.Admin.Parts
         }
         public void SetupForm()
         {
-            //Part? selectedPart = _mainServices.GetRequiredService<SelectedPartStore>().Part;
             if (_selectedPart is null)
             {
                 return;
@@ -193,7 +192,7 @@ namespace Shopfloor.Features.Admin.Parts
             NameOriginal = _selectedPart.NameOriginal;
             Index = _selectedPart.Index;
             Number = _selectedPart.ProducerNumber;
-            Details = _selectedPart.Details;
+            Details = _selectedPart.Details ?? string.Empty;
             PartType = _selectedPart.PartType;
             Producer = _selectedPart.Producer;
             Supplier = _selectedPart.Supplier;

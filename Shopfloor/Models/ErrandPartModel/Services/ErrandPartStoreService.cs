@@ -23,7 +23,10 @@ namespace Shopfloor.Models.ErrandPartModel.Services
         public void Remove(ErrandPart item)
         {
             int position = FindPosition(item);
-            _store.Data.RemoveAt(position);
+            if (position != -1)
+            {
+                _store.Data.RemoveAt(position);
+            }
         }
         private int FindPosition(ErrandPart item) => _store.Data.FindIndex(t => t.Id == item.Id);
     }

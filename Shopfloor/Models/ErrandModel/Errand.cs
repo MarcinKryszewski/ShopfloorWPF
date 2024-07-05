@@ -210,7 +210,37 @@ namespace Shopfloor.Models.ErrandModel
     {
         public object Clone()
         {
-            return MemberwiseClone();
+            Errand clone = new()
+            {
+                CreatedById = CreatedById,
+                CreatedByUser = CreatedByUser,
+                CreatedDate = CreatedDate,
+                Description = Description,
+                ExpectedDate = ExpectedDate,
+                Id = Id,
+                Machine = Machine,
+                MachineId = MachineId,
+                Priority = Priority,
+                OwnerId = OwnerId,
+                Responsible = Responsible,
+                SapNumber = SapNumber,
+                Type = Type,
+                TypeId = TypeId,
+            };
+
+            foreach (ErrandStatus status in Statuses)
+            {
+                clone.AddStatus(status);
+            }
+            foreach (ErrandPart part in Parts)
+            {
+                ErrandPart partClone = (ErrandPart)part.Clone();
+                partClone.Errand = clone;
+
+                clone.Parts.Add(partClone);
+            }
+
+            return clone;
         }
     }
 }

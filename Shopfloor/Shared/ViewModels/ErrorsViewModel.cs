@@ -8,7 +8,7 @@ namespace Shopfloor.Shared.ViewModels
 {
     internal sealed class ErrorsViewModel : ViewModelBase, INotifyDataErrorInfo
     {
-        private readonly Dictionary<string, List<string>> _propertyErrors = new();
+        private readonly Dictionary<string, List<string>> _propertyErrors = [];
 
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
         public bool HasErrors => _propertyErrors.Any();
@@ -16,7 +16,7 @@ namespace Shopfloor.Shared.ViewModels
         {
             if (!_propertyErrors.ContainsKey(propertyName))
             {
-                _propertyErrors.Add(propertyName, new List<string>());
+                _propertyErrors.Add(propertyName, []);
             }
 
             _propertyErrors[propertyName].Add(errorMessage);
@@ -31,7 +31,11 @@ namespace Shopfloor.Shared.ViewModels
         }
         public IEnumerable GetErrors(string? propertyName)
         {
-            return _propertyErrors.GetValueOrDefault(propertyName, null);
+            if (propertyName is null || _propertyErrors.Count == 0)
+            {
+                return Enumerable.Empty<string>();
+            }
+            return _propertyErrors.GetValueOrDefault(propertyName, []) ?? [];
         }
         private void OnErrorsChanged(string propertyName)
         {

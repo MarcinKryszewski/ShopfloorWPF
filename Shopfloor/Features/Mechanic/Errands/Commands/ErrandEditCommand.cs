@@ -119,6 +119,7 @@ namespace Shopfloor.Features.Mechanic.Errands.Commands
             {
                 _partDeleter.Delete(item);
             }
+
             if (errand.Parts.Count == 0)
             {
                 SetPartsStatus(errand, ErrandStatusList.NoPartsList);

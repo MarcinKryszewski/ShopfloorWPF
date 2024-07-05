@@ -13,7 +13,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
     {
         private readonly string _imagePath;
         private readonly bool _isActive;
-        private readonly IProvider<RoleUser> _roleIUserProvider;
+        private readonly IProvider<RoleUser> _roleUserProvider;
         private readonly RolesStore _rolesStore;
         private readonly int _userId;
         private readonly IProvider<User> _userProvider;
@@ -21,7 +21,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
         public UserEditCommand(
             UsersEditViewModel viewModel,
             IProvider<User> userProvider,
-            IProvider<RoleUser> roleIUserProvider,
+            IProvider<RoleUser> roleUserProvider,
             RolesStore rolesStore,
             int userId,
             string imagePath,
@@ -29,7 +29,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
         {
             _viewModel = viewModel;
             _userProvider = userProvider;
-            _roleIUserProvider = roleIUserProvider;
+            _roleUserProvider = roleUserProvider;
             _rolesStore = rolesStore;
             _userId = userId;
             _imagePath = imagePath;
@@ -57,7 +57,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
                     RoleId = (int)role.Id,
                     UserId = _userId,
                 };
-                _ = _roleIUserProvider.Create(roleUser);
+                _ = _roleUserProvider.Create(roleUser);
             }
         }
         private void EditUser()
@@ -97,7 +97,7 @@ namespace Shopfloor.Features.Admin.UsersList.Commands
                     RoleId = (int)role.Id,
                     UserId = _userId,
                 };
-                IRoleUserProvider roleUserProvider = (IRoleUserProvider)_roleIUserProvider; //fix later please
+                IRoleUserProvider roleUserProvider = (IRoleUserProvider)_roleUserProvider; //fix later please
                 _ = roleUserProvider.Delete((int)role.Id, _userId);
             }
         }

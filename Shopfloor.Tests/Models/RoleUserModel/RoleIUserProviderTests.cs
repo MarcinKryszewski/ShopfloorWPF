@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Shopfloor.Tests.Models.RoleUserModel
 {
-    public class RoleIUserProviderTests
+    public class RoleUserProviderTests
     {
 
     }

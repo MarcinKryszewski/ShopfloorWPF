@@ -23,7 +23,6 @@ namespace Shopfloor.Features.Mechanic.Errands
         private readonly SelectedErrandStore _errandStore;
         private readonly ICombinerManager<Part> _partCombiner;
         private readonly IDataStore<Part> _partStore;
-        private ErrandCreatorData? _errandCreatorData;
         private List<Part> _parts = [];
         private string _searchText = string.Empty;
         public ErrandPartsListViewModel(
@@ -46,17 +45,12 @@ namespace Shopfloor.Features.Mechanic.Errands
         }
         public ICommand AddPartToListCommand { get; }
         public SearchableModelList DisplayList { get; }
-        public ErrandCreatorData? ErrandData
-        {
-            get => _errandCreatorData;
-            set => _errandCreatorData = value;
-        }
+        public ErrandCreatorData? ErrandData { get; set; }
         public ICollectionView ErrandParts
         {
             get
             {
                 OnPropertyChanged(nameof(PartsAmount));
-                // return CollectionViewSource.GetDefaultView(_errandStore.ErrandParts);
                 return CollectionViewSource.GetDefaultView(ErrandData?.Errand.Parts ?? []);
             }
         }
@@ -199,7 +193,7 @@ namespace Shopfloor.Features.Mechanic.Errands
         }
         public void CleanForm()
         {
-            throw new NotImplementedException();
+
         }
         public void ClearErrors(string? propertyName)
         {

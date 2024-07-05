@@ -89,3 +89,21 @@ dotnet_diagnostic.S3241.severity = suggestion
 
 # S2953: Methods named "Dispose" should implement "IDisposable.Dispose"
 dotnet_diagnostic.S2953.severity = suggestion
+
+# S3011: Reflection should not be used to increase accessibility of classes, methods, or fields
+dotnet_diagnostic.S3011.severity = suggestion
+
+# S6562: Always set the "DateTimeKind" when creating new "DateTime" instances
+dotnet_diagnostic.S6562.severity = suggestion
+
+# S3267: Loops should be simplified with "LINQ" expressions
+dotnet_diagnostic.S3267.severity = suggestion
+
+# S3263: Static fields should appear in the order they must be initialized 
+dotnet_diagnostic.S3263.severity = suggestion
+
+# S3263: Static fields should appear in the order they must be initialized 
+dotnet_diagnostic.S3263.severity = suggestion
+
+# S1643: Strings should not be concatenated using '+' in a loop
+dotnet_diagnostic.S1643.severity = suggestion

@@ -17,7 +17,11 @@ namespace Shopfloor.Tests.Stores
         private readonly IAuthService _auth = Substitute.For<IAuthService>();
         public CurrentUserStoreTests()
         {
-            _sut = new(_roleProvider, _roleUserProvider, _notifier, _auth);
+            _sut = new(
+                _roleProvider,
+                _roleUserProvider,
+                _notifier,
+                _auth);
         }
         [Fact]
         public void Login_WhenUsernameExists_ShouldSetUser()

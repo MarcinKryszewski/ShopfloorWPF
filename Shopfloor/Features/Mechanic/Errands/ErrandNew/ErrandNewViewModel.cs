@@ -40,10 +40,9 @@ namespace Shopfloor.Features.Mechanic.Errands
         public ErrandNewViewModel(
             NavigationService navigationService,
             StoreRepository stores,
-            IModelCreatorService<Errand> errandCreator,
             ErrandPartsListViewModel errandPartsListViewModel,
+            IModelCreatorService<Errand> errandCreator,
             IModelCreatorService<ErrandPart> partCreator,
-            IModelEditorService<ErrandStatus> errandStatusEditorService,
             IModelCreatorService<ErrandStatus> statusCreator)
         {
             _selectedErrand = stores.SelectedErrand;
@@ -187,6 +186,10 @@ namespace Shopfloor.Features.Mechanic.Errands
                 CreatedById = _currentUserId,
             };
             _errandCreatorData.Errand = Errand;
+            // PartsList?.CleanForm();
+            _partsList = null;
+            OnPropertyChanged(nameof(PartsList));
+            OnPropertyChanged(nameof(IsPartsListVisible));
         }
         public void ClearErrors(string? propertyName)
         {

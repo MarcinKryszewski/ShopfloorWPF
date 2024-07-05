@@ -20,16 +20,20 @@ namespace Shopfloor.Stores
         private const string _loginSuccessfull = "ZALOGOWANO POPRAWNIE";
         private readonly IAuthService _auth;
         private readonly INotifier _notifier;
-        private readonly RoleUserProvider _roleIUserProvider;
+        private readonly IRoleUserProvider _roleUserProvider;
         private readonly IProvider<Role> _roleProvider;
         private bool _isUserLoggedIn;
         private User? _user;
-        public CurrentUserStore(IProvider<Role> roleProvider, IProvider<RoleUser> roleIUserProvider, INotifier notifier, IAuthService auth)
+        public CurrentUserStore(
+            IProvider<Role> roleProvider,
+            IRoleUserProvider roleUserProvider,
+            INotifier notifier,
+            IAuthService auth)
         {
             _user = new() { Username = _defaultUsername };
             _isUserLoggedIn = false;
             _roleProvider = roleProvider;
-            _roleIUserProvider = (RoleUserProvider)roleIUserProvider;
+            _roleUserProvider = roleUserProvider;
             _notifier = notifier;
             _auth = auth;
             _propertyErrors = [];
@@ -80,7 +84,7 @@ namespace Shopfloor.Stores
                 return [];
             }
 
-            IEnumerable<RoleUser> roleUsers = _roleIUserProvider.GetAllForUser((int)User.Id).Result;
+            IEnumerable<RoleUser> roleUsers = _roleUserProvider.GetAllForUser((int)User.Id).Result;
             return roleUsers;
         }
         private void LoginSuccessNotification() => _notifier.ShowInformation(_loginSuccessfull);

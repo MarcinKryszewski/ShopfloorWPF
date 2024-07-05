@@ -12,17 +12,20 @@ namespace Shopfloor.Tests.Models.ErrandPartModel.Services
         private readonly IDataModelStoreService<ErrandPart> _storeService;
         private readonly IModelCreatorService<ErrandPartStatus> _statusCreator;
         private readonly ErrandPartCreatorService _service;
+        private readonly ICombinerManager<ErrandPart> _combiner;
 
         public ErrandPartCreatorServiceTests()
         {
             _databaseService = Substitute.For<IDataModelDatabaseService<ErrandPart>>();
             _storeService = Substitute.For<IDataModelStoreService<ErrandPart>>();
             _statusCreator = Substitute.For<IModelCreatorService<ErrandPartStatus>>();
+            _combiner = Substitute.For<ICombinerManager<ErrandPart>>();
 
             _service = new ErrandPartCreatorService(
                 _databaseService,
                 _storeService,
-                _statusCreator);
+                _statusCreator,
+                _combiner);
         }
 
         [Fact]
