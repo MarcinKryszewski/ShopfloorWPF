@@ -111,7 +111,16 @@ namespace Shopfloor.Models.ErrandPartModel
             string lastIdSQL = "SELECT last_insert_rowid()";
             return await connection.QueryFirstAsync<int>(lastIdSQL);
         }
-        public Task Delete(int id) => throw new NotImplementedException();
+        public async Task Delete(int id)
+        {
+            using IDbConnection connection = _database.Connect();
+            object parameters = new
+            {
+                ErrandId = id,
+                Canceled = true,
+            };
+            await connection.ExecuteAsync(_cancelPartSQL, parameters);
+        }
         public Task Delete(int errandId, int partId) => throw new NotImplementedException();
         public async Task<IEnumerable<ErrandPart>> GetAll()
         {
