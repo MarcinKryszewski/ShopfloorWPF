@@ -1,242 +1,201 @@
 ﻿<UserControl x:Class="Shopfloor.Layout.SidePanel.SidePanelView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Shopfloor.Layout.SidePanel"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DataContext="{d:DesignInstance Type=local:SidePanelViewModel}" d:Height="1020" d:Width="240" mc:Ignorable="d">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Shopfloor.Layout.SidePanel"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        d:DataContext="{d:DesignInstance Type=local:SidePanelViewModel}"
+        d:Height="1020"
+        d:Width="240"
+        mc:Ignorable="d">
 
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
         <Style TargetType="Button">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="Height" Value="40" />
-            <Setter Property="BorderThickness" Value="0" />
-            <Setter Property="Foreground" Value="{StaticResource BrushDarkNeutral1000}" />
+            <Setter Property="Background"
+                    Value="Transparent"/>
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center"/>
+            <Setter Property="Height"
+                    Value="40"/>
+            <Setter Property="BorderThickness"
+                    Value="0"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource BrushDarkNeutral1000}"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="0" CornerRadius="0">
-                            <ContentPresenter HorizontalAlignment="Stretch" />
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="Black"
+                                BorderThickness="0"
+                                CornerRadius="0">
+                            <ContentPresenter HorizontalAlignment="Stretch"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="{StaticResource BrushPurple400}" />
+                <Trigger Property="IsMouseOver"
+                        Value="True">
+                    <Setter Property="Foreground"
+                            Value="{StaticResource BrushPurple400}"/>
                 </Trigger>
-                <Trigger Property="IsPressed" Value="True">
-                    <Setter Property="Foreground" Value="{StaticResource BrushPurple600}" />
+                <Trigger Property="IsPressed"
+                        Value="True">
+                    <Setter Property="Foreground"
+                            Value="{StaticResource BrushPurple600}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <Style TargetType="TextBlock" x:Key="IconBlock">
-            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="TextAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+        <Style TargetType="TextBlock"
+                x:Key="IconBlock">
+            <Setter Property="FontFamily"
+                    Value="Segoe MDL2 Assets"/>
+            <Setter Property="FontSize"
+                    Value="24"/>
+            <Setter Property="TextAlignment"
+                    Value="Center"/>
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
         </Style>
-        <Style x:Key="ButtonStackPanel" TargetType="StackPanel">
-            <Setter Property="Margin" Value="20,0,20,0" />
-            <Setter Property="Orientation" Value="Horizontal" />
+        <Style x:Key="ButtonStackPanel"
+                TargetType="StackPanel">
+            <Setter Property="Margin"
+                    Value="20,0,20,0"/>
+            <Setter Property="Orientation"
+                    Value="Horizontal"/>
         </Style>
-        <Style x:Key="ButtonTextBlock" TargetType="TextBlock">
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="FontWeight" Value="SemiBold" />
+        <Style x:Key="ButtonTextBlock"
+                TargetType="TextBlock">
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="FontSize"
+                    Value="14"/>
+            <Setter Property="FontWeight"
+                    Value="SemiBold"/>
 
         </Style>
-        <Style x:Key="TitleTextBlock" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="Height" Value="40" />
-            <Setter Property="Padding" Value="20,22,20,6" />
-            <Setter Property="FontFamily" Value="Inter" />
-            <Setter Property="Typography.Capitals" Value="AllSmallCaps" />
-            <Setter Property="Foreground" Value="{StaticResource BrushDarkNeutral600}" />
+        <Style x:Key="TitleTextBlock"
+                TargetType="TextBlock">
+            <Setter Property="FontSize"
+                    Value="14"/>
+            <Setter Property="Height"
+                    Value="40"/>
+            <Setter Property="Padding"
+                    Value="20,22,20,6"/>
+            <Setter Property="FontFamily"
+                    Value="Inter"/>
+            <Setter Property="Typography.Capitals"
+                    Value="AllSmallCaps"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource BrushDarkNeutral600}"/>
         </Style>
     </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="64" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="64"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Background="{StaticResource BrushPurple1000}">
+        <Border Grid.Row="0"
+                Background="{StaticResource BrushPurple1000}">
             <Grid>
-                <TextBlock Margin="5,5,0,0" Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="Yellow"/>
-                <TextBlock Margin="4,4,0,0" Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="Yellow"/>
-                <TextBlock Margin="3,3,0,0" Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="Yellow"/>
-                <TextBlock Margin="2,2,0,0" Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="Yellow"/>
-                <TextBlock Margin="1,1,0,0" Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="Yellow"/>
-                <TextBlock Text="MINIMO" FontFamily="BankGothic Md BT" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" FontWeight="SemiBold" Foreground="{StaticResource BrushPurple200}"/>
+                <TextBlock Margin="5,5,0,0"
+                        Text="MINIMO"
+                        FontFamily="BankGothic Md BT"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        FontSize="48"
+                        FontWeight="SemiBold"
+                        Foreground="Yellow"/>
+                <TextBlock Margin="4,4,0,0"
+                        Text="MINIMO"
+                        FontFamily="BankGothic Md BT"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        FontSize="48"
+                        FontWeight="SemiBold"
+                        Foreground="Yellow"/>
+                <TextBlock Margin="3,3,0,0"
+                        Text="MINIMO"
+                        FontFamily="BankGothic Md BT"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        FontSize="48"
+                        FontWeight="SemiBold"
+                        Foreground="Yellow"/>
+                <TextBlock Margin="2,2,0,0"
+                        Text="MINIMO"
+                        FontFamily="BankGothic Md BT"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        FontSize="48"
+                        FontWeight="SemiBold"
+                        Foreground="Yellow"/>
+                <TextBlock Margin="1,1,0,0"
+                        Text="MINIMO"
+                        FontFamily="BankGothic Md BT"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        FontSize="48"
+                        FontWeight="SemiBold"
+                        Foreground="Yellow"/>
+                <TextBlock Text="MINIMO"
+                        FontFamily="BankGothic Md BT"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        FontSize="48"
+                        FontWeight="SemiBold"
+                        Foreground="{StaticResource BrushPurple200}"/>
             </Grid>
         </Border>
-        <ScrollViewer Grid.Row="1" Background="{StaticResource BrushDarkNeutral250}" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-            <StackPanel Margin="0,15,0,0" Orientation="Vertical">
+        <ScrollViewer Grid.Row="1"
+                Background="{StaticResource BrushDarkNeutral250}"
+                HorizontalScrollBarVisibility="Disabled"
+                VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="0,15,0,0"
+                    Orientation="Vertical">
                 <!--#region Mechanik-->
                 <StackPanel>
-                    <TextBlock Style="{StaticResource TitleTextBlock}" Text="Mechanik" />
+                    <TextBlock Style="{StaticResource TitleTextBlock}"
+                            Text="Mechanik"/>
 
                     <Button Command="{Binding Path=NavigateMechanicDashboardCommand}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}" Background="Transparent">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Style="{StaticResource IconBlock}" Text="&#xF404;"/>
+                        <StackPanel Style="{StaticResource ButtonStackPanel}"
+                                Background="Transparent">
+                            <Border Width="24"
+                                    Height="24"
+                                    Margin="0,0,9,0"
+                                    Background="Transparent">
+                                <TextBlock Style="{StaticResource IconBlock}"
+                                        Text="&#xF404;"/>
                             </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dashboard mechanika" Background="Transparent" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Command="{Binding Path=NavigateTasksCommand}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xEADF;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zadania" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Command="{Binding Path=NavigateRequestsCommand}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xE74C;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zapotrzebowanie" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Visibility="{Binding Path=HasAdminRole}" Command="{Binding NavigatePartStockCommand}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xF133;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Stany magazynowe" />
-                        </StackPanel>
-                    </Button>
-
-                </StackPanel>
-                <!--#endregion-->
-                <!--#region Planista-->
-                <StackPanel Visibility="{Binding Path=HasPlannistRole}">
-                    <TextBlock Style="{StaticResource TitleTextBlock}" Text="Planista" />
-
-                    <Button Command="{Binding Path=NavigatePlannistDashboardCommand}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}" Background="Transparent">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Style="{StaticResource IconBlock}" Text="&#xF404;"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dashboard planisty" Background="Transparent" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Command="{Binding Path=NavigateOffersCommand}" Visibility="{Binding Path=HasPlannistRole}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xE7BF;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Oferty" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Command="{Binding Path=NavigateOrdersCommand}" Visibility="{Binding Path=HasAdminRole}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xEA53;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zamówienia" />
-                        </StackPanel>
-                    </Button>
-
-                    <Button Command="{Binding Path=NavigateDeploysCommand}" Visibility="{Binding Path=HasAdminRole}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xE72D;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Pobrania" />
+                            <TextBlock Style="{StaticResource ButtonTextBlock}"
+                                    Text="Dashboard mechanika"
+                                    Background="Transparent"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
                 <!--#endregion-->
 
-                <!--#region Kierownik-->
-                <StackPanel Visibility="{Binding Path=HasManagerRole}">
-                    <TextBlock Style="{StaticResource TitleTextBlock}" Text="Kierownik" />
-
-                    <Button Command="{Binding Path=NavigateManagerDashboardCommand}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}" Background="Transparent">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Style="{StaticResource IconBlock}" Text="&#xF404;"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dashboard kierownika" Background="Transparent" />
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding NavigateOrdersToApproveCommand}" Visibility="{Binding Path=HasAdminRole}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xE73A;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <StackPanel>
-                                <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Zamówienia" />
-                                <TextBlock Style="{StaticResource ButtonTextBlock}" FontSize="10" Text="Do zatwierdzenia" />
-                            </StackPanel>
-                        </StackPanel>
-                    </Button>
-                </StackPanel>
-                <!--#endregion-->
-
-                <!--#region Admin-->
-                <StackPanel Visibility="{Binding Path=HasAdminRole}">
-                    <TextBlock Style="{StaticResource TitleTextBlock}" Text="Admin" />
-
-                    <Button Command="{Binding Path=NavigateUsersCommand}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xE716;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Użytkownicy" />
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding Path=NavigateMachinesCommand}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xE774;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Maszyny" />
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding Path=NavigatePartsCommand}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xEC7A;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Części" />
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding Path=NavigateSuppliersCommand}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xF003;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Dostawcy" />
-                        </StackPanel>
-                    </Button>
-                    <Button Command="{Binding Path=NavigatePartTypesCommand}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}">
-                            <Border Width="24" Height="24" Margin="0,0,9,0" Background="Transparent">
-                                <TextBlock Text="&#xE713;" Style="{StaticResource IconBlock}"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}" Text="Części - rodzaje" />
-                        </StackPanel>
-                    </Button>
-                </StackPanel>                
-                <!--#endregion-->
-                
-                <Button Background="DeepPink" Command="{Binding AddTestData}" Content="Add Test DATA" Visibility="{Binding HasDataInside}" />
-                <Label Content="Marcin Kryszewski" FontSize="8" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch" Foreground="{StaticResource BrushDarkNeutral700}"/>
-                <Label Content="v1.0.0" FontSize="8" HorizontalAlignment="Center" HorizontalContentAlignment="Stretch" Foreground="{StaticResource BrushDarkNeutral700}"/>
+                <Button Background="DeepPink"
+                        Command="{Binding AddTestData}"
+                        Content="Add Test DATA"
+                        Visibility="{Binding HasDataInside}"/>
+                <Label Content="Marcin Kryszewski"
+                        FontSize="8"
+                        HorizontalAlignment="Center"
+                        HorizontalContentAlignment="Stretch"
+                        Foreground="{StaticResource BrushDarkNeutral700}"/>
+                <Label Content="v1.0.0"
+                        FontSize="8"
+                        HorizontalAlignment="Center"
+                        HorizontalContentAlignment="Stretch"
+                        Foreground="{StaticResource BrushDarkNeutral700}"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>

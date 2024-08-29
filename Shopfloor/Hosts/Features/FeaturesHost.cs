@@ -1,11 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Hosts.Features.Admin;
-using Shopfloor.Hosts.Features.Layout;
-using Shopfloor.Hosts.Features.Login;
-using Shopfloor.Hosts.Features.Manager;
-using Shopfloor.Hosts.Features.Mechanic;
-using Shopfloor.Hosts.Features.Plannist;
-using Shopfloor.Services;
+using Shopfloor.Features.God;
+using Shopfloor.Features.WorkInProgressFeature;
 
 namespace Shopfloor.Hosts.Features
 {
@@ -13,15 +8,9 @@ namespace Shopfloor.Hosts.Features
     {
         public static void Get(IServiceCollection services)
         {
-            LayoutHost.Get(services);
-            NotifierServices.Get(services);
-            services.AddTransient<IAuthService, AuthService>();
-            LoginHost.Get(services);
+            services.AddSingleton<WorkInProgressViewModel>();
+            services.AddSingleton<GodViewModel>();
 
-            AdminHost.Get(services);
-            ManagerHost.Get(services);
-            MechanicHost.Get(services);
-            PlannistHost.Get(services);
         }
     }
 }

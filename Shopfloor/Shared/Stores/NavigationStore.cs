@@ -1,5 +1,5 @@
 ﻿using System;
-using Shopfloor.Features;
+using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Shared.Stores

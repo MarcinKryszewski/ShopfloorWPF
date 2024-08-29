@@ -6,22 +6,18 @@ using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
 using Shopfloor.Database.Configuration;
 using Shopfloor.Database.Initializers;
-using Shopfloor.Features.Manager.ManagerDashboard;
-using Shopfloor.Features.Mechanic;
-using Shopfloor.Features.Plannist;
+using Shopfloor.Features.God;
 using Shopfloor.Hosts;
 using Shopfloor.Layout.Content;
 using Shopfloor.Layout.MainWindow;
 using Shopfloor.Layout.SidePanel;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Stores;
 
 namespace Shopfloor
 {
     public partial class App : Application
     {
         private readonly IHost _appHost;
-        private readonly ICurrentUserStore _currentUser;
         private readonly NavigationService _navigationService;
         private readonly IServiceProvider _services;
 
@@ -32,32 +28,7 @@ namespace Shopfloor
 
             _services = _appHost.Services;
 
-            _currentUser = _services.GetRequiredService<ICurrentUserStore>();
             _navigationService = _services.GetRequiredService<NavigationService>();
-        }
-        private static void AutoLogin(ICurrentUserStore currentUserStore)
-        {
-            string userName = Environment.UserName;
-            currentUserStore.Login(userName, true);
-        }
-        private static void DashboardNavigate(ICurrentUserStore currentUserStore, NavigationService navigationService)
-        {
-            if (currentUserStore.User is null)
-            {
-                navigationService.NavigateTo<MechanicDashboardViewModel>();
-                return;
-            }
-            if (currentUserStore.User.IsAuthorized(777))
-            {
-                navigationService.NavigateTo<ManagerDashboardViewModel>();
-                return;
-            }
-            if (currentUserStore.User.IsAuthorized(460))
-            {
-                navigationService.NavigateTo<PlannistDashboardViewModel>();
-                return;
-            }
-            navigationService.NavigateTo<MechanicDashboardViewModel>();
         }
         private static void DatabaseInit(DatabaseConnectionFactory dbConnectionFactory, DatabaseConfiguration dbConfiguration)
         {
@@ -81,8 +52,7 @@ namespace Shopfloor
             };
             MainWindow.Show();
 
-            AutoLogin(_currentUser);
-            DashboardNavigate(_currentUser, _navigationService);
+            _navigationService.NavigateTo<GodViewModel>();
         }
     }
 }

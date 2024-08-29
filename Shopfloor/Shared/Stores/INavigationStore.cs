@@ -6,7 +6,7 @@ namespace Shopfloor.Shared.Stores
     internal interface INavigationStore
     {
         public event Action? CurrentViewModelChanged;
-        ViewModelBase CurrentViewModel
+        ViewModelBase? CurrentViewModel
         {
             get;
             set;

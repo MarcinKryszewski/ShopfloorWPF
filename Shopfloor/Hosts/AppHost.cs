@@ -17,6 +17,7 @@ namespace Shopfloor.Hosts
             {
                 configurationHost.Get(services);
                 DatabaseHost.Get(services);
+                LayoutHost.Get(services);
                 FeaturesHost.Get(services);
                 NavigationHost.Get(services);
             })

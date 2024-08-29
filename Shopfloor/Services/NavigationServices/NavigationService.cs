@@ -1,4 +1,5 @@
 ﻿using System;
+using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Shared;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
@@ -17,8 +18,21 @@ namespace Shopfloor.Services.NavigationServices
         public void NavigateTo<TViewModel>()
             where TViewModel : ViewModelBase
         {
-            ViewModelBase viewModel = _viewModelFactory.Invoke(typeof(TViewModel));
+            ViewModelBase viewModel = CreateViewModel<TViewModel>();
             _navigationStore.CurrentViewModel = viewModel;
+        }
+
+        public ViewModelBase CreateViewModel<TViewModel>()
+            where TViewModel : ViewModelBase
+        {
+            try
+            {
+                return _viewModelFactory.Invoke(typeof(TViewModel));
+            }
+            catch (Exception)
+            {
+                return _viewModelFactory.Invoke(typeof(WorkInProgressViewModel));
+            }
         }
     }
 }
