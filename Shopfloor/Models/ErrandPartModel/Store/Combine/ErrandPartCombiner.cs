@@ -10,7 +10,11 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
         private readonly ErrandPartToErrand _errandToErrandPart;
         private readonly ErrandPartToPart _partToErrandPart;
         private readonly ErrandPartToUser _userToErrandPart;
-        public ErrandPartCombiner(ErrandPartToUser userToErrandPart, ErrandPartToPart partToErrandPart, ErrandPartToErrand errandToErrandPart, ErrandPartToErrandPartStatus errandPartStatusToErrandPart)
+        public ErrandPartCombiner(
+            ErrandPartToUser userToErrandPart,
+            ErrandPartToPart partToErrandPart,
+            ErrandPartToErrand errandToErrandPart,
+            ErrandPartToErrandPartStatus errandPartStatusToErrandPart)
         {
             _userToErrandPart = userToErrandPart;
             _partToErrandPart = partToErrandPart;

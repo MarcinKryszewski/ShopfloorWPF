@@ -9,10 +9,12 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
     {
         private readonly IDataStore<ErrandPart> _errandPartStore;
         private readonly IDataStore<Part> _partStore;
-        public ErrandPartToPart(IDataStore<Part> partStore, IDataStore<ErrandPart> errandPartStore)
+        private readonly ICombinerManager<Part> _partCombiner;
+        public ErrandPartToPart(IDataStore<Part> partStore, IDataStore<ErrandPart> errandPartStore, ICombinerManager<Part> partCombiner)
         {
             _partStore = partStore;
             _errandPartStore = errandPartStore;
+            _partCombiner = partCombiner;
         }
         public Task CombineAll()
         {
@@ -38,6 +40,10 @@ namespace Shopfloor.Models.ErrandPartModel.Store.Combine
             item.Part = parts.Find(part => part.Id == item.PartId);
         }
         private List<ErrandPart> GetErrandParts() => _errandPartStore.Data;
-        private List<Part> GetParts() => _partStore.Data;
+        private List<Part> GetParts()
+        {
+            _partCombiner.CombineAll().Wait();
+            return _partStore.Data;
+        }
     }
 }

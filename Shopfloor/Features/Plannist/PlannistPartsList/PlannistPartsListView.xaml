@@ -150,7 +150,7 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn
                     Width="auto"
-                    Binding="{Binding Path=Part.Type.Name, NotifyOnTargetUpdated=True}"
+                    Binding="{Binding Path=Part.PartType.Name, NotifyOnTargetUpdated=True}"
                     CanUserResize="False"
                     Header="RODZAJ CZĘŚCI"
                     IsReadOnly="True" />

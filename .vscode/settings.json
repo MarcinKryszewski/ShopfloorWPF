@@ -14,5 +14,7 @@
   "dotnet.inlayHints.suppressInlayHintsForParametersThatDifferOnlyBySuffix": false,
   "emmet.showSuggestionsAsSnippets": false,
   "dotnet-test-explorer.autoExpandTree": false,
-  "dotnet-test-explorer.runInParallel": true
+  "dotnet-test-explorer.runInParallel": true,
+  "dotnet-test-explorer.testArguments": "/p:CollectCoverage=true /p:CoverletOutputFormat=lcov /p:CoverletOutput=./lcov.info",
+  "dotnet-test-explorer.testProjectPath": "**/*Tests.csproj"
 }
