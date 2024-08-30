@@ -10,7 +10,6 @@ namespace Shopfloor.Hosts.Features
         {
             services.AddSingleton<WorkInProgressViewModel>();
             services.AddSingleton<GodViewModel>();
-
         }
     }
 }

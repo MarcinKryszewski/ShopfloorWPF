@@ -6,6 +6,7 @@ namespace Shopfloor.Layout.TopPanel
     internal sealed class TopPanelViewModel : ViewModelBase
     {
         public TopPanelViewModel(INavigationService navigationService)
-        { }
+        {
+        }
     }
 }

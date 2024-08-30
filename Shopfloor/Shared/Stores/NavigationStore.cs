@@ -9,7 +9,7 @@ namespace Shopfloor.Shared.Stores
         private readonly WorkInProgressViewModel wipViewModel = new();
         private ViewModelBase? _currentViewModel;
         public event Action? CurrentViewModelChanged;
-        public ViewModelBase CurrentViewModel
+        public ViewModelBase? CurrentViewModel
         {
             get => _currentViewModel ?? wipViewModel;
             set
