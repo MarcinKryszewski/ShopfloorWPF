@@ -4,5 +4,6 @@ namespace Shopfloor.Features.God
 {
     internal sealed class GodViewModel : ViewModelBase
     {
+
     }
 }
