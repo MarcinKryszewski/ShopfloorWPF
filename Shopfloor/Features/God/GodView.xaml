@@ -8,6 +8,37 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
     <Grid Background="Pink">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid Grid.Row="0"
+                  ItemsSource="{Binding Path=WorkOrders}"></DataGrid>
+
+        <Grid Background="blue"
+              Grid.Row="1">
+
+            <StackPanel Width="400px">
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="TEST1"/>
+                    <TextBox Width="300px"
+                             Text="{Binding WorkOrderDto.Description}"/>
+                </StackPanel>
+
+                <Button Content="ZAPISZ"
+                        Width="200px"
+                        Command="{Binding WorkOrderCreate}"
+                        CommandParameter="{Binding WorkOrderDto}"/>
+
+            </StackPanel>
+
+        </Grid>
+
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding Path=Parts}"></DataGrid>
 
     </Grid>
 </UserControl> 

@@ -1,4 +1,4 @@
-﻿using Shopfloor.Features;
+﻿using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;

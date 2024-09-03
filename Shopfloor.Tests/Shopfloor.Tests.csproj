@@ -12,21 +12,18 @@
 
   <ItemGroup>
     <Compile Remove="DatabaseTests\**" />
-    <Compile Remove="Features\**" />
     <Compile Remove="Hosts\**" />
     <Compile Remove="Interfaces\**" />
     <Compile Remove="Layout\**" />
     <Compile Remove="Services\**" />
     <Compile Remove="Stores\**" />
     <EmbeddedResource Remove="DatabaseTests\**" />
-    <EmbeddedResource Remove="Features\**" />
     <EmbeddedResource Remove="Hosts\**" />
     <EmbeddedResource Remove="Interfaces\**" />
     <EmbeddedResource Remove="Layout\**" />
     <EmbeddedResource Remove="Services\**" />
     <EmbeddedResource Remove="Stores\**" />
     <None Remove="DatabaseTests\**" />
-    <None Remove="Features\**" />
     <None Remove="Hosts\**" />
     <None Remove="Interfaces\**" />
     <None Remove="Layout\**" />
@@ -39,12 +36,6 @@
     <Compile Include="Hosts\Core\ConfigurationHostTests.cs" />
     <Compile Include="Hosts\Core\NavigationHostTests.cs" />
     <Compile Include="Hosts\Database\DatabaseHostTests.cs" />
-    <Compile Include="Hosts\Features\Layout\LayoutHostTests.cs" />
-    <Compile Include="Hosts\Features\Login\LoginHostTests.cs" />
-    <Compile Include="Hosts\Features\Manager\ManagerHostTests.cs" />
-    <Compile Include="Hosts\Features\Mechanic\MechanicHostTests.cs" />
-    <Compile Include="Hosts\Features\Notifier\NotifierServicesTests.cs" />
-    <Compile Include="Hosts\Features\Plannist\PlannistHostTests.cs" />
     <Compile Include="Layout\Content\ContentViewModelTests.cs" />
     <Compile Include="Layout\MainWindow\MainWindowViewModelTests.cs" />
     <Compile Include="Layout\SidePanel\SidePanelViewModelTests.cs" />

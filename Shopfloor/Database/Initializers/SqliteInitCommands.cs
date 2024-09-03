@@ -4,7 +4,6 @@ namespace Shopfloor.Database.SQLite
 {
     public sealed class SqliteInitCommands
     {
-
         public SqliteInitCommands()
         {
             InitCommands =
