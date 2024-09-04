@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.God;
 using Shopfloor.Features.WorkInProgressFeature;
+using Shopfloor.Hosts.Features.Notifier;
 
 namespace Shopfloor.Hosts.Features
 {
@@ -10,6 +11,7 @@ namespace Shopfloor.Hosts.Features
         {
             services.AddSingleton<WorkInProgressViewModel>();
             services.AddSingleton<GodViewModel>();
+            NotifierServices.Get(services);
         }
     }
 }

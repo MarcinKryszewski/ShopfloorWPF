@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Shopfloor.Features.God.Commands;
 using Shopfloor.Models;
 using Shopfloor.Models.WorkOrders;
+using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
 
@@ -16,10 +17,12 @@ namespace Shopfloor.Features.God
     {
         private readonly List<WorkOrderModel> _workOrders = [];
         private readonly List<PartModel> _parts = [];
-        public GodViewModel()
+        // private readonly INotifier _notifier;
+        public GodViewModel(INotifier notifier)
         {
             _ = LoadDataAsync();
-            WorkOrderCreate = new CreateWorkOrderCommand(AddWorkOrder);
+            WorkOrderCreate = new CreateWorkOrderCommand(AddWorkOrder, notifier);
+            // _notifier = notifier;
         }
         public WorkOrderDto WorkOrderDto { get; set; } = new();
         public ICommand WorkOrderCreate { get; }
@@ -95,12 +98,14 @@ namespace Shopfloor.Features.God
             tasks.Add(BatchListUpdater.UpdateAsync(
                 dataWorkOrder,
                 _workOrders,
-                WorkOrders));
+                WorkOrders,
+                DispatcherWrapper));
 
             tasks.Add(BatchListUpdater.UpdateAsync(
                 dataPart,
                 _parts,
-                Parts));
+                Parts,
+                DispatcherWrapper));
 
             await Task.WhenAll(tasks);
         }
