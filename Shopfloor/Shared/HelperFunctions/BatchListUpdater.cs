@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using Shopfloor.Shared.Dispatchers;
 
 namespace Shopfloor.Shared.HelperFunctions
@@ -12,12 +13,14 @@ namespace Shopfloor.Shared.HelperFunctions
         private const int _defaultBatchSize = 10;
         private const int _minimumBatchSize = 1;
 
-        public static async Task UpdateAsync<T>(IEnumerable<T> data, List<T> privateList, ICollectionView publicList, IDispatcherWrapper dispatcher, int batchSize = _defaultBatchSize)
+        public static async Task UpdateAsync<T>(IEnumerable<T> data, List<T> privateList, ICollectionView publicList, IDispatcherWrapper? dispatcher = null, int batchSize = _defaultBatchSize)
         {
             if (batchSize < _minimumBatchSize)
             {
                 batchSize = _defaultBatchSize;
             }
+
+            dispatcher ??= new DispatcherWrapper(Application.Current.Dispatcher);
 
             for (int i = 0; i < data.Count(); i += batchSize)
             {

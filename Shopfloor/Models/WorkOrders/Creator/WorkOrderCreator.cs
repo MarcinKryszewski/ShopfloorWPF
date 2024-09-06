@@ -1,8 +1,9 @@
 using System;
+using Shopfloor.Models.Interfaces;
 
 namespace Shopfloor.Models.WorkOrders.Creator
 {
-    public class WorkOrderCreator : IWorkOrderCreator
+    public class WorkOrderCreator : IModelCreator<WorkOrderModel, WorkOrderDto>
     {
         public WorkOrderModel Create(WorkOrderDto workOrder)
         {
@@ -12,6 +13,7 @@ namespace Shopfloor.Models.WorkOrders.Creator
                 Id = random.Next(),
                 Description = workOrder.Description,
                 Parts = workOrder.Parts,
+                Line = workOrder.Line!, // check for error
             };
         }
     }

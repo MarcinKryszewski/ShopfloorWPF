@@ -28,6 +28,14 @@
                              Text="{Binding WorkOrderDto.Description}"/>
                 </StackPanel>
 
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Maszyna"/>
+                    <ComboBox Width="200px"
+                              DisplayMemberPath="Name"
+                              ItemsSource="{Binding Lines}"
+                              SelectedItem="{Binding WorkOrderDto.Line, Mode=TwoWay}"/>
+                </StackPanel>
+
                 <Button Content="ZAPISZ"
                         Width="200px"
                         Command="{Binding WorkOrderCreate}"
