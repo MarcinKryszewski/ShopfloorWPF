@@ -41,29 +41,32 @@ namespace Shopfloor.Features.God
         private static List<WorkOrderModel> TestDataWorkOrders()
         {
             LineModel line = new() { Id = 1, Name = "Line1" };
+
             List<WorkOrderModel> testData = [];
-            testData.Add(new WorkOrderModel() { Id = 1, Description = "WorkOrder1", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 2, Description = "WorkOrder2", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 3, Description = "WorkOrder3", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 4, Description = "WorkOrder4", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 5, Description = "WorkOrder5", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 6, Description = "WorkOrder6", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 7, Description = "WorkOrder7", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 8, Description = "WorkOrder8", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 9, Description = "WorkOrder9", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 10, Description = "WorkOrder10", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 11, Description = "WorkOrder11", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 12, Description = "WorkOrder12", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 13, Description = "WorkOrder13", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 14, Description = "WorkOrder14", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 15, Description = "WorkOrder15", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 16, Description = "WorkOrder16", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 17, Description = "WorkOrder17", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 18, Description = "WorkOrder18", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 19, Description = "WorkOrder19", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 20, Description = "WorkOrder20", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 21, Description = "WorkOrder21", Line = line });
-            testData.Add(new WorkOrderModel() { Id = 22, Description = "WorkOrder22", Line = line });
+
+            testData.Add(new WorkOrderModel() { Id = 1, Description = "WorkOrder1", LineId = 1 });
+            testData.Add(new WorkOrderModel() { Id = 2, Description = "WorkOrder2", LineId = 2 });
+            testData.Add(new WorkOrderModel() { Id = 3, Description = "WorkOrder3", LineId = 3 });
+            testData.Add(new WorkOrderModel() { Id = 4, Description = "WorkOrder4", LineId = 4 });
+            testData.Add(new WorkOrderModel() { Id = 5, Description = "WorkOrder5", LineId = 5 });
+            testData.Add(new WorkOrderModel() { Id = 6, Description = "WorkOrder6", LineId = 6 });
+            testData.Add(new WorkOrderModel() { Id = 7, Description = "WorkOrder7", LineId = 7 });
+            testData.Add(new WorkOrderModel() { Id = 8, Description = "WorkOrder8", LineId = 8 });
+            testData.Add(new WorkOrderModel() { Id = 9, Description = "WorkOrder9", LineId = 9 });
+            testData.Add(new WorkOrderModel() { Id = 10, Description = "WorkOrder10", LineId = 10 });
+            testData.Add(new WorkOrderModel() { Id = 11, Description = "WorkOrder11", LineId = 11 });
+            testData.Add(new WorkOrderModel() { Id = 12, Description = "WorkOrder12", LineId = 12 });
+            testData.Add(new WorkOrderModel() { Id = 13, Description = "WorkOrder13", LineId = 13 });
+            testData.Add(new WorkOrderModel() { Id = 14, Description = "WorkOrder14", LineId = 14 });
+            testData.Add(new WorkOrderModel() { Id = 15, Description = "WorkOrder15", LineId = 15 });
+            testData.Add(new WorkOrderModel() { Id = 16, Description = "WorkOrder16", LineId = 16 });
+            testData.Add(new WorkOrderModel() { Id = 17, Description = "WorkOrder17", LineId = 17 });
+            testData.Add(new WorkOrderModel() { Id = 18, Description = "WorkOrder18", LineId = 18 });
+            testData.Add(new WorkOrderModel() { Id = 19, Description = "WorkOrder19", LineId = 19 });
+            testData.Add(new WorkOrderModel() { Id = 20, Description = "WorkOrder20", LineId = 20 });
+            testData.Add(new WorkOrderModel() { Id = 21, Description = "WorkOrder21", LineId = 21 });
+            testData.Add(new WorkOrderModel() { Id = 22, Description = "WorkOrder22", LineId = 22 });
+
             return testData;
         }
         private static List<LineModel> TestDataLines()

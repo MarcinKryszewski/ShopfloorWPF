@@ -9,5 +9,6 @@ namespace Shopfloor.Models.WorkOrders
         public string Description { get; set; } = string.Empty;
         public List<PartModel> Parts { get; set; } = [];
         public LineModel? Line { get; set; }
+        public int LineId { get; set; }
     }
 }

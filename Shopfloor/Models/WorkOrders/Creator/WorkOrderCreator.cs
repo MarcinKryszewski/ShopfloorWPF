@@ -13,7 +13,8 @@ namespace Shopfloor.Models.WorkOrders.Creator
                 Id = random.Next(),
                 Description = workOrder.Description,
                 Parts = workOrder.Parts,
-                Line = workOrder.Line!, // check for error
+                LineId = workOrder.LineId,
+                Line = workOrder.Line,
             };
         }
     }

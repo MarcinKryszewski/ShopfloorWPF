@@ -4,199 +4,199 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Shopfloor.Layout.SidePanel"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        d:DataContext="{d:DesignInstance Type=local:SidePanelViewModel}"
-        d:Height="1020"
-        d:Width="240"
-        mc:Ignorable="d">
+             d:DataContext="{d:DesignInstance Type=local:SidePanelViewModel}"
+             d:Height="1020"
+             d:Width="240"
+             mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <UserControl.Resources>
+                <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
-        <Style TargetType="Button">
-            <Setter Property="Background"
-                    Value="Transparent"/>
-            <Setter Property="HorizontalContentAlignment"
-                    Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment"
-                    Value="Center"/>
-            <Setter Property="Height"
-                    Value="40"/>
-            <Setter Property="BorderThickness"
-                    Value="0"/>
-            <Setter Property="Foreground"
-                    Value="{StaticResource BrushDarkNeutral1000}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="Black"
-                                BorderThickness="0"
-                                CornerRadius="0">
-                            <ContentPresenter HorizontalAlignment="Stretch"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver"
-                        Value="True">
-                    <Setter Property="Foreground"
-                            Value="{StaticResource BrushPurple400}"/>
-                </Trigger>
-                <Trigger Property="IsPressed"
-                        Value="True">
-                    <Setter Property="Foreground"
-                            Value="{StaticResource BrushPurple600}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-        <Style TargetType="TextBlock"
-                x:Key="IconBlock">
-            <Setter Property="FontFamily"
-                    Value="Segoe MDL2 Assets"/>
-            <Setter Property="FontSize"
-                    Value="24"/>
-            <Setter Property="TextAlignment"
-                    Value="Center"/>
-            <Setter Property="VerticalAlignment"
-                    Value="Center"/>
-        </Style>
-        <Style x:Key="ButtonStackPanel"
-                TargetType="StackPanel">
-            <Setter Property="Margin"
-                    Value="20,0,20,0"/>
-            <Setter Property="Orientation"
-                    Value="Horizontal"/>
-        </Style>
-        <Style x:Key="ButtonTextBlock"
-                TargetType="TextBlock">
-            <Setter Property="VerticalAlignment"
-                    Value="Center"/>
-            <Setter Property="FontSize"
-                    Value="14"/>
-            <Setter Property="FontWeight"
-                    Value="SemiBold"/>
+                <Style TargetType="Button">
+                        <Setter Property="Background"
+                                Value="Transparent"/>
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Stretch"/>
+                        <Setter Property="VerticalContentAlignment"
+                                Value="Center"/>
+                        <Setter Property="Height"
+                                Value="40"/>
+                        <Setter Property="BorderThickness"
+                                Value="0"/>
+                        <Setter Property="Foreground"
+                                Value="{StaticResource BrushDarkNeutral1000}"/>
+                        <Setter Property="Template">
+                                <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border Background="{TemplateBinding Background}"
+                                                        BorderBrush="Black"
+                                                        BorderThickness="0"
+                                                        CornerRadius="0">
+                                                        <ContentPresenter HorizontalAlignment="Stretch"/>
+                                                </Border>
+                                        </ControlTemplate>
+                                </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                                <Trigger Property="IsMouseOver"
+                                         Value="True">
+                                        <Setter Property="Foreground"
+                                                Value="{StaticResource BrushPurple400}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed"
+                                         Value="True">
+                                        <Setter Property="Foreground"
+                                                Value="{StaticResource BrushPurple600}"/>
+                                </Trigger>
+                        </Style.Triggers>
+                </Style>
+                <Style TargetType="TextBlock"
+                       x:Key="IconBlock">
+                        <Setter Property="FontFamily"
+                                Value="Segoe MDL2 Assets"/>
+                        <Setter Property="FontSize"
+                                Value="24"/>
+                        <Setter Property="TextAlignment"
+                                Value="Center"/>
+                        <Setter Property="VerticalAlignment"
+                                Value="Center"/>
+                </Style>
+                <Style x:Key="ButtonStackPanel"
+                       TargetType="StackPanel">
+                        <Setter Property="Margin"
+                                Value="20,0,20,0"/>
+                        <Setter Property="Orientation"
+                                Value="Horizontal"/>
+                </Style>
+                <Style x:Key="ButtonTextBlock"
+                       TargetType="TextBlock">
+                        <Setter Property="VerticalAlignment"
+                                Value="Center"/>
+                        <Setter Property="FontSize"
+                                Value="14"/>
+                        <Setter Property="FontWeight"
+                                Value="SemiBold"/>
 
-        </Style>
-        <Style x:Key="TitleTextBlock"
-                TargetType="TextBlock">
-            <Setter Property="FontSize"
-                    Value="14"/>
-            <Setter Property="Height"
-                    Value="40"/>
-            <Setter Property="Padding"
-                    Value="20,22,20,6"/>
-            <Setter Property="FontFamily"
-                    Value="Inter"/>
-            <Setter Property="Typography.Capitals"
-                    Value="AllSmallCaps"/>
-            <Setter Property="Foreground"
-                    Value="{StaticResource BrushDarkNeutral600}"/>
-        </Style>
-    </UserControl.Resources>
+                </Style>
+                <Style x:Key="TitleTextBlock"
+                       TargetType="TextBlock">
+                        <Setter Property="FontSize"
+                                Value="14"/>
+                        <Setter Property="Height"
+                                Value="40"/>
+                        <Setter Property="Padding"
+                                Value="20,22,20,6"/>
+                        <Setter Property="FontFamily"
+                                Value="Inter"/>
+                        <Setter Property="Typography.Capitals"
+                                Value="AllSmallCaps"/>
+                        <Setter Property="Foreground"
+                                Value="{StaticResource BrushDarkNeutral600}"/>
+                </Style>
+        </UserControl.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="64"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        <Grid>
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="64"/>
+                        <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-        <Border Grid.Row="0"
-                Background="{StaticResource BrushPurple1000}">
-            <Grid>
-                <TextBlock Margin="5,5,0,0"
-                        Text="MINIMO"
-                        FontFamily="BankGothic Md BT"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        FontSize="48"
-                        FontWeight="SemiBold"
-                        Foreground="Yellow"/>
-                <TextBlock Margin="4,4,0,0"
-                        Text="MINIMO"
-                        FontFamily="BankGothic Md BT"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        FontSize="48"
-                        FontWeight="SemiBold"
-                        Foreground="Yellow"/>
-                <TextBlock Margin="3,3,0,0"
-                        Text="MINIMO"
-                        FontFamily="BankGothic Md BT"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        FontSize="48"
-                        FontWeight="SemiBold"
-                        Foreground="Yellow"/>
-                <TextBlock Margin="2,2,0,0"
-                        Text="MINIMO"
-                        FontFamily="BankGothic Md BT"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        FontSize="48"
-                        FontWeight="SemiBold"
-                        Foreground="Yellow"/>
-                <TextBlock Margin="1,1,0,0"
-                        Text="MINIMO"
-                        FontFamily="BankGothic Md BT"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        FontSize="48"
-                        FontWeight="SemiBold"
-                        Foreground="Yellow"/>
-                <TextBlock Text="MINIMO"
-                        FontFamily="BankGothic Md BT"
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="Center"
-                        FontSize="48"
-                        FontWeight="SemiBold"
-                        Foreground="{StaticResource BrushPurple200}"/>
-            </Grid>
-        </Border>
-        <ScrollViewer Grid.Row="1"
-                Background="{StaticResource BrushDarkNeutral250}"
-                HorizontalScrollBarVisibility="Disabled"
-                VerticalScrollBarVisibility="Auto">
-            <StackPanel Margin="0,15,0,0"
-                    Orientation="Vertical">
-                <!--#region Mechanik-->
-                <StackPanel>
-                    <TextBlock Style="{StaticResource TitleTextBlock}"
-                            Text="Mechanik"/>
+                <Border Grid.Row="0"
+                        Background="{StaticResource BrushPurple1000}">
+                        <Grid>
+                                <TextBlock Margin="5,5,0,0"
+                                           Text="MINIMO"
+                                           FontFamily="BankGothic Md BT"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           FontSize="48"
+                                           FontWeight="SemiBold"
+                                           Foreground="Yellow"/>
+                                <TextBlock Margin="4,4,0,0"
+                                           Text="MINIMO"
+                                           FontFamily="BankGothic Md BT"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           FontSize="48"
+                                           FontWeight="SemiBold"
+                                           Foreground="Yellow"/>
+                                <TextBlock Margin="3,3,0,0"
+                                           Text="MINIMO"
+                                           FontFamily="BankGothic Md BT"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           FontSize="48"
+                                           FontWeight="SemiBold"
+                                           Foreground="Yellow"/>
+                                <TextBlock Margin="2,2,0,0"
+                                           Text="MINIMO"
+                                           FontFamily="BankGothic Md BT"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           FontSize="48"
+                                           FontWeight="SemiBold"
+                                           Foreground="Yellow"/>
+                                <TextBlock Margin="1,1,0,0"
+                                           Text="MINIMO"
+                                           FontFamily="BankGothic Md BT"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           FontSize="48"
+                                           FontWeight="SemiBold"
+                                           Foreground="Yellow"/>
+                                <TextBlock Text="MINIMO"
+                                           FontFamily="BankGothic Md BT"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           FontSize="48"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource BrushPurple200}"/>
+                        </Grid>
+                </Border>
+                <ScrollViewer Grid.Row="1"
+                              Background="{StaticResource BrushDarkNeutral250}"
+                              HorizontalScrollBarVisibility="Disabled"
+                              VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="0,15,0,0"
+                                    Orientation="Vertical">
+                                <!--#region Mechanik-->
+                                <StackPanel>
+                                        <TextBlock Style="{StaticResource TitleTextBlock}"
+                                                   Text="Mechanik"/>
 
-                    <Button Command="{Binding Path=NavigateMechanicDashboardCommand}">
-                        <StackPanel Style="{StaticResource ButtonStackPanel}"
-                                Background="Transparent">
-                            <Border Width="24"
-                                    Height="24"
-                                    Margin="0,0,9,0"
-                                    Background="Transparent">
-                                <TextBlock Style="{StaticResource IconBlock}"
-                                        Text="&#xF404;"/>
-                            </Border>
-                            <TextBlock Style="{StaticResource ButtonTextBlock}"
-                                    Text="Dashboard mechanika"
-                                    Background="Transparent"/>
+                                        <Button Command="{Binding Path=NavigateWorkOrdersList}">
+                                                <StackPanel Style="{StaticResource ButtonStackPanel}"
+                                                            Background="Transparent">
+                                                        <Border Width="24"
+                                                                Height="24"
+                                                                Margin="0,0,9,0"
+                                                                Background="Transparent">
+                                                                <TextBlock Style="{StaticResource IconBlock}"
+                                                                           Text="&#xF404;"/>
+                                                        </Border>
+                                                        <TextBlock Style="{StaticResource ButtonTextBlock}"
+                                                                   Text="Dashboard mechanika"
+                                                                   Background="Transparent"/>
+                                                </StackPanel>
+                                        </Button>
+                                </StackPanel>
+                                <!--#endregion-->
+
+                                <Button Background="DeepPink"
+                                        Command="{Binding AddTestData}"
+                                        Content="Add Test DATA"
+                                        Visibility="{Binding HasDataInside}"/>
+                                <Label Content="Marcin Kryszewski"
+                                       FontSize="8"
+                                       HorizontalAlignment="Center"
+                                       HorizontalContentAlignment="Stretch"
+                                       Foreground="{StaticResource BrushDarkNeutral700}"/>
+                                <Label Content="v1.0.0"
+                                       FontSize="8"
+                                       HorizontalAlignment="Center"
+                                       HorizontalContentAlignment="Stretch"
+                                       Foreground="{StaticResource BrushDarkNeutral700}"/>
                         </StackPanel>
-                    </Button>
-                </StackPanel>
-                <!--#endregion-->
-
-                <Button Background="DeepPink"
-                        Command="{Binding AddTestData}"
-                        Content="Add Test DATA"
-                        Visibility="{Binding HasDataInside}"/>
-                <Label Content="Marcin Kryszewski"
-                        FontSize="8"
-                        HorizontalAlignment="Center"
-                        HorizontalContentAlignment="Stretch"
-                        Foreground="{StaticResource BrushDarkNeutral700}"/>
-                <Label Content="v1.0.0"
-                        FontSize="8"
-                        HorizontalAlignment="Center"
-                        HorizontalContentAlignment="Stretch"
-                        Foreground="{StaticResource BrushDarkNeutral700}"/>
-            </StackPanel>
-        </ScrollViewer>
-    </Grid>
+                </ScrollViewer>
+        </Grid>
 </UserControl>

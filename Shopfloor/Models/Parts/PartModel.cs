@@ -2,7 +2,8 @@ namespace Shopfloor.Models
 {
     public class PartModel : IModel
     {
-        public int Id { get; set; }
+        required public int Id { get; init; }
         public string Name { get; set; } = string.Empty;
+        public string Unit { get; set; } = "szt.";
     }
 }
