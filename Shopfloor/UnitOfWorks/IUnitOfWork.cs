@@ -1,7 +1,9 @@
-namespace Shopfloor.Models.Interfaces
+using System;
+
+namespace Shopfloor.UnitOfWorks
 {
     internal interface IUnitOfWork
     {
-
+        public event EventHandler? DecoratingCompleted;
     }
 }

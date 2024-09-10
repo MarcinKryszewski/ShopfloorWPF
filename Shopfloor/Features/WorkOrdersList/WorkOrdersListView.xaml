@@ -10,14 +10,68 @@
     <Grid>
         <DataGrid Grid.Row="0"
                   ItemsSource="{Binding Path=WorkOrders}"
-                  AutoGenerateColumns="False">
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True">
+
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Data"
                                     Binding="{Binding CreateDateOnlyDate}"/>
+
                 <DataGridTextColumn Header="Opis"
                                     Binding="{Binding Description}"/>
+
                 <DataGridTextColumn Header="Linia"
-                        Binding="{Binding Line.Name}"/>
+                                    Binding="{Binding Line.Name}"/>
+
+                <DataGridTemplateColumn
+                    Width="auto"
+                    Header="Akcje"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+
+                                <Button Style="{StaticResource gridConfirmButton}"
+                                        Command="{Binding Path=DataContext.WorkOrderConfirmCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                                    <TextBlock
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Style="{StaticResource gridButtonIcon}"
+                                        Text="&#xE930;"/>
+                                </Button>
+
+                                <Button Margin="3,0,0,0"
+                                        Style="{StaticResource gridInfoButton}"
+                                        Command="{Binding Path=DataContext.WorkOrderDetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
+                                    <TextBlock
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Style="{StaticResource gridButtonIcon}"
+                                        Text="&#xE7B3;"/>
+                                </Button>
+
+                                <Button
+                                    Margin="3,0,0,0"
+                                    Command="{Binding Path=DataContext.WorkOrderEditCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    Style="{StaticResource gridEditButton}">
+                                    <TextBlock
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Style="{StaticResource gridButtonIcon}"
+                                        Text="&#xE70F;"/>
+                                </Button>
+
+                                <Button
+                                    Margin="3,0,0,0"
+                                    Command="{Binding Path=DataContext.WorkOrderCancelCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    Style="{StaticResource gridRemoveButton}">
+                                    <TextBlock
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Style="{StaticResource gridButtonIcon}"
+                                        Text="&#xE74D;"/>
+                                </Button>
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

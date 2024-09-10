@@ -105,32 +105,32 @@ FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Utilities\ConstantVariablesCounter.cs
 FN:8,System.Int32 Shopfloor.Utilities.ConstantVariablesCounter::CountConstantVariablesOfClass()
-FNDA:0,System.Int32 Shopfloor.Utilities.ConstantVariablesCounter::CountConstantVariablesOfClass()
-DA:9,0
-DA:10,0
-DA:11,0
-DA:13,0
-DA:15,0
-DA:16,0
-DA:17,0
-DA:18,0
-DA:19,0
-DA:20,0
-DA:21,0
-DA:22,0
-DA:23,0
-BRDA:15,84,1,0
-BRDA:17,45,0,0
+FNDA:2,System.Int32 Shopfloor.Utilities.ConstantVariablesCounter::CountConstantVariablesOfClass()
+DA:9,2
+DA:10,2
+DA:11,2
+DA:13,2
+DA:15,10
+DA:16,2
+DA:17,2
+DA:18,2
+DA:19,2
+DA:20,2
+DA:21,2
+DA:22,2
+DA:23,2
+BRDA:15,84,1,2
+BRDA:17,45,0,2
 BRDA:17,45,1,0
-BRDA:17,64,0,0
-BRDA:17,64,1,0
-BRDA:15,84,0,0
+BRDA:17,64,0,2
+BRDA:17,64,1,2
+BRDA:15,84,0,2
 LF:13
-LH:0
+LH:13
 BRF:6
-BRH:0
+BRH:5
 FNF:1
-FNH:0
+FNH:1
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Utilities\DataGridWidthRefresh.cs
 FN:8,System.Void Shopfloor.Utilities.DataGridWidthRefresh::RefreshWidth(System.Object,System.Windows.Data.DataTransferEventArgs,System.Int32)
@@ -155,209 +155,256 @@ FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Utilities\RemovePolishCharacters.cs
 FN:5,System.String Shopfloor.Utilities.RemovePolishCharacters::Remove(System.String)
-FNDA:0,System.String Shopfloor.Utilities.RemovePolishCharacters::Remove(System.String)
-DA:6,0
-DA:7,0
-DA:8,0
-DA:10,0
-DA:11,0
-DA:12,0
-DA:13,0
-DA:14,0
-DA:15,0
-BRDA:10,56,1,0
-BRDA:10,56,0,0
+FNDA:8,System.String Shopfloor.Utilities.RemovePolishCharacters::Remove(System.String)
+DA:6,8
+DA:7,8
+DA:8,8
+DA:10,304
+DA:11,144
+DA:12,144
+DA:13,144
+DA:14,8
+DA:15,8
+BRDA:10,56,1,144
+BRDA:10,56,0,8
 LF:9
-LH:0
+LH:9
 BRF:2
-BRH:0
+BRH:2
 FNF:1
-FNH:0
+FNH:1
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Utilities\CustomList\SearchableModelList.cs
 FN:24,System.Int32 Shopfloor.Utilities.CustomList.SearchableModelList::get_CurrentPage()
-FNDA:0,System.Int32 Shopfloor.Utilities.CustomList.SearchableModelList::get_CurrentPage()
-DA:25,0
+FNDA:50,System.Int32 Shopfloor.Utilities.CustomList.SearchableModelList::get_CurrentPage()
+DA:25,50
 FN:26,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::set_CurrentPage(System.Int32)
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::set_CurrentPage(System.Int32)
-DA:27,0
-DA:28,0
-DA:29,0
-DA:30,0
+FNDA:24,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::set_CurrentPage(System.Int32)
+DA:27,24
+DA:28,24
+DA:29,24
+DA:30,24
 FN:31,System.String Shopfloor.Utilities.CustomList.SearchableModelList::get_CurrentPageText()
-FNDA:0,System.String Shopfloor.Utilities.CustomList.SearchableModelList::get_CurrentPageText()
-DA:32,0
+FNDA:3,System.String Shopfloor.Utilities.CustomList.SearchableModelList::get_CurrentPageText()
+DA:32,3
 FN:32,System.Collections.Generic.IEnumerable`1<Shopfloor.Interfaces.ISearchableModel> Shopfloor.Utilities.CustomList.SearchableModelList::get_Data()
-FNDA:0,System.Collections.Generic.IEnumerable`1<Shopfloor.Interfaces.ISearchableModel> Shopfloor.Utilities.CustomList.SearchableModelList::get_Data()
-DA:33,0
+FNDA:35,System.Collections.Generic.IEnumerable`1<Shopfloor.Interfaces.ISearchableModel> Shopfloor.Utilities.CustomList.SearchableModelList::get_Data()
+DA:33,35
 FN:33,System.Collections.Generic.List`1<Shopfloor.Interfaces.ISearchableModel> Shopfloor.Utilities.CustomList.SearchableModelList::get_DataDisplay()
-FNDA:0,System.Collections.Generic.List`1<Shopfloor.Interfaces.ISearchableModel> Shopfloor.Utilities.CustomList.SearchableModelList::get_DataDisplay()
-DA:34,0
+FNDA:5,System.Collections.Generic.List`1<Shopfloor.Interfaces.ISearchableModel> Shopfloor.Utilities.CustomList.SearchableModelList::get_DataDisplay()
+DA:34,5
 FN:36,System.String Shopfloor.Utilities.CustomList.SearchableModelList::get_FilterText()
 FNDA:0,System.String Shopfloor.Utilities.CustomList.SearchableModelList::get_FilterText()
 DA:37,0
 FN:38,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::set_FilterText(System.String)
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::set_FilterText(System.String)
-DA:39,0
-DA:40,0
-DA:41,0
-DA:42,0
+FNDA:4,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::set_FilterText(System.String)
+DA:39,4
+DA:40,4
+DA:41,4
+DA:42,4
 FN:44,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PageFirst()
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PageFirst()
-DA:45,0
-DA:46,0
-DA:47,0
-DA:48,0
+FNDA:2,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PageFirst()
+DA:45,2
+DA:46,2
+DA:47,2
+DA:48,2
 FN:49,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PageLast()
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PageLast()
-DA:50,0
-DA:51,0
-DA:52,0
-DA:53,0
+FNDA:2,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PageLast()
+DA:50,2
+DA:51,2
+DA:52,2
+DA:53,2
 FN:54,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PageNext()
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PageNext()
-DA:55,0
-DA:56,0
-DA:57,0
-DA:58,0
-DA:59,0
-DA:60,0
-DA:61,0
-DA:62,0
-BRDA:57,36,0,0
-BRDA:57,36,1,0
+FNDA:13,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PageNext()
+DA:55,13
+DA:56,13
+DA:57,13
+DA:58,6
+DA:59,6
+DA:60,6
+DA:61,6
+DA:62,13
+BRDA:57,36,0,6
+BRDA:57,36,1,13
 FN:63,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PagePrev()
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PagePrev()
-DA:64,0
-DA:65,0
-DA:66,0
-DA:67,0
-DA:68,0
-DA:69,0
-DA:70,0
-BRDA:65,12,0,0
-BRDA:65,12,1,0
+FNDA:4,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PagePrev()
+DA:64,4
+DA:65,4
+DA:66,2
+DA:67,2
+DA:68,2
+DA:69,2
+DA:70,4
+BRDA:65,12,0,2
+BRDA:65,12,1,4
 FN:71,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PageSet(System.Int32)
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PageSet(System.Int32)
-DA:72,0
-DA:73,0
-DA:74,0
-DA:75,0
-DA:78,0
-DA:79,0
-DA:80,0
-BRDA:73,7,0,0
-BRDA:73,7,1,0
-BRDA:78,20,0,0
-BRDA:78,20,1,0
+FNDA:14,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::PageSet(System.Int32)
+DA:72,14
+DA:73,14
+DA:74,2
+DA:75,2
+DA:78,12
+DA:79,12
+DA:80,14
+BRDA:73,7,0,2
+BRDA:73,7,1,12
+BRDA:78,20,0,10
+BRDA:78,20,1,2
 FN:101,System.Int32 Shopfloor.Utilities.CustomList.SearchableModelList::MaxPage()
-FNDA:0,System.Int32 Shopfloor.Utilities.CustomList.SearchableModelList::MaxPage()
-DA:102,0
-DA:103,0
-DA:104,0
-DA:105,0
+FNDA:48,System.Int32 Shopfloor.Utilities.CustomList.SearchableModelList::MaxPage()
+DA:102,48
+DA:103,48
+DA:104,48
+DA:105,48
 FN:106,System.Threading.Tasks.Task Shopfloor.Utilities.CustomList.SearchableModelList::PageChanged()
-FNDA:0,System.Threading.Tasks.Task Shopfloor.Utilities.CustomList.SearchableModelList::PageChanged()
-DA:107,0
-DA:108,0
-DA:109,0
+FNDA:29,System.Threading.Tasks.Task Shopfloor.Utilities.CustomList.SearchableModelList::PageChanged()
+DA:107,29
+DA:108,29
+DA:109,29
 DA:110,0
 DA:111,0
 DA:112,0
-DA:114,0
-DA:116,0
-DA:118,0
-DA:119,0
-DA:120,0
-DA:122,0
-DA:123,0
+DA:114,29
+DA:116,29
+DA:118,29
+DA:119,29
+DA:120,29
+DA:122,29
+DA:123,29
 BRDA:109,19,0,0
-BRDA:109,19,1,0
+BRDA:109,19,1,29
 FN:128,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::OnPropertyChanged(System.String)
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::OnPropertyChanged(System.String)
-DA:129,0
-DA:130,0
-DA:131,0
-BRDA:130,8,0,0
+FNDA:111,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::OnPropertyChanged(System.String)
+DA:129,111
+DA:130,111
+DA:131,111
+BRDA:130,8,0,111
 BRDA:130,8,1,0
 FN:12,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::.ctor(System.Collections.Generic.IEnumerable`1<Shopfloor.Interfaces.ISearchableModel>,System.Int32)
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::.ctor(System.Collections.Generic.IEnumerable`1<Shopfloor.Interfaces.ISearchableModel>,System.Int32)
-DA:13,0
-DA:14,0
+FNDA:30,System.Void Shopfloor.Utilities.CustomList.SearchableModelList::.ctor(System.Collections.Generic.IEnumerable`1<Shopfloor.Interfaces.ISearchableModel>,System.Int32)
+DA:13,30
+DA:14,30
+DA:16,30
+DA:17,30
+DA:18,30
+DA:19,30
+DA:20,30
+DA:21,30
+DA:22,30
+FN:96,System.Boolean Shopfloor.Utilities.CustomList.SearchableModelList/<>c__DisplayClass26_0::<FilterList>b__0(Shopfloor.Interfaces.ISearchableModel)
+FNDA:15,System.Boolean Shopfloor.Utilities.CustomList.SearchableModelList/<>c__DisplayClass26_0::<FilterList>b__0(Shopfloor.Interfaces.ISearchableModel)
+DA:97,15
+FN:86,System.Void Shopfloor.Utilities.CustomList.SearchableModelList/<FilterList>d__26::MoveNext()
+FNDA:5,System.Void Shopfloor.Utilities.CustomList.SearchableModelList/<FilterList>d__26::MoveNext()
+DA:87,5
+DA:88,5
+DA:89,2
+DA:90,2
+DA:91,2
+DA:92,2
+DA:95,3
+DA:96,3
+DA:98,3
+DA:99,3
+DA:100,5
+BRDA:88,58,0,2
+BRDA:88,58,1,3
+FN:81,System.Void Shopfloor.Utilities.CustomList.SearchableModelList/<ReloadSourceData>d__25::MoveNext()
+FNDA:1,System.Void Shopfloor.Utilities.CustomList.SearchableModelList/<ReloadSourceData>d__25::MoveNext()
+DA:82,1
+DA:83,1
+DA:84,1
+DA:85,1
+LF:88
+LH:84
+BRF:14
+BRH:12
+FNF:19
+FNH:18
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Utilities\CustomList\CustomListCommands\NextPageCommand.cs
+FN:12,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.NextPageCommand::Execute(System.Object)
+FNDA:4,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.NextPageCommand::Execute(System.Object)
+DA:13,4
+DA:14,4
+DA:15,4
+FN:7,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.NextPageCommand::.ctor(Shopfloor.Utilities.CustomList.SearchableModelList)
+FNDA:4,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.NextPageCommand::.ctor(Shopfloor.Utilities.CustomList.SearchableModelList)
+DA:8,4
+DA:9,4
+DA:10,4
+DA:11,4
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Utilities\CustomList\CustomListCommands\PreviousPageCommand.cs
+FN:12,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.PreviousPageCommand::Execute(System.Object)
+FNDA:2,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.PreviousPageCommand::Execute(System.Object)
+DA:13,2
+DA:14,2
+DA:15,2
+FN:7,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.PreviousPageCommand::.ctor(Shopfloor.Utilities.CustomList.SearchableModelList)
+FNDA:2,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.PreviousPageCommand::.ctor(Shopfloor.Utilities.CustomList.SearchableModelList)
+DA:8,2
+DA:9,2
+DA:10,2
+DA:11,2
+LF:7
+LH:7
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\UnitOfWorks\WorkOrdersListRoot.cs
+FN:25,System.Void Shopfloor.UnitOfWorks.WorkOrdersListRoot::OnDecoratingCompleted(System.EventArgs)
+FNDA:0,System.Void Shopfloor.UnitOfWorks.WorkOrdersListRoot::OnDecoratingCompleted(System.EventArgs)
+DA:26,0
+BRDA:26,7,0,0
+BRDA:26,7,1,0
+FN:14,System.Void Shopfloor.UnitOfWorks.WorkOrdersListRoot::.ctor(Shopfloor.Models.Interfaces.IStore`1<Shopfloor.Models.WorkOrders.WorkOrderModel>,Shopfloor.Models.Interfaces.IStore`1<Shopfloor.Models.Lines.LineModel>)
+FNDA:0,System.Void Shopfloor.UnitOfWorks.WorkOrdersListRoot::.ctor(Shopfloor.Models.Interfaces.IStore`1<Shopfloor.Models.WorkOrders.WorkOrderModel>,Shopfloor.Models.Interfaces.IStore`1<Shopfloor.Models.Lines.LineModel>)
+DA:15,0
 DA:16,0
 DA:17,0
 DA:18,0
 DA:19,0
-DA:20,0
-DA:21,0
+FN:36,System.Int32 Shopfloor.UnitOfWorks.WorkOrdersListRoot/<>c::<DecorateWorkOders>b__8_0(Shopfloor.Models.Lines.LineModel)
+FNDA:0,System.Int32 Shopfloor.UnitOfWorks.WorkOrdersListRoot/<>c::<DecorateWorkOders>b__8_0(Shopfloor.Models.Lines.LineModel)
+DA:37,0
+FN:27,System.Void Shopfloor.UnitOfWorks.WorkOrdersListRoot/<DecorateWorkOders>d__8::MoveNext()
+FNDA:0,System.Void Shopfloor.UnitOfWorks.WorkOrdersListRoot/<DecorateWorkOders>d__8::MoveNext()
+DA:28,0
+DA:29,0
+DA:30,0
+DA:32,0
+DA:34,0
+DA:35,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+BRDA:38,378,1,0
+BRDA:40,335,0,0
+BRDA:40,335,1,0
+BRDA:38,378,0,0
+FN:21,System.Void Shopfloor.UnitOfWorks.WorkOrdersListRoot/<GetWorkOrders>d__6::MoveNext()
+FNDA:0,System.Void Shopfloor.UnitOfWorks.WorkOrdersListRoot/<GetWorkOrders>d__6::MoveNext()
 DA:22,0
-FN:96,System.Boolean Shopfloor.Utilities.CustomList.SearchableModelList/<>c__DisplayClass26_0::<FilterList>b__0(Shopfloor.Interfaces.ISearchableModel)
-FNDA:0,System.Boolean Shopfloor.Utilities.CustomList.SearchableModelList/<>c__DisplayClass26_0::<FilterList>b__0(Shopfloor.Interfaces.ISearchableModel)
-DA:97,0
-FN:86,System.Void Shopfloor.Utilities.CustomList.SearchableModelList/<FilterList>d__26::MoveNext()
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.SearchableModelList/<FilterList>d__26::MoveNext()
-DA:87,0
-DA:88,0
-DA:89,0
-DA:90,0
-DA:91,0
-DA:92,0
-DA:95,0
-DA:96,0
-DA:98,0
-DA:99,0
-DA:100,0
-BRDA:88,58,0,0
-BRDA:88,58,1,0
-FN:81,System.Void Shopfloor.Utilities.CustomList.SearchableModelList/<ReloadSourceData>d__25::MoveNext()
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.SearchableModelList/<ReloadSourceData>d__25::MoveNext()
-DA:82,0
-DA:83,0
-DA:84,0
-DA:85,0
-LF:88
+DA:23,0
+DA:24,0
+DA:25,0
+LF:23
 LH:0
-BRF:14
+BRF:6
 BRH:0
-FNF:19
-FNH:0
-end_of_record
-SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Utilities\CustomList\CustomListCommands\NextPageCommand.cs
-FN:12,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.NextPageCommand::Execute(System.Object)
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.NextPageCommand::Execute(System.Object)
-DA:13,0
-DA:14,0
-DA:15,0
-FN:7,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.NextPageCommand::.ctor(Shopfloor.Utilities.CustomList.SearchableModelList)
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.NextPageCommand::.ctor(Shopfloor.Utilities.CustomList.SearchableModelList)
-DA:8,0
-DA:9,0
-DA:10,0
-DA:11,0
-LF:7
-LH:0
-BRF:0
-BRH:0
-FNF:2
-FNH:0
-end_of_record
-SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Utilities\CustomList\CustomListCommands\PreviousPageCommand.cs
-FN:12,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.PreviousPageCommand::Execute(System.Object)
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.PreviousPageCommand::Execute(System.Object)
-DA:13,0
-DA:14,0
-DA:15,0
-FN:7,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.PreviousPageCommand::.ctor(Shopfloor.Utilities.CustomList.SearchableModelList)
-FNDA:0,System.Void Shopfloor.Utilities.CustomList.CustomListCommands.PreviousPageCommand::.ctor(Shopfloor.Utilities.CustomList.SearchableModelList)
-DA:8,0
-DA:9,0
-DA:10,0
-DA:11,0
-LF:7
-LH:0
-BRF:0
-BRH:0
-FNF:2
+FNF:5
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Themes\Controls\SearchBox\SearchBox.xaml
@@ -600,8 +647,8 @@ DA:13,0
 BRDA:13,7,0,0
 BRDA:13,7,1,0
 FN:13,System.Void modreq(System.Runtime.CompilerServices.IsExternalInit) Shopfloor.Shared.ViewModels.ViewModelBase::set_DispatcherWrapper(Shopfloor.Shared.Dispatchers.IDispatcherWrapper)
-FNDA:0,System.Void modreq(System.Runtime.CompilerServices.IsExternalInit) Shopfloor.Shared.ViewModels.ViewModelBase::set_DispatcherWrapper(Shopfloor.Shared.Dispatchers.IDispatcherWrapper)
-DA:14,0
+FNDA:1,System.Void modreq(System.Runtime.CompilerServices.IsExternalInit) Shopfloor.Shared.ViewModels.ViewModelBase::set_DispatcherWrapper(Shopfloor.Shared.Dispatchers.IDispatcherWrapper)
+DA:14,1
 FN:16,System.Void Shopfloor.Shared.ViewModels.ViewModelBase::Dispose()
 FNDA:0,System.Void Shopfloor.Shared.ViewModels.ViewModelBase::Dispose()
 DA:17,0
@@ -614,11 +661,11 @@ DA:22,0
 BRDA:21,8,0,0
 BRDA:21,8,1,0
 LF:7
-LH:0
+LH:1
 BRF:4
 BRH:0
 FNF:4
-FNH:0
+FNH:1
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Shared\Stores\ModalNavigationStore.cs
 FN:12,Shopfloor.Shared.ViewModels.ViewModelBase Shopfloor.Shared.Stores.ModalNavigationStore::get_CurrentViewModel()
@@ -718,10 +765,10 @@ DA:21,3
 DA:23,7
 DA:25,40
 DA:26,13
-DA:27,13
 DA:28,13
 DA:29,13
-DA:30,7
+DA:30,13
+DA:31,7
 BRDA:18,29,0,3
 BRDA:18,29,1,7
 BRDA:23,47,0,0
@@ -835,28 +882,28 @@ FN:17,System.Void Shopfloor.Shared.Commands.RelayCommand::remove_CanExecuteChang
 FNDA:0,System.Void Shopfloor.Shared.Commands.RelayCommand::remove_CanExecuteChanged(System.EventHandler)
 DA:18,0
 FN:19,System.Boolean Shopfloor.Shared.Commands.RelayCommand::CanExecute(System.Object)
-FNDA:0,System.Boolean Shopfloor.Shared.Commands.RelayCommand::CanExecute(System.Object)
-DA:20,0
-BRDA:20,8,0,0
-BRDA:20,8,1,0
+FNDA:1,System.Boolean Shopfloor.Shared.Commands.RelayCommand::CanExecute(System.Object)
+DA:20,1
+BRDA:20,8,0,1
+BRDA:20,8,1,1
 FN:20,System.Void Shopfloor.Shared.Commands.RelayCommand::Execute(System.Object)
-FNDA:0,System.Void Shopfloor.Shared.Commands.RelayCommand::Execute(System.Object)
-DA:21,0
-BRDA:21,8,0,0
-BRDA:21,8,1,0
+FNDA:1,System.Void Shopfloor.Shared.Commands.RelayCommand::Execute(System.Object)
+DA:21,1
+BRDA:21,8,0,1
+BRDA:21,8,1,1
 FN:9,System.Void Shopfloor.Shared.Commands.RelayCommand::.ctor(System.Action`1<System.Object>,System.Predicate`1<System.Object>)
-FNDA:0,System.Void Shopfloor.Shared.Commands.RelayCommand::.ctor(System.Action`1<System.Object>,System.Predicate`1<System.Object>)
-DA:10,0
-DA:11,0
-DA:12,0
-DA:13,0
-DA:14,0
+FNDA:3,System.Void Shopfloor.Shared.Commands.RelayCommand::.ctor(System.Action`1<System.Object>,System.Predicate`1<System.Object>)
+DA:10,3
+DA:11,3
+DA:12,3
+DA:13,3
+DA:14,3
 LF:9
-LH:0
+LH:7
 BRF:4
-BRH:0
+BRH:4
 FNF:5
-FNH:0
+FNH:3
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Shared\BaseClasses\DataModel.cs
 FN:11,System.Boolean Shopfloor.Shared.BaseClasses.DataModel::get_HasErrors()
@@ -1020,61 +1067,117 @@ FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Services\NavigationServices\NavigationCommand.cs
 FN:15,System.Windows.Input.ICommand Shopfloor.Services.NavigationServices.NavigationCommand`1::Navigate()
-FNDA:0,System.Windows.Input.ICommand Shopfloor.Services.NavigationServices.NavigationCommand`1::Navigate()
-DA:16,0
-DA:17,0
-DA:18,0
-BRDA:17,19,0,0
-BRDA:17,19,1,0
+FNDA:3,System.Windows.Input.ICommand Shopfloor.Services.NavigationServices.NavigationCommand`1::Navigate()
+DA:16,3
+DA:17,7
+DA:18,3
+BRDA:17,19,0,1
+BRDA:17,19,1,3
 FN:10,System.Void Shopfloor.Services.NavigationServices.NavigationCommand`1::.ctor(Shopfloor.Services.NavigationServices.INavigationService)
-FNDA:0,System.Void Shopfloor.Services.NavigationServices.NavigationCommand`1::.ctor(Shopfloor.Services.NavigationServices.INavigationService)
-DA:11,0
-DA:12,0
-DA:13,0
-DA:14,0
+FNDA:3,System.Void Shopfloor.Services.NavigationServices.NavigationCommand`1::.ctor(Shopfloor.Services.NavigationServices.INavigationService)
+DA:11,3
+DA:12,3
+DA:13,3
+DA:14,3
 LF:7
-LH:0
+LH:7
 BRF:2
-BRH:0
+BRH:2
 FNF:2
-FNH:0
+FNH:2
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Services\NavigationServices\NavigationService.cs
 FN:19,System.Void Shopfloor.Services.NavigationServices.NavigationService::NavigateTo()
-FNDA:0,System.Void Shopfloor.Services.NavigationServices.NavigationService::NavigateTo()
-DA:20,0
-DA:21,0
-DA:22,0
-DA:23,0
+FNDA:1,System.Void Shopfloor.Services.NavigationServices.NavigationService::NavigateTo()
+DA:20,1
+DA:21,1
+DA:22,1
+DA:23,1
 FN:26,Shopfloor.Shared.ViewModels.ViewModelBase Shopfloor.Services.NavigationServices.NavigationService::CreateViewModel()
-FNDA:0,Shopfloor.Shared.ViewModels.ViewModelBase Shopfloor.Services.NavigationServices.NavigationService::CreateViewModel()
-DA:27,0
-DA:29,0
-DA:30,0
+FNDA:1,Shopfloor.Shared.ViewModels.ViewModelBase Shopfloor.Services.NavigationServices.NavigationService::CreateViewModel()
+DA:27,1
+DA:29,1
+DA:30,1
 DA:32,0
 DA:33,0
 DA:34,0
-DA:36,0
+DA:36,1
 FN:12,System.Void Shopfloor.Services.NavigationServices.NavigationService::.ctor(Shopfloor.Shared.Stores.INavigationStore,System.Func`2<System.Type,Shopfloor.Shared.ViewModels.ViewModelBase>)
-FNDA:0,System.Void Shopfloor.Services.NavigationServices.NavigationService::.ctor(Shopfloor.Shared.Stores.INavigationStore,System.Func`2<System.Type,Shopfloor.Shared.ViewModels.ViewModelBase>)
-DA:13,0
-DA:14,0
-DA:15,0
-DA:16,0
-DA:17,0
+FNDA:1,System.Void Shopfloor.Services.NavigationServices.NavigationService::.ctor(Shopfloor.Shared.Stores.INavigationStore,System.Func`2<System.Type,Shopfloor.Shared.ViewModels.ViewModelBase>)
+DA:13,1
+DA:14,1
+DA:15,1
+DA:16,1
+DA:17,1
 LF:16
-LH:0
+LH:13
 BRF:0
 BRH:0
 FNF:3
+FNH:3
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\Parts\PartModel.cs
+FN:4,System.Int32 Shopfloor.Models.PartModel::get_Id()
+FNDA:2,System.Int32 Shopfloor.Models.PartModel::get_Id()
+DA:5,2
+FN:5,System.String Shopfloor.Models.PartModel::get_Name()
+FNDA:4,System.String Shopfloor.Models.PartModel::get_Name()
+DA:6,4
+FN:6,System.String Shopfloor.Models.PartModel::get_Unit()
+FNDA:2,System.String Shopfloor.Models.PartModel::get_Unit()
+DA:7,2
+LF:3
+LH:3
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\WorkOrderParts\WorkOrderPartModel.cs
+FN:6,System.Int32 Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_Id()
+FNDA:0,System.Int32 Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_Id()
+DA:7,0
+FN:7,System.Int32 Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_PartId()
+FNDA:0,System.Int32 Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_PartId()
+DA:8,0
+FN:8,System.Int32 Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_WorkOrderId()
+FNDA:0,System.Int32 Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_WorkOrderId()
+DA:9,0
+FN:9,Shopfloor.Models.PartModel Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_Part()
+FNDA:0,Shopfloor.Models.PartModel Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_Part()
+DA:10,0
+FN:10,Shopfloor.Models.WorkOrders.WorkOrderModel Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_WorkOrder()
+FNDA:0,Shopfloor.Models.WorkOrders.WorkOrderModel Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_WorkOrder()
+DA:11,0
+FN:11,System.Double Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_Amount()
+FNDA:0,System.Double Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_Amount()
+DA:12,0
+FN:12,System.Double Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_ValuePerPiece()
+FNDA:0,System.Double Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_ValuePerPiece()
+DA:13,0
+FN:13,System.Double Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_TotalValue()
+FNDA:0,System.Double Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_TotalValue()
+DA:14,0
+FN:14,System.String Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_Unit()
+FNDA:0,System.String Shopfloor.Models.WorkOrderParts.WorkOrderPartModel::get_Unit()
+DA:15,0
+BRDA:15,7,0,0
+BRDA:15,7,1,0
+BRDA:15,19,0,0
+BRDA:15,19,1,0
+LF:9
+LH:0
+BRF:4
+BRH:0
+FNF:9
 FNH:0
 end_of_record
-SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\PartModel.cs
-FN:4,System.Int32 Shopfloor.Models.PartModel::get_Id()
-FNDA:0,System.Int32 Shopfloor.Models.PartModel::get_Id()
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\Machines\MachineModel.cs
+FN:4,System.Int32 Shopfloor.Models.Machines.MachineModel::get_Id()
+FNDA:0,System.Int32 Shopfloor.Models.Machines.MachineModel::get_Id()
 DA:5,0
-FN:5,System.String Shopfloor.Models.PartModel::get_Name()
-FNDA:0,System.String Shopfloor.Models.PartModel::get_Name()
+FN:5,System.String Shopfloor.Models.Machines.MachineModel::get_Name()
+FNDA:0,System.String Shopfloor.Models.Machines.MachineModel::get_Name()
 DA:6,0
 LF:2
 LH:0
@@ -1083,41 +1186,287 @@ BRH:0
 FNF:2
 FNH:0
 end_of_record
-SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\WorkOrders\WorkOrderDTO.cs
-FN:6,System.String Shopfloor.Models.WorkOrders.WorkOrderDto::get_Description()
-FNDA:0,System.String Shopfloor.Models.WorkOrders.WorkOrderDto::get_Description()
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\Lines\LineDTO.cs
+FN:6,System.String Shopfloor.Models.Lines.LineDto::get_Name()
+FNDA:0,System.String Shopfloor.Models.Lines.LineDto::get_Name()
 DA:7,0
-FN:7,System.Collections.Generic.List`1<Shopfloor.Models.PartModel> Shopfloor.Models.WorkOrders.WorkOrderDto::get_Parts()
-FNDA:0,System.Collections.Generic.List`1<Shopfloor.Models.PartModel> Shopfloor.Models.WorkOrders.WorkOrderDto::get_Parts()
-DA:8,0
-LF:2
+LF:1
 LH:0
 BRF:0
 BRH:0
-FNF:2
+FNF:1
 FNH:0
 end_of_record
-SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\WorkOrders\WorkOrderModel.cs
-FN:6,System.Int32 Shopfloor.Models.WorkOrders.WorkOrderModel::get_Id()
-FNDA:0,System.Int32 Shopfloor.Models.WorkOrders.WorkOrderModel::get_Id()
-DA:7,0
-FN:7,System.String Shopfloor.Models.WorkOrders.WorkOrderModel::get_Description()
-FNDA:0,System.String Shopfloor.Models.WorkOrders.WorkOrderModel::get_Description()
-DA:8,0
-FN:8,System.Collections.Generic.List`1<Shopfloor.Models.PartModel> Shopfloor.Models.WorkOrders.WorkOrderModel::get_Parts()
-FNDA:0,System.Collections.Generic.List`1<Shopfloor.Models.PartModel> Shopfloor.Models.WorkOrders.WorkOrderModel::get_Parts()
-DA:9,0
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\Lines\LineModel.cs
+FN:7,System.Int32 Shopfloor.Models.Lines.LineModel::get_Id()
+FNDA:2,System.Int32 Shopfloor.Models.Lines.LineModel::get_Id()
+DA:8,2
+FN:8,System.String Shopfloor.Models.Lines.LineModel::get_Name()
+FNDA:4,System.String Shopfloor.Models.Lines.LineModel::get_Name()
+DA:9,4
+FN:9,System.Collections.Generic.List`1<Shopfloor.Models.Machines.MachineModel> Shopfloor.Models.Lines.LineModel::get_Machines()
+FNDA:2,System.Collections.Generic.List`1<Shopfloor.Models.Machines.MachineModel> Shopfloor.Models.Lines.LineModel::get_Machines()
+DA:10,2
 LF:3
-LH:0
+LH:3
 BRF:0
 BRH:0
 FNF:3
+FNH:3
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\Lines\LineRepository.cs
+FN:10,System.Threading.Tasks.Task`1<Shopfloor.Models.Lines.LineModel> Shopfloor.Models.Lines.LineRepository::Create()
+FNDA:0,System.Threading.Tasks.Task`1<Shopfloor.Models.Lines.LineModel> Shopfloor.Models.Lines.LineRepository::Create()
+DA:11,0
+DA:12,0
+FN:15,System.Threading.Tasks.Task`1<Shopfloor.Models.Lines.LineModel> Shopfloor.Models.Lines.LineRepository::Delete()
+FNDA:0,System.Threading.Tasks.Task`1<Shopfloor.Models.Lines.LineModel> Shopfloor.Models.Lines.LineRepository::Delete()
+DA:16,0
+DA:17,0
+FN:34,System.Threading.Tasks.Task`1<Shopfloor.Models.Lines.LineModel> Shopfloor.Models.Lines.LineRepository::Update()
+FNDA:0,System.Threading.Tasks.Task`1<Shopfloor.Models.Lines.LineModel> Shopfloor.Models.Lines.LineRepository::Update()
+DA:35,0
+DA:36,0
+FN:20,System.Void Shopfloor.Models.Lines.LineRepository/<GetData>d__2::MoveNext()
+FNDA:0,System.Void Shopfloor.Models.Lines.LineRepository/<GetData>d__2::MoveNext()
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:30,0
+DA:31,0
+DA:32,0
+LF:17
+LH:0
+BRF:0
+BRH:0
+FNF:4
 FNH:0
 end_of_record
-SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\WorkOrders\Creator\WorkOrderCreator.cs
-FN:7,Shopfloor.Models.WorkOrders.WorkOrderModel Shopfloor.Models.WorkOrders.Creator.WorkOrderCreator::Create(Shopfloor.Models.WorkOrders.WorkOrderDto)
-FNDA:0,Shopfloor.Models.WorkOrders.WorkOrderModel Shopfloor.Models.WorkOrders.Creator.WorkOrderCreator::Create(Shopfloor.Models.WorkOrders.WorkOrderDto)
-DA:8,0
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\Lines\LineStore.cs
+FN:9,System.Void Shopfloor.Models.Lines.LineStore::.ctor(Shopfloor.Models.Lines.LineRepository)
+FNDA:0,System.Void Shopfloor.Models.Lines.LineStore::.ctor(Shopfloor.Models.Lines.LineRepository)
+DA:10,0
+DA:11,0
+DA:13,0
+DA:14,0
+DA:15,0
+DA:16,0
+FN:18,System.Void Shopfloor.Models.Lines.LineStore/<GetDataAsync>d__4::MoveNext()
+FNDA:0,System.Void Shopfloor.Models.Lines.LineStore/<GetDataAsync>d__4::MoveNext()
+DA:19,0
+DA:20,0
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:25,0
+BRDA:20,31,0,0
+BRDA:20,31,1,0
+FN:40,System.Void Shopfloor.Models.Lines.LineStore/<LoadData>d__6::MoveNext()
+FNDA:0,System.Void Shopfloor.Models.Lines.LineStore/<LoadData>d__6::MoveNext()
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+FN:26,System.Void Shopfloor.Models.Lines.LineStore/<ReloadData>d__5::MoveNext()
+FNDA:0,System.Void Shopfloor.Models.Lines.LineStore/<ReloadData>d__5::MoveNext()
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+LF:30
+LH:0
+BRF:2
+BRH:0
+FNF:4
+FNH:0
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\WorkOrders\WorkOrderDTO.cs
+FN:9,System.String Shopfloor.Models.WorkOrders.WorkOrderDto::get_Description()
+FNDA:5,System.String Shopfloor.Models.WorkOrders.WorkOrderDto::get_Description()
+DA:10,5
+FN:10,System.Collections.Generic.List`1<Shopfloor.Models.PartModel> Shopfloor.Models.WorkOrders.WorkOrderDto::get_Parts()
+FNDA:5,System.Collections.Generic.List`1<Shopfloor.Models.PartModel> Shopfloor.Models.WorkOrders.WorkOrderDto::get_Parts()
+DA:11,5
+FN:11,System.Collections.Generic.List`1<System.Int32> Shopfloor.Models.WorkOrders.WorkOrderDto::get_PartsId()
+FNDA:5,System.Collections.Generic.List`1<System.Int32> Shopfloor.Models.WorkOrders.WorkOrderDto::get_PartsId()
+DA:12,5
+FN:12,Shopfloor.Models.Lines.LineModel Shopfloor.Models.WorkOrders.WorkOrderDto::get_Line()
+FNDA:3,Shopfloor.Models.Lines.LineModel Shopfloor.Models.WorkOrders.WorkOrderDto::get_Line()
+DA:13,3
+FN:13,System.Int32 Shopfloor.Models.WorkOrders.WorkOrderDto::get_LineId()
+FNDA:3,System.Int32 Shopfloor.Models.WorkOrders.WorkOrderDto::get_LineId()
+DA:14,3
+FN:14,System.DateTime Shopfloor.Models.WorkOrders.WorkOrderDto::get_CreateDate()
+FNDA:3,System.DateTime Shopfloor.Models.WorkOrders.WorkOrderDto::get_CreateDate()
+DA:15,3
+LF:6
+LH:6
+BRF:0
+BRH:0
+FNF:6
+FNH:6
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\WorkOrders\WorkOrderModel.cs
+FN:8,System.Int32 Shopfloor.Models.WorkOrders.WorkOrderModel::get_Id()
+FNDA:28,System.Int32 Shopfloor.Models.WorkOrders.WorkOrderModel::get_Id()
+DA:9,28
+FN:9,System.String Shopfloor.Models.WorkOrders.WorkOrderModel::get_Description()
+FNDA:54,System.String Shopfloor.Models.WorkOrders.WorkOrderModel::get_Description()
+DA:10,54
+FN:10,System.Collections.Generic.List`1<Shopfloor.Models.PartModel> Shopfloor.Models.WorkOrders.WorkOrderModel::get_Parts()
+FNDA:29,System.Collections.Generic.List`1<Shopfloor.Models.PartModel> Shopfloor.Models.WorkOrders.WorkOrderModel::get_Parts()
+DA:11,29
+FN:11,System.Collections.Generic.List`1<System.Int32> Shopfloor.Models.WorkOrders.WorkOrderModel::get_PartsId()
+FNDA:29,System.Collections.Generic.List`1<System.Int32> Shopfloor.Models.WorkOrders.WorkOrderModel::get_PartsId()
+DA:12,29
+FN:12,Shopfloor.Models.Lines.LineModel Shopfloor.Models.WorkOrders.WorkOrderModel::get_Line()
+FNDA:3,Shopfloor.Models.Lines.LineModel Shopfloor.Models.WorkOrders.WorkOrderModel::get_Line()
+DA:13,3
+FN:13,System.Int32 Shopfloor.Models.WorkOrders.WorkOrderModel::get_LineId()
+FNDA:28,System.Int32 Shopfloor.Models.WorkOrders.WorkOrderModel::get_LineId()
+DA:14,28
+FN:14,System.DateTime Shopfloor.Models.WorkOrders.WorkOrderModel::get_CreateDate()
+FNDA:30,System.DateTime Shopfloor.Models.WorkOrders.WorkOrderModel::get_CreateDate()
+DA:15,30
+FN:15,System.DateOnly Shopfloor.Models.WorkOrders.WorkOrderModel::get_CreateDateOnlyDate()
+FNDA:2,System.DateOnly Shopfloor.Models.WorkOrders.WorkOrderModel::get_CreateDateOnlyDate()
+DA:16,2
+LF:8
+LH:8
+BRF:0
+BRH:0
+FNF:8
+FNH:8
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\WorkOrders\WorkOrderRepository.cs
+FN:9,System.Threading.Tasks.Task`1<Shopfloor.Models.WorkOrders.WorkOrderModel> Shopfloor.Models.WorkOrders.WorkOrderRepository::Create()
+FNDA:0,System.Threading.Tasks.Task`1<Shopfloor.Models.WorkOrders.WorkOrderModel> Shopfloor.Models.WorkOrders.WorkOrderRepository::Create()
+DA:10,0
+DA:11,0
+FN:14,System.Threading.Tasks.Task`1<Shopfloor.Models.WorkOrders.WorkOrderModel> Shopfloor.Models.WorkOrders.WorkOrderRepository::Delete()
+FNDA:0,System.Threading.Tasks.Task`1<Shopfloor.Models.WorkOrders.WorkOrderModel> Shopfloor.Models.WorkOrders.WorkOrderRepository::Delete()
+DA:15,0
+DA:16,0
+FN:19,System.Threading.Tasks.Task`1<Shopfloor.Models.WorkOrders.WorkOrderModel> Shopfloor.Models.WorkOrders.WorkOrderRepository::Update()
+FNDA:0,System.Threading.Tasks.Task`1<Shopfloor.Models.WorkOrders.WorkOrderModel> Shopfloor.Models.WorkOrders.WorkOrderRepository::Update()
+DA:20,0
+DA:21,0
+FN:24,System.Void Shopfloor.Models.WorkOrders.WorkOrderRepository/<GetData>d__3::MoveNext()
+FNDA:0,System.Void Shopfloor.Models.WorkOrders.WorkOrderRepository/<GetData>d__3::MoveNext()
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:49,0
+DA:50,0
+DA:51,0
+LF:32
+LH:0
+BRF:0
+BRH:0
+FNF:4
+FNH:0
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\WorkOrders\WorkOrderStore.cs
+FN:10,System.Void Shopfloor.Models.WorkOrders.WorkOrderStore::.ctor(Shopfloor.Models.WorkOrders.IRepository`1<Shopfloor.Models.WorkOrders.WorkOrderModel>)
+FNDA:3,System.Void Shopfloor.Models.WorkOrders.WorkOrderStore::.ctor(Shopfloor.Models.WorkOrders.IRepository`1<Shopfloor.Models.WorkOrders.WorkOrderModel>)
+DA:11,3
+DA:12,3
+DA:13,3
+DA:14,3
+DA:15,3
+DA:16,3
+FN:18,System.Void Shopfloor.Models.WorkOrders.WorkOrderStore/<GetDataAsync>d__4::MoveNext()
+FNDA:5,System.Void Shopfloor.Models.WorkOrders.WorkOrderStore/<GetDataAsync>d__4::MoveNext()
+DA:19,5
+DA:20,5
+DA:21,3
+DA:22,3
+DA:23,3
+DA:24,5
+DA:25,5
+BRDA:20,31,0,3
+BRDA:20,31,1,5
+FN:56,System.Void Shopfloor.Models.WorkOrders.WorkOrderStore/<LoadData>d__6::MoveNext()
+FNDA:3,System.Void Shopfloor.Models.WorkOrders.WorkOrderStore/<LoadData>d__6::MoveNext()
+DA:57,3
+DA:58,3
+DA:59,3
+DA:60,3
+DA:61,3
+FN:27,System.Void Shopfloor.Models.WorkOrders.WorkOrderStore/<ReloadData>d__5::MoveNext()
+FNDA:1,System.Void Shopfloor.Models.WorkOrders.WorkOrderStore/<ReloadData>d__5::MoveNext()
+DA:28,1
+DA:29,1
+DA:30,1
+DA:31,1
+DA:32,1
+DA:33,1
+DA:34,1
+DA:35,1
+DA:36,1
+DA:37,1
+DA:38,1
+DA:39,1
+DA:40,1
+DA:41,1
+DA:42,1
+DA:43,1
+DA:44,1
+DA:45,1
+DA:46,1
+DA:47,1
+DA:48,1
+DA:49,1
+DA:50,1
+DA:52,1
+DA:53,1
+DA:54,1
+DA:55,1
+LF:45
+LH:45
+BRF:2
+BRH:2
+FNF:4
+FNH:4
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\WorkOrders\Creators\WorkOrderCreator.cs
+FN:8,Shopfloor.Models.WorkOrders.WorkOrderModel Shopfloor.Models.WorkOrders.Creators.WorkOrderCreator::Create(Shopfloor.Models.WorkOrders.WorkOrderDto)
+FNDA:0,Shopfloor.Models.WorkOrders.WorkOrderModel Shopfloor.Models.WorkOrders.Creators.WorkOrderCreator::Create(Shopfloor.Models.WorkOrders.WorkOrderDto)
 DA:9,0
 DA:10,0
 DA:11,0
@@ -1126,42 +1475,16 @@ DA:13,0
 DA:14,0
 DA:15,0
 DA:16,0
-LF:9
+DA:17,0
+DA:18,0
+DA:19,0
+DA:20,0
+DA:21,0
+LF:13
 LH:0
 BRF:0
 BRH:0
 FNF:1
-FNH:0
-end_of_record
-SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\Machines\MachineModel.cs
-FN:9,System.Int32 Shopfloor.Models.Machines.MachineModel::get_Id()
-FNDA:0,System.Int32 Shopfloor.Models.Machines.MachineModel::get_Id()
-DA:10,0
-FN:10,System.String Shopfloor.Models.Machines.MachineModel::get_Name()
-FNDA:0,System.String Shopfloor.Models.Machines.MachineModel::get_Name()
-DA:11,0
-LF:2
-LH:0
-BRF:0
-BRH:0
-FNF:2
-FNH:0
-end_of_record
-SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\Lines\LineModel.cs
-FN:10,System.Int32 Shopfloor.Models.Lines.LineModel::get_Id()
-FNDA:0,System.Int32 Shopfloor.Models.Lines.LineModel::get_Id()
-DA:11,0
-FN:11,System.String Shopfloor.Models.Lines.LineModel::get_Name()
-FNDA:0,System.String Shopfloor.Models.Lines.LineModel::get_Name()
-DA:12,0
-FN:12,System.Collections.Generic.List`1<Shopfloor.Models.Machines.MachineModel> Shopfloor.Models.Lines.LineModel::get_Machines()
-FNDA:0,System.Collections.Generic.List`1<Shopfloor.Models.Machines.MachineModel> Shopfloor.Models.Lines.LineModel::get_Machines()
-DA:13,0
-LF:3
-LH:0
-BRF:0
-BRH:0
-FNF:3
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\obj\Debug\net8.0-windows10.0.17763.0\Layout\TopPanel\TopPanelView.g.cs
@@ -1262,16 +1585,20 @@ FNF:1
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Layout\SidePanel\SidePanelViewModel.cs
-FN:8,System.Void Shopfloor.Layout.SidePanel.SidePanelViewModel::.ctor(Shopfloor.Services.NavigationServices.INavigationService,System.IServiceProvider)
+FN:14,System.Windows.Input.ICommand Shopfloor.Layout.SidePanel.SidePanelViewModel::get_NavigateWorkOrdersList()
+FNDA:0,System.Windows.Input.ICommand Shopfloor.Layout.SidePanel.SidePanelViewModel::get_NavigateWorkOrdersList()
+DA:15,0
+FN:10,System.Void Shopfloor.Layout.SidePanel.SidePanelViewModel::.ctor(Shopfloor.Services.NavigationServices.INavigationService,System.IServiceProvider)
 FNDA:0,System.Void Shopfloor.Layout.SidePanel.SidePanelViewModel::.ctor(Shopfloor.Services.NavigationServices.INavigationService,System.IServiceProvider)
-DA:9,0
-DA:10,0
 DA:11,0
-LF:3
+DA:12,0
+DA:13,0
+DA:14,0
+LF:5
 LH:0
 BRF:0
 BRH:0
-FNF:1
+FNF:2
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\obj\Debug\net8.0-windows10.0.17763.0\Layout\MainWindow\MainWindow.g.cs
@@ -1338,15 +1665,15 @@ FNF:3
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\obj\Debug\net8.0-windows10.0.17763.0\Layout\Content\ContentView.g.cs
-FN:53,System.Void Shopfloor.Layout.Content.ContentView::InitializeComponent()
+FN:54,System.Void Shopfloor.Layout.Content.ContentView::InitializeComponent()
 FNDA:0,System.Void Shopfloor.Layout.Content.ContentView::InitializeComponent()
-DA:54,0
 DA:55,0
 DA:56,0
-DA:58,0
+DA:57,0
 DA:59,0
-BRDA:55,9,0,0
-BRDA:55,9,1,0
+DA:60,0
+BRDA:56,9,0,0
+BRDA:56,9,1,0
 LF:5
 LH:0
 BRF:2
@@ -1431,14 +1758,20 @@ FNF:1
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Hosts\Features\FeaturesHost.cs
-FN:10,System.Void Shopfloor.Hosts.Features.FeaturesHost::Get(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+FN:15,System.Void Shopfloor.Hosts.Features.FeaturesHost::Get(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 FNDA:0,System.Void Shopfloor.Hosts.Features.FeaturesHost::Get(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-DA:11,0
-DA:12,0
-DA:13,0
-DA:14,0
-DA:15,0
-LF:5
+DA:16,0
+DA:17,0
+DA:18,0
+DA:20,0
+DA:22,0
+DA:23,0
+DA:25,0
+DA:26,0
+DA:28,0
+DA:29,0
+DA:30,0
+LF:11
 LH:0
 BRF:0
 BRH:0
@@ -1552,6 +1885,120 @@ BRH:0
 FNF:1
 FNH:0
 end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\obj\Debug\net8.0-windows10.0.17763.0\Features\WorkOrdersList\WorkOrdersListView.g.cs
+FN:50,System.Void Shopfloor.Features.WorkOrdersList.WorkOrdersListView::InitializeComponent()
+FNDA:0,System.Void Shopfloor.Features.WorkOrdersList.WorkOrdersListView::InitializeComponent()
+DA:51,0
+DA:52,0
+DA:53,0
+DA:55,0
+DA:56,0
+BRDA:52,9,0,0
+BRDA:52,9,1,0
+LF:5
+LH:0
+BRF:2
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Features\WorkOrdersList\WorkOrdersListView.xaml
+FN:0,System.Void Shopfloor.Features.WorkOrdersList.WorkOrdersListView::InitializeComponent()
+FNDA:0,System.Void Shopfloor.Features.WorkOrdersList.WorkOrdersListView::InitializeComponent()
+DA:1,0
+LF:1
+LH:0
+BRF:0
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Features\WorkOrdersList\WorkOrdersListView.xaml.cs
+FN:19,System.Void Shopfloor.Features.WorkOrdersList.WorkOrdersListView::.ctor()
+FNDA:0,System.Void Shopfloor.Features.WorkOrdersList.WorkOrdersListView::.ctor()
+DA:20,0
+DA:21,0
+DA:22,0
+DA:23,0
+LF:4
+LH:0
+BRF:0
+BRH:0
+FNF:1
+FNH:0
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Features\WorkOrdersList\WorkOrdersListViewModel.cs
+FN:33,System.Windows.Input.ICommand Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::get_WorkOrderConfirmCommand()
+FNDA:0,System.Windows.Input.ICommand Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::get_WorkOrderConfirmCommand()
+DA:34,0
+FN:34,System.Windows.Input.ICommand Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::get_WorkOrderDetailsCommand()
+FNDA:0,System.Windows.Input.ICommand Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::get_WorkOrderDetailsCommand()
+DA:35,0
+FN:35,System.Windows.Input.ICommand Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::get_WorkOrderEditCommand()
+FNDA:0,System.Windows.Input.ICommand Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::get_WorkOrderEditCommand()
+DA:36,0
+FN:36,System.Windows.Input.ICommand Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::get_WorkOrderCancelCommand()
+FNDA:0,System.Windows.Input.ICommand Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::get_WorkOrderCancelCommand()
+DA:37,0
+FN:38,System.ComponentModel.ICollectionView Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::get_WorkOrders()
+FNDA:0,System.ComponentModel.ICollectionView Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::get_WorkOrders()
+DA:39,0
+FN:40,System.Void Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::WorkOrdersDecorated(System.Object,System.EventArgs)
+FNDA:0,System.Void Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::WorkOrdersDecorated(System.Object,System.EventArgs)
+DA:41,0
+DA:42,0
+DA:43,0
+FN:18,System.Void Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::.ctor(Shopfloor.UnitOfWorks.WorkOrdersListRoot,Shopfloor.Services.NotificationServices.INotifier)
+FNDA:0,System.Void Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel::.ctor(Shopfloor.UnitOfWorks.WorkOrdersListRoot,Shopfloor.Services.NotificationServices.INotifier)
+DA:19,0
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:26,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+FN:44,System.Void Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel/<LoadDataAsync>d__18::MoveNext()
+FNDA:0,System.Void Shopfloor.Features.WorkOrdersList.WorkOrdersListViewModel/<LoadDataAsync>d__18::MoveNext()
+DA:45,0
+DA:46,0
+DA:48,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:55,0
+DA:56,0
+LF:28
+LH:0
+BRF:0
+BRH:0
+FNF:8
+FNH:0
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Features\WorkInProgressFeature\WorkInProgressCommand.cs
+FN:16,System.Void Shopfloor.Features.WorkInProgressFeature.WorkInProgressCommand::Execute(System.Object)
+FNDA:0,System.Void Shopfloor.Features.WorkInProgressFeature.WorkInProgressCommand::Execute(System.Object)
+DA:17,0
+DA:18,0
+DA:19,0
+DA:20,0
+FN:10,System.Void Shopfloor.Features.WorkInProgressFeature.WorkInProgressCommand::.ctor(Shopfloor.Services.NotificationServices.INotifier)
+FNDA:0,System.Void Shopfloor.Features.WorkInProgressFeature.WorkInProgressCommand::.ctor(Shopfloor.Services.NotificationServices.INotifier)
+DA:11,0
+DA:12,0
+DA:13,0
+DA:14,0
+LF:8
+LH:0
+BRF:0
+BRH:0
+FNF:2
+FNH:0
+end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\obj\Debug\net8.0-windows10.0.17763.0\Features\WorkInProgressFeature\WorkInProgressView.g.cs
 FN:50,System.Void Shopfloor.Features.WorkInProgressFeature.WorkInProgressView::InitializeComponent()
 FNDA:0,System.Void Shopfloor.Features.WorkInProgressFeature.WorkInProgressView::InitializeComponent()
@@ -1637,24 +2084,23 @@ FNF:1
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Features\God\GodViewModel.cs
-FN:28,Shopfloor.Models.WorkOrders.WorkOrderDto Shopfloor.Features.God.GodViewModel::get_WorkOrderDto()
+FN:29,Shopfloor.Models.WorkOrders.WorkOrderDto Shopfloor.Features.God.GodViewModel::get_WorkOrderDto()
 FNDA:0,Shopfloor.Models.WorkOrders.WorkOrderDto Shopfloor.Features.God.GodViewModel::get_WorkOrderDto()
-DA:29,0
-FN:29,System.Windows.Input.ICommand Shopfloor.Features.God.GodViewModel::get_WorkOrderCreate()
-FNDA:0,System.Windows.Input.ICommand Shopfloor.Features.God.GodViewModel::get_WorkOrderCreate()
 DA:30,0
-FN:30,System.ComponentModel.ICollectionView Shopfloor.Features.God.GodViewModel::get_WorkOrders()
-FNDA:0,System.ComponentModel.ICollectionView Shopfloor.Features.God.GodViewModel::get_WorkOrders()
+FN:30,System.Windows.Input.ICommand Shopfloor.Features.God.GodViewModel::get_WorkOrderCreate()
+FNDA:0,System.Windows.Input.ICommand Shopfloor.Features.God.GodViewModel::get_WorkOrderCreate()
 DA:31,0
-FN:31,System.ComponentModel.ICollectionView Shopfloor.Features.God.GodViewModel::get_Parts()
-FNDA:0,System.ComponentModel.ICollectionView Shopfloor.Features.God.GodViewModel::get_Parts()
+FN:31,System.ComponentModel.ICollectionView Shopfloor.Features.God.GodViewModel::get_WorkOrders()
+FNDA:0,System.ComponentModel.ICollectionView Shopfloor.Features.God.GodViewModel::get_WorkOrders()
 DA:32,0
-FN:32,System.ComponentModel.ICollectionView Shopfloor.Features.God.GodViewModel::get_Lines()
-FNDA:0,System.ComponentModel.ICollectionView Shopfloor.Features.God.GodViewModel::get_Lines()
+FN:32,System.ComponentModel.ICollectionView Shopfloor.Features.God.GodViewModel::get_Parts()
+FNDA:0,System.ComponentModel.ICollectionView Shopfloor.Features.God.GodViewModel::get_Parts()
 DA:33,0
-FN:41,System.Collections.Generic.List`1<Shopfloor.Models.WorkOrders.WorkOrderModel> Shopfloor.Features.God.GodViewModel::TestDataWorkOrders()
+FN:33,System.ComponentModel.ICollectionView Shopfloor.Features.God.GodViewModel::get_Lines()
+FNDA:0,System.ComponentModel.ICollectionView Shopfloor.Features.God.GodViewModel::get_Lines()
+DA:34,0
+FN:42,System.Collections.Generic.List`1<Shopfloor.Models.WorkOrders.WorkOrderModel> Shopfloor.Features.God.GodViewModel::TestDataWorkOrders()
 FNDA:0,System.Collections.Generic.List`1<Shopfloor.Models.WorkOrders.WorkOrderModel> Shopfloor.Features.God.GodViewModel::TestDataWorkOrders()
-DA:42,0
 DA:43,0
 DA:44,0
 DA:45,0
@@ -1678,22 +2124,21 @@ DA:62,0
 DA:63,0
 DA:64,0
 DA:65,0
-DA:66,0
 DA:67,0
-FN:68,System.Collections.Generic.List`1<Shopfloor.Models.Lines.LineModel> Shopfloor.Features.God.GodViewModel::TestDataLines()
+DA:68,0
+FN:69,System.Collections.Generic.List`1<Shopfloor.Models.Lines.LineModel> Shopfloor.Features.God.GodViewModel::TestDataLines()
 FNDA:0,System.Collections.Generic.List`1<Shopfloor.Models.Lines.LineModel> Shopfloor.Features.God.GodViewModel::TestDataLines()
-DA:69,0
 DA:70,0
-DA:72,0
+DA:71,0
 DA:73,0
 DA:74,0
 DA:75,0
 DA:76,0
-DA:78,0
+DA:77,0
 DA:79,0
-FN:80,System.Collections.Generic.List`1<Shopfloor.Models.PartModel> Shopfloor.Features.God.GodViewModel::TestDataParts()
+DA:80,0
+FN:81,System.Collections.Generic.List`1<Shopfloor.Models.PartModel> Shopfloor.Features.God.GodViewModel::TestDataParts()
 FNDA:0,System.Collections.Generic.List`1<Shopfloor.Models.PartModel> Shopfloor.Features.God.GodViewModel::TestDataParts()
-DA:81,0
 DA:82,0
 DA:83,0
 DA:84,0
@@ -1717,53 +2162,54 @@ DA:101,0
 DA:102,0
 DA:103,0
 DA:104,0
-FN:132,System.Void Shopfloor.Features.God.GodViewModel::ClearLists()
+DA:105,0
+FN:133,System.Void Shopfloor.Features.God.GodViewModel::ClearLists()
 FNDA:0,System.Void Shopfloor.Features.God.GodViewModel::ClearLists()
-DA:133,0
 DA:134,0
 DA:135,0
 DA:136,0
-FN:18,System.Void Shopfloor.Features.God.GodViewModel::.ctor(Shopfloor.Services.NotificationServices.INotifier)
+DA:137,0
+FN:19,System.Void Shopfloor.Features.God.GodViewModel::.ctor(Shopfloor.Services.NotificationServices.INotifier)
 FNDA:0,System.Void Shopfloor.Features.God.GodViewModel::.ctor(Shopfloor.Services.NotificationServices.INotifier)
-DA:19,0
 DA:20,0
 DA:21,0
-DA:23,0
+DA:22,0
 DA:24,0
 DA:25,0
 DA:26,0
-DA:28,0
-FN:34,System.Void Shopfloor.Features.God.GodViewModel/<AddWorkOrder>d__17::MoveNext()
+DA:27,0
+DA:29,0
+FN:35,System.Void Shopfloor.Features.God.GodViewModel/<AddWorkOrder>d__17::MoveNext()
 FNDA:0,System.Void Shopfloor.Features.God.GodViewModel/<AddWorkOrder>d__17::MoveNext()
-DA:35,0
 DA:36,0
 DA:37,0
 DA:38,0
 DA:39,0
 DA:40,0
-FN:105,System.Void Shopfloor.Features.God.GodViewModel/<LoadDataAsync>d__21::MoveNext()
+DA:41,0
+FN:106,System.Void Shopfloor.Features.God.GodViewModel/<LoadDataAsync>d__21::MoveNext()
 FNDA:0,System.Void Shopfloor.Features.God.GodViewModel/<LoadDataAsync>d__21::MoveNext()
-DA:106,0
 DA:107,0
-DA:109,0
+DA:108,0
 DA:110,0
 DA:111,0
-DA:113,0
+DA:112,0
 DA:114,0
 DA:115,0
 DA:116,0
 DA:117,0
-DA:119,0
+DA:118,0
 DA:120,0
 DA:121,0
 DA:122,0
-DA:124,0
+DA:123,0
 DA:125,0
 DA:126,0
 DA:127,0
-DA:129,0
+DA:128,0
 DA:130,0
-LF:102
+DA:131,0
+LF:101
 LH:0
 BRF:0
 BRH:0
@@ -1802,22 +2248,22 @@ FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Database\DatabaseConnectionFactory.cs
 FN:21,System.String Shopfloor.Database.DatabaseConnectionFactory::get_DatabaseType()
-FNDA:0,System.String Shopfloor.Database.DatabaseConnectionFactory::get_DatabaseType()
-DA:22,0
+FNDA:1,System.String Shopfloor.Database.DatabaseConnectionFactory::get_DatabaseType()
+DA:22,1
 FN:23,System.Data.Common.DbConnection Shopfloor.Database.DatabaseConnectionFactory::Connect()
-FNDA:0,System.Data.Common.DbConnection Shopfloor.Database.DatabaseConnectionFactory::Connect()
-DA:24,0
-DA:27,0
-DA:30,0
-DA:31,0
-DA:32,0
-DA:35,0
-DA:37,0
-DA:38,0
-BRDA:27,21,1,0
+FNDA:2,System.Data.Common.DbConnection Shopfloor.Database.DatabaseConnectionFactory::Connect()
+DA:24,2
+DA:27,2
+DA:30,1
+DA:31,1
+DA:32,1
+DA:35,1
+DA:37,1
+DA:38,1
+BRDA:27,21,1,1
 BRDA:30,42,0,0
-BRDA:30,42,1,0
-BRDA:27,21,0,0
+BRDA:30,42,1,1
+BRDA:27,21,0,1
 FN:39,System.Void Shopfloor.Database.DatabaseConnectionFactory::Dispose()
 FNDA:0,System.Void Shopfloor.Database.DatabaseConnectionFactory::Dispose()
 DA:40,0
@@ -1830,39 +2276,39 @@ DA:46,0
 BRDA:41,12,0,0
 BRDA:41,12,1,0
 FN:16,System.Void Shopfloor.Database.DatabaseConnectionFactory::.ctor(Microsoft.Extensions.Configuration.IConfiguration)
-FNDA:0,System.Void Shopfloor.Database.DatabaseConnectionFactory::.ctor(Microsoft.Extensions.Configuration.IConfiguration)
-DA:17,0
-DA:18,0
-DA:19,0
-DA:20,0
-DA:21,0
+FNDA:3,System.Void Shopfloor.Database.DatabaseConnectionFactory::.ctor(Microsoft.Extensions.Configuration.IConfiguration)
+DA:17,3
+DA:18,3
+DA:19,3
+DA:20,3
+DA:21,3
 BRDA:20,33,0,0
-BRDA:20,33,1,0
+BRDA:20,33,1,3
 LF:21
-LH:0
+LH:14
 BRF:8
-BRH:0
+BRH:4
 FNF:4
-FNH:0
+FNH:3
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Database\Initializers\SqliteInitCommands.cs
 FN:12,System.Collections.Generic.List`1<System.String> Shopfloor.Database.SQLite.SqliteInitCommands::get_InitCommands()
-FNDA:0,System.Collections.Generic.List`1<System.String> Shopfloor.Database.SQLite.SqliteInitCommands::get_InitCommands()
-DA:13,0
+FNDA:1,System.Collections.Generic.List`1<System.String> Shopfloor.Database.SQLite.SqliteInitCommands::get_InitCommands()
+DA:13,1
 FN:6,System.Void Shopfloor.Database.SQLite.SqliteInitCommands::.ctor()
-FNDA:0,System.Void Shopfloor.Database.SQLite.SqliteInitCommands::.ctor()
-DA:7,0
-DA:8,0
-DA:9,0
-DA:10,0
-DA:11,0
-DA:12,0
+FNDA:1,System.Void Shopfloor.Database.SQLite.SqliteInitCommands::.ctor()
+DA:7,1
+DA:8,1
+DA:9,1
+DA:10,1
+DA:11,1
+DA:12,1
 LF:7
-LH:0
+LH:7
 BRF:0
 BRH:0
 FNF:2
-FNH:0
+FNH:2
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Database\Initializers\DatabaseInitializerFactory.cs
 FN:17,Shopfloor.Database.Initializers.IDatabaseInitializer Shopfloor.Database.Initializers.DatabaseInitializerFactory::CreateInitializer()
@@ -1950,25 +2396,25 @@ FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Converters\BooleanReverseConverter.cs
 FN:9,System.Object Shopfloor.Converters.BooleanReverseConverter::Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)
-FNDA:0,System.Object Shopfloor.Converters.BooleanReverseConverter::Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)
-DA:10,0
-DA:11,0
-DA:12,0
-DA:13,0
-DA:16,0
-DA:17,0
-BRDA:11,7,0,0
-BRDA:11,7,1,0
-BRDA:11,22,0,0
-BRDA:11,22,1,0
+FNDA:3,System.Object Shopfloor.Converters.BooleanReverseConverter::Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)
+DA:10,3
+DA:11,3
+DA:12,2
+DA:13,2
+DA:16,1
+DA:17,3
+BRDA:11,7,0,2
+BRDA:11,7,1,1
+BRDA:11,22,0,2
+BRDA:11,22,1,1
 FN:18,System.Object Shopfloor.Converters.BooleanReverseConverter::ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)
-FNDA:0,System.Object Shopfloor.Converters.BooleanReverseConverter::ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)
-DA:19,0
-DA:20,0
+FNDA:1,System.Object Shopfloor.Converters.BooleanReverseConverter::ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)
+DA:19,1
+DA:20,1
 LF:8
-LH:0
+LH:8
 BRF:4
-BRH:0
+BRH:4
 FNF:2
-FNH:0
+FNH:2
 end_of_record

@@ -10,9 +10,9 @@ namespace Shopfloor.Models.WorkOrders
         public string Description { get; set; } = string.Empty;
         public List<PartModel> Parts { get; init; } = [];
         public List<int> PartsId { get; init; } = [];
-        public LineModel? Line { get; init; }
+        public LineModel? Line { get; set; }
         required public int LineId { get; init; }
-        public DateTime CreateDate { get; init; }
+        required public DateTime CreateDate { get; init; }
         public DateOnly CreateDateOnlyDate => DateOnly.FromDateTime(CreateDate);
     }
 }

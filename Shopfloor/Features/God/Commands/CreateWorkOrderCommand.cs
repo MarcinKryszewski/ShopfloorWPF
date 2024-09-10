@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Shopfloor.Models.WorkOrders;
-using Shopfloor.Models.WorkOrders.Creator;
+using Shopfloor.Models.WorkOrders.Creators;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 
