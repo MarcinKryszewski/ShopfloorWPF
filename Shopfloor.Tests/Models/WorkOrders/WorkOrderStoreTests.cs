@@ -14,13 +14,13 @@ namespace Shopfloor.Tests.Models.WorkOrders
         }
 
         [Fact]
-        public async Task GetDataAsync_ShouldLoadData_FromRepository_IfNotAlreadyLoaded()
+        public async Task GetDataAsync_ShouldLoadDataFromRepository_IfNotAlreadyLoaded()
         {
             // Arrange
             List<WorkOrderModel>? expectedData = [
-            new() { Id = 1, Description = "Test Work Order 1", LineId=1, CreateDate=DateTime.Now },
-            new() { Id = 2, Description = "Test Work Order 2", LineId=2, CreateDate=DateTime.Now }
-        ];
+                new() { Id = 1, Description = "Test Work Order 1", LineId = 1, CreateDate = DateTime.Now },
+                new() { Id = 2, Description = "Test Work Order 2", LineId = 2, CreateDate = DateTime.Now }
+            ];
 
             _repositoryMock.GetData().Returns(expectedData);
 
@@ -29,7 +29,7 @@ namespace Shopfloor.Tests.Models.WorkOrders
 
             // Assert
             result.Should().BeEquivalentTo(expectedData);
-            await _repositoryMock.Received(1).GetData(); // Ensure data is loaded from the repository once.
+            await _repositoryMock.Received(1).GetData();
         }
 
         [Fact]
@@ -37,8 +37,8 @@ namespace Shopfloor.Tests.Models.WorkOrders
         {
             // Arrange
             List<WorkOrderModel>? firstLoadData = [
-            new() { Id = 1, Description = "Test Work Order 1", LineId=1, CreateDate=DateTime.Now }
-        ];
+                new() { Id = 1, Description = "Test Work Order 1", LineId = 1, CreateDate = DateTime.Now }
+            ];
 
             _repositoryMock.GetData().Returns(firstLoadData);
 
@@ -56,7 +56,7 @@ namespace Shopfloor.Tests.Models.WorkOrders
         {
             // Arrange
             List<WorkOrderModel>? initialData = [
-                new() { Id = 1, Description = "Initial Work Order", LineId=1, CreateDate=DateTime.Now }
+                new() { Id = 1, Description = "Initial Work Order", LineId = 1, CreateDate = DateTime.Now }
             ];
             _repositoryMock.GetData().Returns(initialData);
 
@@ -64,7 +64,6 @@ namespace Shopfloor.Tests.Models.WorkOrders
 
             // Act
             await _workOrderStore.ReloadData();
-
             List<WorkOrderModel>? result = await _workOrderStore.GetDataAsync();
 
             // Assert

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.God;
 using Shopfloor.Features.WorkInProgressFeature;
+using Shopfloor.Features.WorkOrderAddNew;
 using Shopfloor.Features.WorkOrdersList;
 using Shopfloor.Hosts.Features.Notifier;
 using Shopfloor.Models.Interfaces;
@@ -19,14 +20,17 @@ namespace Shopfloor.Hosts.Features
 
             NotifierServices.Get(services);
 
-            services.AddSingleton<WorkOrderRepository>();
+            services.AddSingleton<IRepository<WorkOrderModel>, WorkOrderRepository>();
             services.AddSingleton<IStore<WorkOrderModel>, WorkOrderStore>();
 
-            services.AddSingleton<LineRepository>();
+            services.AddSingleton<IRepository<LineModel>, LineRepository>();
             services.AddSingleton<IStore<LineModel>, LineStore>();
 
             services.AddSingleton<WorkOrdersListRoot>();
             services.AddTransient<WorkOrdersListViewModel>();
+
+            services.AddSingleton<WorkOrderCreateRoot>();
+            services.AddSingleton<WorkOrderAddNewViewModel>();
         }
     }
 }

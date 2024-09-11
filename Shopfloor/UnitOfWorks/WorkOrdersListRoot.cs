@@ -20,7 +20,10 @@ namespace Shopfloor.UnitOfWorks
         public event EventHandler? DecoratingCompleted;
         public async Task<IEnumerable<WorkOrderModel>> GetWorkOrders()
         {
-            _ = DecorateWorkOders();
+            if (!_workOrderStore.Merges.Contains(typeof(LineModel)))
+            {
+                _ = DecorateWorkOders();
+            }
             return await _workOrderStore.GetDataAsync();
         }
         protected void OnDecoratingCompleted(EventArgs e) => DecoratingCompleted?.Invoke(this, e);
@@ -39,6 +42,7 @@ namespace Shopfloor.UnitOfWorks
             {
                 workOrder.Line = lineDictionary.TryGetValue(workOrder.LineId, out LineModel? line) ? line : null;
             }
+            _workOrderStore.Merges.Add(typeof(LineModel));
             OnDecoratingCompleted(EventArgs.Empty);
         }
     }

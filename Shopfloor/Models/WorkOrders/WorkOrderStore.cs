@@ -15,6 +15,8 @@ namespace Shopfloor.Models.WorkOrders
             _repository = repository;
         }
 
+        public HashSet<Type> Merges { get; } = [];
+
         public async Task<List<WorkOrderModel>> GetDataAsync()
         {
             if (!_dataLoaded)

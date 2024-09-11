@@ -29,7 +29,7 @@ namespace Shopfloor.Services.NavigationServices
             {
                 return _viewModelFactory.Invoke(typeof(TViewModel));
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return _viewModelFactory.Invoke(typeof(WorkInProgressViewModel));
             }

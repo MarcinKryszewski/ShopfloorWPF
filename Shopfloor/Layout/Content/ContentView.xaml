@@ -9,6 +9,7 @@
     xmlns:wip="clr-namespace:Shopfloor.Features.WorkInProgressFeature"
     xmlns:god="clr-namespace:Shopfloor.Features.God"
     xmlns:workOrdersList="clr-namespace:Shopfloor.Features.WorkOrdersList"
+    xmlns:workOrderCreate="clr-namespace:Shopfloor.Features.WorkOrderAddNew"
     d:DataContext="{d:DesignInstance Type=content:ContentViewModel}"
     d:Height="1020"
     d:Width="1680"
@@ -36,6 +37,10 @@
 
                     <DataTemplate DataType="{x:Type workOrdersList:WorkOrdersListViewModel}">
                         <workOrdersList:WorkOrdersListView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type workOrderCreate:WorkOrderAddNewViewModel}">
+                        <workOrderCreate:WorkOrderAddNewView/>
                     </DataTemplate>
 
                 </ContentControl.Resources>
