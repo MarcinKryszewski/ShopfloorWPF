@@ -1,14 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shopfloor.Models.Commons.Interfaces;
 
 namespace Shopfloor.Models.WorkOrders
 {
-    internal class WorkOrderRepository : IRepository<WorkOrderModel>
+    internal class WorkOrderRepository : IRepository<WorkOrderModel, WorkOrderCreationModel>
     {
-        public Task<WorkOrderModel> Create()
+        public Task<WorkOrderModel> Create(WorkOrderCreationModel item)
         {
-            throw new NotImplementedException();
+            Random rnd = new();
+
+            WorkOrderModel workOrder = new()
+            {
+                Id = rnd.Next(0, 100),
+                CreateDate = DateTime.Now,
+                LineId = item.LineId,
+                Description = item.Description,
+                Line = item.Line,
+                Parts = item.Parts,
+                PartsId = item.PartsId,
+            };
+            return Task.FromResult(workOrder);
         }
 
         public Task<WorkOrderModel> Delete()

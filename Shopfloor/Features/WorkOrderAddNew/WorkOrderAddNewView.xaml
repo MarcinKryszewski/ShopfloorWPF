@@ -66,7 +66,7 @@
                     IsEditable="true"
                     IsReadOnly="false"
                     ItemsSource="{Binding Path=Lines}"
-                    SelectedItem="{Binding Path=WorkOrderDto.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    SelectedItem="{Binding Path=WorkOrder.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource ComboBoxMain}"/>
             </StackPanel>
 
@@ -90,7 +90,7 @@
                     FontSize="16"
                     MinLines="3"
                     Style="{StaticResource TextBoxMain}"
-                    Text="{Binding Path=WorkOrderDto.Description, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                    Text="{Binding Path=WorkOrder.Description, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
                     TextWrapping="Wrap"/>
             </StackPanel>
 
@@ -114,7 +114,7 @@
                 Height="50"
                 Margin="5,0"
                 Command="{Binding Path=WorkOrderCreateCommand}"
-                CommandParameter="{Binding WorkOrderDto}"
+                CommandParameter="{Binding WorkOrder}"
                 Content="STWÓRZ"
                 Style="{StaticResource ResourceKey=ButtonMain}"/>
 

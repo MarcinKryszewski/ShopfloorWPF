@@ -1,4 +1,4 @@
-namespace Shopfloor.Models.Interfaces
+namespace Shopfloor.Models.Commons.Interfaces
 {
     public interface IModelDto
     {

@@ -29,7 +29,7 @@ namespace Shopfloor.Features.WorkOrderAddNew
             WorkOrderCreateCommand = new WorkOrderCreateCommand(notifier, _unitOfWork);
         }
         public ICollectionView Lines => CollectionViewSource.GetDefaultView(_lines);
-        public WorkOrderDto WorkOrderDto { get; set; } = new();
+        public WorkOrderCreationModel WorkOrder { get; set; } = new();
         public ICommand WorkOrderCreateCommand { get; }
         public ICommand WorkOrdersListNavigate { get; }
         private async Task LoadDataAsync()

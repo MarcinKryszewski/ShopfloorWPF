@@ -1,4 +1,4 @@
-using Shopfloor.Models.Interfaces;
+using Shopfloor.Models.Commons.Interfaces;
 
 namespace Shopfloor.Models.Lines
 {

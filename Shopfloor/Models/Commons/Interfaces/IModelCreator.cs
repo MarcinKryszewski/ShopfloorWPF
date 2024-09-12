@@ -1,3 +1,5 @@
+using Shopfloor.Models.Commons.Interfaces;
+
 namespace Shopfloor.Models.Interfaces
 {
     public interface IModelCreator<T, TDto>

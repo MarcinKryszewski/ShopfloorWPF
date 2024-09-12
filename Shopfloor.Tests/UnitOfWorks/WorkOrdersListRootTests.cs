@@ -1,4 +1,4 @@
-using Shopfloor.Models.Interfaces;
+using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.UnitOfWorks;

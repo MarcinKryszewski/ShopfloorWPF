@@ -1,24 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Shopfloor.Models.Interfaces;
-using Shopfloor.Models.WorkOrders;
+using Shopfloor.Models.Commons.Interfaces;
 
 namespace Shopfloor.Models.Lines
 {
     internal class LineStore : IStore<LineModel>
     {
-        private readonly IRepository<LineModel> _repository;
+        private readonly IRepository<LineModel, LineCreationModel> _repository;
         private List<LineModel> _data = [];
         private bool _dataLoaded = false;
 
-        public LineStore(IRepository<LineModel> repository)
+        public LineStore(IRepository<LineModel, LineCreationModel> repository)
         {
             _repository = repository;
         }
 
         public HashSet<Type> Merges { get; } = [];
-
+        public Task AddItem(LineModel item)
+        {
+            _data.Add(item);
+            return Task.CompletedTask;
+        }
         public async Task<List<LineModel>> GetDataAsync()
         {
             if (!_dataLoaded)

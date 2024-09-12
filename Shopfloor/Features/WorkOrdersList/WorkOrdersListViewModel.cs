@@ -58,6 +58,5 @@ namespace Shopfloor.Features.WorkOrdersList
 
             await Task.WhenAll(tasks);
         }
-
     }
 }

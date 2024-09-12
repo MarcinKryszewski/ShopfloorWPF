@@ -4,7 +4,7 @@ using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Features.WorkOrderAddNew;
 using Shopfloor.Features.WorkOrdersList;
 using Shopfloor.Hosts.Features.Notifier;
-using Shopfloor.Models.Interfaces;
+using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.UnitOfWorks;
@@ -20,10 +20,10 @@ namespace Shopfloor.Hosts.Features
 
             NotifierServices.Get(services);
 
-            services.AddSingleton<IRepository<WorkOrderModel>, WorkOrderRepository>();
+            services.AddSingleton<IRepository<WorkOrderModel, WorkOrderCreationModel>, WorkOrderRepository>();
             services.AddSingleton<IStore<WorkOrderModel>, WorkOrderStore>();
 
-            services.AddSingleton<IRepository<LineModel>, LineRepository>();
+            services.AddSingleton<IRepository<LineModel, LineCreationModel>, LineRepository>();
             services.AddSingleton<IStore<LineModel>, LineStore>();
 
             services.AddSingleton<WorkOrdersListRoot>();

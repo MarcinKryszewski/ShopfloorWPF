@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.Services.NotificationServices;
@@ -13,31 +11,40 @@ namespace Shopfloor.Features.WorkOrderAddNew.Commands
     {
         private readonly INotifier _notifier;
         private readonly WorkOrderCreateRoot _unitOfWork;
-
         public WorkOrderCreateCommand(INotifier notifier, WorkOrderCreateRoot unitOfWork)
         {
             _notifier = notifier;
             _unitOfWork = unitOfWork;
         }
-
         public override void Execute(object? parameter)
         {
-            if (parameter is not WorkOrderDto)
+            if (parameter is not WorkOrderCreationModel)
             {
+                string errorInfo = "Nie udało się stworzyć zadania";
+                _notifier.ShowError(errorInfo);
                 return;
             }
 
-            WorkOrderDto data = (WorkOrderDto)parameter;
+            // TODO: Validation
+
+            WorkOrderCreationModel data = (WorkOrderCreationModel)parameter;
             _ = CreateWorkOrder(data);
         }
-        private async Task CreateWorkOrder(WorkOrderDto data)
+        private async Task CreateWorkOrder(WorkOrderCreationModel data)
         {
             string testNotificationText = $@"
             description: {data.Description}
             lineId: {data.LineId}";
 
-            await _unitOfWork.CreateWorkOrder(data);
-            _notifier.ShowInformation(testNotificationText);
+            try
+            {
+                await _unitOfWork.CreateWorkOrder(data);
+                _notifier.ShowInformation(testNotificationText);
+            }
+            catch (Exception e)
+            {
+                _notifier.ShowError(e.Message);
+            }
         }
     }
 }

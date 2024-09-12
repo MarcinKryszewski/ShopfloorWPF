@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Machines;
 
 namespace Shopfloor.Models.Lines

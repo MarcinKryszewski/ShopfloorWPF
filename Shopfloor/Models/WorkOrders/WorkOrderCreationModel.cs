@@ -1,29 +1,28 @@
-using System;
 using System.Collections.Generic;
+using Shopfloor.Models.Commons.BaseClasses;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
 
 namespace Shopfloor.Models.WorkOrders
 {
-    public class WorkOrderDto : IModelDto
+    internal class WorkOrderCreationModel : ModelValidationBase, IModelCreationModel
     {
         private LineModel? _line;
         public string Description { get; set; } = string.Empty;
-        public List<PartModel> Parts { get; set; } = [];
-        public List<int> PartsId { get; set; } = [];
+        public List<PartModel> Parts { get; } = [];
+        public List<int> PartsId { get; } = [];
         public LineModel? Line
         {
             get => _line;
             set
             {
-                if (value is not null && LineId != value.Id)
+                _line = value;
+                if (value is not null)
                 {
                     LineId = value.Id;
                 }
-                _line = value;
             }
         }
         public int LineId { get; set; }
-        public DateTime CreateDate { get; set; }
     }
 }

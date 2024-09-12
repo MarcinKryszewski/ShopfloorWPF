@@ -1,4 +1,4 @@
-namespace Shopfloor.Models
+namespace Shopfloor.Models.Commons.Interfaces
 {
     public interface IModel
     {

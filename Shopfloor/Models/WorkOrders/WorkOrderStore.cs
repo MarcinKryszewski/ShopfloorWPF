@@ -1,21 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Shopfloor.Models.Interfaces;
+using Shopfloor.Models.Commons.Interfaces;
 
 namespace Shopfloor.Models.WorkOrders
 {
     internal class WorkOrderStore : IStore<WorkOrderModel>
     {
-        private readonly IRepository<WorkOrderModel> _repository;
+        private readonly IRepository<WorkOrderModel, WorkOrderCreationModel> _repository;
         private List<WorkOrderModel> _data = [];
         private bool _dataLoaded = false;
-        public WorkOrderStore(IRepository<WorkOrderModel> repository)
+        public WorkOrderStore(IRepository<WorkOrderModel, WorkOrderCreationModel> repository)
         {
             _repository = repository;
         }
 
         public HashSet<Type> Merges { get; } = [];
+
+        public Task AddItem(WorkOrderModel item)
+        {
+            _data.Add(item);
+            return Task.CompletedTask;
+        }
 
         public async Task<List<WorkOrderModel>> GetDataAsync()
         {

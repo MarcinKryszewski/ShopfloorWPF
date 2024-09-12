@@ -1,3 +1,5 @@
+using Shopfloor.Models.Commons.Interfaces;
+
 namespace Shopfloor.Models
 {
     public class PartModel : IModel

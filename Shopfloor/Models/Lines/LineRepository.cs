@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Shopfloor.Models.WorkOrders;
+using Shopfloor.Models.Commons.Interfaces;
 
 namespace Shopfloor.Models.Lines
 {
-    internal class LineRepository : IRepository<LineModel>
+    internal class LineRepository : IRepository<LineModel, LineCreationModel>
     {
-        public Task<LineModel> Create()
+        public Task<LineModel> Create(LineCreationModel item)
         {
             throw new NotImplementedException();
         }
