@@ -8,7 +8,6 @@ using Shopfloor.Features.WorkOrdersList;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
 using Shopfloor.UnitOfWorks;
@@ -19,14 +18,15 @@ namespace Shopfloor.Features.WorkOrderAddNew
     {
         private readonly WorkOrderCreateRoot _unitOfWork;
         private readonly List<LineModel> _lines = [];
-        public WorkOrderAddNewViewModel(INavigationService navigationService, INotifier notifier, WorkOrderCreateRoot unitOfWork)
+        public WorkOrderAddNewViewModel(ViewModelBaseDependecies dependecies, WorkOrderCreateRoot unitOfWork)
+        : base(dependecies)
         {
             _unitOfWork = unitOfWork;
 
             _ = LoadDataAsync();
 
-            WorkOrdersListNavigate = new NavigationCommand<WorkOrdersListViewModel>(navigationService).Navigate();
-            WorkOrderCreateCommand = new WorkOrderCreateCommand(notifier, _unitOfWork);
+            WorkOrdersListNavigate = new NavigationCommand<WorkOrdersListViewModel>(NavigationService).Navigate();
+            WorkOrderCreateCommand = new WorkOrderCreateCommand(Notifier, _unitOfWork);
         }
         public ICollectionView Lines => CollectionViewSource.GetDefaultView(_lines);
         public WorkOrderCreationModel WorkOrder { get; set; } = new();

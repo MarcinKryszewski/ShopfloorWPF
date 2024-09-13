@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Contexts;
 using Shopfloor.Features.God;
 using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Features.WorkOrderAddNew;
@@ -20,17 +21,38 @@ namespace Shopfloor.Hosts.Features
 
             NotifierServices.Get(services);
 
-            services.AddSingleton<IRepository<WorkOrderModel, WorkOrderCreationModel>, WorkOrderRepository>();
-            services.AddSingleton<IStore<WorkOrderModel>, WorkOrderStore>();
+            Contexts(services);
 
-            services.AddSingleton<IRepository<LineModel, LineCreationModel>, LineRepository>();
-            services.AddSingleton<IStore<LineModel>, LineStore>();
+            WorkOrders(services);
+            Lines(services);
 
+            Features(services);
+        }
+
+        private static void Features(IServiceCollection services)
+        {
             services.AddSingleton<WorkOrdersListRoot>();
             services.AddTransient<WorkOrdersListViewModel>();
 
             services.AddSingleton<WorkOrderCreateRoot>();
             services.AddSingleton<WorkOrderAddNewViewModel>();
+        }
+
+        private static void Lines(IServiceCollection services)
+        {
+            services.AddSingleton<IRepository<LineModel, LineCreationModel>, LineRepository>();
+            services.AddSingleton<IStore<LineModel>, LineStore>();
+        }
+
+        private static void WorkOrders(IServiceCollection services)
+        {
+            services.AddSingleton<IRepository<WorkOrderModel, WorkOrderCreationModel>, WorkOrderRepository>();
+            services.AddSingleton<IStore<WorkOrderModel>, WorkOrderStore>();
+        }
+
+        private static void Contexts(IServiceCollection services)
+        {
+            services.AddSingleton<WorkOrderContext>();
         }
     }
 }

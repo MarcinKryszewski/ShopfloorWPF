@@ -33,9 +33,10 @@ namespace Shopfloor.Models.WorkOrders
         }
         public async Task<WorkOrderModel> GetById(int id)
         {
+            string errorMessage = "Nie znaleziono w bazie danych";
             using IDbConnection connection = _database.Connect();
             await Task.Delay(0);
-            return await Task.FromException(new InvalidOperationException());
+            return await Task.FromException<WorkOrderModel>(new InvalidOperationException(errorMessage));
         }
         public async Task Update(WorkOrderModel item)
         {

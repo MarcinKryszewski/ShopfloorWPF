@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Shopfloor.Services.NavigationServices;
@@ -11,10 +12,14 @@ namespace Shopfloor.Hosts.Core
     {
         public static void Get(IServiceCollection services)
         {
-            services.AddSingleton<Func<Type, ViewModelBase>>(serviceProvider => viewModelType => (ViewModelBase)serviceProvider.GetRequiredService(viewModelType));
             services.AddSingleton<INavigationStore, NavigationStore>();
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<NavigationService>();
+
+            services.AddSingleton<ViewModelBaseDependecies>();
+
+            services.AddSingleton<Func<Type, ViewModelBase>>(implementationFactory: serviceProvider => viewModelType => (ViewModelBase)serviceProvider.GetRequiredService(viewModelType));
+
             services.TryAdd(ServiceDescriptor.Singleton(typeof(INavigationCommand<>), typeof(NavigationCommand<>)));
         }
     }

@@ -20,18 +20,19 @@ namespace Shopfloor.Features.WorkOrdersList
         private readonly WorkOrdersListRoot _unitOfWork;
         private readonly List<WorkOrderModel> _workOrders = [];
 
-        public WorkOrdersListViewModel(WorkOrdersListRoot unitOfWork, INotifier notification, INavigationService navigationService)
+        public WorkOrdersListViewModel(WorkOrdersListRoot unitOfWork, ViewModelBaseDependecies dependecies)
+        : base(dependecies)
         {
             _unitOfWork = unitOfWork;
             _unitOfWork.DecoratingCompleted += WorkOrdersDecorated;
 
             _ = LoadDataAsync();
 
-            WorkOrderCancelCommand = new WorkInProgressCommand(notification);
-            WorkOrderConfirmCommand = new WorkInProgressCommand(notification);
-            WorkOrderDetailsCommand = new WorkInProgressCommand(notification);
-            WorkOrderEditCommand = new WorkInProgressCommand(notification);
-            WorkOrderCreateCommand = new NavigationCommand<WorkOrderAddNewViewModel>(navigationService).Navigate();
+            WorkOrderCancelCommand = new WorkInProgressCommand(Notifier);
+            WorkOrderConfirmCommand = new WorkInProgressCommand(Notifier);
+            WorkOrderDetailsCommand = new WorkInProgressCommand(Notifier);
+            WorkOrderEditCommand = new WorkInProgressCommand(Notifier);
+            WorkOrderCreateCommand = new NavigationCommand<WorkOrderAddNewViewModel>(NavigationService).Navigate();
         }
 
         public ICommand WorkOrderConfirmCommand { get; }
