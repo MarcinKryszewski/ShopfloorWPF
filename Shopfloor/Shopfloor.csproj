@@ -35,6 +35,7 @@
     <Watch Remove="Features\Mechanic\Errands\ErrandNew\ErrandNewView.xaml" />
     <Watch Remove="Features\Mechanic\Tasks\TasksList\TasksListView.xaml" />
     <Watch Remove="Features\Mechanic\Tasks\TasksMainView.xaml" />
+    <Watch Remove="Features\WorkOrderEdit\WorkOrderEditView.xaml" />
     <Watch Remove="Themes\Controls\ButtonThemes.xaml" />
     <Watch Remove="Themes\Controls\ComboBoxThemes.xaml" />
     <Watch Remove="Themes\Controls\DatePickerThemes.xaml" />

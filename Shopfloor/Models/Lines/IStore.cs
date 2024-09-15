@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,7 +8,8 @@ namespace Shopfloor.Models.Commons.Interfaces
         where T : IModel
     {
         public HashSet<Type> Merges { get; }
-        public Task<List<T>> GetDataAsync();
         public Task AddItem(T item);
+        public Task<List<T>> GetDataAsync();
+        public Task ReloadData();
     }
 }

@@ -8,9 +8,9 @@ namespace Shopfloor.Models.Commons.Interfaces
         where T : IModel
         where TCreate : ModelValidationBase
     {
-        public Task<List<T>> GetData();
         public Task<T> Create(TCreate item);
-        public Task<T> Update();
         public Task<T> Delete();
+        public Task<List<T>> GetData();
+        public Task<T> Update();
     }
 }

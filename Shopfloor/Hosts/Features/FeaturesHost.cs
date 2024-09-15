@@ -3,6 +3,7 @@ using Shopfloor.Contexts;
 using Shopfloor.Features.God;
 using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Features.WorkOrderAddNew;
+using Shopfloor.Features.WorkOrderEdit;
 using Shopfloor.Features.WorkOrdersList;
 using Shopfloor.Hosts.Features.Notifier;
 using Shopfloor.Models.Commons.Interfaces;
@@ -29,6 +30,10 @@ namespace Shopfloor.Hosts.Features
             Features(services);
         }
 
+        private static void Contexts(IServiceCollection services)
+        {
+            services.AddSingleton<WorkOrderContext>();
+        }
         private static void Features(IServiceCollection services)
         {
             services.AddSingleton<WorkOrdersListRoot>();
@@ -36,6 +41,9 @@ namespace Shopfloor.Hosts.Features
 
             services.AddSingleton<WorkOrderCreateRoot>();
             services.AddSingleton<WorkOrderAddNewViewModel>();
+
+            services.AddSingleton<WorkOrderEditRoot>();
+            services.AddSingleton<WorkOrderEditViewModel>();
         }
 
         private static void Lines(IServiceCollection services)
@@ -48,11 +56,6 @@ namespace Shopfloor.Hosts.Features
         {
             services.AddSingleton<IRepository<WorkOrderModel, WorkOrderCreationModel>, WorkOrderRepository>();
             services.AddSingleton<IStore<WorkOrderModel>, WorkOrderStore>();
-        }
-
-        private static void Contexts(IServiceCollection services)
-        {
-            services.AddSingleton<WorkOrderContext>();
         }
     }
 }

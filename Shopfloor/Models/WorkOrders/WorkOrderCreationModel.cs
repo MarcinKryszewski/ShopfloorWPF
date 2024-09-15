@@ -9,8 +9,7 @@ namespace Shopfloor.Models.WorkOrders
     {
         private LineModel? _line;
         public string Description { get; set; } = string.Empty;
-        public List<PartModel> Parts { get; } = [];
-        public List<int> PartsId { get; } = [];
+        public int? Id { get; set; }
         public LineModel? Line
         {
             get => _line;
@@ -24,5 +23,7 @@ namespace Shopfloor.Models.WorkOrders
             }
         }
         public int LineId { get; set; }
+        public List<PartModel> Parts { get; } = [];
+        public List<int> PartsId { get; } = [];
     }
 }

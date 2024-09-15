@@ -29,11 +29,6 @@ namespace Shopfloor.Models.WorkOrders
             throw new NotImplementedException();
         }
 
-        public Task<WorkOrderModel> Update()
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<List<WorkOrderModel>> GetData()
         {
             List<WorkOrderModel> testData = [
@@ -61,6 +56,10 @@ namespace Shopfloor.Models.WorkOrders
 
             await Task.Delay(0);
             return testData;
+        }
+        public Task<WorkOrderModel> Update()
+        {
+            throw new NotImplementedException();
         }
     }
 }
