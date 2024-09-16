@@ -24,7 +24,7 @@ namespace Shopfloor.UnitOfWorks
             {
                 _ = DecorateWorkOders();
             }
-            return await _workOrderRepository.GetDataAsync();
+            return (await _workOrderRepository.GetDataAsync()).Where(x => !x.IsDeleted);
         }
         protected void OnDecoratingCompleted(EventArgs e) => DecoratingCompleted?.Invoke(this, e);
         private async Task DecorateWorkOders()

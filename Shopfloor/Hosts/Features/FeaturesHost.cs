@@ -40,10 +40,10 @@ namespace Shopfloor.Hosts.Features
             services.AddTransient<WorkOrdersListViewModel>();
 
             services.AddSingleton<WorkOrderCreateRoot>();
-            services.AddSingleton<WorkOrderAddNewViewModel>();
+            services.AddTransient<WorkOrderAddNewViewModel>();
 
             services.AddSingleton<WorkOrderEditRoot>();
-            services.AddSingleton<WorkOrderEditViewModel>();
+            services.AddTransient<WorkOrderEditViewModel>();
         }
 
         private static void Lines(IServiceCollection services)

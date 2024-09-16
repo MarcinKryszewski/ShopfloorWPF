@@ -12,6 +12,9 @@ namespace Shopfloor.Models.WorkOrders
         public string Description { get; set; } = string.Empty;
         public List<PartModel> Parts { get; init; } = [];
         public List<int> PartsId { get; init; } = [];
+        public bool IsDeleted { get; set; } = false;
+        public DateTime DeletionTime { get; set; }
+        // public PersonModel? DeletedBy { get; }
         public LineModel? Line
         {
             get => _line;
@@ -23,7 +26,7 @@ namespace Shopfloor.Models.WorkOrders
                 }
             }
         }
-        required public int LineId { get; init; }
+        required public int LineId { get; set; }
         required public DateTime CreateDate { get; init; }
         public DateOnly CreateDateOnlyDate => DateOnly.FromDateTime(CreateDate);
     }

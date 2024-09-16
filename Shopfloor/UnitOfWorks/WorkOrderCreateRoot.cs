@@ -30,7 +30,7 @@ namespace Shopfloor.UnitOfWorks
                 return;
             }
 
-            WorkOrderModel item = await _workOrderRepository.Create(data);
+            await _workOrderRepository.Create(data);
         }
         public async Task<IEnumerable<LineModel>> GetLines() => await _lineRepository.GetDataAsync();
         public async Task<IEnumerable<WorkOrderModel>> GetWorkOrders() => await _workOrderRepository.GetDataAsync();

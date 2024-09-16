@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Models.Commons.Interfaces;
 
@@ -31,7 +32,7 @@ namespace Shopfloor.Models.WorkOrders
             return workOrder;
         }
 
-        public Task<WorkOrderModel> Delete()
+        public Task Delete()
         {
             throw new NotImplementedException();
         }
@@ -71,9 +72,28 @@ namespace Shopfloor.Models.WorkOrders
             await Task.Delay(0);
             return _store.Data;
         }
-        public Task<WorkOrderModel> Update()
+        public async Task Update(WorkOrderCreationModel item)
         {
-            throw new NotImplementedException();
+            WorkOrderModel? workOrder = _store.Data.Find(x => x.Id == item.Id);
+            if (workOrder == null)
+            {
+                string errorText = "Nie udało się zmienić tego działania. Popraw dane i spróbuj ponownie!";
+                await Task.FromException(new InvalidOperationException(errorText));
+                return;
+            }
+
+            workOrder.LineId = item.LineId;
+            workOrder.Description = item.Description;
+            workOrder.Line = item.Line;
+
+
+            workOrder.Parts.Clear();
+            workOrder.Parts.AddRange(item.Parts);
+
+            workOrder.PartsId.Clear();
+            workOrder.PartsId.AddRange(item.PartsId);
+
+            await Task.Delay(0);
         }
     }
 }

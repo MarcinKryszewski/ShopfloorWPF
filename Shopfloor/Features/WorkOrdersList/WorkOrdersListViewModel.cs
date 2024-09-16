@@ -8,6 +8,7 @@ using Shopfloor.Contexts;
 using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Features.WorkOrderAddNew;
 using Shopfloor.Features.WorkOrderEdit;
+using Shopfloor.Features.WorkOrdersList.Commands;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.HelperFunctions;
@@ -32,6 +33,7 @@ namespace Shopfloor.Features.WorkOrdersList
             _ = LoadDataAsync();
 
             WorkOrderCancelCommand = new WorkInProgressCommand(Notifier);
+            WorkOrderCancelInfoCommand = new WorkOrderCancelInfoCommand(Notifier);
             WorkOrderConfirmCommand = new WorkInProgressCommand(Notifier);
             WorkOrderDetailsCommand = new WorkInProgressCommand(Notifier);
             WorkOrderEditCommand = new NavigationCommand<WorkOrderEditViewModel>(NavigationService).Navigate();
@@ -42,6 +44,7 @@ namespace Shopfloor.Features.WorkOrdersList
             get => _store.WorkOrder;
             set => _store.WorkOrder = value;
         }
+        public ICommand WorkOrderCancelInfoCommand { get; }
         public ICommand WorkOrderCancelCommand { get; }
         public ICommand WorkOrderConfirmCommand { get; }
         public ICommand WorkOrderCreateCommand { get; }

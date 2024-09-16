@@ -10,11 +10,11 @@ namespace Shopfloor.Features.WorkOrderAddNew.Commands
     internal class WorkOrderCreateCommand : CommandBase
     {
         private readonly INotifier _notifier;
-        private readonly WorkOrderCreateRoot _unitOfWork;
-        public WorkOrderCreateCommand(INotifier notifier, WorkOrderCreateRoot unitOfWork)
+        private readonly WorkOrderCreateRoot _root;
+        public WorkOrderCreateCommand(INotifier notifier, WorkOrderCreateRoot root)
         {
             _notifier = notifier;
-            _unitOfWork = unitOfWork;
+            _root = root;
         }
         public override void Execute(object? parameter)
         {
@@ -24,8 +24,6 @@ namespace Shopfloor.Features.WorkOrderAddNew.Commands
                 _notifier.ShowError(errorInfo);
                 return;
             }
-
-            // TODO: Validation
 
             WorkOrderCreationModel data = (WorkOrderCreationModel)parameter;
             _ = CreateWorkOrder(data);
@@ -38,7 +36,7 @@ namespace Shopfloor.Features.WorkOrderAddNew.Commands
 
             try
             {
-                await _unitOfWork.CreateWorkOrder(data);
+                await _root.CreateWorkOrder(data);
                 _notifier.ShowInformation(testNotificationText);
             }
             catch (Exception e)

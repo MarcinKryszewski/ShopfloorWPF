@@ -18,19 +18,17 @@ namespace Shopfloor.Models.Lines
         {
             throw new NotImplementedException();
         }
-        public Task<LineModel> Delete()
+        public Task Delete()
         {
             throw new NotImplementedException();
         }
 
         public async Task<List<LineModel>> GetDataAsync()
         {
-            List<LineModel> data = [];
-
             if (!_dataLoaded)
             {
                 // TODO: Get data from provider
-                data = [
+                List<LineModel> data = [
                 new LineModel { Id = 1, Name = "Linia Montażowa Silników" },
                 new LineModel { Id = 2, Name = "Linia Spawania Podwozi" },
                 new LineModel { Id = 3, Name = "Linia Lakierowania Karoserii" },
@@ -45,7 +43,7 @@ namespace Shopfloor.Models.Lines
             return _store.Data;
         }
 
-        public Task<LineModel> Update()
+        public Task Update(LineCreationModel item)
         {
             throw new NotImplementedException();
         }

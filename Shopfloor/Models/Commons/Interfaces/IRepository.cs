@@ -11,8 +11,8 @@ namespace Shopfloor.Models.Commons.Interfaces
     {
         public HashSet<Type> Merges { get; }
         public Task<T> Create(TCreate item);
-        public Task<T> Delete();
+        public Task Delete();
         public Task<List<T>> GetDataAsync();
-        public Task<T> Update();
+        public Task Update(TCreate item);
     }
 }

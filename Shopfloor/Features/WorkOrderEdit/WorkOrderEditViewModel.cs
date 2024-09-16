@@ -27,7 +27,7 @@ namespace Shopfloor.Features.WorkOrderEdit
             _ = LoadDataAsync();
 
             WorkOrdersListNavigate = new NavigationCommand<WorkOrdersListViewModel>(NavigationService).Navigate();
-            WorkOrderEditCommand = new WorkOrderEditCommand();
+            WorkOrderEditCommand = new WorkOrderEditCommand(dependecies.Notifier, unitOfWork);
         }
         public ICollectionView Lines => CollectionViewSource.GetDefaultView(_lines);
         public WorkOrderCreationModel WorkOder { get; init; }
