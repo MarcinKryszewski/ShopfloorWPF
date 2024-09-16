@@ -24,6 +24,7 @@ namespace Shopfloor.Shared.HelperFunctions
 
             for (int i = 0; i < data.Count(); i += batchSize)
             {
+                //await Task.Delay(300);
                 privateList.AddRange(data.Skip(i).Take(batchSize));
                 await dispatcher.InvokeAsync(publicList.Refresh);
             }

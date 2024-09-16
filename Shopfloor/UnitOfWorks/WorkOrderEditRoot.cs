@@ -9,13 +9,13 @@ namespace Shopfloor.UnitOfWorks
 {
     internal class WorkOrderEditRoot : IUnitOfWork
     {
-        private readonly IStore<LineModel> _lineStore;
+        private readonly IRepository<LineModel, LineCreationModel> _lineStore;
         private readonly IRepository<WorkOrderModel, WorkOrderCreationModel> _repository;
         private readonly WorkOrderValidation _validation = new();
-        public WorkOrderEditRoot(IStore<LineModel> lineStore, IRepository<WorkOrderModel, WorkOrderCreationModel> repository)
+        public WorkOrderEditRoot(IRepository<LineModel, LineCreationModel> lineRepository, IRepository<WorkOrderModel, WorkOrderCreationModel> workOrderRepository)
         {
-            _lineStore = lineStore;
-            _repository = repository;
+            _lineStore = lineRepository;
+            _repository = workOrderRepository;
         }
         public event EventHandler? DecoratingCompleted;
         public async Task EditWorkOrder(WorkOrderCreationModel data)

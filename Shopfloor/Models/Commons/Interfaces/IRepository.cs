@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Shopfloor.Models.Commons.BaseClasses;
@@ -8,9 +9,10 @@ namespace Shopfloor.Models.Commons.Interfaces
         where T : IModel
         where TCreate : ModelValidationBase
     {
+        public HashSet<Type> Merges { get; }
         public Task<T> Create(TCreate item);
         public Task<T> Delete();
-        public Task<List<T>> GetData();
+        public Task<List<T>> GetDataAsync();
         public Task<T> Update();
     }
 }

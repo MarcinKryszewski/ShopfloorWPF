@@ -10,27 +10,27 @@ namespace Shopfloor.UnitOfWorks
 {
     internal class WorkOrdersListRoot : IUnitOfWork
     {
-        private readonly IStore<WorkOrderModel> _workOrderStore;
-        private readonly IStore<LineModel> _lineStore;
-        public WorkOrdersListRoot(IStore<WorkOrderModel> workOrderStore, IStore<LineModel> lineStore)
+        private readonly IRepository<LineModel, LineCreationModel> _lineRepository;
+        private readonly IRepository<WorkOrderModel, WorkOrderCreationModel> _workOrderRepository;
+        public WorkOrdersListRoot(IRepository<WorkOrderModel, WorkOrderCreationModel> workOrderRepository, IRepository<LineModel, LineCreationModel> lineRepository)
         {
-            _workOrderStore = workOrderStore;
-            _lineStore = lineStore;
+            _workOrderRepository = workOrderRepository;
+            _lineRepository = lineRepository;
         }
         public event EventHandler? DecoratingCompleted;
         public async Task<IEnumerable<WorkOrderModel>> GetWorkOrders()
         {
-            if (!_workOrderStore.Merges.Contains(typeof(LineModel)))
+            if (!_workOrderRepository.Merges.Contains(typeof(LineModel)))
             {
                 _ = DecorateWorkOders();
             }
-            return await _workOrderStore.GetDataAsync();
+            return await _workOrderRepository.GetDataAsync();
         }
         protected void OnDecoratingCompleted(EventArgs e) => DecoratingCompleted?.Invoke(this, e);
         private async Task DecorateWorkOders()
         {
-            Task<List<WorkOrderModel>> workOrdersTask = _workOrderStore.GetDataAsync();
-            Task<List<LineModel>> lineTask = _lineStore.GetDataAsync();
+            Task<List<WorkOrderModel>> workOrdersTask = _workOrderRepository.GetDataAsync();
+            Task<List<LineModel>> lineTask = _lineRepository.GetDataAsync();
 
             await Task.WhenAll(workOrdersTask, lineTask);
 
@@ -40,9 +40,10 @@ namespace Shopfloor.UnitOfWorks
             Dictionary<int, LineModel>? lineDictionary = lines.ToDictionary(line => line.Id);
             foreach (WorkOrderModel workOrder in workOrders)
             {
+                //await Task.Delay(300);
                 workOrder.Line = lineDictionary.TryGetValue(workOrder.LineId, out LineModel? line) ? line : null;
             }
-            _workOrderStore.Merges.Add(typeof(LineModel));
+            _workOrderRepository.Merges.Add(typeof(LineModel));
             OnDecoratingCompleted(EventArgs.Empty);
         }
     }

@@ -9,19 +9,17 @@ namespace Shopfloor.UnitOfWorks
 {
     internal class WorkOrderCreateRoot : IUnitOfWork
     {
-        private readonly IStore<WorkOrderModel> _workOrderStore;
-        private readonly IStore<LineModel> _lineStore;
+        private readonly IRepository<LineModel, LineCreationModel> _lineRepository;
         private readonly WorkOrderValidation _validation = new();
-        private readonly IRepository<WorkOrderModel, WorkOrderCreationModel> _repository;
-        public WorkOrderCreateRoot(IStore<WorkOrderModel> workOrderStore, IStore<LineModel> lineStore, IRepository<WorkOrderModel, WorkOrderCreationModel> repository)
+        private readonly IRepository<WorkOrderModel, WorkOrderCreationModel> _workOrderRepository;
+        public WorkOrderCreateRoot(
+            IRepository<WorkOrderModel, WorkOrderCreationModel> workOrderRepository,
+            IRepository<LineModel, LineCreationModel> lineRepository)
         {
-            _workOrderStore = workOrderStore;
-            _lineStore = lineStore;
-            _repository = repository;
+            _workOrderRepository = workOrderRepository;
+            _lineRepository = lineRepository;
         }
         public event EventHandler? DecoratingCompleted;
-        public async Task<IEnumerable<WorkOrderModel>> GetWorkOrders() => await _workOrderStore.GetDataAsync();
-        public async Task<IEnumerable<LineModel>> GetLines() => await _lineStore.GetDataAsync();
         public async Task CreateWorkOrder(WorkOrderCreationModel data)
         {
             _validation.Validate(data);
@@ -32,9 +30,10 @@ namespace Shopfloor.UnitOfWorks
                 return;
             }
 
-            WorkOrderModel item = await _repository.Create(data);
-            await _workOrderStore.AddItem(item);
+            WorkOrderModel item = await _workOrderRepository.Create(data);
         }
+        public async Task<IEnumerable<LineModel>> GetLines() => await _lineRepository.GetDataAsync();
+        public async Task<IEnumerable<WorkOrderModel>> GetWorkOrders() => await _workOrderRepository.GetDataAsync();
         protected void OnDecoratingCompleted(EventArgs e) => DecoratingCompleted?.Invoke(this, e);
     }
 }

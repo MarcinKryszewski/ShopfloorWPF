@@ -7,10 +7,16 @@ namespace Shopfloor.Models.WorkOrders
 {
     internal class WorkOrderRepository : IRepository<WorkOrderModel, WorkOrderCreationModel>
     {
-        public Task<WorkOrderModel> Create(WorkOrderCreationModel item)
+        private readonly IStore<WorkOrderModel> _store;
+        private bool _dataLoaded = false;
+        public WorkOrderRepository(IStore<WorkOrderModel> store)
+        {
+            _store = store;
+        }
+        public HashSet<Type> Merges { get; } = [];
+        public async Task<WorkOrderModel> Create(WorkOrderCreationModel item)
         {
             Random rnd = new();
-
             WorkOrderModel workOrder = new()
             {
                 Id = rnd.Next(0, 100),
@@ -21,7 +27,8 @@ namespace Shopfloor.Models.WorkOrders
                 Parts = item.Parts,
                 PartsId = item.PartsId,
             };
-            return Task.FromResult(workOrder);
+            await _store.AddItem(workOrder);
+            return workOrder;
         }
 
         public Task<WorkOrderModel> Delete()
@@ -29,9 +36,12 @@ namespace Shopfloor.Models.WorkOrders
             throw new NotImplementedException();
         }
 
-        public async Task<List<WorkOrderModel>> GetData()
+        public async Task<List<WorkOrderModel>> GetDataAsync()
         {
-            List<WorkOrderModel> testData = [
+            if (!_dataLoaded)
+            {
+                // TODO: Get data from provider
+                List<WorkOrderModel> data = [
                 new WorkOrderModel { Id = 1, Description = "Montaż silnika", LineId = 1, CreateDate = new DateTime(2023, 9, 1) },
                 new WorkOrderModel { Id = 2, Description = "Inspekcja podwozia", LineId = 2, CreateDate = new DateTime(2023, 9, 2) },
                 new WorkOrderModel { Id = 3, Description = "Remont skrzyni biegów", LineId = 3, CreateDate = new DateTime(2023, 9, 3) },
@@ -52,10 +62,14 @@ namespace Shopfloor.Models.WorkOrders
                 new WorkOrderModel { Id = 18, Description = "Montaż foteli", LineId = 5, CreateDate = new DateTime(2023, 9, 18) },
                 new WorkOrderModel { Id = 19, Description = "Konfiguracja deski rozdzielczej", LineId = 4, CreateDate = new DateTime(2023, 9, 19) },
                 new WorkOrderModel { Id = 20, Description = "Końcowa inspekcja pojazdu", LineId = 1, CreateDate = new DateTime(2023, 9, 20) },
-            ];
+                ];
+
+                _store.Data.AddRange(data);
+                _dataLoaded = true;
+            }
 
             await Task.Delay(0);
-            return testData;
+            return _store.Data;
         }
         public Task<WorkOrderModel> Update()
         {
