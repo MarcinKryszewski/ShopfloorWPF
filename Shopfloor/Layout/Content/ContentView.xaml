@@ -11,38 +11,50 @@
     xmlns:workOrderCreate="clr-namespace:Shopfloor.Features.WorkOrderAddNew"
     xmlns:workOrderEdit="clr-namespace:Shopfloor.Features.WorkOrderEdit"
     xmlns:workOrdersList="clr-namespace:Shopfloor.Features.WorkOrdersList"
+    xmlns:workOrderDetails="clr-namespace:Shopfloor.Features.WorkOrderDetails"
+    xmlns:partsList="clr-namespace:Shopfloor.Features.PartsList"
     d:DataContext="{d:DesignInstance Type=content:ContentViewModel}"
     d:Height="1020"
     d:Width="1680"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <topPanel:TopPanelView Grid.Row="0" DataContext="{Binding TopPanelViewModel}" />
-        <Border Grid.Row="1" Background="{StaticResource BrushDarkNeutral100}">
+        <topPanel:TopPanelView Grid.Row="0"
+                               DataContext="{Binding TopPanelViewModel}"/>
+        <Border Grid.Row="1"
+                Background="{StaticResource BrushDarkNeutral100}">
             <ContentControl Content="{Binding Content}">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type wip:WorkInProgressViewModel}">
-                        <wip:WorkInProgressView />
+                        <wip:WorkInProgressView/>
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type god:GodViewModel}">
-                        <god:GodView />
+                        <god:GodView/>
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type workOrdersList:WorkOrdersListViewModel}">
-                        <workOrdersList:WorkOrdersListView />
+                        <workOrdersList:WorkOrdersListView/>
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type workOrderCreate:WorkOrderAddNewViewModel}">
-                        <workOrderCreate:WorkOrderAddNewView />
+                        <workOrderCreate:WorkOrderAddNewView/>
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type workOrderEdit:WorkOrderEditViewModel}">
-                        <workOrderEdit:WorkOrderEditView />
+                        <workOrderEdit:WorkOrderEditView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type workOrderDetails:WorkOrderDetailsViewModel}">
+                        <workOrderDetails:WorkOrderDetailsView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type partsList:PartsListViewModel}">
+                        <partsList:PartsListView/>
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>

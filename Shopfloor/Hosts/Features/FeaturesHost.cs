@@ -1,8 +1,11 @@
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Contexts;
 using Shopfloor.Features.God;
+using Shopfloor.Features.PartsList;
 using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Features.WorkOrderAddNew;
+using Shopfloor.Features.WorkOrderDetails;
 using Shopfloor.Features.WorkOrderEdit;
 using Shopfloor.Features.WorkOrdersList;
 using Shopfloor.Hosts.Features.Notifier;
@@ -24,8 +27,8 @@ namespace Shopfloor.Hosts.Features
 
             Contexts(services);
 
-            WorkOrders(services);
-            Lines(services);
+            WorkOrderServices(services);
+            LinesServices(services);
 
             Features(services);
         }
@@ -36,6 +39,17 @@ namespace Shopfloor.Hosts.Features
         }
         private static void Features(IServiceCollection services)
         {
+            WorkOrders(services);
+            Parts(services);
+        }
+
+        private static void Parts(IServiceCollection services)
+        {
+            services.AddTransient<PartsListViewModel>();
+        }
+
+        private static void WorkOrders(IServiceCollection services)
+        {
             services.AddSingleton<WorkOrdersListRoot>();
             services.AddTransient<WorkOrdersListViewModel>();
 
@@ -44,15 +58,16 @@ namespace Shopfloor.Hosts.Features
 
             services.AddSingleton<WorkOrderEditRoot>();
             services.AddTransient<WorkOrderEditViewModel>();
-        }
 
-        private static void Lines(IServiceCollection services)
+            services.AddTransient<WorkOrderDetailsViewModel>();
+        }
+        private static void LinesServices(IServiceCollection services)
         {
             services.AddSingleton<IRepository<LineModel, LineCreationModel>, LineRepository>();
             services.AddSingleton<IStore<LineModel>, LineStore>();
         }
 
-        private static void WorkOrders(IServiceCollection services)
+        private static void WorkOrderServices(IServiceCollection services)
         {
             services.AddSingleton<IRepository<WorkOrderModel, WorkOrderCreationModel>, WorkOrderRepository>();
             services.AddSingleton<IStore<WorkOrderModel>, WorkOrderStore>();

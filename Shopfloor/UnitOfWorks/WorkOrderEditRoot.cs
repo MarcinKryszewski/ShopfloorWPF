@@ -19,7 +19,7 @@ namespace Shopfloor.UnitOfWorks
             _lineRepository = lineRepository;
             _workOrderRepository = workOrderRepository;
         }
-        public event EventHandler? DecoratingCompleted;
+        public event EventHandler? DataChanged;
         public async Task EditWorkOrder(WorkOrderCreationModel data)
         {
             string errorText = "Nie udało się zmienić działania. Popraw dane i spróbuj ponownie!";

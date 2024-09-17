@@ -90,7 +90,8 @@
                                     Style="{StaticResource gridRemoveButton}">
                                     <Button.InputBindings>
                                         <MouseBinding Gesture="Shift+LeftClick"
-                                                      Command="{Binding Path=DataContext.WorkOrderCancelCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                                                      Command="{Binding Path=DataContext.WorkOrderCancelCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                      CommandParameter="{Binding .}"/>
                                     </Button.InputBindings>
 
                                     <TextBlock
@@ -102,7 +103,11 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+
+                <DataGridTextColumn Binding="{Binding IsDeleted}"
+                                    Header="Status"/>
             </DataGrid.Columns>
+
         </DataGrid>
     </Grid>
 </UserControl> 

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Shopfloor.Models.Commons.BaseClasses;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
+using Shopfloor.Models.Parts;
 
 namespace Shopfloor.Models.WorkOrders
 {

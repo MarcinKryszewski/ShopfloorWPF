@@ -75,7 +75,7 @@ namespace Shopfloor.Tests.UnitOfWorks
             _lineStoreMock.GetDataAsync().Returns(lines);
 
             bool eventRaised = false;
-            _workOrdersListRoot.DecoratingCompleted += (sender, e) => eventRaised = true;
+            _workOrdersListRoot.DataChanged += (sender, e) => eventRaised = true;
 
             // Act
             await _workOrdersListRoot.GetWorkOrders();

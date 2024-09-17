@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Features.WorkOrderAddNew;
+using Shopfloor.Features.WorkOrderDetails;
 using Shopfloor.Features.WorkOrderEdit;
 using Shopfloor.Features.WorkOrdersList.Commands;
 using Shopfloor.Models.WorkOrders;
@@ -28,14 +29,14 @@ namespace Shopfloor.Features.WorkOrdersList
         {
             _unitOfWork = unitOfWork;
             _store = store;
-            _unitOfWork.DecoratingCompleted += WorkOrdersDecorated;
+            _unitOfWork.DataChanged += DataChanged;
 
             _ = LoadDataAsync();
 
-            WorkOrderCancelCommand = new WorkInProgressCommand(Notifier);
+            WorkOrderCancelCommand = new WorkOrderCancelCommand(Notifier, unitOfWork);
             WorkOrderCancelInfoCommand = new WorkOrderCancelInfoCommand(Notifier);
-            WorkOrderConfirmCommand = new WorkInProgressCommand(Notifier);
-            WorkOrderDetailsCommand = new WorkInProgressCommand(Notifier);
+            WorkOrderConfirmCommand = new WorkInProgressCommand(Notifier); // TODO
+            WorkOrderDetailsCommand = new NavigationCommand<WorkOrderDetailsViewModel>(NavigationService).Navigate();
             WorkOrderEditCommand = new NavigationCommand<WorkOrderEditViewModel>(NavigationService).Navigate();
             WorkOrderCreateCommand = new NavigationCommand<WorkOrderAddNewViewModel>(NavigationService).Navigate();
         }
@@ -51,9 +52,17 @@ namespace Shopfloor.Features.WorkOrdersList
         public ICommand WorkOrderDetailsCommand { get; }
         public ICommand WorkOrderEditCommand { get; }
         public ICollectionView WorkOrders => CollectionViewSource.GetDefaultView(_workOrders);
-        public void WorkOrdersDecorated(object? sender, EventArgs e)
+        public void DataChanged(object? sender, EventArgs e)
         {
+            HandleWorkOrderRemoval(e);
             WorkOrders.Refresh();
+        }
+        private void HandleWorkOrderRemoval(EventArgs e)
+        {
+            if (e is ObjectEventArgs { Args: WorkOrderModel deletedWorkOrder })
+            {
+                _workOrders.Remove(deletedWorkOrder);
+            }
         }
         private async Task LoadDataAsync()
         {

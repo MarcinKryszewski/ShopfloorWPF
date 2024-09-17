@@ -4,6 +4,6 @@ namespace Shopfloor.UnitOfWorks
 {
     internal interface IUnitOfWork
     {
-        public event EventHandler? DecoratingCompleted;
+        public event EventHandler? DataChanged;
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.WorkOrders;
+using Shopfloor.Shared.HelperFunctions;
 
 namespace Shopfloor.UnitOfWorks
 {
@@ -17,16 +18,21 @@ namespace Shopfloor.UnitOfWorks
             _workOrderRepository = workOrderRepository;
             _lineRepository = lineRepository;
         }
-        public event EventHandler? DecoratingCompleted;
+        public event EventHandler? DataChanged;
         public async Task<IEnumerable<WorkOrderModel>> GetWorkOrders()
         {
             if (!_workOrderRepository.Merges.Contains(typeof(LineModel)))
             {
                 _ = DecorateWorkOders();
             }
-            return (await _workOrderRepository.GetDataAsync()).Where(x => !x.IsDeleted);
+            return await _workOrderRepository.GetDataAsync();
         }
-        protected void OnDecoratingCompleted(EventArgs e) => DecoratingCompleted?.Invoke(this, e);
+        public async Task CancelWorkOrder(WorkOrderModel workOrder)
+        {
+            await _workOrderRepository.Delete(workOrder.Id);
+            OnDataChanged(new ObjectEventArgs(workOrder));
+        }
+        protected void OnDataChanged(EventArgs e) => DataChanged?.Invoke(this, e);
         private async Task DecorateWorkOders()
         {
             Task<List<WorkOrderModel>> workOrdersTask = _workOrderRepository.GetDataAsync();
@@ -44,7 +50,7 @@ namespace Shopfloor.UnitOfWorks
                 workOrder.Line = lineDictionary.TryGetValue(workOrder.LineId, out LineModel? line) ? line : null;
             }
             _workOrderRepository.Merges.Add(typeof(LineModel));
-            OnDecoratingCompleted(EventArgs.Empty);
+            OnDataChanged(EventArgs.Empty);
         }
     }
 }

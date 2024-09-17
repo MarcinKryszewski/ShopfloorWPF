@@ -4,7 +4,7 @@ using Shopfloor.Models.Machines;
 
 namespace Shopfloor.Models.Lines
 {
-    public class LineModel : IModel
+    internal class LineModel : IModel
     {
         required public int Id { get; init; }
         public string Name { get; set; } = string.Empty;

@@ -1,4 +1,5 @@
 using Shopfloor.Models.Commons.Interfaces;
+using Shopfloor.Models.Parts;
 using Shopfloor.Models.WorkOrders;
 
 namespace Shopfloor.Models.WorkOrderParts

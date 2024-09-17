@@ -19,7 +19,7 @@ namespace Shopfloor.UnitOfWorks
             _workOrderRepository = workOrderRepository;
             _lineRepository = lineRepository;
         }
-        public event EventHandler? DecoratingCompleted;
+        public event EventHandler? DataChanged;
         public async Task CreateWorkOrder(WorkOrderCreationModel data)
         {
             _validation.Validate(data);
@@ -34,6 +34,6 @@ namespace Shopfloor.UnitOfWorks
         }
         public async Task<IEnumerable<LineModel>> GetLines() => await _lineRepository.GetDataAsync();
         public async Task<IEnumerable<WorkOrderModel>> GetWorkOrders() => await _workOrderRepository.GetDataAsync();
-        protected void OnDecoratingCompleted(EventArgs e) => DecoratingCompleted?.Invoke(this, e);
+        protected void OnDecoratingCompleted(EventArgs e) => DataChanged?.Invoke(this, e);
     }
 }

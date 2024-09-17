@@ -18,7 +18,7 @@ namespace Shopfloor.Models.Lines
         {
             throw new NotImplementedException();
         }
-        public Task Delete()
+        public Task Delete(int id)
         {
             throw new NotImplementedException();
         }

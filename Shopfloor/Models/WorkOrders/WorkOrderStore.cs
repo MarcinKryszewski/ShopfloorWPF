@@ -14,7 +14,6 @@ namespace Shopfloor.Models.WorkOrders
             _data.Add(item);
             return Task.CompletedTask;
         }
-
         public async Task ReloadData()
         {
         }

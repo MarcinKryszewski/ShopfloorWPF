@@ -179,6 +179,22 @@
                                                                    Background="Transparent"/>
                                                 </StackPanel>
                                         </Button>
+
+                                        <Button Command="{Binding Path=NavigatePartsList}">
+                                                <StackPanel Style="{StaticResource ButtonStackPanel}"
+                                                            Background="Transparent">
+                                                        <Border Width="24"
+                                                                Height="24"
+                                                                Margin="0,0,9,0"
+                                                                Background="Transparent">
+                                                                <TextBlock Style="{StaticResource IconBlock}"
+                                                                           Text="&#xF404;"/>
+                                                        </Border>
+                                                        <TextBlock Style="{StaticResource ButtonTextBlock}"
+                                                                   Text="Test listy części"
+                                                                   Background="Transparent"/>
+                                                </StackPanel>
+                                        </Button>
                                 </StackPanel>
                                 <!--#endregion-->
 

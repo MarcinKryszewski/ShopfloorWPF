@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
+using Shopfloor.Models.Parts;
 
 namespace Shopfloor.Models.WorkOrders
 {
-    public class WorkOrderDto : IModelDto
+    internal class WorkOrderDto : IModelDto
     {
         private LineModel? _line;
         public string Description { get; set; } = string.Empty;
