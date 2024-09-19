@@ -5,9 +5,9 @@ using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.WorkOrders;
 
-namespace Shopfloor.UnitOfWorks
+namespace Shopfloor.Roots
 {
-    internal class WorkOrderCreateRoot : IUnitOfWork
+    internal class WorkOrderCreateRoot : IRoot
     {
         private readonly IRepository<LineModel, LineCreationModel> _lineRepository;
         private readonly WorkOrderValidation _validation = new();

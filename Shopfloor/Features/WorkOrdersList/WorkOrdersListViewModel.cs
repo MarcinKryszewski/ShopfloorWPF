@@ -11,29 +11,29 @@ using Shopfloor.Features.WorkOrderDetails;
 using Shopfloor.Features.WorkOrderEdit;
 using Shopfloor.Features.WorkOrdersList.Commands;
 using Shopfloor.Models.WorkOrders;
+using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
-using Shopfloor.UnitOfWorks;
 
 namespace Shopfloor.Features.WorkOrdersList
 {
     internal class WorkOrdersListViewModel : ViewModelBase
     {
         private readonly WorkOrderContext _store;
-        private readonly WorkOrdersListRoot _unitOfWork;
+        private readonly WorkOrdersListRoot _root;
         private readonly List<WorkOrderModel> _workOrders = [];
 
-        public WorkOrdersListViewModel(WorkOrdersListRoot unitOfWork, WorkOrderContext store, ViewModelBaseDependecies dependecies)
+        public WorkOrdersListViewModel(WorkOrdersListRoot root, WorkOrderContext store, ViewModelBaseDependecies dependecies)
         : base(dependecies)
         {
-            _unitOfWork = unitOfWork;
+            _root = root;
             _store = store;
-            _unitOfWork.DataChanged += DataChanged;
+            _root.DataChanged += DataChanged;
 
             _ = LoadDataAsync();
 
-            WorkOrderCancelCommand = new WorkOrderCancelCommand(Notifier, unitOfWork);
+            WorkOrderCancelCommand = new WorkOrderCancelCommand(Notifier, root);
             WorkOrderCancelInfoCommand = new WorkOrderCancelInfoCommand(Notifier);
             WorkOrderConfirmCommand = new WorkInProgressCommand(Notifier); // TODO
             WorkOrderDetailsCommand = new NavigationCommand<WorkOrderDetailsViewModel>(NavigationService).Navigate();
@@ -68,7 +68,7 @@ namespace Shopfloor.Features.WorkOrdersList
         {
             List<Task> tasks = [];
 
-            IEnumerable<WorkOrderModel> dataWorkOrder = await _unitOfWork.GetWorkOrders();
+            IEnumerable<WorkOrderModel> dataWorkOrder = await _root.GetWorkOrders();
 
             tasks.Add(BatchListUpdater.UpdateAsync(
                 dataWorkOrder,

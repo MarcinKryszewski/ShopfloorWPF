@@ -7,9 +7,9 @@ using Shopfloor.Models.Lines;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.Shared.HelperFunctions;
 
-namespace Shopfloor.UnitOfWorks
+namespace Shopfloor.Roots
 {
-    internal class WorkOrdersListRoot : IUnitOfWork
+    internal class WorkOrdersListRoot : IRoot
     {
         private readonly IRepository<LineModel, LineCreationModel> _lineRepository;
         private readonly IRepository<WorkOrderModel, WorkOrderCreationModel> _workOrderRepository;

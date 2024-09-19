@@ -1,8 +1,8 @@
 using System;
 
-namespace Shopfloor.UnitOfWorks
+namespace Shopfloor.Roots
 {
-    internal interface IUnitOfWork
+    internal interface IRoot
     {
         public event EventHandler? DataChanged;
     }
