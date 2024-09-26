@@ -207,37 +207,67 @@
                                    Style="{StaticResource TooltipText}"
                                    Margin="0,7,0,3"/>
                         <ComboBox Style="{StaticResource ComboBoxMain}"
+                                  DisplayMemberPath="Name"
+                                  IsEditable="true"
+                                  IsReadOnly="false"
+                                  SelectedValue="{Binding PartsFilter.Line}"
+                                  SelectedValuePath="Name"
+                                  ItemsSource="{Binding Path=Lines}"
                                   MinHeight="30px"/>
 
                         <TextBlock Text="Maszyna"
                                    Style="{StaticResource TooltipText}"
                                    Margin="0,7,0,3"/>
                         <ComboBox Style="{StaticResource ComboBoxMain}"
+                                  DisplayMemberPath="Name"
+                                  IsEditable="true"
+                                  IsReadOnly="false"
+                                  SelectedValue="{Binding PartsFilter.Machine}"
+                                  SelectedValuePath="Name"
+                                  ItemsSource="{Binding Path=Machines}"
                                   MinHeight="30px"/>
 
                         <TextBlock Text="Rodzaj"
                                    Style="{StaticResource TooltipText}"
                                    Margin="0,7,0,3"/>
                         <ComboBox Style="{StaticResource ComboBoxMain}"
-                                  MinHeight="30px"/>
+                                  MinHeight="30px"
+                                  DisplayMemberPath="Name"
+                                  IsEditable="true"
+                                  IsReadOnly="false"
+                                  Text="{Binding PartsFilter.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  ItemsSource="{Binding Path=Types}"/>
 
                         <TextBlock Text="Producent"
                                    Style="{StaticResource TooltipText}"
                                    Margin="0,7,0,3"/>
                         <ComboBox Style="{StaticResource ComboBoxMain}"
+                                  DisplayMemberPath="Name"
+                                  IsEditable="true"
+                                  IsReadOnly="false"
+                                  Text="{Binding PartsFilter.Manufacturer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  ItemsSource="{Binding Path=Manufacturers}"
                                   MinHeight="30px"/>
 
                         <TextBlock Text="Numer producenta"
                                    Style="{StaticResource TooltipText}"
                                    Margin="0,7,0,3"/>
                         <ComboBox Style="{StaticResource ComboBoxMain}"
+                                  IsEditable="true"
+                                  IsReadOnly="false"
+                                  SelectedValue="{Binding PartsFilter.Number}"
+                                  ItemsSource="{Binding Path=ManufacturerNumbers}"
                                   MinHeight="30px"/>
 
                         <TextBlock Text="Indeks"
                                    Style="{StaticResource TooltipText}"
                                    Margin="0,7,0,3"/>
                         <ComboBox Style="{StaticResource ComboBoxMain}"
-                                  MinHeight="30px"/>
+                                  MinHeight="30px"
+                                  IsEditable="true"
+                                  IsReadOnly="false"
+                                  Text="{Binding PartsFilter.Index, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  ItemsSource="{Binding Path=Indexes}"/>
 
                         <Grid Margin="0,7,0,3">
                                 <Grid.ColumnDefinitions>
@@ -253,14 +283,65 @@
                                 <CheckBox Style="{StaticResource CheckBoxStyle1}"
                                           HorizontalAlignment="Left"
                                           VerticalAlignment="Center"
+                                          IsChecked="{Binding PartsFilter.Confirmed}"
                                           Grid.Column="1"
                                           Margin="10,0,0,0"/>
                         </Grid>
 
                 </StackPanel>
 
-                <Grid Background="Blue"
-                      Grid.Column="1"/>
+                <DataGrid
+                        Grid.Column="1"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="True"
+                        ItemsSource="{Binding Path=Parts}"
+                        SelectionMode="Single"
+                        Style="{DynamicResource DataGridMain}"
+                        ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}">
+
+                        <DataGrid.RowStyle>
+                                <Style BasedOn="{StaticResource DataGridRowMain}"
+                                       TargetType="DataGridRow">
+                                        <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsConfirmed}"
+                                                             Value="True">
+                                                        <Setter Property="BorderBrush"
+                                                                Value="#2FD32F"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding IsConfirmed}"
+                                                             Value="False">
+                                                        <Setter Property="BorderBrush"
+                                                                Value="#D32F2F"/>
+                                                </DataTrigger>
+                                        </Style.Triggers>
+                                </Style>
+                        </DataGrid.RowStyle>
+
+                        <DataGrid.Columns>
+
+                                <DataGridTextColumn Binding="{Binding Manufacturer.Name}"
+                                                    Header="Producent"/>
+
+                                <DataGridTextColumn Binding="{Binding PartType.Name}"
+                                                    Header="Rodzaj"/>
+
+                                <DataGridTextColumn Binding="{Binding NameOriginal}"
+                                                    Header="Nazwa producenta"/>
+
+                                <DataGridTextColumn Binding="{Binding NamePl}"
+                                                    Header="Nazwa polska"/>
+
+                                <DataGridTextColumn Binding="{Binding Index}"
+                                                    Header="Indeks"/>
+
+                                <DataGridTextColumn Binding="{Binding Amount}"
+                                                    Header="Ilość"/>
+
+                                <DataGridTextColumn Binding="{Binding Unit}"
+                                                    Header="Jednostka"/>
+
+                        </DataGrid.Columns>
+                </DataGrid>
 
         </Grid>
 </UserControl> 

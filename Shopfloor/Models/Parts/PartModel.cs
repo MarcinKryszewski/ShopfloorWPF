@@ -9,7 +9,7 @@ namespace Shopfloor.Models.Parts
     internal class PartModel : IModel
     {
         required public int Id { get; init; }
-        public string Name { get; set; } = string.Empty;
+        public double Amount { get; set; }
         public string Unit { get; set; } = "szt.";
 
         public ManufacturerModel? Manufacturer { get; set; }
@@ -22,6 +22,7 @@ namespace Shopfloor.Models.Parts
         public string NameOriginal { get; set; } = string.Empty;
         public string NamePl { get; set; } = string.Empty;
         public string Index { get; init; } = string.Empty;
+        public string PartNumber { get; set; } = string.Empty;
         public bool IsConfirmed { get; set; } = false;
     }
 }
