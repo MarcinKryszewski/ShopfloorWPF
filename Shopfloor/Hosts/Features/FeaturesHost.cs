@@ -23,6 +23,7 @@ namespace Shopfloor.Hosts.Features
         private static void Contexts(IServiceCollection services)
         {
             services.AddSingleton<WorkOrderContext>();
+            services.AddSingleton<PartsBasketContext>();
         }
     }
 }

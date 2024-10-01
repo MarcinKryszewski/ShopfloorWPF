@@ -340,6 +340,28 @@
                                 <DataGridTextColumn Binding="{Binding Unit}"
                                                     Header="Jednostka"/>
 
+                                <DataGridTemplateColumn
+                                        Width="auto"
+                                        Header="Akcje"
+                                        IsReadOnly="True">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal">
+
+                                                                <Button Command="{Binding Path=DataContext.AddPartCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                                        CommandParameter="{Binding }"
+                                                                        Style="{StaticResource gridConfirmButton}">
+                                                                        <TextBlock
+                                                                                FontFamily="Segoe MDL2 Assets"
+                                                                                Style="{StaticResource gridButtonIcon}"
+                                                                                Text="&#xE930;"/>
+                                                                </Button>
+
+                                                        </StackPanel>
+                                                </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
                         </DataGrid.Columns>
                 </DataGrid>
 
