@@ -40,7 +40,7 @@ namespace Shopfloor.Features.PartsList
             Parts.Filter = FilterParts;
             _ = LoadDataAsync();
 
-            AddPartCommand = new AddToBasketCommand(basket, baseDependecies.Notifier);
+            AddPartCommand = new AddToBasketCommand(_basket, baseDependecies.Notifier);
         }
         public ICollectionView Parts => CollectionViewSource.GetDefaultView(_parts);
         public ICollectionView Lines => CollectionViewSource.GetDefaultView(_lines);

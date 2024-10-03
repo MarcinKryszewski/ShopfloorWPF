@@ -9,11 +9,10 @@ namespace Shopfloor.Layout.SidePanel
 {
     internal sealed partial class SidePanelViewModel : ViewModelBase
     {
-        public SidePanelViewModel(INavigationService navigationService, IServiceProvider databaseServices)
+        public SidePanelViewModel(INavigationService navigationService)
         {
             NavigateWorkOrdersList = new NavigationCommand<WorkOrdersListViewModel>(navigationService).Navigate();
             NavigatePartsList = new NavigationCommand<PartsListViewModel>(navigationService).Navigate();
-
         }
         public ICommand NavigateWorkOrdersList { get; }
         public ICommand NavigatePartsList { get; }
