@@ -189,6 +189,7 @@
                 </Style>
 
         </UserControl.Resources>
+
         <Grid>
 
                 <Grid.ColumnDefinitions>
@@ -198,95 +199,134 @@
 
                 <StackPanel Grid.Column="0"
                             Width="250px"
-                            Margin="20,0,20,0">
+                            Margin="0">
 
-                        <TextBlock Text="Filtry"
-                                   Style="{StaticResource TitleTextBlock}"/>
+                        <StackPanel Margin="20,0,20,0">
 
-                        <TextBlock Text="Linia"
-                                   Style="{StaticResource TooltipText}"
-                                   Margin="0,7,0,3"/>
-                        <ComboBox Style="{StaticResource ComboBoxMain}"
-                                  DisplayMemberPath="Name"
-                                  IsEditable="true"
-                                  IsReadOnly="false"
-                                  SelectedValue="{Binding PartsFilter.Line}"
-                                  SelectedValuePath="Name"
-                                  ItemsSource="{Binding Path=Lines}"
-                                  MinHeight="30px"/>
+                                <TextBlock Text="Filtry"
+                                           Style="{StaticResource TitleTextBlock}"/>
 
-                        <TextBlock Text="Maszyna"
-                                   Style="{StaticResource TooltipText}"
-                                   Margin="0,7,0,3"/>
-                        <ComboBox Style="{StaticResource ComboBoxMain}"
-                                  DisplayMemberPath="Name"
-                                  IsEditable="true"
-                                  IsReadOnly="false"
-                                  SelectedValue="{Binding PartsFilter.Machine}"
-                                  SelectedValuePath="Name"
-                                  ItemsSource="{Binding Path=Machines}"
-                                  MinHeight="30px"/>
+                                <TextBlock Text="Linia"
+                                           Style="{StaticResource TooltipText}"
+                                           Margin="0,7,0,3"/>
+                                <ComboBox Style="{StaticResource ComboBoxMain}"
+                                          DisplayMemberPath="Name"
+                                          IsEditable="true"
+                                          IsReadOnly="false"
+                                          SelectedValue="{Binding PartsFilter.Line}"
+                                          SelectedValuePath="Name"
+                                          ItemsSource="{Binding Path=Lines}"
+                                          MinHeight="30px"/>
 
-                        <TextBlock Text="Rodzaj"
-                                   Style="{StaticResource TooltipText}"
-                                   Margin="0,7,0,3"/>
-                        <ComboBox Style="{StaticResource ComboBoxMain}"
-                                  MinHeight="30px"
-                                  DisplayMemberPath="Name"
-                                  IsEditable="true"
-                                  IsReadOnly="false"
-                                  Text="{Binding PartsFilter.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                  ItemsSource="{Binding Path=Types}"/>
+                                <TextBlock Text="Maszyna"
+                                           Style="{StaticResource TooltipText}"
+                                           Margin="0,7,0,3"/>
+                                <ComboBox Style="{StaticResource ComboBoxMain}"
+                                          DisplayMemberPath="Name"
+                                          IsEditable="true"
+                                          IsReadOnly="false"
+                                          SelectedValue="{Binding PartsFilter.Machine}"
+                                          SelectedValuePath="Name"
+                                          ItemsSource="{Binding Path=Machines}"
+                                          MinHeight="30px"/>
 
-                        <TextBlock Text="Producent"
-                                   Style="{StaticResource TooltipText}"
-                                   Margin="0,7,0,3"/>
-                        <ComboBox Style="{StaticResource ComboBoxMain}"
-                                  DisplayMemberPath="Name"
-                                  IsEditable="true"
-                                  IsReadOnly="false"
-                                  Text="{Binding PartsFilter.Manufacturer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                  ItemsSource="{Binding Path=Manufacturers}"
-                                  MinHeight="30px"/>
+                                <TextBlock Text="Rodzaj"
+                                           Style="{StaticResource TooltipText}"
+                                           Margin="0,7,0,3"/>
+                                <ComboBox Style="{StaticResource ComboBoxMain}"
+                                          MinHeight="30px"
+                                          DisplayMemberPath="Name"
+                                          IsEditable="true"
+                                          IsReadOnly="false"
+                                          Text="{Binding PartsFilter.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          ItemsSource="{Binding Path=Types}"/>
 
-                        <TextBlock Text="Numer producenta"
-                                   Style="{StaticResource TooltipText}"
-                                   Margin="0,7,0,3"/>
-                        <ComboBox Style="{StaticResource ComboBoxMain}"
-                                  IsEditable="true"
-                                  IsReadOnly="false"
-                                  SelectedValue="{Binding PartsFilter.Number}"
-                                  ItemsSource="{Binding Path=ManufacturerNumbers}"
-                                  MinHeight="30px"/>
+                                <TextBlock Text="Producent"
+                                           Style="{StaticResource TooltipText}"
+                                           Margin="0,7,0,3"/>
+                                <ComboBox Style="{StaticResource ComboBoxMain}"
+                                          DisplayMemberPath="Name"
+                                          IsEditable="true"
+                                          IsReadOnly="false"
+                                          Text="{Binding PartsFilter.Manufacturer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          ItemsSource="{Binding Path=Manufacturers}"
+                                          MinHeight="30px"/>
 
-                        <TextBlock Text="Indeks"
-                                   Style="{StaticResource TooltipText}"
-                                   Margin="0,7,0,3"/>
-                        <ComboBox Style="{StaticResource ComboBoxMain}"
-                                  MinHeight="30px"
-                                  IsEditable="true"
-                                  IsReadOnly="false"
-                                  Text="{Binding PartsFilter.Index, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                  ItemsSource="{Binding Path=Indexes}"/>
+                                <TextBlock Text="Numer producenta"
+                                           Style="{StaticResource TooltipText}"
+                                           Margin="0,7,0,3"/>
+                                <ComboBox Style="{StaticResource ComboBoxMain}"
+                                          IsEditable="true"
+                                          IsReadOnly="false"
+                                          SelectedValue="{Binding PartsFilter.Number}"
+                                          ItemsSource="{Binding Path=ManufacturerNumbers}"
+                                          MinHeight="30px"/>
 
-                        <Grid Margin="0,7,0,3">
-                                <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Indeks"
+                                           Style="{StaticResource TooltipText}"
+                                           Margin="0,7,0,3"/>
+                                <ComboBox Style="{StaticResource ComboBoxMain}"
+                                          MinHeight="30px"
+                                          IsEditable="true"
+                                          IsReadOnly="false"
+                                          Text="{Binding PartsFilter.Index, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          ItemsSource="{Binding Path=Indexes}"/>
 
-                                <TextBlock Text="Zatwierdzone"
-                                           VerticalAlignment="Center"
-                                           Grid.Column="0"
-                                           Margin="2,0,0,0"
-                                           Style="{StaticResource TooltipText}"/>
-                                <CheckBox Style="{StaticResource CheckBoxStyle1}"
-                                          HorizontalAlignment="Left"
-                                          VerticalAlignment="Center"
-                                          IsChecked="{Binding PartsFilter.Confirmed}"
-                                          Grid.Column="1"
-                                          Margin="10,0,0,0"/>
-                        </Grid>
+                                <Grid Margin="0,7,0,3">
+                                        <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Text="Zatwierdzone"
+                                                   VerticalAlignment="Center"
+                                                   Grid.Column="0"
+                                                   Margin="2,0,0,0"
+                                                   Style="{StaticResource TooltipText}"/>
+                                        <CheckBox Style="{StaticResource CheckBoxStyle1}"
+                                                  HorizontalAlignment="Left"
+                                                  VerticalAlignment="Center"
+                                                  IsChecked="{Binding PartsFilter.Confirmed}"
+                                                  Grid.Column="1"
+                                                  Margin="10,0,0,0"/>
+                                </Grid>
+
+                        </StackPanel>
+
+                        <Separator Margin="20,20,20,10"/>
+
+                        <StackPanel Margin="20,0,20,0">
+                                <TextBlock Text="Szczegóły"
+                                           Style="{StaticResource TitleTextBlock}"/>
+
+                                <TextBlock Text="Producent"
+                                           Style="{StaticResource TooltipText}"
+                                           Margin="0,7,0,3"/>
+                                <TextBox Style="{StaticResource TextBoxMain}"
+                                         Text="{Binding Part.Manufacturer.Name}"
+                                         MinHeight="30"
+                                         Padding="5,0"
+                                         IsReadOnly="True"/>
+
+                                <TextBlock Text="Nazwa producenta"
+                                           Style="{StaticResource TooltipText}"
+                                           Margin="0,7,0,3"/>
+                                <TextBox Style="{StaticResource TextBoxMain}"
+                                         Text="{Binding Part.NameOriginal}"
+                                         MinHeight="30"
+                                         Padding="5,0"
+                                         IsReadOnly="True"/>
+
+                                <TextBlock Text="Stan magazynowy"
+                                           Style="{StaticResource TooltipText}"
+                                           Margin="0,7,0,3"/>
+                                <TextBox Style="{StaticResource TextBoxMain}"
+                                         Text="{Binding Part.AmountText, Mode=OneWay}"
+                                         MinHeight="30"
+                                         Padding="5,0"
+                                         IsReadOnly="True"/>
+
+                        </StackPanel>
 
                 </StackPanel>
 
@@ -296,7 +336,10 @@
                         IsReadOnly="True"
                         ItemsSource="{Binding Path=Parts}"
                         SelectionMode="Single"
+                        SelectionUnit="FullRow"
                         Style="{DynamicResource DataGridMain}"
+                        SelectedItem="{Binding Path=Part}"
+                        CellStyle="{DynamicResource DataGridCellMain}"
                         ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}">
 
                         <DataGrid.RowStyle>
@@ -319,26 +362,16 @@
 
                         <DataGrid.Columns>
 
-                                <DataGridTextColumn Binding="{Binding Manufacturer.Name}"
-                                                    Header="Producent"/>
-
                                 <DataGridTextColumn Binding="{Binding PartType.Name}"
-                                                    Header="Rodzaj"/>
-
-                                <DataGridTextColumn Binding="{Binding NameOriginal}"
-                                                    Header="Nazwa producenta"/>
+                                                    Header="Rodzaj"
+                                                    Width="auto"/>
 
                                 <DataGridTextColumn Binding="{Binding NamePl}"
                                                     Header="Nazwa polska"/>
 
                                 <DataGridTextColumn Binding="{Binding Index}"
-                                                    Header="Indeks"/>
-
-                                <DataGridTextColumn Binding="{Binding Amount}"
-                                                    Header="Ilość"/>
-
-                                <DataGridTextColumn Binding="{Binding Unit}"
-                                                    Header="Jednostka"/>
+                                                    Header="Indeks"
+                                                    Width="auto"/>
 
                                 <DataGridTemplateColumn
                                         Width="auto"
@@ -366,4 +399,5 @@
                 </DataGrid>
 
         </Grid>
+
 </UserControl> 

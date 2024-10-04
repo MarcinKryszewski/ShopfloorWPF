@@ -7,6 +7,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Features.PartsList;
+using Shopfloor.Features.PartsList.Interfaces;
 using Shopfloor.Features.WorkOrderAddNew.Commands;
 using Shopfloor.Features.WorkOrdersList;
 using Shopfloor.Models.Lines;
@@ -19,16 +20,21 @@ using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.WorkOrderAddNew
 {
-    internal class WorkOrderAddNewViewModel : ViewModelBase
+    internal class WorkOrderAddNewViewModel : ViewModelBase, IViewModelContainingPartsList
     {
         private readonly WorkOrderCreateRoot _root;
         private readonly List<LineModel> _lines = [];
         private Visibility _isPartsListVisible = Visibility.Collapsed;
-        public WorkOrderAddNewViewModel(ViewModelBaseDependecies dependecies, WorkOrderCreateRoot root, PartsBasketContext partsBasket, PartsListViewModel partsListViewModel)
+        public WorkOrderAddNewViewModel(
+            ViewModelBaseDependecies dependecies,
+            WorkOrderCreateRoot root,
+            PartsBasketContext partsBasket,
+            PartsListViewModel partsListViewModel)
         : base(dependecies)
         {
             _root = root;
             Parts = partsBasket.Parts;
+            Parts.Clear();
 
             _ = LoadDataAsync();
 
@@ -37,7 +43,7 @@ namespace Shopfloor.Features.WorkOrderAddNew
             ShowPartsList = new ShowPartsListCommand(this);
             PartsListViewModel = partsListViewModel;
         }
-        public ObservableCollection<PartModel> Parts { get; }
+        public ObservableCollection<PartBasketModel> Parts { get; }
         public ICollectionView Lines => CollectionViewSource.GetDefaultView(_lines);
         public WorkOrderCreationModel WorkOrder { get; set; } = new();
         public ICommand WorkOrderCreateCommand { get; }
@@ -49,9 +55,12 @@ namespace Shopfloor.Features.WorkOrderAddNew
             set
             {
                 _isPartsListVisible = value;
+                IsPartsListButtonVisible = value == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
                 OnPropertyChanged(nameof(IsPartsListVisible));
+                OnPropertyChanged(nameof(IsPartsListButtonVisible));
             }
         }
+        public Visibility IsPartsListButtonVisible { get; private set; } = Visibility.Visible;
         public PartsListViewModel PartsListViewModel { get; }
         private async Task LoadDataAsync()
         {

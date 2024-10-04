@@ -5,13 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Shopfloor.Features.WorkOrderEdit"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:partsList="clr-namespace:Shopfloor.Features.PartsList"
     d:DataContext="{d:DesignInstance Type=local:WorkOrderEditViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="GridCell"
-                TargetType="StackPanel">
+               TargetType="StackPanel">
             <Setter Property="Margin"
                     Value="10,10,10,5"/>
         </Style>
@@ -20,113 +21,172 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition>
+                <ColumnDefinition.Style>
+                    <Style TargetType="ColumnDefinition">
+                        <Setter Property="Width"
+                                Value="0"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsPartsListVisible}"
+                                         Value="Visible">
+                                <Setter Property="Width"
+                                        Value="*"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ColumnDefinition.Style>
+            </ColumnDefinition>
+        </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"
-                        MinWidth="350"/>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="auto"
-                        MinWidth="350"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <TextBlock Text="Edytuj zadanie"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2"
+                   Foreground="{StaticResource BrushPurple200}"
+                   FontSize="20"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
 
+        <Grid Grid.Row="1"
+              Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"
-                        MinHeight="80"/>
-                <RowDefinition Height="auto"
-                        MinHeight="80"/>
-                <RowDefinition Height="auto"
-                        MinHeight="80"/>
-                <RowDefinition Height="auto"
-                        MinHeight="80"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackPanel
-                Grid.Row="0"
-                Grid.Column="3"
-                Style="{StaticResource GridCell}">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TooltipText}"
-                            Text="Linia"/>
-                    <TextBlock
-                        FontSize="14"
-                        Foreground="Red"
-                        Text=" *"/>
-                </StackPanel>
-                <ComboBox
-                    MinHeight="40"
-                    DisplayMemberPath="Name"
-                    IsEditable="true"
-                    IsReadOnly="false"
-                    ItemsSource="{Binding Path=Lines}"
-                    SelectedItem="{Binding Path=WorkOder.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                    Style="{StaticResource ComboBoxMain}"/>
-            </StackPanel>
+            <Grid Grid.Row="0">
 
-            <StackPanel
-                Grid.Row="3"
-                Grid.Column="1"
-                Grid.ColumnSpan="3"
-                Margin="10,-10,10,5">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Style="{StaticResource TooltipText}"
-                            Text="Opis"/>
-                    <TextBlock
-                        FontSize="14"
-                        Foreground="Red"
-                        Text=" *"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"
+                                      MinWidth="350"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="auto"
+                                      MinWidth="350"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"
+                                   MinHeight="80"/>
+                    <RowDefinition Height="auto"
+                                   MinHeight="80"/>
+                    <RowDefinition Height="auto"
+                                   MinHeight="80"/>
+                    <RowDefinition Height="auto"
+                                   MinHeight="80"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Style="{StaticResource GridCell}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TooltipText}"
+                                   Text="Linia"/>
+                        <TextBlock
+                            FontSize="14"
+                            Foreground="Red"
+                            Text=" *"/>
+                    </StackPanel>
+                    <ComboBox
+                        MinHeight="40"
+                        DisplayMemberPath="Name"
+                        IsEditable="true"
+                        IsReadOnly="false"
+                        ItemsSource="{Binding Path=Lines}"
+                        SelectedItem="{Binding Path=WorkOder.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource ComboBoxMain}"/>
                 </StackPanel>
-                <TextBox
-                    MaxWidth="730"
-                    Padding="8,8"
-                    VerticalContentAlignment="Top"
-                    FontSize="16"
-                    MinLines="3"
-                    Style="{StaticResource TextBoxMain}"
-                    Text="{Binding Path=WorkOder.Description, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
-                    TextWrapping="Wrap"/>
-            </StackPanel>
+
+                <StackPanel
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="3"
+                    Margin="10,-10,10,5">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource TooltipText}"
+                                   Text="Opis"/>
+                        <TextBlock
+                            FontSize="14"
+                            Foreground="Red"
+                            Text=" *"/>
+                    </StackPanel>
+                    <TextBox
+                        MaxWidth="730"
+                        Padding="8,8"
+                        VerticalContentAlignment="Top"
+                        FontSize="16"
+                        MinLines="3"
+                        Style="{StaticResource TextBoxMain}"
+                        Text="{Binding Path=WorkOder.Description, UpdateSourceTrigger=LostFocus, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"
+                        TextWrapping="Wrap"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Visibility="{Binding IsPartsListVisible}"
+                  Grid.Row="1">
+                <DataGrid ItemsSource="{Binding Path=Parts}"/>
+            </Grid>
+
+            <Grid Grid.Row="2"
+                  Margin="0,15,0,0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Width="150"
+                    Height="50"
+                    Margin="5,0"
+                    Command="{Binding Path=WorkOrderEditCommand}"
+                    CommandParameter="{Binding WorkOder}"
+                    Content="ZAPISZ"
+                    Style="{StaticResource ResourceKey=ButtonMain}"/>
+
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Width="150"
+                    Height="50"
+                    Margin="5,0"
+                    Command="{Binding Path=ShowPartsList}"
+                    Content="DODAJ CZĘŚCI"
+                    Visibility="{Binding IsPartsListButtonVisible}"
+                    Style="{StaticResource ResourceKey=ButtonEmpty}"/>
+
+                <Button
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Width="150"
+                    Height="50"
+                    Margin="5,0"
+                    Command="{Binding Path=WorkOrdersListNavigate}"
+                    Content="WRÓĆ"
+                    Style="{StaticResource ResourceKey=ButtonSide}"/>
+            </Grid>
         </Grid>
 
-        <Grid Grid.Row="3"
-                Margin="0,15,0,0">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Button
-                Grid.Row="0"
-                Grid.Column="1"
-                Width="150"
-                Height="50"
-                Margin="5,0"
-                Command="{Binding Path=WorkOrderEditCommand}"
-                CommandParameter="{Binding WorkOder}"
-                Content="ZAPISZ"
-                Style="{StaticResource ResourceKey=ButtonMain}"/>
-
-            <Button
-                Grid.Row="4"
-                Grid.Column="3"
-                Width="150"
-                Height="50"
-                Margin="5,0"
-                Command="{Binding Path=WorkOrdersListNavigate}"
-                Content="WRÓĆ"
-                Style="{StaticResource ResourceKey=ButtonSide}"/>
+        <Grid Grid.Row="1"
+              Grid.Column="1"
+              Visibility="{Binding IsPartsListVisible}">
+            <!-- Visibility="{Binding IsPartsListVisible}" -->
+            <partsList:PartsListView DataContext="{Binding PartsListViewModel}"/>
         </Grid>
+
     </Grid>
 </UserControl>

@@ -11,6 +11,7 @@ namespace Shopfloor.Models.Parts
         required public int Id { get; init; }
         public double Amount { get; set; }
         public string Unit { get; set; } = "szt.";
+        public string AmountText => $"{Amount} {Unit}";
 
         public ManufacturerModel? Manufacturer { get; set; }
         public int ManufacturerId { get; init; }

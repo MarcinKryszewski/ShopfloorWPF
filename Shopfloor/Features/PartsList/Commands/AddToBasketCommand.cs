@@ -26,15 +26,14 @@ namespace Shopfloor.Features.PartsList.Commands
 
             PartModel part = (PartModel)parameter;
 
-            if (_basket.Parts.Any(x => x == part))
+            if (_basket.Parts.Any(x => x.Part == part))
             {
                 string partInTheBasket = "Część znajduje się już na liście!";
                 _notifier.ShowInformation(partInTheBasket);
                 return;
             }
-
             string partAddToBasket = $"Dodano {part.NameOriginal} do listy";
-            _basket.Parts.Add(part);
+            _basket.Parts.Add(new PartBasketModel() { Part = part, });
             _notifier.ShowSuccess(partAddToBasket);
         }
     }

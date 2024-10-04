@@ -166,6 +166,7 @@
                     Margin="5,0"
                     Command="{Binding Path=ShowPartsList}"
                     Content="DODAJ CZĘŚCI"
+                    Visibility="{Binding IsPartsListButtonVisible}"
                     Style="{StaticResource ResourceKey=ButtonEmpty}"/>
 
                 <Button
@@ -188,10 +189,5 @@
             <partsList:PartsListView DataContext="{Binding PartsListViewModel}"/>
         </Grid>
 
-
-        <!-- <partsList:PartsListView Grid.Row="1"
-                                 Grid.Column="1"
-                                 Visibility="{Binding DataContext.IsPartsListVisible, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                 DataContext="{Binding PartsListViewModel}"/> -->
     </Grid>
 </UserControl> 

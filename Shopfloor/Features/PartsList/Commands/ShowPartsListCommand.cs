@@ -1,13 +1,14 @@
 using System.Windows;
+using Shopfloor.Features.PartsList.Interfaces;
 using Shopfloor.Shared.Commands;
 
 namespace Shopfloor.Features.WorkOrderAddNew.Commands
 {
     internal class ShowPartsListCommand : CommandBase
     {
-        private readonly WorkOrderAddNewViewModel _partsListVisible;
+        private readonly IViewModelContainingPartsList _partsListVisible;
 
-        public ShowPartsListCommand(WorkOrderAddNewViewModel viewModel)
+        public ShowPartsListCommand(IViewModelContainingPartsList viewModel)
         {
             _partsListVisible = viewModel;
         }

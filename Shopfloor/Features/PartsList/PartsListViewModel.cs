@@ -29,6 +29,8 @@ namespace Shopfloor.Features.PartsList
         private readonly List<string> _indexes = [];
         private readonly PartsListRoot _root;
         private readonly PartsBasketContext _basket;
+        private PartModel? _part;
+
         public PartsListViewModel(PartsListRoot root, PartsBasketContext basket, ViewModelBaseDependecies baseDependecies)
         : base(baseDependecies)
         {
@@ -41,6 +43,14 @@ namespace Shopfloor.Features.PartsList
             _ = LoadDataAsync();
 
             AddPartCommand = new AddToBasketCommand(_basket, baseDependecies.Notifier);
+        }
+        public PartModel? Part
+        {
+            get => _part; set
+            {
+                _part = value;
+                OnPropertyChanged(nameof(Part));
+            }
         }
         public ICollectionView Parts => CollectionViewSource.GetDefaultView(_parts);
         public ICollectionView Lines => CollectionViewSource.GetDefaultView(_lines);

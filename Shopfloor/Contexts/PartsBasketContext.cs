@@ -5,6 +5,11 @@ namespace Shopfloor.Contexts
 {
     internal class PartsBasketContext
     {
-        public ObservableCollection<PartModel> Parts { get; } = [];
+        public ObservableCollection<PartBasketModel> Parts { get; } = [];
+    }
+    internal class PartBasketModel
+    {
+        required public PartModel Part { get; init; }
+        public double Amount { get; set; } = 0;
     }
 }
