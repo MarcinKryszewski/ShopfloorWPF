@@ -1,6 +1,7 @@
 using System.Linq;
-using Shopfloor.Contexts;
+using Shopfloor.Contexts.PartsBasket;
 using Shopfloor.Models.Parts;
+using Shopfloor.Models.WorkOrderParts;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 
@@ -33,7 +34,7 @@ namespace Shopfloor.Features.PartsList.Commands
                 return;
             }
             string partAddToBasket = $"Dodano {part.NameOriginal} do listy";
-            _basket.Parts.Add(new PartBasketModel() { Part = part, });
+            _basket.Parts.Add(new WorkOrderPartCreationModel() { Part = part, PartId = part.Id });
             _notifier.ShowSuccess(partAddToBasket);
         }
     }

@@ -54,6 +54,7 @@
 
         <Grid Grid.Row="1"
               Grid.Column="0">
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>

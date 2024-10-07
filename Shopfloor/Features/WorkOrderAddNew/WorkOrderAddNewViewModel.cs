@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using Shopfloor.Contexts;
+using Shopfloor.Contexts.PartsBasket;
 using Shopfloor.Features.PartsList;
 using Shopfloor.Features.PartsList.Interfaces;
 using Shopfloor.Features.WorkOrderAddNew.Commands;
 using Shopfloor.Features.WorkOrdersList;
 using Shopfloor.Models.Lines;
-using Shopfloor.Models.Parts;
+using Shopfloor.Models.WorkOrderParts;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
@@ -43,7 +43,7 @@ namespace Shopfloor.Features.WorkOrderAddNew
             ShowPartsList = new ShowPartsListCommand(this);
             PartsListViewModel = partsListViewModel;
         }
-        public ObservableCollection<PartBasketModel> Parts { get; }
+        public ObservableCollection<WorkOrderPartCreationModel> Parts { get; }
         public ICollectionView Lines => CollectionViewSource.GetDefaultView(_lines);
         public WorkOrderCreationModel WorkOrder { get; set; } = new();
         public ICommand WorkOrderCreateCommand { get; }

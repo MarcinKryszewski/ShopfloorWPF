@@ -6,12 +6,14 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
+using Shopfloor.Contexts.PartsBasket;
 using Shopfloor.Features.PartsList;
 using Shopfloor.Features.PartsList.Interfaces;
 using Shopfloor.Features.WorkOrderAddNew.Commands;
 using Shopfloor.Features.WorkOrderEdit.Commands;
 using Shopfloor.Features.WorkOrdersList;
 using Shopfloor.Models.Lines;
+using Shopfloor.Models.WorkOrderParts;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
@@ -47,7 +49,7 @@ namespace Shopfloor.Features.WorkOrderEdit
             PartsListViewModel = partsListViewModel;
         }
         public ICollectionView Lines => CollectionViewSource.GetDefaultView(_lines);
-        public ObservableCollection<PartBasketModel> Parts { get; }
+        public ObservableCollection<WorkOrderPartCreationModel> Parts { get; }
         public Visibility IsPartsListVisible
         {
             get => _isPartsListVisible;

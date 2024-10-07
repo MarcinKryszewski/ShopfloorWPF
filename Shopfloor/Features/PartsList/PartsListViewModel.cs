@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
-using Shopfloor.Contexts;
+using Shopfloor.Contexts.PartsBasket;
 using Shopfloor.Features.PartsList.Commands;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.Machines;
