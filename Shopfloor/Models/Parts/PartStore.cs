@@ -15,6 +15,7 @@ namespace Shopfloor.Models.Parts
         }
         public async Task ReloadData()
         {
+            await Task.Delay(0);
         }
     }
 }

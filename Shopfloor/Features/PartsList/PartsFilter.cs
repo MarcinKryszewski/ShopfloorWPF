@@ -12,9 +12,7 @@ namespace Shopfloor.Features.PartsList
         private string _number = string.Empty;
         private string _index = string.Empty;
         private bool _confirmed;
-
         public event EventHandler? FiltersChanged;
-        protected void OnFiltersChanged(EventArgs e) => FiltersChanged?.Invoke(this, e);
         public string Line
         {
             get => _line;
@@ -78,5 +76,6 @@ namespace Shopfloor.Features.PartsList
                 OnFiltersChanged(EventArgs.Empty);
             }
         }
+        protected void OnFiltersChanged(EventArgs e) => FiltersChanged?.Invoke(this, e);
     }
 }

@@ -6,9 +6,9 @@ using Shopfloor.Models.Commons.Interfaces;
 
 namespace Shopfloor.Models.Parts
 {
-    internal class PartProvider : IProvider<PartModel>
+    internal class PartProvider : IProvider<PartModel, PartCreationModel>
     {
-        public Task<int> Create(PartModel item)
+        public Task<int> Create(PartCreationModel item)
         {
             throw new NotImplementedException();
         }

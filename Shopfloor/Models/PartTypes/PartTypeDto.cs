@@ -4,6 +4,5 @@ namespace Shopfloor.Models.PartTypes
 {
     internal class PartTypeDto : IModelDto
     {
-
     }
 }

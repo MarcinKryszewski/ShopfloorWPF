@@ -18,16 +18,7 @@ namespace Shopfloor.Models.WorkOrders
         public async Task<WorkOrderModel> Create(WorkOrderCreationModel item)
         {
             Random rnd = new();
-            WorkOrderModel workOrder = new()
-            {
-                Id = rnd.Next(0, 100),
-                CreateDate = DateTime.Now,
-                LineId = item.LineId,
-                Description = item.Description,
-                Line = item.Line,
-                Parts = item.Parts,
-                PartsId = item.PartsId,
-            };
+            WorkOrderModel workOrder = item.CreateModel(rnd.Next(0, 100));
             await _store.AddItem(workOrder);
             return workOrder;
         }
@@ -35,15 +26,15 @@ namespace Shopfloor.Models.WorkOrders
         public async Task Delete(int id)
         {
             // TODO: Remove in DB
-            WorkOrderModel? workorder = _store.Data.Find(x => x.Id == id);
-            if (workorder == null)
+            WorkOrderModel? item = _store.Data.Find(x => x.Id == id);
+            if (item == null)
             {
                 string errorText = "Nie udało się anulować tego działania. Spróbuj ponownie!";
                 await Task.FromException(new InvalidOperationException(errorText));
                 return;
             }
 
-            _store.Data.Remove(workorder);
+            _store.Data.Remove(item);
         }
 
         public async Task<List<WorkOrderModel>> GetDataAsync()
@@ -94,7 +85,6 @@ namespace Shopfloor.Models.WorkOrders
             workOrder.LineId = item.LineId;
             workOrder.Description = item.Description;
             workOrder.Line = item.Line;
-
 
             workOrder.Parts.Clear();
             workOrder.Parts.AddRange(item.Parts);

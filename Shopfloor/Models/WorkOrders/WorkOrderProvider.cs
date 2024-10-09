@@ -7,14 +7,14 @@ using Shopfloor.Models.Commons.Interfaces;
 
 namespace Shopfloor.Models.WorkOrders
 {
-    internal class WorkOrderProvider : IProvider<WorkOrderModel>
+    internal class WorkOrderProvider : IProvider<WorkOrderModel, WorkOrderCreationModel>
     {
         private readonly DatabaseConnectionFactory _database;
         public WorkOrderProvider(DatabaseConnectionFactory databaseConnection)
         {
             _database = databaseConnection;
         }
-        public async Task<int> Create(WorkOrderModel item)
+        public async Task<int> Create(WorkOrderCreationModel item)
         {
             using IDbConnection connection = _database.Connect();
             await Task.Delay(0);

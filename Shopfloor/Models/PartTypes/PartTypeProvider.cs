@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Models.Commons.Interfaces;
+using Shopfloor.Models.Parts;
 
 namespace Shopfloor.Models.PartTypes
 {
-    internal class PartTypeProvider : IProvider<PartTypeModel>
+    internal class PartTypeProvider : IProvider<PartTypeModel, PartTypeCreationModel>
     {
-        public Task<int> Create(PartTypeModel item)
+        public Task<int> Create(PartTypeCreationModel item)
         {
             throw new NotImplementedException();
         }

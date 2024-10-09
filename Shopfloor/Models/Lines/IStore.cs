@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.Commons.Interfaces
 {
-    public interface IStore<T>
+    internal interface IStore<T>
         where T : IModel
     {
         public List<T> Data { get; }

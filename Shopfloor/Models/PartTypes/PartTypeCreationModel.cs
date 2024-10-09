@@ -3,7 +3,11 @@ using Shopfloor.Models.Commons.Interfaces;
 
 namespace Shopfloor.Models.PartTypes
 {
-    internal class PartTypeCreationModel : ModelValidationBase, IModelCreationModel
+    internal class PartTypeCreationModel : ModelValidationBase, IModelCreationModel<PartTypeModel>
     {
+        public PartTypeModel CreateModel(int id)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

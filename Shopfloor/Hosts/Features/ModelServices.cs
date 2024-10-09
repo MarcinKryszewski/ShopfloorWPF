@@ -5,6 +5,7 @@ using Shopfloor.Models.Machines;
 using Shopfloor.Models.Manufacturers;
 using Shopfloor.Models.Parts;
 using Shopfloor.Models.PartTypes;
+using Shopfloor.Models.WorkOrderParts;
 using Shopfloor.Models.WorkOrders;
 
 namespace Shopfloor.Hosts.Models
@@ -19,6 +20,13 @@ namespace Shopfloor.Hosts.Models
             ManufacturersServices(services);
             PartTypesServices(services);
             MachinesServices(services);
+            WorkOrderPartServices(services);
+        }
+        private static void WorkOrderPartServices(IServiceCollection services)
+        {
+            services.AddSingleton<IRepository<WorkOrderPartModel, WorkOrderPartCreationModel>, WorkOrderPartRepository>();
+            services.AddSingleton<IStore<WorkOrderPartModel>, WorkOrderPartStore>();
+            services.AddSingleton<IProvider<WorkOrderPartModel, WorkOrderPartCreationModel>, WorkOrderPartProvider>();
         }
         private static void LinesServices(IServiceCollection services)
         {

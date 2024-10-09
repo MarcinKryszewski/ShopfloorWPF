@@ -16,6 +16,7 @@ namespace Shopfloor.Models.WorkOrders
         }
         public async Task ReloadData()
         {
+            await Task.Delay(0);
         }
     }
 }

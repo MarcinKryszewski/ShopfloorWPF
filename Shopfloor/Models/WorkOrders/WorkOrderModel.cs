@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.Parts;
+using Shopfloor.Models.WorkOrderParts;
 
 namespace Shopfloor.Models.WorkOrders
 {
@@ -11,7 +12,7 @@ namespace Shopfloor.Models.WorkOrders
         private LineModel? _line;
         required public int Id { get; init; }
         public string Description { get; set; } = string.Empty;
-        public List<PartModel> Parts { get; init; } = [];
+        public List<WorkOrderPartModel> Parts { get; init; } = [];
         public List<int> PartsId { get; init; } = [];
         public bool IsDeleted { get; set; } = false;
         public DateTime DeletionTime { get; set; }

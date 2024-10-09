@@ -1,6 +1,6 @@
 namespace Shopfloor.Models.Commons.Interfaces
 {
-    public interface IModel
+    internal interface IModel
     {
         public int Id { get; init; }
     }

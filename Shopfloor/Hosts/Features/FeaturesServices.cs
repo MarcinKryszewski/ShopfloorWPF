@@ -31,6 +31,7 @@ namespace Shopfloor.Hosts.Features
             services.AddSingleton<WorkOrderEditRoot>();
             services.AddTransient<WorkOrderEditViewModel>();
 
+            services.AddTransient<WorkOrderDetailsRoot>();
             services.AddTransient<WorkOrderDetailsViewModel>();
         }
     }
