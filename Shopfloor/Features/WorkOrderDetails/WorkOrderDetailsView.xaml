@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:Shopfloor.Features.WorkOrderDetails"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:partsList="clr-namespace:Shopfloor.Features.PartsList"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
@@ -14,6 +13,22 @@
             <Setter Property="Margin"
                     Value="10,10,10,5"/>
         </Style>
+
+        <Style x:Key="TitleTextBlock"
+               TargetType="TextBlock">
+            <Setter Property="FontSize"
+                    Value="20"/>
+            <Setter Property="Height"
+                    Value="auto"/>
+            <Setter Property="Padding"
+                    Value="0,10,0,0"/>
+            <Setter Property="FontFamily"
+                    Value="Inter"/>
+            <Setter Property="Typography.Capitals"
+                    Value="AllSmallCaps"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource BrushDarkNeutral600}"/>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
@@ -22,36 +37,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition>
-                <ColumnDefinition.Style>
-                    <Style TargetType="ColumnDefinition">
-                        <Setter Property="Width"
-                                Value="0"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsPartsListVisible}"
-                                         Value="Visible">
-                                <Setter Property="Width"
-                                        Value="*"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ColumnDefinition.Style>
-            </ColumnDefinition>
-        </Grid.ColumnDefinitions>
-
-        <TextBlock Text="Nowe zadanie"
+        <TextBlock Text="Szczegóły zadania"
                    Grid.Row="0"
-                   Grid.Column="0"
-                   Grid.ColumnSpan="2"
                    Foreground="{StaticResource BrushPurple200}"
                    FontSize="20"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"/>
 
-        <Grid Grid.Row="1"
-              Grid.Column="0">
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -131,8 +124,55 @@
             </Grid>
 
             <Grid Visibility="{Binding IsPartsListVisible}"
-                  Grid.Row="1">
-                <DataGrid ItemsSource="{Binding Path=Parts}"/>
+                  Grid.Row="1"
+                  MaxWidth="730">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Text="Części"
+                           Style="{StaticResource TitleTextBlock}"/>
+
+                <DataGrid Grid.Row="1"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          ItemsSource="{Binding Path=Parts}"
+                          SelectionMode="Single"
+                          SelectionUnit="FullRow"
+                          Style="{DynamicResource DataGridMain}"
+                          CellStyle="{DynamicResource DataGridCellMain}"
+                          RowStyle="{DynamicResource DataGridRowMain}"
+                          ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
+                          TargetUpdated="DataGrid_TargetUpdated">
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Binding="{Binding Part.PartType.Name}"
+                                            Header="Rodzaj"
+                                            Width="auto"/>
+
+                        <DataGridTextColumn Binding="{Binding Part.NamePl, NotifyOnTargetUpdated=True}"
+                                            Header="Nazwa polska"
+                                            Width="1*"/>
+
+                        <DataGridTextColumn Binding="{Binding Part.Index}"
+                                            Header="Indeks"
+                                            Width="auto"/>
+
+                        <DataGridTextColumn Binding="{Binding Amount}"
+                                            Header="Ilość"
+                                            Width="auto"/>
+
+                        <DataGridTextColumn Binding="{Binding Unit}"
+                                            Header="Jednostka"
+                                            Width="auto"/>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
             </Grid>
 
             <Grid Grid.Row="2"
@@ -155,8 +195,6 @@
                     Style="{StaticResource ResourceKey=ButtonSide}"/>
             </Grid>
         </Grid>
-
-
 
     </Grid>
 

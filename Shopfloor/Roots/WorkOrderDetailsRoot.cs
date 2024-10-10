@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Shopfloor.Contexts;
 using Shopfloor.Contexts.PartsBasket;
 using Shopfloor.Models.Commons.Interfaces;
+using Shopfloor.Models.Parts;
 using Shopfloor.Models.WorkOrderParts;
 
 namespace Shopfloor.Roots
@@ -14,16 +15,18 @@ namespace Shopfloor.Roots
         private readonly PartsBasketContext _partsBasket;
         private readonly IRepository<WorkOrderPartModel, WorkOrderPartCreationModel> _workOrderPartRepository;
         private readonly WorkOrderContext _store;
+        private readonly IRepository<PartModel, PartCreationModel> _partRepository;
 
         public WorkOrderDetailsRoot(
+            IRepository<PartModel, PartCreationModel> partRepository,
             PartsBasketContext partsBasket,
-            IRepository<WorkOrderPartModel,
-            WorkOrderPartCreationModel> workOrderPartRepository,
+            IRepository<WorkOrderPartModel, WorkOrderPartCreationModel> workOrderPartRepository,
             WorkOrderContext store)
         {
             _partsBasket = partsBasket;
             _workOrderPartRepository = workOrderPartRepository;
             _store = store;
+            _partRepository = partRepository;
         }
         public event EventHandler? DataChanged;
         public List<WorkOrderPartModel> Parts { get; } = [];
@@ -44,7 +47,23 @@ namespace Shopfloor.Roots
                 WorkOrderPartCreationModel creationModel = new();
                 _partsBasket.Parts.Add(creationModel.CreateFromModel(item));
             }
+            if (!_workOrderPartRepository.Merges.Contains(typeof(PartModel)))
+            {
+                _ = DecorateBasketWithParts();
+            }
             return Task.CompletedTask;
+        }
+        protected void OnDataChanged(EventArgs e) => DataChanged?.Invoke(this, e);
+        private async Task DecorateBasketWithParts()
+        {
+            List<PartModel>? parts = await _partRepository.GetDataAsync();
+
+            foreach (WorkOrderPartCreationModel item in _partsBasket.Parts)
+            {
+                item.Part = parts.Find(part => part.Id == item.PartId);
+            }
+
+            OnDataChanged(EventArgs.Empty);
         }
     }
 }

@@ -1,5 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Contexts.PartsBasket;
@@ -14,6 +19,7 @@ namespace Shopfloor.Features.WorkOrderDetails
 {
     internal class WorkOrderDetailsViewModel : ViewModelBase
     {
+        private readonly PartsBasketContext _partsBasket;
         public WorkOrderDetailsViewModel(
             ViewModelBaseDependecies dependecies,
             WorkOrderContext store,
@@ -25,17 +31,18 @@ namespace Shopfloor.Features.WorkOrderDetails
             WorkOrdersListNavigate = new NavigationCommand<WorkOrdersListViewModel>(NavigationService).Navigate();
             root.DataChanged += DataChanged;
 
-            Parts = partsBasket.Parts;
-            Parts.Clear();
+            _partsBasket = partsBasket;
+            _partsBasket.Parts.Clear();
 
             root.LoadBasket();
         }
         public ICommand WorkOrdersListNavigate { get; }
         public WorkOrderModel WorkOder { get; init; }
-        public ObservableCollection<WorkOrderPartCreationModel> Parts { get; }
+        public Visibility IsPartsListVisible => _partsBasket.Parts.Any() ? Visibility.Visible : Visibility.Collapsed;
+        public ICollectionView Parts => CollectionViewSource.GetDefaultView(_partsBasket.Parts);
         public void DataChanged(object? sender, EventArgs e)
         {
-            // Parts.Refresh();
+            Parts.Refresh();
         }
     }
 }

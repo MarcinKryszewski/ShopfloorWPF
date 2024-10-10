@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Shopfloor.Utilities;
 
 namespace Shopfloor.Features.WorkOrderEdit
 {
@@ -24,5 +25,6 @@ namespace Shopfloor.Features.WorkOrderEdit
         {
             InitializeComponent();
         }
+        public void DataGrid_TargetUpdated(object sender, DataTransferEventArgs e) => DataGridWidthRefresh.RefreshWidth(sender, e, 1);
     }
 }

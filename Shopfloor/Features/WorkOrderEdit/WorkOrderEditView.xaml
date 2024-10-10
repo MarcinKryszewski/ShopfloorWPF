@@ -11,11 +11,29 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
+
         <Style x:Key="GridCell"
                TargetType="StackPanel">
             <Setter Property="Margin"
                     Value="10,10,10,5"/>
         </Style>
+
+        <Style x:Key="TitleTextBlock"
+               TargetType="TextBlock">
+            <Setter Property="FontSize"
+                    Value="20"/>
+            <Setter Property="Height"
+                    Value="auto"/>
+            <Setter Property="Padding"
+                    Value="0,10,0,0"/>
+            <Setter Property="FontFamily"
+                    Value="Inter"/>
+            <Setter Property="Typography.Capitals"
+                    Value="AllSmallCaps"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource BrushDarkNeutral600}"/>
+        </Style>
+
     </UserControl.Resources>
 
     <Grid>
