@@ -41,6 +41,8 @@ namespace Shopfloor.Features.WorkOrderAddNew
             WorkOrdersListNavigate = new NavigationCommand<WorkOrdersListViewModel>(NavigationService).Navigate();
             WorkOrderCreateCommand = new WorkOrderCreateCommand(Notifier, _root);
             ShowPartsList = new ShowPartsListCommand(this);
+            RemovePartFromBasketCommand = new RemovePartFromBasketCommand(partsBasket);
+
             PartsListViewModel = partsListViewModel;
         }
         public ObservableCollection<WorkOrderPartCreationModel> Parts { get; }
@@ -49,6 +51,7 @@ namespace Shopfloor.Features.WorkOrderAddNew
         public ICommand WorkOrderCreateCommand { get; }
         public ICommand WorkOrdersListNavigate { get; }
         public ICommand ShowPartsList { get; }
+        public ICommand RemovePartFromBasketCommand { get; }
         public Visibility IsPartsListVisible
         {
             get => _isPartsListVisible;

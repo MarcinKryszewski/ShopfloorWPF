@@ -151,8 +151,82 @@
             </Grid>
 
             <Grid Visibility="{Binding IsPartsListVisible}"
-                  Grid.Row="1">
-                <DataGrid ItemsSource="{Binding Path=Parts}"/>
+                  Grid.Row="1"
+                  MaxWidth="730">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           Text="Części"
+                           Style="{StaticResource TitleTextBlock}"/>
+
+                <DataGrid Grid.Row="1"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="False"
+                          ItemsSource="{Binding Path=Parts}"
+                          SelectionMode="Single"
+                          SelectionUnit="FullRow"
+                          Style="{DynamicResource DataGridMain}"
+                          CellStyle="{DynamicResource DataGridCellMain}"
+                          RowStyle="{DynamicResource DataGridRowMain}"
+                          ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
+                          TargetUpdated="DataGrid_TargetUpdated">
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Binding="{Binding Part.PartType.Name}"
+                                            Header="Rodzaj"
+                                            Width="auto"
+                                            IsReadOnly="True"/>
+
+                        <DataGridTextColumn Binding="{Binding Part.NamePl, NotifyOnTargetUpdated=True}"
+                                            Header="Nazwa polska"
+                                            Width="1*"
+                                            IsReadOnly="True"/>
+
+                        <DataGridTextColumn Binding="{Binding Part.Index}"
+                                            Header="Indeks"
+                                            Width="auto"
+                                            IsReadOnly="True"/>
+
+                        <DataGridTextColumn Binding="{Binding Amount}"
+                                            Header="Ilość"
+                                            Width="auto"
+                                            IsReadOnly="False"/>
+
+                        <DataGridTextColumn Binding="{Binding Unit}"
+                                            Header="Jednostka"
+                                            Width="auto"
+                                            IsReadOnly="True"/>
+
+                        <DataGridTemplateColumn
+                            Width="auto"
+                            Header="Akcje"
+                            IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+
+                                        <Button Command="{Binding Path=DataContext.RemovePartFromBasketCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                CommandParameter="{Binding }"
+                                                Style="{StaticResource gridRemoveButton}">
+                                            <TextBlock
+                                                FontFamily="Segoe MDL2 Assets"
+                                                Style="{StaticResource gridButtonIcon}"
+                                                Text="&#xE74D;"/>
+                                        </Button>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
             </Grid>
 
             <Grid Grid.Row="2"

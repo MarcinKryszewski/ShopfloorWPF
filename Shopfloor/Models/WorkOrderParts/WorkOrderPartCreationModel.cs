@@ -25,6 +25,8 @@ namespace Shopfloor.Models.WorkOrderParts
                 WorkOrderId = WorkOrderId,
                 Amount = Amount,
                 ValuePerPiece = ValuePerPiece,
+                Part = Part,
+                WorkOrder = WorkOrder,
             };
         }
         public WorkOrderPartCreationModel CreateFromModel(WorkOrderPartModel model)

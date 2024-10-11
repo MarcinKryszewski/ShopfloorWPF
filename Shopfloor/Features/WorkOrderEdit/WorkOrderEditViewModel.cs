@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -40,6 +41,9 @@ namespace Shopfloor.Features.WorkOrderEdit
 
             Parts = partsBasket.Parts;
             Parts.Clear();
+
+            _root.LoadBasket();
+            IsPartsListVisible = Parts.Any() ? Visibility.Visible : Visibility.Collapsed;
 
             _ = LoadDataAsync();
 
