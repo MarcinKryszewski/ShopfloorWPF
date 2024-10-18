@@ -10,6 +10,7 @@ namespace Shopfloor.Contexts.PartsBasket
     {
         private WorkOrderModel? _workOrder;
         public ObservableCollection<WorkOrderPartCreationModel> Parts { get; } = [];
+        public List<WorkOrderPartCreationModel> OriginalPartsList { get; set; } = [];
         public List<WorkOrderPartCreationModel> PartsCanceled { get; } = [];
         public WorkOrderModel? WorkOrder
         {

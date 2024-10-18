@@ -43,6 +43,7 @@ namespace Shopfloor.Features.WorkOrderEdit
             Parts.Clear();
 
             _root.LoadBasket();
+            partsBasket.OriginalPartsList = [.. Parts];
             IsPartsListVisible = Parts.Any() ? Visibility.Visible : Visibility.Collapsed;
 
             _ = LoadDataAsync();

@@ -49,6 +49,7 @@ namespace Shopfloor.Roots
             try
             {
                 await _workOrderRepository.Update(data);
+                await WorkOrderPartsHandler();
             }
             catch (Exception)
             {
@@ -90,6 +91,49 @@ namespace Shopfloor.Roots
             }
 
             OnDataChanged(EventArgs.Empty);
+        }
+        private async Task WorkOrderPartsHandler()
+        {
+            List<Task> tasks = [];
+
+            tasks.Add(UpdateParts());
+            tasks.Add(AddParts());
+            tasks.Add(DeleteParts());
+
+            await Task.WhenAll(tasks);
+        }
+        private async Task UpdateParts()
+        {
+            List<Task> tasks = [];
+
+            List<WorkOrderPartCreationModel> parts = _partsBasket.Parts.Intersect(_partsBasket.OriginalPartsList).ToList();
+            foreach (WorkOrderPartCreationModel part in parts)
+            {
+                tasks.Add(_workOrderPartRepository.Update(part));
+            }
+            await Task.WhenAll(tasks);
+        }
+        private async Task AddParts()
+        {
+            List<Task> tasks = [];
+
+            List<WorkOrderPartCreationModel> parts = _partsBasket.Parts.Except(_partsBasket.OriginalPartsList).ToList();
+            foreach (WorkOrderPartCreationModel part in parts)
+            {
+                tasks.Add(_workOrderPartRepository.Update(part));
+            }
+            await Task.WhenAll(tasks);
+        }
+        private async Task DeleteParts()
+        {
+            List<Task> tasks = [];
+
+            List<WorkOrderPartCreationModel> parts = _partsBasket.OriginalPartsList.Except(_partsBasket.Parts).ToList();
+            foreach (WorkOrderPartCreationModel part in parts)
+            {
+                tasks.Add(_workOrderPartRepository.Update(part));
+            }
+            await Task.WhenAll(tasks);
         }
     }
 }

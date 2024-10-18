@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shopfloor.Models.WorkOrderParts;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.Roots;
 using Shopfloor.Services.NotificationServices;
@@ -11,7 +13,9 @@ namespace Shopfloor.Features.WorkOrderEdit.Commands
     {
         private readonly INotifier _notifier;
         private readonly WorkOrderEditRoot _root;
-        public WorkOrderEditCommand(INotifier notifier, WorkOrderEditRoot root)
+        public WorkOrderEditCommand(
+            INotifier notifier,
+            WorkOrderEditRoot root)
         {
             _notifier = notifier;
             _root = root;
