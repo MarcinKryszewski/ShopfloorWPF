@@ -60,8 +60,19 @@ namespace Shopfloor.Models.WorkOrderParts
         }
         public async Task Update(WorkOrderPartCreationModel item)
         {
-            await Task.Delay(0);
-            throw new NotImplementedException();
+            WorkOrderPartModel? existingData = _store.Data.Find(x => x.Id == item.Id);
+
+            if (existingData is null)
+            {
+                string errorText = "Nie udało się zaktualizować tej części. Spróbuj ponownie!";
+                await Task.FromException(new InvalidOperationException(errorText));
+                return;
+            }
+
+            await _provider.Update(existingData);
+            existingData.SetValues(item);
+
+            await Task.CompletedTask;
         }
     }
 }

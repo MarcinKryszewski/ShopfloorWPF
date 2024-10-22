@@ -28,7 +28,7 @@ namespace Shopfloor.Tests.Models.WorkOrders
         public void WorkOrderDto_ShouldSetPropertiesCorrectly()
         {
             // Arrange
-            PartModel? part = new() { Id = 1, Name = "Part1" };
+            PartModel? part = new() { Id = 1, NameOriginal = "Part1" };
             LineModel? line = new() { Id = 10, Name = "Line10" };
             WorkOrderDto? workOrderDto = new()
             {

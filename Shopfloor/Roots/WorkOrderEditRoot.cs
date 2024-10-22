@@ -120,7 +120,7 @@ namespace Shopfloor.Roots
             List<WorkOrderPartCreationModel> parts = _partsBasket.Parts.Except(_partsBasket.OriginalPartsList).ToList();
             foreach (WorkOrderPartCreationModel part in parts)
             {
-                tasks.Add(_workOrderPartRepository.Update(part));
+                tasks.Add(_workOrderPartRepository.Create(part));
             }
             await Task.WhenAll(tasks);
         }
@@ -129,10 +129,11 @@ namespace Shopfloor.Roots
             List<Task> tasks = [];
 
             List<WorkOrderPartCreationModel> parts = _partsBasket.OriginalPartsList.Except(_partsBasket.Parts).ToList();
-            foreach (WorkOrderPartCreationModel part in parts)
-            {
-                tasks.Add(_workOrderPartRepository.Update(part));
-            }
+            tasks.AddRange(
+                parts
+                    .Where(part => part.Id is not null)
+                    .Select(part => _workOrderPartRepository.Delete((int)part.Id!)));
+
             await Task.WhenAll(tasks);
         }
     }

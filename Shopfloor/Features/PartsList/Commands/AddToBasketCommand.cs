@@ -34,7 +34,7 @@ namespace Shopfloor.Features.PartsList.Commands
                 return;
             }
             string partAddToBasket = $"Dodano {part.NameOriginal} do listy";
-            _basket.Parts.Add(new WorkOrderPartCreationModel() { Part = part, PartId = part.Id });
+            _basket.Parts.Add(new WorkOrderPartCreationModel() { Part = part, PartId = part.Id, WorkOrderId = _basket.WorkOrder?.Id ?? 0 });
             _notifier.ShowSuccess(partAddToBasket);
         }
     }

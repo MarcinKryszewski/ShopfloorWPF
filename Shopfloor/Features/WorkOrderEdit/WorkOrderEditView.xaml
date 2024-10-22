@@ -210,7 +210,7 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
 
-                                        <Button Command="{Binding Path=DataContext.RemovePartFromBasketCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        <Button Command="{Binding Path=DataContext.RemovePartCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                                 CommandParameter="{Binding }"
                                                 Style="{StaticResource gridRemoveButton}">
                                             <TextBlock

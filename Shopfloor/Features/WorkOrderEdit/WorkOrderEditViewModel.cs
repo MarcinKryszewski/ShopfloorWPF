@@ -39,6 +39,7 @@ namespace Shopfloor.Features.WorkOrderEdit
             _root = root;
             WorkOder = store.ToWorkOrderCreation();
 
+            partsBasket.WorkOrder = store.WorkOrder;
             Parts = partsBasket.Parts;
             Parts.Clear();
 
@@ -51,6 +52,7 @@ namespace Shopfloor.Features.WorkOrderEdit
             WorkOrdersListNavigate = new NavigationCommand<WorkOrdersListViewModel>(NavigationService).Navigate();
             WorkOrderEditCommand = new WorkOrderEditCommand(dependecies.Notifier, root);
             ShowPartsList = new ShowPartsListCommand(this);
+            RemovePartCommand = new RemovePartFromBasketCommand(partsBasket);
             PartsListViewModel = partsListViewModel;
         }
         public ICollectionView Lines => CollectionViewSource.GetDefaultView(_lines);
@@ -72,6 +74,7 @@ namespace Shopfloor.Features.WorkOrderEdit
         public ICommand WorkOrderEditCommand { get; }
         public ICommand WorkOrdersListNavigate { get; }
         public ICommand ShowPartsList { get; }
+        public ICommand RemovePartCommand { get; }
         private async Task LoadDataAsync()
         {
             List<Task> tasks = [];

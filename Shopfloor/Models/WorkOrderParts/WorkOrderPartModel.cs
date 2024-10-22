@@ -16,5 +16,10 @@ namespace Shopfloor.Models.WorkOrderParts
         public double ValuePerPiece { get; set; } = 0;
         public double TotalValue => ValuePerPiece * Amount;
         public string Unit => Part?.Unit ?? "szt.";
+        public void SetValues(WorkOrderPartCreationModel data)
+        {
+            Amount = data.Amount;
+            ValuePerPiece = data.ValuePerPiece;
+        }
     }
 }
