@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
-using Shopfloor.Models.WorkOrderParts;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.Roots;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 
-namespace Shopfloor.Features.WorkOrderEdit.Commands
+namespace Shopfloor.Features.Mechanic.WorkOrderAddNew.Commands
 {
-    internal class WorkOrderEditCommand : CommandBase
+    internal class WorkOrderCreateCommand : CommandBase
     {
         private readonly INotifier _notifier;
-        private readonly WorkOrderEditRoot _root;
-        public WorkOrderEditCommand(
-            INotifier notifier,
-            WorkOrderEditRoot root)
+        private readonly WorkOrderCreateRoot _root;
+        public WorkOrderCreateCommand(INotifier notifier, WorkOrderCreateRoot root)
         {
             _notifier = notifier;
             _root = root;
@@ -24,15 +20,15 @@ namespace Shopfloor.Features.WorkOrderEdit.Commands
         {
             if (parameter is not WorkOrderCreationModel)
             {
-                string errorInfo = "Nie udało się edytować zadania";
+                string errorInfo = "Nie udało się stworzyć zadania";
                 _notifier.ShowError(errorInfo);
                 return;
             }
 
             WorkOrderCreationModel data = (WorkOrderCreationModel)parameter;
-            _ = EditWorkOrder(data);
+            _ = CreateWorkOrder(data);
         }
-        private async Task EditWorkOrder(WorkOrderCreationModel data)
+        private async Task CreateWorkOrder(WorkOrderCreationModel data)
         {
             string testNotificationText = $@"
             description: {data.Description}
@@ -40,7 +36,7 @@ namespace Shopfloor.Features.WorkOrderEdit.Commands
 
             try
             {
-                await _root.EditWorkOrder(data);
+                await _root.CreateWorkOrder(data);
                 _notifier.ShowInformation(testNotificationText);
             }
             catch (Exception e)

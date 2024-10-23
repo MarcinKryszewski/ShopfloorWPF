@@ -1,9 +1,9 @@
 ﻿<UserControl
-    x:Class="Shopfloor.Features.WorkOrderEdit.WorkOrderEditView"
+    x:Class="Shopfloor.Features.Mechanic.WorkOrderEdit.WorkOrderEditView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Shopfloor.Features.WorkOrderEdit"
+    xmlns:local="clr-namespace:Shopfloor.Features.Mechanic.WorkOrderEdit"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:partsList="clr-namespace:Shopfloor.Features.PartsList"
     d:DataContext="{d:DesignInstance Type=local:WorkOrderEditViewModel}"

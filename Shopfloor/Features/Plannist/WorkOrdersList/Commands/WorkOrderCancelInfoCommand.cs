@@ -1,7 +1,7 @@
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 
-namespace Shopfloor.Features.WorkOrdersList.Commands
+namespace Shopfloor.Features.Plannist.WorkOrdersList.Commands
 {
     internal class WorkOrderCancelInfoCommand : CommandBase
     {

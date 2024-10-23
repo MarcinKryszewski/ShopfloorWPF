@@ -2,7 +2,7 @@ using System.Windows;
 using Shopfloor.Features.PartsList.Interfaces;
 using Shopfloor.Shared.Commands;
 
-namespace Shopfloor.Features.WorkOrderAddNew.Commands
+namespace Shopfloor.Features.PartsList.Commands
 {
     internal class ShowPartsListCommand : CommandBase
     {

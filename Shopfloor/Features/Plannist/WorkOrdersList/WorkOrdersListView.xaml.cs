@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Shopfloor.Features.WorkOrdersList
+namespace Shopfloor.Features.Plannist.WorkOrdersList
 {
     public sealed partial class WorkOrdersListView : UserControl
     {

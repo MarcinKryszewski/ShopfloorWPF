@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
+using Shopfloor.Features.Mechanic.WorkOrdersList;
 using Shopfloor.Features.PartsList;
-using Shopfloor.Features.WorkOrdersList;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
 

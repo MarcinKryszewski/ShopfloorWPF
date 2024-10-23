@@ -1,9 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.Mechanic.WorkOrderAddNew;
+using Shopfloor.Features.Mechanic.WorkOrderDetails;
+using Shopfloor.Features.Mechanic.WorkOrderEdit;
+using Shopfloor.Features.Mechanic.WorkOrdersList;
 using Shopfloor.Features.PartsList;
-using Shopfloor.Features.WorkOrderAddNew;
-using Shopfloor.Features.WorkOrderDetails;
-using Shopfloor.Features.WorkOrderEdit;
-using Shopfloor.Features.WorkOrdersList;
 using Shopfloor.Roots;
 
 namespace Shopfloor.Hosts.Features

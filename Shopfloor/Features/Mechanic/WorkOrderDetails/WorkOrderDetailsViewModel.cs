@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -8,14 +6,13 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Contexts.PartsBasket;
-using Shopfloor.Features.WorkOrdersList;
-using Shopfloor.Models.WorkOrderParts;
+using Shopfloor.Features.Mechanic.WorkOrdersList;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.WorkOrderDetails
+namespace Shopfloor.Features.Mechanic.WorkOrderDetails
 {
     internal class WorkOrderDetailsViewModel : ViewModelBase
     {

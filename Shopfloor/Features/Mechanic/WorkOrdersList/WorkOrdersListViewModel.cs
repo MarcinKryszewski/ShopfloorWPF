@@ -5,18 +5,18 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
+using Shopfloor.Features.Mechanic.WorkOrderAddNew;
+using Shopfloor.Features.Mechanic.WorkOrderDetails;
+using Shopfloor.Features.Mechanic.WorkOrderEdit;
+using Shopfloor.Features.Mechanic.WorkOrdersList.Commands;
 using Shopfloor.Features.WorkInProgressFeature;
-using Shopfloor.Features.WorkOrderAddNew;
-using Shopfloor.Features.WorkOrderDetails;
-using Shopfloor.Features.WorkOrderEdit;
-using Shopfloor.Features.WorkOrdersList.Commands;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.WorkOrdersList
+namespace Shopfloor.Features.Mechanic.WorkOrdersList
 {
     internal class WorkOrdersListViewModel : ViewModelBase
     {

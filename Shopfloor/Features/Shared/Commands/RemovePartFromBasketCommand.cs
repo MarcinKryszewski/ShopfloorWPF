@@ -2,7 +2,7 @@ using Shopfloor.Contexts.PartsBasket;
 using Shopfloor.Models.WorkOrderParts;
 using Shopfloor.Shared.Commands;
 
-namespace Shopfloor.Features.WorkOrderAddNew.Commands
+namespace Shopfloor.Features.Shared.Commands
 {
     internal class RemovePartFromBasketCommand : CommandBase
     {

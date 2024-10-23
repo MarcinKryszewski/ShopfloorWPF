@@ -8,11 +8,12 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Contexts.PartsBasket;
+using Shopfloor.Features.Mechanic.WorkOrderEdit.Commands;
+using Shopfloor.Features.Mechanic.WorkOrdersList;
 using Shopfloor.Features.PartsList;
+using Shopfloor.Features.PartsList.Commands;
 using Shopfloor.Features.PartsList.Interfaces;
-using Shopfloor.Features.WorkOrderAddNew.Commands;
-using Shopfloor.Features.WorkOrderEdit.Commands;
-using Shopfloor.Features.WorkOrdersList;
+using Shopfloor.Features.Shared.Commands;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.WorkOrderParts;
 using Shopfloor.Models.WorkOrders;
@@ -21,7 +22,7 @@ using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.WorkOrderEdit
+namespace Shopfloor.Features.Mechanic.WorkOrderEdit
 {
     internal class WorkOrderEditViewModel : ViewModelBase, IViewModelContainingPartsList
     {

@@ -1,11 +1,9 @@
-using System;
-using System.Threading.Tasks;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.Roots;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 
-namespace Shopfloor.Features.WorkOrdersList.Commands
+namespace Shopfloor.Features.Plannist.WorkOrdersList.Commands
 {
     internal class WorkOrderCancelCommand : CommandBase
     {

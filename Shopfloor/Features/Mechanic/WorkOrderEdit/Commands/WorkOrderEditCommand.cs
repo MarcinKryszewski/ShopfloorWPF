@@ -1,17 +1,19 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Shopfloor.Models.WorkOrders;
 using Shopfloor.Roots;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 
-namespace Shopfloor.Features.WorkOrderAddNew.Commands
+namespace Shopfloor.Features.Mechanic.WorkOrderEdit.Commands
 {
-    internal class WorkOrderCreateCommand : CommandBase
+    internal class WorkOrderEditCommand : CommandBase
     {
         private readonly INotifier _notifier;
-        private readonly WorkOrderCreateRoot _root;
-        public WorkOrderCreateCommand(INotifier notifier, WorkOrderCreateRoot root)
+        private readonly WorkOrderEditRoot _root;
+        public WorkOrderEditCommand(
+            INotifier notifier,
+            WorkOrderEditRoot root)
         {
             _notifier = notifier;
             _root = root;
@@ -20,15 +22,15 @@ namespace Shopfloor.Features.WorkOrderAddNew.Commands
         {
             if (parameter is not WorkOrderCreationModel)
             {
-                string errorInfo = "Nie udało się stworzyć zadania";
+                string errorInfo = "Nie udało się edytować zadania";
                 _notifier.ShowError(errorInfo);
                 return;
             }
 
             WorkOrderCreationModel data = (WorkOrderCreationModel)parameter;
-            _ = CreateWorkOrder(data);
+            _ = EditWorkOrder(data);
         }
-        private async Task CreateWorkOrder(WorkOrderCreationModel data)
+        private async Task EditWorkOrder(WorkOrderCreationModel data)
         {
             string testNotificationText = $@"
             description: {data.Description}
@@ -36,7 +38,7 @@ namespace Shopfloor.Features.WorkOrderAddNew.Commands
 
             try
             {
-                await _root.CreateWorkOrder(data);
+                await _root.EditWorkOrder(data);
                 _notifier.ShowInformation(testNotificationText);
             }
             catch (Exception e)
