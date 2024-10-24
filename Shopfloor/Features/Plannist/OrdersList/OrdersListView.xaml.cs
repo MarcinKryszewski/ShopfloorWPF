@@ -13,11 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Shopfloor.Features.Plannist.WorkOrdersList
+namespace Shopfloor.Features.Plannist.OrdersList
 {
-    public sealed partial class WorkOrdersListView : UserControl
+    public sealed partial class OrdersListView : UserControl
     {
-        public WorkOrdersListView()
+        public OrdersListView()
         {
             this.InitializeComponent();
         }

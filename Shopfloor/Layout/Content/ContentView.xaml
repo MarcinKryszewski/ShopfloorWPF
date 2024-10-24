@@ -11,6 +11,7 @@
     xmlns:workOrderCreate="clr-namespace:Shopfloor.Features.Mechanic.WorkOrderAddNew"
     xmlns:workOrderEdit="clr-namespace:Shopfloor.Features.Mechanic.WorkOrderEdit"
     xmlns:workOrdersList="clr-namespace:Shopfloor.Features.Mechanic.WorkOrdersList"
+    xmlns:ordersList="clr-namespace:Shopfloor.Features.Plannist.OrdersList"
     xmlns:workOrderDetails="clr-namespace:Shopfloor.Features.Mechanic.WorkOrderDetails"
     xmlns:partsList="clr-namespace:Shopfloor.Features.PartsList"
     d:DataContext="{d:DesignInstance Type=content:ContentViewModel}"
@@ -37,6 +38,7 @@
                         <god:GodView/>
                     </DataTemplate>
 
+
                     <DataTemplate DataType="{x:Type workOrdersList:WorkOrdersListViewModel}">
                         <workOrdersList:WorkOrdersListView/>
                     </DataTemplate>
@@ -56,6 +58,12 @@
                     <DataTemplate DataType="{x:Type partsList:PartsListViewModel}">
                         <partsList:PartsListView/>
                     </DataTemplate>
+
+
+                    <DataTemplate DataType="{x:Type ordersList:OrdersListViewModel}">
+                        <ordersList:OrdersListView/>
+                    </DataTemplate>
+
                 </ContentControl.Resources>
             </ContentControl>
         </Border>
