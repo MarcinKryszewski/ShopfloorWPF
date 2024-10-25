@@ -13,5 +13,8 @@ namespace Shopfloor.Models.Orders
         public List<OrderStatusModel> Statuses { get; init; } = [];
         public OrderStatusModel? LastStatus => Statuses.MaxBy(x => x.CreationDate);
         public double TotalValue => Parts.Sum(x => x.TotalValue);
+        public void SetValues(OrderCreationModel data)
+        {
+        }
     }
 }

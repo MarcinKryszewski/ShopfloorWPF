@@ -7,7 +7,6 @@ namespace Shopfloor.Models.Orders
     {
         public void Validate(OrderCreationModel item)
         {
-            throw new NotImplementedException();
         }
     }
 }

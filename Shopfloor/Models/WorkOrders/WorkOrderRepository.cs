@@ -25,7 +25,6 @@ namespace Shopfloor.Models.WorkOrders
 
         public async Task Delete(int id)
         {
-            // TODO: Remove in DB
             WorkOrderModel? item = _store.Data.Find(x => x.Id == id);
             if (item == null)
             {

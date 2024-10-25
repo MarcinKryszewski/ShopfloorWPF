@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Models.Commons.Interfaces;
 
-namespace Shopfloor.Models.Orders
+namespace Shopfloor.Models.OrderParts
 {
-    internal class OrderProvider : IProvider<OrderModel, OrderCreationModel>
+    internal class OrderPartProvider : IProvider<OrderPartModel, OrderPartCreationModel>
     {
-        public Task<int> Create(OrderCreationModel item)
+        public Task<int> Create(OrderPartCreationModel item)
         {
             Random rnd = new();
             int id = rnd.Next(100, 100000);
@@ -18,16 +18,16 @@ namespace Shopfloor.Models.Orders
         {
             return Task.CompletedTask;
         }
-        public Task<IEnumerable<OrderModel>> GetAll()
+        public Task<IEnumerable<OrderPartModel>> GetAll()
         {
-            IEnumerable<OrderModel> result = [];
+            IEnumerable<OrderPartModel> result = [];
             return Task.FromResult(result);
         }
-        public Task<OrderModel> GetById(int id)
+        public Task<OrderPartModel> GetById(int id)
         {
-            return Task.FromResult(new OrderModel() { Id = id });
+            return Task.FromResult(new OrderPartModel() { Id = id, OrderId = 3453, PartId = 32423 });
         }
-        public Task Update(OrderModel item)
+        public Task Update(OrderPartModel item)
         {
             return Task.CompletedTask;
         }

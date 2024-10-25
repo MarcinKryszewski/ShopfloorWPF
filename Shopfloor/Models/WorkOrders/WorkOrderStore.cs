@@ -8,7 +8,6 @@ namespace Shopfloor.Models.WorkOrders
     {
         private readonly List<WorkOrderModel> _data = [];
         public List<WorkOrderModel> Data => _data;
-
         public Task AddItem(WorkOrderModel item)
         {
             _data.Add(item);

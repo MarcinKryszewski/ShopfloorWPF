@@ -4,31 +4,31 @@ using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Models.Commons.Interfaces;
 
-namespace Shopfloor.Models.Orders
+namespace Shopfloor.Models.OrderParts
 {
-    internal class OrderRepository : IRepository<OrderModel, OrderCreationModel>
+    internal class OrderPartRepository : IRepository<OrderPartModel, OrderPartCreationModel>
     {
-        private readonly IStore<OrderModel> _store;
-        private readonly IProvider<OrderModel, OrderCreationModel> _provider;
+        private readonly IStore<OrderPartModel> _store;
+        private readonly IProvider<OrderPartModel, OrderPartCreationModel> _provider;
         private bool _dataLoaded = false;
-        public OrderRepository(
-            IStore<OrderModel> store,
-            IProvider<OrderModel, OrderCreationModel> provider)
+        public OrderPartRepository(
+            IStore<OrderPartModel> store,
+            IProvider<OrderPartModel, OrderPartCreationModel> provider)
         {
             _store = store;
             _provider = provider;
         }
         public HashSet<Type> Merges { get; } = [];
-        public async Task<OrderModel> Create(OrderCreationModel item)
+        public async Task<OrderPartModel> Create(OrderPartCreationModel item)
         {
             int id = await _provider.Create(item);
-            OrderModel order = item.CreateModel(id);
+            OrderPartModel order = item.CreateModel(id);
             _store.Data.Add(order);
             return order;
         }
         public async Task Delete(int id)
         {
-            OrderModel? item = _store.Data.Find(x => x.Id == id);
+            OrderPartModel? item = _store.Data.Find(x => x.Id == id);
             if (item == null)
             {
                 string errorText = "Nie udało się anulować tego zamówienia. Spróbuj ponownie!";
@@ -46,20 +46,20 @@ namespace Shopfloor.Models.Orders
                 await Task.FromException(new InvalidOperationException(errorText));
             }
         }
-        public async Task<List<OrderModel>> GetDataAsync()
+        public async Task<List<OrderPartModel>> GetDataAsync()
         {
             if (!_dataLoaded)
             {
-                List<OrderModel> data = (await _provider.GetAll()).ToList();
+                List<OrderPartModel> data = (await _provider.GetAll()).ToList();
                 _store.Data.AddRange(data);
                 _dataLoaded = true;
             }
 
             return _store.Data;
         }
-        public async Task Update(OrderCreationModel item)
+        public async Task Update(OrderPartCreationModel item)
         {
-            OrderModel? existingData = _store.Data.Find(x => x.Id == item.Id);
+            OrderPartModel? existingData = _store.Data.Find(x => x.Id == item.Id);
 
             if (existingData is null)
             {

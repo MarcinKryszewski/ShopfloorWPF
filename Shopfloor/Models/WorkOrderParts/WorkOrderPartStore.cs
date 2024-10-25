@@ -7,7 +7,6 @@ namespace Shopfloor.Models.WorkOrderParts
     internal class WorkOrderPartStore : IStore<WorkOrderPartModel>
     {
         private readonly List<WorkOrderPartModel> _data = [];
-
         public List<WorkOrderPartModel> Data => _data;
         public Task AddItem(WorkOrderPartModel item)
         {

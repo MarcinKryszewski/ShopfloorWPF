@@ -8,6 +8,7 @@ namespace Shopfloor.Models.Orders
 {
     internal class OrderCreationModel : ModelValidationBase, IModelCreationModel<OrderModel>
     {
+        public int? Id { get; set; }
         public List<WorkOrderPartModel> Parts { get; set; } = [];
         public double TotalValue => Parts.Sum(x => x.TotalValue);
         public OrderModel CreateModel(int id)

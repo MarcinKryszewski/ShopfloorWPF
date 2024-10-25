@@ -1,14 +1,15 @@
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Shopfloor.Models.Commons.Interfaces;
 
-namespace Shopfloor.Models.Orders
+namespace Shopfloor.Models.OrderParts
 {
-    internal class OrderStore : IStore<OrderModel>
+    internal class OrderPartStore : IStore<OrderPartModel>
     {
-        private readonly List<OrderModel> _data = [];
-        public List<OrderModel> Data => _data;
-        public Task AddItem(OrderModel item)
+        private readonly List<OrderPartModel> _data = [];
+        public List<OrderPartModel> Data => _data;
+        public Task AddItem(OrderPartModel item)
         {
             _data.Add(item);
             return Task.CompletedTask;
