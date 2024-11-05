@@ -4,11 +4,11 @@ using Shopfloor.Models.Commons.Interfaces;
 
 namespace Shopfloor.Models.Lines
 {
-    internal class LineStore : IStore<LineModel>
+    internal class LineStore : IStore<Line>
     {
-        private readonly List<LineModel> _data = [];
-        public List<LineModel> Data => _data;
-        public Task AddItem(LineModel item)
+        private readonly List<Line> _data = [];
+        public List<Line> Data => _data;
+        public Task AddItem(Line item)
         {
             _data.Add(item);
             return Task.CompletedTask;

@@ -1,51 +1,75 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Models.Commons.Interfaces;
 
 namespace Shopfloor.Models.Lines
 {
-    internal class LineRepository : IRepository<LineModel, LineCreationModel>
+    internal class LineRepository : IRepository<Line, LineCreation>
     {
-        private readonly IStore<LineModel> _store;
+        private readonly IStore<Line> _store;
+        private readonly IProvider<Line, LineCreation> _provider;
         private bool _dataLoaded = false;
-        public LineRepository(IStore<LineModel> store)
+        public LineRepository(IStore<Line> store, IProvider<Line, LineCreation> provider)
         {
             _store = store;
+            _provider = provider;
         }
         public HashSet<Type> Merges { get; } = [];
-        public Task<LineModel> Create(LineCreationModel item)
+        public async Task<Line> Create(LineCreation item)
         {
-            throw new NotImplementedException();
+            int id = await _provider.Create(item);
+            Line model = item.CreateModel(id);
+            _store.Data.Add(model);
+            return model;
         }
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            Line? item = _store.Data.Find(x => x.Id == id);
+            if (item == null)
+            {
+                string errorText = "ERROR";
+                await Task.FromException(new InvalidOperationException(errorText));
+                return;
+            }
+            try
+            {
+                await _provider.Delete(id);
+                _store.Data.Remove(item);
+            }
+            catch (Exception)
+            {
+                string errorText = "ERROR";
+                await Task.FromException(new InvalidOperationException(errorText));
+            }
         }
-
-        public async Task<List<LineModel>> GetDataAsync()
+        public async Task<List<Line>> GetDataAsync()
         {
             if (!_dataLoaded)
             {
-                // TODO: Get data from provider
-                List<LineModel> data = [
-                new LineModel { Id = 1, Name = "Linia Montażowa Silników" },
-                new LineModel { Id = 2, Name = "Linia Spawania Podwozi" },
-                new LineModel { Id = 3, Name = "Linia Lakierowania Karoserii" },
-                new LineModel { Id = 4, Name = "Linia Montażu Układów Elektrycznych" },
-                new LineModel { Id = 5, Name = "Linia Testów Bezpieczeństwa" }
-                ];
+                List<Line> data = (await _provider.GetAll()).ToList();
                 _store.Data.AddRange(data);
                 _dataLoaded = true;
             }
 
-            await Task.Delay(0);
             return _store.Data;
         }
-
-        public Task Update(LineCreationModel item)
+        public async Task Update(LineCreation item)
         {
-            throw new NotImplementedException();
+            Line? existingData = _store.Data.Find(x => x.Id == item.Id);
+
+            if (existingData is null)
+            {
+                string errorText = "ERROR";
+                await Task.FromException(new InvalidOperationException(errorText));
+                return;
+            }
+
+            await _provider.Update(existingData);
+            // existingData.SetValues(item);
+
+            await Task.CompletedTask;
         }
     }
 }

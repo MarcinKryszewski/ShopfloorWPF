@@ -8,12 +8,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:topPanel="clr-namespace:Shopfloor.Layout.TopPanel"
     xmlns:wip="clr-namespace:Shopfloor.Features.WorkInProgressFeature"
-    xmlns:workOrderCreate="clr-namespace:Shopfloor.Features.Mechanic.WorkOrderAddNew"
-    xmlns:workOrderEdit="clr-namespace:Shopfloor.Features.Mechanic.WorkOrderEdit"
-    xmlns:workOrdersList="clr-namespace:Shopfloor.Features.Mechanic.WorkOrdersList"
-    xmlns:ordersList="clr-namespace:Shopfloor.Features.Plannist.OrdersList"
-    xmlns:workOrderDetails="clr-namespace:Shopfloor.Features.Mechanic.WorkOrderDetails"
-    xmlns:partsList="clr-namespace:Shopfloor.Features.PartsList"
     d:DataContext="{d:DesignInstance Type=content:ContentViewModel}"
     d:Height="1020"
     d:Width="1680"
@@ -30,38 +24,13 @@
                 Background="{StaticResource BrushDarkNeutral100}">
             <ContentControl Content="{Binding Content}">
                 <ContentControl.Resources>
+
                     <DataTemplate DataType="{x:Type wip:WorkInProgressViewModel}">
                         <wip:WorkInProgressView/>
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type god:GodViewModel}">
                         <god:GodView/>
-                    </DataTemplate>
-
-
-                    <DataTemplate DataType="{x:Type workOrdersList:WorkOrdersListViewModel}">
-                        <workOrdersList:WorkOrdersListView/>
-                    </DataTemplate>
-
-                    <DataTemplate DataType="{x:Type workOrderCreate:WorkOrderAddNewViewModel}">
-                        <workOrderCreate:WorkOrderAddNewView/>
-                    </DataTemplate>
-
-                    <DataTemplate DataType="{x:Type workOrderEdit:WorkOrderEditViewModel}">
-                        <workOrderEdit:WorkOrderEditView/>
-                    </DataTemplate>
-
-                    <DataTemplate DataType="{x:Type workOrderDetails:WorkOrderDetailsViewModel}">
-                        <workOrderDetails:WorkOrderDetailsView/>
-                    </DataTemplate>
-
-                    <DataTemplate DataType="{x:Type partsList:PartsListViewModel}">
-                        <partsList:PartsListView/>
-                    </DataTemplate>
-
-
-                    <DataTemplate DataType="{x:Type ordersList:OrdersListViewModel}">
-                        <ordersList:OrdersListView/>
                     </DataTemplate>
 
                 </ContentControl.Resources>

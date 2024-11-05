@@ -1,6 +1,4 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Contexts;
-using Shopfloor.Contexts.PartsBasket;
 using Shopfloor.Features.God;
 using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Hosts.Features.Notifier;
@@ -23,8 +21,7 @@ namespace Shopfloor.Hosts.Features
         }
         private static void Contexts(IServiceCollection services)
         {
-            services.AddSingleton<WorkOrderContext>();
-            services.AddSingleton<PartsBasketContext>();
+
         }
     }
 }

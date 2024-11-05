@@ -1,11 +1,11 @@
 using System;
 using Shopfloor.Models.Commons.Interfaces;
 
-namespace Shopfloor.Models.PartTypes
+namespace Shopfloor.Models.Lines
 {
-    internal class PartTypeModel : IModel
+    internal class Line : IModel
     {
-        public int Id { get; init; }
+        required public int Id { get; init; }
         public string Name { get; set; } = string.Empty;
     }
 }
