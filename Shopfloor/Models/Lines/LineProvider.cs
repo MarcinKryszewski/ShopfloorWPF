@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Models.Commons.Interfaces;
 
@@ -27,7 +26,7 @@ namespace Shopfloor.Models.Lines
             ];
             return Task.FromResult(data);
         }
-        public Task<Line> GetById(int id)
+        public Task<Line?> GetById(int id)
         {
             List<Line> data = [
                 new Line { Id = 1, Name = "Linia puszkowa", },
@@ -36,7 +35,7 @@ namespace Shopfloor.Models.Lines
                 new Line { Id = 4, Name = "Linia puszkowa KRONES", },
             ];
 
-            Line result = data.First(x => x.Id == id);
+            Line? result = data.Find(x => x.Id == id);
 
             return Task.FromResult(result);
         }

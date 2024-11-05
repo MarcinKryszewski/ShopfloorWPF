@@ -1,32 +1,32 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Models.Commons.Interfaces;
 
-namespace Shopfloor.Models.Lines
+namespace Shopfloor.Models.Persons
 {
-    internal class LineRepository : IRepository<Line, LineCreation>
+    internal class PersonRepository : IRepository<Person, PersonCreation>
     {
-        private readonly IProvider<Line, LineCreation> _provider;
-        private readonly IStore<Line> _store;
+        private readonly IProvider<Person, PersonCreation> _provider;
+        private readonly IStore<Person> _store;
         private bool _dataLoaded = false;
-        public LineRepository(IStore<Line> store, IProvider<Line, LineCreation> provider)
+        public PersonRepository(IStore<Person> store, IProvider<Person, PersonCreation> provider)
         {
             _store = store;
             _provider = provider;
         }
         public HashSet<Type> Merges { get; } = [];
-        public async Task<Line> Create(LineCreation item)
+        public async Task<Person> Create(PersonCreation item)
         {
             int id = await _provider.Create(item);
-            Line model = item.CreateModel(id);
+            Person model = item.CreateModel(id);
             _store.Data.Add(model);
             return model;
         }
         public async Task Delete(int id)
         {
-            Line? item = _store.Data.Find(x => x.Id == id);
+            Person? item = _store.Data.Find(x => x.Id == id);
             if (item == null)
             {
                 string errorText = "ERROR";
@@ -44,20 +44,20 @@ namespace Shopfloor.Models.Lines
                 await Task.FromException(new InvalidOperationException(errorText));
             }
         }
-        public async Task<List<Line>> GetDataAsync()
+        public async Task<List<Person>> GetDataAsync()
         {
             if (!_dataLoaded)
             {
-                List<Line> data = (await _provider.GetAll()).ToList();
+                List<Person> data = (await _provider.GetAll()).ToList();
                 _store.Data.AddRange(data);
                 _dataLoaded = true;
             }
 
             return _store.Data;
         }
-        public async Task Update(LineCreation item)
+        public async Task Update(PersonCreation item)
         {
-            Line? existingData = _store.Data.Find(x => x.Id == item.Id);
+            Person? existingData = _store.Data.Find(x => x.Id == item.Id);
 
             if (existingData is null)
             {
