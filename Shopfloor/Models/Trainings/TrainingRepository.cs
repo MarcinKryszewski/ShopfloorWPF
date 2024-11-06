@@ -1,32 +1,32 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Models.Commons.Interfaces;
 
-namespace Shopfloor.Models.Activities
+namespace Shopfloor.Models.Trainings
 {
-    internal class ActivityRepository : IRepository<Activity, ActivityCreation>
+    internal class TrainingRepository : IRepository<Training, TrainingCreation>
     {
-        private readonly IProvider<Activity, ActivityCreation> _provider;
-        private readonly IStore<Activity> _store;
+        private readonly IProvider<Training, TrainingCreation> _provider;
+        private readonly IStore<Training> _store;
         private bool _dataLoaded = false;
-        public ActivityRepository(IStore<Activity> store, IProvider<Activity, ActivityCreation> provider)
+        public TrainingRepository(IStore<Training> store, IProvider<Training, TrainingCreation> provider)
         {
             _store = store;
             _provider = provider;
         }
         public HashSet<Type> Merges { get; } = [];
-        public async Task<Activity> Create(ActivityCreation item)
+        public async Task<Training> Create(TrainingCreation item)
         {
             int id = await _provider.Create(item);
-            Activity model = item.CreateModel(id);
+            Training model = item.CreateModel(id);
             _store.Data.Add(model);
             return model;
         }
         public async Task Delete(int id)
         {
-            Activity? item = _store.Data.Find(x => x.Id == id);
+            Training? item = _store.Data.Find(x => x.Id == id);
             if (item == null)
             {
                 string errorText = "ERROR";
@@ -44,20 +44,20 @@ namespace Shopfloor.Models.Activities
                 await Task.FromException(new InvalidOperationException(errorText));
             }
         }
-        public async Task<List<Activity>> GetDataAsync()
+        public async Task<List<Training>> GetDataAsync()
         {
             if (!_dataLoaded)
             {
-                List<Activity> data = (await _provider.GetAll()).ToList();
+                List<Training> data = (await _provider.GetAll()).ToList();
                 _store.Data.AddRange(data);
                 _dataLoaded = true;
             }
 
             return _store.Data;
         }
-        public async Task Update(ActivityCreation item)
+        public async Task Update(TrainingCreation item)
         {
-            Activity? existingData = _store.Data.Find(x => x.Id == item.Id);
+            Training? existingData = _store.Data.Find(x => x.Id == item.Id);
 
             if (existingData is null)
             {

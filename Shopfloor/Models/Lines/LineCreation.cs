@@ -9,7 +9,11 @@ namespace Shopfloor.Models.Lines
         public string Name { get; set; } = string.Empty;
         public Line CreateModel(int id)
         {
-            return new Line() { Id = id, Name = Name };
+            return new Line()
+            {
+                Id = id,
+                Name = Name,
+            };
         }
     }
 }

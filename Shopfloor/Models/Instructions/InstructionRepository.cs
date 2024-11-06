@@ -1,32 +1,32 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Models.Commons.Interfaces;
 
-namespace Shopfloor.Models.Activities
+namespace Shopfloor.Models.Instructions
 {
-    internal class ActivityRepository : IRepository<Activity, ActivityCreation>
+    internal class InstructionRepository : IRepository<Instruction, InstructionCreation>
     {
-        private readonly IProvider<Activity, ActivityCreation> _provider;
-        private readonly IStore<Activity> _store;
+        private readonly IProvider<Instruction, InstructionCreation> _provider;
+        private readonly IStore<Instruction> _store;
         private bool _dataLoaded = false;
-        public ActivityRepository(IStore<Activity> store, IProvider<Activity, ActivityCreation> provider)
+        public InstructionRepository(IStore<Instruction> store, IProvider<Instruction, InstructionCreation> provider)
         {
             _store = store;
             _provider = provider;
         }
         public HashSet<Type> Merges { get; } = [];
-        public async Task<Activity> Create(ActivityCreation item)
+        public async Task<Instruction> Create(InstructionCreation item)
         {
             int id = await _provider.Create(item);
-            Activity model = item.CreateModel(id);
+            Instruction model = item.CreateModel(id);
             _store.Data.Add(model);
             return model;
         }
         public async Task Delete(int id)
         {
-            Activity? item = _store.Data.Find(x => x.Id == id);
+            Instruction? item = _store.Data.Find(x => x.Id == id);
             if (item == null)
             {
                 string errorText = "ERROR";
@@ -44,20 +44,20 @@ namespace Shopfloor.Models.Activities
                 await Task.FromException(new InvalidOperationException(errorText));
             }
         }
-        public async Task<List<Activity>> GetDataAsync()
+        public async Task<List<Instruction>> GetDataAsync()
         {
             if (!_dataLoaded)
             {
-                List<Activity> data = (await _provider.GetAll()).ToList();
+                List<Instruction> data = (await _provider.GetAll()).ToList();
                 _store.Data.AddRange(data);
                 _dataLoaded = true;
             }
 
             return _store.Data;
         }
-        public async Task Update(ActivityCreation item)
+        public async Task Update(InstructionCreation item)
         {
-            Activity? existingData = _store.Data.Find(x => x.Id == item.Id);
+            Instruction? existingData = _store.Data.Find(x => x.Id == item.Id);
 
             if (existingData is null)
             {
