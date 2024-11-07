@@ -10,7 +10,7 @@ using Shopfloor.Models.Persons;
 using Shopfloor.Models.Trainings;
 using Shopfloor.Models.Workshops;
 
-namespace Shopfloor.Hosts.Models
+namespace Shopfloor.Hosts.Features
 {
     internal static class ModelServices
     {

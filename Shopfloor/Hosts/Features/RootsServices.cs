@@ -1,13 +1,13 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.ActionsList;
+using Shopfloor.Roots;
 
 namespace Shopfloor.Hosts.Features
 {
-    internal static class FeaturesServices
+    internal static class RootsServices
     {
         public static void Get(IServiceCollection services)
         {
-            services.AddSingleton<ActionsListViewModel>();
+            services.AddSingleton<ActivitiesRoot>();
         }
     }
 }

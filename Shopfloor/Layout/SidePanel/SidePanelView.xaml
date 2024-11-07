@@ -164,7 +164,7 @@
                                         <TextBlock Style="{StaticResource TitleTextBlock}"
                                                    Text="Mechanik"/>
 
-                                        <Button Command="{Binding Path=NavigateWorkOrdersList}">
+                                        <Button Command="{Binding Path=NavigateActionsList}">
                                                 <StackPanel Style="{StaticResource ButtonStackPanel}"
                                                             Background="Transparent">
                                                         <Border Width="24"

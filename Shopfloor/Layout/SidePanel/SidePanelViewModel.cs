@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using Shopfloor.Features.ActionsList;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
 
@@ -9,10 +10,8 @@ namespace Shopfloor.Layout.SidePanel
     {
         public SidePanelViewModel(INavigationService navigationService)
         {
-            // NavigateWorkOrdersList = new NavigationCommand<WorkOrdersListViewModel>(navigationService).Navigate();
+            NavigateActionsList = new NavigationCommand<ActionsListViewModel>(navigationService).Navigate();
         }
-        public ICommand NavigateWorkOrdersList { get; }
-        public ICommand NavigateOrdersList { get; }
-        public ICommand NavigatePartsList { get; }
+        public ICommand NavigateActionsList { get; }
     }
 }

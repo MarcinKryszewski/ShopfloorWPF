@@ -2,7 +2,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.God;
 using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Hosts.Features.Notifier;
-using Shopfloor.Hosts.Models;
 
 namespace Shopfloor.Hosts.Features
 {
@@ -15,13 +14,10 @@ namespace Shopfloor.Hosts.Features
 
             NotifierServices.Get(services);
 
-            Contexts(services);
+            ContextServices.Get(services);
             ModelServices.Get(services);
             FeaturesServices.Get(services);
-        }
-        private static void Contexts(IServiceCollection services)
-        {
-
+            RootsServices.Get(services);
         }
     }
 }
