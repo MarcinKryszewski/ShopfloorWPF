@@ -8,6 +8,7 @@ namespace Shopfloor.Hosts.Features
         public static void Get(IServiceCollection services)
         {
             services.AddSingleton<ActionsListViewModel>();
+            services.AddTransient<ActionsFilter>();
         }
     }
 }

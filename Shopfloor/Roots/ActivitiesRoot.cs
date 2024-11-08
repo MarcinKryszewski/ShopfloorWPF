@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Models.Activities;
+using Shopfloor.Models.ActivitiesInstructions;
 using Shopfloor.Models.ActivityTypes;
 using Shopfloor.Models.Commons.Interfaces;
+using Shopfloor.Models.Lines;
 using Shopfloor.Models.Machines;
 using Shopfloor.Models.Workshops;
 
@@ -16,16 +18,22 @@ namespace Shopfloor.Roots
         private readonly IRepository<Machine, MachineCreation> _machineData;
         private readonly IRepository<Workshop, WorkshopCreation> _workshopData;
         private readonly IRepository<ActivityType, ActivityTypeCreation> _typeData;
+        private readonly IRepository<Line, LineCreation> _lineData;
+        private readonly IRepository<ActivityInstruction, ActivityInstructionCreation> _instructionsData;
         public ActivitiesRoot(
             IRepository<Activity, ActivityCreation> activityData,
             IRepository<Machine, MachineCreation> machineData,
             IRepository<Workshop, WorkshopCreation> workshopData,
-            IRepository<ActivityType, ActivityTypeCreation> typeData)
+            IRepository<ActivityType, ActivityTypeCreation> typeData,
+            IRepository<Line, LineCreation> lineData,
+            IRepository<ActivityInstruction, ActivityInstructionCreation> instructionsData)
         {
             _activityData = activityData;
             _machineData = machineData;
             _typeData = typeData;
             _workshopData = workshopData;
+            _lineData = lineData;
+            _instructionsData = instructionsData;
         }
         public event EventHandler? DataChanged;
         public async Task<IEnumerable<Activity>> GetData()
@@ -45,6 +53,11 @@ namespace Shopfloor.Roots
             if (!_activityData.Merges.Contains(typeof(ActivityType)))
             {
                 _ = DecorateWitActivityTypes(data);
+            }
+
+            if (!_activityData.Merges.Contains(typeof(ActivityInstruction)))
+            {
+                _ = DecorateWitInstructions(data);
             }
 
             return await _activityData.GetDataAsync();
@@ -67,12 +80,22 @@ namespace Shopfloor.Roots
         protected void OnDataChanged(EventArgs e) => DataChanged?.Invoke(this, e);
         private async Task DecorateWitMachines(IEnumerable<Activity> activities)
         {
-            IEnumerable<Machine> machines = await _machineData.GetDataAsync();
+            Task<List<Machine>>? machineTask = _machineData.GetDataAsync();
+            Task<List<Line>>? lineTask = _lineData.GetDataAsync();
+
+            await Task.WhenAll(machineTask, lineTask);
+
+            IEnumerable<Machine> machines = await machineTask;
+            IEnumerable<Line> lines = await lineTask;
 
             foreach (Activity activity in activities)
             {
-                await Task.Delay(400);
-                activity.Machine = machines.FirstOrDefault(x => activity.MachineId == x.Id);
+                Machine? machine = machines.FirstOrDefault(x => activity.MachineId == x.Id);
+                if (machine != null)
+                {
+                    machine.Line = lines.FirstOrDefault(x => machine.LineId == x.Id);
+                }
+                activity.Machine = machine;
             }
 
             _activityData.Merges.Add(typeof(Machine));
@@ -100,6 +123,18 @@ namespace Shopfloor.Roots
             }
 
             _activityData.Merges.Add(typeof(ActivityType));
+            OnDataChanged(EventArgs.Empty);
+        }
+        private async Task DecorateWitInstructions(IEnumerable<Activity> activities)
+        {
+            IEnumerable<ActivityInstruction> instructions = await _instructionsData.GetDataAsync();
+
+            foreach (Activity activity in activities)
+            {
+                activity.HasInstruction = instructions.Any(x => activity.Id == x.ActivityId);
+            }
+
+            _activityData.Merges.Add(typeof(ActivityInstruction));
             OnDataChanged(EventArgs.Empty);
         }
     }

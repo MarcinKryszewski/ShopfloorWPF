@@ -213,9 +213,9 @@
                           DisplayMemberPath="Name"
                           IsEditable="true"
                           IsReadOnly="false"
-                          SelectedValue="{Binding PartsFilter.Line}"
-                          SelectedValuePath="Name"
-                          ItemsSource="{Binding Path=Lines}"
+                          Text="{Binding FilterData.Workshop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Path=FilterData.Workshops}"
+                          IsTextSearchEnabled="false"
                           MinHeight="30px"/>
 
                 <TextBlock Text="Linia"
@@ -225,9 +225,9 @@
                           DisplayMemberPath="Name"
                           IsEditable="true"
                           IsReadOnly="false"
-                          SelectedValue="{Binding PartsFilter.Line}"
-                          SelectedValuePath="Name"
-                          ItemsSource="{Binding Path=Lines}"
+                          Text="{Binding FilterData.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Path=FilterData.Lines}"
+                          IsTextSearchEnabled="false"
                           MinHeight="30px"/>
 
                 <TextBlock Text="Maszyna"
@@ -237,10 +237,10 @@
                           DisplayMemberPath="Name"
                           IsEditable="true"
                           IsReadOnly="false"
-                          SelectedValue="{Binding PartsFilter.Line}"
-                          SelectedValuePath="Name"
-                          ItemsSource="{Binding Path=Lines}"
-                          MinHeight="30px"/>
+                          Text="{Binding FilterData.Machine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Path=FilterData.Machines}"
+                          MinHeight="30px"
+                          IsTextSearchEnabled="false"/>
 
                 <TextBlock Text="Rodzaj"
                            Style="{StaticResource TooltipText}"
@@ -249,9 +249,9 @@
                           DisplayMemberPath="Name"
                           IsEditable="true"
                           IsReadOnly="false"
-                          SelectedValue="{Binding PartsFilter.Line}"
-                          SelectedValuePath="Name"
-                          ItemsSource="{Binding Path=Lines}"
+                          Text="{Binding FilterData.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Path=FilterData.Types}"
+                          IsTextSearchEnabled="false"
                           MinHeight="30px"/>
 
                 <Grid Margin="0,7,0,3">
@@ -263,7 +263,29 @@
                     <CheckBox Style="{StaticResource CheckBoxStyle1}"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Center"
-                              IsChecked="{Binding PartsFilter.Confirmed}"
+                              IsChecked="{Binding FilterData.HasInstruction}"
+                              IsThreeState="True"
+                              Grid.Column="0"
+                              Margin="2,0,0,0"/>
+                    <TextBlock Text="Ma instrukcę"
+                               VerticalAlignment="Center"
+                               Grid.Column="1"
+                               Margin="10,0,0,0"
+                               Style="{StaticResource TooltipText}"/>
+
+                </Grid>
+
+                <Grid Margin="0,7,0,3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox Style="{StaticResource CheckBoxStyle1}"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Center"
+                              IsThreeState="True"
+                              IsChecked="{Binding FilterData.IsPassed}"
                               Grid.Column="0"
                               Margin="2,0,0,0"/>
                     <TextBlock Text="Przekazana"
@@ -283,7 +305,7 @@
                     <CheckBox Style="{StaticResource CheckBoxStyle1}"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Center"
-                              IsChecked="{Binding PartsFilter.Confirmed}"
+                              IsChecked="{Binding FilterData.IsLoto}"
                               Grid.Column="0"
                               Margin="2,0,0,0"/>
                     <TextBlock Text="LOTO"
@@ -303,7 +325,7 @@
                     <CheckBox Style="{StaticResource CheckBoxStyle1}"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Center"
-                              IsChecked="{Binding PartsFilter.Confirmed}"
+                              IsChecked="{Binding FilterData.IsJog}"
                               Grid.Column="0"
                               Margin="2,0,0,0"/>
                     <TextBlock Text="JOG"
@@ -323,7 +345,7 @@
                     <CheckBox Style="{StaticResource CheckBoxStyle1}"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Center"
-                              IsChecked="{Binding PartsFilter.Confirmed}"
+                              IsChecked="{Binding FilterData.IsProduction}"
                               Grid.Column="0"
                               Margin="2,0,0,0"/>
                     <TextBlock Text="Podczas produkcji"
@@ -353,6 +375,11 @@
                 <Style BasedOn="{StaticResource DataGridRowMain}"
                        TargetType="DataGridRow">
                     <Style.Triggers>
+                        <DataTrigger Binding="{Binding HasInstruction}"
+                                     Value="True">
+                            <Setter Property="BorderBrush"
+                                    Value="#BAD32F"/>
+                        </DataTrigger>
                         <DataTrigger Binding="{Binding IsPassed}"
                                      Value="True">
                             <Setter Property="BorderBrush"
@@ -363,10 +390,57 @@
             </DataGrid.RowStyle>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Description}"
+                <DataGridTextColumn Binding="{Binding Machine.Line.Name}"
+                                    Header="Linia"
+                                    Width="auto"/>
+
+                <DataGridTextColumn Binding="{Binding Machine.Name}"
+                                    Header="Maszyna"
+                                    Width="auto"/>
+
+                <DataGridTextColumn Binding="{Binding Workshop.Name}"
+                                    Header="Warsztat"
+                                    Width="auto"/>
+
+                <DataGridTextColumn Binding="{Binding Type.Name}"
                                     Header="Rodzaj"
                                     Width="auto"/>
+
+                <DataGridTextColumn Binding="{Binding Description}"
+                                    Header="Opis"
+                                    Width="*"/>
+
+                <DataGridTextColumn Binding="{Binding OccuranceText}"
+                                    Header="Częstotliwość"
+                                    Width="auto"/>
+
+                <DataGridTextColumn Binding="{Binding Additionals}"
+                                    Header="Specjalne"
+                                    Width="auto"/>
+
+                <DataGridTemplateColumn
+                    Width="auto"
+                    Header="Akcje"
+                    IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+
+                                <Button Command="{Binding Path=DataContext.AddPartCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding }"
+                                        Style="{StaticResource gridConfirmButton}">
+                                    <TextBlock
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Style="{StaticResource gridButtonIcon}"
+                                        Text="&#xE930;"/>
+                                </Button>
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
+
         </DataGrid>
 
     </Grid>

@@ -1,3 +1,4 @@
+using System.Linq;
 using Shopfloor.Models.ActivityTypes;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Machines;
@@ -21,6 +22,16 @@ namespace Shopfloor.Models.Activities
         public bool IsDurningProduction { get; set; }
         public int Occurance { get; set; } = 1;
         public OccuranceUnit OccuranceUnit { get; set; } = OccuranceUnit.M;
+        public string OccuranceText => $"{Occurance} {OccuranceUnit}";
+        public bool HasInstruction { get; set; } = false;
+        public string Additionals => string.Join(
+            " / ",
+            new[]
+            {
+                IsLoto ? "LOTO" : null,
+                IsJog ? "JOG" : null,
+                IsDurningProduction ? "Podczas produkcji" : null,
+            }.Where(s => !string.IsNullOrEmpty(s)));
         public void SetValues<T>(IModelCreationModel<T> data)
             where T : IModel
         {

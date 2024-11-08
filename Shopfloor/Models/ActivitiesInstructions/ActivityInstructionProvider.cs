@@ -33,7 +33,7 @@ namespace Shopfloor.Models.ActivitiesInstructions
         {
             IEnumerable<ActivityInstruction> data = [
                 new ActivityInstruction { Id = 1, ActivityId = 1, InstructionId = 1 },
-                new ActivityInstruction { Id = 2, ActivityId = 2, InstructionId = 2 },
+                new ActivityInstruction { Id = 2, ActivityId = 1, InstructionId = 2 },
                 new ActivityInstruction { Id = 3, ActivityId = 3, InstructionId = 3 },
                 new ActivityInstruction { Id = 4, ActivityId = 4, InstructionId = 4 },
                 new ActivityInstruction { Id = 5, ActivityId = 5, InstructionId = 5 },
@@ -61,7 +61,7 @@ namespace Shopfloor.Models.ActivitiesInstructions
                 new ActivityInstruction { Id = 27, ActivityId = 27, InstructionId = 27 },
                 new ActivityInstruction { Id = 28, ActivityId = 28, InstructionId = 28 },
                 new ActivityInstruction { Id = 29, ActivityId = 1, InstructionId = 29 },
-                new ActivityInstruction { Id = 30, ActivityId = 2, InstructionId = 30 },
+                new ActivityInstruction { Id = 30, ActivityId = 3, InstructionId = 30 },
             ];
 
             return data;
