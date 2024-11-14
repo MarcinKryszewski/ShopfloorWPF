@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Contexts;
 
 namespace Shopfloor.Hosts.Features
 {
@@ -6,6 +7,7 @@ namespace Shopfloor.Hosts.Features
     {
         public static void Get(IServiceCollection services)
         {
+            services.AddSingleton<ActivityContext>();
         }
     }
 }

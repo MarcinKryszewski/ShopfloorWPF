@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Data;
+using System.Windows.Input;
+using Shopfloor.Contexts;
+using Shopfloor.Features.ActionDetails;
 using Shopfloor.Models.Activities;
-using Shopfloor.Models.Machines;
 using Shopfloor.Roots;
+using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
 
@@ -14,22 +17,35 @@ namespace Shopfloor.Features.ActionsList
     internal class ActionsListViewModel : ViewModelBase
     {
         private readonly ActivitiesRoot _root;
+        private readonly ActivityContext _activityContext;
         private readonly List<Activity> _activities = [];
         public ActionsListViewModel(
             ActivitiesRoot root,
-            ActionsFilter filter)
+            ActionsFilter filter,
+            ActivityContext activityContext,
+            ViewModelBaseDependecies dependecies)
+        : base(dependecies)
         {
             _root = root;
             FilterData = filter;
+            _activityContext = activityContext;
 
             _root.DataChanged += DataChanged;
             FilterData.FiltersChanged += OnFiltersChanged;
             Activities.Filter = Filter;
 
+            DetailsCommand = new NavigationCommand<ActionDetailsViewModel>(NavigationService).Navigate();
+
             _ = LoadDataAsync();
         }
         public ICollectionView Activities => CollectionViewSource.GetDefaultView(_activities);
         public ActionsFilter FilterData { get; }
+        public ICommand DetailsCommand { get; }
+        public Activity? Activity
+        {
+            get => _activityContext.Activity;
+            set => _activityContext.Activity = value;
+        }
         public void OnFiltersChanged(object? sender, EventArgs e)
         {
             Activities.Refresh();

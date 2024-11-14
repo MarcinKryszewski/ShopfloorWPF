@@ -760,10 +760,10 @@ DA:21,0
 DA:23,0
 DA:25,0
 DA:26,0
+DA:27,0
 DA:28,0
 DA:29,0
 DA:30,0
-DA:31,0
 BRDA:18,29,0,0
 BRDA:18,29,1,0
 BRDA:23,47,0,0
@@ -1165,17 +1165,13 @@ FNF:3
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Roots\ActivitiesRoot.cs
-FN:66,System.Void Shopfloor.Roots.ActivitiesRoot::OnDataChanged(System.EventArgs)
+FN:79,System.Void Shopfloor.Roots.ActivitiesRoot::OnDataChanged(System.EventArgs)
 FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot::OnDataChanged(System.EventArgs)
-DA:67,0
-BRDA:67,7,0,0
-BRDA:67,7,1,0
-FN:18,System.Void Shopfloor.Roots.ActivitiesRoot::.ctor(Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Activities.Activity,Shopfloor.Models.Activities.ActivityCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Machines.Machine,Shopfloor.Models.Machines.MachineCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Workshops.Workshop,Shopfloor.Models.Workshops.WorkshopCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.ActivityTypes.ActivityType,Shopfloor.Models.ActivityTypes.ActivityTypeCreation>)
-FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot::.ctor(Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Activities.Activity,Shopfloor.Models.Activities.ActivityCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Machines.Machine,Shopfloor.Models.Machines.MachineCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Workshops.Workshop,Shopfloor.Models.Workshops.WorkshopCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.ActivityTypes.ActivityType,Shopfloor.Models.ActivityTypes.ActivityTypeCreation>)
-DA:19,0
-DA:20,0
-DA:21,0
-DA:22,0
+DA:80,0
+BRDA:80,7,0,0
+BRDA:80,7,1,0
+FN:22,System.Void Shopfloor.Roots.ActivitiesRoot::.ctor(Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Activities.Activity,Shopfloor.Models.Activities.ActivityCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Machines.Machine,Shopfloor.Models.Machines.MachineCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Workshops.Workshop,Shopfloor.Models.Workshops.WorkshopCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.ActivityTypes.ActivityType,Shopfloor.Models.ActivityTypes.ActivityTypeCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Lines.Line,Shopfloor.Models.Lines.LineCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.ActivitiesInstructions.ActivityInstruction,Shopfloor.Models.ActivitiesInstructions.ActivityInstructionCreation>)
+FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot::.ctor(Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Activities.Activity,Shopfloor.Models.Activities.ActivityCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Machines.Machine,Shopfloor.Models.Machines.MachineCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Workshops.Workshop,Shopfloor.Models.Workshops.WorkshopCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.ActivityTypes.ActivityType,Shopfloor.Models.ActivityTypes.ActivityTypeCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Lines.Line,Shopfloor.Models.Lines.LineCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.ActivitiesInstructions.ActivityInstruction,Shopfloor.Models.ActivitiesInstructions.ActivityInstructionCreation>)
 DA:23,0
 DA:24,0
 DA:25,0
@@ -1183,99 +1179,199 @@ DA:26,0
 DA:27,0
 DA:28,0
 DA:29,0
-FN:74,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass13_0::<DecorateWitMachines>b__0(Shopfloor.Models.Machines.Machine)
-FNDA:0,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass13_0::<DecorateWitMachines>b__0(Shopfloor.Models.Machines.Machine)
-DA:75,0
-FN:86,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass14_0::<DecorateWitWorkshops>b__0(Shopfloor.Models.Workshops.Workshop)
-FNDA:0,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass14_0::<DecorateWitWorkshops>b__0(Shopfloor.Models.Workshops.Workshop)
-DA:87,0
-FN:98,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass15_0::<DecorateWitActivityTypes>b__0(Shopfloor.Models.ActivityTypes.ActivityType)
-FNDA:0,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass15_0::<DecorateWitActivityTypes>b__0(Shopfloor.Models.ActivityTypes.ActivityType)
-DA:99,0
-FN:52,System.Void Shopfloor.Roots.ActivitiesRoot/<CreateActivity>d__9::MoveNext()
-FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<CreateActivity>d__9::MoveNext()
-DA:53,0
-DA:54,0
-DA:55,0
-DA:56,0
-FN:93,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitActivityTypes>d__15::MoveNext()
-FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitActivityTypes>d__15::MoveNext()
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+FN:92,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass15_0::<DecorateWitMachines>b__0(Shopfloor.Models.Machines.Machine)
+FNDA:0,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass15_0::<DecorateWitMachines>b__0(Shopfloor.Models.Machines.Machine)
+DA:93,0
+FN:95,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass15_1::<DecorateWitMachines>b__1(Shopfloor.Models.Lines.Line)
+FNDA:0,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass15_1::<DecorateWitMachines>b__1(Shopfloor.Models.Lines.Line)
+DA:96,0
+FN:109,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass16_0::<DecorateWitWorkshops>b__0(Shopfloor.Models.Workshops.Workshop)
+FNDA:0,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass16_0::<DecorateWitWorkshops>b__0(Shopfloor.Models.Workshops.Workshop)
+DA:110,0
+FN:121,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass17_0::<DecorateWitActivityTypes>b__0(Shopfloor.Models.ActivityTypes.ActivityType)
+FNDA:0,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass17_0::<DecorateWitActivityTypes>b__0(Shopfloor.Models.ActivityTypes.ActivityType)
+DA:122,0
+FN:133,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass18_0::<DecorateWitInstructions>b__0(Shopfloor.Models.ActivitiesInstructions.ActivityInstruction)
+FNDA:0,System.Boolean Shopfloor.Roots.ActivitiesRoot/<>c__DisplayClass18_0::<DecorateWitInstructions>b__0(Shopfloor.Models.ActivitiesInstructions.ActivityInstruction)
+DA:134,0
+FN:65,System.Void Shopfloor.Roots.ActivitiesRoot/<CreateActivity>d__11::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<CreateActivity>d__11::MoveNext()
+DA:66,0
+DA:67,0
+DA:68,0
+DA:69,0
+FN:116,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitActivityTypes>d__17::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitActivityTypes>d__17::MoveNext()
+DA:117,0
+DA:118,0
+DA:120,0
+DA:121,0
+DA:123,0
+DA:125,0
+DA:126,0
+DA:127,0
+BRDA:120,263,1,0
+BRDA:120,263,0,0
+FN:128,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitInstructions>d__18::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitInstructions>d__18::MoveNext()
+DA:129,0
+DA:130,0
+DA:132,0
+DA:133,0
+DA:135,0
+DA:137,0
+DA:138,0
+DA:139,0
+BRDA:132,263,1,0
+BRDA:132,263,0,0
+FN:81,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitMachines>d__15::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitMachines>d__15::MoveNext()
+DA:82,0
+DA:83,0
+DA:84,0
+DA:86,0
+DA:88,0
+DA:89,0
+DA:91,0
+DA:92,0
 DA:94,0
 DA:95,0
 DA:97,0
 DA:98,0
-DA:100,0
+DA:99,0
+DA:101,0
 DA:102,0
 DA:103,0
-DA:104,0
-BRDA:97,263,1,0
-BRDA:97,263,0,0
-FN:68,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitMachines>d__13::MoveNext()
-FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitMachines>d__13::MoveNext()
-DA:69,0
-DA:70,0
-DA:72,0
-DA:73,0
-DA:74,0
+BRDA:91,677,1,0
+BRDA:94,574,0,0
+BRDA:94,574,1,0
+BRDA:91,677,0,0
+FN:104,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitWorkshops>d__16::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitWorkshops>d__16::MoveNext()
+DA:105,0
+DA:106,0
+DA:108,0
+DA:109,0
+DA:111,0
+DA:113,0
+DA:114,0
+DA:115,0
+BRDA:108,263,1,0
+BRDA:108,263,0,0
+FN:75,System.Void Shopfloor.Roots.ActivitiesRoot/<DeleteActivity>d__13::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<DeleteActivity>d__13::MoveNext()
 DA:76,0
+DA:77,0
 DA:78,0
 DA:79,0
-DA:80,0
-BRDA:72,386,1,0
-BRDA:72,386,0,0
-FN:81,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitWorkshops>d__14::MoveNext()
-FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<DecorateWitWorkshops>d__14::MoveNext()
-DA:82,0
-DA:83,0
-DA:85,0
-DA:86,0
-DA:88,0
-DA:90,0
-DA:91,0
-DA:92,0
-BRDA:85,263,1,0
-BRDA:85,263,0,0
-FN:62,System.Void Shopfloor.Roots.ActivitiesRoot/<DeleteActivity>d__11::MoveNext()
-FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<DeleteActivity>d__11::MoveNext()
-DA:63,0
-DA:64,0
-DA:65,0
-DA:66,0
-FN:31,System.Void Shopfloor.Roots.ActivitiesRoot/<GetData>d__8::MoveNext()
-FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<GetData>d__8::MoveNext()
-DA:32,0
-DA:33,0
-DA:35,0
-DA:36,0
-DA:37,0
-DA:38,0
+FN:39,System.Void Shopfloor.Roots.ActivitiesRoot/<GetData>d__10::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<GetData>d__10::MoveNext()
 DA:40,0
 DA:41,0
-DA:42,0
 DA:43,0
+DA:44,0
 DA:45,0
 DA:46,0
-DA:47,0
 DA:48,0
+DA:49,0
 DA:50,0
 DA:51,0
-BRDA:35,194,0,0
-BRDA:35,194,1,0
-BRDA:40,254,0,0
-BRDA:40,254,1,0
-BRDA:45,314,0,0
-BRDA:45,314,1,0
-FN:57,System.Void Shopfloor.Roots.ActivitiesRoot/<UpdateActivity>d__10::MoveNext()
-FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<UpdateActivity>d__10::MoveNext()
+DA:53,0
+DA:54,0
+DA:55,0
+DA:56,0
 DA:58,0
 DA:59,0
 DA:60,0
 DA:61,0
-LF:68
+DA:63,0
+DA:64,0
+BRDA:43,194,0,0
+BRDA:43,194,1,0
+BRDA:48,254,0,0
+BRDA:48,254,1,0
+BRDA:53,314,0,0
+BRDA:53,314,1,0
+BRDA:58,374,0,0
+BRDA:58,374,1,0
+FN:70,System.Void Shopfloor.Roots.ActivitiesRoot/<UpdateActivity>d__12::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.ActivitiesRoot/<UpdateActivity>d__12::MoveNext()
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,0
+LF:93
 LH:0
-BRF:14
+BRF:20
 BRH:0
-FNF:12
+FNF:15
+FNH:0
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Roots\DataRoot.cs
+FN:28,System.Void Shopfloor.Roots.DataRoot::.ctor(Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Activities.Activity,Shopfloor.Models.Activities.ActivityCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.ActivitiesInstructions.ActivityInstruction,Shopfloor.Models.ActivitiesInstructions.ActivityInstructionCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.ActivityTypes.ActivityType,Shopfloor.Models.ActivityTypes.ActivityTypeCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Instructions.Instruction,Shopfloor.Models.Instructions.InstructionCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Lines.Line,Shopfloor.Models.Lines.LineCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Machines.Machine,Shopfloor.Models.Machines.MachineCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Persons.Person,Shopfloor.Models.Persons.PersonCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Trainings.Training,Shopfloor.Models.Trainings.TrainingCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Workshops.Workshop,Shopfloor.Models.Workshops.WorkshopCreation>)
+FNDA:0,System.Void Shopfloor.Roots.DataRoot::.ctor(Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Activities.Activity,Shopfloor.Models.Activities.ActivityCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.ActivitiesInstructions.ActivityInstruction,Shopfloor.Models.ActivitiesInstructions.ActivityInstructionCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.ActivityTypes.ActivityType,Shopfloor.Models.ActivityTypes.ActivityTypeCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Instructions.Instruction,Shopfloor.Models.Instructions.InstructionCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Lines.Line,Shopfloor.Models.Lines.LineCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Machines.Machine,Shopfloor.Models.Machines.MachineCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Persons.Person,Shopfloor.Models.Persons.PersonCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Trainings.Training,Shopfloor.Models.Trainings.TrainingCreation>,Shopfloor.Models.Commons.Interfaces.IRepository`2<Shopfloor.Models.Workshops.Workshop,Shopfloor.Models.Workshops.WorkshopCreation>)
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,0
+DA:40,0
+DA:41,0
+DA:42,0
+DA:43,0
+DA:44,0
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+FN:53,System.Void Shopfloor.Roots.DataRoot/<GetActivity>d__13::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.DataRoot/<GetActivity>d__13::MoveNext()
+DA:54,0
+FN:54,System.Void Shopfloor.Roots.DataRoot/<GetActivityInstruction>d__14::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.DataRoot/<GetActivityInstruction>d__14::MoveNext()
+DA:55,0
+FN:55,System.Void Shopfloor.Roots.DataRoot/<GetActivityType>d__15::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.DataRoot/<GetActivityType>d__15::MoveNext()
+DA:56,0
+FN:56,System.Void Shopfloor.Roots.DataRoot/<GetInstruction>d__16::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.DataRoot/<GetInstruction>d__16::MoveNext()
+DA:57,0
+FN:57,System.Void Shopfloor.Roots.DataRoot/<GetLine>d__17::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.DataRoot/<GetLine>d__17::MoveNext()
+DA:58,0
+FN:58,System.Void Shopfloor.Roots.DataRoot/<GetMachine>d__18::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.DataRoot/<GetMachine>d__18::MoveNext()
+DA:59,0
+FN:59,System.Void Shopfloor.Roots.DataRoot/<GetPerson>d__19::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.DataRoot/<GetPerson>d__19::MoveNext()
+DA:60,0
+FN:60,System.Void Shopfloor.Roots.DataRoot/<GetTraining>d__20::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.DataRoot/<GetTraining>d__20::MoveNext()
+DA:61,0
+FN:61,System.Void Shopfloor.Roots.DataRoot/<GetWorkshop>d__21::MoveNext()
+FNDA:0,System.Void Shopfloor.Roots.DataRoot/<GetWorkshop>d__21::MoveNext()
+DA:62,0
+LF:31
+LH:0
+BRF:0
+BRH:0
+FNF:10
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\Workshops\Workshop.cs
@@ -3085,73 +3181,95 @@ FNF:1
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\Activities\Activity.cs
-FN:9,System.Int32 Shopfloor.Models.Activities.Activity::get_Id()
+FN:10,System.Int32 Shopfloor.Models.Activities.Activity::get_Id()
 FNDA:0,System.Int32 Shopfloor.Models.Activities.Activity::get_Id()
-DA:10,0
-FN:10,System.Int32 Shopfloor.Models.Activities.Activity::get_MachineId()
-FNDA:0,System.Int32 Shopfloor.Models.Activities.Activity::get_MachineId()
 DA:11,0
-FN:11,Shopfloor.Models.Machines.Machine Shopfloor.Models.Activities.Activity::get_Machine()
-FNDA:0,Shopfloor.Models.Machines.Machine Shopfloor.Models.Activities.Activity::get_Machine()
+FN:11,System.Int32 Shopfloor.Models.Activities.Activity::get_MachineId()
+FNDA:0,System.Int32 Shopfloor.Models.Activities.Activity::get_MachineId()
 DA:12,0
-FN:12,System.Int32 Shopfloor.Models.Activities.Activity::get_WorkshopId()
-FNDA:0,System.Int32 Shopfloor.Models.Activities.Activity::get_WorkshopId()
+FN:12,Shopfloor.Models.Machines.Machine Shopfloor.Models.Activities.Activity::get_Machine()
+FNDA:0,Shopfloor.Models.Machines.Machine Shopfloor.Models.Activities.Activity::get_Machine()
 DA:13,0
-FN:13,Shopfloor.Models.Workshops.Workshop Shopfloor.Models.Activities.Activity::get_Workshop()
-FNDA:0,Shopfloor.Models.Workshops.Workshop Shopfloor.Models.Activities.Activity::get_Workshop()
+FN:13,System.Int32 Shopfloor.Models.Activities.Activity::get_WorkshopId()
+FNDA:0,System.Int32 Shopfloor.Models.Activities.Activity::get_WorkshopId()
 DA:14,0
-FN:14,System.String Shopfloor.Models.Activities.Activity::get_Description()
-FNDA:0,System.String Shopfloor.Models.Activities.Activity::get_Description()
+FN:14,Shopfloor.Models.Workshops.Workshop Shopfloor.Models.Activities.Activity::get_Workshop()
+FNDA:0,Shopfloor.Models.Workshops.Workshop Shopfloor.Models.Activities.Activity::get_Workshop()
 DA:15,0
-FN:15,System.Boolean Shopfloor.Models.Activities.Activity::get_IsPassed()
-FNDA:0,System.Boolean Shopfloor.Models.Activities.Activity::get_IsPassed()
+FN:15,System.String Shopfloor.Models.Activities.Activity::get_Description()
+FNDA:0,System.String Shopfloor.Models.Activities.Activity::get_Description()
 DA:16,0
-FN:16,System.Int32 Shopfloor.Models.Activities.Activity::get_TypeId()
-FNDA:0,System.Int32 Shopfloor.Models.Activities.Activity::get_TypeId()
+FN:16,System.Boolean Shopfloor.Models.Activities.Activity::get_IsPassed()
+FNDA:0,System.Boolean Shopfloor.Models.Activities.Activity::get_IsPassed()
 DA:17,0
-FN:17,Shopfloor.Models.ActivityTypes.ActivityType Shopfloor.Models.Activities.Activity::get_Type()
-FNDA:0,Shopfloor.Models.ActivityTypes.ActivityType Shopfloor.Models.Activities.Activity::get_Type()
+FN:17,System.Int32 Shopfloor.Models.Activities.Activity::get_TypeId()
+FNDA:0,System.Int32 Shopfloor.Models.Activities.Activity::get_TypeId()
 DA:18,0
-FN:18,System.Boolean Shopfloor.Models.Activities.Activity::get_IsLoto()
-FNDA:0,System.Boolean Shopfloor.Models.Activities.Activity::get_IsLoto()
+FN:18,Shopfloor.Models.ActivityTypes.ActivityType Shopfloor.Models.Activities.Activity::get_Type()
+FNDA:0,Shopfloor.Models.ActivityTypes.ActivityType Shopfloor.Models.Activities.Activity::get_Type()
 DA:19,0
-FN:19,System.Boolean Shopfloor.Models.Activities.Activity::get_IsJog()
-FNDA:0,System.Boolean Shopfloor.Models.Activities.Activity::get_IsJog()
+FN:19,System.Boolean Shopfloor.Models.Activities.Activity::get_IsLoto()
+FNDA:0,System.Boolean Shopfloor.Models.Activities.Activity::get_IsLoto()
 DA:20,0
-FN:20,System.Boolean Shopfloor.Models.Activities.Activity::get_IsDurningProduction()
-FNDA:0,System.Boolean Shopfloor.Models.Activities.Activity::get_IsDurningProduction()
+FN:20,System.Boolean Shopfloor.Models.Activities.Activity::get_IsJog()
+FNDA:0,System.Boolean Shopfloor.Models.Activities.Activity::get_IsJog()
 DA:21,0
-FN:21,System.Int32 Shopfloor.Models.Activities.Activity::get_Occurance()
-FNDA:0,System.Int32 Shopfloor.Models.Activities.Activity::get_Occurance()
+FN:21,System.Boolean Shopfloor.Models.Activities.Activity::get_IsDurningProduction()
+FNDA:0,System.Boolean Shopfloor.Models.Activities.Activity::get_IsDurningProduction()
 DA:22,0
-FN:22,Shopfloor.Models.Activities.OccuranceUnit Shopfloor.Models.Activities.Activity::get_OccuranceUnit()
-FNDA:0,Shopfloor.Models.Activities.OccuranceUnit Shopfloor.Models.Activities.Activity::get_OccuranceUnit()
+FN:22,System.Int32 Shopfloor.Models.Activities.Activity::get_Occurance()
+FNDA:0,System.Int32 Shopfloor.Models.Activities.Activity::get_Occurance()
 DA:23,0
-FN:25,System.Void Shopfloor.Models.Activities.Activity::SetValues(Shopfloor.Models.Commons.Interfaces.IModelCreationModel`1<T>)
-FNDA:0,System.Void Shopfloor.Models.Activities.Activity::SetValues(Shopfloor.Models.Commons.Interfaces.IModelCreationModel`1<T>)
+FN:23,Shopfloor.Models.Activities.OccuranceUnit Shopfloor.Models.Activities.Activity::get_OccuranceUnit()
+FNDA:0,Shopfloor.Models.Activities.OccuranceUnit Shopfloor.Models.Activities.Activity::get_OccuranceUnit()
+DA:24,0
+FN:24,System.String Shopfloor.Models.Activities.Activity::get_OccuranceText()
+FNDA:0,System.String Shopfloor.Models.Activities.Activity::get_OccuranceText()
+DA:25,0
+FN:25,System.Boolean Shopfloor.Models.Activities.Activity::get_HasInstruction()
+FNDA:0,System.Boolean Shopfloor.Models.Activities.Activity::get_HasInstruction()
 DA:26,0
+FN:26,System.String Shopfloor.Models.Activities.Activity::get_Additionals()
+FNDA:0,System.String Shopfloor.Models.Activities.Activity::get_Additionals()
 DA:27,0
 DA:28,0
 DA:29,0
+DA:30,0
+DA:31,0
 DA:32,0
+DA:33,0
 DA:34,0
-DA:35,0
-DA:36,0
+BRDA:27,19,0,0
+BRDA:27,19,1,0
+BRDA:27,38,0,0
+BRDA:27,38,1,0
+BRDA:27,57,0,0
+BRDA:27,57,1,0
+FN:36,System.Void Shopfloor.Models.Activities.Activity::SetValues(Shopfloor.Models.Commons.Interfaces.IModelCreationModel`1<T>)
+FNDA:0,System.Void Shopfloor.Models.Activities.Activity::SetValues(Shopfloor.Models.Commons.Interfaces.IModelCreationModel`1<T>)
 DA:37,0
 DA:38,0
 DA:39,0
 DA:40,0
-DA:41,0
-DA:42,0
 DA:43,0
-DA:44,0
-BRDA:27,15,0,0
-BRDA:27,15,1,0
-LF:30
+DA:45,0
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,0
+DA:52,0
+DA:53,0
+DA:54,0
+DA:55,0
+BRDA:38,15,0,0
+BRDA:38,15,1,0
+LF:40
 LH:0
-BRF:2
+BRF:8
 BRH:0
-FNF:15
+FNF:18
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Models\Activities\ActivityCreation.cs
@@ -3966,11 +4084,12 @@ FNF:1
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Hosts\Features\ContextServices.cs
-FN:7,System.Void Shopfloor.Hosts.Features.ContextServices::Get(Microsoft.Extensions.DependencyInjection.IServiceCollection)
+FN:8,System.Void Shopfloor.Hosts.Features.ContextServices::Get(Microsoft.Extensions.DependencyInjection.IServiceCollection)
 FNDA:0,System.Void Shopfloor.Hosts.Features.ContextServices::Get(Microsoft.Extensions.DependencyInjection.IServiceCollection)
-DA:8,0
 DA:9,0
-LF:2
+DA:10,0
+DA:11,0
+LF:3
 LH:0
 BRF:0
 BRH:0
@@ -4002,7 +4121,8 @@ FNDA:0,System.Void Shopfloor.Hosts.Features.FeaturesServices::Get(Microsoft.Exte
 DA:9,0
 DA:10,0
 DA:11,0
-LF:3
+DA:12,0
+LF:4
 LH:0
 BRF:0
 BRH:0
@@ -4099,7 +4219,8 @@ FNDA:0,System.Void Shopfloor.Hosts.Features.RootsServices::Get(Microsoft.Extensi
 DA:9,0
 DA:10,0
 DA:11,0
-LF:3
+DA:12,0
+LF:4
 LH:0
 BRF:0
 BRH:0
@@ -4318,6 +4439,181 @@ BRH:0
 FNF:1
 FNH:0
 end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Features\ActionsList\ActionsFilter.cs
+FN:43,System.String Shopfloor.Features.ActionsList.ActionsFilter::get_Workshop()
+FNDA:0,System.String Shopfloor.Features.ActionsList.ActionsFilter::get_Workshop()
+DA:44,0
+FN:45,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_Workshop(System.String)
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_Workshop(System.String)
+DA:46,0
+DA:47,0
+DA:48,0
+DA:49,0
+FN:52,System.String Shopfloor.Features.ActionsList.ActionsFilter::get_Line()
+FNDA:0,System.String Shopfloor.Features.ActionsList.ActionsFilter::get_Line()
+DA:53,0
+FN:54,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_Line(System.String)
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_Line(System.String)
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+FN:62,System.String Shopfloor.Features.ActionsList.ActionsFilter::get_Machine()
+FNDA:0,System.String Shopfloor.Features.ActionsList.ActionsFilter::get_Machine()
+DA:63,0
+FN:64,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_Machine(System.String)
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_Machine(System.String)
+DA:65,0
+DA:66,0
+DA:67,0
+DA:68,0
+FN:71,System.String Shopfloor.Features.ActionsList.ActionsFilter::get_Type()
+FNDA:0,System.String Shopfloor.Features.ActionsList.ActionsFilter::get_Type()
+DA:72,0
+FN:73,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_Type(System.String)
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_Type(System.String)
+DA:74,0
+DA:75,0
+DA:76,0
+DA:77,0
+FN:80,System.Nullable`1<System.Boolean> Shopfloor.Features.ActionsList.ActionsFilter::get_IsPassed()
+FNDA:0,System.Nullable`1<System.Boolean> Shopfloor.Features.ActionsList.ActionsFilter::get_IsPassed()
+DA:81,0
+FN:82,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_IsPassed(System.Nullable`1<System.Boolean>)
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_IsPassed(System.Nullable`1<System.Boolean>)
+DA:83,0
+DA:84,0
+DA:85,0
+DA:86,0
+FN:89,System.Boolean Shopfloor.Features.ActionsList.ActionsFilter::get_IsLoto()
+FNDA:0,System.Boolean Shopfloor.Features.ActionsList.ActionsFilter::get_IsLoto()
+DA:90,0
+FN:91,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_IsLoto(System.Boolean)
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_IsLoto(System.Boolean)
+DA:92,0
+DA:93,0
+DA:94,0
+DA:95,0
+FN:98,System.Boolean Shopfloor.Features.ActionsList.ActionsFilter::get_IsJog()
+FNDA:0,System.Boolean Shopfloor.Features.ActionsList.ActionsFilter::get_IsJog()
+DA:99,0
+FN:100,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_IsJog(System.Boolean)
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_IsJog(System.Boolean)
+DA:101,0
+DA:102,0
+DA:103,0
+DA:104,0
+FN:107,System.Boolean Shopfloor.Features.ActionsList.ActionsFilter::get_IsProduction()
+FNDA:0,System.Boolean Shopfloor.Features.ActionsList.ActionsFilter::get_IsProduction()
+DA:108,0
+FN:109,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_IsProduction(System.Boolean)
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_IsProduction(System.Boolean)
+DA:110,0
+DA:111,0
+DA:112,0
+DA:113,0
+FN:116,System.Nullable`1<System.Boolean> Shopfloor.Features.ActionsList.ActionsFilter::get_HasInstruction()
+FNDA:0,System.Nullable`1<System.Boolean> Shopfloor.Features.ActionsList.ActionsFilter::get_HasInstruction()
+DA:117,0
+FN:118,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_HasInstruction(System.Nullable`1<System.Boolean>)
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter::set_HasInstruction(System.Nullable`1<System.Boolean>)
+DA:119,0
+DA:120,0
+DA:121,0
+DA:122,0
+FN:123,System.ComponentModel.ICollectionView Shopfloor.Features.ActionsList.ActionsFilter::get_Workshops()
+FNDA:0,System.ComponentModel.ICollectionView Shopfloor.Features.ActionsList.ActionsFilter::get_Workshops()
+DA:124,0
+FN:124,System.ComponentModel.ICollectionView Shopfloor.Features.ActionsList.ActionsFilter::get_Lines()
+FNDA:0,System.ComponentModel.ICollectionView Shopfloor.Features.ActionsList.ActionsFilter::get_Lines()
+DA:125,0
+FN:125,System.ComponentModel.ICollectionView Shopfloor.Features.ActionsList.ActionsFilter::get_Machines()
+FNDA:0,System.ComponentModel.ICollectionView Shopfloor.Features.ActionsList.ActionsFilter::get_Machines()
+DA:126,0
+FN:126,System.ComponentModel.ICollectionView Shopfloor.Features.ActionsList.ActionsFilter::get_Types()
+FNDA:0,System.ComponentModel.ICollectionView Shopfloor.Features.ActionsList.ActionsFilter::get_Types()
+DA:127,0
+FN:127,System.Void Shopfloor.Features.ActionsList.ActionsFilter::OnFiltersChanged(System.EventArgs)
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter::OnFiltersChanged(System.EventArgs)
+DA:128,0
+BRDA:128,7,0,0
+BRDA:128,7,1,0
+FN:129,System.Boolean Shopfloor.Features.ActionsList.ActionsFilter::Filter(System.Object)
+FNDA:0,System.Boolean Shopfloor.Features.ActionsList.ActionsFilter::Filter(System.Object)
+DA:130,0
+DA:131,0
+DA:132,0
+DA:134,0
+DA:136,0
+DA:138,0
+DA:139,0
+BRDA:131,14,0,0
+BRDA:134,28,0,0
+BRDA:134,28,1,0
+BRDA:131,14,1,0
+FN:19,System.Void Shopfloor.Features.ActionsList.ActionsFilter::.ctor(Shopfloor.Roots.DataRoot)
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter::.ctor(Shopfloor.Roots.DataRoot)
+DA:20,0
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:25,0
+DA:26,0
+DA:27,0
+DA:28,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:33,0
+DA:34,0
+DA:35,0
+DA:37,0
+DA:39,0
+DA:40,0
+FN:140,System.Void Shopfloor.Features.ActionsList.ActionsFilter/<LoadDataAsync>d__55::MoveNext()
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter/<LoadDataAsync>d__55::MoveNext()
+DA:141,0
+DA:142,0
+DA:144,0
+DA:145,0
+DA:146,0
+DA:147,0
+DA:149,0
+DA:150,0
+FN:156,System.Void Shopfloor.Features.ActionsList.ActionsFilter/<LoadLines>d__57::MoveNext()
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter/<LoadLines>d__57::MoveNext()
+DA:157,0
+DA:158,0
+DA:159,0
+DA:160,0
+FN:161,System.Void Shopfloor.Features.ActionsList.ActionsFilter/<LoadMachines>d__58::MoveNext()
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter/<LoadMachines>d__58::MoveNext()
+DA:162,0
+DA:163,0
+DA:164,0
+DA:165,0
+FN:166,System.Void Shopfloor.Features.ActionsList.ActionsFilter/<LoadTypes>d__59::MoveNext()
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter/<LoadTypes>d__59::MoveNext()
+DA:167,0
+DA:168,0
+DA:169,0
+DA:170,0
+FN:151,System.Void Shopfloor.Features.ActionsList.ActionsFilter/<LoadWorkshops>d__56::MoveNext()
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsFilter/<LoadWorkshops>d__56::MoveNext()
+DA:152,0
+DA:153,0
+DA:154,0
+DA:155,0
+LF:101
+LH:0
+BRF:6
+BRH:0
+FNF:30
+FNH:0
+end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\obj\Debug\net8.0-windows10.0.17763.0\Features\ActionsList\ActionsListView.g.cs
 FN:50,System.Void Shopfloor.Features.ActionsList.ActionsListView::InitializeComponent()
 FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsListView::InitializeComponent()
@@ -4361,41 +4657,94 @@ FNF:1
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Features\ActionsList\ActionsListViewModel.cs
-FN:22,System.ComponentModel.ICollectionView Shopfloor.Features.ActionsList.ActionsListViewModel::get_Activities()
+FN:41,System.ComponentModel.ICollectionView Shopfloor.Features.ActionsList.ActionsListViewModel::get_Activities()
 FNDA:0,System.ComponentModel.ICollectionView Shopfloor.Features.ActionsList.ActionsListViewModel::get_Activities()
-DA:23,0
-FN:24,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel::DataChanged(System.Object,System.EventArgs)
+DA:42,0
+FN:42,Shopfloor.Features.ActionsList.ActionsFilter Shopfloor.Features.ActionsList.ActionsListViewModel::get_FilterData()
+FNDA:0,Shopfloor.Features.ActionsList.ActionsFilter Shopfloor.Features.ActionsList.ActionsListViewModel::get_FilterData()
+DA:43,0
+FN:43,System.Windows.Input.ICommand Shopfloor.Features.ActionsList.ActionsListViewModel::get_DetailsCommand()
+FNDA:0,System.Windows.Input.ICommand Shopfloor.Features.ActionsList.ActionsListViewModel::get_DetailsCommand()
+DA:44,0
+FN:46,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel::OnFiltersChanged(System.Object,System.EventArgs)
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel::OnFiltersChanged(System.Object,System.EventArgs)
+DA:47,0
+DA:48,0
+DA:49,0
+FN:50,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel::DataChanged(System.Object,System.EventArgs)
 FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel::DataChanged(System.Object,System.EventArgs)
-DA:25,0
-DA:26,0
-DA:27,0
-FN:15,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel::.ctor(Shopfloor.Roots.ActivitiesRoot)
-FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel::.ctor(Shopfloor.Roots.ActivitiesRoot)
-DA:16,0
-DA:17,0
-DA:18,0
-DA:19,0
-DA:20,0
-DA:21,0
+DA:51,0
+DA:52,0
+DA:53,0
+FN:54,System.Boolean Shopfloor.Features.ActionsList.ActionsListViewModel::Filter(System.Object)
+FNDA:0,System.Boolean Shopfloor.Features.ActionsList.ActionsListViewModel::Filter(System.Object)
+DA:55,0
+DA:56,0
+DA:57,0
+DA:58,0
+DA:59,0
+DA:60,0
+DA:61,0
+DA:62,0
+DA:63,0
+DA:64,0
+DA:65,0
+DA:66,0
+DA:68,0
+DA:70,0
+DA:71,0
+BRDA:56,14,0,0
+BRDA:58,36,0,0
+BRDA:58,36,1,0
+BRDA:59,86,0,0
+BRDA:59,86,1,0
+BRDA:60,141,0,0
+BRDA:60,141,1,0
+BRDA:61,192,0,0
+BRDA:61,192,1,0
+BRDA:62,247,0,0
+BRDA:62,247,1,0
+BRDA:63,293,0,0
+BRDA:63,293,1,0
+BRDA:64,317,0,0
+BRDA:64,317,1,0
+BRDA:65,341,0,0
+BRDA:65,341,1,0
+BRDA:66,374,0,0
+BRDA:66,374,1,0
+BRDA:56,14,1,0
+FN:21,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel::.ctor(Shopfloor.Roots.ActivitiesRoot,Shopfloor.Features.ActionsList.ActionsFilter,Shopfloor.Contexts.ActivityContext,Shopfloor.Shared.ViewModels.ViewModelBaseDependecies)
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel::.ctor(Shopfloor.Roots.ActivitiesRoot,Shopfloor.Features.ActionsList.ActionsFilter,Shopfloor.Contexts.ActivityContext,Shopfloor.Shared.ViewModels.ViewModelBaseDependecies)
 DA:22,0
-FN:36,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel/<LoadActivitiesAsync>d__7::MoveNext()
-FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel/<LoadActivitiesAsync>d__7::MoveNext()
-DA:37,0
-DA:38,0
-DA:39,0
-DA:40,0
-FN:28,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel/<LoadDataAsync>d__6::MoveNext()
-FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel/<LoadDataAsync>d__6::MoveNext()
+DA:28,0
 DA:29,0
 DA:30,0
+DA:31,0
 DA:32,0
 DA:34,0
 DA:35,0
-LF:20
+DA:36,0
+DA:38,0
+DA:40,0
+DA:41,0
+FN:80,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel/<LoadActivitiesAsync>d__16::MoveNext()
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel/<LoadActivitiesAsync>d__16::MoveNext()
+DA:81,0
+DA:82,0
+DA:83,0
+DA:84,0
+FN:72,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel/<LoadDataAsync>d__15::MoveNext()
+FNDA:0,System.Void Shopfloor.Features.ActionsList.ActionsListViewModel/<LoadDataAsync>d__15::MoveNext()
+DA:73,0
+DA:74,0
+DA:76,0
+DA:78,0
+DA:79,0
+LF:45
 LH:0
-BRF:0
+BRF:20
 BRH:0
-FNF:5
+FNF:9
 FNH:0
 end_of_record
 SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Database\DatabaseConnectionFactory.cs
@@ -4568,5 +4917,16 @@ LH:0
 BRF:4
 BRH:0
 FNF:2
+FNH:0
+end_of_record
+SF:c:\Users\kryszm02\Downloads\ShopfloorWPF\Shopfloor\Contexts\ActivityContext.cs
+FN:10,Shopfloor.Models.Activities.Activity Shopfloor.Contexts.ActivityContext::get_Activity()
+FNDA:0,Shopfloor.Models.Activities.Activity Shopfloor.Contexts.ActivityContext::get_Activity()
+DA:11,0
+LF:1
+LH:0
+BRF:0
+BRH:0
+FNF:1
 FNH:0
 end_of_record

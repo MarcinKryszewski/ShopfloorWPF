@@ -426,7 +426,7 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
 
-                                <Button Command="{Binding Path=DataContext.AddPartCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                <Button Command="{Binding Path=DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                         CommandParameter="{Binding }"
                                         Style="{StaticResource gridConfirmButton}">
                                     <TextBlock
