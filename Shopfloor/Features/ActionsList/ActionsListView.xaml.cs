@@ -1,4 +1,6 @@
 using System.Windows.Controls;
+using System.Windows.Data;
+using Shopfloor.Utilities;
 
 namespace Shopfloor.Features.ActionsList
 {
@@ -8,5 +10,6 @@ namespace Shopfloor.Features.ActionsList
         {
             this.InitializeComponent();
         }
+        public void DataGrid_TargetUpdated(object sender, DataTransferEventArgs e) => DataGridWidthRefresh.RefreshWidth(sender, e, 4);
     }
 }

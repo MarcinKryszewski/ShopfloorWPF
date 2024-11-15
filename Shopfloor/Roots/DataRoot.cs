@@ -25,7 +25,6 @@ namespace Shopfloor.Roots
         private readonly IRepository<Person, PersonCreation> _persons;
         private readonly IRepository<Training, TrainingCreation> _trainings;
         private readonly IRepository<Workshop, WorkshopCreation> _workshops;
-
         public DataRoot(
             IRepository<Activity, ActivityCreation> activities,
             IRepository<ActivityInstruction, ActivityInstructionCreation> activitiesInstructions,
@@ -35,8 +34,7 @@ namespace Shopfloor.Roots
             IRepository<Machine, MachineCreation> machines,
             IRepository<Person, PersonCreation> persons,
             IRepository<Training, TrainingCreation> trainings,
-            IRepository<Workshop, WorkshopCreation> workshops
-        )
+            IRepository<Workshop, WorkshopCreation> workshops)
         {
             _activities = activities;
             _activitiesInstructions = activitiesInstructions;
@@ -48,9 +46,7 @@ namespace Shopfloor.Roots
             _trainings = trainings;
             _workshops = workshops;
         }
-
         public event EventHandler? DataChanged;
-
         public async Task<IEnumerable<Activity>> GetActivity() => await _activities.GetDataAsync();
         public async Task<IEnumerable<ActivityInstruction>> GetActivityInstruction() => await _activitiesInstructions.GetDataAsync();
         public async Task<IEnumerable<ActivityType>> GetActivityType() => await _activityTypes.GetDataAsync();

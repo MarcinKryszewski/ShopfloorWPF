@@ -42,17 +42,17 @@ namespace Shopfloor.Roots
 
             if (!_activityData.Merges.Contains(typeof(Machine)))
             {
-                _ = DecorateWitMachines(data);
+                _ = DecorateWithMachines(data);
             }
 
             if (!_activityData.Merges.Contains(typeof(Workshop)))
             {
-                _ = DecorateWitWorkshops(data);
+                _ = DecorateWithWorkshops(data);
             }
 
             if (!_activityData.Merges.Contains(typeof(ActivityType)))
             {
-                _ = DecorateWitActivityTypes(data);
+                _ = DecorateWithActivityTypes(data);
             }
 
             if (!_activityData.Merges.Contains(typeof(ActivityInstruction)))
@@ -60,7 +60,7 @@ namespace Shopfloor.Roots
                 _ = DecorateWitInstructions(data);
             }
 
-            return await _activityData.GetDataAsync();
+            return data;
         }
         public async Task CreateActivity(ActivityCreation data)
         {
@@ -78,7 +78,7 @@ namespace Shopfloor.Roots
             OnDataChanged(EventArgs.Empty);
         }
         protected void OnDataChanged(EventArgs e) => DataChanged?.Invoke(this, e);
-        private async Task DecorateWitMachines(IEnumerable<Activity> activities)
+        private async Task DecorateWithMachines(IEnumerable<Activity> activities)
         {
             Task<List<Machine>>? machineTask = _machineData.GetDataAsync();
             Task<List<Line>>? lineTask = _lineData.GetDataAsync();
@@ -101,7 +101,7 @@ namespace Shopfloor.Roots
             _activityData.Merges.Add(typeof(Machine));
             OnDataChanged(EventArgs.Empty);
         }
-        private async Task DecorateWitWorkshops(IEnumerable<Activity> activities)
+        private async Task DecorateWithWorkshops(IEnumerable<Activity> activities)
         {
             IEnumerable<Workshop> workshops = await _workshopData.GetDataAsync();
 
@@ -113,7 +113,7 @@ namespace Shopfloor.Roots
             _activityData.Merges.Add(typeof(Workshop));
             OnDataChanged(EventArgs.Empty);
         }
-        private async Task DecorateWitActivityTypes(IEnumerable<Activity> activities)
+        private async Task DecorateWithActivityTypes(IEnumerable<Activity> activities)
         {
             IEnumerable<ActivityType> types = await _typeData.GetDataAsync();
 

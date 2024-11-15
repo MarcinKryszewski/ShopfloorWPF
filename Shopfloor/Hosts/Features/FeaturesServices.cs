@@ -11,7 +11,7 @@ namespace Shopfloor.Hosts.Features
             services.AddSingleton<ActionsListViewModel>();
             services.AddTransient<ActionsFilter>();
 
-            services.AddSingleton<ActionDetailsViewModel>();
+            services.AddTransient<ActionDetailsViewModel>();
         }
     }
 }
