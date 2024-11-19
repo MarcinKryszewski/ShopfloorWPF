@@ -26,8 +26,6 @@ namespace Shopfloor
             _appHost = AppHost.Get();
             _appHost.Start();
 
-
-
             _services = _appHost.Services;
 
             _navigationService = _services.GetRequiredService<NavigationService>();
