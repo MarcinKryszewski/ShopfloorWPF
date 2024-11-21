@@ -8,20 +8,118 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
 
+    <UserControl.Resources>
+
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition/>
-            <RowDefinition/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0"
                    Text="{Binding Title}"
                    Style="{StaticResource TitleTextBlock}"/>
 
-        <DataGrid Grid.Row="1"
-                  ItemsSource="{Binding Path=TestList}"/>
+        <Grid Grid.Row="1"
+              Margin="20,0,0,20"
+              DataContext="{Binding Activity}">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBlock}"
+                       BasedOn="{StaticResource TooltipText}">
+                    <Setter Property="Margin"
+                            Value="0,0,0,10"/>
+                </Style>
+                <Style TargetType="{x:Type CheckBox}"
+                       BasedOn="{StaticResource CheckBoxStyle1}"/>
+            </Grid.Resources>
+
+            <TextBlock Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Workshop.Name"/>
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                       Text="Description"/>
+            <TextBlock Grid.Row="2"
+                       Grid.Column="0"
+                       Text="IsPassed"/>
+            <TextBlock Grid.Row="3"
+                       Grid.Column="0"
+                       Text="Type.Name"/>
+            <TextBlock Grid.Row="4"
+                       Grid.Column="0"
+                       Text="IsLoto"/>
+            <TextBlock Grid.Row="5"
+                       Grid.Column="0"
+                       Text="IsJog"/>
+            <TextBlock Grid.Row="6"
+                       Grid.Column="0"
+                       Text="IsDurningProduction"/>
+            <TextBlock Grid.Row="7"
+                       Grid.Column="0"
+                       Text="OccuranceText"/>
+            <TextBlock Grid.Row="8"
+                       Grid.Column="0"
+                       Text="HasInstruction"/>
+
+            <TextBlock Grid.Row="0"
+                       Grid.Column="2"
+                       Text="{Binding Workshop.Name}"/>
+            <TextBlock Grid.Row="1"
+                       Grid.Column="2"
+                       Text="{Binding Description}"/>
+            <CheckBox Grid.Row="2"
+                      Grid.Column="2"
+                      IsEnabled="False"
+                      IsChecked="{Binding IsPassed}"/>
+            <TextBlock Grid.Row="3"
+                       Grid.Column="2"
+                       Text="{Binding Type.Name}"/>
+            <CheckBox Grid.Row="4"
+                      Grid.Column="2"
+                      IsEnabled="False"
+                      IsChecked="{Binding IsLoto}"/>
+            <CheckBox Grid.Row="5"
+                      Grid.Column="2"
+                      IsEnabled="False"
+                      IsChecked="{Binding IsJog, Mode=OneWay}"/>
+            <CheckBox Grid.Row="6"
+                      Grid.Column="2"
+                      IsEnabled="False"
+                      IsChecked="{Binding IsDurningProduction}"/>
+            <TextBlock Grid.Row="7"
+                       Grid.Column="2"
+                       Text="{Binding OccuranceText}"/>
+            <CheckBox Grid.Row="8"
+                      Grid.Column="2"
+                      IsEnabled="False"
+                      IsChecked="{Binding HasInstruction}"/>
+
+        </Grid>
 
         <DataGrid Grid.Row="2"
                   ItemsSource="{Binding Path=Trainings}"/>
@@ -42,12 +140,36 @@
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="1">
-                <Button
-                    Width="150"
-                    Height="50"
-                    Command="{Binding Path=ReturnCommand}"
-                    Content="WRÓĆ"
-                    Style="{StaticResource ResourceKey=ButtonSide}"/>
+                <StackPanel Orientation="Horizontal">
+
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Margin"
+                                    Value="10,0"/>
+                            <Setter Property="Height"
+                                    Value="50"/>
+                            <Setter Property="Width"
+                                    Value="150"/>
+                        </Style>
+                    </StackPanel.Resources>
+
+                    <Button
+                        Style="{StaticResource ResourceKey=ButtonMain}"
+                        Command="{Binding Path=EditCommand}"
+                        Content="EDYTUJ"
+                        Margin="10,0"
+                        Height="50"
+                        Width="150"/>
+
+                    <Button
+                        Style="{StaticResource ResourceKey=ButtonSide}"
+                        Command="{Binding Path=ReturnCommand}"
+                        Content="WRÓĆ"
+                        Margin="10,0"
+                        Height="50"
+                        Width="150"/>
+
+                </StackPanel>
             </Border>
         </Grid>
 

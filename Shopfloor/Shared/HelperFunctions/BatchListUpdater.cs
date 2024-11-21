@@ -13,7 +13,12 @@ namespace Shopfloor.Shared.HelperFunctions
         private const int _defaultBatchSize = 10;
         private const int _minimumBatchSize = 1;
 
-        public static async Task UpdateAsync<T>(IEnumerable<T> data, List<T> privateList, ICollectionView publicList, IDispatcherWrapper? dispatcher = null, int batchSize = _defaultBatchSize)
+        public static async Task UpdateAsync<T>(
+            IEnumerable<T> data,
+            List<T> privateList,
+            ICollectionView publicList,
+            IDispatcherWrapper? dispatcher = null,
+            int batchSize = _defaultBatchSize)
         {
             if (batchSize < _minimumBatchSize)
             {
@@ -22,9 +27,11 @@ namespace Shopfloor.Shared.HelperFunctions
 
             dispatcher ??= new DispatcherWrapper(Application.Current.Dispatcher);
 
-            for (int i = 0; i < data.Count(); i += batchSize)
+            int dataCount = data.Count();
+            for (int i = 0; i < dataCount; i += batchSize)
             {
                 privateList.AddRange(data.Skip(i).Take(batchSize));
+                await Task.Delay(1);
                 await dispatcher.InvokeAsync(publicList.Refresh);
             }
         }

@@ -74,6 +74,7 @@ namespace Shopfloor.Features.ActionsList
         }
         private async Task LoadDataAsync()
         {
+            // await Task.Delay(5000);
             List<Task> tasks = [];
 
             tasks.Add(LoadActivitiesAsync());
