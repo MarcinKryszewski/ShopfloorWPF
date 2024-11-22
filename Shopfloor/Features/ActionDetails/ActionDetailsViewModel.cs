@@ -41,6 +41,8 @@ namespace Shopfloor.Features.ActionDetails
         }
         public ICollectionView Trainings => CollectionViewSource.GetDefaultView(_trainings);
         public ICommand ReturnCommand { get; }
+        public bool IsViewedByTrainee => false;
+        public bool IsViewedByCoach => true;
         public Activity Activity => _activityContext.Activity!;
         public List<Activity> TestList { get; } = [];
         public string Title
