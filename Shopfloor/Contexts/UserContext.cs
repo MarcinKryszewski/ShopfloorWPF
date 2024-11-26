@@ -1,4 +1,4 @@
-using Shopfloor.Models.Users;
+using Shopfloor.Services.AuthServices;
 
 namespace Shopfloor.Contexts
 {

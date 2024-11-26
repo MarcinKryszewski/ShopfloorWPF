@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.ActionDetails;
 using Shopfloor.Features.ActionsList;
 
-namespace Shopfloor.Hosts.Features
+namespace Shopfloor.Hosts.Features.Services
 {
     internal static class FeaturesServices
     {

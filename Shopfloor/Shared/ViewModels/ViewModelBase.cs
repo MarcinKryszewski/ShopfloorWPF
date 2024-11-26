@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using Shopfloor.Contexts;
+using Shopfloor.Services.AuthServices;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Dispatchers;
@@ -11,11 +13,13 @@ namespace Shopfloor.Shared.ViewModels
     {
         private readonly INotifier _notifier;
         private readonly INavigationService _navigationService;
+        private readonly IUserContext _userContext;
         private IDispatcherWrapper? _dispatcher;
         public ViewModelBase(ViewModelBaseDependecies? dependecies = null)
         {
             _notifier = dependecies?.Notifier ?? new NotifierDummy();
             _navigationService = dependecies?.NavigationService ?? new NavigationServiceDummy();
+            _userContext = dependecies?.UserContext ?? new EmptyUserContext();
         }
         public event PropertyChangedEventHandler? PropertyChanged;
         public IDispatcherWrapper DispatcherWrapper
@@ -25,6 +29,7 @@ namespace Shopfloor.Shared.ViewModels
         }
         protected INotifier Notifier => _notifier;
         protected INavigationService NavigationService => _navigationService;
+        protected IUserContext UserContext => _userContext;
         public virtual void Dispose()
         {
         }

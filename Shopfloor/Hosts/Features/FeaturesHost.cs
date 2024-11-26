@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.God;
 using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Hosts.Features.Notifier;
+using Shopfloor.Hosts.Features.Services;
 
 namespace Shopfloor.Hosts.Features
 {
@@ -18,6 +19,7 @@ namespace Shopfloor.Hosts.Features
             ModelServices.Get(services);
             FeaturesServices.Get(services);
             RootsServices.Get(services);
+            AuthServices.Get(services);
         }
     }
 }

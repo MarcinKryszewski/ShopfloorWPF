@@ -19,16 +19,16 @@ namespace Shopfloor.Models.Persons
         public Task<IEnumerable<Person>> GetAll()
         {
             IEnumerable<Person> data = [
-                new Person { Id = 1, Name = "Alice", Surname = "Johnson", WorkshopId = 1 },
-                new Person { Id = 2, Name = "Bob", Surname = "Smith", WorkshopId = 2 },
-                new Person { Id = 3, Name = "Carol", Surname = "Miller", WorkshopId = 3 },
-                new Person { Id = 4, Name = "David", Surname = "Brown", WorkshopId = 1 },
-                new Person { Id = 5, Name = "Eve", Surname = "Davis", WorkshopId = 2 },
-                new Person { Id = 6, Name = "Frank", Surname = "Wilson", WorkshopId = 3 },
-                new Person { Id = 7, Name = "Grace", Surname = "Taylor", WorkshopId = 1 },
-                new Person { Id = 8, Name = "Hank", Surname = "Anderson", WorkshopId = 2 },
-                new Person { Id = 9, Name = "Ivy", Surname = "Thomas", WorkshopId = 3 },
-                new Person { Id = 10, Name = "Jack", Surname = "White", WorkshopId = 1 }
+                new Person { Id = 1, Name = "Alice", Surname = "Johnson", WorkshopId = 1, Username = "johnsa01", },
+                new Person { Id = 2, Name = "Bob", Surname = "Smith", WorkshopId = 2, Username = "smithb01", },
+                new Person { Id = 3, Name = "Carol", Surname = "Miller", WorkshopId = 3, Username = "millec01", },
+                new Person { Id = 4, Name = "David", Surname = "Brown", WorkshopId = 1, Username = "kryszm02", },
+                new Person { Id = 5, Name = "Eve", Surname = "Davis", WorkshopId = 2, Username = "davise01", },
+                new Person { Id = 6, Name = "Frank", Surname = "Wilson", WorkshopId = 3, Username = "wilsof01", },
+                new Person { Id = 7, Name = "Grace", Surname = "Taylor", WorkshopId = 1, Username = "taylog01", },
+                new Person { Id = 8, Name = "Hank", Surname = "Anderson", WorkshopId = 2, Username = "anderh01", },
+                new Person { Id = 9, Name = "Ivy", Surname = "Thomas", WorkshopId = 3, Username = "thomai01", },
+                new Person { Id = 10, Name = "Jack", Surname = "White", WorkshopId = 1, Username = "whitej01", }
             ];
 
             return Task.FromResult(data);

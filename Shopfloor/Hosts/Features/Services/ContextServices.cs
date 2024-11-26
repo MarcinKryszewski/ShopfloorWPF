@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Contexts;
 
-namespace Shopfloor.Hosts.Features
+namespace Shopfloor.Hosts.Features.Services
 {
     internal static class ContextServices
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,6 +12,7 @@ using Shopfloor.Hosts;
 using Shopfloor.Layout.Content;
 using Shopfloor.Layout.MainWindow;
 using Shopfloor.Layout.SidePanel;
+using Shopfloor.Services.AuthServices;
 using Shopfloor.Services.NavigationServices;
 
 namespace Shopfloor
@@ -46,6 +48,7 @@ namespace Shopfloor
             SidePanelViewModel sidePanel = _services.GetRequiredService<SidePanelViewModel>();
             ContentViewModel content = _services.GetRequiredService<ContentViewModel>();
 
+
             MainWindow = new MainWindow()
             {
                 DataContext = new MainWindowViewModel(sidePanel, content),
@@ -53,6 +56,13 @@ namespace Shopfloor
             MainWindow.Show();
 
             _navigationService.NavigateTo<GodViewModel>();
+
+            _ = TryAutoLogin();
+        }
+        private async Task TryAutoLogin()
+        {
+            AuthService auth = _services.GetRequiredService<AuthService>();
+            await auth.AutoLogin();
         }
     }
 }

@@ -10,13 +10,13 @@ namespace Shopfloor.Services.AuthServices
             await Task.Delay(0);
             Random rnd = new();
 
-            return rnd.Next(99, 9999);
+            return rnd.Next(99, 9999); // test
         }
         public async Task<string[]> GetRoles(int id)
         {
             await Task.Delay(0);
 
-            return ["admin", "user"];
+            return ["admin", "user"]; // test
         }
     }
 }

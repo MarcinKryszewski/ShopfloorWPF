@@ -1,12 +1,34 @@
-﻿using Shopfloor.Services.NavigationServices;
+﻿using System.ComponentModel;
+using Shopfloor.Services.AuthServices;
+using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Layout.TopPanel
 {
     internal sealed class TopPanelViewModel : ViewModelBase
     {
-        public TopPanelViewModel(INavigationService navigationService)
+        private readonly IUserContext _userContext;
+        public TopPanelViewModel(
+            INavigationService navigationService,
+            IUserContext userContext)
         {
+            _userContext = userContext;
+            _userContext.PropertyChanged += OnUserAuthenticated;
         }
+        public string UsernameTitle
+        {
+            if (!_userContext.IsAuthenticated)
+            {
+                string loginPrompt = "Zaloguj się!";
+                return loginPrompt;
+            }
+}
+private void OnUserAuthenticated(object? sender, PropertyChangedEventArgs e)
+{
+    if (e.PropertyName == nameof(_userContext.Person))
+    {
+        OnPropertyChanged(nameof(Username));
+    }
+}
     }
 }

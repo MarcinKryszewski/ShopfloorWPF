@@ -9,6 +9,7 @@ namespace Shopfloor.Models.Persons
         public int Id { get; init; }
         public string Name { get; set; } = string.Empty;
         public string Surname { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
         public Workshop? Workshop { get; set; }
         public int WorkshopId { get; init; }
         public void SetValues<T>(IModelCreationModel<T> data)
@@ -24,6 +25,7 @@ namespace Shopfloor.Models.Persons
             Name = creation.Name;
             Surname = creation.Surname;
             Workshop = creation.Workshop;
+            Username = creation.Username;
         }
     }
 }
