@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using Shopfloor.Services.AuthServices;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
@@ -17,18 +18,29 @@ namespace Shopfloor.Layout.TopPanel
         }
         public string UsernameTitle
         {
-            if (!_userContext.IsAuthenticated)
+            get
             {
-                string loginPrompt = "Zaloguj się!";
-                return loginPrompt;
+                if (!_userContext.IsAuthenticated)
+                {
+                    string loginPrompt = "Zaloguj się!";
+                    return loginPrompt;
+                }
+
+                if (_userContext.Person is null)
+                {
+                    string personNotFoundInDatabase = "Dopisz się do listy osób!";
+                    return personNotFoundInDatabase;
+                }
+
+                return $"Witaj {_userContext.Person.Name}!";
             }
-}
-private void OnUserAuthenticated(object? sender, PropertyChangedEventArgs e)
-{
-    if (e.PropertyName == nameof(_userContext.Person))
-    {
-        OnPropertyChanged(nameof(Username));
-    }
-}
+        }
+        private void OnUserAuthenticated(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(_userContext.Person) || e.PropertyName == nameof(_userContext.IsAuthenticated))
+            {
+                OnPropertyChanged(nameof(UsernameTitle));
+            }
+        }
     }
 }
