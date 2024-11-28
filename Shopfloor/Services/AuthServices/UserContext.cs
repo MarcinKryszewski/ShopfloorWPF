@@ -26,7 +26,25 @@ namespace Shopfloor.Services.AuthServices
                 OnPropertyChanged(nameof(IsAuthenticated));
             }
         }
-        public string UserPrompt => Person is null ? "Witaj! Jesteś niezalogowany." : $"Witaj {Person.Name}!";
+        public string UserPrompt
+        {
+            get
+            {
+                if (!IsAuthenticated)
+                {
+                    string loginPrompt = "Witaj! Jesteś niezalogowany.";
+                    return loginPrompt;
+                }
+
+                if (Person is null)
+                {
+                    string personNotFoundInDatabase = "Dopisz się do listy osób!";
+                    return personNotFoundInDatabase;
+                }
+
+                return $"Witaj {Person.Name}!";
+            }
+        }
         public bool HasRole(string role) => User?.Roles.Contains(role) ?? false;
     }
 }

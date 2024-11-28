@@ -16,25 +16,7 @@ namespace Shopfloor.Layout.TopPanel
             _userContext = userContext;
             _userContext.PropertyChanged += OnUserAuthenticated;
         }
-        public string UsernameTitle
-        {
-            get
-            {
-                if (!_userContext.IsAuthenticated)
-                {
-                    string loginPrompt = "Zaloguj się!";
-                    return loginPrompt;
-                }
-
-                if (_userContext.Person is null)
-                {
-                    string personNotFoundInDatabase = "Dopisz się do listy osób!";
-                    return personNotFoundInDatabase;
-                }
-
-                return $"Witaj {_userContext.Person.Name}!";
-            }
-        }
+        public string UsernameTitle => _userContext.UserPrompt;
         private void OnUserAuthenticated(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(_userContext.Person) || e.PropertyName == nameof(_userContext.IsAuthenticated))
