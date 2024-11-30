@@ -1,255 +1,273 @@
-<UserControl x:Class="Shopfloor.Features.ActionsList.ActionsListView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Shopfloor.Features.ActionsList"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignHeight="450"
-             d:DesignWidth="800">
+<UserControl
+    x:Class="Shopfloor.Features.ActionsList.ActionsListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Shopfloor.Features.ActionsList"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=local:ActionsListViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
 
     <UserControl.Resources>
         <Style TargetType="TextBlock">
-            <Setter Property="Foreground"
-                    Value="White"/>
+            <Setter Property="Foreground" Value="White" />
         </Style>
 
     </UserControl.Resources>
 
     <Grid MaxHeight="930">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
 
         <Grid.Resources>
             <Style TargetType="ScrollViewer">
-                <Setter Property="Margin"
-                        Value="10"/>
+                <Setter Property="Margin" Value="10" />
                 <!-- <Setter Property="HorizontalScrollBarVisibility"
-                        Value="Auto"/> -->
-                <Setter Property="VerticalScrollBarVisibility"
-                        Value="Auto"/>
+                        Value="Auto"/>-->
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
             </Style>
         </Grid.Resources>
 
         <ScrollViewer Grid.Column="0">
-            <StackPanel Width="250px"
-                        Margin="10,0,0,0">
+            <StackPanel Width="250px" Margin="10,0,0,0">
 
-                <TextBlock Text="Filtry"
-                           Style="{StaticResource TitleTextBlock}"/>
+                <TextBlock Style="{StaticResource TitleTextBlock}" Text="Filtry" />
 
-                <TextBlock Text="Warsztat"
-                           Style="{StaticResource TooltipText}"
-                           Margin="0,7,0,3"/>
-                <ComboBox Style="{StaticResource ComboBoxMain}"
-                          DisplayMemberPath="Name"
-                          IsEditable="true"
-                          IsReadOnly="false"
-                          Text="{Binding FilterData.Workshop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          ItemsSource="{Binding Path=FilterData.Workshops}"
-                          IsTextSearchEnabled="false"
-                          MinHeight="30px"/>
+                <TextBlock
+                    Margin="0,7,0,3"
+                    Style="{StaticResource TooltipText}"
+                    Text="Warsztat" />
+                <ComboBox
+                    MinHeight="30px"
+                    DisplayMemberPath="Name"
+                    IsEditable="true"
+                    IsReadOnly="false"
+                    IsTextSearchEnabled="false"
+                    ItemsSource="{Binding Path=FilterData.Workshops}"
+                    Style="{StaticResource ComboBoxMain}"
+                    Text="{Binding FilterData.Workshop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBlock Text="Linia"
-                           Style="{StaticResource TooltipText}"
-                           Margin="0,7,0,3"/>
-                <ComboBox Style="{StaticResource ComboBoxMain}"
-                          DisplayMemberPath="Name"
-                          IsEditable="true"
-                          IsReadOnly="false"
-                          Text="{Binding FilterData.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          ItemsSource="{Binding Path=FilterData.Lines}"
-                          IsTextSearchEnabled="false"
-                          MinHeight="30px"/>
+                <TextBlock
+                    Margin="0,7,0,3"
+                    Style="{StaticResource TooltipText}"
+                    Text="Linia" />
+                <ComboBox
+                    MinHeight="30px"
+                    DisplayMemberPath="Name"
+                    IsEditable="true"
+                    IsReadOnly="false"
+                    IsTextSearchEnabled="false"
+                    ItemsSource="{Binding Path=FilterData.Lines}"
+                    Style="{StaticResource ComboBoxMain}"
+                    Text="{Binding FilterData.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBlock Text="Maszyna"
-                           Style="{StaticResource TooltipText}"
-                           Margin="0,7,0,3"/>
-                <ComboBox Style="{StaticResource ComboBoxMain}"
-                          DisplayMemberPath="Name"
-                          IsEditable="true"
-                          IsReadOnly="false"
-                          Text="{Binding FilterData.Machine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          ItemsSource="{Binding Path=FilterData.Machines}"
-                          MinHeight="30px"
-                          IsTextSearchEnabled="false"/>
+                <TextBlock
+                    Margin="0,7,0,3"
+                    Style="{StaticResource TooltipText}"
+                    Text="Maszyna" />
+                <ComboBox
+                    MinHeight="30px"
+                    DisplayMemberPath="Name"
+                    IsEditable="true"
+                    IsReadOnly="false"
+                    IsTextSearchEnabled="false"
+                    ItemsSource="{Binding Path=FilterData.Machines}"
+                    Style="{StaticResource ComboBoxMain}"
+                    Text="{Binding FilterData.Machine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-                <TextBlock Text="Rodzaj"
-                           Style="{StaticResource TooltipText}"
-                           Margin="0,7,0,3"/>
-                <ComboBox Style="{StaticResource ComboBoxMain}"
-                          DisplayMemberPath="Name"
-                          IsEditable="true"
-                          IsReadOnly="false"
-                          Text="{Binding FilterData.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          ItemsSource="{Binding Path=FilterData.Types}"
-                          IsTextSearchEnabled="false"
-                          MinHeight="30px"/>
+                <TextBlock
+                    Margin="0,7,0,3"
+                    Style="{StaticResource TooltipText}"
+                    Text="Rodzaj" />
+                <ComboBox
+                    MinHeight="30px"
+                    DisplayMemberPath="Name"
+                    IsEditable="true"
+                    IsReadOnly="false"
+                    IsTextSearchEnabled="false"
+                    ItemsSource="{Binding Path=FilterData.Types}"
+                    Style="{StaticResource ComboBoxMain}"
+                    Text="{Binding FilterData.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 <Grid Margin="0,7,0,3">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <CheckBox Style="{StaticResource CheckBoxStyle1}"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              IsChecked="{Binding FilterData.HasInstruction}"
-                              IsThreeState="True"
-                              Grid.Column="0"
-                              Margin="2,0,0,0"/>
-                    <TextBlock Text="Ma instrukcję"
-                               VerticalAlignment="Center"
-                               Grid.Column="1"
-                               Margin="10,0,0,0"
-                               Style="{StaticResource TooltipText}"/>
+                    <CheckBox
+                        Grid.Column="0"
+                        Margin="2,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding FilterData.HasInstruction}"
+                        IsThreeState="True"
+                        Style="{StaticResource CheckBoxStyle1}" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource TooltipText}"
+                        Text="Ma instrukcję" />
                 </Grid>
 
                 <Grid Margin="0,7,0,3">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <CheckBox Style="{StaticResource CheckBoxStyle1}"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              IsThreeState="True"
-                              IsChecked="{Binding FilterData.IsPassed}"
-                              Grid.Column="0"
-                              Margin="2,0,0,0"/>
-                    <TextBlock Text="Przekazana"
-                               VerticalAlignment="Center"
-                               Grid.Column="1"
-                               Margin="10,0,0,0"
-                               Style="{StaticResource TooltipText}"/>
+                    <CheckBox
+                        Grid.Column="0"
+                        Margin="2,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding FilterData.IsPassed}"
+                        IsThreeState="True"
+                        Style="{StaticResource CheckBoxStyle1}" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource TooltipText}"
+                        Text="Przekazana" />
                 </Grid>
 
                 <Grid Margin="0,7,0,3">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <CheckBox Style="{StaticResource CheckBoxStyle1}"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              IsChecked="{Binding FilterData.IsLoto}"
-                              Grid.Column="0"
-                              Margin="2,0,0,0"/>
-                    <TextBlock Text="LOTO"
-                               VerticalAlignment="Center"
-                               Grid.Column="1"
-                               Margin="10,0,0,0"
-                               Style="{StaticResource TooltipText}"/>
+                    <CheckBox
+                        Grid.Column="0"
+                        Margin="2,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding FilterData.IsLoto}"
+                        Style="{StaticResource CheckBoxStyle1}" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource TooltipText}"
+                        Text="LOTO" />
                 </Grid>
 
                 <Grid Margin="0,7,0,3">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
 
-                    <CheckBox Style="{StaticResource CheckBoxStyle1}"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              IsChecked="{Binding FilterData.IsJog}"
-                              Grid.Column="0"
-                              Margin="2,0,0,0"/>
-                    <TextBlock Text="JOG"
-                               VerticalAlignment="Center"
-                               Grid.Column="1"
-                               Margin="10,0,0,0"
-                               Style="{StaticResource TooltipText}"/>
+                    <CheckBox
+                        Grid.Column="0"
+                        Margin="2,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding FilterData.IsJog}"
+                        Style="{StaticResource CheckBoxStyle1}" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource TooltipText}"
+                        Text="JOG" />
 
                 </Grid>
 
                 <Grid Margin="0,7,0,3">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <CheckBox Style="{StaticResource CheckBoxStyle1}"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              IsChecked="{Binding FilterData.IsProduction}"
-                              Grid.Column="0"
-                              Margin="2,0,0,0"/>
-                    <TextBlock Text="Podczas produkcji"
-                               VerticalAlignment="Center"
-                               Grid.Column="1"
-                               Margin="10,0,0,0"
-                               Style="{StaticResource TooltipText}"/>
+                    <CheckBox
+                        Grid.Column="0"
+                        Margin="2,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding FilterData.IsProduction}"
+                        Style="{StaticResource CheckBoxStyle1}" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource TooltipText}"
+                        Text="Podczas produkcji" />
 
                 </Grid>
 
             </StackPanel>
         </ScrollViewer>
 
-        <ScrollViewer Grid.Column="1">
+        <ScrollViewer x:Name="OuterScrollViewer" Grid.Column="1">
             <DataGrid
                 AutoGenerateColumns="False"
+                CellStyle="{DynamicResource DataGridCellMain}"
+                ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
                 IsReadOnly="True"
                 ItemsSource="{Binding Path=Activities}"
+                PreviewMouseWheel="DataGrid_PreviewMouseWheel"
+                SelectedItem="{Binding Path=Activity}"
                 SelectionMode="Single"
                 SelectionUnit="FullRow"
                 Style="{DynamicResource DataGridMain}"
-                SelectedItem="{Binding Path=Activity}"
-                CellStyle="{DynamicResource DataGridCellMain}"
-                ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
                 TargetUpdated="DataGrid_TargetUpdated">
 
                 <DataGrid.RowStyle>
-                    <Style BasedOn="{StaticResource DataGridRowMain}"
-                           TargetType="DataGridRow">
+                    <Style BasedOn="{StaticResource DataGridRowMain}" TargetType="DataGridRow">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding HasInstruction}"
-                                         Value="True">
-                                <Setter Property="BorderBrush"
-                                        Value="#BAD32F"/>
+                            <DataTrigger Binding="{Binding HasInstruction}" Value="True">
+                                <Setter Property="BorderBrush" Value="#BAD32F" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding IsPassed}"
-                                         Value="True">
-                                <Setter Property="BorderBrush"
-                                        Value="#2FD32F"/>
+                            <DataTrigger Binding="{Binding IsPassed}" Value="True">
+                                <Setter Property="BorderBrush" Value="#2FD32F" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </DataGrid.RowStyle>
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding Machine.Line.Name}"
-                                        Header="Linia"
-                                        Width="auto"/>
+                    <DataGridTextColumn
+                        Width="auto"
+                        Binding="{Binding Machine.Line.Name}"
+                        Header="Linia" />
 
-                    <DataGridTextColumn Binding="{Binding Machine.Name}"
-                                        Header="Maszyna"
-                                        Width="auto"/>
+                    <DataGridTextColumn
+                        Width="auto"
+                        Binding="{Binding Machine.Name}"
+                        Header="Maszyna" />
 
-                    <DataGridTextColumn Binding="{Binding Workshop.Name}"
-                                        Header="Warsztat"
-                                        Width="auto"/>
+                    <DataGridTextColumn
+                        Width="auto"
+                        Binding="{Binding Workshop.Name}"
+                        Header="Warsztat" />
 
-                    <DataGridTextColumn Binding="{Binding Type.Name}"
-                                        Header="Rodzaj"
-                                        Width="auto"/>
+                    <DataGridTextColumn
+                        Width="auto"
+                        Binding="{Binding Type.Name}"
+                        Header="Rodzaj" />
 
-                    <DataGridTextColumn Binding="{Binding Description, NotifyOnTargetUpdated=True}"
-                                        Header="Opis"
-                                        Width="*"/>
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Description, NotifyOnTargetUpdated=True}"
+                        Header="Opis" />
 
-                    <DataGridTextColumn Binding="{Binding OccuranceText}"
-                                        Header="Częstotliwość"
-                                        Width="auto"/>
+                    <DataGridTextColumn
+                        Width="auto"
+                        Binding="{Binding OccuranceText}"
+                        Header="Częstotliwość" />
 
-                    <DataGridTextColumn Binding="{Binding Additionals}"
-                                        Header="Specjalne"
-                                        Width="auto"/>
+                    <DataGridTextColumn
+                        Width="auto"
+                        Binding="{Binding Additionals}"
+                        Header="Specjalne" />
 
                     <DataGridTemplateColumn
                         Width="auto"
@@ -259,13 +277,14 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
 
-                                    <Button Command="{Binding Path=DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                            CommandParameter="{Binding }"
-                                            Style="{StaticResource gridConfirmButton}">
+                                    <Button
+                                        Command="{Binding Path=DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource gridConfirmButton}">
                                         <TextBlock
                                             FontFamily="Segoe MDL2 Assets"
                                             Style="{StaticResource gridButtonIcon}"
-                                            Text="&#xE930;"/>
+                                            Text="&#xE930;" />
                                     </Button>
 
                                 </StackPanel>
