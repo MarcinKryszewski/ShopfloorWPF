@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
+using Shopfloor.Features.ActionCreate;
 using Shopfloor.Features.ActionDetails;
+using Shopfloor.Features.ActionEdit;
 using Shopfloor.Models.Activities;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
@@ -35,12 +37,16 @@ namespace Shopfloor.Features.ActionsList
             Activities.Filter = Filter;
 
             DetailsCommand = new NavigationCommand<ActionDetailsViewModel>(NavigationService).Navigate();
+            EditCommand = new NavigationCommand<ActionEditViewModel>(NavigationService).Navigate();
+            CreateActionCommand = new NavigationCommand<ActionCreateViewModel>(NavigationService).Navigate();
 
             _ = LoadDataAsync();
         }
         public ICollectionView Activities => CollectionViewSource.GetDefaultView(_activities);
         public ActionsFilter FilterData { get; }
         public ICommand DetailsCommand { get; }
+        public ICommand EditCommand { get; }
+        public ICommand CreateActionCommand { get; }
         public Activity? Activity
         {
             get => _activityContext.Activity;

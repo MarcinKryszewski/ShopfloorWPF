@@ -33,163 +33,180 @@
             </Style>
         </Grid.Resources>
 
-        <ScrollViewer Grid.Column="0">
-            <StackPanel Width="250px"
-                        Margin="10,0,0,0">
+        <Grid Grid.Column="0">
 
-                <TextBlock Text="Filtry"
-                           Style="{StaticResource TitleTextBlock}"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-                <TextBlock Text="Warsztat"
-                           Style="{StaticResource TooltipText}"
-                           Margin="0,7,0,3"/>
-                <ComboBox Style="{StaticResource ComboBoxMain}"
-                          DisplayMemberPath="Name"
-                          IsEditable="true"
-                          IsReadOnly="false"
-                          Text="{Binding FilterData.Workshop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          ItemsSource="{Binding Path=FilterData.Workshops}"
-                          IsTextSearchEnabled="false"
-                          MinHeight="30px"/>
+            <ScrollViewer Grid.Row="0">
+                <StackPanel Width="250px"
+                            Margin="10,0,0,0">
 
-                <TextBlock Text="Linia"
-                           Style="{StaticResource TooltipText}"
-                           Margin="0,7,0,3"/>
-                <ComboBox Style="{StaticResource ComboBoxMain}"
-                          DisplayMemberPath="Name"
-                          IsEditable="true"
-                          IsReadOnly="false"
-                          Text="{Binding FilterData.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          ItemsSource="{Binding Path=FilterData.Lines}"
-                          IsTextSearchEnabled="false"
-                          MinHeight="30px"/>
+                    <TextBlock Text="Filtry"
+                               Style="{StaticResource TitleTextBlock}"/>
 
-                <TextBlock Text="Maszyna"
-                           Style="{StaticResource TooltipText}"
-                           Margin="0,7,0,3"/>
-                <ComboBox Style="{StaticResource ComboBoxMain}"
-                          DisplayMemberPath="Name"
-                          IsEditable="true"
-                          IsReadOnly="false"
-                          Text="{Binding FilterData.Machine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          ItemsSource="{Binding Path=FilterData.Machines}"
-                          MinHeight="30px"
-                          IsTextSearchEnabled="false"/>
+                    <TextBlock Text="Warsztat"
+                               Style="{StaticResource TooltipText}"
+                               Margin="0,7,0,3"/>
+                    <ComboBox Style="{StaticResource ComboBoxMain}"
+                              DisplayMemberPath="Name"
+                              IsEditable="true"
+                              IsReadOnly="false"
+                              Text="{Binding FilterData.Workshop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding Path=FilterData.Workshops}"
+                              IsTextSearchEnabled="false"
+                              MinHeight="30px"/>
 
-                <TextBlock Text="Rodzaj"
-                           Style="{StaticResource TooltipText}"
-                           Margin="0,7,0,3"/>
-                <ComboBox Style="{StaticResource ComboBoxMain}"
-                          DisplayMemberPath="Name"
-                          IsEditable="true"
-                          IsReadOnly="false"
-                          Text="{Binding FilterData.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          ItemsSource="{Binding Path=FilterData.Types}"
-                          IsTextSearchEnabled="false"
-                          MinHeight="30px"/>
+                    <TextBlock Text="Linia"
+                               Style="{StaticResource TooltipText}"
+                               Margin="0,7,0,3"/>
+                    <ComboBox Style="{StaticResource ComboBoxMain}"
+                              DisplayMemberPath="Name"
+                              IsEditable="true"
+                              IsReadOnly="false"
+                              Text="{Binding FilterData.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding Path=FilterData.Lines}"
+                              IsTextSearchEnabled="false"
+                              MinHeight="30px"/>
 
-                <Grid Margin="0,7,0,3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Maszyna"
+                               Style="{StaticResource TooltipText}"
+                               Margin="0,7,0,3"/>
+                    <ComboBox Style="{StaticResource ComboBoxMain}"
+                              DisplayMemberPath="Name"
+                              IsEditable="true"
+                              IsReadOnly="false"
+                              Text="{Binding FilterData.Machine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding Path=FilterData.Machines}"
+                              MinHeight="30px"
+                              IsTextSearchEnabled="false"/>
 
-                    <CheckBox Style="{StaticResource CheckBoxStyle1}"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              IsChecked="{Binding FilterData.HasInstruction}"
-                              IsThreeState="True"
-                              Grid.Column="0"
-                              Margin="2,0,0,0"/>
-                    <TextBlock Text="Ma instrukcję"
-                               VerticalAlignment="Center"
-                               Grid.Column="1"
-                               Margin="10,0,0,0"
-                               Style="{StaticResource TooltipText}"/>
-                </Grid>
+                    <TextBlock Text="Rodzaj"
+                               Style="{StaticResource TooltipText}"
+                               Margin="0,7,0,3"/>
+                    <ComboBox Style="{StaticResource ComboBoxMain}"
+                              DisplayMemberPath="Name"
+                              IsEditable="true"
+                              IsReadOnly="false"
+                              Text="{Binding FilterData.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding Path=FilterData.Types}"
+                              IsTextSearchEnabled="false"
+                              MinHeight="30px"/>
 
-                <Grid Margin="0,7,0,3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                    <Grid Margin="0,7,0,3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <CheckBox Style="{StaticResource CheckBoxStyle1}"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              IsThreeState="True"
-                              IsChecked="{Binding FilterData.IsPassed}"
-                              Grid.Column="0"
-                              Margin="2,0,0,0"/>
-                    <TextBlock Text="Przekazana"
-                               VerticalAlignment="Center"
-                               Grid.Column="1"
-                               Margin="10,0,0,0"
-                               Style="{StaticResource TooltipText}"/>
-                </Grid>
+                        <CheckBox Style="{StaticResource CheckBoxStyle1}"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding FilterData.HasInstruction}"
+                                  IsThreeState="True"
+                                  Grid.Column="0"
+                                  Margin="2,0,0,0"/>
+                        <TextBlock Text="Ma instrukcję"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="1"
+                                   Margin="10,0,0,0"
+                                   Style="{StaticResource TooltipText}"/>
+                    </Grid>
 
-                <Grid Margin="0,7,0,3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                    <Grid Margin="0,7,0,3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <CheckBox Style="{StaticResource CheckBoxStyle1}"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              IsChecked="{Binding FilterData.IsLoto}"
-                              Grid.Column="0"
-                              Margin="2,0,0,0"/>
-                    <TextBlock Text="LOTO"
-                               VerticalAlignment="Center"
-                               Grid.Column="1"
-                               Margin="10,0,0,0"
-                               Style="{StaticResource TooltipText}"/>
-                </Grid>
+                        <CheckBox Style="{StaticResource CheckBoxStyle1}"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  IsThreeState="True"
+                                  IsChecked="{Binding FilterData.IsPassed}"
+                                  Grid.Column="0"
+                                  Margin="2,0,0,0"/>
+                        <TextBlock Text="Przekazana"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="1"
+                                   Margin="10,0,0,0"
+                                   Style="{StaticResource TooltipText}"/>
+                    </Grid>
 
-                <Grid Margin="0,7,0,3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                    <Grid Margin="0,7,0,3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox Style="{StaticResource CheckBoxStyle1}"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding FilterData.IsLoto}"
+                                  Grid.Column="0"
+                                  Margin="2,0,0,0"/>
+                        <TextBlock Text="LOTO"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="1"
+                                   Margin="10,0,0,0"
+                                   Style="{StaticResource TooltipText}"/>
+                    </Grid>
+
+                    <Grid Margin="0,7,0,3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
 
-                    <CheckBox Style="{StaticResource CheckBoxStyle1}"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              IsChecked="{Binding FilterData.IsJog}"
-                              Grid.Column="0"
-                              Margin="2,0,0,0"/>
-                    <TextBlock Text="JOG"
-                               VerticalAlignment="Center"
-                               Grid.Column="1"
-                               Margin="10,0,0,0"
-                               Style="{StaticResource TooltipText}"/>
+                        <CheckBox Style="{StaticResource CheckBoxStyle1}"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding FilterData.IsJog}"
+                                  Grid.Column="0"
+                                  Margin="2,0,0,0"/>
+                        <TextBlock Text="JOG"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="1"
+                                   Margin="10,0,0,0"
+                                   Style="{StaticResource TooltipText}"/>
 
-                </Grid>
+                    </Grid>
 
-                <Grid Margin="0,7,0,3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                    <Grid Margin="0,7,0,3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <CheckBox Style="{StaticResource CheckBoxStyle1}"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Center"
-                              IsChecked="{Binding FilterData.IsProduction}"
-                              Grid.Column="0"
-                              Margin="2,0,0,0"/>
-                    <TextBlock Text="Podczas produkcji"
-                               VerticalAlignment="Center"
-                               Grid.Column="1"
-                               Margin="10,0,0,0"
-                               Style="{StaticResource TooltipText}"/>
+                        <CheckBox Style="{StaticResource CheckBoxStyle1}"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding FilterData.IsProduction}"
+                                  Grid.Column="0"
+                                  Margin="2,0,0,0"/>
+                        <TextBlock Text="Podczas produkcji"
+                                   VerticalAlignment="Center"
+                                   Grid.Column="1"
+                                   Margin="10,0,0,0"
+                                   Style="{StaticResource TooltipText}"/>
 
-                </Grid>
+                    </Grid>
 
-            </StackPanel>
-        </ScrollViewer>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Button
+                Grid.Row="2"
+                Style="{StaticResource ResourceKey=ButtonMain}"
+                Margin="10"
+                Command="{Binding Path=CreateActionCommand}"
+                Content="NOWY CILT"
+                Height="50"/>
+        </Grid>
 
         <ScrollViewer Grid.Column="1">
             <DataGrid
@@ -265,7 +282,16 @@
                                         <TextBlock
                                             FontFamily="Segoe MDL2 Assets"
                                             Style="{StaticResource gridButtonIcon}"
-                                            Text="&#xE930;"/>
+                                            Text="&#xE7B3;"/>
+                                    </Button>
+
+                                    <Button Command="{Binding Path=DataContext.EditCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding }"
+                                            Style="{StaticResource gridEditButton}">
+                                        <TextBlock
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Style="{StaticResource gridButtonIcon}"
+                                            Text="&#xE70F;"/>
                                     </Button>
 
                                 </StackPanel>

@@ -1,7 +1,7 @@
-<UserControl x:Class="Shopfloor.Features.ActionDetails.ActionDetailsView"
+<UserControl x:Class="Shopfloor.Features.ActionEdit.ActionEditView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Shopfloor.Features.ActionDetails"
+             xmlns:local="clr-namespace:Shopfloor.Features.ActionEdit"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
@@ -85,28 +85,28 @@
             <TextBlock Grid.Row="0"
                        Grid.Column="2"
                        Text="{Binding Workshop.Name}"/>
-            <TextBlock Grid.Row="1"
-                       Grid.Column="2"
-                       Text="{Binding Description}"/>
+            <TextBox Grid.Row="1"
+                     Grid.Column="2"
+                     Text="{Binding Description}"/>
             <CheckBox Grid.Row="2"
                       Grid.Column="2"
-                      IsEnabled="False"
+                      IsEnabled="True"
                       IsChecked="{Binding IsPassed}"/>
             <TextBlock Grid.Row="3"
                        Grid.Column="2"
                        Text="{Binding Type.Name}"/>
             <CheckBox Grid.Row="4"
                       Grid.Column="2"
-                      IsEnabled="False"
-                      IsChecked="{Binding IsLoto}"/>
+                      IsEnabled="True"
+                      IsChecked="{Binding IsLoto, Mode=TwoWay}"/>
             <CheckBox Grid.Row="5"
                       Grid.Column="2"
-                      IsEnabled="False"
-                      IsChecked="{Binding IsJog, Mode=OneWay}"/>
+                      IsEnabled="True"
+                      IsChecked="{Binding IsJog, Mode=TwoWay}"/>
             <CheckBox Grid.Row="6"
                       Grid.Column="2"
-                      IsEnabled="False"
-                      IsChecked="{Binding IsDurningProduction}"/>
+                      IsEnabled="True"
+                      IsChecked="{Binding IsDurningProduction, Mode=TwoWay}"/>
             <TextBlock Grid.Row="7"
                        Grid.Column="2"
                        Text="{Binding OccuranceText}"/>
@@ -260,7 +260,7 @@
                     <Button
                         Style="{StaticResource ResourceKey=ButtonMain}"
                         Command="{Binding Path=EditCommand}"
-                        Content="EDYTUJ"
+                        Content="ZAPISZ"
                         Margin="10,0"
                         Height="50"
                         Width="150"/>
