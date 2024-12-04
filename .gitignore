@@ -370,3 +370,4 @@ Shopfloor/db.db
 .vscode/task.json
 .vscode/tasks.json
 .vscode/settings.json
+Shopfloor.Tests/lcov.info
