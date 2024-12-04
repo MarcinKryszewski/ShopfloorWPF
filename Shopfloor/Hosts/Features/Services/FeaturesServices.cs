@@ -1,5 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
+using Shopfloor.Features.ActionCreate;
 using Shopfloor.Features.ActionDetails;
+using Shopfloor.Features.ActionEdit;
 using Shopfloor.Features.ActionsList;
 
 namespace Shopfloor.Hosts.Features.Services
@@ -12,6 +14,8 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddTransient<ActionsFilter>();
 
             services.AddTransient<ActionDetailsViewModel>();
+            services.AddTransient<ActionEditViewModel>();
+            services.AddTransient<ActionCreateViewModel>();
         }
     }
 }
