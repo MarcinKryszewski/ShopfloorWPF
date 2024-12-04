@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using System.Linq;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Persons;
 using Shopfloor.Services.NotificationServices;
@@ -9,10 +8,10 @@ namespace Shopfloor.Services.AuthServices
 {
     internal class AuthService
     {
-        private readonly IUserContext _userContext;
         private readonly INotifier _notifier;
-        private readonly UserProvider _userProvider;
         private readonly IRepository<Person, PersonCreation> _personRepository;
+        private readonly IUserContext _userContext;
+        private readonly UserProvider _userProvider;
         public AuthService(
             IUserContext userContext,
             INotifier notifier,
@@ -24,12 +23,12 @@ namespace Shopfloor.Services.AuthServices
             _userProvider = userprovider;
             _personRepository = personRepository;
         }
-        public IUserContext GetUserContext() => _userContext;
         public async Task AutoLogin()
         {
             string username = Environment.UserName;
             await Login(username);
         }
+        public IUserContext GetUserContext() => _userContext;
         public async Task Login(string username)
         {
             int? userId = await _userProvider.GetByUsername(username);
@@ -62,6 +61,15 @@ namespace Shopfloor.Services.AuthServices
 
             return Task.CompletedTask;
         }
+        private async Task<Person?> GetPerson(string username)
+        {
+            return (await _personRepository.GetDataAsync()).Find(x => x.Username == username);
+        }
+        private void NotifyFailedLogin()
+        {
+            string loginInfoText = "Niestety, nie zalogowano";
+            _notifier.ShowSuccess(loginInfoText);
+        }
         private void NotifyLogout()
         {
             string logoutInfoText = "Wylogowano";
@@ -71,15 +79,6 @@ namespace Shopfloor.Services.AuthServices
         {
             string loginInfoText = "Zalogowano";
             _notifier.ShowSuccess(loginInfoText);
-        }
-        private void NotifyFailedLogin()
-        {
-            string loginInfoText = "Niestety, nie zalogowano";
-            _notifier.ShowSuccess(loginInfoText);
-        }
-        private async Task<Person> GetPerson(string username)
-        {
-            return (await _personRepository.GetDataAsync()).First(x => x.Username == username);
         }
     }
 }

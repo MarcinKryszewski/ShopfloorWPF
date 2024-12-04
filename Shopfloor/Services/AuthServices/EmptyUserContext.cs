@@ -3,12 +3,12 @@ using Shopfloor.Models.Persons;
 
 namespace Shopfloor.Services.AuthServices
 {
-    internal class EmptyUserContext : IUserContext, INotifyPropertyChanged
+    internal class EmptyUserContext : IUserContext
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        public User? User
+        public bool IsAuthenticated
         {
-            get => null;
+            get => false;
             set { }
         }
         public Person? Person
@@ -16,9 +16,9 @@ namespace Shopfloor.Services.AuthServices
             get => null;
             set { }
         }
-        public bool IsAuthenticated
+        public User? User
         {
-            get => false;
+            get => null;
             set { }
         }
         public string UserPrompt => string.Empty;

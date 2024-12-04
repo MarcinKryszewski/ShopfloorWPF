@@ -25,7 +25,7 @@ namespace Shopfloor.Models.Persons
                 new Person { Id = 4, Name = "David", Surname = "Brown", WorkshopId = 1, Username = "kryszm02", },
                 new Person { Id = 5, Name = "Eve", Surname = "Davis", WorkshopId = 2, Username = "davise01", },
                 new Person { Id = 6, Name = "Frank", Surname = "Wilson", WorkshopId = 3, Username = "wilsof01", },
-                new Person { Id = 7, Name = "Grace", Surname = "Taylor", WorkshopId = 1, Username = "taylog01", },
+                new Person { Id = 7, Name = "Grace", Surname = "Taylor", WorkshopId = 1, Username = "Marcin", },
                 new Person { Id = 8, Name = "Hank", Surname = "Anderson", WorkshopId = 2, Username = "anderh01", },
                 new Person { Id = 9, Name = "Ivy", Surname = "Thomas", WorkshopId = 3, Username = "thomai01", },
                 new Person { Id = 10, Name = "Jack", Surname = "White", WorkshopId = 1, Username = "whitej01", }

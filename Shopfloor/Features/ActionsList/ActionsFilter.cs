@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using Shopfloor.Models.Activities;
 using Shopfloor.Models.ActivityTypes;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.Machines;
@@ -130,7 +128,6 @@ namespace Shopfloor.Features.ActionsList
         {
             if (obj is Machine machine)
             {
-
                 bool line = string.IsNullOrEmpty(Line) || machine.Line!.Name.Contains(Line, StringComparison.InvariantCultureIgnoreCase);
 
                 return line;

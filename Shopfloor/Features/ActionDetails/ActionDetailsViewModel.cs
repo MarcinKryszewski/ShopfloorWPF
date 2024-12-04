@@ -7,8 +7,10 @@ using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Features.ActionsList;
 using Shopfloor.Models.Activities;
+using Shopfloor.Models.Persons;
 using Shopfloor.Models.Trainings;
 using Shopfloor.Roots;
+using Shopfloor.Services.AuthServices;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
@@ -18,16 +20,20 @@ namespace Shopfloor.Features.ActionDetails
     internal class ActionDetailsViewModel : ViewModelBase
     {
         private readonly ActivityContext _activityContext;
-        private readonly TrainingsRoot _trainingsRoot;
         private readonly List<Training> _trainings = [];
+        private readonly TrainingsRoot _trainingsRoot;
+        private readonly IUserContext _userContext;
+
         public ActionDetailsViewModel(
             ActivityContext activityContext,
             TrainingsRoot trainingsRoot,
-            ViewModelBaseDependecies dependecies)
+            ViewModelBaseDependecies dependecies,
+            IUserContext userContext)
         : base(dependecies)
         {
             _activityContext = activityContext;
             _trainingsRoot = trainingsRoot;
+            _userContext = userContext;
             ReturnCommand = new NavigationCommand<ActionsListViewModel>(NavigationService).Navigate();
 
             if (_activityContext.Activity is null)
@@ -39,11 +45,9 @@ namespace Shopfloor.Features.ActionDetails
 
             _ = LoadDataAsync();
         }
-        public ICollectionView Trainings => CollectionViewSource.GetDefaultView(_trainings);
-        public ICommand ReturnCommand { get; }
-        public bool IsViewedByTrainee => false;
-        public bool IsViewedByCoach => true;
         public Activity Activity => _activityContext.Activity!;
+        public Person? CurrentPerson => _userContext.Person;
+        public ICommand ReturnCommand { get; }
         public List<Activity> TestList { get; } = [];
         public string Title
         {
@@ -55,6 +59,7 @@ namespace Shopfloor.Features.ActionDetails
                 return $"{type} - {line} - {machine}";
             }
         }
+        public ICollectionView Trainings => CollectionViewSource.GetDefaultView(_trainings);
         private async Task LoadDataAsync()
         {
             List<Task> tasks = [];
