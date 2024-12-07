@@ -6,6 +6,7 @@ namespace Shopfloor.Services.AuthServices
     internal class EmptyUserContext : IUserContext
     {
         public event PropertyChangedEventHandler? PropertyChanged;
+#pragma warning disable S108 // Nested blocks of code should not be left empty
         public bool IsAuthenticated
         {
             get => false;
@@ -21,6 +22,7 @@ namespace Shopfloor.Services.AuthServices
             get => null;
             set { }
         }
+#pragma warning restore S108 // Nested blocks of code should not be left empty
         public string UserPrompt => string.Empty;
         public bool HasRole(string role) => false;
     }

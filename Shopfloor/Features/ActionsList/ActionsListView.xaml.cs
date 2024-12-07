@@ -14,11 +14,9 @@ namespace Shopfloor.Features.ActionsList
         public void DataGrid_TargetUpdated(object sender, DataTransferEventArgs e) => DataGridWidthRefresh.RefreshWidth(sender, e, 4);
         private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
-            var scrollViewer = OuterScrollViewer;
-
-            if (scrollViewer != null)
+            if (!e.Handled && sender is ScrollViewer scrollViewer)
             {
-                scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - (e.Delta / 3.0));
+                scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
                 e.Handled = true;
             }
         }

@@ -48,7 +48,6 @@ namespace Shopfloor
             SidePanelViewModel sidePanel = _services.GetRequiredService<SidePanelViewModel>();
             ContentViewModel content = _services.GetRequiredService<ContentViewModel>();
 
-
             MainWindow = new MainWindow()
             {
                 DataContext = new MainWindowViewModel(sidePanel, content),
