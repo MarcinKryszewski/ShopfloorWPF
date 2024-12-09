@@ -3,6 +3,7 @@ using Shopfloor.Features.ActionCreate;
 using Shopfloor.Features.ActionDetails;
 using Shopfloor.Features.ActionEdit;
 using Shopfloor.Features.ActionsList;
+using Shopfloor.Features.TrainingsList;
 
 namespace Shopfloor.Hosts.Features.Services
 {
@@ -16,6 +17,8 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddTransient<ActionDetailsViewModel>();
             services.AddTransient<ActionEditViewModel>();
             services.AddTransient<ActionCreateViewModel>();
+
+            services.AddTransient<TrainingsListViewModel>();
         }
     }
 }

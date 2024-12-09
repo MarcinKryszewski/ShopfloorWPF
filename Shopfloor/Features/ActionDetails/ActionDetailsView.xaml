@@ -6,28 +6,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Shopfloor.Features.ActionDetails"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:trainings="clr-namespace:Shopfloor.Features.TrainingsList"
     d:DataContext="{d:DesignInstance Type=local:ActionDetailsViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <converters:ComparisonConverter x:Key="ComparisonConverter"/>
+        <converters:ComparisonConverter x:Key="ComparisonConverter" />
     </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <TextBlock
             Grid.Row="0"
             Style="{StaticResource TitleTextBlock}"
-            Text="{Binding Title}"/>
+            Text="{Binding Title}" />
 
         <Grid
             Grid.Row="1"
@@ -35,240 +36,133 @@
             DataContext="{Binding Activity}">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
             <Grid.Resources>
-                <Style BasedOn="{StaticResource TooltipText}"
-                       TargetType="{x:Type TextBlock}">
-                    <Setter Property="Margin"
-                            Value="0,0,0,10"/>
+                <Style BasedOn="{StaticResource TooltipText}" TargetType="{x:Type TextBlock}">
+                    <Setter Property="Margin" Value="0,0,0,10" />
                 </Style>
-                <Style BasedOn="{StaticResource CheckBoxStyle1}"
-                       TargetType="{x:Type CheckBox}"/>
+                <Style BasedOn="{StaticResource CheckBoxStyle1}" TargetType="{x:Type CheckBox}" />
             </Grid.Resources>
 
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
-                Text="Warsztat"/>
+                Text="Warsztat" />
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
-                Text="Opis"/>
+                Text="Opis" />
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="0"
-                Text="Przekazane"/>
+                Text="Przekazane" />
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="0"
-                Text="Rodzaj"/>
+                Text="Rodzaj" />
             <TextBlock
                 Grid.Row="4"
                 Grid.Column="0"
-                Text="LOTO"/>
+                Text="LOTO" />
             <TextBlock
                 Grid.Row="5"
                 Grid.Column="0"
-                Text="Tryb JOG"/>
+                Text="Tryb JOG" />
             <TextBlock
                 Grid.Row="6"
                 Grid.Column="0"
-                Text="Podczas produkcji"/>
+                Text="Podczas produkcji" />
             <TextBlock
                 Grid.Row="7"
                 Grid.Column="0"
-                Text="Częstotliwość"/>
+                Text="Częstotliwość" />
             <TextBlock
                 Grid.Row="8"
                 Grid.Column="0"
-                Text="Instrukcja wykonania"/>
+                Text="Instrukcja wykonania" />
 
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="2"
-                Text="{Binding Workshop.Name}"/>
+                Text="{Binding Workshop.Name}" />
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="2"
-                Text="{Binding Description}"/>
+                Text="{Binding Description}" />
             <CheckBox
                 Grid.Row="2"
                 Grid.Column="2"
                 IsChecked="{Binding IsPassed}"
-                IsEnabled="False"/>
+                IsEnabled="False" />
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="2"
-                Text="{Binding Type.Name}"/>
+                Text="{Binding Type.Name}" />
             <CheckBox
                 Grid.Row="4"
                 Grid.Column="2"
                 IsChecked="{Binding IsLoto}"
-                IsEnabled="False"/>
+                IsEnabled="False" />
             <CheckBox
                 Grid.Row="5"
                 Grid.Column="2"
                 IsChecked="{Binding IsJog, Mode=OneWay}"
-                IsEnabled="False"/>
+                IsEnabled="False" />
             <CheckBox
                 Grid.Row="6"
                 Grid.Column="2"
                 IsChecked="{Binding IsDurningProduction}"
-                IsEnabled="False"/>
+                IsEnabled="False" />
             <TextBlock
                 Grid.Row="7"
                 Grid.Column="2"
-                Text="{Binding OccuranceText}"/>
+                Text="{Binding OccuranceText}" />
             <CheckBox
                 Grid.Row="8"
                 Grid.Column="2"
                 IsChecked="{Binding HasInstruction}"
-                IsEnabled="False"/>
+                IsEnabled="False" />
         </Grid>
 
         <Grid Grid.Row="2">
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-
-            <TextBlock
-                Grid.Row="0"
-                Style="{StaticResource TitleTextBlock}"
-                Text="Szkolenia"/>
-
-            <DataGrid
-                Grid.Row="1"
-                Margin="20,0"
-                AutoGenerateColumns="False"
-                CellStyle="{DynamicResource DataGridCellMain}"
-                ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
-                IsReadOnly="True"
-                ItemsSource="{Binding Path=Trainings}"
-                RowStyle="{StaticResource DataGridRowMain}"
-                Style="{DynamicResource DataGridMain}">
-
-                <DataGrid.Columns>
-
-                    <DataGridTextColumn
-                        Width="auto"
-                        Binding="{Binding Trainee.FullName}"
-                        Header="Szkolony"/>
-
-                    <DataGridTextColumn
-                        Width="auto"
-                        Binding="{Binding Coach.FullName}"
-                        Header="Szkolący"/>
-
-                    <DataGridTextColumn
-                        Width="auto"
-                        Binding="{Binding TrainingDate}"
-                        Header="Szkolony"/>
-
-                    <DataGridCheckBoxColumn
-                        Width="auto"
-                        Binding="{Binding IsConfirmedByTrainee}"
-                        Header="Potwierdził szkolony"/>
-
-                    <DataGridCheckBoxColumn
-                        Width="auto"
-                        Binding="{Binding IsConfirmedByCoach}"
-                        Header="Potwierdził szkolący"/>
-
-                    <DataGridTemplateColumn
-                        Width="auto"
-                        Header="Akcje"
-                        IsReadOnly="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <!-- <Button /> -->
-                                    <Button
-                                        Command="{Binding Path=DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource gridConfirmButton}">
-
-                                        <Button.Visibility>
-                                            <MultiBinding Converter="{StaticResource ComparisonConverter}">
-                                                <Binding Path="IsConfirmedByCoach"/>
-                                                <Binding Path="IsConfirmedByTrainee"/>
-                                                <Binding Path="Coach"/>
-                                                <Binding Path="Trainee"/>
-                                                <Binding Path="DataContext.CurrentPerson"
-                                                         RelativeSource="{RelativeSource AncestorType=UserControl}"/>
-                                            </MultiBinding>
-                                        </Button.Visibility>
-
-                                        <!--<Button.Style>
-                                            <Style BasedOn="{StaticResource gridConfirmButton}" TargetType="Button">
-
-                                                <Setter Property="Visibility" Value="Collapsed" />
-
-                                                <Style.Triggers>
-
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding IsConfirmedByCoach}" Value="False" />
-                                                            <Condition Binding="{Binding DataContext.IsViewedByCoach, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger>
-
-                                                    <MultiDataTrigger>
-                                                        <MultiDataTrigger.Conditions>
-                                                            <Condition Binding="{Binding IsConfirmedByTrainee}" Value="False" />
-                                                            <Condition Binding="{Binding IsViewedByTrainee, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" Value="True" />
-                                                        </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </MultiDataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Button.Style>-->
-
-                                        <TextBlock
-                                            FontFamily="Segoe MDL2 Assets"
-                                            Style="{StaticResource gridButtonIcon}"
-                                            Text="&#xE930;"/>
-                                    </Button>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+            <ContentControl Content="{Binding Trainings}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type trainings:TrainingsListViewModel}">
+                        <trainings:TrainingsListView />
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
         </Grid>
 
         <Grid Grid.Row="3">
 
             <Grid.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="Padding"
-                            Value="5,15,5,20"/>
+                    <Setter Property="Padding" Value="5,15,5,20" />
                 </Style>
             </Grid.Resources>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="1">
@@ -276,12 +170,9 @@
 
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type Button}">
-                            <Setter Property="Margin"
-                                    Value="10,0"/>
-                            <Setter Property="Height"
-                                    Value="50"/>
-                            <Setter Property="Width"
-                                    Value="150"/>
+                            <Setter Property="Margin" Value="10,0" />
+                            <Setter Property="Height" Value="50" />
+                            <Setter Property="Width" Value="150" />
                         </Style>
                     </StackPanel.Resources>
 
@@ -291,7 +182,7 @@
                         Margin="10,0"
                         Command="{Binding Path=EditCommand}"
                         Content="EDYTUJ"
-                        Style="{StaticResource ResourceKey=ButtonMain}"/>
+                        Style="{StaticResource ResourceKey=ButtonMain}" />
 
                     <Button
                         Width="150"
@@ -299,7 +190,7 @@
                         Margin="10,0"
                         Command="{Binding Path=ReturnCommand}"
                         Content="WRÓĆ"
-                        Style="{StaticResource ResourceKey=ButtonSide}"/>
+                        Style="{StaticResource ResourceKey=ButtonSide}" />
                 </StackPanel>
             </Border>
         </Grid>

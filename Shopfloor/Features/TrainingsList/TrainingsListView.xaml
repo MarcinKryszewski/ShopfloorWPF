@@ -1,0 +1,107 @@
+﻿<UserControl
+    x:Class="Shopfloor.Features.TrainingsList.TrainingsListView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:Shopfloor.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Shopfloor.Features.TrainingsList"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=local:TrainingsListViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:ComparisonConverter x:Key="ComparisonConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Style="{StaticResource TitleTextBlock}"
+            Text="Szkolenia" />
+
+        <FrameworkElement x:Name="FrameWorkElementProxy" Visibility="Collapsed" />
+
+        <DataGrid
+            Grid.Row="1"
+            Margin="20,0"
+            AutoGenerateColumns="False"
+            CellStyle="{DynamicResource DataGridCellMain}"
+            ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
+            IsReadOnly="True"
+            ItemsSource="{Binding Path=Trainings}"
+            RowStyle="{StaticResource DataGridRowMain}"
+            Style="{DynamicResource DataGridMain}">
+
+            <DataGrid.Columns>
+
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Trainee.FullName}"
+                    Header="Szkolony" />
+
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Coach.FullName}"
+                    Header="Szkolący" />
+
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding TrainingDate}"
+                    Header="Szkolony" />
+
+                <DataGridCheckBoxColumn
+                    Width="auto"
+                    Binding="{Binding IsConfirmedByTrainee}"
+                    Header="Potwierdził szkolony" />
+
+                <DataGridCheckBoxColumn
+                    Width="auto"
+                    Binding="{Binding IsConfirmedByCoach}"
+                    Header="Potwierdził szkolący" />
+
+                <DataGridTemplateColumn
+                    Width="auto"
+                    Header="Akcje"
+                    IsReadOnly="True"
+                    Visibility="{Binding Path=DataContext.IsEditable, Source={x:Reference Name=FrameWorkElementProxy}, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+
+                                <Button
+                                    Command="{Binding Path=DataContext.ConfirmTraining, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                    CommandParameter="{Binding}"
+                                    Style="{StaticResource gridConfirmButton}">
+
+                                    <Button.Visibility>
+                                        <MultiBinding Converter="{StaticResource ComparisonConverter}">
+                                            <Binding Path="IsConfirmedByCoach" />
+                                            <Binding Path="IsConfirmedByTrainee" />
+                                            <Binding Path="Coach" />
+                                            <Binding Path="Trainee" />
+                                            <Binding Path="DataContext.CurrentPerson" RelativeSource="{RelativeSource AncestorType=UserControl}" />
+                                        </MultiBinding>
+                                    </Button.Visibility>
+
+                                    <TextBlock
+                                        FontFamily="Segoe MDL2 Assets"
+                                        Style="{StaticResource gridButtonIcon}"
+                                        Text="&#xE930;" />
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

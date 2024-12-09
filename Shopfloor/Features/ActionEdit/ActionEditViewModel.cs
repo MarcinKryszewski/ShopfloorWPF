@@ -1,16 +1,14 @@
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
+using Shopfloor.Features.ActionDetails;
+using Shopfloor.Features.ActionEdit.Commands;
 using Shopfloor.Features.ActionsList;
+using Shopfloor.Features.TrainingsList;
 using Shopfloor.Models.Activities;
-using Shopfloor.Models.Trainings;
+using Shopfloor.Models.Persons;
 using Shopfloor.Roots;
+using Shopfloor.Services.AuthServices;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.ActionEdit
@@ -18,16 +16,17 @@ namespace Shopfloor.Features.ActionEdit
     internal class ActionEditViewModel : ViewModelBase
     {
         private readonly ActivityContext _activityContext;
-        private readonly TrainingsRoot _trainingsRoot;
-        private readonly List<Training> _trainings = [];
+        private readonly DataRoot _data;
+        private readonly TrainingsListViewModel _trainings;
+        private readonly IUserContext _userContext;
         public ActionEditViewModel(
             ActivityContext activityContext,
-            TrainingsRoot trainingsRoot,
-            ViewModelBaseDependecies dependecies)
+            ViewModelBaseDependecies dependecies,
+            DataRoot data,
+            TrainingsListViewModel trainings)
         : base(dependecies)
         {
             _activityContext = activityContext;
-            _trainingsRoot = trainingsRoot;
             ReturnCommand = new NavigationCommand<ActionsListViewModel>(NavigationService).Navigate();
 
             if (_activityContext.Activity is null)
@@ -35,16 +34,19 @@ namespace Shopfloor.Features.ActionEdit
                 ReturnCommand.Execute(null);
             }
 
-            TestList.Add(Activity);
+            _activityContext.IsEditable = true;
+            _userContext = dependecies.UserContext;
+            _data = data;
+            _trainings = trainings;
 
-            _ = LoadDataAsync();
+            CancelCommand = new NavigationCommand<ActionDetailsViewModel>(NavigationService).Navigate();
+            SaveCommand = new ActionEditCommand();
         }
-        public ICollectionView Trainings => CollectionViewSource.GetDefaultView(_trainings);
-        public ICommand ReturnCommand { get; }
-        public bool IsViewedByTrainee => false;
-        public bool IsViewedByCoach => true;
         public Activity Activity => _activityContext.Activity!;
-        public List<Activity> TestList { get; } = [];
+        public ICommand CancelCommand { get; }
+        public Person? CurrentPerson => _userContext.Person;
+        public ICommand ReturnCommand { get; }
+        public ICommand SaveCommand { get; }
         public string Title
         {
             get
@@ -55,18 +57,6 @@ namespace Shopfloor.Features.ActionEdit
                 return $"EDYCJA {type} - {line} - {machine}";
             }
         }
-        private async Task LoadDataAsync()
-        {
-            List<Task> tasks = [];
-
-            tasks.Add(LoadTrainingsAsync());
-
-            await Task.WhenAll(tasks);
-        }
-        private async Task LoadTrainingsAsync()
-        {
-            IEnumerable<Training> data = await _trainingsRoot.GetData();
-            await BatchListUpdater.UpdateAsync(data.Where(x => x.ActivityId == Activity.Id), _trainings, Trainings);
-        }
+        public TrainingsListViewModel Trainings => _trainings;
     }
 }
