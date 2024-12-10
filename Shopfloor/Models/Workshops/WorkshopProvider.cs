@@ -19,7 +19,7 @@ namespace Shopfloor.Models.Workshops
         public Task<IEnumerable<Workshop>> GetAll()
         {
             IEnumerable<Workshop> data = [
-                new Workshop { Id = 1, Name = "Warszta mechaniczny", },
+                new Workshop { Id = 1, Name = "Warsztat mechaniczny", },
                 new Workshop { Id = 2, Name = "Warsztat elektroniczny", },
                 new Workshop { Id = 3, Name = "Operatorzy", },
             ];
@@ -28,7 +28,7 @@ namespace Shopfloor.Models.Workshops
         public Task<Workshop?> GetById(int id)
         {
             List<Workshop> data = [
-                new Workshop { Id = 1, Name = "Warszta mechaniczny", },
+                new Workshop { Id = 1, Name = "Warsztat mechaniczny", },
                 new Workshop { Id = 2, Name = "Warsztat elektroniczny", },
                 new Workshop { Id = 3, Name = "Operatorzy", },
             ];

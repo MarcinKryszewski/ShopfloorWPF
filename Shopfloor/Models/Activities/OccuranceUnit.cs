@@ -1,5 +1,3 @@
-using System;
-
 namespace Shopfloor.Models.Activities
 {
     public enum OccuranceUnit
