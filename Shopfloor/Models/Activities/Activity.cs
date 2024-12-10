@@ -53,5 +53,9 @@ namespace Shopfloor.Models.Activities
             Occurance = creation.Occurance;
             OccuranceUnit = creation.OccuranceUnit;
         }
+        public Activity Clone()
+        {
+            return (Activity)MemberwiseClone();
+        }
     }
 }

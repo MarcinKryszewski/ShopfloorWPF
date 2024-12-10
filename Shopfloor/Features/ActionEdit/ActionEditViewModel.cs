@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Features.ActionDetails;
@@ -6,9 +10,11 @@ using Shopfloor.Features.ActionsList;
 using Shopfloor.Features.TrainingsList;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.Persons;
+using Shopfloor.Models.Workshops;
 using Shopfloor.Roots;
 using Shopfloor.Services.AuthServices;
 using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.ActionEdit
@@ -19,6 +25,8 @@ namespace Shopfloor.Features.ActionEdit
         private readonly DataRoot _data;
         private readonly TrainingsListViewModel _trainings;
         private readonly IUserContext _userContext;
+        private readonly List<Workshop> _workshops = [];
+        private readonly Activity _activity;
         public ActionEditViewModel(
             ActivityContext activityContext,
             ViewModelBaseDependecies dependecies,
@@ -35,18 +43,22 @@ namespace Shopfloor.Features.ActionEdit
             }
 
             _activityContext.IsEditable = true;
+            _activity = _activityContext.Activity!.Clone();
             _userContext = dependecies.UserContext;
             _data = data;
             _trainings = trainings;
 
             CancelCommand = new NavigationCommand<ActionDetailsViewModel>(NavigationService).Navigate();
             SaveCommand = new ActionEditCommand();
+
+            _ = LoadDataAsync();
         }
-        public Activity Activity => _activityContext.Activity!;
+        public Activity Activity => _activity;
         public ICommand CancelCommand { get; }
         public Person? CurrentPerson => _userContext.Person;
         public ICommand ReturnCommand { get; }
         public ICommand SaveCommand { get; }
+        public ICollectionView Workshops => CollectionViewSource.GetDefaultView(_workshops);
         public string Title
         {
             get
@@ -57,6 +69,19 @@ namespace Shopfloor.Features.ActionEdit
                 return $"EDYCJA {type} - {line} - {machine}";
             }
         }
+        private async Task LoadDataAsync()
+        {
+            List<Task> tasks = [];
+
+            tasks.Add(LoadWorkshops());
+
+            await Task.WhenAll(tasks);
+        }
         public TrainingsListViewModel Trainings => _trainings;
+        private async Task LoadWorkshops()
+        {
+            IEnumerable<Workshop> data = await _data.GetWorkshop();
+            await BatchListUpdater.UpdateAsync(data, _workshops, Workshops);
+        }
     }
 }

@@ -13,139 +13,151 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <converters:ComparisonConverter x:Key="ComparisonConverter" />
+        <converters:ComparisonConverter x:Key="ComparisonConverter"/>
     </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <TextBlock
             Grid.Row="0"
             Style="{StaticResource TitleTextBlock}"
-            Text="{Binding Title}" />
+            Text="{Binding Title}"/>
 
         <Grid
             Grid.Row="1"
-            Margin="20,0,0,20"
-            DataContext="{Binding Activity}">
+            Margin="20,0,0,20">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
             <Grid.Resources>
-                <Style BasedOn="{StaticResource TooltipText}" TargetType="{x:Type TextBlock}">
-                    <Setter Property="Margin" Value="0,0,0,10" />
+                <Style BasedOn="{StaticResource TooltipText}"
+                       TargetType="{x:Type TextBlock}">
+                    <Setter Property="Margin"
+                            Value="0,0,0,10"/>
                 </Style>
-                <Style BasedOn="{StaticResource CheckBoxStyle1}" TargetType="{x:Type CheckBox}" />
+
+                <Style BasedOn="{StaticResource CheckBoxStyle1}"
+                       TargetType="{x:Type CheckBox}"/>
+
+                <Style BasedOn="{StaticResource ComboBoxMain}"
+                       TargetType="{x:Type ComboBox}"/>
             </Grid.Resources>
 
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
-                Text="Warsztat" />
+                Text="Warsztat"/>
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
-                Text="Opis" />
+                Text="Opis"/>
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="0"
-                Text="Przekazane" />
+                Text="Przekazane"/>
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="0"
-                Text="Rodzaj" />
+                Text="Rodzaj"/>
             <TextBlock
                 Grid.Row="4"
                 Grid.Column="0"
-                Text="LOTO" />
+                Text="LOTO"/>
             <TextBlock
                 Grid.Row="5"
                 Grid.Column="0"
-                Text="Tryb JOG" />
+                Text="Tryb JOG"/>
             <TextBlock
                 Grid.Row="6"
                 Grid.Column="0"
-                Text="Podczas produkcji" />
+                Text="Podczas produkcji"/>
             <TextBlock
                 Grid.Row="7"
                 Grid.Column="0"
-                Text="Częstotliwość" />
+                Text="Częstotliwość"/>
             <TextBlock
                 Grid.Row="8"
                 Grid.Column="0"
-                Text="Instrukcja wykonania" />
+                Text="Instrukcja wykonania"/>
 
-            <TextBlock
+            <ComboBox
+                MinHeight="30px"
                 Grid.Row="0"
                 Grid.Column="2"
-                Text="{Binding Workshop.Name}" />
+                SelectedValue="{Binding Activity.Workshop}"
+                ItemsSource="{Binding Workshops}"
+                DisplayMemberPath="Name"
+                IsEditable="true"
+                IsReadOnly="false"
+                IsTextSearchEnabled="false"/>
             <TextBox
                 Grid.Row="1"
                 Grid.Column="2"
-                Text="{Binding Description}" />
+                Text="{Binding Activity.Description}"/>
             <CheckBox
                 Grid.Row="2"
                 Grid.Column="2"
-                IsChecked="{Binding IsPassed}"
-                IsEnabled="True" />
+                IsChecked="{Binding Activity.IsPassed}"
+                IsEnabled="True"/>
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="2"
-                Text="{Binding Type.Name}" />
+                Text="{Binding Activity.Type.Name}"/>
             <CheckBox
                 Grid.Row="4"
                 Grid.Column="2"
-                IsChecked="{Binding IsLoto, Mode=TwoWay}"
-                IsEnabled="True" />
+                IsChecked="{Binding Activity.IsLoto, Mode=TwoWay}"
+                IsEnabled="True"/>
             <CheckBox
                 Grid.Row="5"
                 Grid.Column="2"
-                IsChecked="{Binding IsJog, Mode=TwoWay}"
-                IsEnabled="True" />
+                IsChecked="{Binding Activity.IsJog, Mode=TwoWay}"
+                IsEnabled="True"/>
             <CheckBox
                 Grid.Row="6"
                 Grid.Column="2"
-                IsChecked="{Binding IsDurningProduction, Mode=TwoWay}"
-                IsEnabled="True" />
+                IsChecked="{Binding Activity.IsDurningProduction, Mode=TwoWay}"
+                IsEnabled="True"/>
             <TextBlock
                 Grid.Row="7"
                 Grid.Column="2"
-                Text="{Binding OccuranceText}" />
+                Text="{Binding Activity.OccuranceText}"/>
             <CheckBox
                 Grid.Row="8"
                 Grid.Column="2"
-                IsChecked="{Binding HasInstruction}"
-                IsEnabled="False" />
+                IsChecked="{Binding Activity.HasInstruction}"
+                IsEnabled="False"/>
         </Grid>
 
         <Grid Grid.Row="2">
             <ContentControl Content="{Binding Trainings}">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type trainings:TrainingsListViewModel}">
-                        <trainings:TrainingsListView />
+                        <trainings:TrainingsListView/>
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
@@ -155,14 +167,15 @@
 
             <Grid.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="Padding" Value="5,15,5,20" />
+                    <Setter Property="Padding"
+                            Value="5,15,5,20"/>
                 </Style>
             </Grid.Resources>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="1">
@@ -170,9 +183,12 @@
 
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type Button}">
-                            <Setter Property="Margin" Value="10,0" />
-                            <Setter Property="Height" Value="50" />
-                            <Setter Property="Width" Value="150" />
+                            <Setter Property="Margin"
+                                    Value="10,0"/>
+                            <Setter Property="Height"
+                                    Value="50"/>
+                            <Setter Property="Width"
+                                    Value="150"/>
                         </Style>
                     </StackPanel.Resources>
 
@@ -182,7 +198,7 @@
                         Margin="10,0"
                         Command="{Binding Path=SaveCommand}"
                         Content="ZAPISZ"
-                        Style="{StaticResource ResourceKey=ButtonMain}" />
+                        Style="{StaticResource ResourceKey=ButtonMain}"/>
 
                     <Button
                         Width="150"
@@ -190,7 +206,7 @@
                         Margin="10,0"
                         Command="{Binding Path=CancelCommand}"
                         Content="ANULUJ"
-                        Style="{StaticResource ResourceKey=ButtonEmpty}" />
+                        Style="{StaticResource ResourceKey=ButtonEmpty}"/>
 
                     <Button
                         Width="150"
@@ -198,7 +214,7 @@
                         Margin="10,0"
                         Command="{Binding Path=ReturnCommand}"
                         Content="WRÓĆ"
-                        Style="{StaticResource ResourceKey=ButtonSide}" />
+                        Style="{StaticResource ResourceKey=ButtonSide}"/>
                 </StackPanel>
             </Border>
         </Grid>
