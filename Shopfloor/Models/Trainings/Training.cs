@@ -34,5 +34,21 @@ namespace Shopfloor.Models.Trainings
             Trainee = creation.Trainee;
             TrainingDate = creation.TrainingDate;
         }
+        public TrainingCreation CreateModelCreation()
+        {
+            return new TrainingCreation()
+            {
+                Id = Id,
+                Activity = Activity,
+                ActivityId = ActivityId,
+                Coach = Coach,
+                CoachId = CoachId,
+                IsConfirmedByCoach = IsConfirmedByCoach,
+                IsConfirmedByTrainee = IsConfirmedByTrainee,
+                Trainee = Trainee,
+                TraineeId = TraineeId,
+                TrainingDate = TrainingDate,
+            };
+        }
     }
 }

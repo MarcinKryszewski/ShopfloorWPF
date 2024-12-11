@@ -6,6 +6,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Features.ActionEdit.Commands;
+using Shopfloor.Features.TrainingsList.Commands;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.Persons;
 using Shopfloor.Models.Trainings;
@@ -31,7 +32,7 @@ namespace Shopfloor.Features.TrainingsList
             _userContext = dependecies.UserContext;
             _activityContext = activityContext;
             _activityContext.PropertyChanged += OnActionEditableChange;
-            ConfirmTraining = new ConfirmTrainingCommand();
+            ConfirmTraining = new ConfirmTrainingCommand(_userContext, _trainingsRoot);
             _ = LoadTrainingsAsync();
         }
         public Activity? Activity => _activityContext.Activity;

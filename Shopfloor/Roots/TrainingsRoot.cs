@@ -14,7 +14,6 @@ namespace Shopfloor.Roots
         private readonly IRepository<Activity, ActivityCreation> _activityData;
         private readonly IRepository<Training, TrainingCreation> _trainingData;
         private readonly IRepository<Person, PersonCreation> _personData;
-
         public TrainingsRoot(
             IRepository<Activity, ActivityCreation> activityData,
             IRepository<Training, TrainingCreation> trainingData,
@@ -40,6 +39,10 @@ namespace Shopfloor.Roots
             }
 
             return data;
+        }
+        public async Task ConfirmTraining(TrainingCreation data)
+        {
+            await _trainingData.Update(data);
         }
         protected void OnDataChanged(EventArgs e) => DataChanged?.Invoke(this, e);
         private async Task DecorateWithPersons(IEnumerable<Training> data)
