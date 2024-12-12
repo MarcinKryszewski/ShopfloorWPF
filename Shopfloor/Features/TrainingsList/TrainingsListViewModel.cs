@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,7 +32,10 @@ namespace Shopfloor.Features.TrainingsList
             _trainingsRoot = trainingsRoot;
             _userContext = dependecies.UserContext;
             _activityContext = activityContext;
+
             _activityContext.PropertyChanged += OnActionEditableChange;
+            _trainingsRoot.DataChanged += OnTrainingConfirmed;
+
             ConfirmTraining = new ConfirmTrainingCommand(_userContext, _trainingsRoot);
             _ = LoadTrainingsAsync();
         }
@@ -58,6 +62,10 @@ namespace Shopfloor.Features.TrainingsList
             {
                 OnPropertyChanged(nameof(IsEditable));
             }
+        }
+        private void OnTrainingConfirmed(object? sender, EventArgs e)
+        {
+            Trainings.Refresh();
         }
     }
 }

@@ -31,6 +31,7 @@ namespace Shopfloor.Services.AuthServices
         public IUserContext GetUserContext() => _userContext;
         public async Task Login(string username)
         {
+            username = username.ToLower();
             int? userId = await _userProvider.GetByUsername(username);
 
             if (userId == null)

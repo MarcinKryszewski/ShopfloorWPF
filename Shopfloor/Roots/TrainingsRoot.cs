@@ -43,6 +43,7 @@ namespace Shopfloor.Roots
         public async Task ConfirmTraining(TrainingCreation data)
         {
             await _trainingData.Update(data);
+            OnDataChanged(EventArgs.Empty);
         }
         protected void OnDataChanged(EventArgs e) => DataChanged?.Invoke(this, e);
         private async Task DecorateWithPersons(IEnumerable<Training> data)
