@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
@@ -18,9 +19,10 @@ namespace Shopfloor.Features.ActionsList
 {
     internal class ActionsListViewModel : ViewModelBase
     {
-        private readonly ActivitiesRoot _root;
-        private readonly ActivityContext _activityContext;
+        private static readonly object _syncLock = new();
         private readonly List<Activity> _activities = [];
+        private readonly ActivityContext _activityContext;
+        private readonly ActivitiesRoot _root;
         public ActionsListViewModel(
             ActivitiesRoot root,
             ActionsFilter filter,
@@ -31,32 +33,42 @@ namespace Shopfloor.Features.ActionsList
             _root = root;
             FilterData = filter;
             _activityContext = activityContext;
-
+            Activities = new ListCollectionView(_activities)
+            {
+                Filter = Filter,
+            };
             _root.DataChanged += DataChanged;
             FilterData.FiltersChanged += OnFiltersChanged;
-            Activities.Filter = Filter;
+            BindingOperations.EnableCollectionSynchronization(_activities, _syncLock);
 
             DetailsCommand = new NavigationCommand<ActionDetailsViewModel>(NavigationService).Navigate();
             EditCommand = new NavigationCommand<ActionEditViewModel>(NavigationService).Navigate();
             CreateActionCommand = new NavigationCommand<ActionCreateViewModel>(NavigationService).Navigate();
 
-            _ = LoadDataAsync();
+            Task.Run(LoadDataAsync);
         }
-        public ICollectionView Activities => CollectionViewSource.GetDefaultView(_activities);
-        public ActionsFilter FilterData { get; }
-        public ICommand DetailsCommand { get; }
-        public ICommand EditCommand { get; }
-        public ICommand CreateActionCommand { get; }
+        public ICollectionView Activities { get; init; }
         public Activity? Activity
         {
             get => _activityContext.Activity;
             set => _activityContext.Activity = value;
         }
-        public void OnFiltersChanged(object? sender, EventArgs e)
-        {
-            Activities.Refresh();
-        }
+        public ICommand CreateActionCommand { get; }
+        public ICommand DetailsCommand { get; }
+        public ICommand EditCommand { get; }
+        public ActionsFilter FilterData { get; }
         public void DataChanged(object? sender, EventArgs e)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                lock (_syncLock)
+                {
+                    OnPropertyChanged(nameof(Activities));
+                    Activities.Refresh();
+                }
+            });
+        }
+        public void OnFiltersChanged(object? sender, EventArgs e)
         {
             Activities.Refresh();
         }
@@ -78,19 +90,20 @@ namespace Shopfloor.Features.ActionsList
             }
             return false;
         }
+        private async Task LoadActivitiesAsync()
+        {
+            IEnumerable<Activity> activities = await _root.GetData();
+            BatchListUpdater.DataChanged += DataChanged;
+            await BatchListUpdater.UpdateAsync(activities, _activities);
+            BatchListUpdater.DataChanged -= DataChanged;
+        }
         private async Task LoadDataAsync()
         {
-            // await Task.Delay(5000);
             List<Task> tasks = [];
 
             tasks.Add(LoadActivitiesAsync());
 
             await Task.WhenAll(tasks);
-        }
-        private async Task LoadActivitiesAsync()
-        {
-            IEnumerable<Activity> activities = await _root.GetData();
-            await BatchListUpdater.UpdateAsync(activities, _activities, Activities);
         }
     }
 }

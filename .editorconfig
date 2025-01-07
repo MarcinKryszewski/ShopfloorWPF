@@ -107,3 +107,9 @@ dotnet_diagnostic.S3263.severity = suggestion
 
 # S1643: Strings should not be concatenated using '+' in a loop
 dotnet_diagnostic.S1643.severity = suggestion
+
+# CsWinRT1030: Project does not enable unsafe blocks
+dotnet_diagnostic.CsWinRT1030.severity = none
+
+# CsWinRT1028: Class is not marked partial
+dotnet_diagnostic.CsWinRT1028.severity = none

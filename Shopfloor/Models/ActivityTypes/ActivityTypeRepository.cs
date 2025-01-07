@@ -11,6 +11,7 @@ namespace Shopfloor.Models.ActivityTypes
         private readonly IProvider<ActivityType, ActivityTypeCreation> _provider;
         private readonly IStore<ActivityType> _store;
         private bool _dataLoaded = false;
+        private bool _loading = false;
         public ActivityTypeRepository(
             IStore<ActivityType> store,
             IProvider<ActivityType,
@@ -49,11 +50,17 @@ namespace Shopfloor.Models.ActivityTypes
         }
         public async Task<List<ActivityType>> GetDataAsync()
         {
+            while (_loading)
+            {
+                await Task.Delay(3);
+            }
             if (!_dataLoaded)
             {
+                _loading = true;
+                _dataLoaded = true;
                 List<ActivityType> data = (await _provider.GetAll()).ToList();
                 _store.Data.AddRange(data);
-                _dataLoaded = true;
+                _loading = false;
             }
 
             return _store.Data;

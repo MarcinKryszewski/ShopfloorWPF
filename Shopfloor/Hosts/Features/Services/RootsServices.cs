@@ -10,6 +10,7 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddSingleton<ActivitiesRoot>();
             services.AddSingleton<DataRoot>();
             services.AddSingleton<TrainingsRoot>();
+            services.AddSingleton<ActivitiesDataRoot>();
         }
     }
 }

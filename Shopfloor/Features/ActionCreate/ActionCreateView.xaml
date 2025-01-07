@@ -1,19 +1,291 @@
-<UserControl x:Class="Shopfloor.Features.ActionCreate.ActionCreateView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Shopfloor.Features.ActionCreate"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             d:DesignHeight="450"
-        d:DesignWidth="800">
+<UserControl
+    x:Class="Shopfloor.Features.ActionCreate.ActionCreateView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Shopfloor.Features.ActionCreate"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DataContext="{d:DesignInstance Type=local:ActionCreateViewModel}"
+    d:DesignHeight="850"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
     <Grid>
-        <Button
-            Style="{StaticResource ResourceKey=ButtonSide}"
-            Command="{Binding Path=ReturnCommand}"
-            Content="WRÓĆ"
-            Margin="10,0"
-            Height="50"
-            Width="150"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            Grid.Row="0"
+            Padding="0,15"
+            HorizontalAlignment="Center"
+            FontSize="32"
+            FontWeight="ExtraBold"
+            Foreground="{StaticResource BrushPurple500}"
+            Text="NOWY CILT" />
+
+        <ScrollViewer
+            Grid.Row="1"
+            MaxHeight="800"
+            VerticalScrollBarVisibility="Auto">
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" MinWidth="500" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="1">
+
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="24" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Grid.Resources>
+                            <Style BasedOn="{StaticResource TooltipText}" TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="0,0,0,3" />
+                            </Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Margin" Value="4,4" />
+                            </Style>
+                            <Style BasedOn="{StaticResource ComboBoxMain}" TargetType="{x:Type ComboBox}">
+                                <Setter Property="MinHeight" Value="40px" />
+                                <Setter Property="MinWidth" Value="310px" />
+                            </Style>
+                        </Grid.Resources>
+
+                        <Border>
+                            <StackPanel Grid.Row="0" Grid.Column="0">
+                                <TextBlock Text="Rodzaj" />
+                                <ComboBox
+                                    DisplayMemberPath="Name"
+                                    ItemsSource="{Binding Path=Types}"
+                                    SelectedItem="{Binding Path=Activity.Type}" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="0">
+                            <StackPanel>
+                                <TextBlock Text="Warsztat" />
+                                <ComboBox
+                                    DisplayMemberPath="Name"
+                                    ItemsSource="{Binding Path=Workshops}"
+                                    SelectedItem="{Binding Path=Activity.Workshop}" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Row="2" Grid.Column="0">
+                            <StackPanel>
+                                <TextBlock Text="Linia" />
+                                <ComboBox
+                                    DisplayMemberPath="Name"
+                                    ItemsSource="{Binding Path=Lines}"
+                                    SelectedItem="{Binding Path=Line}" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Row="2" Grid.Column="2">
+                            <StackPanel>
+                                <TextBlock Text="Maszyna" />
+                                <ComboBox
+                                    DisplayMemberPath="Name"
+                                    ItemsSource="{Binding Path=Machines}"
+                                    SelectedItem="{Binding Path=Activity.Machine}" />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <Grid Margin="0,0,0,12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.Resources>
+                            <Style BasedOn="{StaticResource TooltipText}" TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="5,0,0,12" />
+                                <Setter Property="FontSize" Value="14" />
+                            </Style>
+                            <Style BasedOn="{StaticResource CheckBoxStyle1}" TargetType="{x:Type CheckBox}">
+                                <Setter Property="Margin" Value="30,0,4,0" />
+                                <Setter Property="Padding" Value="0" />
+                            </Style>
+                        </Grid.Resources>
+
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Margin="0,0,0,14"
+                            Content="Dodatkowe informacje"
+                            FontSize="16"
+                            FontWeight="Bold"
+                            Foreground="{StaticResource BrushPurple200}" />
+
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Text="Loto" />
+                        <CheckBox
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            IsChecked="{Binding Path=Activity.IsJog}" />
+
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Text="Loto" />
+                        <CheckBox
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            IsChecked="{Binding Path=Activity.IsLoto}" />
+
+                        <TextBlock
+                            Grid.Row="3"
+                            Grid.Column="1"
+                            Text="Podczas produkcji" />
+                        <CheckBox
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            IsChecked="{Binding Path=Activity.IsDurningProduction}" />
+                    </Grid>
+
+                    <Grid Margin="0,0,0,12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Grid.Resources>
+                            <Style BasedOn="{StaticResource TooltipText}" TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="3,0,0,3" />
+                            </Style>
+                            <Style BasedOn="{StaticResource TextBoxMain}" TargetType="{x:Type TextBox}" />
+                            <Style BasedOn="{StaticResource ComboBoxMain}" TargetType="{x:Type ComboBox}">
+                                <Setter Property="MinHeight" Value="40px" />
+                                <Setter Property="MinWidth" Value="92px" />
+                                <Setter Property="Margin" Value="3,0,0,0" />
+                            </Style>
+                        </Grid.Resources>
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Text="Częstotliwość" />
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Width="92"
+                            MinHeight="40"
+                            Margin="3,0,8,0"
+                            HorizontalContentAlignment="Center"
+                            FontSize="16px"
+                            Text="{Binding Path=Activity.OccuranceValue}" />
+                        <ComboBox
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Center"
+                            DisplayMemberPath="OccuranceUnitText"
+                            ItemsSource="{Binding Path=Occurencies}"
+                            SelectedIndex="2"
+                            SelectedItem="{Binding Path=Activity.Occurance}" />
+                    </Grid>
+
+                    <StackPanel Margin="0,0,0,12">
+
+                        <StackPanel.Resources>
+                            <Style BasedOn="{StaticResource TooltipText}" TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="3,0,0,3" />
+                            </Style>
+                            <Style BasedOn="{StaticResource TextBoxMain}" TargetType="{x:Type TextBox}">
+                                <Setter Property="MinHeight" Value="163" />
+                                <Setter Property="Width" Value="650" />
+                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                <Setter Property="VerticalContentAlignment" Value="Top" />
+                            </Style>
+                        </StackPanel.Resources>
+
+                        <TextBlock Margin="3,0,8,0" Text="Opis" />
+                        <TextBox
+                            Padding="5"
+                            AcceptsReturn="True"
+                            Text="{Binding Path=Activity.Description}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+
+        <Grid Grid.Row="2">
+
+            <Grid.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="Padding" Value="5,15,5,20" />
+                </Style>
+            </Grid.Resources>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="1">
+                <StackPanel Orientation="Horizontal">
+
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Margin" Value="10,0" />
+                            <Setter Property="Height" Value="50" />
+                            <Setter Property="Width" Value="150" />
+                        </Style>
+                    </StackPanel.Resources>
+
+                    <Button
+                        Width="150"
+                        Height="50"
+                        Margin="10,0"
+                        Command="{Binding Path=SaveCommand}"
+                        Content="ZAPISZ"
+                        Style="{StaticResource ResourceKey=ButtonMain}" />
+
+                    <Button
+                        Width="150"
+                        Height="50"
+                        Margin="10,0"
+                        Command="{Binding Path=ReturnCommand}"
+                        Content="WRÓĆ"
+                        Style="{StaticResource ResourceKey=ButtonSide}" />
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl> 

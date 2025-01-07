@@ -64,7 +64,7 @@ namespace Shopfloor.Services.AuthServices
         }
         private async Task<Person?> GetPerson(string username)
         {
-            return (await _personRepository.GetDataAsync()).Find(x => x.Username == username);
+            return (await _personRepository.GetDataAsync()).Find(x => x.Username.Equals(username, StringComparison.CurrentCultureIgnoreCase));
         }
         private void NotifyFailedLogin()
         {

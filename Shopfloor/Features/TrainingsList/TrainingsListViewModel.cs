@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
-using Shopfloor.Features.ActionEdit.Commands;
 using Shopfloor.Features.TrainingsList.Commands;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.Persons;
@@ -54,7 +53,7 @@ namespace Shopfloor.Features.TrainingsList
             IEnumerable<Training> data = (await _trainingsRoot.GetData())
                 .Where(x => x.ActivityId == Activity.Id);
 
-            await BatchListUpdater.UpdateAsync(data, _trainings, Trainings);
+            await BatchListUpdater.UpdateAsync(data, _trainings);
         }
         private void OnActionEditableChange(object? sender, PropertyChangedEventArgs e)
         {

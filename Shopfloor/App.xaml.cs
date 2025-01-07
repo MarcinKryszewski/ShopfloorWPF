@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Data;
+using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Markup;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
@@ -27,6 +30,7 @@ namespace Shopfloor
         {
             _appHost = AppHost.Get();
             _appHost.Start();
+            SetCulture();
 
             _services = _appHost.Services;
 
@@ -56,12 +60,25 @@ namespace Shopfloor
 
             _navigationService.NavigateTo<GodViewModel>();
 
-            _ = TryAutoLogin();
+            Task.Run(TryAutoLogin);
         }
         private async Task TryAutoLogin()
         {
             AuthService auth = _services.GetRequiredService<AuthService>();
             await auth.AutoLogin();
+        }
+        private void SetCulture()
+        {
+            var vCulture = new CultureInfo("pl-PL");
+
+            Thread.CurrentThread.CurrentCulture = vCulture;
+            Thread.CurrentThread.CurrentUICulture = vCulture;
+            CultureInfo.DefaultThreadCurrentCulture = vCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = vCulture;
+
+            FrameworkElement.LanguageProperty.OverrideMetadata(
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
         }
     }
 }

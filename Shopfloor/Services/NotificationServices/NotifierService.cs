@@ -1,4 +1,5 @@
 using System;
+using System.Windows;
 using ToastNotifications;
 using ToastNotifications.Core;
 using ToastNotifications.Messages.Error;
@@ -18,19 +19,31 @@ namespace Shopfloor.Services.NotificationServices
             }
             public void ShowError(string message)
             {
-                Notify(() => new ErrorMessage(message));
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Notify(() => new ErrorMessage(message));
+                });
             }
             public void ShowInformation(string message)
             {
-                Notify(() => new InformationMessage(message));
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Notify(() => new InformationMessage(message));
+                });
             }
             public void ShowSuccess(string message)
             {
-                Notify(() => new SuccessMessage(message));
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Notify(() => new SuccessMessage(message));
+                });
             }
             public void ShowWarning(string message)
             {
-                Notify(() => new WarningMessage(message));
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Notify(() => new WarningMessage(message));
+                });
             }
         }
     }

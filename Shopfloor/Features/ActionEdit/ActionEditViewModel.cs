@@ -95,12 +95,12 @@ namespace Shopfloor.Features.ActionEdit
         private async Task LoadTypes()
         {
             IEnumerable<ActivityType> data = await _data.GetActivityType();
-            await BatchListUpdater.UpdateAsync(data, _activityTypes, ActivityTypes);
+            await BatchListUpdater.UpdateAsync(data, _activityTypes);
         }
         private async Task LoadWorkshops()
         {
             IEnumerable<Workshop> data = await _data.GetWorkshop();
-            await BatchListUpdater.UpdateAsync(data, _workshops, Workshops);
+            await BatchListUpdater.UpdateAsync(data, _workshops);
         }
     }
 }

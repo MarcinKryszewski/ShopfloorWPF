@@ -11,6 +11,7 @@ namespace Shopfloor.Models.Machines
         private readonly IProvider<Machine, MachineCreation> _provider;
         private readonly IStore<Machine> _store;
         private bool _dataLoaded = false;
+        private bool _loading = false;
         public MachineRepository(IStore<Machine> store, IProvider<Machine, MachineCreation> provider)
         {
             _store = store;
@@ -46,11 +47,17 @@ namespace Shopfloor.Models.Machines
         }
         public async Task<List<Machine>> GetDataAsync()
         {
+            while (_loading)
+            {
+                await Task.Delay(3);
+            }
             if (!_dataLoaded)
             {
+                _loading = true;
+                _dataLoaded = true;
                 List<Machine> data = (await _provider.GetAll()).ToList();
                 _store.Data.AddRange(data);
-                _dataLoaded = true;
+                _loading = false;
             }
 
             return _store.Data;

@@ -15,22 +15,31 @@
     <UserControl.Resources>
         <converters:ComparisonConverter x:Key="ComparisonConverter" />
     </UserControl.Resources>
-
     <Grid>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
         <TextBlock
             Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
             Style="{StaticResource TitleTextBlock}"
             Text="{Binding Title}" />
 
-        <Grid Grid.Row="1" Margin="20,0,0,20">
+        <Grid
+            Grid.Row="1"
+            Grid.Column="0"
+            Margin="20,0,0,20">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
@@ -73,57 +82,58 @@
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
-                Text="Opis" />
+                Text="Przekazane" />
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="0"
-                Text="Przekazane" />
+                Text="Rodzaj" />
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="0"
-                Text="Rodzaj" />
+                Text="LOTO" />
             <TextBlock
                 Grid.Row="4"
                 Grid.Column="0"
-                Text="LOTO" />
+                Text="Tryb JOG" />
             <TextBlock
                 Grid.Row="5"
                 Grid.Column="0"
-                Text="Tryb JOG" />
+                Text="Podczas produkcji" />
             <TextBlock
                 Grid.Row="6"
                 Grid.Column="0"
-                Text="Podczas produkcji" />
+                Text="Częstotliwość" />
             <TextBlock
                 Grid.Row="7"
                 Grid.Column="0"
-                Text="Częstotliwość" />
+                Text="Instrukcja wykonania" />
             <TextBlock
                 Grid.Row="8"
                 Grid.Column="0"
-                Text="Instrukcja wykonania" />
+                VerticalAlignment="Top"
+                Text="Opis" />
 
             <ComboBox
                 Grid.Row="0"
                 Grid.Column="2"
+                MaxWidth="200"
+                HorizontalAlignment="Left"
                 DisplayMemberPath="Name"
                 IsEditable="true"
                 IsReadOnly="false"
                 IsTextSearchEnabled="false"
                 ItemsSource="{Binding Workshops}"
                 SelectedValue="{Binding Activity.Workshop}" />
-            <TextBox
+            <CheckBox
                 Grid.Row="1"
                 Grid.Column="2"
-                Text="{Binding Activity.Description}" />
-            <CheckBox
-                Grid.Row="2"
-                Grid.Column="2"
+                HorizontalAlignment="Left"
                 IsChecked="{Binding Activity.IsPassed}"
                 IsEnabled="True" />
             <ComboBox
-                Grid.Row="3"
+                Grid.Row="2"
                 Grid.Column="2"
+                HorizontalAlignment="Left"
                 DisplayMemberPath="Name"
                 IsEditable="true"
                 IsReadOnly="false"
@@ -131,32 +141,39 @@
                 ItemsSource="{Binding ActivityTypes}"
                 SelectedValue="{Binding Activity.Type}" />
             <CheckBox
+                Grid.Row="3"
+                Grid.Column="2"
+                HorizontalAlignment="Left"
+                IsChecked="{Binding Activity.IsLoto, Mode=TwoWay}"
+                IsEnabled="True" />
+            <CheckBox
                 Grid.Row="4"
                 Grid.Column="2"
-                IsChecked="{Binding Activity.IsLoto, Mode=TwoWay}"
+                HorizontalAlignment="Left"
+                IsChecked="{Binding Activity.IsJog, Mode=TwoWay}"
                 IsEnabled="True" />
             <CheckBox
                 Grid.Row="5"
                 Grid.Column="2"
-                IsChecked="{Binding Activity.IsJog, Mode=TwoWay}"
-                IsEnabled="True" />
-            <CheckBox
-                Grid.Row="6"
-                Grid.Column="2"
+                HorizontalAlignment="Left"
                 IsChecked="{Binding Activity.IsDurningProduction, Mode=TwoWay}"
                 IsEnabled="True" />
-            <Grid Grid.Row="7" Grid.Column="2">
+            <Grid
+                Grid.Row="6"
+                Grid.Column="2"
+                HorizontalAlignment="Left">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
                 <TextBox
                     Grid.Column="0"
+                    MinWidth="50"
                     Margin="0,0,5,0"
                     Text="{Binding Activity.Occurance}" />
                 <ComboBox
                     Grid.Column="1"
-                    MinWidth="30"
+                    MinWidth="50"
                     DisplayMemberPath="."
                     IsEditable="true"
                     IsReadOnly="false"
@@ -165,13 +182,22 @@
                     SelectedValue="{Binding Activity.OccuranceUnit}" />
             </Grid>
             <CheckBox
-                Grid.Row="8"
+                Grid.Row="7"
                 Grid.Column="2"
                 IsChecked="{Binding Activity.HasInstruction}"
                 IsEnabled="False" />
+            <TextBox
+                Grid.Row="8"
+                Grid.Column="2"
+                Width="500"
+                MinHeight="80"
+                VerticalContentAlignment="Top"
+                AcceptsReturn="True"
+                Text="{Binding Activity.Description}"
+                TextWrapping="Wrap" />
         </Grid>
 
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="1" Grid.Column="1">
             <ContentControl Content="{Binding Trainings}">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type trainings:TrainingsListViewModel}">
@@ -181,7 +207,10 @@
             </ContentControl>
         </Grid>
 
-        <Grid Grid.Row="3">
+        <Grid
+            Grid.Row="2"
+            Grid.Column="0"
+            Grid.ColumnSpan="2">
 
             <Grid.Resources>
                 <Style TargetType="Border">

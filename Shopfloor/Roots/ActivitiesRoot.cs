@@ -60,6 +60,7 @@ namespace Shopfloor.Roots
                 _ = DecorateWitInstructions(data);
             }
 
+            OnDataChanged(EventArgs.Empty);
             return data;
         }
         public async Task CreateActivity(ActivityCreation data)
@@ -99,7 +100,6 @@ namespace Shopfloor.Roots
             }
 
             _activityData.Merges.Add(typeof(Machine));
-            OnDataChanged(EventArgs.Empty);
         }
         private async Task DecorateWithWorkshops(IEnumerable<Activity> activities)
         {
@@ -111,7 +111,6 @@ namespace Shopfloor.Roots
             }
 
             _activityData.Merges.Add(typeof(Workshop));
-            OnDataChanged(EventArgs.Empty);
         }
         private async Task DecorateWithActivityTypes(IEnumerable<Activity> activities)
         {
@@ -123,7 +122,6 @@ namespace Shopfloor.Roots
             }
 
             _activityData.Merges.Add(typeof(ActivityType));
-            OnDataChanged(EventArgs.Empty);
         }
         private async Task DecorateWitInstructions(IEnumerable<Activity> activities)
         {
@@ -135,7 +133,6 @@ namespace Shopfloor.Roots
             }
 
             _activityData.Merges.Add(typeof(ActivityInstruction));
-            OnDataChanged(EventArgs.Empty);
         }
     }
 }

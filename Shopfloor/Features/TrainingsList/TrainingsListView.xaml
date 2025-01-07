@@ -50,12 +50,12 @@
                 <DataGridTextColumn
                     Width="auto"
                     Binding="{Binding Coach.FullName}"
-                    Header="Szkolący" />
+                    Header="Trener" />
 
                 <DataGridTextColumn
                     Width="auto"
-                    Binding="{Binding TrainingDate}"
-                    Header="Szkolony" />
+                    Binding="{Binding TrainingDate, StringFormat={}{0:yyyy-MM-dd}}"
+                    Header="Data szkolenia" />
 
                 <DataGridCheckBoxColumn
                     Width="auto"
@@ -65,7 +65,7 @@
                 <DataGridCheckBoxColumn
                     Width="auto"
                     Binding="{Binding IsConfirmedByCoach}"
-                    Header="Potwierdził szkolący" />
+                    Header="Potwierdził trener" />
 
                 <DataGridTemplateColumn
                     Width="auto"

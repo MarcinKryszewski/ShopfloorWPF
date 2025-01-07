@@ -118,4 +118,8 @@
 	  </EmbeddedResource>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Features\ActionCreate\Commands\" />
+	</ItemGroup>
+
 </Project>
