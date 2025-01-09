@@ -18,7 +18,7 @@ namespace Shopfloor.Tests.Shared.HelperFunctions
             int batchSize = 10;
 
             // Act
-            await BatchListUpdater.UpdateAsync(data, privateList, mockPublicList, _fakeDispatcher, batchSize);
+            await BatchListUpdater.UpdateAsync(data, privateList, batchSize);
 
             // Assert
             privateList.Should().HaveCount(25);
@@ -38,7 +38,7 @@ namespace Shopfloor.Tests.Shared.HelperFunctions
             ICollectionView mockPublicList = Substitute.For<ICollectionView>();
 
             // Act
-            await BatchListUpdater.UpdateAsync(data, privateList, mockPublicList, _fakeDispatcher, invalidBatchSize);
+            await BatchListUpdater.UpdateAsync(data, privateList, invalidBatchSize);
 
             // Assert
             privateList.Should().HaveCount(20);
@@ -56,7 +56,7 @@ namespace Shopfloor.Tests.Shared.HelperFunctions
             int batchSize = 5;
 
             // Act
-            await BatchListUpdater.UpdateAsync(data, privateList, mockPublicList, _fakeDispatcher, batchSize);
+            await BatchListUpdater.UpdateAsync(data, privateList, batchSize);
 
             // Assert
             privateList.Should().HaveCount(15);
@@ -72,7 +72,7 @@ namespace Shopfloor.Tests.Shared.HelperFunctions
             ICollectionView mockPublicList = Substitute.For<ICollectionView>();
 
             // Act
-            await BatchListUpdater.UpdateAsync(data, privateList, mockPublicList, _fakeDispatcher);
+            await BatchListUpdater.UpdateAsync(data, privateList);
 
             // Assert
             privateList.Should().BeEmpty();
@@ -89,7 +89,7 @@ namespace Shopfloor.Tests.Shared.HelperFunctions
             int batchSize = 5;
 
             // Act
-            await BatchListUpdater.UpdateAsync(data, privateList, mockPublicList, _fakeDispatcher, batchSize);
+            await BatchListUpdater.UpdateAsync(data, privateList, batchSize);
 
             // Assert
             privateList.Should().HaveCount(1);

@@ -37,6 +37,8 @@ namespace Shopfloor.Models.Activities
         required public int TypeId { get; init; }
         public Workshop? Workshop { get; set; }
         required public int WorkshopId { get; init; }
+        public ActivityStatus Status { get; set; } = ActivityStatus.Unconfirmed;
+        public string StatusText => Status.ToString();
         public Activity Clone()
         {
             return (Activity)MemberwiseClone();
@@ -53,6 +55,7 @@ namespace Shopfloor.Models.Activities
 
             Machine = creation.Machine;
             Workshop = creation.Workshop;
+            Status = creation.Status;
             Description = creation.Description;
             IsPassed = creation.IsPassed;
             Type = creation.Type;

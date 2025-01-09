@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
+using Shopfloor.Features.ActionCreate.Commands;
 using Shopfloor.Features.ActionsList;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.ActivityTypes;
@@ -17,13 +18,16 @@ namespace Shopfloor.Features.ActionCreate
 {
     internal class ActionCreateViewModel : ViewModelBase
     {
+        private readonly ActivitiesRoot _activitiesRoot;
+
         public ActionCreateViewModel(
             ViewModelBaseDependecies dependecies,
-            ActivitiesDataRoot dataRoot)
+            ActivitiesDataRoot dataRoot,
+            ActivitiesRoot activitiesRoot)
         : base(dependecies)
         {
             ReturnCommand = new NavigationCommand<ActionsListViewModel>(NavigationService).Navigate();
-            SaveCommand = new NavigationCommand<ActionsListViewModel>(NavigationService).Navigate(); //TODO save
+            SaveCommand = new ActionCreateCommand(activitiesRoot);
             Task.Run(() => LoadDataAsync(dataRoot));
         }
         public ActivityCreation Activity { get; } = new();

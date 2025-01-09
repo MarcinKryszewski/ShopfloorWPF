@@ -9,6 +9,7 @@ using Shopfloor.Contexts;
 using Shopfloor.Features.ActionCreate;
 using Shopfloor.Features.ActionDetails;
 using Shopfloor.Features.ActionEdit;
+using Shopfloor.Features.ActionsList.Commands;
 using Shopfloor.Models.Activities;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
@@ -44,6 +45,7 @@ namespace Shopfloor.Features.ActionsList
             DetailsCommand = new NavigationCommand<ActionDetailsViewModel>(NavigationService).Navigate();
             EditCommand = new NavigationCommand<ActionEditViewModel>(NavigationService).Navigate();
             CreateActionCommand = new NavigationCommand<ActionCreateViewModel>(NavigationService).Navigate();
+            CancelCommand = new CancelCommand();
 
             Task.Run(LoadDataAsync);
         }
@@ -56,6 +58,7 @@ namespace Shopfloor.Features.ActionsList
         public ICommand CreateActionCommand { get; }
         public ICommand DetailsCommand { get; }
         public ICommand EditCommand { get; }
+        public ICommand CancelCommand { get; }
         public ActionsFilter FilterData { get; }
         public void DataChanged(object? sender, EventArgs e)
         {

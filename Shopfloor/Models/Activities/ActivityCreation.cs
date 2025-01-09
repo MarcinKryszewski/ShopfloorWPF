@@ -22,6 +22,8 @@ namespace Shopfloor.Models.Activities
         public int TypeId { get; set; }
         public Workshop? Workshop { get; set; }
         public int WorkshopId { get; set; }
+        public ActivityStatus Status { get; set; } = ActivityStatus.Unconfirmed;
+        public string StatusText => Status.ToString();
         public Activity CreateModel(int id)
         {
             return new Activity()
@@ -31,6 +33,7 @@ namespace Shopfloor.Models.Activities
                 Machine = Machine,
                 WorkshopId = WorkshopId,
                 Workshop = Workshop,
+                Status = Status,
                 Description = Description,
                 IsPassed = IsPassed,
                 TypeId = TypeId,
