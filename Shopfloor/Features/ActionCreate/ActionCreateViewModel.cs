@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
@@ -18,8 +19,6 @@ namespace Shopfloor.Features.ActionCreate
 {
     internal class ActionCreateViewModel : ViewModelBase
     {
-        private readonly ActivitiesRoot _activitiesRoot;
-
         public ActionCreateViewModel(
             ViewModelBaseDependecies dependecies,
             ActivitiesDataRoot dataRoot,
@@ -29,16 +28,35 @@ namespace Shopfloor.Features.ActionCreate
             ReturnCommand = new NavigationCommand<ActionsListViewModel>(NavigationService).Navigate();
             SaveCommand = new ActionCreateCommand(activitiesRoot);
             Task.Run(() => LoadDataAsync(dataRoot));
+
+            SaveCommand.ExecuteFinished += OnActivitySave;
         }
-        public ActivityCreation Activity { get; } = new();
+        public ActivityCreation Activity { get; private set; } = new();
         public Line? Line { get; set; }
         public ICollectionView Lines { get; private set; } = new ListCollectionView(new List<Line>());
         public ICollectionView Machines { get; private set; } = new ListCollectionView(new List<Machine>());
         public ICollectionView Occurencies { get; private set; } = new ListCollectionView(new List<Occurance>());
         public ICommand ReturnCommand { get; }
-        public ICommand SaveCommand { get; }
+        public ActionCreateCommand SaveCommand { get; }
         public ICollectionView Types { get; private set; } = new ListCollectionView(new List<ActivityType>());
         public ICollectionView Workshops { get; private set; } = new ListCollectionView(new List<Workshop>());
+        public void OnActivitySave(object? sender, EventArgs e)
+        {
+
+            if (SaveCommand.ExecutedSuccessful)
+            {
+                Activity = new();
+                Notifier.ShowSuccess(SaveCommand.NotifyText);
+                Line = null;
+
+                OnPropertyChanged(nameof(Activity));
+                OnPropertyChanged(nameof(Line));
+
+                return;
+            }
+
+            Notifier.ShowError(SaveCommand.NotifyText);
+        }
         private async Task LoadDataAsync(ActivitiesDataRoot dataRoot)
         {
             List<Task> tasks = [];

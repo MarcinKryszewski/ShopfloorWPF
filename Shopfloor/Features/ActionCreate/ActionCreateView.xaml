@@ -35,7 +35,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"
-                            MinWidth="500"/>
+                                      MinWidth="500"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
@@ -55,8 +55,21 @@
                         </Grid.RowDefinitions>
 
                         <Grid.Resources>
+                            <Style BasedOn="{StaticResource ComboBoxMain}"
+                                   TargetType="{x:Type ComboBox}">
+                                <Setter Property="MinHeight"
+                                        Value="40px"/>
+                                <Setter Property="MinWidth"
+                                        Value="310px"/>
+                                <Setter Property="IsEditable"
+                                        Value="True"/>
+                                <Setter Property="IsReadOnly"
+                                        Value="False"/>
+                                <Setter Property="IsTextSearchEnabled"
+                                        Value="True"/>
+                            </Style>
                             <Style BasedOn="{StaticResource TooltipText}"
-                                    TargetType="{x:Type TextBlock}">
+                                   TargetType="{x:Type TextBlock}">
                                 <Setter Property="Margin"
                                         Value="0,0,0,3"/>
                             </Style>
@@ -66,18 +79,11 @@
                                 <Setter Property="Margin"
                                         Value="4,4"/>
                             </Style>
-                            <Style BasedOn="{StaticResource ComboBoxMain}"
-                                    TargetType="{x:Type ComboBox}">
-                                <Setter Property="MinHeight"
-                                        Value="40px"/>
-                                <Setter Property="MinWidth"
-                                        Value="310px"/>
-                            </Style>
                         </Grid.Resources>
 
                         <Border>
                             <StackPanel Grid.Row="0"
-                                    Grid.Column="0">
+                                        Grid.Column="0">
                                 <TextBlock Text="Rodzaj"/>
                                 <ComboBox
                                     DisplayMemberPath="Name"
@@ -135,14 +141,14 @@
 
                         <Grid.Resources>
                             <Style BasedOn="{StaticResource TooltipText}"
-                                    TargetType="{x:Type TextBlock}">
+                                   TargetType="{x:Type TextBlock}">
                                 <Setter Property="Margin"
                                         Value="5,0,0,12"/>
                                 <Setter Property="FontSize"
                                         Value="14"/>
                             </Style>
                             <Style BasedOn="{StaticResource CheckBoxStyle1}"
-                                    TargetType="{x:Type CheckBox}">
+                                   TargetType="{x:Type CheckBox}">
                                 <Setter Property="Margin"
                                         Value="30,0,4,0"/>
                                 <Setter Property="Padding"
@@ -163,7 +169,7 @@
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="1"
-                            Text="Loto"/>
+                            Text="Jog"/>
                         <CheckBox
                             Grid.Row="1"
                             Grid.Column="0"
@@ -201,20 +207,26 @@
 
                         <Grid.Resources>
                             <Style BasedOn="{StaticResource TooltipText}"
-                                    TargetType="{x:Type TextBlock}">
+                                   TargetType="{x:Type TextBlock}">
                                 <Setter Property="Margin"
                                         Value="3,0,0,3"/>
                             </Style>
                             <Style BasedOn="{StaticResource TextBoxMain}"
-                                    TargetType="{x:Type TextBox}"/>
+                                   TargetType="{x:Type TextBox}"/>
                             <Style BasedOn="{StaticResource ComboBoxMain}"
-                                    TargetType="{x:Type ComboBox}">
+                                   TargetType="{x:Type ComboBox}">
                                 <Setter Property="MinHeight"
                                         Value="40px"/>
                                 <Setter Property="MinWidth"
                                         Value="92px"/>
                                 <Setter Property="Margin"
                                         Value="3,0,0,0"/>
+                                <Setter Property="IsEditable"
+                                        Value="True"/>
+                                <Setter Property="IsReadOnly"
+                                        Value="True"/>
+                                <Setter Property="IsTextSearchEnabled"
+                                        Value="False"/>
                             </Style>
                         </Grid.Resources>
 
@@ -248,12 +260,12 @@
 
                         <StackPanel.Resources>
                             <Style BasedOn="{StaticResource TooltipText}"
-                                    TargetType="{x:Type TextBlock}">
+                                   TargetType="{x:Type TextBlock}">
                                 <Setter Property="Margin"
                                         Value="3,0,0,3"/>
                             </Style>
                             <Style BasedOn="{StaticResource TextBoxMain}"
-                                    TargetType="{x:Type TextBox}">
+                                   TargetType="{x:Type TextBox}">
                                 <Setter Property="MinHeight"
                                         Value="163"/>
                                 <Setter Property="Width"
@@ -266,7 +278,7 @@
                         </StackPanel.Resources>
 
                         <TextBlock Margin="3,0,8,0"
-                                Text="Opis"/>
+                                   Text="Opis"/>
                         <TextBox
                             Padding="5"
                             AcceptsReturn="True"

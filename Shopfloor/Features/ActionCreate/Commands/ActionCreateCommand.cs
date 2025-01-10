@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Models.Activities;
 using Shopfloor.Roots;
@@ -15,7 +13,9 @@ namespace Shopfloor.Features.ActionCreate.Commands
         {
             _activitiesRoot = activitiesRoot;
         }
-
+        public event EventHandler? ExecuteFinished;
+        public string NotifyText { get; private set; } = string.Empty;
+        public bool ExecutedSuccessful { get; private set; }
         public override void Execute(object? parameter)
         {
             if (parameter is null)
@@ -25,14 +25,23 @@ namespace Shopfloor.Features.ActionCreate.Commands
             ActivityCreation activity = (ActivityCreation)parameter;
             Task.Run(() => CreateActivity(activity));
         }
+        protected void OnExecuteFinished(EventArgs e) => ExecuteFinished?.Invoke(this, e);
         private async Task CreateActivity(ActivityCreation activity)
         {
+            const string errorExists = "Popraw błędy";
+            const string actionCompletedSuccessfully = "Dodano działanie pomyślnie";
+            ExecutedSuccessful = false;
+
             ActivityValidation validation = new();
             validation.Validate(activity);
+            NotifyText = errorExists;
             if (!activity.HasErrors)
             {
                 await _activitiesRoot.CreateActivity(activity);
+                NotifyText = actionCompletedSuccessfully;
+                ExecutedSuccessful = true;
             }
+            OnExecuteFinished(EventArgs.Empty);
         }
     }
 }

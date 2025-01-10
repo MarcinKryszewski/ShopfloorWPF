@@ -34,11 +34,8 @@ namespace Shopfloor.Features.ActionsList
             _root = root;
             FilterData = filter;
             _activityContext = activityContext;
-            Activities = new ListCollectionView(_activities)
-            {
-                Filter = Filter,
-            };
-            _root.DataChanged += DataChanged;
+            Activities.Filter = Filter;
+            _root.DataChanged += OnDataChanged;
             FilterData.FiltersChanged += OnFiltersChanged;
             BindingOperations.EnableCollectionSynchronization(_activities, _syncLock);
 
@@ -49,7 +46,7 @@ namespace Shopfloor.Features.ActionsList
 
             Task.Run(LoadDataAsync);
         }
-        public ICollectionView Activities { get; init; }
+        public ICollectionView Activities => CollectionViewSource.GetDefaultView(_root.Data.AsObservable);
         public Activity? Activity
         {
             get => _activityContext.Activity;
@@ -60,7 +57,7 @@ namespace Shopfloor.Features.ActionsList
         public ICommand EditCommand { get; }
         public ICommand CancelCommand { get; }
         public ActionsFilter FilterData { get; }
-        public void DataChanged(object? sender, EventArgs e)
+        public void OnDataChanged(object? sender, EventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -73,6 +70,7 @@ namespace Shopfloor.Features.ActionsList
         }
         public void OnFiltersChanged(object? sender, EventArgs e)
         {
+            Activities.Filter = Filter;
             Activities.Refresh();
         }
         private bool Filter(object obj)
@@ -95,10 +93,11 @@ namespace Shopfloor.Features.ActionsList
         }
         private async Task LoadActivitiesAsync()
         {
-            IEnumerable<Activity> activities = await _root.GetData();
-            BatchListUpdater.DataChanged += DataChanged;
-            await BatchListUpdater.UpdateAsync(activities, _activities);
-            BatchListUpdater.DataChanged -= DataChanged;
+            // IEnumerable<Activity> activities = await _root.GetData();
+            // BatchListUpdater.DataChanged += DataChanged;
+            // await BatchListUpdater.UpdateAsync(activities, _activities);
+            // BatchListUpdater.DataChanged -= DataChanged;
+            await _root.GetData();
         }
         private async Task LoadDataAsync()
         {

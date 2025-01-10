@@ -93,6 +93,7 @@ namespace Shopfloor.Features.ActionsList
             set
             {
                 _line = value;
+                Machine = string.Empty;
                 Machines.Refresh();
                 OnFiltersChanged(EventArgs.Empty);
             }

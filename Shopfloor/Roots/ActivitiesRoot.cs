@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.ActivitiesInstructions;
 using Shopfloor.Models.ActivityTypes;
@@ -9,6 +11,7 @@ using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.Machines;
 using Shopfloor.Models.Workshops;
+using Shopfloor.Utilities.Collections;
 
 namespace Shopfloor.Roots
 {
@@ -36,36 +39,44 @@ namespace Shopfloor.Roots
             _instructionsData = instructionsData;
         }
         public event EventHandler? DataChanged;
-        public async Task<IEnumerable<Activity>> GetData()
+        public ConcurrentObservableCollection<Activity> Data { get; private set; } = [];
+        public async Task GetData()
         {
-            IEnumerable<Activity> data = await _activityData.GetDataAsync();
+            List<Activity> data = (await _activityData.GetDataAsync()).Where(item => !Data.Contains(item)).ToList();
+            List<Task> merges = [];
 
             if (!_activityData.Merges.Contains(typeof(Machine)))
             {
-                _ = DecorateWithMachines(data);
+                merges.Add(DecorateWithMachines(data));
             }
 
             if (!_activityData.Merges.Contains(typeof(Workshop)))
             {
-                _ = DecorateWithWorkshops(data);
+                merges.Add(DecorateWithWorkshops(data));
             }
 
             if (!_activityData.Merges.Contains(typeof(ActivityType)))
             {
-                _ = DecorateWithActivityTypes(data);
+                merges.Add(DecorateWithActivityTypes(data));
             }
 
             if (!_activityData.Merges.Contains(typeof(ActivityInstruction)))
             {
-                _ = DecorateWitInstructions(data);
+                merges.Add(DecorateWitInstructions(data));
             }
+            await Task.WhenAll(merges);
+
+            await Task.Run(() => Parallel.ForEach(data, item =>
+            {
+                Data.Add(item);
+            }));
 
             OnDataChanged(EventArgs.Empty);
-            return data;
         }
         public async Task CreateActivity(ActivityCreation data)
         {
-            await _activityData.Create(data);
+            Activity activity = await _activityData.Create(data);
+            await Application.Current.Dispatcher.InvokeAsync(() => Data.Add(activity));
             OnDataChanged(EventArgs.Empty);
         }
         public async Task UpdateActivity(ActivityCreation data)

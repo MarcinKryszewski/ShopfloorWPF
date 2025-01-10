@@ -158,7 +158,7 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             IsChecked="{Binding FilterData.IsLoto}"
-                            Style="{StaticResource CheckBoxStyle1}"/>
+                            Style="{StaticResource CheckBoxStyleTwoState}"/>
                         <TextBlock
                             Grid.Column="1"
                             Margin="10,0,0,0"
@@ -179,7 +179,7 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             IsChecked="{Binding FilterData.IsJog}"
-                            Style="{StaticResource CheckBoxStyle1}"/>
+                            Style="{StaticResource CheckBoxStyleTwoState}"/>
                         <TextBlock
                             Grid.Column="1"
                             Margin="10,0,0,0"
@@ -200,7 +200,7 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             IsChecked="{Binding FilterData.IsProduction}"
-                            Style="{StaticResource CheckBoxStyle1}"/>
+                            Style="{StaticResource CheckBoxStyleTwoState}"/>
                         <TextBlock
                             Grid.Column="1"
                             Margin="10,0,0,0"
@@ -325,7 +325,7 @@
                                         Command="{Binding Path=DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource gridRemoveButton}"
-                                            Margin="2,0,0,0">
+                                        Margin="2,0,0,0">
                                         <TextBlock
                                             FontFamily="Segoe MDL2 Assets"
                                             Style="{StaticResource gridButtonIcon}"
