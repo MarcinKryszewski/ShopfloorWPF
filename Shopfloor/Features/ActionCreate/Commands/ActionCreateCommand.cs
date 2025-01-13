@@ -31,8 +31,8 @@ namespace Shopfloor.Features.ActionCreate.Commands
             const string errorExists = "Popraw błędy";
             const string actionCompletedSuccessfully = "Dodano działanie pomyślnie";
             ExecutedSuccessful = false;
-
             ActivityValidation validation = new();
+
             validation.Validate(activity);
             NotifyText = errorExists;
             if (!activity.HasErrors)

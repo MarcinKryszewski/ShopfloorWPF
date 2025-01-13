@@ -11,6 +11,7 @@ namespace Shopfloor.Models.Activities
     {
         public void Validate(ActivityCreation item)
         {
+
             List<Task> tasks = [];
 
             tasks.Add(ValidateDescription(item));
@@ -25,6 +26,7 @@ namespace Shopfloor.Models.Activities
         {
             string propertyName = nameof(ActivityCreation.OccuranceValue);
             int value = item.OccuranceValue;
+            item.ClearErrors(propertyName);
             List<Task> tasks = [];
 
             tasks.Add(OccuranceValue_CheckMinimumValue(item, propertyName, value));
@@ -35,6 +37,7 @@ namespace Shopfloor.Models.Activities
         {
             string propertyName = nameof(ActivityCreation.Workshop);
             Workshop? value = item.Workshop;
+            item.ClearErrors(propertyName);
             List<Task> tasks = [];
 
             tasks.Add(Workshop_CheckNull(item, propertyName, value));
@@ -45,10 +48,10 @@ namespace Shopfloor.Models.Activities
         {
             string propertyName = nameof(ActivityCreation.Type);
             ActivityType? value = item.Type;
+            item.ClearErrors(propertyName);
             List<Task> tasks = [];
 
             tasks.Add(Type_CheckNull(item, propertyName, value));
-
 
             await Task.WhenAll(tasks);
         }
@@ -56,9 +59,9 @@ namespace Shopfloor.Models.Activities
         {
             string propertyName = nameof(ActivityCreation.Description);
             string value = item.Description;
+            item.ClearErrors(propertyName);
             List<Task> tasks = [];
 
-            item.ClearErrors(propertyName);
 
             tasks.Add(Description_CheckNull(item, propertyName, value));
             tasks.Add(Description_CheckEmpty(item, propertyName, value));
@@ -70,8 +73,8 @@ namespace Shopfloor.Models.Activities
         {
             string propertyName = nameof(ActivityCreation.Machine);
             Machine? value = item.Machine;
-            List<Task> tasks = [];
             item.ClearErrors(propertyName);
+            List<Task> tasks = [];
 
             tasks.Add(Machine_CheckNull(item, propertyName, value));
 

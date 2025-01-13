@@ -42,7 +42,6 @@ namespace Shopfloor.Features.ActionCreate
         public ICollectionView Workshops { get; private set; } = new ListCollectionView(new List<Workshop>());
         public void OnActivitySave(object? sender, EventArgs e)
         {
-
             if (SaveCommand.ExecutedSuccessful)
             {
                 Activity = new();
