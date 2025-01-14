@@ -62,7 +62,6 @@ namespace Shopfloor.Models.Activities
             item.ClearErrors(propertyName);
             List<Task> tasks = [];
 
-
             tasks.Add(Description_CheckNull(item, propertyName, value));
             tasks.Add(Description_CheckEmpty(item, propertyName, value));
             tasks.Add(Description_CheckLength(item, propertyName, value));

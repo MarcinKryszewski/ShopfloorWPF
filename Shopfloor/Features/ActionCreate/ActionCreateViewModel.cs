@@ -19,6 +19,7 @@ namespace Shopfloor.Features.ActionCreate
 {
     internal class ActionCreateViewModel : ViewModelBase
     {
+        private Line? _line;
         public ActionCreateViewModel(
             ViewModelBaseDependecies dependecies,
             ActivitiesDataRoot dataRoot,
@@ -32,7 +33,21 @@ namespace Shopfloor.Features.ActionCreate
             SaveCommand.ExecuteFinished += OnActivitySave;
         }
         public ActivityCreation Activity { get; private set; } = new();
-        public Line? Line { get; set; }
+        public Line? Line
+        {
+            get => _line;
+            set
+            {
+                Machine? machine = Activity.Machine;
+                _line = value;
+                Machines.Refresh();
+                if (!Machines.Contains(machine))
+                {
+                    Activity.Machine = null;
+                }
+                OnPropertyChanged(nameof(Activity));
+            }
+        }
         public ICollectionView Lines { get; private set; } = new ListCollectionView(new List<Line>());
         public ICollectionView Machines { get; private set; } = new ListCollectionView(new List<Machine>());
         public ICollectionView Occurencies { get; private set; } = new ListCollectionView(new List<Occurance>());
@@ -78,6 +93,7 @@ namespace Shopfloor.Features.ActionCreate
         {
             List<Machine> data = await dataRoot.GetMachines();
             Machines = new ListCollectionView(data);
+            Machines.Filter = Filter;
             OnPropertyChanged(nameof(Types));
         }
         private async Task LoadOccurenciesAsync(ActivitiesDataRoot dataRoot)
@@ -97,6 +113,16 @@ namespace Shopfloor.Features.ActionCreate
             List<Workshop> data = await dataRoot.GetWorkshops();
             Workshops = new ListCollectionView(data);
             OnPropertyChanged(nameof(Types));
+        }
+        private bool Filter(object obj)
+        {
+            if (obj is Machine machine)
+            {
+                bool line = string.IsNullOrEmpty(Line?.Name ?? string.Empty) || machine.Line!.Name.Contains(Line?.Name ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
+
+                return line;
+            }
+            return false;
         }
     }
 }
