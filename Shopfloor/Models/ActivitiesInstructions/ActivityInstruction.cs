@@ -6,6 +6,7 @@ namespace Shopfloor.Models.ActivitiesInstructions
 {
     internal class ActivityInstruction : IModel
     {
+        public string Name { get; } = string.Empty;
         public Activity? Activity { get; set; }
         required public int ActivityId { get; init; }
         required public int Id { get; init; }

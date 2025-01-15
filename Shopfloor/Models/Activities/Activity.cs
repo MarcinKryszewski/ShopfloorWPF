@@ -8,6 +8,7 @@ namespace Shopfloor.Models.Activities
 {
     internal class Activity : IModel
     {
+        public string Name { get; } = string.Empty;
         public string Additionals => string.Join(
             " / ",
             new[]

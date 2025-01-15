@@ -17,6 +17,8 @@ namespace Shopfloor.Models.Trainings
         public Person? Trainee { get; set; }
         public int TraineeId { get; init; }
         public DateTime? TrainingDate { get; set; }
+        public string Name { get; } = string.Empty;
+
         public void SetValues<T>(IModelCreationModel<T> data)
             where T : IModel
         {

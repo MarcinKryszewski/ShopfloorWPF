@@ -56,6 +56,7 @@
                         IsEditable="true"
                         IsReadOnly="false"
                         IsTextSearchEnabled="false"
+                        SelectedItem="{Binding Path=FilterData.SelectedWorkshop}"
                         ItemsSource="{Binding Path=FilterData.Workshops}"
                         Style="{StaticResource ComboBoxMain}"
                         Text="{Binding FilterData.Workshop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -70,9 +71,11 @@
                         IsEditable="true"
                         IsReadOnly="false"
                         IsTextSearchEnabled="false"
+                        SelectedItem="{Binding Path=FilterData.SelectedLine}"
                         ItemsSource="{Binding Path=FilterData.Lines}"
                         Style="{StaticResource ComboBoxMain}"
-                        Text="{Binding FilterData.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        Text="{Binding FilterData.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedValuePath="Name"/>
 
                     <TextBlock
                         Margin="0,7,0,3"
@@ -86,7 +89,9 @@
                         IsTextSearchEnabled="false"
                         ItemsSource="{Binding Path=FilterData.Machines}"
                         Style="{StaticResource ComboBoxMain}"
-                        Text="{Binding FilterData.Machine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        SelectedItem="{Binding Path=FilterData.SelectedMachine}"
+                        Text="{Binding FilterData.Machine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        SelectedValuePath="Name"/>
 
                     <TextBlock
                         Margin="0,7,0,3"
@@ -98,6 +103,7 @@
                         IsEditable="true"
                         IsReadOnly="false"
                         IsTextSearchEnabled="false"
+                        SelectedItem="{Binding Path=FilterData.SelectedType}"
                         ItemsSource="{Binding Path=FilterData.Types}"
                         Style="{StaticResource ComboBoxMain}"
                         Text="{Binding FilterData.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

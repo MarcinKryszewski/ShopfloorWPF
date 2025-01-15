@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using Shopfloor.Models.ActivityTypes;
+using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.Machines;
 using Shopfloor.Models.Workshops;
@@ -42,6 +44,10 @@ namespace Shopfloor.Features.ActionsList
             Task.Run(LoadDataAsync);
         }
         public event EventHandler? FiltersChanged;
+        public Machine? SelectedMachine { get; set; }
+        public Workshop? SelectedWorkshop { get; set; }
+        public Line? SelectedLine { get; set; }
+        public ActivityType? SelectedType { get; set; }
         public bool? HasInstruction
         {
             get => _hasInstruction;
@@ -92,9 +98,20 @@ namespace Shopfloor.Features.ActionsList
             get => _line;
             set
             {
+                string machineName = Machine;
                 _line = value;
-                Machine = string.Empty;
+                if (!IsInIEnumerable<Line>(_line, Lines))
+                {
+                    SelectedLine = null;
+                    OnPropertyChanged(nameof(SelectedLine));
+                }
                 Machines.Refresh();
+                if (!IsInIEnumerable<Machine>(machineName, Machines))
+                {
+                    Machine = string.Empty;
+                    OnPropertyChanged(nameof(Machine));
+                }
+                OnPropertyChanged(nameof(Line));
                 OnFiltersChanged(EventArgs.Empty);
             }
         }
@@ -105,6 +122,11 @@ namespace Shopfloor.Features.ActionsList
             set
             {
                 _machine = value;
+                if (!IsInIEnumerable<Machine>(_machine, Machines))
+                {
+                    SelectedMachine = null;
+                    OnPropertyChanged(nameof(SelectedMachine));
+                }
                 OnFiltersChanged(EventArgs.Empty);
             }
         }
@@ -115,6 +137,11 @@ namespace Shopfloor.Features.ActionsList
             set
             {
                 _type = value;
+                if (!IsInIEnumerable<ActivityType>(_type, Types))
+                {
+                    SelectedType = null;
+                    OnPropertyChanged(nameof(SelectedType));
+                }
                 OnFiltersChanged(EventArgs.Empty);
             }
         }
@@ -125,11 +152,28 @@ namespace Shopfloor.Features.ActionsList
             set
             {
                 _workshop = value;
+                if (!IsInIEnumerable<Workshop>(_workshop, Workshops))
+                {
+                    SelectedWorkshop = null;
+                    OnPropertyChanged(nameof(SelectedWorkshop));
+                }
                 OnFiltersChanged(EventArgs.Empty);
             }
         }
         public ICollectionView Workshops => CollectionViewSource.GetDefaultView(_workshops);
         protected void OnFiltersChanged(EventArgs e) => FiltersChanged?.Invoke(this, e);
+        private static bool IsInIEnumerable<T>(string name, IEnumerable table)
+        where T : IModel
+        {
+            foreach (T item in table)
+            {
+                if (item.Name == name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         private bool Filter(object obj)
         {
             if (obj is Machine machine)

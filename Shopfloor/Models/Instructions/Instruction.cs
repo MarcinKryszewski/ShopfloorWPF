@@ -8,6 +8,7 @@ namespace Shopfloor.Models.Instructions
     {
         public Person? AcceptedBy { get; set; }
         public int AcceptedById { get; set; }
+        public string Name { get; } = string.Empty;
         public Person? Author { get; set; }
         public int AuthorId { get; init; }
         public DateTime CreationDate { get; set; }
