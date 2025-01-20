@@ -13,12 +13,17 @@ using Shopfloor.Models.Machines;
 using Shopfloor.Models.Workshops;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
+using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.ActionCreate
 {
     internal class ActionCreateViewModel : ViewModelBase
     {
+        private string _typeName = string.Empty;
+        private string _workshopName = string.Empty;
+        private string _lineName = string.Empty;
+        private string _machineName = string.Empty;
         private Line? _line;
         public ActionCreateViewModel(
             ViewModelBaseDependecies dependecies,
@@ -46,6 +51,58 @@ namespace Shopfloor.Features.ActionCreate
                     Activity.Machine = null;
                 }
                 OnPropertyChanged(nameof(Activity));
+            }
+        }
+        public string TypeName
+        {
+            get => _typeName;
+            set
+            {
+                _typeName = value;
+                if (!CollectionHelper.IsInIEnumerable<ActivityType>(_typeName, Types))
+                {
+                    Activity.Type = null;
+                    OnPropertyChanged(nameof(Activity));
+                }
+            }
+        }
+        public string WorkshopName
+        {
+            get => _workshopName;
+            set
+            {
+                _workshopName = value;
+                if (!CollectionHelper.IsInIEnumerable<Workshop>(_workshopName, Workshops))
+                {
+                    Activity.Workshop = null;
+                    OnPropertyChanged(nameof(Activity));
+                }
+            }
+        }
+        public string LineName
+        {
+            get => _lineName;
+            set
+            {
+                _lineName = value;
+                if (!CollectionHelper.IsInIEnumerable<Line>(_lineName, Lines))
+                {
+                    Line = null;
+                    OnPropertyChanged(nameof(Line));
+                }
+            }
+        }
+        public string MachineName
+        {
+            get => _machineName;
+            set
+            {
+                _machineName = value;
+                if (!CollectionHelper.IsInIEnumerable<Machine>(_machineName, Machines))
+                {
+                    Activity.Machine = null;
+                    OnPropertyChanged(nameof(Activity));
+                }
             }
         }
         public ICollectionView Lines { get; private set; } = new ListCollectionView(new List<Line>());
@@ -92,8 +149,10 @@ namespace Shopfloor.Features.ActionCreate
         private async Task LoadMachinesAsync(ActivitiesDataRoot dataRoot)
         {
             List<Machine> data = await dataRoot.GetMachines();
-            Machines = new ListCollectionView(data);
-            Machines.Filter = Filter;
+            Machines = new ListCollectionView(data)
+            {
+                Filter = Filter,
+            };
             OnPropertyChanged(nameof(Types));
         }
         private async Task LoadOccurenciesAsync(ActivitiesDataRoot dataRoot)

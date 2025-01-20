@@ -87,6 +87,7 @@
                                 <TextBlock Text="Rodzaj"/>
                                 <ComboBox
                                     DisplayMemberPath="Name"
+                                    Text="{Binding TypeName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     ItemsSource="{Binding Path=Types}"
                                     SelectedItem="{Binding Path=Activity.Type}"/>
                             </StackPanel>
@@ -98,6 +99,7 @@
                                 <TextBlock Text="Warsztat"/>
                                 <ComboBox
                                     DisplayMemberPath="Name"
+                                    Text="{Binding WorkshopName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     ItemsSource="{Binding Path=Workshops}"
                                     SelectedItem="{Binding Path=Activity.Workshop}"/>
                             </StackPanel>
@@ -109,6 +111,7 @@
                                 <TextBlock Text="Linia"/>
                                 <ComboBox
                                     DisplayMemberPath="Name"
+                                    Text="{Binding LineName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     ItemsSource="{Binding Path=Lines}"
                                     SelectedItem="{Binding Path=Line}"/>
                             </StackPanel>
@@ -120,8 +123,10 @@
                                 <TextBlock Text="Maszyna"/>
                                 <ComboBox
                                     DisplayMemberPath="Name"
+                                    Text="{Binding MachineName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                     ItemsSource="{Binding Path=Machines}"
-                                    SelectedItem="{Binding Path=Activity.Machine}"/>
+                                    SelectedItem="{Binding Path=Activity.Machine}"
+                                    SelectedValuePath="Name"/>
                             </StackPanel>
                         </Border>
                     </Grid>
