@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -13,7 +14,6 @@ using Shopfloor.Features.ActionsList.Commands;
 using Shopfloor.Models.Activities;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
-using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.ActionsList
@@ -42,7 +42,7 @@ namespace Shopfloor.Features.ActionsList
             DetailsCommand = new NavigationCommand<ActionDetailsViewModel>(NavigationService).Navigate();
             EditCommand = new NavigationCommand<ActionEditViewModel>(NavigationService).Navigate();
             CreateActionCommand = new NavigationCommand<ActionCreateViewModel>(NavigationService).Navigate();
-            CancelCommand = new CancelCommand();
+            CancelCommand = new CancelCommand(root);
 
             Task.Run(LoadDataAsync);
         }
@@ -93,10 +93,6 @@ namespace Shopfloor.Features.ActionsList
         }
         private async Task LoadActivitiesAsync()
         {
-            // IEnumerable<Activity> activities = await _root.GetData();
-            // BatchListUpdater.DataChanged += DataChanged;
-            // await BatchListUpdater.UpdateAsync(activities, _activities);
-            // BatchListUpdater.DataChanged -= DataChanged;
             await _root.GetData();
         }
         private async Task LoadDataAsync()

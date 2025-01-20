@@ -42,7 +42,10 @@ namespace Shopfloor.Roots
         public ConcurrentObservableCollection<Activity> Data { get; private set; } = [];
         public async Task GetData()
         {
-            List<Activity> data = (await _activityData.GetDataAsync()).Where(item => !Data.Contains(item)).ToList();
+            List<Activity> data = (await _activityData
+                .GetDataAsync())
+                .Where(item => !Data.Contains(item) && item.Status != ActivityStatus.Canceled)
+                .ToList();
             List<Task> merges = [];
 
             if (!_activityData.Merges.Contains(typeof(Machine)))
@@ -87,6 +90,8 @@ namespace Shopfloor.Roots
         public async Task DeleteActivity(Activity data)
         {
             await _activityData.Delete(data.Id);
+            Data.Remove(data);
+            data.Status = ActivityStatus.Canceled;
             OnDataChanged(EventArgs.Empty);
         }
         protected void OnDataChanged(EventArgs e) => DataChanged?.Invoke(this, e);
