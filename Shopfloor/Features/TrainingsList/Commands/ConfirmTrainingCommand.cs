@@ -24,15 +24,11 @@ namespace Shopfloor.Features.TrainingsList.Commands
             {
                 return;
             }
-            TrainingCreation trainingData = GetTrainingData((Training)parameter);
+            Training trainingData = (Training)parameter;
             ConfirmTraining(trainingData);
             SaveTraining(trainingData);
         }
-        private static TrainingCreation GetTrainingData(Training data)
-        {
-            return data.CreateModelCreation();
-        }
-        private void ConfirmTraining(TrainingCreation training)
+        private void ConfirmTraining(Training training)
         {
             Person? currentUser = _userContext.Person;
             if (currentUser == null)
@@ -50,9 +46,9 @@ namespace Shopfloor.Features.TrainingsList.Commands
                 training.IsConfirmedByTrainee = true;
             }
         }
-        private void SaveTraining(TrainingCreation training)
+        private void SaveTraining(Training training)
         {
-            _trainingRoot.ConfirmTraining(training).Wait();
+            _trainingRoot.ConfirmTraining(training.CreateModelCreation()).Wait();
         }
     }
 }

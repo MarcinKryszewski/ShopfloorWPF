@@ -24,7 +24,7 @@ namespace Shopfloor.Features.ActionEdit
 {
     internal class ActionEditViewModel : ViewModelBase
     {
-        private readonly Activity _activity;
+        private readonly ActivityCreation _activity;
         private readonly ActivityContext _activityContext;
         private readonly List<ActivityType> _activityTypes = [];
         private readonly DataRoot _data;
@@ -34,34 +34,37 @@ namespace Shopfloor.Features.ActionEdit
             ActivityContext activityContext,
             ViewModelBaseDependecies dependecies,
             DataRoot data,
+            ActivitiesRoot activitiesRoot,
             TrainingsListViewModel trainings)
         : base(dependecies)
         {
             _activityContext = activityContext;
+            Activity? activity = _activityContext.Activity;
             ReturnCommand = new NavigationCommand<ActionsListViewModel>(NavigationService).Navigate();
 
-            if (_activityContext.Activity is null)
+            if (activity is null)
             {
                 ReturnCommand.Execute(null);
             }
 
             _activityContext.IsEditable = true;
-            _activity = _activityContext.Activity!.Clone();
+            _activity = new(activity!);
+
             _userContext = dependecies.UserContext;
             _data = data;
 
             Trainings = trainings;
 
             CancelCommand = new NavigationCommand<ActionDetailsViewModel>(NavigationService).Navigate();
-            SaveCommand = new ActionEditCommand();
+            SaveCommand = new ActionEditCommand(activitiesRoot);
 
             _ = LoadDataAsync();
         }
-        public Activity Activity => _activity;
+        public ActivityCreation Activity => _activity;
         public ICollectionView ActivityTypes => CollectionViewSource.GetDefaultView(_activityTypes);
         public ICommand CancelCommand { get; }
         public Person? CurrentPerson => _userContext.Person;
-        public ICollectionView OccuranceUnits { get; private set; } = CollectionViewSource.GetDefaultView(new List<object>());
+        public ICollectionView OccuranceUnits { get; private set; } = new ListCollectionView(new List<Occurance>());
         public ICommand ReturnCommand { get; }
         public ICommand SaveCommand { get; }
         public string Title
@@ -85,11 +88,19 @@ namespace Shopfloor.Features.ActionEdit
             tasks.Add(LoadOccuranceUnits());
 
             await Task.WhenAll(tasks);
+            OnPropertyChanged(nameof(Activity));
         }
         private Task LoadOccuranceUnits()
         {
-            IEnumerable<OccuranceUnit> data = Enum.GetValues(typeof(OccuranceUnit)).Cast<OccuranceUnit>();
-            OccuranceUnits = CollectionViewSource.GetDefaultView(data);
+            List<Occurance> occurances = [];
+            foreach (OccuranceUnit item in Enum.GetValues(typeof(OccuranceUnit)))
+            {
+                occurances.Add(new()
+                {
+                    Unit = item,
+                });
+            }
+            OccuranceUnits = new ListCollectionView(occurances);
             return Task.CompletedTask;
         }
         private async Task LoadTypes()

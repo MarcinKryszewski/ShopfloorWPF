@@ -13,20 +13,20 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <converters:ComparisonConverter x:Key="ComparisonConverter" />
+        <converters:ComparisonConverter x:Key="ComparisonConverter"/>
     </UserControl.Resources>
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock
@@ -34,7 +34,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Style="{StaticResource TitleTextBlock}"
-            Text="{Binding Title}" />
+            Text="{Binding Title}"/>
 
         <Grid
             Grid.Row="1"
@@ -42,76 +42,85 @@
             Margin="20,0,0,20">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="20" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
             <Grid.Resources>
-                <Style BasedOn="{StaticResource TooltipText}" TargetType="{x:Type TextBlock}">
-                    <Setter Property="Margin" Value="0,0,0,10" />
+                <Style BasedOn="{StaticResource TooltipText}"
+                       TargetType="{x:Type TextBlock}">
+                    <Setter Property="Margin"
+                            Value="0,0,0,10"/>
                 </Style>
-                <Style BasedOn="{StaticResource CheckBoxStyle1}" TargetType="{x:Type CheckBox}" />
-                <Style BasedOn="{StaticResource ComboBoxMain}" TargetType="{x:Type ComboBox}">
-                    <Setter Property="MinHeight" Value="28px" />
-                    <Setter Property="MinWidth" Value="200px" />
+                <Style BasedOn="{StaticResource CheckBoxStyle1}"
+                       TargetType="{x:Type CheckBox}"/>
+                <Style BasedOn="{StaticResource ComboBoxMain}"
+                       TargetType="{x:Type ComboBox}">
+                    <Setter Property="MinHeight"
+                            Value="28px"/>
+                    <Setter Property="MinWidth"
+                            Value="200px"/>
                 </Style>
-                <Style BasedOn="{StaticResource TextBoxMain}" TargetType="{x:Type TextBox}">
-                    <Setter Property="MinWidth" Value="50px" />
-                    <Setter Property="MinHeight" Value="28px" />
+                <Style BasedOn="{StaticResource TextBoxMain}"
+                       TargetType="{x:Type TextBox}">
+                    <Setter Property="MinWidth"
+                            Value="50px"/>
+                    <Setter Property="MinHeight"
+                            Value="28px"/>
                 </Style>
             </Grid.Resources>
 
             <TextBlock
                 Grid.Row="0"
                 Grid.Column="0"
-                Text="Warsztat" />
+                Text="Warsztat"/>
             <TextBlock
                 Grid.Row="1"
                 Grid.Column="0"
-                Text="Przekazane" />
+                Text="Przekazane"/>
             <TextBlock
                 Grid.Row="2"
                 Grid.Column="0"
-                Text="Rodzaj" />
+                Text="Rodzaj"/>
             <TextBlock
                 Grid.Row="3"
                 Grid.Column="0"
-                Text="LOTO" />
+                Text="LOTO"/>
             <TextBlock
                 Grid.Row="4"
                 Grid.Column="0"
-                Text="Tryb JOG" />
+                Text="Tryb JOG"/>
             <TextBlock
                 Grid.Row="5"
                 Grid.Column="0"
-                Text="Podczas produkcji" />
+                Text="Podczas produkcji"/>
             <TextBlock
                 Grid.Row="6"
                 Grid.Column="0"
-                Text="Częstotliwość" />
+                Text="Częstotliwość"/>
             <TextBlock
                 Grid.Row="7"
                 Grid.Column="0"
-                Text="Instrukcja wykonania" />
+                Text="Instrukcja wykonania"/>
             <TextBlock
                 Grid.Row="8"
                 Grid.Column="0"
                 VerticalAlignment="Top"
-                Text="Opis" />
+                Text="Opis"/>
 
             <ComboBox
                 Grid.Row="0"
@@ -123,13 +132,13 @@
                 IsReadOnly="false"
                 IsTextSearchEnabled="false"
                 ItemsSource="{Binding Workshops}"
-                SelectedValue="{Binding Activity.Workshop}" />
+                SelectedValue="{Binding Activity.Workshop}"/>
             <CheckBox
                 Grid.Row="1"
                 Grid.Column="2"
                 HorizontalAlignment="Left"
                 IsChecked="{Binding Activity.IsPassed}"
-                IsEnabled="True" />
+                IsEnabled="True"/>
             <ComboBox
                 Grid.Row="2"
                 Grid.Column="2"
@@ -139,53 +148,53 @@
                 IsReadOnly="false"
                 IsTextSearchEnabled="false"
                 ItemsSource="{Binding ActivityTypes}"
-                SelectedValue="{Binding Activity.Type}" />
+                SelectedValue="{Binding Activity.Type}"/>
             <CheckBox
                 Grid.Row="3"
                 Grid.Column="2"
                 HorizontalAlignment="Left"
                 IsChecked="{Binding Activity.IsLoto, Mode=TwoWay}"
-                IsEnabled="True" />
+                IsEnabled="True"/>
             <CheckBox
                 Grid.Row="4"
                 Grid.Column="2"
                 HorizontalAlignment="Left"
                 IsChecked="{Binding Activity.IsJog, Mode=TwoWay}"
-                IsEnabled="True" />
+                IsEnabled="True"/>
             <CheckBox
                 Grid.Row="5"
                 Grid.Column="2"
                 HorizontalAlignment="Left"
                 IsChecked="{Binding Activity.IsDurningProduction, Mode=TwoWay}"
-                IsEnabled="True" />
+                IsEnabled="True"/>
             <Grid
                 Grid.Row="6"
                 Grid.Column="2"
                 HorizontalAlignment="Left">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
                 <TextBox
                     Grid.Column="0"
                     MinWidth="50"
                     Margin="0,0,5,0"
-                    Text="{Binding Activity.Occurance}" />
+                    Text="{Binding Activity.OccuranceValue}"/>
                 <ComboBox
                     Grid.Column="1"
                     MinWidth="50"
-                    DisplayMemberPath="."
+                    DisplayMemberPath="OccuranceUnitText"
                     IsEditable="true"
                     IsReadOnly="false"
                     IsTextSearchEnabled="false"
                     ItemsSource="{Binding OccuranceUnits}"
-                    SelectedValue="{Binding Activity.OccuranceUnit}" />
+                    SelectedItem="{Binding Activity.Occurance}"/>
             </Grid>
             <CheckBox
                 Grid.Row="7"
                 Grid.Column="2"
                 IsChecked="{Binding Activity.HasInstruction}"
-                IsEnabled="False" />
+                IsEnabled="False"/>
             <TextBox
                 Grid.Row="8"
                 Grid.Column="2"
@@ -194,14 +203,15 @@
                 VerticalContentAlignment="Top"
                 AcceptsReturn="True"
                 Text="{Binding Activity.Description}"
-                TextWrapping="Wrap" />
+                TextWrapping="Wrap"/>
         </Grid>
 
-        <Grid Grid.Row="1" Grid.Column="1">
+        <Grid Grid.Row="1"
+              Grid.Column="1">
             <ContentControl Content="{Binding Trainings}">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type trainings:TrainingsListViewModel}">
-                        <trainings:TrainingsListView />
+                        <trainings:TrainingsListView/>
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>
@@ -214,14 +224,15 @@
 
             <Grid.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="Padding" Value="5,15,5,20" />
+                    <Setter Property="Padding"
+                            Value="5,15,5,20"/>
                 </Style>
             </Grid.Resources>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="1">
@@ -229,9 +240,12 @@
 
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type Button}">
-                            <Setter Property="Margin" Value="10,0" />
-                            <Setter Property="Height" Value="50" />
-                            <Setter Property="Width" Value="150" />
+                            <Setter Property="Margin"
+                                    Value="10,0"/>
+                            <Setter Property="Height"
+                                    Value="50"/>
+                            <Setter Property="Width"
+                                    Value="150"/>
                         </Style>
                     </StackPanel.Resources>
 
@@ -240,8 +254,9 @@
                         Height="50"
                         Margin="10,0"
                         Command="{Binding Path=SaveCommand}"
+                        CommandParameter="{Binding Path=Activity}"
                         Content="ZAPISZ"
-                        Style="{StaticResource ResourceKey=ButtonMain}" />
+                        Style="{StaticResource ResourceKey=ButtonMain}"/>
 
                     <Button
                         Width="150"
@@ -249,7 +264,7 @@
                         Margin="10,0"
                         Command="{Binding Path=CancelCommand}"
                         Content="ANULUJ"
-                        Style="{StaticResource ResourceKey=ButtonEmpty}" />
+                        Style="{StaticResource ResourceKey=ButtonEmpty}"/>
 
                     <Button
                         Width="150"
@@ -257,7 +272,7 @@
                         Margin="10,0"
                         Command="{Binding Path=ReturnCommand}"
                         Content="WRÓĆ"
-                        Style="{StaticResource ResourceKey=ButtonSide}" />
+                        Style="{StaticResource ResourceKey=ButtonSide}"/>
                 </StackPanel>
             </Border>
         </Grid>

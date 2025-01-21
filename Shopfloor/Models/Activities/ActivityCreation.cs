@@ -8,6 +8,27 @@ namespace Shopfloor.Models.Activities
 {
     internal class ActivityCreation : ModelValidationBase, IModelCreationModel<Activity>
     {
+        public ActivityCreation(Activity model)
+        {
+            Id = model.Id;
+            MachineId = model.MachineId;
+            Machine = model.Machine;
+            WorkshopId = model.WorkshopId;
+            Workshop = model.Workshop;
+            Status = model.Status;
+            Description = model.Description;
+            IsPassed = model.IsPassed;
+            TypeId = model.TypeId;
+            Type = model.Type;
+            IsLoto = model.IsLoto;
+            IsJog = model.IsJog;
+            IsDurningProduction = model.IsDurningProduction;
+            OccuranceValue = model.OccuranceValue;
+            Occurance = model.Occurance;
+        }
+        public ActivityCreation()
+        {
+        }
         public string Description { get; set; } = string.Empty;
         public int Id { get; set; }
         public bool IsDurningProduction { get; set; }
@@ -16,7 +37,11 @@ namespace Shopfloor.Models.Activities
         public bool IsPassed { get; set; } = false;
         public Machine? Machine { get; set; }
         public int MachineId { get; set; }
-        public Occurance Occurance { get; set; } = new();
+        public Occurance Occurance
+        {
+            get;
+            set;
+        } = new();
         public int OccuranceValue { get; set; } = 1;
         public ActivityType? Type { get; set; }
         public int TypeId { get; set; }
@@ -24,6 +49,7 @@ namespace Shopfloor.Models.Activities
         public int WorkshopId { get; set; }
         public ActivityStatus Status { get; set; } = ActivityStatus.Unconfirmed;
         public string StatusText => Status.ToString();
+
         public Activity CreateModel(int id)
         {
             return new Activity()
