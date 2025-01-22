@@ -37,11 +37,7 @@ namespace Shopfloor.Models.Activities
         public bool IsPassed { get; set; } = false;
         public Machine? Machine { get; set; }
         public int MachineId { get; set; }
-        public Occurance Occurance
-        {
-            get;
-            set;
-        } = new();
+        public Occurance Occurance { get; set; } = new();
         public int OccuranceValue { get; set; } = 1;
         public ActivityType? Type { get; set; }
         public int TypeId { get; set; }

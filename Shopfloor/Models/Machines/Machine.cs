@@ -1,4 +1,5 @@
-﻿using Shopfloor.Models.Commons.Interfaces;
+﻿using System.Collections.Generic;
+using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.Persons;
 
@@ -10,8 +11,8 @@ namespace Shopfloor.Models.Machines
         public Line? Line { get; set; }
         required public int LineId { get; init; }
         public string Name { get; set; } = string.Empty;
-        public Person? Responsible { get; set; }
-        public int ResponsibleId { get; set; }
+        public List<Person> Responsibles { get; init; } = [];
+        public List<int> ResponsibleIds { get; init; } = [];
         public void SetValues<T>(IModelCreationModel<T> data)
             where T : IModel
         {
@@ -24,8 +25,8 @@ namespace Shopfloor.Models.Machines
 
             Name = creation.Name;
             Line = creation.Line;
-            Responsible = creation.Responsible;
-            ResponsibleId = creation.ResponsibleId;
+            Responsibles.AddRange(creation.Responsibles);
+            ResponsibleIds.AddRange(creation.ResponsibleIds);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Shopfloor.Models.Activities
     {
         public string OccuranceUnitText => Unit.ToString();
         public OccuranceUnit Unit { get; set; } = OccuranceUnit.M;
-        public bool Equals(Occurance other)
+        public bool Equals(Occurance? other)
         {
             if (other == null)
             {
@@ -23,6 +23,10 @@ namespace Shopfloor.Models.Activities
             }
 
             return Equals(occurance);
+        }
+        public override int GetHashCode()
+        {
+            return Unit.GetHashCode();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Shopfloor.Models.Commons.BaseClasses;
+﻿using System.Collections.Generic;
+using Shopfloor.Models.Commons.BaseClasses;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.Persons;
@@ -11,8 +12,8 @@ namespace Shopfloor.Models.Machines
         public Line? Line { get; set; }
         public int LineId { get; set; }
         public string Name { get; set; } = string.Empty;
-        public Person? Responsible { get; set; }
-        public int ResponsibleId { get; set; }
+        public List<Person> Responsibles { get; set; } = [];
+        public List<int> ResponsibleIds { get; set; } = [];
         public Machine CreateModel(int id)
         {
             return new Machine
@@ -21,8 +22,8 @@ namespace Shopfloor.Models.Machines
                 Line = Line,
                 LineId = LineId,
                 Name = Name,
-                Responsible = Responsible,
-                ResponsibleId = ResponsibleId,
+                Responsibles = Responsibles,
+                ResponsibleIds = ResponsibleIds,
             };
         }
     }

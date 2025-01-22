@@ -4,18 +4,28 @@ namespace Shopfloor.Tests.Models.Activities
 {
     public class OccuranceTests
     {
-        // [Theory]
-        // [InlineData(OccuanceUnit.D)]
-        // [InlineData(OccuanceUnit.W)]
-        // [InlineData(OccuanceUnit.M)]
-        // [InlineData(OccuanceUnit.Y)]
-        [Fact]
-        public void Occurance_ShouldBeEqualToOccurance()
+        [Theory]
+        [InlineData(OccuranceUnit.D)]
+        [InlineData(OccuranceUnit.W)]
+        [InlineData(OccuranceUnit.M)]
+        [InlineData(OccuranceUnit.Y)]
+        public void Occurance_ShouldBeEqualToOccurance(OccuranceUnit unit)
         {
             // Arrange
-            // var aaa = OccuanceUnit.D;
+            Occurance aaa = new()
+            {
+                Unit = unit,
+            };
+            Occurance bbb = new()
+            {
+                Unit = unit,
+            };
+
             // Act
+            bool result = aaa.Equals(bbb);
+
             // Assert
+            result.Should().BeTrue();
         }
     }
 }

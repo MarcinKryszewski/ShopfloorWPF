@@ -11,7 +11,6 @@ namespace Shopfloor.Models.Activities
     {
         public void Validate(ActivityCreation item)
         {
-
             List<Task> tasks = [];
 
             tasks.Add(ValidateDescription(item));

@@ -175,7 +175,23 @@
                                                                            Text="&#xEC7A;"/>
                                                         </Border>
                                                         <TextBlock Style="{StaticResource ButtonTextBlock}"
-                                                                   Text="Dashboard mechanika"
+                                                                   Text="Dashboard CILT"
+                                                                   Background="Transparent"/>
+                                                </StackPanel>
+                                        </Button>
+
+                                        <Button Command="{Binding Path=NavigateMachineResponsibilities}">
+                                                <StackPanel Style="{StaticResource ButtonStackPanel}"
+                                                            Background="Transparent">
+                                                        <Border Width="24"
+                                                                Height="24"
+                                                                Margin="0,0,9,0"
+                                                                Background="Transparent">
+                                                                <TextBlock Style="{StaticResource IconBlock}"
+                                                                           Text="&#xEC7A;"/>
+                                                        </Border>
+                                                        <TextBlock Style="{StaticResource ButtonTextBlock}"
+                                                                   Text="Odpowiedzialności"
                                                                    Background="Transparent"/>
                                                 </StackPanel>
                                         </Button>
