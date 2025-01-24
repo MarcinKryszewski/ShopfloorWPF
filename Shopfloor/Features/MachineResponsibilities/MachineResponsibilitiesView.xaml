@@ -8,7 +8,42 @@
              d:DesignHeight="450"
              d:DesignWidth="800">
     <Grid>
-        <DataGrid
-            ItemsSource="{Binding Path=Machines}"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ComboBox Grid.Row="0"
+                  MinHeight="30px"
+                  DisplayMemberPath="Name"
+                  IsEditable="true"
+                  IsReadOnly="false"
+                  IsTextSearchEnabled="false"
+                  SelectedItem="{Binding Path=FilterData.SelectedLine}"
+                  ItemsSource="{Binding Path=Lines}"
+                  Style="{StaticResource ComboBoxMain}"
+                  Text="{Binding FilterData.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedValuePath="Name"/>
+        <DataGrid Grid.Row="1"
+                  Style="{DynamicResource DataGridMain}"
+                  CellStyle="{DynamicResource DataGridCellMain}"
+                  ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
+                  RowStyle="{DynamicResource DataGridRowMain}"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding Path=Machines}">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Line.Name}"
+                    Header="Linia"/>
+
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Name}"
+                    Header="Maszyna"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl> 
