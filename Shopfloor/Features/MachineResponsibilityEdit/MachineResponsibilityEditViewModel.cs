@@ -35,6 +35,20 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
 
             Task.Run(LoadDataAsync);
         }
+        private bool FilterExistingPeople(object obj)
+        {
+            if (obj is Person person)
+            {
+                if (_context.Machine is null)
+                {
+                    return true;
+                }
+                bool personExists = _context.Machine.ResponsibleIds.Contains(person.Id);
+
+                return !personExists;
+            }
+            return true;
+        }
         public string MissingWorkshops
         {
             get
@@ -102,7 +116,10 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
         private async Task LoadPersonsAsync(DataRoot dataRoot)
         {
             List<Person> data = (await dataRoot.GetPerson()).ToList();
-            Persons = new ListCollectionView(data);
+            Persons = new ListCollectionView(data)
+            {
+                Filter = FilterExistingPeople,
+            };
             OnPropertyChanged(nameof(Persons));
         }
     }
