@@ -1,4 +1,3 @@
-using FluentAssertions;
 using Shopfloor.Database.SQLite;
 using Shopfloor.Utilities;
 
@@ -15,7 +14,7 @@ namespace Shopfloor.Tests.Database.Initializers
             // Act
             bool result = sqlCommands.InitCommands.Count == amountOfConstants;
             // Assert
-            result.Should().BeTrue();
+            result.ShouldBe(true);
         }
     }
 }

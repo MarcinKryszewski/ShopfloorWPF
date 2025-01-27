@@ -89,7 +89,7 @@ namespace Shopfloor.Roots
                     machine.Responsibles.Add(data.First(p => p.Id == item));
                 }
             }
-            _machinesData.Merges.Add(typeof(Machine));
+            _machinesData.Merges.Add(typeof(Person));
         }
         private async Task DecorateWithLines(IEnumerable<Machine> machines)
         {

@@ -8,14 +8,13 @@ namespace Shopfloor.Tests.Utilities
         [InlineData("ąćęłńóśźż", "acelnoszz")]
         [InlineData("ĄĆĘŁŃÓŚŹŻ", "ACELNOSZZ")]
         [InlineData("ZażółćGĘśląJaźń", "ZazolcGEslaJazn")]
-
         public void Remove_ReplacesPolishCharactersWithEnglishCharacters(string input, string expected)
         {
             // Arrange
             // Act
             string result = RemovePolishCharacters.Remove(input);
             // Assert
-            result.Should().Be(expected);
+            result.ShouldBe(expected);
         }
         [Fact]
         public void Remove_WithEmptyString_ReturnsEmptyString()
@@ -25,7 +24,7 @@ namespace Shopfloor.Tests.Utilities
             // Act
             string result = RemovePolishCharacters.Remove(input);
             // Assert
-            result.Should().BeEmpty();
+            result.ShouldBeEmpty();
         }
         [Fact]
         public void Remove_WithNoPolishCharacters_ReturnsSameString()
@@ -35,7 +34,7 @@ namespace Shopfloor.Tests.Utilities
             // Act
             string result = RemovePolishCharacters.Remove(input);
             // Assert
-            result.Should().Be(input);
+            result.ShouldBe(input);
         }
     }
 }

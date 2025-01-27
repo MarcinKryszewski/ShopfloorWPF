@@ -21,7 +21,7 @@ namespace Shopfloor.Tests.Services.NavigationServices
             // Act
             navigationService.NavigateTo<WorkInProgressViewModel>();
             // Assert
-            navigationStore.CurrentViewModel.Should().Be(expectedViewModel);
+            navigationStore.CurrentViewModel.ShouldBe(expectedViewModel);
         }
     }
 }

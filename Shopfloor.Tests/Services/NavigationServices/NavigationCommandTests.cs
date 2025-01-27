@@ -1,28 +1,17 @@
-﻿using Shopfloor.Services.NavigationServices;
+﻿using System.Windows.Input;
+using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
-using System.Windows.Input;
 
 namespace Shopfloor.Tests.Services.NavigationServices
 {
     public class NavigationCommandTests
     {
-        private readonly INavigationService _navigationService;
         private readonly NavigationCommand<TestViewModel> _navigationCommand;
-
+        private readonly INavigationService _navigationService;
         public NavigationCommandTests()
         {
             _navigationService = Substitute.For<INavigationService>();
             _navigationCommand = new NavigationCommand<TestViewModel>(_navigationService);
-        }
-
-        [Fact]
-        public void Navigate_Should_Return_ICommand_Instance()
-        {
-            // Act
-            var command = _navigationCommand.Navigate();
-            // Assert
-            command.Should().NotBeNull();
-            command.Should().BeAssignableTo<ICommand>();
         }
 
         [Fact]
@@ -33,9 +22,8 @@ namespace Shopfloor.Tests.Services.NavigationServices
             // Act
             var canExecute = command.CanExecute(null);
             // Assert
-            canExecute.Should().BeTrue();
+            canExecute.ShouldBeTrue();
         }
-
         [Fact]
         public void Navigate_Command_Should_Invoke_NavigationService()
         {
@@ -45,6 +33,15 @@ namespace Shopfloor.Tests.Services.NavigationServices
             command.Execute(null);
             // Assert
             _navigationService.Received(1).NavigateTo<TestViewModel>();
+        }
+        [Fact]
+        public void Navigate_Should_Return_ICommand_Instance()
+        {
+            // Act
+            var command = _navigationCommand.Navigate();
+            // Assert
+            command.ShouldNotBeNull();
+            command.ShouldBeAssignableTo<ICommand>();
         }
     }
 

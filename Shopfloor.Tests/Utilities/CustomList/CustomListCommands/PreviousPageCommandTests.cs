@@ -6,6 +6,41 @@ namespace Shopfloor.Tests.Utilities.CustomList.CustomListCommands
 {
     public class PreviousPageCommandTests
     {
+        [Fact]
+        public void PagePrev_PageShouldNotChange_WhenCurrentPageIsFirst()
+        {
+            // Arrange
+            IEnumerable<ISearchableModel> data = GetData();
+            int pageSize = 1;
+            int currentPage;
+            SearchableModelList list = new(data, pageSize);
+            PreviousPageCommand sut = new(list);
+            // Act
+            list.PageSet(1);
+            currentPage = list.CurrentPage;
+            sut.Execute("");
+            int result = list.CurrentPage;
+            // Assert
+            result.ShouldBe(1);
+            result.ShouldBe(currentPage);
+        }
+        [Fact]
+        public void PagePrev_ShouldChangeCurrentPage()
+        {
+            // Arrange
+            int pageSize = 1;
+            IEnumerable<ISearchableModel> data = GetData();
+            SearchableModelList list = new(data, pageSize);
+            int startingPageNumber = list.CurrentPage;
+            PreviousPageCommand sut = new(list);
+            // Act
+            list.PageSet(2);
+            sut.Execute("");
+            int result = list.CurrentPage;
+            // Assert
+            result.ShouldBeLessThanOrEqualTo(startingPageNumber);
+            result.ShouldBeGreaterThanOrEqualTo(1);
+        }
         private static IEnumerable<ISearchableModel> GetData()
         {
             ISearchableModel model1 = Substitute.For<ISearchableModel>();
@@ -25,41 +60,6 @@ namespace Shopfloor.Tests.Utilities.CustomList.CustomListCommands
             model4.SearchValue.Returns("test22");
 
             return [model1, model2, model3, model4];
-        }
-        [Fact]
-        public void PagePrev_ShouldChangeCurrentPage()
-        {
-            // Arrange
-            int pageSize = 1;
-            IEnumerable<ISearchableModel> data = GetData();
-            SearchableModelList list = new(data, pageSize);
-            int startingPageNumber = list.CurrentPage;
-            PreviousPageCommand sut = new(list);
-            // Act
-            list.PageSet(2);
-            sut.Execute("");
-            int result = list.CurrentPage;
-            // Assert
-            result.Should().BeLessThanOrEqualTo(startingPageNumber);
-            result.Should().BeGreaterThanOrEqualTo(1);
-        }
-        [Fact]
-        public void PagePrev_PageShouldNotChange_WhenCurrentPageIsFirst()
-        {
-            // Arrange
-            IEnumerable<ISearchableModel> data = GetData();
-            int pageSize = 1;
-            int currentPage;
-            SearchableModelList list = new(data, pageSize);
-            PreviousPageCommand sut = new(list);
-            // Act
-            list.PageSet(1);
-            currentPage = list.CurrentPage;
-            sut.Execute("");
-            int result = list.CurrentPage;
-            // Assert
-            result.Should().Be(1);
-            result.Should().Be(currentPage);
         }
     }
 }

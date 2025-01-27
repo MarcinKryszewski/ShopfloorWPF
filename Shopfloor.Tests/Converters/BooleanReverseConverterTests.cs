@@ -1,6 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Globalization;
 using Shopfloor.Converters;
-using System.Globalization;
 
 namespace Shopfloor.Tests.Converters
 {
@@ -15,7 +14,7 @@ namespace Shopfloor.Tests.Converters
             // Act
             object result = converter.Convert(input, typeof(object), new object(), CultureInfo.InvariantCulture);
             // Assert
-            result.Should().Be(true);
+            result.ShouldBe(true);
         }
         [Fact]
         public void Convert_WhenInputIsNotBool_ReturnsSameValue()
@@ -26,7 +25,7 @@ namespace Shopfloor.Tests.Converters
             // Act
             object result = converter.Convert(input, typeof(object), new object(), CultureInfo.InvariantCulture);
             // Assert
-            result.Should().Be(input);
+            result.ShouldBe(input);
         }
         [Fact]
         public void Convert_WhenInputIsTrue_ReturnsFalse()
@@ -37,7 +36,7 @@ namespace Shopfloor.Tests.Converters
             // Act
             object result = converter.Convert(input, typeof(object), new object(), CultureInfo.InvariantCulture);
             // Assert
-            result.Should().Be(false);
+            result.ShouldBe(false);
         }
         [Fact]
         public void ConvertBack_AlwaysThrowsNotImplementedException()
@@ -47,7 +46,7 @@ namespace Shopfloor.Tests.Converters
             // Act
             Action result = () => converter.ConvertBack(new object(), typeof(object), new object(), CultureInfo.InvariantCulture);
             // Assert
-            result.Should().Throw<NotImplementedException>();
+            result.ShouldThrow<NotImplementedException>();
         }
     }
 }

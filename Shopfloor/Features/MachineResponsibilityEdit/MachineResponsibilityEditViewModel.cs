@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
-using Shopfloor.Features.MachineResponsibilityEdit;
-using Shopfloor.Models.Lines;
+using Shopfloor.Features.MachineResponsibilities;
 using Shopfloor.Models.Machines;
 using Shopfloor.Models.Persons;
 using Shopfloor.Models.Workshops;
@@ -17,48 +14,27 @@ using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.MachineResponsibilities
+namespace Shopfloor.Features.MachineResponsibilityEdit
 {
-    internal class MachineResponsibilitiesViewModel : ViewModelBase
+    internal class MachineResponsibilityEditViewModel : ViewModelBase
     {
-        private static readonly object _syncLock = new();
         private readonly MachineContext _context;
         private readonly DataRoot _data;
         private readonly MachinesRoot _machinesRoot;
-        private string _lineName = string.Empty;
-
-        public MachineResponsibilitiesViewModel(
+        public MachineResponsibilityEditViewModel(
             MachinesRoot machinesRoot,
             MachineContext context,
             ViewModelBaseDependecies dependecies,
             DataRoot data)
-            : base(dependecies)
+        : base(dependecies)
         {
-            _machinesRoot = machinesRoot;
             _context = context;
+            _machinesRoot = machinesRoot;
             _data = data;
-
-            _machinesRoot.DataChanged += OnDataChanged;
-
-            Machines.GroupDescriptions.Add(new PropertyGroupDescription(nameof(Machine.LineId)));
-            Machines.Filter = Filter;
-
-            EditResponsibilitiesCommand = new NavigationCommand<MachineResponsibilityEditViewModel>(NavigationService).Navigate();
+            ReturnCommand = new NavigationCommand<MachineResponsibilitiesViewModel>(NavigationService).Navigate();
 
             Task.Run(LoadDataAsync);
         }
-        public ICommand EditResponsibilitiesCommand { get; }
-        public string LineName
-        {
-            get => _lineName;
-            set
-            {
-                _lineName = value;
-                Machines.Refresh();
-            }
-        }
-        public ICollectionView Lines { get; private set; } = new ListCollectionView(new List<Line>());
-        public ICollectionView Machines => CollectionViewSource.GetDefaultView(_machinesRoot.Data.AsObservable);
         public string MissingWorkshops
         {
             get
@@ -77,7 +53,7 @@ namespace Shopfloor.Features.MachineResponsibilities
                 }
 
                 StringBuilder sb = new();
-                sb.AppendLine("Warsztaty z brakuj¹c¹ osob¹ odpowiedzialn¹:");
+                sb.AppendLine("Warsztaty z brakujÄ…cÄ… osobÄ… odpowiedzialnÄ…:");
                 foreach (Workshop workshop in workshops)
                 {
                     sb.AppendLine(workshop.Name);
@@ -86,18 +62,8 @@ namespace Shopfloor.Features.MachineResponsibilities
             }
         }
         public ICollectionView Persons { get; private set; } = new ListCollectionView(new List<Person>());
-        public Line? SelectedLine { get; set; }
-        public Machine? SelectedMachine
-        {
-            get => _context.Machine;
-            set
-            {
-                _context.Machine = value;
-                OnPropertyChanged(nameof(SelectedMachine));
-                OnPropertyChanged(nameof(Title));
-                OnPropertyChanged(nameof(MissingWorkshops));
-            }
-        }
+        public ICommand ReturnCommand { get; }
+        public Machine? SelectedMachine => _context.Machine;
         public string Title
         {
             get
@@ -110,17 +76,6 @@ namespace Shopfloor.Features.MachineResponsibilities
                 string name = SelectedMachine.Name ?? string.Empty;
                 return $"{line} - {name}";
             }
-        }
-        public void OnDataChanged(object? sender, EventArgs e)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                lock (_syncLock)
-                {
-                    OnPropertyChanged(nameof(Machines));
-                    Machines.Refresh();
-                }
-            });
         }
         private static LinkedList<Workshop> MissingResponsibles(Machine machine, IEnumerable<Workshop> workshops)
         {
@@ -136,37 +91,13 @@ namespace Shopfloor.Features.MachineResponsibilities
             }
             return missingWorkshops;
         }
-        private bool Filter(object obj)
-        {
-            if (obj is Machine machine)
-            {
-                bool line =
-                    string.IsNullOrEmpty(LineName) ||
-                    machine.Line!.Name.Contains(LineName, StringComparison.InvariantCultureIgnoreCase);
-
-                return line;
-            }
-            return false;
-        }
         private async Task LoadDataAsync()
         {
             List<Task> tasks = [];
 
-            tasks.Add(LoadMachinesAsync(_machinesRoot));
-            tasks.Add(LoadLinesAsync(_data));
             tasks.Add(LoadPersonsAsync(_data));
 
             await Task.WhenAll(tasks);
-        }
-        private async Task LoadLinesAsync(DataRoot dataRoot)
-        {
-            List<Line> data = (await dataRoot.GetLine()).ToList();
-            Lines = new ListCollectionView(data);
-            OnPropertyChanged(nameof(Lines));
-        }
-        private async Task LoadMachinesAsync(MachinesRoot dataRoot)
-        {
-            await dataRoot.GetData();
         }
         private async Task LoadPersonsAsync(DataRoot dataRoot)
         {

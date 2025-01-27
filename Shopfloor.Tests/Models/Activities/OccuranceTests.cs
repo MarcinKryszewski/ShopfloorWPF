@@ -25,7 +25,7 @@ namespace Shopfloor.Tests.Models.Activities
             bool result = aaa.Equals(bbb);
 
             // Assert
-            result.Should().BeTrue();
+            result.ShouldBeTrue();
         }
     }
 }

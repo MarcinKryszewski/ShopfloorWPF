@@ -8,6 +8,7 @@ namespace Shopfloor.Hosts.Features.Services
         public static void Get(IServiceCollection services)
         {
             services.AddSingleton<ActivityContext>();
+            services.AddSingleton<MachineContext>();
         }
     }
 }

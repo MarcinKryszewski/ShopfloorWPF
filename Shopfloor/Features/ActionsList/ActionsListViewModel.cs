@@ -20,7 +20,6 @@ namespace Shopfloor.Features.ActionsList
     internal class ActionsListViewModel : ViewModelBase
     {
         private static readonly object _syncLock = new();
-        private readonly List<Activity> _activities = [];
         private readonly ActivityContext _activityContext;
         private readonly ActivitiesRoot _root;
         public ActionsListViewModel(
@@ -36,7 +35,6 @@ namespace Shopfloor.Features.ActionsList
             Activities.Filter = Filter;
             _root.DataChanged += OnDataChanged;
             FilterData.FiltersChanged += OnFiltersChanged;
-            BindingOperations.EnableCollectionSynchronization(_activities, _syncLock);
 
             DetailsCommand = new NavigationCommand<ActionDetailsViewModel>(NavigationService).Navigate();
             EditCommand = new NavigationCommand<ActionEditViewModel>(NavigationService).Navigate();
@@ -51,10 +49,10 @@ namespace Shopfloor.Features.ActionsList
             get => _activityContext.Activity;
             set => _activityContext.Activity = value;
         }
+        public ICommand CancelCommand { get; }
         public ICommand CreateActionCommand { get; }
         public ICommand DetailsCommand { get; }
         public ICommand EditCommand { get; }
-        public ICommand CancelCommand { get; }
         public ActionsFilter FilterData { get; }
         public void OnDataChanged(object? sender, EventArgs e)
         {

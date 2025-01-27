@@ -14,17 +14,16 @@ namespace Shopfloor.Tests.Utilities
 #pragma warning disable IDE0052 // Remove unread private members
             private readonly string _stringVariable = string.Empty;
 #pragma warning restore IDE0052 // Remove unread private members
-
         }
         [Fact]
         public void CountConstantVariablesOfClass_ShouldReturnValue_WhenClassProvided()
         {
-            // Arrange            
+            // Arrange
             // Act
             int? result = ConstantVariablesCounter.CountConstantVariablesOfClass<TestClass>();
             // Assert
-            result.Should().Be(2);
-            result.Should().NotBeNull();
+            result.ShouldBe(2);
+            result.ShouldNotBeNull();
         }
     }
 }

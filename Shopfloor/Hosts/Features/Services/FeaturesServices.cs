@@ -4,6 +4,7 @@ using Shopfloor.Features.ActionDetails;
 using Shopfloor.Features.ActionEdit;
 using Shopfloor.Features.ActionsList;
 using Shopfloor.Features.MachineResponsibilities;
+using Shopfloor.Features.MachineResponsibilityEdit;
 using Shopfloor.Features.TrainingsList;
 
 namespace Shopfloor.Hosts.Features.Services
@@ -22,6 +23,7 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddTransient<TrainingsListViewModel>();
 
             services.AddTransient<MachineResponsibilitiesViewModel>();
+            services.AddTransient<MachineResponsibilityEditViewModel>();
         }
     }
 }
