@@ -33,7 +33,11 @@
 
         <StackPanel Grid.Row="1"
                     Grid.Column="0">
-            <DataGrid ItemsSource="{Binding Path=SelectedMachine.Responsibles}">
+            <DataGrid ItemsSource="{Binding Path=SelectedPersons}"
+                      SelectionMode="Single"
+                      SelectionUnit="FullRow"
+                      IsReadOnly="True"
+                      SelectedItem="{Binding SelectedPerson}">
                 <DataGrid.Style>
                     <Style TargetType="DataGrid">
                         <Setter Property="Visibility"
@@ -47,6 +51,14 @@
                         </Style.Triggers>
                     </Style>
                 </DataGrid.Style>
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding Path=RemovePersonCommand}"
+                                               CommandParameter="{Binding SelectedPerson}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+
             </DataGrid>
             <TextBlock Foreground="{StaticResource BrushAccentPink400}"
                        Text="{Binding Path=MissingWorkshops}"/>
@@ -55,11 +67,16 @@
         <DataGrid
             Grid.Row="1"
             Grid.Column="1"
-            ItemsSource="{Binding Path=Persons}">
+            ItemsSource="{Binding Path=Persons}"
+            SelectionMode="Single"
+            SelectionUnit="FullRow"
+            IsReadOnly="True"
+            SelectedItem="{Binding SelectedPerson}">
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding Path=ReturnCommand}"/>
+                    <i:InvokeCommandAction Command="{Binding Path=AddPersonCommand}"
+                                           CommandParameter="{Binding SelectedPerson}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
 

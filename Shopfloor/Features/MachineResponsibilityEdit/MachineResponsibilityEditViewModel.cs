@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Features.MachineResponsibilities;
+using Shopfloor.Features.MachineResponsibilityEdit.Commands;
 using Shopfloor.Models.Machines;
 using Shopfloor.Models.Persons;
 using Shopfloor.Models.Workshops;
@@ -21,6 +24,8 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
         private readonly MachineContext _context;
         private readonly DataRoot _data;
         private readonly MachinesRoot _machinesRoot;
+        private Person? _selectedPerson;
+        private ListCollectionView _persons = new(new List<Person>());
         public MachineResponsibilityEditViewModel(
             MachinesRoot machinesRoot,
             MachineContext context,
@@ -32,6 +37,11 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
             _machinesRoot = machinesRoot;
             _data = data;
             ReturnCommand = new NavigationCommand<MachineResponsibilitiesViewModel>(NavigationService).Navigate();
+            AddPersonCommand = new(SelectedMachine.Responsibles);
+            RemovePersonCommand = new(SelectedMachine.Responsibles);
+
+            AddPersonCommand.DataChanged += OnDataChanged;
+            RemovePersonCommand.DataChanged += OnDataChanged;
 
             Task.Run(LoadDataAsync);
         }
@@ -39,15 +49,24 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
         {
             if (obj is Person person)
             {
-                if (_context.Machine is null)
+                if (SelectedMachine is null)
                 {
                     return true;
                 }
-                bool personExists = _context.Machine.ResponsibleIds.Contains(person.Id);
+                bool personExists = SelectedMachine.Responsibles.Contains(person);
 
                 return !personExists;
             }
             return true;
+        }
+        public void OnDataChanged(object? sender, EventArgs e)
+        {
+            OnPropertyChanged(nameof(MissingWorkshops));
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                SelectedPersons.Refresh();
+                Persons.Refresh();
+            });
         }
         public string MissingWorkshops
         {
@@ -75,9 +94,21 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
                 return sb.ToString();
             }
         }
-        public ICollectionView Persons { get; private set; } = new ListCollectionView(new List<Person>());
+        public ICollectionView Persons => _persons;
+        public ICollectionView SelectedPersons => CollectionViewSource.GetDefaultView(SelectedMachine.Responsibles);
         public ICommand ReturnCommand { get; }
-        public Machine? SelectedMachine => _context.Machine;
+        public AddPersonToListCommand AddPersonCommand { get; }
+        public RemovePersonToListCommand RemovePersonCommand { get; }
+        public Machine SelectedMachine => _context.Machine!;
+        public Person? SelectedPerson
+        {
+            get => _selectedPerson;
+            set
+            {
+                _selectedPerson = value;
+                OnPropertyChanged(nameof(SelectedPerson));
+            }
+        }
         public string Title
         {
             get
@@ -116,7 +147,7 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
         private async Task LoadPersonsAsync(DataRoot dataRoot)
         {
             List<Person> data = (await dataRoot.GetPerson()).ToList();
-            Persons = new ListCollectionView(data)
+            _persons = new ListCollectionView(data)
             {
                 Filter = FilterExistingPeople,
             };
