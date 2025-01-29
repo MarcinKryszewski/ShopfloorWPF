@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using Microsoft.Xaml.Behaviors.Core;
 using Shopfloor.Contexts;
 using Shopfloor.Features.MachineResponsibilities;
 using Shopfloor.Features.MachineResponsibilityEdit.Commands;
@@ -23,62 +24,47 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
     {
         private readonly MachineContext _context;
         private readonly DataRoot _data;
-        private readonly MachinesRoot _machinesRoot;
-        private Person? _selectedPerson;
+        private readonly Machine _selectedMachine;
+        private readonly List<Person> _selectedPersons = [];
         private ListCollectionView _persons = new(new List<Person>());
+        private Person? _selectedPerson;
+        private ActionCommand? cancelCommand;
         public MachineResponsibilityEditViewModel(
-            MachinesRoot machinesRoot,
             MachineContext context,
             ViewModelBaseDependecies dependecies,
+            MachinesRoot machinesRoot,
             DataRoot data)
         : base(dependecies)
         {
-            _context = context;
-            _machinesRoot = machinesRoot;
-            _data = data;
             ReturnCommand = new NavigationCommand<MachineResponsibilitiesViewModel>(NavigationService).Navigate();
-            AddPersonCommand = new(SelectedMachine.Responsibles);
-            RemovePersonCommand = new(SelectedMachine.Responsibles);
 
-            AddPersonCommand.DataChanged += OnDataChanged;
-            RemovePersonCommand.DataChanged += OnDataChanged;
+            _data = data;
+            _context = context;
+
+            if (_context.Machine is null)
+            {
+                ReturnCommand.Execute(null);
+            }
+
+            _selectedMachine = _context.Machine!;
+
+            AddPersonCommand = new AddPersonToListCommand(_selectedPersons);
+            RemovePersonCommand = new RemovePersonToListCommand(_selectedPersons);
+            SaveCommand = new SaveResponsiblesCommand(_selectedMachine, _selectedPersons, machinesRoot);
+
+            ((AddPersonToListCommand)AddPersonCommand).DataChanged += OnDataChanged;
+            ((RemovePersonToListCommand)RemovePersonCommand).DataChanged += OnDataChanged;
 
             Task.Run(LoadDataAsync);
         }
-        private bool FilterExistingPeople(object obj)
-        {
-            if (obj is Person person)
-            {
-                if (SelectedMachine is null)
-                {
-                    return true;
-                }
-                bool personExists = SelectedMachine.Responsibles.Contains(person);
-
-                return !personExists;
-            }
-            return true;
-        }
-        public void OnDataChanged(object? sender, EventArgs e)
-        {
-            OnPropertyChanged(nameof(MissingWorkshops));
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                SelectedPersons.Refresh();
-                Persons.Refresh();
-            });
-        }
+        public ICommand AddPersonCommand { get; }
+        public ICommand CancelCommand => cancelCommand ??= new ActionCommand(Cancel);
         public string MissingWorkshops
         {
             get
             {
-                if (SelectedMachine is null)
-                {
-                    return string.Empty;
-                }
-
                 IEnumerable<Workshop> workshopsData = _data.GetWorkshop().Result;
-                IEnumerable<Workshop> workshops = MissingResponsibles(SelectedMachine, workshopsData);
+                IEnumerable<Workshop> workshops = MissingResponsibles(_selectedPersons, workshopsData);
 
                 if (!workshops.Any())
                 {
@@ -95,11 +81,9 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
             }
         }
         public ICollectionView Persons => _persons;
-        public ICollectionView SelectedPersons => CollectionViewSource.GetDefaultView(SelectedMachine.Responsibles);
+        public ICommand RemovePersonCommand { get; }
         public ICommand ReturnCommand { get; }
-        public AddPersonToListCommand AddPersonCommand { get; }
-        public RemovePersonToListCommand RemovePersonCommand { get; }
-        public Machine SelectedMachine => _context.Machine!;
+        public ICommand SaveCommand { get; }
         public Person? SelectedPerson
         {
             get => _selectedPerson;
@@ -109,38 +93,66 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
                 OnPropertyChanged(nameof(SelectedPerson));
             }
         }
+        public ICollectionView SelectedPersons => CollectionViewSource.GetDefaultView(_selectedPersons);
         public string Title
         {
             get
             {
-                if (SelectedMachine is null)
+                if (_selectedMachine is null)
                 {
                     return string.Empty;
                 }
-                string line = SelectedMachine.Line?.Name ?? string.Empty;
-                string name = SelectedMachine.Name ?? string.Empty;
+                string line = _selectedMachine.Line?.Name ?? string.Empty;
+                string name = _selectedMachine.Name ?? string.Empty;
                 return $"{line} - {name}";
             }
         }
-        private static LinkedList<Workshop> MissingResponsibles(Machine machine, IEnumerable<Workshop> workshops)
+        public void OnDataChanged(object? sender, EventArgs e)
         {
-            IEnumerable<Person> responsibles = machine.Responsibles;
-            LinkedList<Workshop> missingWorkshops = [];
-
-            foreach (Workshop workshop in workshops)
+            OnPropertyChanged(nameof(MissingWorkshops));
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                if (responsibles.FirstOrDefault(p => p.Workshop == workshop) is null)
-                {
-                    missingWorkshops.AddLast(workshop);
-                }
+                SelectedPersons.Refresh();
+                Persons.Refresh();
+            });
+        }
+        private static LinkedList<Workshop> MissingResponsibles(IEnumerable<Person> responsibles, IEnumerable<Workshop> workshops)
+        {
+            LinkedList<Workshop> missingWorkshops = [];
+            foreach (Workshop workshop in from Workshop workshop in workshops
+                                          where responsibles.FirstOrDefault(p => p.Workshop == workshop) is null
+                                          select workshop)
+            {
+                missingWorkshops.AddLast(workshop);
             }
+
             return missingWorkshops;
+        }
+        private void Cancel()
+        {
+            LoadSelectedPersonsAsync();
+            OnDataChanged(null, new EventArgs());
+        }
+        private bool FilterExistingPeople(object obj)
+        {
+            if (obj is Person person)
+            {
+                if (_selectedMachine is null)
+                {
+                    return true;
+                }
+                bool personExists = SelectedPersons.Contains(person);
+
+                return !personExists;
+            }
+            return true;
         }
         private async Task LoadDataAsync()
         {
             List<Task> tasks = [];
 
             tasks.Add(LoadPersonsAsync(_data));
+            tasks.Add(LoadSelectedPersonsAsync());
 
             await Task.WhenAll(tasks);
         }
@@ -152,6 +164,16 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
                 Filter = FilterExistingPeople,
             };
             OnPropertyChanged(nameof(Persons));
+        }
+        private Task LoadSelectedPersonsAsync()
+        {
+            _selectedPersons.Clear();
+            foreach (Person item in _selectedMachine.Responsibles)
+            {
+                _selectedPersons.Add(item);
+            }
+            OnPropertyChanged(nameof(SelectedPersons));
+            return Task.CompletedTask;
         }
     }
 }
