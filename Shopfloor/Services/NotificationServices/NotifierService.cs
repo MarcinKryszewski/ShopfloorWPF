@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Windows;
 using ToastNotifications;
 using ToastNotifications.Core;
@@ -17,6 +18,22 @@ namespace Shopfloor.Services.NotificationServices
                 : base(configureAction)
             {
             }
+            public void Show(Notification notification)
+            {
+                Show(notification.Message, notification.Type);
+            }
+            public void Show(string message, NotifierType type = NotifierType.Success)
+            {
+                Task showNotification = type switch
+                {
+                    NotifierType.Success => Task.Run(() => ShowSuccess(message)),
+                    NotifierType.Information => Task.Run(() => ShowInformation(message)),
+                    NotifierType.Error => Task.Run(() => ShowError(message)),
+                    NotifierType.Warning => Task.Run(() => ShowWarning(message)),
+                    _ => Task.Run(() => ShowError("Critical error with notifier!")),
+                };
+            }
+
             public void ShowError(string message)
             {
                 Application.Current.Dispatcher.Invoke(() =>

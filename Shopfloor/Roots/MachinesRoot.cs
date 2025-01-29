@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Org.BouncyCastle.Math.EC.Rfc7748;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.Machines;
+using Shopfloor.Models.MachinesResponsibles;
 using Shopfloor.Models.Persons;
 using Shopfloor.Models.Workshops;
 using Shopfloor.Utilities.Collections;
@@ -17,16 +19,19 @@ namespace Shopfloor.Roots
         private readonly IRepository<Person, PersonCreation> _personData;
         private readonly IRepository<Line, LineCreation> _linesData;
         private readonly IRepository<Workshop, WorkshopCreation> _workshopsData;
+        private readonly IRepository<MachineResponsible, MachineResponsibleCreation> _responsiblesData;
         public MachinesRoot(
             IRepository<Machine, MachineCreation> machineData,
             IRepository<Person, PersonCreation> personData,
             IRepository<Line, LineCreation> lineData,
-            IRepository<Workshop, WorkshopCreation> workshopsData)
+            IRepository<Workshop, WorkshopCreation> workshopsData,
+            IRepository<MachineResponsible, MachineResponsibleCreation> responsiblesData)
         {
             _machinesData = machineData;
             _personData = personData;
             _linesData = lineData;
             _workshopsData = workshopsData;
+            _responsiblesData = responsiblesData;
         }
         public event EventHandler? DataChanged;
         public ConcurrentObservableCollection<Machine> Data { get; private set; } = [];
@@ -69,27 +74,56 @@ namespace Shopfloor.Roots
             await Task.CompletedTask;
             throw new NotImplementedException();
         }
-        protected void OnDataChanged(EventArgs e) => DataChanged?.Invoke(this, e);
-        private async Task DecorateWithPersons(IEnumerable<Machine> machines)
+        public async Task UpdateResponsibles(Machine machine, List<Person> persons)
         {
-            IEnumerable<Person> data = await _personData.GetDataAsync();
-            if (!_personData.Merges.Contains(typeof(Workshop)))
+            int machineId = machine.Id;
+            List<Person> peopleToDelete = [];
+            List<Person> peopleToAdd = [];
+            List<Person> peopleExisting = machine.Responsibles;
+
+            peopleToDelete.AddRange(peopleExisting.Except(persons));
+            peopleToAdd.AddRange(persons.Except(peopleExisting));
+
+            List<Task> tasks = [];
+
+            tasks.AddRange(ResponsiblesTaskCreate(machineId, peopleToAdd));
+            tasks.AddRange(ResponsiblesTaskDelete(peopleToDelete));
+
+            await Task.WhenAll(tasks);
+
+            machine.Responsibles.Clear();
+            machine.ResponsibleIds.Clear();
+
+            machine.Responsibles.AddRange(persons);
+            machine.ResponsibleIds.AddRange(persons.Select(person => person.Id));
+        }
+        protected void OnDataChanged(EventArgs e) => DataChanged?.Invoke(this, e);
+        private List<Task> ResponsiblesTaskCreate(int machineId, List<Person> people)
+        {
+            List<Task> tasks = [];
+
+            foreach (Person person in people)
             {
-                _ = Task.Run(() => DecoratePersonsWithWorkshops(data));
+                tasks.Add(_responsiblesData.Create(new MachineResponsibleCreation() { MachineId = machineId, PersonId = person.Id }));
             }
 
-            foreach (Machine machine in machines)
+            return tasks;
+        }
+        private async Task<List<Task>> ResponsiblesTaskDelete(List<Person> people)
+        {
+            List<Task> tasks = [];
+            List<MachineResponsible> responsibled = await _responsiblesData.GetDataAsync();
+
+            foreach (Person person in people)
             {
-                if (machine.ResponsibleIds.Count == 0)
+                int? id = responsibled.FirstOrDefault(x => x.Id == person.Id)?.Id;
+                if (id != null)
                 {
-                    return;
-                }
-                foreach (int item in machine.ResponsibleIds)
-                {
-                    machine.Responsibles.Add(data.First(p => p.Id == item));
+                    tasks.Add(_responsiblesData.Delete((int)id));
                 }
             }
-            _machinesData.Merges.Add(typeof(Person));
+
+            return tasks;
         }
         private async Task DecorateWithLines(IEnumerable<Machine> machines)
         {
@@ -112,6 +146,28 @@ namespace Shopfloor.Roots
             }
 
             _machinesData.Merges.Add(typeof(Line));
+        }
+        private async Task DecorateWithPersons(IEnumerable<Machine> machines)
+        {
+            IEnumerable<MachineResponsible> responsibles = await _responsiblesData.GetDataAsync();
+
+            IEnumerable<Person> data = await _personData.GetDataAsync();
+            if (!_personData.Merges.Contains(typeof(Workshop)))
+            {
+                _ = Task.Run(() => DecoratePersonsWithWorkshops(data));
+            }
+
+            foreach (Machine machine in machines)
+            {
+                List<MachineResponsible> persons = responsibles.Where(x => x.MachineId == machine.Id).ToList();
+                machine.ResponsibleIds.AddRange(persons
+                    .Select(x => x.PersonId));
+                machine.Responsibles.AddRange(data
+                    .Where(x => machine.ResponsibleIds.
+                        Contains(x.Id)));
+            }
+
+            _machinesData.Merges.Add(typeof(Person));
         }
     }
 }

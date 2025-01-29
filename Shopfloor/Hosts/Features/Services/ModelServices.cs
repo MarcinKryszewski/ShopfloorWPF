@@ -6,6 +6,7 @@ using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Instructions;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.Machines;
+using Shopfloor.Models.MachinesResponsibles;
 using Shopfloor.Models.Persons;
 using Shopfloor.Models.Trainings;
 using Shopfloor.Models.Workshops;
@@ -41,6 +42,7 @@ namespace Shopfloor.Hosts.Features.Services
             Lines(services);
             Machines(services);
             Persons(services);
+            Responsibles(services);
             Trainings(services);
             Workshops(services);
         }
@@ -79,6 +81,12 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddSingleton<IRepository<Workshop, WorkshopCreation>, WorkshopRepository>();
             services.AddSingleton<IStore<Workshop>, WorkshopStore>();
             services.AddSingleton<IProvider<Workshop, WorkshopCreation>, WorkshopProvider>();
+        }
+        public static void Responsibles(IServiceCollection services)
+        {
+            services.AddSingleton<IRepository<MachineResponsible, MachineResponsibleCreation>, MachineResponsibleRepository>();
+            services.AddSingleton<IStore<MachineResponsible>, MachineResponsibleStore>();
+            services.AddSingleton<IProvider<MachineResponsible, MachineResponsibleCreation>, MachineResponsibleProvider>();
         }
     }
 }

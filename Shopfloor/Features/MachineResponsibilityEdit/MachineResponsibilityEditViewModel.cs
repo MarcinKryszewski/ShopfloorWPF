@@ -16,6 +16,7 @@ using Shopfloor.Models.Persons;
 using Shopfloor.Models.Workshops;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
+using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.MachineResponsibilityEdit
@@ -54,6 +55,7 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
 
             ((AddPersonToListCommand)AddPersonCommand).DataChanged += OnDataChanged;
             ((RemovePersonToListCommand)RemovePersonCommand).DataChanged += OnDataChanged;
+            ((SaveResponsiblesCommand)SaveCommand).DataChanged += OnDataChanged;
 
             Task.Run(LoadDataAsync);
         }
@@ -71,13 +73,13 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
                     return string.Empty;
                 }
 
-                StringBuilder sb = new();
-                sb.AppendLine("Warsztaty z brakującą osobą odpowiedzialną:");
+                StringBuilder missingWorkshopsText = new();
+                missingWorkshopsText.AppendLine("Warsztaty z brakującą osobą odpowiedzialną:");
                 foreach (Workshop workshop in workshops)
                 {
-                    sb.AppendLine(workshop.Name);
+                    missingWorkshopsText.AppendLine(workshop.Name);
                 }
-                return sb.ToString();
+                return missingWorkshopsText.ToString();
             }
         }
         public ICollectionView Persons => _persons;
@@ -107,7 +109,7 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
                 return $"{line} - {name}";
             }
         }
-        public void OnDataChanged(object? sender, EventArgs e)
+        private void OnDataChanged(object? sender, Notification? notification)
         {
             OnPropertyChanged(nameof(MissingWorkshops));
             Application.Current.Dispatcher.Invoke(() =>
@@ -115,6 +117,10 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
                 SelectedPersons.Refresh();
                 Persons.Refresh();
             });
+            if (notification != null)
+            {
+                Notifier.Show(notification);
+            }
         }
         private static LinkedList<Workshop> MissingResponsibles(IEnumerable<Person> responsibles, IEnumerable<Workshop> workshops)
         {
@@ -131,7 +137,7 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
         private void Cancel()
         {
             LoadSelectedPersonsAsync();
-            OnDataChanged(null, new EventArgs());
+            OnDataChanged(null, new Notification() { Message = "Przywrócono oryginalne osoby odpowiedzialne", Type = NotifierType.Information });
         }
         private bool FilterExistingPeople(object obj)
         {
@@ -155,6 +161,7 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
             tasks.Add(LoadSelectedPersonsAsync());
 
             await Task.WhenAll(tasks);
+            OnDataChanged(null, null);
         }
         private async Task LoadPersonsAsync(DataRoot dataRoot)
         {
