@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -78,12 +77,10 @@ namespace Shopfloor.Features.ActionEdit
             }
         }
         public TrainingsListViewModel Trainings { get; }
-        public ICollectionView Workshops => CollectionViewSource.GetDefaultView(_workshops);
         private async Task LoadDataAsync()
         {
             List<Task> tasks = [];
 
-            tasks.Add(LoadWorkshops());
             tasks.Add(LoadTypes());
             tasks.Add(LoadOccuranceUnits());
 
@@ -107,11 +104,6 @@ namespace Shopfloor.Features.ActionEdit
         {
             IEnumerable<ActivityType> data = await _data.GetActivityType();
             await BatchListUpdater.UpdateAsync(data, _activityTypes);
-        }
-        private async Task LoadWorkshops()
-        {
-            IEnumerable<Workshop> data = await _data.GetWorkshop();
-            await BatchListUpdater.UpdateAsync(data, _workshops);
         }
     }
 }

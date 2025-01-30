@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -109,19 +108,6 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
                 return $"{line} - {name}";
             }
         }
-        private void OnDataChanged(object? sender, Notification? notification)
-        {
-            OnPropertyChanged(nameof(MissingWorkshops));
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                SelectedPersons.Refresh();
-                Persons.Refresh();
-            });
-            if (notification != null)
-            {
-                Notifier.Show(notification);
-            }
-        }
         private static LinkedList<Workshop> MissingResponsibles(IEnumerable<Person> responsibles, IEnumerable<Workshop> workshops)
         {
             LinkedList<Workshop> missingWorkshops = [];
@@ -181,6 +167,19 @@ namespace Shopfloor.Features.MachineResponsibilityEdit
             }
             OnPropertyChanged(nameof(SelectedPersons));
             return Task.CompletedTask;
+        }
+        private void OnDataChanged(object? sender, Notification? notification)
+        {
+            OnPropertyChanged(nameof(MissingWorkshops));
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                SelectedPersons.Refresh();
+                Persons.Refresh();
+            });
+            if (notification != null)
+            {
+                Notifier.Show(notification);
+            }
         }
     }
 }
