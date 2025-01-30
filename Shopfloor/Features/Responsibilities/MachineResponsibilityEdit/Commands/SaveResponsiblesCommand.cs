@@ -37,8 +37,7 @@ namespace Shopfloor.Features.MachineResponsibilityEdit.Commands
                         return;
                     }
                     OnSave(_notificationError);
-                }
-            );
+                });
         }
         protected void OnSave(Notification e) => DataChanged?.Invoke(this, e);
     }

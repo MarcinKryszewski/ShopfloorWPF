@@ -11,6 +11,11 @@
     xmlns:god="clr-namespace:Shopfloor.Features.God"
     xmlns:machineResponsibilities="clr-namespace:Shopfloor.Features.MachineResponsibilities"
     xmlns:machineResponsibilityEdit="clr-namespace:Shopfloor.Features.MachineResponsibilityEdit"
+    xmlns:personalTraining="clr-namespace:Shopfloor.Features.Personal.PersonalTraining"
+    xmlns:trainingCreate="clr-namespace:Shopfloor.Features.TrainingFeatures.TrainingCreate"
+    xmlns:trainingDetails="clr-namespace:Shopfloor.Features.TrainingFeatures.TrainingDetails"
+    xmlns:actionTrainingList="clr-namespace:Shopfloor.Features.TrainingFeatures.ActionTrainingList"
+    xmlns:actionTransfer="clr-namespace:Shopfloor.Features.Action.ActionTransfer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:topPanel="clr-namespace:Shopfloor.Layout.TopPanel"
     xmlns:wip="clr-namespace:Shopfloor.Features.WorkInProgressFeature"
@@ -20,41 +25,60 @@
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <topPanel:TopPanelView Grid.Row="0" DataContext="{Binding TopPanelViewModel}" />
-        <Border Grid.Row="1" Background="{StaticResource BrushDarkNeutral100}">
+        <topPanel:TopPanelView Grid.Row="0"
+                               DataContext="{Binding TopPanelViewModel}"/>
+        <Border Grid.Row="1"
+                Background="{StaticResource BrushDarkNeutral100}">
             <ContentControl Content="{Binding Content}">
                 <ContentControl.Resources>
 
                     <DataTemplate DataType="{x:Type wip:WorkInProgressViewModel}">
-                        <wip:WorkInProgressView />
+                        <wip:WorkInProgressView/>
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type god:GodViewModel}">
-                        <god:GodView />
+                        <god:GodView/>
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type activitiesList:ActionsListViewModel}">
-                        <activitiesList:ActionsListView />
+                        <activitiesList:ActionsListView/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type activityDetails:ActionDetailsViewModel}">
-                        <activityDetails:ActionDetailsView />
+                        <activityDetails:ActionDetailsView/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type activityEdit:ActionEditViewModel}">
-                        <activityEdit:ActionEditView />
+                        <activityEdit:ActionEditView/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type activityCreate:ActionCreateViewModel}">
-                        <activityCreate:ActionCreateView />
+                        <activityCreate:ActionCreateView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type actionTransfer:ActionTransferViewModel}">
+                        <actionTransfer:ActionTransferView/>
                     </DataTemplate>
 
                     <DataTemplate DataType="{x:Type machineResponsibilities:MachineResponsibilitiesViewModel}">
-                        <machineResponsibilities:MachineResponsibilitiesView />
+                        <machineResponsibilities:MachineResponsibilitiesView/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type machineResponsibilityEdit:MachineResponsibilityEditViewModel}">
-                        <machineResponsibilityEdit:MachineResponsibilityEditView />
+                        <machineResponsibilityEdit:MachineResponsibilityEditView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type actionTrainingList:ActionTrainingListViewModel}">
+                        <actionTrainingList:ActionTrainingListView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type trainingCreate:TrainingCreateViewModel}">
+                        <trainingCreate:TrainingCreateView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type trainingDetails:TrainingDetailsViewModel}">
+                        <trainingDetails:TrainingDetailsView/>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type personalTraining:PersonalTrainingViewModel}">
+                        <personalTraining:PersonalTrainingView/>
                     </DataTemplate>
                 </ContentControl.Resources>
             </ContentControl>

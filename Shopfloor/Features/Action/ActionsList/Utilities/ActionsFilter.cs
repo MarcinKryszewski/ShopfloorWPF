@@ -12,7 +12,7 @@ using Shopfloor.Roots;
 using Shopfloor.Shared;
 using Shopfloor.Shared.HelperFunctions;
 
-namespace Shopfloor.Features.ActionsList
+namespace Shopfloor.Features.Action.ActionsList.Utilities
 {
     internal class ActionsFilter : ObservableObject
     {

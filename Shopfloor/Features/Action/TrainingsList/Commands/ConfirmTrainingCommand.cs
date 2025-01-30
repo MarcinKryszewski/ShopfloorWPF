@@ -5,7 +5,7 @@ using Shopfloor.Roots;
 using Shopfloor.Services.AuthServices;
 using Shopfloor.Shared.Commands;
 
-namespace Shopfloor.Features.TrainingsList.Commands
+namespace Shopfloor.Features.Action.TrainingsList.Commands
 {
     internal class ConfirmTrainingCommand : CommandBase
     {

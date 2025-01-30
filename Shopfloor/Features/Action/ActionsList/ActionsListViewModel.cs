@@ -6,10 +6,14 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
+using Shopfloor.Features.Action.ActionsList.Utilities;
+using Shopfloor.Features.Action.ActionTransfer;
 using Shopfloor.Features.ActionCreate;
 using Shopfloor.Features.ActionDetails;
 using Shopfloor.Features.ActionEdit;
 using Shopfloor.Features.ActionsList.Commands;
+using Shopfloor.Features.TrainingFeatures.ActionTrainingList;
+using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Models.Activities;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
@@ -40,6 +44,8 @@ namespace Shopfloor.Features.ActionsList
             EditCommand = new NavigationCommand<ActionEditViewModel>(NavigationService).Navigate();
             CreateActionCommand = new NavigationCommand<ActionCreateViewModel>(NavigationService).Navigate();
             CancelCommand = new CancelCommand(root);
+            TrainingsCommand = new NavigationCommand<ActionTrainingListViewModel>(NavigationService).Navigate();
+            TransferActionCommand = new NavigationCommand<ActionTransferViewModel>(NavigationService).Navigate();
 
             Task.Run(LoadDataAsync);
         }
@@ -53,6 +59,8 @@ namespace Shopfloor.Features.ActionsList
         public ICommand CreateActionCommand { get; }
         public ICommand DetailsCommand { get; }
         public ICommand EditCommand { get; }
+        public ICommand TrainingsCommand { get; }
+        public ICommand TransferActionCommand { get; }
         public ActionsFilter FilterData { get; }
         public void OnDataChanged(object? sender, EventArgs e)
         {

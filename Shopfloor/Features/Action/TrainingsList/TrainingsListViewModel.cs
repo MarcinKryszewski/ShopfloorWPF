@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
-using Shopfloor.Features.TrainingsList.Commands;
+using Shopfloor.Features.Action.TrainingsList.Commands;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.Persons;
 using Shopfloor.Models.Trainings;
@@ -20,7 +20,7 @@ namespace Shopfloor.Features.TrainingsList
     internal class TrainingsListViewModel : ViewModelBase
     {
         private readonly ActivityContext _activityContext;
-        private readonly List<Training> _trainings = [];
+        private readonly List<Models.Trainings.Training> _trainings = [];
         private readonly TrainingsRoot _trainingsRoot;
         private readonly IUserContext _userContext;
         public TrainingsListViewModel(

@@ -141,28 +141,6 @@
                             Margin="2,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            IsChecked="{Binding FilterData.IsPassed}"
-                            IsThreeState="True"
-                            Style="{StaticResource CheckBoxStyle1}"/>
-                        <TextBlock
-                            Grid.Column="1"
-                            Margin="10,0,0,0"
-                            VerticalAlignment="Center"
-                            Style="{StaticResource TooltipText}"
-                            Text="Przekazana"/>
-                    </Grid>
-
-                    <Grid Margin="0,7,0,3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <CheckBox
-                            Grid.Column="0"
-                            Margin="2,0,0,0"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
                             IsChecked="{Binding FilterData.IsLoto}"
                             Style="{StaticResource CheckBoxStyleTwoState}"/>
                         <TextBlock
@@ -336,6 +314,28 @@
                                             FontFamily="Segoe MDL2 Assets"
                                             Style="{StaticResource gridButtonIcon}"
                                             Text="&#xE74D;"/>
+                                    </Button>
+
+                                    <Button
+                                        Command="{Binding Path=DataContext.TrainingsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource gridInfoButton}"
+                                        Margin="2,0,0,0">
+                                        <TextBlock
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Style="{StaticResource gridButtonIcon}"
+                                            Text="&#xE7BE;"/>
+                                    </Button>
+
+                                    <Button
+                                        Command="{Binding Path=DataContext.TransferActionCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource gridOrangeButton}"
+                                        Margin="2,0,0,0">
+                                        <TextBlock
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Style="{StaticResource gridButtonIcon}"
+                                            Text="&#xE748;"/>
                                     </Button>
 
                                 </StackPanel>
