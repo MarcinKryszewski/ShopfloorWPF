@@ -13,7 +13,6 @@ using Shopfloor.Features.ActionEdit;
 using Shopfloor.Features.Actions.ActionCreate;
 using Shopfloor.Features.ActionsList.Commands;
 using Shopfloor.Features.Trainings.ActionTrainingList;
-using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Models.Activities;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;

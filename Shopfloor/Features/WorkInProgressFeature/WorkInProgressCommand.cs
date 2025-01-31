@@ -1,4 +1,3 @@
-using System;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 

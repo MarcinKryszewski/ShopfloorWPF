@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Shopfloor.Models.Persons;
 using Shopfloor.Models.Trainings;
 using Shopfloor.Roots;

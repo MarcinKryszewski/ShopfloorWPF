@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Shopfloor.Services.AuthServices;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;

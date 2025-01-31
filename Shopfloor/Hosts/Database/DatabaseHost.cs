@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Database;
-using Shopfloor.Services;
 
 namespace Shopfloor.Hosts.Database
 {

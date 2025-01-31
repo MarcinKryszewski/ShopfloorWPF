@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.Windows;
-using Shopfloor.Contexts;
 using Shopfloor.Services.AuthServices;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Services.NotificationServices;

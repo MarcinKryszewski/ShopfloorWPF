@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Shopfloor.Features.ActionsList;
 using Shopfloor.Features.MachineResponsibilities;
 using Shopfloor.Services.NavigationServices;

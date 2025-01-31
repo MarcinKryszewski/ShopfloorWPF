@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Org.BouncyCastle.Math.EC.Rfc7748;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.Machines;

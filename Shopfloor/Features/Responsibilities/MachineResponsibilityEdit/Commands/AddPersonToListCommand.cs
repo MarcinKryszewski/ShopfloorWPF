@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Data;
 using Shopfloor.Models.Persons;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
