@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Shopfloor.Features.TrainingFeatures.ActionTrainingList
+namespace Shopfloor.Features.Trainings.ActionTrainingList
 {
     public sealed partial class ActionTrainingListView : UserControl
     {

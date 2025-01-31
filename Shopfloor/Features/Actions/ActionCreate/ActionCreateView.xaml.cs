@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Shopfloor.Features.ActionCreate
+namespace Shopfloor.Features.Actions.ActionCreate
 {
     public sealed partial class ActionCreateView : UserControl
     {

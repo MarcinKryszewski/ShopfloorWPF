@@ -16,7 +16,7 @@ using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.ActionCreate
+namespace Shopfloor.Features.Actions.ActionCreate
 {
     internal class ActionCreateViewModel : ViewModelBase
     {

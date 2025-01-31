@@ -1,4 +1,21 @@
-﻿using Shopfloor.Layout.TopPanel;
+﻿using System.Windows;
+using System.Windows.Controls;
+using Shopfloor.Features.Action.ActionTransfer;
+using Shopfloor.Features.ActionDetails;
+using Shopfloor.Features.ActionEdit;
+using Shopfloor.Features.Actions.ActionCreate;
+using Shopfloor.Features.ActionsList;
+using Shopfloor.Features.God;
+using Shopfloor.Features.MachineResponsibilities;
+using Shopfloor.Features.MachineResponsibilityEdit;
+using Shopfloor.Features.Personal.PersonalTraining;
+using Shopfloor.Features.TrainingFeatures.TrainingCreate;
+using Shopfloor.Features.TrainingFeatures.TrainingDetails;
+using Shopfloor.Features.Trainings.ActionTrainingList;
+using Shopfloor.Features.TrainingsList;
+using Shopfloor.Features.WorkInProgressFeature;
+using Shopfloor.Layout.Content.Util;
+using Shopfloor.Layout.TopPanel;
 using Shopfloor.Shared.Stores;
 using Shopfloor.Shared.ViewModels;
 
@@ -15,8 +32,33 @@ namespace Shopfloor.Layout.Content
             _navigationStore = navigationStore;
             _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
         }
+        public static DataTemplateSelector TemplateSelector => new ViewModelTemplateSelector()
+        {
+            GodTemplate = GetDataTemplate<GodView>(),
+            WorkInProgressTemplate = GetDataTemplate<WorkInProgressView>(),
+            ActionCreateTemplate = GetDataTemplate<ActionCreateView>(),
+            ActionDetailsTemplate = GetDataTemplate<ActionDetailsView>(),
+            ActionEditTemplate = GetDataTemplate<ActionEditView>(),
+            ActionListTemplate = GetDataTemplate<ActionsListView>(),
+            ActionTransferTemplate = GetDataTemplate<ActionTransferView>(),
+            TrainingsListTemplate = GetDataTemplate<TrainingsListView>(),
+            PersonalTrainingTemplate = GetDataTemplate<PersonalTrainingView>(),
+            MachineResponsibilitiesTemplate = GetDataTemplate<MachineResponsibilitiesView>(),
+            MachineResponsibilityEditemplate = GetDataTemplate<MachineResponsibilityEditView>(),
+            ActionTrainingListTemplate = GetDataTemplate<ActionTrainingListView>(),
+            TrainingCreateTemplate = GetDataTemplate<TrainingCreateView>(),
+            TrainingDetailsTemplate = GetDataTemplate<TrainingDetailsView>(),
+        };
         public ViewModelBase? Content => _navigationStore.CurrentViewModel;
         public TopPanelViewModel TopPanelViewModel => _topPanelViewModel;
+        private static DataTemplate GetDataTemplate<TView>()
+        where TView : UserControl
+        {
+            return new DataTemplate(typeof(TView))
+            {
+                VisualTree = new FrameworkElementFactory(typeof(TView)),
+            };
+        }
         private void OnCurrentViewModelChanged()
         {
             OnPropertyChanged(nameof(Content));
