@@ -24,10 +24,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Features\ActionCreate\**" />
     <Compile Remove="Themes\Controls\PlaceholderTextBox\Themes\**" />
+    <EmbeddedResource Remove="Features\ActionCreate\**" />
     <EmbeddedResource Remove="Themes\Controls\PlaceholderTextBox\Themes\**" />
+    <None Remove="Features\ActionCreate\**" />
     <None Remove="Themes\Controls\PlaceholderTextBox\Themes\**" />
+    <Page Remove="Features\ActionCreate\**" />
     <Page Remove="Themes\Controls\PlaceholderTextBox\Themes\**" />
+    <Watch Remove="Features\ActionCreate\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -120,10 +125,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Features\ActionCreate\Commands\" />
   </ItemGroup>
 
 </Project>

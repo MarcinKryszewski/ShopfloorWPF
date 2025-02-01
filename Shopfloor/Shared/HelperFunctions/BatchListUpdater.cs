@@ -25,7 +25,7 @@ namespace Shopfloor.Shared.HelperFunctions
             int dataCount = data.Count();
             await Populatelist(dataCount, batchSize, privateList, data);
         }
-        private static async Task Populatelist<T>(int dataCount, int batchSize, List<T> privateList, IEnumerable<T> data)
+        private static Task Populatelist<T>(int dataCount, int batchSize, List<T> privateList, IEnumerable<T> data)
         {
             long runTime = Stopwatch.GetTimestamp();
             for (int i = 0; i <= dataCount; i += batchSize)
@@ -38,6 +38,7 @@ namespace Shopfloor.Shared.HelperFunctions
                 }
             }
             DataChanged?.Invoke(null, EventArgs.Empty);
+            return Task.CompletedTask;
         }
     }
 }

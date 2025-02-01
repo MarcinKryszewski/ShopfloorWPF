@@ -223,6 +223,7 @@ csharp_style_var_for_built_in_types = false:silent
 csharp_style_var_when_type_is_apparent = false:silent
 csharp_style_var_elsewhere = false:silent
 dotnet_diagnostic.S3246.severity = suggestion
+dotnet_diagnostic.SA0001.severity = suggestion
 
 [*.vb]
 #### Naming styles ####

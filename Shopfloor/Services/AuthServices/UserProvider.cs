@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
+#pragma warning disable S1118 // Utility classes should not have public constructors
 namespace Shopfloor.Services.AuthServices
 {
     internal class UserProvider
@@ -20,3 +21,4 @@ namespace Shopfloor.Services.AuthServices
         }
     }
 }
+#pragma warning restore S1118 // Utility classes should not have public constructors

@@ -122,6 +122,10 @@ namespace Shopfloor.Features.MachineResponsibilities
                 }
             });
         }
+        private static async Task LoadMachinesAsync(MachinesRoot dataRoot)
+        {
+            await dataRoot.GetData();
+        }
         private static LinkedList<Workshop> MissingResponsibles(Machine machine, IEnumerable<Workshop> workshops)
         {
             IEnumerable<Person> responsibles = machine.Responsibles;
@@ -163,10 +167,6 @@ namespace Shopfloor.Features.MachineResponsibilities
             List<Line> data = (await dataRoot.GetLine()).ToList();
             Lines = new ListCollectionView(data);
             OnPropertyChanged(nameof(Lines));
-        }
-        private async Task LoadMachinesAsync(MachinesRoot dataRoot)
-        {
-            await dataRoot.GetData();
         }
         private async Task LoadPersonsAsync(DataRoot dataRoot)
         {

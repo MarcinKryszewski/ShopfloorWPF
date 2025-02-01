@@ -34,11 +34,15 @@ namespace Shopfloor.Roots
         }
         public event EventHandler? DataChanged;
         public ConcurrentObservableCollection<Machine> Data { get; private set; } = [];
-        public async Task CreateMachine(MachineCreation data)
+        public static Task CreateMachine(MachineCreation data)
         {
             throw new NotImplementedException();
         }
-        public async Task DeleteMachine(MachineCreation data)
+        public static Task DeleteMachine(MachineCreation data)
+        {
+            throw new NotImplementedException();
+        }
+        public static Task UpdateMachine(MachineCreation data)
         {
             throw new NotImplementedException();
         }
@@ -65,10 +69,6 @@ namespace Shopfloor.Roots
             }));
 
             OnDataChanged(EventArgs.Empty);
-        }
-        public async Task UpdateMachine(MachineCreation data)
-        {
-            throw new NotImplementedException();
         }
         public async Task UpdateResponsibles(Machine machine, List<Person> persons)
         {
