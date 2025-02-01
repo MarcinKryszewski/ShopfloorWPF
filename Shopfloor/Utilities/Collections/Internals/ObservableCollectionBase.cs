@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Shopfloor.Utilities.Collections.Internals
 {
+    [ExcludeFromCodeCoverage]
     internal abstract class ObservableCollectionBase<T> : INotifyCollectionChanged, INotifyPropertyChanged
     {
         protected ObservableCollectionBase()

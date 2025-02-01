@@ -13,4 +13,3 @@ namespace Shopfloor.Utilities.Collections.Internals
         Reset,
     }
 }
-

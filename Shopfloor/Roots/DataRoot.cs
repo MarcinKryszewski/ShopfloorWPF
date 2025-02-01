@@ -46,7 +46,11 @@ namespace Shopfloor.Roots
             _trainings = trainings;
             _workshops = workshops;
         }
-        public event EventHandler? DataChanged;
+        public event EventHandler? DataChanged
+        {
+            add { throw new NotSupportedException(); }
+            remove { throw new NotSupportedException(); }
+        }
         public async Task<IEnumerable<Activity>> GetActivity() => await _activities.GetDataAsync();
         public async Task<IEnumerable<ActivityInstruction>> GetActivityInstruction() => await _activitiesInstructions.GetDataAsync();
         public async Task<IEnumerable<ActivityType>> GetActivityType() => await _activityTypes.GetDataAsync();

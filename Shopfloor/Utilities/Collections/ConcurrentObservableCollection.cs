@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Windows;
@@ -10,6 +11,7 @@ using Shopfloor.Utilities.Collections.Internals;
 
 namespace Shopfloor.Utilities.Collections
 {
+    [ExcludeFromCodeCoverage]
     public sealed class ConcurrentObservableCollection<T> : IList<T>, IReadOnlyList<T>, IList
     {
         private readonly Dispatcher _dispatcher;
@@ -28,17 +30,6 @@ namespace Shopfloor.Utilities.Collections
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         }
 
-        private static Dispatcher GetCurrentDispatcher()
-        {
-            return Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
-        }
-
-        /// <summary>
-        /// When set to <see langword="true"/> AddRange and InsertRange methods raise NotifyCollectionChanged with all items instead of one event per item.
-        /// </summary>
-        /// <remarks>Most WPF controls doesn't support batch modifications</remarks>
-        public bool SupportRangeNotifications { get; set; }
-
         public IReadOnlyObservableCollection<T> AsObservable
         {
             get
@@ -54,21 +45,19 @@ namespace Shopfloor.Utilities.Collections
                 return _observableCollection;
             }
         }
-
-        bool ICollection<T>.IsReadOnly => false;
-
         public int Count => _items.Count;
-
-        bool IList.IsReadOnly => false;
-
-        bool IList.IsFixedSize => false;
-
         int ICollection.Count => Count;
-
-        object ICollection.SyncRoot => ((ICollection)_items).SyncRoot;
-
+        bool IList.IsFixedSize => false;
+        bool ICollection<T>.IsReadOnly => false;
+        bool IList.IsReadOnly => false;
         bool ICollection.IsSynchronized => ((ICollection)_items).IsSynchronized;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether when set to <see langword="true"/> AddRange and InsertRange methods raise NotifyCollectionChanged with all items instead of one event per item.
+        /// </summary>
+        /// <remarks>Most WPF controls doesn't support batch modifications.</remarks>
+        public bool SupportRangeNotifications { get; set; }
+        object ICollection.SyncRoot => ((ICollection)_items).SyncRoot;
         object? IList.this[int index]
         {
             get => this[index];
@@ -78,7 +67,6 @@ namespace Shopfloor.Utilities.Collections
                 this[index] = (T)value!;
             }
         }
-
         public T this[int index]
         {
             get => _items[index];
@@ -91,7 +79,6 @@ namespace Shopfloor.Utilities.Collections
                 }
             }
         }
-
         public void Add(T item)
         {
             lock (_lock)
@@ -100,12 +87,22 @@ namespace Shopfloor.Utilities.Collections
                 _observableCollection?.EnqueueAdd(item);
             }
         }
-
+        int IList.Add(object? value)
+        {
+            AssertType(value, nameof(value));
+            var item = (T)value!;
+            lock (_lock)
+            {
+                var index = _items.Count;
+                _items = _items.Add(item);
+                _observableCollection?.EnqueueAdd(item);
+                return index;
+            }
+        }
         public void AddRange(params T[] items)
         {
             AddRange((IEnumerable<T>)items);
         }
-
         public void AddRange(IEnumerable<T> items)
         {
             lock (_lock)
@@ -128,7 +125,65 @@ namespace Shopfloor.Utilities.Collections
                 }
             }
         }
-
+        public void Clear()
+        {
+            lock (_lock)
+            {
+                _items = _items.Clear();
+                _observableCollection?.EnqueueClear();
+            }
+        }
+        void IList.Clear()
+        {
+            Clear();
+        }
+        public bool Contains(T item)
+        {
+            return _items.Contains(item);
+        }
+        bool IList.Contains(object? value)
+        {
+            AssertType(value, nameof(value));
+            return Contains((T)value!);
+        }
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            _items.CopyTo(array, arrayIndex);
+        }
+        void ICollection.CopyTo(Array array, int index)
+        {
+            ((ICollection)_items).CopyTo(array, index);
+        }
+        public IEnumerator<T> GetEnumerator()
+        {
+            return _items.GetEnumerator();
+        }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+        public int IndexOf(T item)
+        {
+            return _items.IndexOf(item);
+        }
+        int IList.IndexOf(object? value)
+        {
+            AssertType(value, nameof(value));
+            return IndexOf((T)value!);
+        }
+        public void Insert(int index, T item)
+        {
+            lock (_lock)
+            {
+                _items = _items.Insert(index, item);
+                _observableCollection?.EnqueueInsert(index, item);
+            }
+        }
+        void IList.Insert(int index, object? value)
+        {
+            AssertType(value, nameof(value));
+            Insert(index, (T)value!);
+        }
         public void InsertRange(int index, IEnumerable<T> items)
         {
             lock (_lock)
@@ -152,25 +207,6 @@ namespace Shopfloor.Utilities.Collections
                 }
             }
         }
-
-        public void Clear()
-        {
-            lock (_lock)
-            {
-                _items = _items.Clear();
-                _observableCollection?.EnqueueClear();
-            }
-        }
-
-        public void Insert(int index, T item)
-        {
-            lock (_lock)
-            {
-                _items = _items.Insert(index, item);
-                _observableCollection?.EnqueueInsert(index, item);
-            }
-        }
-
         public bool Remove(T item)
         {
             lock (_lock)
@@ -186,7 +222,11 @@ namespace Shopfloor.Utilities.Collections
                 return false;
             }
         }
-
+        void IList.Remove(object? value)
+        {
+            AssertType(value, nameof(value));
+            Remove((T)value!);
+        }
         public void RemoveAt(int index)
         {
             lock (_lock)
@@ -195,37 +235,14 @@ namespace Shopfloor.Utilities.Collections
                 _observableCollection?.EnqueueRemoveAt(index);
             }
         }
-
-        public IEnumerator<T> GetEnumerator()
+        void IList.RemoveAt(int index)
         {
-            return _items.GetEnumerator();
+            RemoveAt(index);
         }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public int IndexOf(T item)
-        {
-            return _items.IndexOf(item);
-        }
-
-        public bool Contains(T item)
-        {
-            return _items.Contains(item);
-        }
-
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            _items.CopyTo(array, arrayIndex);
-        }
-
         public void Sort()
         {
             Sort(comparer: null);
         }
-
         public void Sort(IComparer<T>? comparer)
         {
             lock (_lock)
@@ -234,12 +251,10 @@ namespace Shopfloor.Utilities.Collections
                 _observableCollection?.EnqueueReset(_items);
             }
         }
-
         public void StableSort()
         {
             StableSort(comparer: null);
         }
-
         public void StableSort(IComparer<T>? comparer)
         {
             lock (_lock)
@@ -248,65 +263,18 @@ namespace Shopfloor.Utilities.Collections
                 _observableCollection?.EnqueueReset(_items);
             }
         }
-
-        int IList.Add(object? value)
-        {
-            AssertType(value, nameof(value));
-            var item = (T)value!;
-            lock (_lock)
-            {
-                var index = _items.Count;
-                _items = _items.Add(item);
-                _observableCollection?.EnqueueAdd(item);
-                return index;
-            }
-        }
-
-        bool IList.Contains(object? value)
-        {
-            AssertType(value, nameof(value));
-            return Contains((T)value!);
-        }
-
-        void IList.Clear()
-        {
-            Clear();
-        }
-
-        int IList.IndexOf(object? value)
-        {
-            AssertType(value, nameof(value));
-            return IndexOf((T)value!);
-        }
-
-        void IList.Insert(int index, object? value)
-        {
-            AssertType(value, nameof(value));
-            Insert(index, (T)value!);
-        }
-
-        void IList.Remove(object? value)
-        {
-            AssertType(value, nameof(value));
-            Remove((T)value!);
-        }
-
-        void IList.RemoveAt(int index)
-        {
-            RemoveAt(index);
-        }
-
-        void ICollection.CopyTo(Array array, int index)
-        {
-            ((ICollection)_items).CopyTo(array, index);
-        }
-
         private static void AssertType(object? value, string argumentName)
         {
             if (value is null || value is T)
+            {
                 return;
+            }
 
             throw new ArgumentException($"value must be of type '{typeof(T).FullName}'", argumentName);
+        }
+        private static Dispatcher GetCurrentDispatcher()
+        {
+            return Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
         }
     }
 }

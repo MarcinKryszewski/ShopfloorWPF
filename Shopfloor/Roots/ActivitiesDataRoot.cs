@@ -17,7 +17,11 @@ namespace Shopfloor.Roots
         {
             _data = data;
         }
-        public event EventHandler? DataChanged;
+        public event EventHandler? DataChanged
+        {
+            add { throw new NotSupportedException(); }
+            remove { throw new NotSupportedException(); }
+        }
         public async Task<List<Line>> GetLines()
         {
             return (await _data.GetLine()).ToList();

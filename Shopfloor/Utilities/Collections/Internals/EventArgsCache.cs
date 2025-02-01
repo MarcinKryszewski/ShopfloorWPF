@@ -1,8 +1,10 @@
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Shopfloor.Utilities.Collections.Internals
 {
+    [ExcludeFromCodeCoverage]
     internal static class EventArgsCache
     {
         internal static readonly PropertyChangedEventArgs CountPropertyChanged = new("Count");

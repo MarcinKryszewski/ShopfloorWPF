@@ -32,7 +32,7 @@ namespace Shopfloor.Services.AuthServices
         public async Task Login(string username)
         {
             username = username.ToLower();
-            int? userId = await _userProvider.GetByUsername(username);
+            int? userId = await UserProvider.GetByUsername(username);
 
             if (userId == null)
             {
@@ -48,7 +48,7 @@ namespace Shopfloor.Services.AuthServices
                 Username = username,
                 Id = (int)userId,
             };
-            user.Roles.AddRange(await _userProvider.GetRoles((int)userId));
+            user.Roles.AddRange(await UserProvider.GetRoles((int)userId));
 
             _userContext.User = user;
             _userContext.IsAuthenticated = true;

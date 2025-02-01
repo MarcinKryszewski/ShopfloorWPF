@@ -15,13 +15,6 @@ namespace Shopfloor.Services.NavigationServices
             _viewModelFactory = viewModelFactory;
             _navigationStore = navigationStore;
         }
-        public void NavigateTo<TViewModel>()
-            where TViewModel : ViewModelBase
-        {
-            ViewModelBase viewModel = CreateViewModel<TViewModel>();
-            _navigationStore.CurrentViewModel = viewModel;
-        }
-
         public ViewModelBase CreateViewModel<TViewModel>()
             where TViewModel : ViewModelBase
         {
@@ -29,10 +22,16 @@ namespace Shopfloor.Services.NavigationServices
             {
                 return _viewModelFactory.Invoke(typeof(TViewModel));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return _viewModelFactory.Invoke(typeof(WorkInProgressViewModel));
             }
+        }
+        public void NavigateTo<TViewModel>()
+                    where TViewModel : ViewModelBase
+        {
+            ViewModelBase viewModel = CreateViewModel<TViewModel>();
+            _navigationStore.CurrentViewModel = viewModel;
         }
     }
 }

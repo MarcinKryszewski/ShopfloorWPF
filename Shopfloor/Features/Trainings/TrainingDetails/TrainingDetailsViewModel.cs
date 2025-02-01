@@ -4,6 +4,5 @@ namespace Shopfloor.Features.TrainingFeatures.TrainingDetails
 {
     internal class TrainingDetailsViewModel : ViewModelBase
     {
-
     }
 }

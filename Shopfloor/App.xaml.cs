@@ -43,6 +43,19 @@ namespace Shopfloor
             IDatabaseInitializer databaseInitializer = initializer.CreateInitializer();
             databaseInitializer.Initialize();
         }
+        private static void SetCulture()
+        {
+            var vCulture = new CultureInfo("pl-PL");
+
+            Thread.CurrentThread.CurrentCulture = vCulture;
+            Thread.CurrentThread.CurrentUICulture = vCulture;
+            CultureInfo.DefaultThreadCurrentCulture = vCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = vCulture;
+
+            FrameworkElement.LanguageProperty.OverrideMetadata(
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+        }
         private void ApplicationStart(object sender, StartupEventArgs e)
         {
             DatabaseConnectionFactory dbConnection = _services.GetRequiredService<DatabaseConnectionFactory>();
@@ -66,19 +79,6 @@ namespace Shopfloor
         {
             AuthService auth = _services.GetRequiredService<AuthService>();
             await auth.AutoLogin();
-        }
-        private void SetCulture()
-        {
-            var vCulture = new CultureInfo("pl-PL");
-
-            Thread.CurrentThread.CurrentCulture = vCulture;
-            Thread.CurrentThread.CurrentUICulture = vCulture;
-            CultureInfo.DefaultThreadCurrentCulture = vCulture;
-            CultureInfo.DefaultThreadCurrentUICulture = vCulture;
-
-            FrameworkElement.LanguageProperty.OverrideMetadata(
-                typeof(FrameworkElement),
-                new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
         }
     }
 }

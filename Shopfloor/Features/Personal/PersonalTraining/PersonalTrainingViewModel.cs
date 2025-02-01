@@ -4,6 +4,5 @@ namespace Shopfloor.Features.Personal.PersonalTraining
 {
     internal class PersonalTrainingViewModel : ViewModelBase
     {
-
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Runtime.InteropServices;
 
+#pragma warning disable SA1649 // File name should match first type name
 namespace Shopfloor.Utilities.Collections.Internals
 {
     [StructLayout(LayoutKind.Auto)]
@@ -60,3 +61,4 @@ namespace Shopfloor.Utilities.Collections.Internals
         public ImmutableList<T>? Items { get; }
     }
 }
+#pragma warning restore SA1649 // File name should match first type name
