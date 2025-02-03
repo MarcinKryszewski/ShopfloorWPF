@@ -1,10 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Features.Action.ActionsList.Utilities;
-using Shopfloor.Features.Action.ActionTransfer;
 using Shopfloor.Features.ActionDetails;
 using Shopfloor.Features.ActionEdit;
 using Shopfloor.Features.Actions.ActionCreate;
-using Shopfloor.Features.ActionsList;
+using Shopfloor.Features.Actions.ActionsList;
+using Shopfloor.Features.Actions.ActionTransfer;
 using Shopfloor.Features.MachineResponsibilities;
 using Shopfloor.Features.MachineResponsibilityEdit;
 using Shopfloor.Features.Personal.PersonalTraining;

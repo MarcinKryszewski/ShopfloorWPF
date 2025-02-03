@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 
-namespace Shopfloor.Features.Action.ActionTransfer
+namespace Shopfloor.Features.Actions.ActionTransfer
 {
     public sealed partial class ActionTransferView : UserControl
     {

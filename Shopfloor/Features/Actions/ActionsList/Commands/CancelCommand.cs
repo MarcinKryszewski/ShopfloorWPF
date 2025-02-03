@@ -2,7 +2,7 @@ using Shopfloor.Models.Activities;
 using Shopfloor.Roots;
 using Shopfloor.Shared.Commands;
 
-namespace Shopfloor.Features.ActionsList.Commands
+namespace Shopfloor.Features.Actions.ActionsList.Commands
 {
     internal class CancelCommand : CommandBase
     {

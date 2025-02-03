@@ -1,9 +1,9 @@
 <UserControl
-    x:Class="Shopfloor.Features.ActionsList.ActionsListView"
+    x:Class="Shopfloor.Features.Actions.ActionsList.ActionsListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Shopfloor.Features.ActionsList"
+    xmlns:local="clr-namespace:Shopfloor.Features.Actions.ActionsList"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DataContext="{d:DesignInstance Type=local:ActionsListViewModel}"
     d:DesignHeight="450"
@@ -226,13 +226,13 @@
                     <Style BasedOn="{StaticResource DataGridRowMain}"
                            TargetType="DataGridRow">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding HasInstruction}"
-                                         Value="True">
+                            <DataTrigger Binding="{Binding Workshop.Name}"
+                                         Value="Warsztat mechaniczny">
                                 <Setter Property="BorderBrush"
                                         Value="#BAD32F"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding IsPassed}"
-                                         Value="True">
+                            <DataTrigger Binding="{Binding Workshop.Name}"
+                                         Value="Warsztat elektroniczny">
                                 <Setter Property="BorderBrush"
                                         Value="#2FD32F"/>
                             </DataTrigger>

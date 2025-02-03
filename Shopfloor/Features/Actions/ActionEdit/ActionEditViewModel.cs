@@ -7,7 +7,7 @@ using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Features.ActionDetails;
 using Shopfloor.Features.ActionEdit.Commands;
-using Shopfloor.Features.ActionsList;
+using Shopfloor.Features.Actions.ActionsList;
 using Shopfloor.Features.TrainingsList;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.ActivityTypes;

@@ -3,7 +3,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Utilities;
 
-namespace Shopfloor.Features.ActionsList
+namespace Shopfloor.Features.Actions.ActionsList
 {
     public sealed partial class ActionsListView : UserControl
     {

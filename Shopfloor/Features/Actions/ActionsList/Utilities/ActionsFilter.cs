@@ -25,7 +25,6 @@ namespace Shopfloor.Features.Action.ActionsList.Utilities
         private bool? _hasInstruction = null;
         private bool _isJog = false;
         private bool _isLoto = false;
-        private bool? _isPassed = null;
         private bool _isProduction = false;
         private string _line = string.Empty;
         private string _machine = string.Empty;
@@ -70,15 +69,6 @@ namespace Shopfloor.Features.Action.ActionsList.Utilities
             set
             {
                 _isLoto = value;
-                OnFiltersChanged(EventArgs.Empty);
-            }
-        }
-        public bool? IsPassed
-        {
-            get => _isPassed;
-            set
-            {
-                _isPassed = value;
                 OnFiltersChanged(EventArgs.Empty);
             }
         }

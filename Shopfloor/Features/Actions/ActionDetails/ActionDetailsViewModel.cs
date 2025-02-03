@@ -1,7 +1,7 @@
 using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Features.ActionEdit;
-using Shopfloor.Features.ActionsList;
+using Shopfloor.Features.Actions.ActionsList;
 using Shopfloor.Features.TrainingsList;
 using Shopfloor.Models.Activities;
 using Shopfloor.Services.NavigationServices;

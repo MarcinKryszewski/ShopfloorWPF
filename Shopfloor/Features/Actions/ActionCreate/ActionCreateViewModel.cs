@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Features.ActionCreate.Commands;
-using Shopfloor.Features.ActionsList;
+using Shopfloor.Features.Actions.ActionsList;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.ActivityTypes;
 using Shopfloor.Models.Lines;

@@ -7,18 +7,18 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Features.Action.ActionsList.Utilities;
-using Shopfloor.Features.Action.ActionTransfer;
 using Shopfloor.Features.ActionDetails;
 using Shopfloor.Features.ActionEdit;
 using Shopfloor.Features.Actions.ActionCreate;
-using Shopfloor.Features.ActionsList.Commands;
+using Shopfloor.Features.Actions.ActionsList.Commands;
+using Shopfloor.Features.Actions.ActionTransfer;
 using Shopfloor.Features.Trainings.ActionTrainingList;
 using Shopfloor.Models.Activities;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.ActionsList
+namespace Shopfloor.Features.Actions.ActionsList
 {
     internal class ActionsListViewModel : ViewModelBase
     {
@@ -85,13 +85,12 @@ namespace Shopfloor.Features.ActionsList
                 bool line = string.IsNullOrEmpty(FilterData.Line) || activity.Machine!.Line!.Name.Contains(FilterData.Line, StringComparison.InvariantCultureIgnoreCase);
                 bool machine = string.IsNullOrEmpty(FilterData.Machine) || activity.Machine!.Name.Contains(FilterData.Machine, StringComparison.InvariantCultureIgnoreCase);
                 bool type = string.IsNullOrEmpty(FilterData.Type) || activity.Type!.Name.Contains(FilterData.Type, StringComparison.InvariantCultureIgnoreCase);
-                bool isPassed = FilterData.IsPassed == null || (bool)FilterData.IsPassed == activity.IsPassed;
                 bool isLoto = !FilterData.IsLoto || activity.IsLoto;
                 bool isJog = !FilterData.IsJog || activity.IsJog;
                 bool isProduction = !FilterData.IsProduction || activity.IsDurningProduction;
                 bool hasInstruction = FilterData.HasInstruction == null || (bool)FilterData.HasInstruction == activity.HasInstruction;
 
-                return workshop && line && machine && type && isPassed && isLoto && isJog && isProduction && hasInstruction;
+                return workshop && line && machine && type && isLoto && isJog && isProduction && hasInstruction;
             }
             return false;
         }

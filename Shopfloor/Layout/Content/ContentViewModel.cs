@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Shopfloor.Features.Action.ActionTransfer;
 using Shopfloor.Features.ActionDetails;
 using Shopfloor.Features.ActionEdit;
 using Shopfloor.Features.Actions.ActionCreate;
-using Shopfloor.Features.ActionsList;
+using Shopfloor.Features.Actions.ActionTransfer;
+using Shopfloor.Features.Actions.ActionsList;
 using Shopfloor.Features.God;
 using Shopfloor.Features.MachineResponsibilities;
 using Shopfloor.Features.MachineResponsibilityEdit;

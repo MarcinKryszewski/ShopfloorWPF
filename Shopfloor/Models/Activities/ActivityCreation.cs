@@ -17,7 +17,6 @@ namespace Shopfloor.Models.Activities
             Workshop = model.Workshop;
             Status = model.Status;
             Description = model.Description;
-            IsPassed = model.IsPassed;
             TypeId = model.TypeId;
             Type = model.Type;
             IsLoto = model.IsLoto;
@@ -34,7 +33,6 @@ namespace Shopfloor.Models.Activities
         public bool IsDurningProduction { get; set; }
         public bool IsJog { get; set; }
         public bool IsLoto { get; set; }
-        public bool IsPassed { get; set; } = false;
         public Machine? Machine { get; set; }
         public int MachineId { get; set; }
         public Occurance Occurance { get; set; } = new();
@@ -57,7 +55,6 @@ namespace Shopfloor.Models.Activities
                 Workshop = Workshop,
                 Status = Status,
                 Description = Description,
-                IsPassed = IsPassed,
                 TypeId = TypeId,
                 Type = Type,
                 IsLoto = IsLoto,
