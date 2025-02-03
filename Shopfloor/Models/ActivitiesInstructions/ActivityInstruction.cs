@@ -6,12 +6,12 @@ namespace Shopfloor.Models.ActivitiesInstructions
 {
     internal class ActivityInstruction : IModel
     {
-        public string Name { get; } = string.Empty;
         public Activity? Activity { get; set; }
         required public int ActivityId { get; init; }
         required public int Id { get; init; }
         public Instruction? Instruction { get; set; }
         required public int InstructionId { get; init; }
+        public string Name { get; } = string.Empty;
         public void SetValues<T>(IModelCreationModel<T> data)
             where T : IModel
         {

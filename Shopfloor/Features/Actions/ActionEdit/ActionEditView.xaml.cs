@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 
-namespace Shopfloor.Features.ActionEdit
+namespace Shopfloor.Features.Actions.ActionEdit
 {
     public sealed partial class ActionEditView : UserControl
     {

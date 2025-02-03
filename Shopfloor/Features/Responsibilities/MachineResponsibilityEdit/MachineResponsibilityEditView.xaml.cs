@@ -1,10 +1,7 @@
 ﻿using System.Windows.Controls;
 
-namespace Shopfloor.Features.MachineResponsibilityEdit
+namespace Shopfloor.Features.Responsibilities.MachineResponsibilityEdit
 {
-    /// <summary>
-    /// Interaction logic for MachineResponsibilityEditView.xaml
-    /// </summary>
     public partial class MachineResponsibilityEditView : UserControl
     {
         public MachineResponsibilityEditView()

@@ -1,13 +1,12 @@
 <UserControl
-    x:Class="Shopfloor.Features.ActionEdit.ActionEditView"
+    x:Class="Shopfloor.Features.Actions.ActionEdit.ActionEditView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Shopfloor.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Shopfloor.Features.ActionEdit"
+    xmlns:local="clr-namespace:Shopfloor.Features.Actions.ActionEdit"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:trainings="clr-namespace:Shopfloor.Features.TrainingsList"
-    d:DataContext="{d:DesignInstance Type=local:ActionEditViewModel}"
+    xmlns:trainings="clr-namespace:Shopfloor.Features.Actions.TrainingsList"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -111,7 +110,6 @@
             <Label Grid.Row="0" Grid.Column="2">
                 <TextBlock Text="{Binding Activity.Workshop.Name}" />
             </Label>
-
 
             <ComboBox
                 Grid.Row="2"

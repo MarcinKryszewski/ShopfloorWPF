@@ -1,6 +1,6 @@
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.TrainingFeatures.TrainingCreate
+namespace Shopfloor.Features.Trainings.TrainingCreate
 {
     internal class TrainingCreateViewModel : ViewModelBase
     {

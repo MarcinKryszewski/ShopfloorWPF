@@ -6,7 +6,7 @@ namespace Shopfloor.Features.God
     {
         public GodView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

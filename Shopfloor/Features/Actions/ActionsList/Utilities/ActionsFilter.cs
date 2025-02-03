@@ -12,7 +12,7 @@ using Shopfloor.Roots;
 using Shopfloor.Shared;
 using Shopfloor.Shared.HelperFunctions;
 
-namespace Shopfloor.Features.Action.ActionsList.Utilities
+namespace Shopfloor.Features.Actions.ActionsList.Utilities
 {
     internal class ActionsFilter : ObservableObject
     {
@@ -41,10 +41,6 @@ namespace Shopfloor.Features.Action.ActionsList.Utilities
             Task.Run(LoadDataAsync);
         }
         public event EventHandler? FiltersChanged;
-        public Machine? SelectedMachine { get; set; }
-        public Workshop? SelectedWorkshop { get; set; }
-        public Line? SelectedLine { get; set; }
-        public ActivityType? SelectedType { get; set; }
         public bool? HasInstruction
         {
             get => _hasInstruction;
@@ -119,6 +115,10 @@ namespace Shopfloor.Features.Action.ActionsList.Utilities
             }
         }
         public ICollectionView Machines { get; init; }
+        public Line? SelectedLine { get; set; }
+        public Machine? SelectedMachine { get; set; }
+        public ActivityType? SelectedType { get; set; }
+        public Workshop? SelectedWorkshop { get; set; }
         public string Type
         {
             get => _type;

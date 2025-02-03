@@ -5,10 +5,9 @@ namespace Shopfloor.Services.NotificationServices
 {
     internal sealed class NotifierCommand : CommandBase
     {
+        private readonly string _message;
         private readonly INotifier _notifier;
         private readonly ToastMessageStyles _style;
-        private readonly string _message;
-
         public NotifierCommand(INotifier notifier, string message, ToastMessageStyles style)
         {
             _notifier = notifier;

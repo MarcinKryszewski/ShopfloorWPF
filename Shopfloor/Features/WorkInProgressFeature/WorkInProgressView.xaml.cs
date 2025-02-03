@@ -6,7 +6,7 @@ namespace Shopfloor.Features.WorkInProgressFeature
     {
         public WorkInProgressView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

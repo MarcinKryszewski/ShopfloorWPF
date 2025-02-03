@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 
-namespace Shopfloor.Features.TrainingFeatures.TrainingCreate
+namespace Shopfloor.Features.Trainings.TrainingCreate
 {
     public sealed partial class TrainingCreateView : UserControl
     {

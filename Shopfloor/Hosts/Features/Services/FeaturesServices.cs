@@ -1,17 +1,17 @@
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Features.Action.ActionsList.Utilities;
-using Shopfloor.Features.ActionDetails;
-using Shopfloor.Features.ActionEdit;
 using Shopfloor.Features.Actions.ActionCreate;
+using Shopfloor.Features.Actions.ActionDetails;
+using Shopfloor.Features.Actions.ActionEdit;
 using Shopfloor.Features.Actions.ActionsList;
+using Shopfloor.Features.Actions.ActionsList.Utilities;
 using Shopfloor.Features.Actions.ActionTransfer;
-using Shopfloor.Features.MachineResponsibilities;
-using Shopfloor.Features.MachineResponsibilityEdit;
+using Shopfloor.Features.Actions.TrainingsList;
 using Shopfloor.Features.Personal.PersonalTraining;
-using Shopfloor.Features.TrainingFeatures.TrainingCreate;
-using Shopfloor.Features.TrainingFeatures.TrainingDetails;
+using Shopfloor.Features.Responsibilities.MachineResponsibilities;
+using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit;
 using Shopfloor.Features.Trainings.ActionTrainingList;
-using Shopfloor.Features.TrainingsList;
+using Shopfloor.Features.Trainings.TrainingCreate;
+using Shopfloor.Features.Trainings.TrainingDetails;
 
 namespace Shopfloor.Hosts.Features.Services
 {

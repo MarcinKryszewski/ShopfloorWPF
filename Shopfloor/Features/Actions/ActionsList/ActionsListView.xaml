@@ -12,75 +12,70 @@
 
     <UserControl.Resources>
         <Style TargetType="TextBlock">
-            <Setter Property="Foreground"
-                    Value="White"/>
+            <Setter Property="Foreground" Value="White" />
         </Style>
     </UserControl.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
 
         <Grid.Resources>
             <Style TargetType="ScrollViewer">
-                <Setter Property="VerticalScrollBarVisibility"
-                        Value="Auto"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
             </Style>
         </Grid.Resources>
 
         <Grid Grid.Column="0">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
-            <ScrollViewer Grid.Row="0"
-                          Margin="0,0,10,0">
-                <StackPanel Width="250px"
-                            Margin="10,0,0,0">
+            <ScrollViewer Grid.Row="0" Margin="0,0,10,0">
+                <StackPanel Width="250px" Margin="10,0,0,0">
 
-                    <TextBlock Style="{StaticResource TitleTextBlock}"
-                               Text="Filtry"/>
+                    <TextBlock Style="{StaticResource TitleTextBlock}" Text="Filtry" />
 
                     <TextBlock
                         Margin="0,7,0,3"
                         Style="{StaticResource TooltipText}"
-                        Text="Warsztat"/>
+                        Text="Warsztat" />
                     <ComboBox
                         MinHeight="30px"
                         DisplayMemberPath="Name"
                         IsEditable="true"
                         IsReadOnly="false"
                         IsTextSearchEnabled="false"
-                        SelectedItem="{Binding Path=FilterData.SelectedWorkshop}"
                         ItemsSource="{Binding Path=FilterData.Workshops}"
+                        SelectedItem="{Binding Path=FilterData.SelectedWorkshop}"
                         Style="{StaticResource ComboBoxMain}"
-                        Text="{Binding FilterData.Workshop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        Text="{Binding FilterData.Workshop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Margin="0,7,0,3"
                         Style="{StaticResource TooltipText}"
-                        Text="Linia"/>
+                        Text="Linia" />
                     <ComboBox
                         MinHeight="30px"
                         DisplayMemberPath="Name"
                         IsEditable="true"
                         IsReadOnly="false"
                         IsTextSearchEnabled="false"
-                        SelectedItem="{Binding Path=FilterData.SelectedLine}"
                         ItemsSource="{Binding Path=FilterData.Lines}"
+                        SelectedItem="{Binding Path=FilterData.SelectedLine}"
+                        SelectedValuePath="Name"
                         Style="{StaticResource ComboBoxMain}"
-                        Text="{Binding FilterData.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        SelectedValuePath="Name"/>
+                        Text="{Binding FilterData.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Margin="0,7,0,3"
                         Style="{StaticResource TooltipText}"
-                        Text="Maszyna"/>
+                        Text="Maszyna" />
                     <ComboBox
                         MinHeight="30px"
                         DisplayMemberPath="Name"
@@ -88,30 +83,30 @@
                         IsReadOnly="false"
                         IsTextSearchEnabled="false"
                         ItemsSource="{Binding Path=FilterData.Machines}"
-                        Style="{StaticResource ComboBoxMain}"
                         SelectedItem="{Binding Path=FilterData.SelectedMachine}"
-                        Text="{Binding FilterData.Machine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        SelectedValuePath="Name"/>
+                        SelectedValuePath="Name"
+                        Style="{StaticResource ComboBoxMain}"
+                        Text="{Binding FilterData.Machine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
                         Margin="0,7,0,3"
                         Style="{StaticResource TooltipText}"
-                        Text="Rodzaj"/>
+                        Text="Rodzaj" />
                     <ComboBox
                         MinHeight="30px"
                         DisplayMemberPath="Name"
                         IsEditable="true"
                         IsReadOnly="false"
                         IsTextSearchEnabled="false"
-                        SelectedItem="{Binding Path=FilterData.SelectedType}"
                         ItemsSource="{Binding Path=FilterData.Types}"
+                        SelectedItem="{Binding Path=FilterData.SelectedType}"
                         Style="{StaticResource ComboBoxMain}"
-                        Text="{Binding FilterData.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        Text="{Binding FilterData.Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                     <Grid Margin="0,7,0,3">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <CheckBox
@@ -121,19 +116,19 @@
                             VerticalAlignment="Center"
                             IsChecked="{Binding FilterData.HasInstruction}"
                             IsThreeState="True"
-                            Style="{StaticResource CheckBoxStyle1}"/>
+                            Style="{StaticResource CheckBoxStyle1}" />
                         <TextBlock
                             Grid.Column="1"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
                             Style="{StaticResource TooltipText}"
-                            Text="Ma instrukcję"/>
+                            Text="Ma instrukcję" />
                     </Grid>
 
                     <Grid Margin="0,7,0,3">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <CheckBox
@@ -142,19 +137,19 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             IsChecked="{Binding FilterData.IsLoto}"
-                            Style="{StaticResource CheckBoxStyleTwoState}"/>
+                            Style="{StaticResource CheckBoxStyleTwoState}" />
                         <TextBlock
                             Grid.Column="1"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
                             Style="{StaticResource TooltipText}"
-                            Text="LOTO"/>
+                            Text="LOTO" />
                     </Grid>
 
                     <Grid Margin="0,7,0,3">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <CheckBox
@@ -163,19 +158,19 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             IsChecked="{Binding FilterData.IsJog}"
-                            Style="{StaticResource CheckBoxStyleTwoState}"/>
+                            Style="{StaticResource CheckBoxStyleTwoState}" />
                         <TextBlock
                             Grid.Column="1"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
                             Style="{StaticResource TooltipText}"
-                            Text="JOG"/>
+                            Text="JOG" />
                     </Grid>
 
                     <Grid Margin="0,7,0,3">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <CheckBox
@@ -184,13 +179,13 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             IsChecked="{Binding FilterData.IsProduction}"
-                            Style="{StaticResource CheckBoxStyleTwoState}"/>
+                            Style="{StaticResource CheckBoxStyleTwoState}" />
                         <TextBlock
                             Grid.Column="1"
                             Margin="10,0,0,0"
                             VerticalAlignment="Center"
                             Style="{StaticResource TooltipText}"
-                            Text="Podczas produkcji"/>
+                            Text="Podczas produkcji" />
                     </Grid>
                 </StackPanel>
             </ScrollViewer>
@@ -201,7 +196,7 @@
                 Margin="10"
                 Command="{Binding Path=CreateActionCommand}"
                 Content="NOWY CILT"
-                Style="{StaticResource ResourceKey=ButtonMain}"/>
+                Style="{StaticResource ResourceKey=ButtonMain}" />
         </Grid>
 
         <ScrollViewer
@@ -223,18 +218,13 @@
                 TargetUpdated="DataGrid_TargetUpdated">
 
                 <DataGrid.RowStyle>
-                    <Style BasedOn="{StaticResource DataGridRowMain}"
-                           TargetType="DataGridRow">
+                    <Style BasedOn="{StaticResource DataGridRowMain}" TargetType="DataGridRow">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Workshop.Name}"
-                                         Value="Warsztat mechaniczny">
-                                <Setter Property="BorderBrush"
-                                        Value="#BAD32F"/>
+                            <DataTrigger Binding="{Binding Workshop.Name}" Value="Warsztat mechaniczny">
+                                <Setter Property="BorderBrush" Value="#BAD32F" />
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding Workshop.Name}"
-                                         Value="Warsztat elektroniczny">
-                                <Setter Property="BorderBrush"
-                                        Value="#2FD32F"/>
+                            <DataTrigger Binding="{Binding Workshop.Name}" Value="Warsztat elektroniczny">
+                                <Setter Property="BorderBrush" Value="#2FD32F" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -244,37 +234,37 @@
                     <DataGridTextColumn
                         Width="auto"
                         Binding="{Binding Machine.Line.Name}"
-                        Header="Linia"/>
+                        Header="Linia" />
 
                     <DataGridTextColumn
                         Width="auto"
                         Binding="{Binding Machine.Name}"
-                        Header="Maszyna"/>
+                        Header="Maszyna" />
 
                     <DataGridTextColumn
                         Width="auto"
                         Binding="{Binding Workshop.Name}"
-                        Header="Warsztat"/>
+                        Header="Warsztat" />
 
                     <DataGridTextColumn
                         Width="auto"
                         Binding="{Binding Type.Name}"
-                        Header="Rodzaj"/>
+                        Header="Rodzaj" />
 
                     <DataGridTextColumn
                         Width="*"
                         Binding="{Binding Description, NotifyOnTargetUpdated=True}"
-                        Header="Opis"/>
+                        Header="Opis" />
 
                     <DataGridTextColumn
                         Width="auto"
                         Binding="{Binding OccuranceText}"
-                        Header="Częstotliwość"/>
+                        Header="Częstotliwość" />
 
                     <DataGridTextColumn
                         Width="auto"
                         Binding="{Binding Additionals}"
-                        Header="Specjalne"/>
+                        Header="Specjalne" />
 
                     <DataGridTemplateColumn
                         Width="auto"
@@ -291,53 +281,52 @@
                                         <TextBlock
                                             FontFamily="Segoe MDL2 Assets"
                                             Style="{StaticResource gridButtonIcon}"
-                                            Text="&#xE7B3;"/>
+                                            Text="&#xE7B3;" />
                                     </Button>
 
                                     <Button
+                                        Margin="2,0,0,0"
                                         Command="{Binding Path=DataContext.EditCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                         CommandParameter="{Binding}"
-                                        Style="{StaticResource gridEditButton}"
-                                        Margin="2,0,0,0">
+                                        Style="{StaticResource gridEditButton}">
                                         <TextBlock
                                             FontFamily="Segoe MDL2 Assets"
                                             Style="{StaticResource gridButtonIcon}"
-                                            Text="&#xE70F;"/>
+                                            Text="&#xE70F;" />
                                     </Button>
 
                                     <Button
+                                        Margin="2,0,0,0"
                                         Command="{Binding Path=DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                         CommandParameter="{Binding}"
-                                        Style="{StaticResource gridRemoveButton}"
-                                        Margin="2,0,0,0">
+                                        Style="{StaticResource gridRemoveButton}">
                                         <TextBlock
                                             FontFamily="Segoe MDL2 Assets"
                                             Style="{StaticResource gridButtonIcon}"
-                                            Text="&#xE74D;"/>
+                                            Text="&#xE74D;" />
                                     </Button>
 
                                     <Button
+                                        Margin="2,0,0,0"
                                         Command="{Binding Path=DataContext.TrainingsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                         CommandParameter="{Binding}"
-                                        Style="{StaticResource gridInfoButton}"
-                                        Margin="2,0,0,0">
+                                        Style="{StaticResource gridInfoButton}">
                                         <TextBlock
                                             FontFamily="Segoe MDL2 Assets"
                                             Style="{StaticResource gridButtonIcon}"
-                                            Text="&#xE7BE;"/>
+                                            Text="&#xE7BE;" />
                                     </Button>
 
                                     <Button
+                                        Margin="2,0,0,0"
                                         Command="{Binding Path=DataContext.TransferActionCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                                         CommandParameter="{Binding}"
-                                        Style="{StaticResource gridOrangeButton}"
-                                        Margin="2,0,0,0">
+                                        Style="{StaticResource gridOrangeButton}">
                                         <TextBlock
                                             FontFamily="Segoe MDL2 Assets"
                                             Style="{StaticResource gridButtonIcon}"
-                                            Text="&#xE748;"/>
+                                            Text="&#xE748;" />
                                     </Button>
-
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

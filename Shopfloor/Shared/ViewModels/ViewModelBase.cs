@@ -10,8 +10,8 @@ namespace Shopfloor.Shared.ViewModels
 {
     internal class ViewModelBase : INotifyPropertyChanged
     {
-        private readonly INotifier _notifier;
         private readonly INavigationService _navigationService;
+        private readonly INotifier _notifier;
         private readonly IUserContext _userContext;
         private IDispatcherWrapper? _dispatcher;
         public ViewModelBase(ViewModelBaseDependecies? dependecies = null)
@@ -26,8 +26,8 @@ namespace Shopfloor.Shared.ViewModels
             get => _dispatcher ?? new DispatcherWrapper(Application.Current.Dispatcher);
             init => _dispatcher = value;
         }
-        protected INotifier Notifier => _notifier;
         protected INavigationService NavigationService => _navigationService;
+        protected INotifier Notifier => _notifier;
         protected IUserContext UserContext => _userContext;
         public virtual void Dispose()
         {

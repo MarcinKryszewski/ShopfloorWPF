@@ -16,19 +16,16 @@
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="240"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="240" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <sidePanel:SidePanelView Grid.Column="0"
-                                 DataContext="{Binding SidePanelViewModel}"/>
-        <content:ContentView Grid.Column="1"
-                DataContext="{Binding ContentViewModel}"/>
+        <sidePanel:SidePanelView Grid.Column="0" DataContext="{Binding SidePanelViewModel}" />
+        <content:ContentView Grid.Column="1" DataContext="{Binding ContentViewModel}" />
         <!-- <ScrollViewer
             Grid.Column="1"
             HorizontalScrollBarVisibility="Disabled"
             VerticalScrollBarVisibility="Auto">
-            
-        </ScrollViewer> -->
+        </ScrollViewer>-->
     </Grid>
 </Window>

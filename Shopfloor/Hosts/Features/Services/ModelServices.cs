@@ -70,6 +70,12 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddSingleton<IStore<Person>, PersonStore>();
             services.AddSingleton<IProvider<Person, PersonCreation>, PersonProvider>();
         }
+        public static void Responsibles(IServiceCollection services)
+        {
+            services.AddSingleton<IRepository<MachineResponsible, MachineResponsibleCreation>, MachineResponsibleRepository>();
+            services.AddSingleton<IStore<MachineResponsible>, MachineResponsibleStore>();
+            services.AddSingleton<IProvider<MachineResponsible, MachineResponsibleCreation>, MachineResponsibleProvider>();
+        }
         public static void Trainings(IServiceCollection services)
         {
             services.AddSingleton<IRepository<Training, TrainingCreation>, TrainingRepository>();
@@ -81,12 +87,6 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddSingleton<IRepository<Workshop, WorkshopCreation>, WorkshopRepository>();
             services.AddSingleton<IStore<Workshop>, WorkshopStore>();
             services.AddSingleton<IProvider<Workshop, WorkshopCreation>, WorkshopProvider>();
-        }
-        public static void Responsibles(IServiceCollection services)
-        {
-            services.AddSingleton<IRepository<MachineResponsible, MachineResponsibleCreation>, MachineResponsibleRepository>();
-            services.AddSingleton<IStore<MachineResponsible>, MachineResponsibleStore>();
-            services.AddSingleton<IProvider<MachineResponsible, MachineResponsibleCreation>, MachineResponsibleProvider>();
         }
     }
 }

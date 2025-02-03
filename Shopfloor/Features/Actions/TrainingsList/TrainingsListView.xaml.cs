@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Shopfloor.Features.TrainingsList
+namespace Shopfloor.Features.Actions.TrainingsList
 {
     /// <summary>
     /// Interaction logic for TrainingsListView.xaml

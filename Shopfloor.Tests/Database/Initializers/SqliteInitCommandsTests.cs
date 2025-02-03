@@ -1,4 +1,4 @@
-using Shopfloor.Database.SQLite;
+using Shopfloor.Database.Initializers;
 using Shopfloor.Utilities;
 
 namespace Shopfloor.Tests.Database.Initializers

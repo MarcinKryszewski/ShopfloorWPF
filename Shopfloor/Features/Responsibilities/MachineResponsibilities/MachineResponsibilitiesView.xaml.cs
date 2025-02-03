@@ -1,7 +1,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Shopfloor.Features.MachineResponsibilities
+namespace Shopfloor.Features.Responsibilities.MachineResponsibilities
 {
     public sealed partial class MachineResponsibilitiesView : UserControl
     {

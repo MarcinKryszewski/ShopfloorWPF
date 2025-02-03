@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
-using Shopfloor.Features.ActionDetails;
-using Shopfloor.Features.ActionEdit.Commands;
+using Shopfloor.Features.Actions.ActionDetails;
+using Shopfloor.Features.Actions.ActionEdit.Commands;
 using Shopfloor.Features.Actions.ActionsList;
-using Shopfloor.Features.TrainingsList;
+using Shopfloor.Features.Actions.TrainingsList;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.ActivityTypes;
 using Shopfloor.Models.Persons;
@@ -19,7 +19,7 @@ using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.ActionEdit
+namespace Shopfloor.Features.Actions.ActionEdit
 {
     internal class ActionEditViewModel : ViewModelBase
     {

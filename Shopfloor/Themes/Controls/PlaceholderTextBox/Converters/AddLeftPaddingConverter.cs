@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Shopfloor.Controls.PlaceholderTextBox.Converters
+namespace Shopfloor.Themes.Controls.PlaceholderTextBox.Converters
 {
     internal sealed class AddLeftPaddingConverter : IValueConverter
     {

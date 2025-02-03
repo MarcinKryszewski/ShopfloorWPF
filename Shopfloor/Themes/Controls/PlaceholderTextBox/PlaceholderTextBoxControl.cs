@@ -3,23 +3,23 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Shopfloor.Controls.PlaceholderTextBox
+namespace Shopfloor.Themes.Controls.PlaceholderTextBox
 {
     internal sealed class PlaceholderTextBoxControl : TextBox
     {
-        public static readonly DependencyProperty PlaceholderProperty =
-            DependencyProperty.Register(
-                "Placeholder",
-                typeof(string),
-                typeof(PlaceholderTextBoxControl),
-                new PropertyMetadata(string.Empty));
+        public static readonly DependencyProperty IsEmptyProperty = _isEmptyPropertyKey!.DependencyProperty;
         public static readonly DependencyProperty PlaceholderColorProperty =
             DependencyProperty.Register(
                 "PlaceholderColor",
                 typeof(SolidColorBrush),
                 typeof(PlaceholderTextBoxControl),
                 new PropertyMetadata(new SolidColorBrush(Colors.Black)));
-        public static readonly DependencyProperty IsEmptyProperty = _isEmptyPropertyKey!.DependencyProperty;
+        public static readonly DependencyProperty PlaceholderProperty =
+                            DependencyProperty.Register(
+                "Placeholder",
+                typeof(string),
+                typeof(PlaceholderTextBoxControl),
+                new PropertyMetadata(string.Empty));
         private static readonly DependencyPropertyKey _isEmptyPropertyKey =
             DependencyProperty.RegisterReadOnly(
                 "IsEmpty",
@@ -29,6 +29,11 @@ namespace Shopfloor.Controls.PlaceholderTextBox
         static PlaceholderTextBoxControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(PlaceholderTextBoxControl), new FrameworkPropertyMetadata(typeof(PlaceholderTextBoxControl)));
+        }
+        public bool IsEmpty
+        {
+            get { return (bool)GetValue(IsEmptyProperty); }
+            private set { SetValue(_isEmptyPropertyKey, value); }
         }
         public string Placeholder
         {
@@ -41,13 +46,6 @@ namespace Shopfloor.Controls.PlaceholderTextBox
             get { return (SolidColorBrush)GetValue(PlaceholderColorProperty); }
             set { SetValue(PlaceholderColorProperty, value); }
         }
-
-        public bool IsEmpty
-        {
-            get { return (bool)GetValue(IsEmptyProperty); }
-            private set { SetValue(_isEmptyPropertyKey, value); }
-        }
-
         protected override void OnInitialized(EventArgs e)
         {
             UpdateIsEmpty();

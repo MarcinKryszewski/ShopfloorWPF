@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shopfloor.Database.Configuration;
+using Shopfloor.Database;
 
 namespace Shopfloor.Hosts.Core
 {

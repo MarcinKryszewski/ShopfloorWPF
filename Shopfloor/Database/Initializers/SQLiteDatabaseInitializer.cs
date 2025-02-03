@@ -1,7 +1,6 @@
 ﻿using System.Data;
 using System.IO;
 using Dapper;
-using Shopfloor.Database.SQLite;
 
 namespace Shopfloor.Database.Initializers
 {

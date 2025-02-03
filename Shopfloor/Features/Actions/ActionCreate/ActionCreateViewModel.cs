@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Input;
-using Shopfloor.Features.ActionCreate.Commands;
+using Shopfloor.Features.Actions.ActionCreate.Commands;
 using Shopfloor.Features.Actions.ActionsList;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.ActivityTypes;
@@ -20,11 +20,11 @@ namespace Shopfloor.Features.Actions.ActionCreate
 {
     internal class ActionCreateViewModel : ViewModelBase
     {
-        private string _typeName = string.Empty;
-        private string _workshopName = string.Empty;
+        private Line? _line;
         private string _lineName = string.Empty;
         private string _machineName = string.Empty;
-        private Line? _line;
+        private string _typeName = string.Empty;
+        private string _workshopName = string.Empty;
         public ActionCreateViewModel(
             ViewModelBaseDependecies dependecies,
             ActivitiesDataRoot dataRoot,
@@ -53,32 +53,6 @@ namespace Shopfloor.Features.Actions.ActionCreate
                 OnPropertyChanged(nameof(Activity));
             }
         }
-        public string TypeName
-        {
-            get => _typeName;
-            set
-            {
-                _typeName = value;
-                if (!CollectionHelper.IsInIEnumerable<ActivityType>(_typeName, Types))
-                {
-                    Activity.Type = null;
-                    OnPropertyChanged(nameof(Activity));
-                }
-            }
-        }
-        public string WorkshopName
-        {
-            get => _workshopName;
-            set
-            {
-                _workshopName = value;
-                if (!CollectionHelper.IsInIEnumerable<Workshop>(_workshopName, Workshops))
-                {
-                    Activity.Workshop = null;
-                    OnPropertyChanged(nameof(Activity));
-                }
-            }
-        }
         public string LineName
         {
             get => _lineName;
@@ -92,6 +66,7 @@ namespace Shopfloor.Features.Actions.ActionCreate
                 }
             }
         }
+        public ICollectionView Lines { get; private set; } = new ListCollectionView(new List<Line>());
         public string MachineName
         {
             get => _machineName;
@@ -105,12 +80,37 @@ namespace Shopfloor.Features.Actions.ActionCreate
                 }
             }
         }
-        public ICollectionView Lines { get; private set; } = new ListCollectionView(new List<Line>());
         public ICollectionView Machines { get; private set; } = new ListCollectionView(new List<Machine>());
         public ICollectionView Occurencies { get; private set; } = new ListCollectionView(new List<Occurance>());
         public ICommand ReturnCommand { get; }
         public ActionCreateCommand SaveCommand { get; }
+        public string TypeName
+        {
+            get => _typeName;
+            set
+            {
+                _typeName = value;
+                if (!CollectionHelper.IsInIEnumerable<ActivityType>(_typeName, Types))
+                {
+                    Activity.Type = null;
+                    OnPropertyChanged(nameof(Activity));
+                }
+            }
+        }
         public ICollectionView Types { get; private set; } = new ListCollectionView(new List<ActivityType>());
+        public string WorkshopName
+        {
+            get => _workshopName;
+            set
+            {
+                _workshopName = value;
+                if (!CollectionHelper.IsInIEnumerable<Workshop>(_workshopName, Workshops))
+                {
+                    Activity.Workshop = null;
+                    OnPropertyChanged(nameof(Activity));
+                }
+            }
+        }
         public ICollectionView Workshops { get; private set; } = new ListCollectionView(new List<Workshop>());
         public void OnActivitySave(object? sender, EventArgs e)
         {
@@ -127,6 +127,16 @@ namespace Shopfloor.Features.Actions.ActionCreate
             }
 
             Notifier.ShowError(SaveCommand.NotifyText);
+        }
+        private bool Filter(object obj)
+        {
+            if (obj is Machine machine)
+            {
+                bool line = string.IsNullOrEmpty(Line?.Name ?? string.Empty) || machine.Line!.Name.Contains(Line?.Name ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
+
+                return line;
+            }
+            return false;
         }
         private async Task LoadDataAsync(ActivitiesDataRoot dataRoot)
         {
@@ -172,16 +182,6 @@ namespace Shopfloor.Features.Actions.ActionCreate
             List<Workshop> data = await dataRoot.GetWorkshops();
             Workshops = new ListCollectionView(data);
             OnPropertyChanged(nameof(Types));
-        }
-        private bool Filter(object obj)
-        {
-            if (obj is Machine machine)
-            {
-                bool line = string.IsNullOrEmpty(Line?.Name ?? string.Empty) || machine.Line!.Name.Contains(Line?.Name ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
-
-                return line;
-            }
-            return false;
         }
     }
 }

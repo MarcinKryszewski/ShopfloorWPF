@@ -140,9 +140,6 @@
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </Grid>
-
-
-
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

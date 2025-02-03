@@ -7,15 +7,15 @@ using Shopfloor.Roots;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 
-namespace Shopfloor.Features.MachineResponsibilityEdit.Commands
+namespace Shopfloor.Features.Responsibilities.MachineResponsibilityEdit.Commands
 {
     internal class SaveResponsiblesCommand : CommandBase
     {
-        private readonly MachinesRoot _root;
         private readonly Machine _machine;
-        private readonly List<Person> _persons;
         private readonly Notification _notificationError = new() { Message = "Błąd zapisu osób odpowiedzialnych! Spróbuj ponownie!", Type = NotifierType.Error };
         private readonly Notification _notificationSuccess = new() { Message = "Dodano osoby odpowiedzialne!", Type = NotifierType.Success };
+        private readonly List<Person> _persons;
+        private readonly MachinesRoot _root;
         public SaveResponsiblesCommand(
             Machine selectedMachine,
             List<Person> selectedPersons,

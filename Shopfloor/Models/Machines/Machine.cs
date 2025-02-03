@@ -11,8 +11,8 @@ namespace Shopfloor.Models.Machines
         public Line? Line { get; set; }
         required public int LineId { get; init; }
         public string Name { get; set; } = string.Empty;
-        public List<Person> Responsibles { get; init; } = [];
         public List<int> ResponsibleIds { get; init; } = [];
+        public List<Person> Responsibles { get; init; } = [];
         public void SetValues<T>(IModelCreationModel<T> data)
             where T : IModel
         {

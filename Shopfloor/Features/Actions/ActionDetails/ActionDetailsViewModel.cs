@@ -1,13 +1,13 @@
 using System.Windows.Input;
 using Shopfloor.Contexts;
-using Shopfloor.Features.ActionEdit;
+using Shopfloor.Features.Actions.ActionEdit;
 using Shopfloor.Features.Actions.ActionsList;
-using Shopfloor.Features.TrainingsList;
+using Shopfloor.Features.Actions.TrainingsList;
 using Shopfloor.Models.Activities;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.ActionDetails
+namespace Shopfloor.Features.Actions.ActionDetails
 {
     internal class ActionDetailsViewModel : ViewModelBase
     {

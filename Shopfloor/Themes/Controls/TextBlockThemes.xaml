@@ -53,5 +53,4 @@
         <Setter Property="Typography.Capitals" Value="AllSmallCaps" />
         <Setter Property="Foreground" Value="{StaticResource BrushDarkNeutral600}" />
     </Style>
-
 </ResourceDictionary>

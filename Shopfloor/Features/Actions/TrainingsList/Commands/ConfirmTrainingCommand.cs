@@ -4,12 +4,12 @@ using Shopfloor.Roots;
 using Shopfloor.Services.AuthServices;
 using Shopfloor.Shared.Commands;
 
-namespace Shopfloor.Features.Action.TrainingsList.Commands
+namespace Shopfloor.Features.Actions.TrainingsList.Commands
 {
     internal class ConfirmTrainingCommand : CommandBase
     {
-        private readonly IUserContext _userContext;
         private readonly TrainingsRoot _trainingRoot;
+        private readonly IUserContext _userContext;
         public ConfirmTrainingCommand(
             IUserContext userContext,
             TrainingsRoot trainingRoot)

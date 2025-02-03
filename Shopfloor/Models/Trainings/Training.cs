@@ -14,28 +14,10 @@ namespace Shopfloor.Models.Trainings
         required public int Id { get; init; }
         public bool IsConfirmedByCoach { get; set; }
         public bool IsConfirmedByTrainee { get; set; }
+        public string Name { get; } = string.Empty;
         public Person? Trainee { get; set; }
         public int TraineeId { get; init; }
         public DateTime? TrainingDate { get; set; }
-        public string Name { get; } = string.Empty;
-
-        public void SetValues<T>(IModelCreationModel<T> data)
-            where T : IModel
-        {
-            if (data is not TrainingCreation)
-            {
-                return;
-            }
-
-            TrainingCreation creation = (TrainingCreation)data;
-
-            Activity = creation.Activity;
-            Coach = creation.Coach;
-            IsConfirmedByCoach = creation.IsConfirmedByCoach;
-            IsConfirmedByTrainee = creation.IsConfirmedByTrainee;
-            Trainee = creation.Trainee;
-            TrainingDate = creation.TrainingDate;
-        }
         public TrainingCreation CreateModelCreation()
         {
             return new TrainingCreation()
@@ -51,6 +33,23 @@ namespace Shopfloor.Models.Trainings
                 TraineeId = TraineeId,
                 TrainingDate = TrainingDate,
             };
+        }
+        public void SetValues<T>(IModelCreationModel<T> data)
+                    where T : IModel
+        {
+            if (data is not TrainingCreation)
+            {
+                return;
+            }
+
+            TrainingCreation creation = (TrainingCreation)data;
+
+            Activity = creation.Activity;
+            Coach = creation.Coach;
+            IsConfirmedByCoach = creation.IsConfirmedByCoach;
+            IsConfirmedByTrainee = creation.IsConfirmedByTrainee;
+            Trainee = creation.Trainee;
+            TrainingDate = creation.TrainingDate;
         }
     }
 }

@@ -4,7 +4,7 @@ using Shopfloor.Models.Activities;
 using Shopfloor.Roots;
 using Shopfloor.Shared.Commands;
 
-namespace Shopfloor.Features.ActionCreate.Commands
+namespace Shopfloor.Features.Actions.ActionCreate.Commands
 {
     internal class ActionCreateCommand : CommandBase
     {
@@ -14,8 +14,8 @@ namespace Shopfloor.Features.ActionCreate.Commands
             _activitiesRoot = activitiesRoot;
         }
         public event EventHandler? ExecuteFinished;
-        public string NotifyText { get; private set; } = string.Empty;
         public bool ExecutedSuccessful { get; private set; }
+        public string NotifyText { get; private set; } = string.Empty;
         public override void Execute(object? parameter)
         {
             if (parameter is null)

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 using Shopfloor.Features.Actions.ActionsList;
-using Shopfloor.Features.MachineResponsibilities;
+using Shopfloor.Features.Responsibilities.MachineResponsibilities;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
 

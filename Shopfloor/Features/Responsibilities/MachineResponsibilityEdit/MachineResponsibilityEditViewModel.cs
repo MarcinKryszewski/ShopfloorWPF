@@ -8,8 +8,8 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Xaml.Behaviors.Core;
 using Shopfloor.Contexts;
-using Shopfloor.Features.MachineResponsibilities;
-using Shopfloor.Features.MachineResponsibilityEdit.Commands;
+using Shopfloor.Features.Responsibilities.MachineResponsibilities;
+using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit.Commands;
 using Shopfloor.Models.Machines;
 using Shopfloor.Models.Persons;
 using Shopfloor.Models.Workshops;
@@ -18,7 +18,7 @@ using Shopfloor.Services.NavigationServices;
 using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.MachineResponsibilityEdit
+namespace Shopfloor.Features.Responsibilities.MachineResponsibilityEdit
 {
     internal class MachineResponsibilityEditViewModel : ViewModelBase
     {

@@ -8,7 +8,6 @@ using System.Windows.Markup;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Shopfloor.Database;
-using Shopfloor.Database.Configuration;
 using Shopfloor.Database.Initializers;
 using Shopfloor.Features.God;
 using Shopfloor.Hosts;

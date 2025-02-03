@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Tests.UtilityClasses;
 
 namespace Shopfloor.Tests.Shared.HelperFunctions

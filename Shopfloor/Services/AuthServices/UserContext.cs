@@ -5,18 +5,8 @@ namespace Shopfloor.Services.AuthServices
 {
     internal class UserContext : ObservableObject, IUserContext
     {
-        private Person? _person;
         private bool _isAuthenticated = false;
-        public User? User { get; set; }
-        public Person? Person
-        {
-            get => _person;
-            set
-            {
-                _person = value;
-                OnPropertyChanged(nameof(Person));
-            }
-        }
+        private Person? _person;
         public bool IsAuthenticated
         {
             get => _isAuthenticated;
@@ -26,6 +16,16 @@ namespace Shopfloor.Services.AuthServices
                 OnPropertyChanged(nameof(IsAuthenticated));
             }
         }
+        public Person? Person
+        {
+            get => _person;
+            set
+            {
+                _person = value;
+                OnPropertyChanged(nameof(Person));
+            }
+        }
+        public User? User { get; set; }
         public string UserPrompt
         {
             get

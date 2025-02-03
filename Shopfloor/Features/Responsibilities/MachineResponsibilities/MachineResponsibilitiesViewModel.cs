@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
-using Shopfloor.Features.MachineResponsibilityEdit;
+using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit;
 using Shopfloor.Models.Lines;
 using Shopfloor.Models.Machines;
 using Shopfloor.Models.Persons;
@@ -17,7 +17,7 @@ using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
 
-namespace Shopfloor.Features.MachineResponsibilities
+namespace Shopfloor.Features.Responsibilities.MachineResponsibilities
 {
     internal class MachineResponsibilitiesViewModel : ViewModelBase
     {

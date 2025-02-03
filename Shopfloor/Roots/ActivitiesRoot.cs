@@ -17,11 +17,11 @@ namespace Shopfloor.Roots
     internal class ActivitiesRoot : IRoot
     {
         private readonly IRepository<Activity, ActivityCreation> _activityData;
-        private readonly IRepository<Machine, MachineCreation> _machineData;
-        private readonly IRepository<Workshop, WorkshopCreation> _workshopData;
-        private readonly IRepository<ActivityType, ActivityTypeCreation> _typeData;
-        private readonly IRepository<Line, LineCreation> _lineData;
         private readonly IRepository<ActivityInstruction, ActivityInstructionCreation> _instructionsData;
+        private readonly IRepository<Line, LineCreation> _lineData;
+        private readonly IRepository<Machine, MachineCreation> _machineData;
+        private readonly IRepository<ActivityType, ActivityTypeCreation> _typeData;
+        private readonly IRepository<Workshop, WorkshopCreation> _workshopData;
         public ActivitiesRoot(
             IRepository<Activity, ActivityCreation> activityData,
             IRepository<Machine, MachineCreation> machineData,
@@ -39,6 +39,19 @@ namespace Shopfloor.Roots
         }
         public event EventHandler? DataChanged;
         public ConcurrentObservableCollection<Activity> Data { get; private set; } = [];
+        public async Task CreateActivity(ActivityCreation data)
+        {
+            Activity activity = await _activityData.Create(data);
+            await Application.Current.Dispatcher.InvokeAsync(() => Data.Add(activity));
+            OnDataChanged(EventArgs.Empty);
+        }
+        public async Task DeleteActivity(Activity data)
+        {
+            await _activityData.Delete(data.Id);
+            Data.Remove(data);
+            data.Status = ActivityStatus.Canceled;
+            OnDataChanged(EventArgs.Empty);
+        }
         public async Task GetData()
         {
             List<Activity> data = (await _activityData
@@ -75,25 +88,23 @@ namespace Shopfloor.Roots
 
             OnDataChanged(EventArgs.Empty);
         }
-        public async Task CreateActivity(ActivityCreation data)
-        {
-            Activity activity = await _activityData.Create(data);
-            await Application.Current.Dispatcher.InvokeAsync(() => Data.Add(activity));
-            OnDataChanged(EventArgs.Empty);
-        }
         public async Task UpdateActivity(ActivityCreation data)
         {
             await _activityData.Update(data);
             OnDataChanged(EventArgs.Empty);
         }
-        public async Task DeleteActivity(Activity data)
-        {
-            await _activityData.Delete(data.Id);
-            Data.Remove(data);
-            data.Status = ActivityStatus.Canceled;
-            OnDataChanged(EventArgs.Empty);
-        }
         protected void OnDataChanged(EventArgs e) => DataChanged?.Invoke(this, e);
+        private async Task DecorateWithActivityTypes(IEnumerable<Activity> activities)
+        {
+            IEnumerable<ActivityType> types = await _typeData.GetDataAsync();
+
+            foreach (Activity activity in activities)
+            {
+                activity.Type = types.FirstOrDefault(x => activity.TypeId == x.Id);
+            }
+
+            _activityData.Merges.Add(typeof(ActivityType));
+        }
         private async Task DecorateWithMachines(IEnumerable<Activity> activities)
         {
             Task<List<Machine>>? machineTask = _machineData.GetDataAsync();
@@ -126,17 +137,6 @@ namespace Shopfloor.Roots
             }
 
             _activityData.Merges.Add(typeof(Workshop));
-        }
-        private async Task DecorateWithActivityTypes(IEnumerable<Activity> activities)
-        {
-            IEnumerable<ActivityType> types = await _typeData.GetDataAsync();
-
-            foreach (Activity activity in activities)
-            {
-                activity.Type = types.FirstOrDefault(x => activity.TypeId == x.Id);
-            }
-
-            _activityData.Merges.Add(typeof(ActivityType));
         }
         private async Task DecorateWitInstructions(IEnumerable<Activity> activities)
         {

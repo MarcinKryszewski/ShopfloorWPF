@@ -37,13 +37,12 @@ namespace Shopfloor.Models.Activities
         public int MachineId { get; set; }
         public Occurance Occurance { get; set; } = new();
         public int OccuranceValue { get; set; } = 1;
+        public ActivityStatus Status { get; set; } = ActivityStatus.Unconfirmed;
+        public string StatusText => Status.ToString();
         public ActivityType? Type { get; set; }
         public int TypeId { get; set; }
         public Workshop? Workshop { get; set; }
         public int WorkshopId { get; set; }
-        public ActivityStatus Status { get; set; } = ActivityStatus.Unconfirmed;
-        public string StatusText => Status.ToString();
-
         public Activity CreateModel(int id)
         {
             return new Activity()

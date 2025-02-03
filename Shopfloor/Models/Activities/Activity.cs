@@ -8,7 +8,6 @@ namespace Shopfloor.Models.Activities
 {
     internal class Activity : IModel
     {
-        public string Name { get; } = string.Empty;
         public string Additionals => string.Join(
             " / ",
             new[]
@@ -25,6 +24,7 @@ namespace Shopfloor.Models.Activities
         public bool IsLoto { get; set; }
         public Machine? Machine { get; set; }
         required public int MachineId { get; init; }
+        public string Name { get; } = string.Empty;
         public Occurance Occurance { get; set; } = new();
         public string OccuranceText => $"{OccuranceValue} {Occurance.OccuranceUnitText}";
         public OccuranceUnit OccuranceUnit
@@ -33,12 +33,12 @@ namespace Shopfloor.Models.Activities
             set => Occurance.Unit = value;
         }
         public int OccuranceValue { get; set; } = 1;
+        public ActivityStatus Status { get; set; } = ActivityStatus.Unconfirmed;
+        public string StatusText => Status.ToString();
         public ActivityType? Type { get; set; }
         required public int TypeId { get; init; }
         public Workshop? Workshop { get; set; }
         required public int WorkshopId { get; init; }
-        public ActivityStatus Status { get; set; } = ActivityStatus.Unconfirmed;
-        public string StatusText => Status.ToString();
         public Activity Clone()
         {
             return (Activity)MemberwiseClone();

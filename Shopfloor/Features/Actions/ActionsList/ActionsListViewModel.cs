@@ -1,16 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
-using Shopfloor.Features.Action.ActionsList.Utilities;
-using Shopfloor.Features.ActionDetails;
-using Shopfloor.Features.ActionEdit;
 using Shopfloor.Features.Actions.ActionCreate;
+using Shopfloor.Features.Actions.ActionDetails;
+using Shopfloor.Features.Actions.ActionEdit;
 using Shopfloor.Features.Actions.ActionsList.Commands;
+using Shopfloor.Features.Actions.ActionsList.Utilities;
 using Shopfloor.Features.Actions.ActionTransfer;
 using Shopfloor.Features.Trainings.ActionTrainingList;
 using Shopfloor.Models.Activities;
@@ -22,7 +23,7 @@ namespace Shopfloor.Features.Actions.ActionsList
 {
     internal class ActionsListViewModel : ViewModelBase
     {
-        private static readonly object _syncLock = new();
+        private static readonly Lock _syncLock = new();
         private readonly ActivityContext _activityContext;
         private readonly ActivitiesRoot _root;
         public ActionsListViewModel(
@@ -58,9 +59,9 @@ namespace Shopfloor.Features.Actions.ActionsList
         public ICommand CreateActionCommand { get; }
         public ICommand DetailsCommand { get; }
         public ICommand EditCommand { get; }
+        public ActionsFilter FilterData { get; }
         public ICommand TrainingsCommand { get; }
         public ICommand TransferActionCommand { get; }
-        public ActionsFilter FilterData { get; }
         public void OnDataChanged(object? sender, EventArgs e)
         {
             Application.Current.Dispatcher.Invoke(() =>
