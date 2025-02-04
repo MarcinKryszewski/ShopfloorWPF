@@ -17,7 +17,7 @@ namespace Shopfloor.Features.Actions.ActionsList.Utilities
     internal class ActionsFilter : ObservableObject
     {
         private static readonly object _syncLock = new();
-        private readonly DataRoot _data;
+        private readonly IDataRoot _data;
         private readonly List<Line> _lines = [];
         private readonly List<Machine> _machines = [];
         private readonly List<ActivityType> _types = [];
@@ -30,7 +30,7 @@ namespace Shopfloor.Features.Actions.ActionsList.Utilities
         private string _machine = string.Empty;
         private string _type = string.Empty;
         private string _workshop = string.Empty;
-        public ActionsFilter(DataRoot data)
+        public ActionsFilter(IDataRoot data)
         {
             _data = data;
             Machines = new ListCollectionView(_machines)

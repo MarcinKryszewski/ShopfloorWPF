@@ -8,7 +8,7 @@ namespace Shopfloor.Hosts.Features.Services
         public static void Get(IServiceCollection services)
         {
             services.AddSingleton<ActivitiesRoot>();
-            services.AddSingleton<DataRoot>();
+            services.AddSingleton<IDataRoot, DataRoot>();
             services.AddSingleton<TrainingsRoot>();
             services.AddSingleton<ActivitiesDataRoot>();
             services.AddSingleton<MachinesRoot>();

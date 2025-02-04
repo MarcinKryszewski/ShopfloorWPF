@@ -15,7 +15,7 @@ using Shopfloor.Models.Workshops;
 
 namespace Shopfloor.Roots
 {
-    internal class DataRoot : IRoot
+    internal class DataRoot : IDataRoot
     {
         private readonly IRepository<Activity, ActivityCreation> _activities;
         private readonly IRepository<ActivityInstruction, ActivityInstructionCreation> _activitiesInstructions;

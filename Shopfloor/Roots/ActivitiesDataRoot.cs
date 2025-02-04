@@ -12,8 +12,8 @@ namespace Shopfloor.Roots
 {
     internal class ActivitiesDataRoot : IRoot
     {
-        private readonly DataRoot _data;
-        public ActivitiesDataRoot(DataRoot data)
+        private readonly IDataRoot _data;
+        public ActivitiesDataRoot(IDataRoot data)
         {
             _data = data;
         }

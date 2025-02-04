@@ -14,10 +14,10 @@ namespace Shopfloor.Roots
 {
     internal class ActionTransferRoot : IRoot
     {
-        private readonly DataRoot _data;
+        private readonly IDataRoot _data;
         private readonly ActivityContext _context;
         public ActionTransferRoot(
-            DataRoot data,
+            IDataRoot data,
             ActivityContext context)
         {
             _data = data;
@@ -37,19 +37,6 @@ namespace Shopfloor.Roots
             OnDataChanged();
         }
         protected void OnDataChanged() => DataChanged?.Invoke(this, EventArgs.Empty);
-        private static TrainingStatus GetTrainingStatus(IEnumerable<Training> personTrainings)
-        {
-            Training? training = personTrainings.FirstOrDefault(x => x.IsConfirmedByTrainee);
-            if (training == null)
-            {
-                return TrainingStatus.InTraining;
-            }
-            if (!personTrainings.Any())
-            {
-                return TrainingStatus.Untrained;
-            }
-            return TrainingStatus.Trained;
-        }
         private async Task LoadWorkshops()
         {
             Workshops.Clear();
@@ -93,7 +80,7 @@ namespace Shopfloor.Roots
                 TrainingList.Add(new ResponsibleTraining()
                 {
                     Responsible = person,
-                    TrainingStatus = GetTrainingStatus(personTrainings),
+                    TrainingStatus = TrainingStatusRetriever.GetTrainingStatus(personTrainings),
                 });
             }
         }

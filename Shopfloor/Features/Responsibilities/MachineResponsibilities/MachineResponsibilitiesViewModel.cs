@@ -23,7 +23,7 @@ namespace Shopfloor.Features.Responsibilities.MachineResponsibilities
     {
         private static readonly object _syncLock = new();
         private readonly MachineContext _context;
-        private readonly DataRoot _data;
+        private readonly IDataRoot _data;
         private readonly MachinesRoot _machinesRoot;
         private string _lineName = string.Empty;
 
@@ -31,7 +31,7 @@ namespace Shopfloor.Features.Responsibilities.MachineResponsibilities
             MachinesRoot machinesRoot,
             MachineContext context,
             ViewModelBaseDependecies dependecies,
-            DataRoot data)
+            IDataRoot data)
             : base(dependecies)
         {
             _machinesRoot = machinesRoot;
@@ -77,7 +77,7 @@ namespace Shopfloor.Features.Responsibilities.MachineResponsibilities
                 }
 
                 StringBuilder sb = new();
-                sb.AppendLine("Warsztaty z brakuj�c� osob� odpowiedzialn�:");
+                sb.AppendLine("Warsztaty z brakującą osobą odpowiedzialną:");
                 foreach (Workshop workshop in workshops)
                 {
                     sb.AppendLine(workshop.Name);
@@ -162,13 +162,13 @@ namespace Shopfloor.Features.Responsibilities.MachineResponsibilities
 
             await Task.WhenAll(tasks);
         }
-        private async Task LoadLinesAsync(DataRoot dataRoot)
+        private async Task LoadLinesAsync(IDataRoot dataRoot)
         {
             List<Line> data = (await dataRoot.GetLines()).ToList();
             Lines = new ListCollectionView(data);
             OnPropertyChanged(nameof(Lines));
         }
-        private async Task LoadPersonsAsync(DataRoot dataRoot)
+        private async Task LoadPersonsAsync(IDataRoot dataRoot)
         {
             List<Person> data = (await dataRoot.GetPersons()).ToList();
             Persons = new ListCollectionView(data);

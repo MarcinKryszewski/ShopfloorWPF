@@ -23,17 +23,16 @@ namespace Shopfloor.Features.Responsibilities.MachineResponsibilityEdit
     internal class MachineResponsibilityEditViewModel : ViewModelBase
     {
         private readonly MachineContext _context;
-        private readonly DataRoot _data;
+        private readonly IDataRoot _data;
         private readonly Machine _selectedMachine;
         private readonly List<Person> _selectedPersons = [];
         private ListCollectionView _persons = new(new List<Person>());
         private Person? _selectedPerson;
-        private ActionCommand? cancelCommand;
         public MachineResponsibilityEditViewModel(
             MachineContext context,
             ViewModelBaseDependecies dependecies,
             MachinesRoot machinesRoot,
-            DataRoot data)
+            IDataRoot data)
         : base(dependecies)
         {
             ReturnCommand = new NavigationCommand<MachineResponsibilitiesViewModel>(NavigationService).Navigate();
@@ -59,7 +58,7 @@ namespace Shopfloor.Features.Responsibilities.MachineResponsibilityEdit
             Task.Run(LoadDataAsync);
         }
         public ICommand AddPersonCommand { get; }
-        public ICommand CancelCommand => cancelCommand ??= new ActionCommand(Cancel);
+        public ICommand CancelCommand => new ActionCommand(Cancel);
         public string MissingWorkshops
         {
             get
@@ -149,7 +148,7 @@ namespace Shopfloor.Features.Responsibilities.MachineResponsibilityEdit
             await Task.WhenAll(tasks);
             OnDataChanged(null, null);
         }
-        private async Task LoadPersonsAsync(DataRoot dataRoot)
+        private async Task LoadPersonsAsync(IDataRoot dataRoot)
         {
             List<Person> data = (await dataRoot.GetPersons()).ToList();
             _persons = new ListCollectionView(data)

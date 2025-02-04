@@ -26,13 +26,13 @@ namespace Shopfloor.Features.Actions.ActionEdit
         private readonly ActivityCreation _activity;
         private readonly ActivityContext _activityContext;
         private readonly List<ActivityType> _activityTypes = [];
-        private readonly DataRoot _data;
+        private readonly IDataRoot _data;
         private readonly IUserContext _userContext;
         private readonly List<Workshop> _workshops = [];
         public ActionEditViewModel(
             ActivityContext activityContext,
             ViewModelBaseDependecies dependecies,
-            DataRoot data,
+            IDataRoot data,
             ActivitiesRoot activitiesRoot,
             TrainingsListViewModel trainings)
         : base(dependecies)
