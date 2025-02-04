@@ -68,7 +68,7 @@ namespace Shopfloor.Features.Responsibilities.MachineResponsibilities
                     return string.Empty;
                 }
 
-                IEnumerable<Workshop> workshopsData = _data.GetWorkshop().Result;
+                IEnumerable<Workshop> workshopsData = _data.GetWorkshops().Result;
                 IEnumerable<Workshop> workshops = MissingResponsibles(SelectedMachine, workshopsData);
 
                 if (!workshops.Any())
@@ -77,7 +77,7 @@ namespace Shopfloor.Features.Responsibilities.MachineResponsibilities
                 }
 
                 StringBuilder sb = new();
-                sb.AppendLine("Warsztaty z brakuj¹c¹ osob¹ odpowiedzialn¹:");
+                sb.AppendLine("Warsztaty z brakujï¿½cï¿½ osobï¿½ odpowiedzialnï¿½:");
                 foreach (Workshop workshop in workshops)
                 {
                     sb.AppendLine(workshop.Name);
@@ -164,13 +164,13 @@ namespace Shopfloor.Features.Responsibilities.MachineResponsibilities
         }
         private async Task LoadLinesAsync(DataRoot dataRoot)
         {
-            List<Line> data = (await dataRoot.GetLine()).ToList();
+            List<Line> data = (await dataRoot.GetLines()).ToList();
             Lines = new ListCollectionView(data);
             OnPropertyChanged(nameof(Lines));
         }
         private async Task LoadPersonsAsync(DataRoot dataRoot)
         {
-            List<Person> data = (await dataRoot.GetPerson()).ToList();
+            List<Person> data = (await dataRoot.GetPersons()).ToList();
             Persons = new ListCollectionView(data);
             OnPropertyChanged(nameof(Persons));
         }

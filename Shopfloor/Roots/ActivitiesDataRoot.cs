@@ -24,16 +24,16 @@ namespace Shopfloor.Roots
         }
         public async Task<List<Line>> GetLines()
         {
-            return (await _data.GetLine()).ToList();
+            return (await _data.GetLines()).ToList();
         }
         public async Task<List<Machine>> GetMachines()
         {
-            return (await _data.GetMachine()).ToList();
+            return (await _data.GetMachines()).ToList();
         }
         public Task<List<Occurance>> GetOccurencies()
         {
             List<Occurance> occurances = [];
-            foreach (OccuranceUnit item in Enum.GetValues(typeof(OccuranceUnit)))
+            foreach (OccuranceUnit item in Enum.GetValues<OccuranceUnit>())
             {
                 occurances.Add(new()
                 {
@@ -44,11 +44,11 @@ namespace Shopfloor.Roots
         }
         public async Task<List<ActivityType>> GetTypes()
         {
-            return (await _data.GetActivityType()).ToList();
+            return (await _data.GetActivityTypes()).ToList();
         }
         public async Task<List<Workshop>> GetWorkshops()
         {
-            return (await _data.GetWorkshop()).ToList();
+            return (await _data.GetWorkshops()).ToList();
         }
     }
 }

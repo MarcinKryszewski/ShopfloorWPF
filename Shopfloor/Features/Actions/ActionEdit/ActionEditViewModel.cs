@@ -102,7 +102,7 @@ namespace Shopfloor.Features.Actions.ActionEdit
         }
         private async Task LoadTypes()
         {
-            IEnumerable<ActivityType> data = await _data.GetActivityType();
+            IEnumerable<ActivityType> data = await _data.GetActivityTypes();
             await BatchListUpdater.UpdateAsync(data, _activityTypes);
         }
     }

@@ -175,12 +175,12 @@ namespace Shopfloor.Features.Actions.ActionsList.Utilities
         }
         private async Task LoadLines()
         {
-            IEnumerable<Line> data = await _data.GetLine();
+            IEnumerable<Line> data = await _data.GetLines();
             await BatchListUpdater.UpdateAsync(data, _lines);
         }
         private async Task LoadMachines()
         {
-            IEnumerable<Machine> data = await _data.GetMachine();
+            IEnumerable<Machine> data = await _data.GetMachines();
             await BatchListUpdater.UpdateAsync(data, _machines);
             await Application.Current.Dispatcher.InvokeAsync(() =>
             {
@@ -193,12 +193,12 @@ namespace Shopfloor.Features.Actions.ActionsList.Utilities
         }
         private async Task LoadTypes()
         {
-            IEnumerable<ActivityType> data = await _data.GetActivityType();
+            IEnumerable<ActivityType> data = await _data.GetActivityTypes();
             await BatchListUpdater.UpdateAsync(data, _types);
         }
         private async Task LoadWorkshops()
         {
-            IEnumerable<Workshop> data = await _data.GetWorkshop();
+            IEnumerable<Workshop> data = await _data.GetWorkshops();
             await BatchListUpdater.UpdateAsync(data, _workshops);
         }
     }

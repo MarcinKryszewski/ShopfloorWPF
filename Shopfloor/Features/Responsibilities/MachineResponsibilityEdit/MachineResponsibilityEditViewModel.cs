@@ -64,7 +64,7 @@ namespace Shopfloor.Features.Responsibilities.MachineResponsibilityEdit
         {
             get
             {
-                IEnumerable<Workshop> workshopsData = _data.GetWorkshop().Result;
+                IEnumerable<Workshop> workshopsData = _data.GetWorkshops().Result;
                 IEnumerable<Workshop> workshops = MissingResponsibles(_selectedPersons, workshopsData);
 
                 if (!workshops.Any())
@@ -151,7 +151,7 @@ namespace Shopfloor.Features.Responsibilities.MachineResponsibilityEdit
         }
         private async Task LoadPersonsAsync(DataRoot dataRoot)
         {
-            List<Person> data = (await dataRoot.GetPerson()).ToList();
+            List<Person> data = (await dataRoot.GetPersons()).ToList();
             _persons = new ListCollectionView(data)
             {
                 Filter = FilterExistingPeople,

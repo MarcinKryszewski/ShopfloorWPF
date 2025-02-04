@@ -6,38 +6,30 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Features.Actions.ActionsList;
+using Shopfloor.Features.Actions.ActionTransfer.Utilities;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.MachinesResponsibles;
 using Shopfloor.Models.Persons;
 using Shopfloor.Models.Trainings;
 using Shopfloor.Models.Workshops;
+using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
 using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Actions.ActionTransfer
 {
-    internal enum TrainingStatus
-    {
-        Untrained,
-        InTraining,
-        Trained,
-    }
     internal class ActionTransferViewModel : ViewModelBase
     {
         private readonly IRepository<Person, PersonCreation> _personsData;
-        private readonly IRepository<MachineResponsible, MachineResponsibleCreation> _responsibilitiesData;
         private readonly List<ResponsibleTraining> _responsibleTrainings = [];
-        private readonly IRepository<Training, TrainingCreation> _trainingsData;
-        private readonly IRepository<Workshop, WorkshopCreation> _workshopsData;
+        private readonly ActionTransferRoot _root;
         private Workshop? _selectedWorkshop;
         public ActionTransferViewModel(
             ViewModelBaseDependecies dependecies,
             ActivityContext activityContext,
-            IRepository<MachineResponsible, MachineResponsibleCreation> responsibilitiesData,
-            IRepository<Training, TrainingCreation> trainingsData,
-            IRepository<Person, PersonCreation> personsData,
-            IRepository<Workshop, WorkshopCreation> workshopsData)
+            ActionTransferRoot root,
+            IRepository<Person, PersonCreation> personsData)
         : base(dependecies)
         {
             if (activityContext == null)
@@ -45,14 +37,14 @@ namespace Shopfloor.Features.Actions.ActionTransfer
                 ReturnCommand.Execute(null);
             }
             Activity = activityContext!.Activity!;
-            _trainingsData = trainingsData;
-            _responsibilitiesData = responsibilitiesData;
+            _root = root;
             _personsData = personsData;
-            _workshopsData = workshopsData;
-            PeopleToTrain = new ListCollectionView(_responsibleTrainings)
+            PeopleToTrain = new ListCollectionView(_root.TrainingList)
             {
                 Filter = FilterWorkshop,
             };
+
+            Workshops = new ListCollectionView(_root.Workshops);
 
             Task.Run(LoadDataAsync);
         }
@@ -61,11 +53,11 @@ namespace Shopfloor.Features.Actions.ActionTransfer
         {
             get
             {
-                if (_responsibleTrainings.Count == 0)
+                if (_root.TrainingList.Count == 0)
                 {
                     return false;
                 }
-                foreach (ResponsibleTraining item in _responsibleTrainings)
+                foreach (ResponsibleTraining item in _root.TrainingList)
                 {
                     if (!FilterWorkshop(item))
                     {
@@ -89,9 +81,11 @@ namespace Shopfloor.Features.Actions.ActionTransfer
                 _selectedWorkshop = value;
                 OnPropertyChanged(nameof(SelectedWorkshop));
                 PeopleToTrain.Refresh();
+                OnPropertyChanged(nameof(IsEveryoneTrained));
             }
         }
-        public ICollectionView Workshops { get; private set; } = new ListCollectionView(new List<Workshop>());
+        // public ICollectionView Workshops { get; private set; } = new ListCollectionView(new List<Workshop>());
+        public ICollectionView Workshops { get; private set; }
         private bool FilterWorkshop(object obj)
         {
             if (obj is ResponsibleTraining training && SelectedWorkshop is not null)
@@ -104,52 +98,16 @@ namespace Shopfloor.Features.Actions.ActionTransfer
         {
             List<Task> tasks = [];
 
-            IEnumerable<Training> dataOne = (await _trainingsData.GetDataAsync()).Where(x => x.ActivityId == Activity.Id);
-            IEnumerable<MachineResponsible> dataTwo = (await _responsibilitiesData.GetDataAsync()).Where(x => x.MachineId == Activity.MachineId);
-            List<Person> dataThree = await _personsData.GetDataAsync();
+            await _root.LoadData();
 
-            foreach (MachineResponsible item in dataTwo)
-            {
-                Person? person = dataThree.Find(x => x.Id == item.PersonId);
-                TrainingStatus status = TrainingStatus.Trained;
-                if (person == null)
-                {
-                    break;
-                }
-
-                IEnumerable<Training> personTrainings = dataOne.Where(x => x.TraineeId == person.Id);
-                Training? training = personTrainings.FirstOrDefault(x => x.IsConfirmedByTrainee);
-
-                if (training == null)
-                {
-                    status = TrainingStatus.InTraining;
-                }
-
-                if (!personTrainings.Any())
-                {
-                    status = TrainingStatus.Untrained;
-                }
-
-                _responsibleTrainings.Add(new ResponsibleTraining()
-                {
-                    Responsible = person,
-                    TrainingStatus = status,
-                });
-            }
-
-            Workshops = new ListCollectionView(await _workshopsData.GetDataAsync());
+            // Workshops = new ListCollectionView(await _workshopsData.GetDataAsync());
+            // Workshops = new ListCollectionView(_root.Workshops);
 
             await Task.WhenAll(tasks);
             PeopleToTrain.Refresh();
             Workshops.Refresh();
             SelectedWorkshop = Workshops.Cast<Workshop>().FirstOrDefault(x => x.Id == Activity.WorkshopId);
         }
-    }
-
-    internal class ResponsibleTraining
-    {
-        required public Person Responsible { get; set; }
-        public TrainingStatus TrainingStatus { get; set; } = TrainingStatus.Untrained;
     }
 }
 
