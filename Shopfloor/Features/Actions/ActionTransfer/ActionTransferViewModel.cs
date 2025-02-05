@@ -8,6 +8,7 @@ using Shopfloor.Contexts;
 using Shopfloor.Features.Actions.ActionsList;
 using Shopfloor.Features.Actions.ActionTransfer.Commands;
 using Shopfloor.Features.Actions.ActionTransfer.Utilities;
+using Shopfloor.Features.Actions.ActionTransfer.Utilities.Filters;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.Workshops;
 using Shopfloor.Roots;
@@ -20,6 +21,7 @@ namespace Shopfloor.Features.Actions.ActionTransfer
     internal class ActionTransferViewModel : ViewModelBase
     {
         private readonly ActionTransferRoot _root;
+        private readonly FilterWorkshop _filterWorkshop = new();
         private Workshop? _selectedWorkshop;
         public ActionTransferViewModel(
             ViewModelBaseDependecies dependecies,
@@ -35,7 +37,7 @@ namespace Shopfloor.Features.Actions.ActionTransfer
             _root = root;
             PeopleToTrain = new ListCollectionView(_root.TrainingList)
             {
-                Filter = FilterWorkshop,
+                Filter = _filterWorkshop.Filter,
             };
 
             Workshops = new ListCollectionView(_root.Workshops);
@@ -56,7 +58,7 @@ namespace Shopfloor.Features.Actions.ActionTransfer
                 }
                 foreach (ResponsibleTraining item in _root.TrainingList)
                 {
-                    if (!FilterWorkshop(item))
+                    if (!_filterWorkshop.Filter(item))
                     {
                         continue;
                     }
@@ -77,6 +79,7 @@ namespace Shopfloor.Features.Actions.ActionTransfer
             set
             {
                 _selectedWorkshop = value;
+                _filterWorkshop.Workshop = value;
                 OnPropertyChanged(nameof(SelectedWorkshop));
                 PeopleToTrain.Refresh();
                 OnPropertyChanged(nameof(IsEveryoneTrained));
@@ -91,14 +94,14 @@ namespace Shopfloor.Features.Actions.ActionTransfer
             }
             OnPropertyChanged(nameof(Activity));
         }
-        private bool FilterWorkshop(object obj)
-        {
-            if (obj is ResponsibleTraining training && SelectedWorkshop is not null)
-            {
-                return training.Responsible.WorkshopId == SelectedWorkshop.Id;
-            }
-            return false;
-        }
+        // private bool FilterWorkshop(object obj)
+        // {
+        //     if (obj is ResponsibleTraining training && SelectedWorkshop is not null)
+        //     {
+        //         return training.Responsible.WorkshopId == SelectedWorkshop.Id;
+        //     }
+        //     return false;
+        // }
         private async Task LoadDataAsync()
         {
             List<Task> tasks = [];
