@@ -65,6 +65,7 @@ namespace Shopfloor.Models.Trainings
                 new Training { Id = 28, ActivityId = 28, CoachId = 8, TraineeId = 3, IsConfirmedByCoach = false, IsConfirmedByTrainee = true, TrainingDate = DateTime.Now.AddDays(27) },
                 new Training { Id = 29, ActivityId = 1, CoachId = 9, TraineeId = 4, IsConfirmedByCoach = true, IsConfirmedByTrainee = false, TrainingDate = DateTime.Now.AddDays(28) },
                 new Training { Id = 30, ActivityId = 2, CoachId = 10, TraineeId = 5, IsConfirmedByCoach = false, IsConfirmedByTrainee = true, TrainingDate = DateTime.Now.AddDays(29) },
+                new Training { Id = 31, ActivityId = 23, CoachId = 10, TraineeId = 6, IsConfirmedByCoach = true, IsConfirmedByTrainee = true, TrainingDate = DateTime.Now.AddDays(29) },
             ];
 
             return data;

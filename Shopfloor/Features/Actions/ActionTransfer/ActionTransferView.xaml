@@ -12,52 +12,62 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <converters:BooleanToVisibilityReverseConverter x:Key="BooleanToVisibilityReverseConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:BooleanToVisibilityReverseConverter x:Key="BooleanToVisibilityReverseConverter"/>
     </UserControl.Resources>
 
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.Resources>
-            <Style BasedOn="{StaticResource TooltipText}" TargetType="{x:Type TextBlock}" />
-            <Style BasedOn="{StaticResource CheckBoxStyle1}" TargetType="{x:Type CheckBox}" />
-            <Style BasedOn="{StaticResource ComboBoxMain}" TargetType="{x:Type ComboBox}">
-                <Setter Property="MinHeight" Value="28px" />
-                <Setter Property="Width" Value="200px" />
+            <Style BasedOn="{StaticResource TooltipText}"
+                   TargetType="{x:Type TextBlock}"/>
+            <Style BasedOn="{StaticResource CheckBoxStyle1}"
+                   TargetType="{x:Type CheckBox}"/>
+            <Style BasedOn="{StaticResource ComboBoxMain}"
+                   TargetType="{x:Type ComboBox}">
+                <Setter Property="MinHeight"
+                        Value="28px"/>
+                <Setter Property="Width"
+                        Value="200px"/>
             </Style>
-            <Style BasedOn="{StaticResource TextBoxMain}" TargetType="{x:Type TextBox}">
-                <Setter Property="MinWidth" Value="50px" />
+            <Style BasedOn="{StaticResource TextBoxMain}"
+                   TargetType="{x:Type TextBox}">
+                <Setter Property="MinWidth"
+                        Value="50px"/>
             </Style>
             <Style TargetType="{x:Type Label}">
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="VerticalContentAlignment"
+                        Value="Center"/>
+                <Setter Property="BorderThickness"
+                        Value="0"/>
             </Style>
         </Grid.Resources>
 
         <Border Grid.Row="0">
-            <TextBlock Style="{StaticResource TitleTextBlock}" Text="Przekazywanie działań" />
+            <TextBlock Style="{StaticResource TitleTextBlock}"
+                       Text="Przekazywanie działań"/>
         </Border>
 
         <Grid Grid.Row="1">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Border
@@ -67,21 +77,21 @@
                 HorizontalAlignment="Center">
 
                 <StackPanel>
-                    <TextBlock Text="Obecny odpowiedzialny" />
+                    <TextBlock Text="Obecny odpowiedzialny"/>
                     <TextBlock
                         Margin="0,0,0,20"
                         Padding="0"
                         FontSize="22"
                         Foreground="{StaticResource BrushAccentPink500}"
                         Style="{StaticResource TitleTextBlock}"
-                        Text="{Binding Activity.Workshop.Name}" />
-                    <TextBlock Text="Przekaż do" />
+                        Text="{Binding Activity.Workshop.Name}"/>
+                    <TextBlock Text="Przekaż do"/>
                     <ComboBox
                         Width="300"
                         Margin="0,0,0,40"
                         DisplayMemberPath="Name"
                         ItemsSource="{Binding Path=Workshops}"
-                        SelectedItem="{Binding Path=SelectedWorkshop}" />
+                        SelectedItem="{Binding Path=SelectedWorkshop}"/>
                 </StackPanel>
             </Border>
 
@@ -91,29 +101,32 @@
                 DataContext="{Binding Activity}">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
                 <Grid.Resources>
-                    <Style BasedOn="{StaticResource TooltipText}" TargetType="{x:Type TextBlock}">
-                        <Setter Property="Margin" Value="0,0,0,10" />
+                    <Style BasedOn="{StaticResource TooltipText}"
+                           TargetType="{x:Type TextBlock}">
+                        <Setter Property="Margin"
+                                Value="0,0,0,10"/>
                     </Style>
-                    <Style BasedOn="{StaticResource CheckBoxStyle1}" TargetType="{x:Type CheckBox}" />
+                    <Style BasedOn="{StaticResource CheckBoxStyle1}"
+                           TargetType="{x:Type CheckBox}"/>
                 </Grid.Resources>
 
                 <Border
@@ -124,78 +137,79 @@
                         Margin="0,0,0,10"
                         Padding="0"
                         Style="{StaticResource TitleTextBlock}"
-                        Text="Szczegóły zadania" />
+                        Text="Szczegóły zadania"/>
                 </Border>
 
                 <TextBlock
                     Grid.Row="8"
                     Grid.Column="0"
-                    Text="Opis" />
+                    Text="Opis"/>
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="0"
-                    Text="Rodzaj" />
+                    Text="Rodzaj"/>
                 <TextBlock
                     Grid.Row="3"
                     Grid.Column="0"
-                    Text="LOTO" />
+                    Text="LOTO"/>
                 <TextBlock
                     Grid.Row="4"
                     Grid.Column="0"
-                    Text="Tryb JOG" />
+                    Text="Tryb JOG"/>
                 <TextBlock
                     Grid.Row="5"
                     Grid.Column="0"
-                    Text="Podczas produkcji" />
+                    Text="Podczas produkcji"/>
                 <TextBlock
                     Grid.Row="6"
                     Grid.Column="0"
-                    Text="Częstotliwość" />
+                    Text="Częstotliwość"/>
                 <TextBlock
                     Grid.Row="7"
                     Grid.Column="0"
-                    Text="Instrukcja wykonania" />
+                    Text="Instrukcja wykonania"/>
 
                 <TextBlock
                     Grid.Row="8"
                     Grid.Column="2"
-                    Text="{Binding Description}" />
+                    Text="{Binding Description}"/>
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="2"
-                    Text="{Binding Type.Name}" />
+                    Text="{Binding Type.Name}"/>
                 <CheckBox
                     Grid.Row="3"
                     Grid.Column="2"
                     IsChecked="{Binding IsLoto}"
-                    IsEnabled="False" />
+                    IsEnabled="False"/>
                 <CheckBox
                     Grid.Row="4"
                     Grid.Column="2"
                     IsChecked="{Binding IsJog, Mode=OneWay}"
-                    IsEnabled="False" />
+                    IsEnabled="False"/>
                 <CheckBox
                     Grid.Row="5"
                     Grid.Column="2"
                     IsChecked="{Binding IsDurningProduction}"
-                    IsEnabled="False" />
+                    IsEnabled="False"/>
                 <TextBlock
                     Grid.Row="6"
                     Grid.Column="2"
-                    Text="{Binding OccuranceText}" />
+                    Text="{Binding OccuranceText}"/>
                 <CheckBox
                     Grid.Row="7"
                     Grid.Column="2"
                     IsChecked="{Binding HasInstruction}"
-                    IsEnabled="False" />
+                    IsEnabled="False"/>
             </Grid>
 
-            <Grid Grid.Row="1" Column="2">
+            <Grid Grid.Row="1"
+                  Column="2">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <Border Grid.Row="0">
@@ -203,25 +217,73 @@
                         Margin="0,0,0,10"
                         Padding="0"
                         Style="{StaticResource TitleTextBlock}"
-                        Text="Szkolenia" />
+                        Text="Szkolenia"/>
                 </Border>
 
                 <DataGrid
+                    Margin="0"
                     Grid.Row="1"
                     AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    HeadersVisibility="None"
+                    ColumnHeaderHeight="0"
+                    Style="{DynamicResource DataGridMain}"
                     ItemsSource="{Binding PeopleToTrain}">
 
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="Background"
+                                    Value="Transparent"/>
+                        </Style>
+                    </DataGrid.RowStyle>
+
+                    <DataGrid.CellStyle>
+                        <Style BasedOn="{StaticResource DataGridCellMain}"
+                               TargetType="{x:Type DataGridCell}">
+                            <Setter Property="MinHeight"
+                                    Value="20"/>
+                        </Style>
+                    </DataGrid.CellStyle>
+
                     <DataGrid.Columns>
+
+                        <DataGridTemplateColumn Width="auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock FontFamily="Segoe Fluent Icons"
+                                               FontWeight="ExtraBold"
+                                               FontSize="18"
+                                               Text="&#xE91F;">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+
+                                                <Setter Property="Foreground"
+                                                        Value="Orange"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TrainingStatus}"
+                                                                 Value="Trained">
+                                                        <Setter Property="Foreground"
+                                                                Value="Green"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding TrainingStatus}"
+                                                                 Value="Untrained">
+                                                        <Setter Property="Foreground"
+                                                                Value="Red"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
                         <DataGridTextColumn
                             Width="auto"
                             Binding="{Binding Responsible.FullName}"
-                            Header="Osoba" />
+                            Header="Osoba"
+                            Foreground="{StaticResource BrushPurple300}"/>
 
-                        <DataGridTextColumn
-                            Width="auto"
-                            Binding="{Binding TrainingStatus}"
-                            Header="Status" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -231,7 +293,7 @@
                 Grid.Column="1"
                 Grid.ColumnSpan="2"
                 Margin="0,20,0,0">
-                <TextBlock Text="Powody" />
+                <TextBlock Text="Powody"/>
 
                 <ScrollViewer
                     MaxHeight="500"
@@ -247,25 +309,30 @@
                         VerticalContentAlignment="Top"
                         AcceptsReturn="True"
                         Style="{StaticResource TextBoxMain}"
-                        TextWrapping="Wrap" />
+                        TextWrapping="Wrap"/>
                 </ScrollViewer>
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="2" Margin="0,40,0,0">
+        <Grid Grid.Row="2"
+              Margin="0,40,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="1" Orientation="Horizontal">
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal">
 
                 <StackPanel.Resources>
                     <Style TargetType="{x:Type Button}">
-                        <Setter Property="Margin" Value="10,0" />
-                        <Setter Property="Height" Value="50" />
-                        <Setter Property="Width" Value="150" />
+                        <Setter Property="Margin"
+                                Value="10,0"/>
+                        <Setter Property="Height"
+                                Value="50"/>
+                        <Setter Property="Width"
+                                Value="150"/>
                     </Style>
                 </StackPanel.Resources>
 
@@ -273,10 +340,11 @@
                     Width="150"
                     Height="50"
                     Margin="10,0"
-                    Command="{Binding Path=ReturnCommand}"
+                    Command="{Binding Path=SaveCommand}"
+                    CommandParameter="{Binding SelectedWorkshop}"
                     Content="PRZEKAŻ"
                     Style="{StaticResource ResourceKey=ButtonMain}"
-                    Visibility="{Binding Path=IsEveryoneTrained, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    Visibility="{Binding Path=IsEveryoneTrained, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
                 <Button
                     Width="150"
@@ -285,7 +353,7 @@
                     Command="{Binding Path=ReturnCommand}"
                     Content="PRZESZKÓL"
                     Style="{StaticResource ResourceKey=ButtonEmpty}"
-                    Visibility="{Binding Path=IsEveryoneTrained, Converter={StaticResource BooleanToVisibilityReverseConverter}}" />
+                    Visibility="{Binding Path=IsEveryoneTrained, Converter={StaticResource BooleanToVisibilityReverseConverter}}"/>
 
                 <Button
                     Width="150"
@@ -293,7 +361,8 @@
                     Margin="10,0"
                     Command="{Binding Path=ReturnCommand}"
                     Content="WRÓĆ"
-                    Style="{StaticResource ResourceKey=ButtonSide}" />
+                    Style="{StaticResource ResourceKey=ButtonSide}"/>
+
             </StackPanel>
         </Grid>
     </Grid>

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Contexts;
 using Shopfloor.Features.Actions.ActionTransfer.Utilities;
+using Shopfloor.Models.Activities;
+using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.MachinesResponsibles;
 using Shopfloor.Models.Persons;
 using Shopfloor.Models.Trainings;
@@ -16,12 +18,15 @@ namespace Shopfloor.Roots
     {
         private readonly IDataRoot _data;
         private readonly ActivityContext _context;
+        private readonly IRepository<Activity, ActivityCreation> _activityData;
         public ActionTransferRoot(
             IDataRoot data,
-            ActivityContext context)
+            ActivityContext context,
+            IRepository<Activity, ActivityCreation> activityData)
         {
             _data = data;
             _context = context;
+            _activityData = activityData;
         }
         public event EventHandler? DataChanged;
         public ConcurrentObservableCollection<Workshop> Workshops { get; private set; } = [];
@@ -35,6 +40,13 @@ namespace Shopfloor.Roots
 
             await Task.WhenAll(tasks);
             OnDataChanged();
+        }
+        public async Task TransferAction(Activity? activity, Workshop workshop)
+        {
+            ArgumentNullException.ThrowIfNull(activity);
+
+            activity.Workshop = workshop;
+            await _activityData.Update(activity.ToObjectCreation());
         }
         protected void OnDataChanged() => DataChanged?.Invoke(this, EventArgs.Empty);
         private async Task LoadWorkshops()

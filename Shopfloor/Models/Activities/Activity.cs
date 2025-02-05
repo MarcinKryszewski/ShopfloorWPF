@@ -64,5 +64,25 @@ namespace Shopfloor.Models.Activities
             OccuranceValue = creation.OccuranceValue;
             Occurance = creation.Occurance;
         }
+        public ActivityCreation ToObjectCreation()
+        {
+            return new ActivityCreation()
+            {
+                Id = Id,
+                MachineId = MachineId,
+                Machine = Machine,
+                WorkshopId = WorkshopId,
+                Workshop = Workshop,
+                Status = Status,
+                Description = Description,
+                TypeId = TypeId,
+                Type = Type,
+                IsLoto = IsLoto,
+                IsJog = IsJog,
+                IsDurningProduction = IsDurningProduction,
+                OccuranceValue = OccuranceValue,
+                Occurance = Occurance,
+            };
+        }
     }
 }

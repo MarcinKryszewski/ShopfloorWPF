@@ -6,30 +6,25 @@ using System.Windows.Data;
 using System.Windows.Input;
 using Shopfloor.Contexts;
 using Shopfloor.Features.Actions.ActionsList;
+using Shopfloor.Features.Actions.ActionTransfer.Commands;
 using Shopfloor.Features.Actions.ActionTransfer.Utilities;
 using Shopfloor.Models.Activities;
-using Shopfloor.Models.Commons.Interfaces;
-using Shopfloor.Models.MachinesResponsibles;
-using Shopfloor.Models.Persons;
-using Shopfloor.Models.Trainings;
 using Shopfloor.Models.Workshops;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
+using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Actions.ActionTransfer
 {
     internal class ActionTransferViewModel : ViewModelBase
     {
-        private readonly IRepository<Person, PersonCreation> _personsData;
-        private readonly List<ResponsibleTraining> _responsibleTrainings = [];
         private readonly ActionTransferRoot _root;
         private Workshop? _selectedWorkshop;
         public ActionTransferViewModel(
             ViewModelBaseDependecies dependecies,
             ActivityContext activityContext,
-            ActionTransferRoot root,
-            IRepository<Person, PersonCreation> personsData)
+            ActionTransferRoot root)
         : base(dependecies)
         {
             if (activityContext == null)
@@ -38,13 +33,15 @@ namespace Shopfloor.Features.Actions.ActionTransfer
             }
             Activity = activityContext!.Activity!;
             _root = root;
-            _personsData = personsData;
             PeopleToTrain = new ListCollectionView(_root.TrainingList)
             {
                 Filter = FilterWorkshop,
             };
 
             Workshops = new ListCollectionView(_root.Workshops);
+
+            SaveCommand = new ActionTransferCommand(root, activityContext);
+            ((ActionTransferCommand)SaveCommand).ExecuteFinished += OnActionTransfer;
 
             Task.Run(LoadDataAsync);
         }
@@ -73,6 +70,7 @@ namespace Shopfloor.Features.Actions.ActionTransfer
         }
         public ICollectionView PeopleToTrain { get; }
         public ICommand ReturnCommand => new NavigationCommand<ActionsListViewModel>(NavigationService).Navigate();
+        public ICommand SaveCommand { get; }
         public Workshop? SelectedWorkshop
         {
             get => _selectedWorkshop;
@@ -84,8 +82,15 @@ namespace Shopfloor.Features.Actions.ActionTransfer
                 OnPropertyChanged(nameof(IsEveryoneTrained));
             }
         }
-        // public ICollectionView Workshops { get; private set; } = new ListCollectionView(new List<Workshop>());
         public ICollectionView Workshops { get; private set; }
+        private void OnActionTransfer(object? sender, Notification? notification)
+        {
+            if (notification != null)
+            {
+                Notifier.Show(notification);
+            }
+            OnPropertyChanged(nameof(Activity));
+        }
         private bool FilterWorkshop(object obj)
         {
             if (obj is ResponsibleTraining training && SelectedWorkshop is not null)
@@ -99,9 +104,6 @@ namespace Shopfloor.Features.Actions.ActionTransfer
             List<Task> tasks = [];
 
             await _root.LoadData();
-
-            // Workshops = new ListCollectionView(await _workshopsData.GetDataAsync());
-            // Workshops = new ListCollectionView(_root.Workshops);
 
             await Task.WhenAll(tasks);
             PeopleToTrain.Refresh();
