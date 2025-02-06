@@ -217,7 +217,7 @@
                         Margin="0,0,0,10"
                         Padding="0"
                         Style="{StaticResource TitleTextBlock}"
-                        Text="Szkolenia"/>
+                        Text="Wymagane Szkolenia"/>
                 </Border>
 
                 <DataGrid
@@ -259,16 +259,22 @@
 
                                                 <Setter Property="Foreground"
                                                         Value="Orange"/>
+                                                <Setter Property="ToolTip"
+                                                        Value="W trakcie szkolenia"/>
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding TrainingStatus}"
                                                                  Value="Trained">
                                                         <Setter Property="Foreground"
                                                                 Value="Green"/>
+                                                        <Setter Property="ToolTip"
+                                                                Value="Szkolenie zakończone"/>
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding TrainingStatus}"
                                                                  Value="Untrained">
                                                         <Setter Property="Foreground"
                                                                 Value="Red"/>
+                                                        <Setter Property="ToolTip"
+                                                                Value="Brak szkolenia"/>
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>

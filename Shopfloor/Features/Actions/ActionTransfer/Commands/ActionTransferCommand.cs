@@ -48,7 +48,7 @@ namespace Shopfloor.Features.Actions.ActionTransfer.Commands
                 return;
             }
 
-            IList<ResponsibleTraining> trainingList = FilterListOnWorkshop(_root.TrainingList, _activity?.Workshop ?? null);
+            IList<ResponsibleTraining> trainingList = FilterListOnWorkshop(_root.TrainingList, workshop);
             if (trainingList.Count == 0)
             {
                 OnExecuteFinished(_notificationEmptyTrainingList);

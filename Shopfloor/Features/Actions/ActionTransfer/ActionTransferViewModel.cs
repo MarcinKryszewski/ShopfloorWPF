@@ -94,14 +94,6 @@ namespace Shopfloor.Features.Actions.ActionTransfer
             }
             OnPropertyChanged(nameof(Activity));
         }
-        // private bool FilterWorkshop(object obj)
-        // {
-        //     if (obj is ResponsibleTraining training && SelectedWorkshop is not null)
-        //     {
-        //         return training.Responsible.WorkshopId == SelectedWorkshop.Id;
-        //     }
-        //     return false;
-        // }
         private async Task LoadDataAsync()
         {
             List<Task> tasks = [];
@@ -115,7 +107,3 @@ namespace Shopfloor.Features.Actions.ActionTransfer
         }
     }
 }
-
-// X - nieprzeszkolony
-// O - w trakcie szkolenia
-// V - przeszkolony

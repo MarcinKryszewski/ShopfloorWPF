@@ -20,7 +20,7 @@ namespace Shopfloor.Models.Activities
         public async Task<Activity> Create(ActivityCreation item)
         {
             int id = await _provider.Create(item);
-            Activity model = item.CreateModel(id);
+            Activity model = ActivityMapper.ToModel(id, item);
             _store.Data.Add(model);
             return model;
         }

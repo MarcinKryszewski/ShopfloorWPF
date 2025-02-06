@@ -46,7 +46,7 @@ namespace Shopfloor.Roots
             ArgumentNullException.ThrowIfNull(activity);
 
             activity.Workshop = workshop;
-            await _activityData.Update(activity.ToObjectCreation());
+            await _activityData.Update(ActivityMapper.ToCreationModel(activity));
         }
         protected void OnDataChanged() => DataChanged?.Invoke(this, EventArgs.Empty);
         private async Task LoadWorkshops()

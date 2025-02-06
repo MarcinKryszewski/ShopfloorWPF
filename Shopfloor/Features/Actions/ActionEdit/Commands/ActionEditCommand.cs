@@ -2,20 +2,21 @@
 using System.Threading.Tasks;
 using Shopfloor.Models.Activities;
 using Shopfloor.Roots;
+using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.Commands;
 
 namespace Shopfloor.Features.Actions.ActionEdit.Commands
 {
     internal class ActionEditCommand : CommandBase
     {
+        private readonly Notification _notificationError = new() { Message = "Popraw błędy", Type = NotifierType.Error };
+        private readonly Notification _notificationSuccess = new() { Message = "Zmienieono działanie pomyślnie", Type = NotifierType.Success };
         private readonly ActivitiesRoot _activitiesRoot;
         public ActionEditCommand(ActivitiesRoot activitiesRoot)
         {
             _activitiesRoot = activitiesRoot;
         }
-        public event EventHandler? ExecuteFinished;
-        public bool ExecutedSuccessful { get; private set; }
-        public string NotifyText { get; private set; } = string.Empty;
+        public event EventHandler<Notification?>? ExecuteFinished;
         public override void Execute(object? parameter)
         {
             if (parameter is null)
@@ -25,23 +26,20 @@ namespace Shopfloor.Features.Actions.ActionEdit.Commands
             ActivityCreation activity = (ActivityCreation)parameter;
             Task.Run(() => EditeActivity(activity));
         }
-        protected void OnExecuteFinished(EventArgs e) => ExecuteFinished?.Invoke(this, e);
+        protected void OnExecuteFinished(Notification? e) => ExecuteFinished?.Invoke(this, e);
         private async Task EditeActivity(ActivityCreation activity)
         {
-            const string errorExists = "Popraw błędy";
-            const string actionCompletedSuccessfully = "Dodano działanie pomyślnie";
-            ExecutedSuccessful = false;
             ActivityValidation validation = new();
 
             validation.Validate(activity);
-            NotifyText = errorExists;
-            if (!activity.HasErrors)
+            if (activity.HasErrors)
             {
-                await _activitiesRoot.UpdateActivity(activity);
-                NotifyText = actionCompletedSuccessfully;
-                ExecutedSuccessful = true;
+                OnExecuteFinished(_notificationError);
+                return;
             }
-            OnExecuteFinished(EventArgs.Empty);
+
+            await _activitiesRoot.UpdateActivity(activity);
+            OnExecuteFinished(_notificationSuccess);
         }
     }
 }

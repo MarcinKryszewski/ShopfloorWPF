@@ -8,6 +8,9 @@ namespace Shopfloor.Models.Activities
 {
     internal class Activity : IModel
     {
+        private int _workshopId;
+        private Workshop? _workshop;
+        private Machine? _machine;
         public string Additionals => string.Join(
             " / ",
             new[]
@@ -22,8 +25,16 @@ namespace Shopfloor.Models.Activities
         public bool IsDurningProduction { get; set; }
         public bool IsJog { get; set; }
         public bool IsLoto { get; set; }
-        public Machine? Machine { get; set; }
-        required public int MachineId { get; init; }
+        public Machine? Machine
+        {
+            get => _machine;
+            set
+            {
+                _machine = value;
+                MachineId = value?.Id ?? -1;
+            }
+        }
+        required public int MachineId { get; set; }
         public string Name { get; } = string.Empty;
         public Occurance Occurance { get; set; } = new();
         public string OccuranceText => $"{OccuranceValue} {Occurance.OccuranceUnitText}";
@@ -37,12 +48,19 @@ namespace Shopfloor.Models.Activities
         public string StatusText => Status.ToString();
         public ActivityType? Type { get; set; }
         required public int TypeId { get; init; }
-        public Workshop? Workshop { get; set; }
-        required public int WorkshopId { get; init; }
-        public Activity Clone()
+        public Workshop? Workshop
         {
-            return (Activity)MemberwiseClone();
+            get => _workshop;
+            set
+            {
+                _workshop = value;
+                if (value is not null)
+                {
+                    _workshopId = value.Id;
+                }
+            }
         }
+        required public int WorkshopId { get => _workshopId; init => _workshopId = value; } // workaround for init + private set, it uses backing field, so it can be changed from the inside of a class
         public void SetValues<T>(IModelCreationModel<T> data)
                     where T : IModel
         {

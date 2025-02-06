@@ -12,10 +12,10 @@ using Shopfloor.Features.Actions.TrainingsList;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.ActivityTypes;
 using Shopfloor.Models.Persons;
-using Shopfloor.Models.Workshops;
 using Shopfloor.Roots;
 using Shopfloor.Services.AuthServices;
 using Shopfloor.Services.NavigationServices;
+using Shopfloor.Services.NotificationServices;
 using Shopfloor.Shared.HelperFunctions;
 using Shopfloor.Shared.ViewModels;
 
@@ -28,7 +28,6 @@ namespace Shopfloor.Features.Actions.ActionEdit
         private readonly List<ActivityType> _activityTypes = [];
         private readonly IDataRoot _data;
         private readonly IUserContext _userContext;
-        private readonly List<Workshop> _workshops = [];
         public ActionEditViewModel(
             ActivityContext activityContext,
             ViewModelBaseDependecies dependecies,
@@ -57,6 +56,8 @@ namespace Shopfloor.Features.Actions.ActionEdit
             CancelCommand = new NavigationCommand<ActionDetailsViewModel>(NavigationService).Navigate();
             SaveCommand = new ActionEditCommand(activitiesRoot);
 
+            ((ActionEditCommand)SaveCommand).ExecuteFinished += OnActionSaved;
+
             _ = LoadDataAsync();
         }
         public ActivityCreation Activity => _activity;
@@ -77,6 +78,13 @@ namespace Shopfloor.Features.Actions.ActionEdit
             }
         }
         public TrainingsListViewModel Trainings { get; }
+        private void OnActionSaved(object? sender, Notification? notification)
+        {
+            if (notification != null)
+            {
+                Notifier.Show(notification);
+            }
+        }
         private async Task LoadDataAsync()
         {
             List<Task> tasks = [];

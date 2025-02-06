@@ -62,6 +62,7 @@ namespace Shopfloor.Roots
             }
 
             await Task.WhenAll(merges);
+            Data.Clear();
 
             await Task.Run(() => Parallel.ForEach(data, item =>
             {

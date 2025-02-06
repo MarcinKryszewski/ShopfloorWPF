@@ -12,7 +12,7 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddSingleton<TrainingsRoot>();
             services.AddSingleton<ActivitiesDataRoot>();
             services.AddSingleton<MachinesRoot>();
-            services.AddSingleton<ActionTransferRoot>();
+            services.AddTransient<ActionTransferRoot>();
         }
     }
 }
