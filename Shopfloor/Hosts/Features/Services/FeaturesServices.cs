@@ -10,8 +10,6 @@ using Shopfloor.Features.Personal.PersonalTraining;
 using Shopfloor.Features.Responsibilities.MachineResponsibilities;
 using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit;
 using Shopfloor.Features.Trainings.ActionTrainingList;
-using Shopfloor.Features.Trainings.TrainingCreate;
-using Shopfloor.Features.Trainings.TrainingDetails;
 
 namespace Shopfloor.Hosts.Features.Services
 {
@@ -32,9 +30,7 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddTransient<MachineResponsibilitiesViewModel>();
             services.AddTransient<MachineResponsibilityEditViewModel>();
 
-            services.AddTransient<TrainingDetailsViewModel>();
             services.AddTransient<ActionTrainingListViewModel>();
-            services.AddTransient<TrainingCreateViewModel>();
 
             services.AddTransient<PersonalTrainingViewModel>();
         }

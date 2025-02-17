@@ -1,12 +1,15 @@
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Shopfloor.Features.Trainings.TrainingDetails
 {
-    public sealed partial class TrainingDetailsView : UserControl
+    /// <summary>
+    /// Interaction logic for TrainingDetailsView.xaml
+    /// </summary>
+    public partial class TrainingDetailsView : UserControl
     {
         public TrainingDetailsView()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
     }
 }

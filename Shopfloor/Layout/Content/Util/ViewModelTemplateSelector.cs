@@ -11,8 +11,6 @@ using Shopfloor.Features.Personal.PersonalTraining;
 using Shopfloor.Features.Responsibilities.MachineResponsibilities;
 using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit;
 using Shopfloor.Features.Trainings.ActionTrainingList;
-using Shopfloor.Features.Trainings.TrainingCreate;
-using Shopfloor.Features.Trainings.TrainingDetails;
 using Shopfloor.Features.WorkInProgressFeature;
 
 namespace Shopfloor.Layout.Content.Util
@@ -49,8 +47,6 @@ namespace Shopfloor.Layout.Content.Util
                 MachineResponsibilitiesViewModel => MachineResponsibilitiesTemplate,
                 MachineResponsibilityEditViewModel => MachineResponsibilityEditemplate,
                 ActionTrainingListViewModel => ActionTrainingListTemplate,
-                TrainingCreateViewModel => TrainingCreateTemplate,
-                TrainingDetailsViewModel => TrainingDetailsTemplate,
                 _ => base.SelectTemplate(item, container),
             };
         }

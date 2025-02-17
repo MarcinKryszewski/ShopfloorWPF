@@ -1,4 +1,4 @@
-using Shopfloor.Shared.ViewModels;
+﻿using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Features.Trainings.TrainingCreate
 {

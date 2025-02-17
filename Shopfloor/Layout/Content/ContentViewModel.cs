@@ -11,8 +11,6 @@ using Shopfloor.Features.Personal.PersonalTraining;
 using Shopfloor.Features.Responsibilities.MachineResponsibilities;
 using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit;
 using Shopfloor.Features.Trainings.ActionTrainingList;
-using Shopfloor.Features.Trainings.TrainingCreate;
-using Shopfloor.Features.Trainings.TrainingDetails;
 using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Layout.Content.Util;
 using Shopfloor.Layout.TopPanel;
@@ -46,8 +44,6 @@ namespace Shopfloor.Layout.Content
             MachineResponsibilitiesTemplate = GetDataTemplate<MachineResponsibilitiesView>(),
             MachineResponsibilityEditemplate = GetDataTemplate<MachineResponsibilityEditView>(),
             ActionTrainingListTemplate = GetDataTemplate<ActionTrainingListView>(),
-            TrainingCreateTemplate = GetDataTemplate<TrainingCreateView>(),
-            TrainingDetailsTemplate = GetDataTemplate<TrainingDetailsView>(),
         };
         public ViewModelBase? Content => _navigationStore.CurrentViewModel;
         public TopPanelViewModel TopPanelViewModel => _topPanelViewModel;
