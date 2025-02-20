@@ -10,7 +10,10 @@ using Shopfloor.Features.God;
 using Shopfloor.Features.Personal.PersonalTraining;
 using Shopfloor.Features.Responsibilities.MachineResponsibilities;
 using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit;
-using Shopfloor.Features.Trainings.ActionTrainingList;
+using Shopfloor.Features.Trainings.ActionTraining;
+using Shopfloor.Features.Trainings.PersonTraining;
+using Shopfloor.Features.Trainings.TrainingDetails;
+using Shopfloor.Features.Trainings.TrainingMain;
 using Shopfloor.Features.WorkInProgressFeature;
 
 namespace Shopfloor.Layout.Content.Util
@@ -21,7 +24,7 @@ namespace Shopfloor.Layout.Content.Util
         public DataTemplate? ActionDetailsTemplate { get; set; }
         public DataTemplate? ActionEditTemplate { get; set; }
         public DataTemplate? ActionListTemplate { get; set; }
-        public DataTemplate? ActionTrainingListTemplate { get; set; }
+        public DataTemplate? TrainingMainViewModelTemplate { get; set; }
         public DataTemplate? ActionTransferTemplate { get; set; }
         public DataTemplate? GodTemplate { get; set; }
         public DataTemplate? MachineResponsibilitiesTemplate { get; set; }
@@ -31,6 +34,8 @@ namespace Shopfloor.Layout.Content.Util
         public DataTemplate? TrainingDetailsTemplate { get; set; }
         public DataTemplate? TrainingsListTemplate { get; set; }
         public DataTemplate? WorkInProgressTemplate { get; set; }
+        public DataTemplate? ActionTrainingTemplate { get; set; }
+        public DataTemplate? PersonTrainingTemplate { get; set; }
         public override DataTemplate? SelectTemplate(object item, DependencyObject? container)
         {
             return item switch
@@ -46,8 +51,11 @@ namespace Shopfloor.Layout.Content.Util
                 PersonalTrainingViewModel => PersonalTrainingTemplate,
                 MachineResponsibilitiesViewModel => MachineResponsibilitiesTemplate,
                 MachineResponsibilityEditViewModel => MachineResponsibilityEditemplate,
-                ActionTrainingListViewModel => ActionTrainingListTemplate,
-                _ => base.SelectTemplate(item, container),
+                TrainingMainViewModel => TrainingMainViewModelTemplate,
+                TrainingDetailsViewModel => TrainingDetailsTemplate,
+                ActionTrainingView => ActionTrainingTemplate,
+                PersonTrainingView => PersonTrainingTemplate,
+                _ => WorkInProgressTemplate,
             };
         }
     }

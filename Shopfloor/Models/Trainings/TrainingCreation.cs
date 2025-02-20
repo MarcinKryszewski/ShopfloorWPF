@@ -11,7 +11,7 @@ namespace Shopfloor.Models.Trainings
         public Activity? Activity { get; set; }
         public int ActivityId { get; set; }
         public Person? Coach { get; set; }
-        public int CoachId { get; set; }
+        public int? CoachId { get; set; }
         required public int Id { get; set; }
         public bool IsConfirmedByCoach { get; set; }
         public bool IsConfirmedByTrainee { get; set; }
