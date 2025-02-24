@@ -171,6 +171,22 @@
                                 Text="Odpowiedzialności" />
                         </StackPanel>
                     </Button>
+
+                    <Button Command="{Binding Path=NavigateTrainings}">
+                        <StackPanel Background="Transparent" Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Transparent">
+                                <TextBlock Style="{StaticResource IconBlock}" Text="&#xEC7A;" />
+                            </Border>
+                            <TextBlock
+                                Background="Transparent"
+                                Style="{StaticResource ButtonTextBlock}"
+                                Text="Szkolenia" />
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
                 <!--#endregion-->
 
