@@ -35,15 +35,15 @@ namespace Shopfloor.Features.Actions.TrainingsList.Commands
                 return;
             }
 
-            if (currentUser == training.Coach)
-            {
-                training.IsConfirmedByCoach = true;
-            }
+            // if (currentUser == training.Coach)
+            // {
+            //     training.IsConfirmedByCoach = true;
+            // }
 
-            if (currentUser == training.Trainee)
-            {
-                training.IsConfirmedByTrainee = true;
-            }
+            // if (currentUser == training.Trainee)
+            // {
+            //     training.IsConfirmedByTrainee = true;
+            // }
         }
         private void SaveTraining(Training training)
         {

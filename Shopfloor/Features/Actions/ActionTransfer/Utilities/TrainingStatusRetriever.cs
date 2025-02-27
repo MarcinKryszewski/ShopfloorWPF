@@ -13,11 +13,11 @@ namespace Shopfloor.Features.Actions.ActionTransfer.Utilities
                 return TrainingStatus.Untrained;
             }
 
-            Training? training = personTrainings.FirstOrDefault(x => x.IsConfirmedByTrainee);
-            if (training == null)
-            {
-                return TrainingStatus.InTraining;
-            }
+            // Training? training = personTrainings.FirstOrDefault(x => x.IsConfirmedByTrainee);
+            // if (training == null)
+            // {
+            //     return TrainingStatus.InTraining;
+            // }
 
             return TrainingStatus.Trained;
         }

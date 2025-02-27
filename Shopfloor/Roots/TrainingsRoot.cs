@@ -65,7 +65,6 @@ namespace Shopfloor.Roots
             foreach (Training item in data)
             {
                 item.Trainee = persons.FirstOrDefault(x => item.TraineeId == x.Id);
-                item.Coach = persons.FirstOrDefault(x => item.CoachId == x.Id);
             }
 
             _trainingData.Merges.Add(typeof(Person));

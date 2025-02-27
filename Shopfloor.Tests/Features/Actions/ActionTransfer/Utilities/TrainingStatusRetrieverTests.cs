@@ -23,10 +23,7 @@ namespace Shopfloor.Tests.Features.Actions.ActionTransfer.Utilities
                 new Training {
                     Id = 1,
                     ActivityId = 1,
-                    CoachId = 1,
                     TraineeId = 1,
-                    IsConfirmedByCoach = true,
-                    IsConfirmedByTrainee = false,
                     TrainingDate = DateTime.Now },];
             // Act
             TrainingStatus result = TrainingStatusRetriever.GetTrainingStatus(trainingList);
@@ -41,26 +38,17 @@ namespace Shopfloor.Tests.Features.Actions.ActionTransfer.Utilities
                 new Training {
                     Id = 2,
                     ActivityId = 1,
-                    CoachId = 1,
                     TraineeId = 1,
-                    IsConfirmedByCoach = true,
-                    IsConfirmedByTrainee = true,
                     TrainingDate = DateTime.Now },
                 new Training {
                     Id = 1,
                     ActivityId = 1,
-                    CoachId = 1,
                     TraineeId = 1,
-                    IsConfirmedByCoach = true,
-                    IsConfirmedByTrainee = false,
                     TrainingDate = DateTime.Now },
                 new Training {
                     Id = 2,
                     ActivityId = 1,
-                    CoachId = 1,
                     TraineeId = 1,
-                    IsConfirmedByCoach = true,
-                    IsConfirmedByTrainee = true,
                     TrainingDate = DateTime.Now },];
             // Act
             TrainingStatus result = TrainingStatusRetriever.GetTrainingStatus(trainingList);
