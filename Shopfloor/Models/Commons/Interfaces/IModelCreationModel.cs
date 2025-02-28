@@ -12,7 +12,7 @@ namespace Shopfloor.Models.Commons.Interfaces
         public void AddError(string propertyName, string errorMassage);
         public void ClearErrors(string propertyName);
         public int CountErrors(string propertyName);
-        public T CreateModel(int id);
+        public T? CreateModel(int id);
         public IEnumerable GetErrors(string? propertyName);
     }
 }

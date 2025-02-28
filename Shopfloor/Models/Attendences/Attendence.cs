@@ -1,5 +1,9 @@
+using System;
+using System.Collections.Generic;
 using Shopfloor.Models.Commons.Interfaces;
+using Shopfloor.Models.Courses;
 using Shopfloor.Models.Persons;
+using Shopfloor.Models.Trainings;
 
 namespace Shopfloor.Models.Attendences
 {
@@ -9,6 +13,11 @@ namespace Shopfloor.Models.Attendences
         public string Name { get; set; } = string.Empty;
         public bool IsConfirmedByCoach { get; set; }
         public bool IsConfirmedByTrainee { get; set; }
+        public Course? Course { get; set; }
+        required public int CourseId { get; init; }
+        public Training? Training { get; set; }
+        required public int TrainingId { get; init; }
+        public DateTime? TrainingDate { get; set; }
         public AttendenceCreation CreateModelCreation()
         {
             return new AttendenceCreation()
@@ -16,6 +25,11 @@ namespace Shopfloor.Models.Attendences
                 Id = Id,
                 IsConfirmedByCoach = IsConfirmedByCoach,
                 IsConfirmedByTrainee = IsConfirmedByTrainee,
+                TrainingDate = TrainingDate,
+                TrainingId = TrainingId,
+                CourseId = CourseId,
+                Training = Training,
+                Course = Course,
             };
         }
         public void SetValues<T>(IModelCreationModel<T> data)
@@ -31,6 +45,9 @@ namespace Shopfloor.Models.Attendences
             IsConfirmedByCoach = creation.IsConfirmedByCoach;
             IsConfirmedByTrainee = creation.IsConfirmedByTrainee;
             Name = creation.Name;
+            TrainingDate = creation.TrainingDate;
+            Course = creation.Course;
+            Training = creation.Training;
         }
     }
 }

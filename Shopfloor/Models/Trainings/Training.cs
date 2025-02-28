@@ -1,5 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Shopfloor.Models.Activities;
+using Shopfloor.Models.Attendences;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Persons;
 
@@ -9,13 +10,11 @@ namespace Shopfloor.Models.Trainings
     {
         public Activity? Activity { get; set; }
         public int ActivityId { get; init; }
-
         required public int Id { get; init; }
-
         public string Name { get; } = string.Empty;
         public Person? Trainee { get; set; }
         public int TraineeId { get; init; }
-        public DateTime? TrainingDate { get; set; }
+        public List<Attendence> Attendences { get; init; } = [];
         public TrainingCreation CreateModelCreation()
         {
             return new TrainingCreation()
@@ -25,7 +24,7 @@ namespace Shopfloor.Models.Trainings
                 ActivityId = ActivityId,
                 Trainee = Trainee,
                 TraineeId = TraineeId,
-                TrainingDate = TrainingDate,
+                Attendences = Attendences,
             };
         }
         public void SetValues<T>(IModelCreationModel<T> data)
@@ -40,7 +39,8 @@ namespace Shopfloor.Models.Trainings
 
             Activity = creation.Activity;
             Trainee = creation.Trainee;
-            TrainingDate = creation.TrainingDate;
+            Attendences.Clear();
+            Attendences.AddRange(creation.Attendences);
         }
     }
 }

@@ -1,3 +1,4 @@
+using Shopfloor.Models.Attendences;
 using Shopfloor.Models.Persons;
 using Shopfloor.Models.Trainings;
 using Shopfloor.Roots;
@@ -8,46 +9,9 @@ namespace Shopfloor.Features.Actions.TrainingsList.Commands
 {
     internal class ConfirmTrainingCommand : CommandBase
     {
-        private readonly TrainingsRoot _trainingRoot;
-        private readonly IUserContext _userContext;
-        public ConfirmTrainingCommand(
-            IUserContext userContext,
-            TrainingsRoot trainingRoot)
-        {
-            _userContext = userContext;
-            _trainingRoot = trainingRoot;
-        }
         public override void Execute(object? parameter)
         {
-            if (parameter is not Training)
-            {
-                return;
-            }
-            Training trainingData = (Training)parameter;
-            ConfirmTraining(trainingData);
-            SaveTraining(trainingData);
-        }
-        private void ConfirmTraining(Training training)
-        {
-            Person? currentUser = _userContext.Person;
-            if (currentUser == null)
-            {
-                return;
-            }
-
-            // if (currentUser == training.Coach)
-            // {
-            //     training.IsConfirmedByCoach = true;
-            // }
-
-            // if (currentUser == training.Trainee)
-            // {
-            //     training.IsConfirmedByTrainee = true;
-            // }
-        }
-        private void SaveTraining(Training training)
-        {
-            _trainingRoot.ConfirmTraining(training.CreateModelCreation()).Wait();
+            throw new System.NotImplementedException();
         }
     }
 }

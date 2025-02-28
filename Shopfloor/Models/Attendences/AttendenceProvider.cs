@@ -18,23 +18,11 @@ namespace Shopfloor.Models.Attendences
         }
         public Task<IEnumerable<Attendence>> GetAll()
         {
-            IEnumerable<Attendence> data = [
-                new Attendence { Id = 1, Name = "Attendence1", },
-                new Attendence { Id = 2, Name = "Attendence2", },
-                new Attendence { Id = 3, Name = "Attendence3", },
-                new Attendence { Id = 4, Name = "Attendence4", },
-            ];
-            return Task.FromResult(data);
+            return Task.FromResult(TestData());
         }
         public Task<Attendence?> GetById(int id)
         {
-            List<Attendence> data = [
-                new Attendence { Id = 1, Name = "Attendence1", },
-                new Attendence { Id = 2, Name = "Attendence2", },
-                new Attendence { Id = 3, Name = "Attendence3", },
-                new Attendence { Id = 4, Name = "Attendence4", },
-            ];
-
+            List<Attendence> data = [.. TestData()];
             Attendence? result = data.Find(x => x.Id == id);
 
             return Task.FromResult(result);
@@ -42,6 +30,17 @@ namespace Shopfloor.Models.Attendences
         public Task Update(Attendence item)
         {
             return Task.CompletedTask;
+        }
+        private static IEnumerable<Attendence> TestData()
+        {
+            IEnumerable<Attendence> data = [
+                new Attendence { CourseId = 1, TrainingId = 1, TrainingDate = DateTime.Now },
+                new Attendence { CourseId = 2, TrainingId = 2, TrainingDate = DateTime.Now.AddDays(-1), },
+                new Attendence { CourseId = 3, TrainingId = 1, TrainingDate = DateTime.Now.AddDays(-2), },
+                new Attendence { CourseId = 4, TrainingId = 4, TrainingDate = DateTime.Now.AddDays(-3), },
+            ];
+
+            return data;
         }
     }
 }
