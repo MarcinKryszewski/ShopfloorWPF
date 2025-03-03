@@ -28,7 +28,7 @@ namespace Shopfloor.Models.Trainings
             };
         }
         public void SetValues<T>(IModelCreationModel<T> data)
-                    where T : IModel
+        where T : IModel
         {
             if (data is not TrainingCreation)
             {
