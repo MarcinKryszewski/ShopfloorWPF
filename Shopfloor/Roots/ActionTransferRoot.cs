@@ -87,7 +87,7 @@ namespace Shopfloor.Roots
                     continue;
                 }
 
-                IEnumerable<Training> personTrainings = trainings.Where(x => x.TraineeId == person.Id);
+                IEnumerable<Training> personTrainings = trainings.Where(x => x.StundetIds.Contains(person.Id));
 
                 TrainingList.Add(new ResponsibleTraining()
                 {
@@ -108,7 +108,7 @@ namespace Shopfloor.Roots
         }
         private async Task<List<Person>> LoadPersons()
         {
-            return (await _data.GetPersons()).ToList();
+            return [.. await _data.GetPersons()];
         }
     }
 }

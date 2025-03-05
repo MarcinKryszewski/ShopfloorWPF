@@ -4,29 +4,29 @@ using System.Linq;
 using System.Threading.Tasks;
 using Shopfloor.Models.Commons.Interfaces;
 
-namespace Shopfloor.Models.Courses
+namespace Shopfloor.Models.Students
 {
-    internal class CourseRepository : IRepository<Course, CourseCreation>
+    internal class StudentRepository : IRepository<Student, StudentCreation>
     {
-        private readonly IProvider<Course, CourseCreation> _provider;
-        private readonly IStore<Course> _store;
+        private readonly IProvider<Student, StudentCreation> _provider;
+        private readonly IStore<Student> _store;
         private bool _dataLoaded = false;
-        public CourseRepository(IStore<Course> store, IProvider<Course, CourseCreation> provider)
+        public StudentRepository(IStore<Student> store, IProvider<Student, StudentCreation> provider)
         {
             _store = store;
             _provider = provider;
         }
         public HashSet<Type> Merges { get; } = [];
-        public async Task<Course> Create(CourseCreation item)
+        public async Task<Student> Create(StudentCreation item)
         {
             int id = await _provider.Create(item);
-            Course model = item.CreateModel(id);
+            Student model = item.CreateModel(id);
             _store.Data.Add(model);
             return model;
         }
         public async Task Delete(int id)
         {
-            Course? item = _store.Data.Find(x => x.Id == id);
+            Student? item = _store.Data.Find(x => x.Id == id);
             if (item == null)
             {
                 string errorText = "ERROR";
@@ -44,20 +44,20 @@ namespace Shopfloor.Models.Courses
                 await Task.FromException(new InvalidOperationException(errorText));
             }
         }
-        public async Task<List<Course>> GetDataAsync()
+        public async Task<List<Student>> GetDataAsync()
         {
             if (!_dataLoaded)
             {
-                List<Course> data = (await _provider.GetAll()).ToList();
+                List<Student> data = (await _provider.GetAll()).ToList();
                 _store.Data.AddRange(data);
                 _dataLoaded = true;
             }
 
             return _store.Data;
         }
-        public async Task Update(CourseCreation item)
+        public async Task Update(StudentCreation item)
         {
-            Course? existingData = _store.Data.Find(x => x.Id == item.Id);
+            Student? existingData = _store.Data.Find(x => x.Id == item.Id);
 
             if (existingData is null)
             {

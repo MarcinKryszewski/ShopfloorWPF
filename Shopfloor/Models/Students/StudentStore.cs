@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Shopfloor.Models.Commons.Interfaces;
 
-namespace Shopfloor.Models.Courses
+namespace Shopfloor.Models.Students
 {
-    internal class CourseStore : IStore<Course>
+    internal class StudentStore : IStore<Student>
     {
-        private readonly List<Course> _data = [];
-        public List<Course> Data => _data;
-        public Task AddItem(Course item)
+        private readonly List<Student> _data = [];
+        public List<Student> Data => _data;
+        public Task AddItem(Student item)
         {
             _data.Add(item);
             return Task.CompletedTask;
