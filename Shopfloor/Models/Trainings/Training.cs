@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Shopfloor.Models.Activities;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Persons;
+using Shopfloor.Models.Students;
 
 namespace Shopfloor.Models.Trainings
 {
@@ -13,7 +14,7 @@ namespace Shopfloor.Models.Trainings
         public int TeacherId { get; set; }
         public Person? Teacher { get; set; }
         public List<int> StundetIds { get; init; } = [];
-        public List<Person> Students { get; init; } = [];
+        public List<Student> Students { get; init; } = [];
         required public int ActivityId { get; init; }
         public Activity? Activity { get; set; }
         public DateTime TrainingDate { get; set; }

@@ -22,7 +22,8 @@
 
         <ScrollViewer
             x:Name="OuterScrollerViewer"
-            Grid.Column="1"
+            MaxHeight="800"
+            Grid.Row="1"
             Margin="0,15,0,0"
             PreviewMouseWheel="DataGrid_PreviewMouseWheel">
 
@@ -32,11 +33,31 @@
                       ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
                       IsReadOnly="True"
                       ItemsSource="{Binding Path=Trainings}"
+                      RowStyle="{StaticResource DataGridRowMain}"
                       SelectedItem="{Binding Path=Training}"
                       SelectionMode="Single"
                       SelectionUnit="FullRow"
                       Style="{DynamicResource DataGridMain}"
-                      TargetUpdated="DataGrid_TargetUpdated"/>
+                      TargetUpdated="DataGrid_TargetUpdated">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="auto"
+                        Binding="{Binding Activity.Description}"
+                        Header="Czynność"/>
+
+                    <DataGridTextColumn
+                        Width="auto"
+                        Binding="{Binding Teacher.FullName}"
+                        Header="Trener"/>
+
+                    <DataGridTextColumn
+                        Width="auto"
+                        Binding="{Binding TrainingDate}"
+                        Header="Data"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
 
         </ScrollViewer>
 

@@ -1,4 +1,3 @@
-using System;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Persons;
 using Shopfloor.Models.Trainings;

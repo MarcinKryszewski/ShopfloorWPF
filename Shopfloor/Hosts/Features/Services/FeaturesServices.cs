@@ -35,7 +35,7 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddTransient<MachineResponsibilitiesViewModel>();
             services.AddTransient<MachineResponsibilityEditViewModel>();
 
-            services.AddTransient<TrainingMainViewModel>();
+            services.AddSingleton<TrainingMainViewModel>();
             services.AddTransient<ActionTrainingViewModel>();
             services.AddTransient<PersonalTrainingViewModel>();
             services.AddTransient<TrainingCreateViewModel>();

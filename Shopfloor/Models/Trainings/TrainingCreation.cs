@@ -4,6 +4,7 @@ using Shopfloor.Models.Activities;
 using Shopfloor.Models.Commons.BaseClasses;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.Persons;
+using Shopfloor.Models.Students;
 
 namespace Shopfloor.Models.Trainings
 {
@@ -14,7 +15,7 @@ namespace Shopfloor.Models.Trainings
         public int TeacherId { get; set; }
         public Person? Teacher { get; set; }
         public ICollection<int> StundetIds { get; set; } = [];
-        public ICollection<Person> Students { get; set; } = [];
+        public ICollection<Student> Students { get; set; } = [];
         public int ActivityId { get; set; }
         public Activity? Activity { get; set; }
         public DateTime TrainingDate { get; set; }

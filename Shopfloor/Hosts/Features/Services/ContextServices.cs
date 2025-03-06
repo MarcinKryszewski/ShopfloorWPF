@@ -9,6 +9,7 @@ namespace Shopfloor.Hosts.Features.Services
         {
             services.AddSingleton<ActivityContext>();
             services.AddSingleton<MachineContext>();
+            services.AddSingleton<TrainingContext>();
         }
     }
 }

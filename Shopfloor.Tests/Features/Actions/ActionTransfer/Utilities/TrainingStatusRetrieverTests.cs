@@ -23,7 +23,7 @@ namespace Shopfloor.Tests.Features.Actions.ActionTransfer.Utilities
                 new Training {
                     Id = 1,
                     ActivityId = 1,
-                    TraineeId = 1,
+                    // TraineeId = 1,
                     TrainingDate = DateTime.Now },];
             // Act
             TrainingStatus result = TrainingStatusRetriever.GetTrainingStatus(trainingList);
@@ -38,17 +38,17 @@ namespace Shopfloor.Tests.Features.Actions.ActionTransfer.Utilities
                 new Training {
                     Id = 2,
                     ActivityId = 1,
-                    TraineeId = 1,
+                    // TraineeId = 1,
                     TrainingDate = DateTime.Now },
                 new Training {
                     Id = 1,
                     ActivityId = 1,
-                    TraineeId = 1,
+                    // TraineeId = 1,
                     TrainingDate = DateTime.Now },
                 new Training {
                     Id = 2,
                     ActivityId = 1,
-                    TraineeId = 1,
+                    // TraineeId = 1,
                     TrainingDate = DateTime.Now },];
             // Act
             TrainingStatus result = TrainingStatusRetriever.GetTrainingStatus(trainingList);
