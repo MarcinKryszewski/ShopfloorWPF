@@ -41,10 +41,7 @@
                       TargetUpdated="DataGrid_TargetUpdated">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn
-                        Width="auto"
-                        Binding="{Binding Activity.Description}"
-                        Header="Czynność"/>
+
 
                     <DataGridTextColumn
                         Width="auto"
@@ -55,6 +52,57 @@
                         Width="auto"
                         Binding="{Binding TrainingDate}"
                         Header="Data"/>
+
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Activity.Description}"
+                        Header="Czynność"/>
+
+                    <DataGridTemplateColumn
+                        Width="auto"
+                        Header="Akcje"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Button
+                                        Command="{Binding Path=DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource gridConfirmButton}">
+                                        <TextBlock
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Style="{StaticResource gridButtonIcon}"
+                                            Text="&#xE7B3;"/>
+                                    </Button>
+
+                                    <Button
+                                        Margin="2,0,0,0"
+                                        Command="{Binding Path=DataContext.EditCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource gridEditButton}">
+                                        <TextBlock
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Style="{StaticResource gridButtonIcon}"
+                                            Text="&#xE70F;"/>
+                                    </Button>
+
+                                    <Button
+                                        Margin="2,0,0,0"
+                                        Command="{Binding Path=DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource gridRemoveButton}">
+                                        <TextBlock
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Style="{StaticResource gridButtonIcon}"
+                                            Text="&#xE74D;"/>
+                                    </Button>
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
                 </DataGrid.Columns>
 
             </DataGrid>
@@ -79,22 +127,6 @@
 
             <Border Grid.Column="1">
                 <StackPanel Orientation="Horizontal">
-
-                    <Button
-                        Width="150"
-                        Height="50"
-                        Margin="10,0"
-                        Command="{Binding Path=DetailsCommand}"
-                        Content="SZCZEGÓŁY"
-                        Style="{StaticResource ResourceKey=ButtonMain}"/>
-
-                    <Button
-                        Width="150"
-                        Height="50"
-                        Margin="10,0"
-                        Command="{Binding Path=EditCommand}"
-                        Content="EDYTUJ"
-                        Style="{StaticResource ResourceKey=ButtonEmpty}"/>
 
                     <Button
                         Width="150"

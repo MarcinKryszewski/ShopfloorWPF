@@ -13,6 +13,7 @@ using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit;
 using Shopfloor.Features.Trainings.ActionTraining;
 using Shopfloor.Features.Trainings.PersonTraining;
 using Shopfloor.Features.Trainings.TrainingDetails;
+using Shopfloor.Features.Trainings.TrainingEdit;
 using Shopfloor.Features.Trainings.TrainingMain;
 using Shopfloor.Features.WorkInProgressFeature;
 
@@ -33,6 +34,7 @@ namespace Shopfloor.Layout.Content.Util
         public DataTemplate? TrainingCreateTemplate { get; set; }
         public DataTemplate? TrainingDetailsTemplate { get; set; }
         public DataTemplate? TrainingsListTemplate { get; set; }
+        public DataTemplate? TrainingEditTemplate { get; set; }
         public DataTemplate? WorkInProgressTemplate { get; set; }
         public DataTemplate? ActionTrainingTemplate { get; set; }
         public DataTemplate? PersonTrainingTemplate { get; set; }
@@ -53,6 +55,7 @@ namespace Shopfloor.Layout.Content.Util
                 MachineResponsibilityEditViewModel => MachineResponsibilityEditemplate,
                 TrainingMainViewModel => TrainingMainViewModelTemplate,
                 TrainingDetailsViewModel => TrainingDetailsTemplate,
+                TrainingEditViewModel => TrainingEditTemplate,
                 ActionTrainingView => ActionTrainingTemplate,
                 PersonTrainingView => PersonTrainingTemplate,
                 _ => WorkInProgressTemplate,

@@ -13,6 +13,7 @@ using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit;
 using Shopfloor.Features.Trainings.ActionTraining;
 using Shopfloor.Features.Trainings.PersonTraining;
 using Shopfloor.Features.Trainings.TrainingDetails;
+using Shopfloor.Features.Trainings.TrainingEdit;
 using Shopfloor.Features.Trainings.TrainingMain;
 using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Layout.Content.Util;
@@ -48,6 +49,7 @@ namespace Shopfloor.Layout.Content
             MachineResponsibilityEditemplate = GetDataTemplate<MachineResponsibilityEditView>(),
             TrainingMainViewModelTemplate = GetDataTemplate<TrainingMainView>(),
             TrainingDetailsTemplate = GetDataTemplate<TrainingDetailsView>(),
+            TrainingEditTemplate = GetDataTemplate<TrainingEditView>(),
             ActionTrainingTemplate = GetDataTemplate<ActionTrainingView>(),
             PersonTrainingTemplate = GetDataTemplate<PersonTrainingView>(),
         };
