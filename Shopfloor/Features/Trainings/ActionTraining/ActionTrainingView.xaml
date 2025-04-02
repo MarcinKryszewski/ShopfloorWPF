@@ -1,12 +1,212 @@
 ﻿<UserControl x:Class="Shopfloor.Features.Trainings.ActionTraining.ActionTrainingView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Shopfloor.Features.Trainings.ActionTraining"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
     <Grid>
-            
+        <!--
+                Title
+                TrainingList    PersonTrained       PersonOnTraining
+                Train           Retrain             Cancel
+
+                Return
+            -->
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{Binding ActionTitle}"
+                   Grid.Row="0"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Employees-->
+            <ScrollViewer
+                x:Name="OuterScrollerViewer"
+                MaxHeight="800"
+                Grid.Column="0"
+                Margin="0,15,0,0"
+                PreviewMouseWheel="DataGrid_PreviewMouseWheel">
+
+                <DataGrid Margin="0,0,10,0"
+                          AutoGenerateColumns="False"
+                          CellStyle="{DynamicResource DataGridCellMain}"
+                          ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
+                          IsReadOnly="True"
+                          ItemsSource="{Binding Path=TrainingList}"
+                          RowStyle="{StaticResource DataGridRowMain}"
+                          SelectedItem="{Binding Path=Training}"
+                          SelectionMode="Single"
+                          SelectionUnit="FullRow"
+                          Style="{DynamicResource DataGridMain}"
+                          TargetUpdated="DataGrid_TargetUpdated">
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn
+                            Width="auto"
+                            Binding="{Binding Responsible.FullName}"
+                            Header="Imię i nazwisko"/>
+
+                        <DataGridTextColumn
+                            Width="auto"
+                            Binding="{Binding Responsible.Workshop.Name}"
+                            Header="Dział"/>
+
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding TrainingStatus}"
+                            Header="Status"/>
+
+                        <DataGridTemplateColumn
+                            Width="auto"
+                            Header="Akcje"
+                            IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+
+                                        <Button
+                                            Command="{Binding Path=DataContext.TrainCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding}">
+                                            <Button.Style>
+                                                <Style BasedOn="{StaticResource gridConfirmButton}"
+                                                       TargetType="Button">
+                                                    <Setter Property="Visibility"
+                                                            Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding TrainingStatus}"
+                                                                     Value="Untrained">
+                                                            <Setter Property="Visibility"
+                                                                    Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                            <TextBlock
+                                                FontFamily="Segoe MDL2 Assets"
+                                                Style="{StaticResource gridButtonIcon}"
+                                                Text="&#xE7B3;"/>
+                                        </Button>
+
+                                        <Button
+                                            Margin="2,0,0,0"
+                                            Command="{Binding Path=DataContext.RetrainCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding}">
+                                            <Button.Style>
+                                                <Style BasedOn="{StaticResource gridEditButton}"
+                                                       TargetType="Button">
+                                                    <Setter Property="Visibility"
+                                                            Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding TrainingStatus}"
+                                                                     Value="Trained">
+                                                            <Setter Property="Visibility"
+                                                                    Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                            <TextBlock
+                                                FontFamily="Segoe MDL2 Assets"
+                                                Style="{StaticResource gridButtonIcon}"
+                                                Text="&#xE70F;"/>
+                                        </Button>
+
+                                        <Button
+                                            Margin="2,0,0,0"
+                                            Command="{Binding Path=DataContext.CancelTrainingCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding}">
+                                            <Button.Style>
+                                                <Style BasedOn="{StaticResource gridRemoveButton}"
+                                                       TargetType="Button">
+                                                    <Setter Property="Visibility"
+                                                            Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding TrainingStatus}"
+                                                                     Value="InTraining">
+                                                            <Setter Property="Visibility"
+                                                                    Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Button.Style>
+                                            <TextBlock
+                                                FontFamily="Segoe MDL2 Assets"
+                                                Style="{StaticResource gridButtonIcon}"
+                                                Text="&#xE74D;"/>
+                                        </Button>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+            </ScrollViewer>
+
+            <!--TrainingList-->
+            <ListView Grid.Column="2">
+                <ListView.View>
+                    <GridView/>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+        <Grid Grid.Row="2">
+
+            <Grid.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="Padding"
+                            Value="5,15,5,20"/>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="1">
+                <StackPanel Orientation="Horizontal">
+
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Margin"
+                                    Value="10,0"/>
+                            <Setter Property="Height"
+                                    Value="50"/>
+                            <Setter Property="Width"
+                                    Value="150"/>
+                        </Style>
+                    </StackPanel.Resources>
+
+                    <Button
+                        Width="150"
+                        Height="50"
+                        Margin="10,0"
+                        Command="{Binding Path=ReturnCommand}"
+                        Content="WRÓĆ"
+                        Style="{StaticResource ResourceKey=ButtonSide}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>
