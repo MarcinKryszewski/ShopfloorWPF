@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Shopfloor.Features.Trainings.TrainingCreate"
-             xmlns:content="clr-namespace:Shopfloor.Features.Trainings.ActionTraining"
+             xmlns:action="clr-namespace:Shopfloor.Features.Trainings.ActionTraining"
+             xmlns:person="clr-namespace:Shopfloor.Features.Trainings.PersonTraining"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
@@ -12,13 +13,87 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
         <TextBlock
             Grid.Row="0"
             Style="{StaticResource TitleTextBlock}"
             Text="Szkolenia - tworzenie"/>
-        <content:ActionTrainingView Grid.Row="1"
-                                    DataContext="{Binding ContentViewModel}"/>
+
+        <Grid Grid.Row="1">
+
+            <Grid.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="Padding"
+                            Value="5,15,5,20"/>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="1"
+                       Grid.Row="0"
+                       Text="Wybierz"/>
+
+            <Border Grid.Column="1"
+                    Grid.Row="1">
+                <StackPanel Orientation="Horizontal">
+
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Margin"
+                                    Value="10,0"/>
+                            <Setter Property="Height"
+                                    Value="50"/>
+                            <Setter Property="Width"
+                                    Value="150"/>
+                        </Style>
+                    </StackPanel.Resources>
+
+                    <Button
+                        Width="150"
+                        Height="50"
+                        Margin="10,0"
+                        Command="{Binding Path=SetTrainingViewModelCommand}"
+                        CommandParameter="action"
+                        Content="DZIAŁANIE"
+                        Style="{StaticResource ResourceKey=ButtonMain}"/>
+
+                    <Button
+                        Width="150"
+                        Height="50"
+                        Margin="10,0"
+                        Command="{Binding Path=SetTrainingViewModelCommand}"
+                        CommandParameter="person"
+                        Content="OSOBA"
+                        Style="{StaticResource ResourceKey=ButtonMain}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <ContentControl Content="{Binding ContentViewModel}"
+                        Grid.Row="2">
+            <ContentControl.Resources>
+                <DataTemplate DataType="{x:Type action:ActionTrainingViewModel}">
+                    <action:ActionTrainingView/>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type person:PersonTrainingViewModel}">
+                    <person:PersonTrainingView/>
+                </DataTemplate>
+            </ContentControl.Resources>
+        </ContentControl>
+
     </Grid>
 </UserControl>

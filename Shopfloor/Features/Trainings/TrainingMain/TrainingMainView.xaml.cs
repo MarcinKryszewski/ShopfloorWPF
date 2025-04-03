@@ -11,7 +11,7 @@ namespace Shopfloor.Features.Trainings.TrainingMain
         {
             this.InitializeComponent();
         }
-        public void DataGrid_TargetUpdated(object sender, DataTransferEventArgs e) => DataGridWidthRefresh.RefreshWidth(sender, e, 4);
+        public void DataGrid_TargetUpdated(object sender, DataTransferEventArgs e) => DataGridWidthRefresh.RefreshWidth(sender, e, 2);
         private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (!e.Handled && sender is ScrollViewer scrollViewer)

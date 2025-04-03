@@ -42,9 +42,9 @@
 
                 <DataGrid.Columns>
 
-
                     <DataGridTextColumn
                         Width="auto"
+                        MinWidth="100"
                         Binding="{Binding Teacher.FullName}"
                         Header="Trener"/>
 
