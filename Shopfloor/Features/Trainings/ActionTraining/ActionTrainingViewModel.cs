@@ -1,41 +1,34 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Input;
-using Shopfloor.Features.Actions.ActionTransfer.Utilities;
-using Shopfloor.Models.Commons.Interfaces;
-using Shopfloor.Models.MachinesResponsibles;
-using Shopfloor.Models.Persons;
-using Shopfloor.Models.Trainings;
+﻿using System.ComponentModel;
+using Shopfloor.Features.Trainings.ActionTraining.Contexts;
+using Shopfloor.Features.Trainings.ActionTraining.SelectAction;
+using Shopfloor.Features.Trainings.ActionTraining.SelectPerson;
 using Shopfloor.Shared.ViewModels;
-using Shopfloor.Utilities.Collections;
 
 namespace Shopfloor.Features.Trainings.ActionTraining
 {
     internal class ActionTrainingViewModel : ViewModelBase
     {
-        public ActionTrainingViewModel(IRepository<Training, TrainingCreation> trainingRepository, IRepository<Person, PersonCreation> personRepository)
+        private readonly SelectActionViewModel _actionViewModel;
+        private readonly SelectPersonViewModel _personViewModel;
+        private readonly SelectedActionContext _actionContext;
+        private ViewModelBase _contentViewModel;
+        public ActionTrainingViewModel(
+            SelectActionViewModel actionViewModel,
+            SelectPersonViewModel personViewModel,
+            SelectedActionContext actionContext)
         {
-            FillTrainingList(trainingRepository.GetDataAsync().Result, personRepository.GetDataAsync().Result);
+            _actionViewModel = actionViewModel;
+            _personViewModel = personViewModel;
+            _actionContext = actionContext;
+
+            _contentViewModel = _actionViewModel;
+            _actionContext.PropertyChanged += OnActionContextChanged;
         }
-        public ICommand TrainCommand { get; }
-        public ICommand RetrainCommand { get; }
-        public ICommand CancelTrainingCommand { get; }
-        public ICommand ReturnCommand { get; }
-        public ConcurrentObservableCollection<ResponsibleTraining> TrainingList { get; private set; } = [];
-        private void FillTrainingList(IEnumerable<Training> trainings, List<Person> persons)
+        public ViewModelBase ContentViewModel => _contentViewModel;
+        private void OnActionContextChanged(object? sender, PropertyChangedEventArgs e)
         {
-            TrainingList.Clear();
-
-            foreach (Person person in persons)
-            {
-                IEnumerable<Training> personTrainings = trainings.Where(x => x.StundetIds.Contains(person.Id));
-
-                TrainingList.Add(new ResponsibleTraining()
-                {
-                    Responsible = person,
-                    TrainingStatus = TrainingStatusRetriever.GetTrainingStatus(personTrainings),
-                });
-            }
+            _contentViewModel = _actionContext.Activity is null ? _actionViewModel : _personViewModel;
+            OnPropertyChanged(nameof(ContentViewModel));
         }
     }
 }

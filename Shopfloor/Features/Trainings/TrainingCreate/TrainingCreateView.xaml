@@ -93,6 +93,7 @@
                     <person:PersonTrainingView/>
                 </DataTemplate>
             </ContentControl.Resources>
+
         </ContentControl>
 
     </Grid>
