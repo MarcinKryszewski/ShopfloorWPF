@@ -27,7 +27,7 @@
             <Grid.Resources>
                 <Style TargetType="Border">
                     <Setter Property="Padding"
-                            Value="5,15,5,20"/>
+                            Value="5,15,5,5"/>
                 </Style>
             </Grid.Resources>
 
@@ -44,7 +44,11 @@
 
             <TextBlock Grid.Column="1"
                        Grid.Row="0"
-                       Text="Wybierz"/>
+                       HorizontalAlignment="Center"
+                       FontSize="32"
+                       FontWeight="ExtraBold"
+                       Foreground="{StaticResource BrushPurple500}"
+                       Text="Chcę zacząć od"/>
 
             <Border Grid.Column="1"
                     Grid.Row="1">
@@ -67,7 +71,7 @@
                         Margin="10,0"
                         Command="{Binding Path=SetTrainingViewModelCommand}"
                         CommandParameter="action"
-                        Content="DZIAŁANIE"
+                        Content="DZIAŁANIA"
                         Style="{StaticResource ResourceKey=ButtonMain}"/>
 
                     <Button
@@ -76,7 +80,7 @@
                         Margin="10,0"
                         Command="{Binding Path=SetTrainingViewModelCommand}"
                         CommandParameter="person"
-                        Content="OSOBA"
+                        Content="OSOBY"
                         Style="{StaticResource ResourceKey=ButtonMain}"/>
                 </StackPanel>
             </Border>

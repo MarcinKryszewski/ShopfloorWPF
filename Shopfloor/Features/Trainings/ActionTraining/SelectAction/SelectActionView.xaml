@@ -12,128 +12,153 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <TextBlock
             Grid.Row="0"
-            Padding="0,15"
+            Padding="0,5"
             HorizontalAlignment="Center"
             FontSize="32"
             FontWeight="ExtraBold"
             Foreground="{StaticResource BrushPurple500}"
             Text="WYBIERZ DZIAŁANIE"/>
 
-        <StackPanel Orientation="Horizontal"
-                    Grid.Row="1">
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-            <Border>
-                <StackPanel>
-                    <TextBlock
-                        Margin="0,7,0,3"
-                        Style="{StaticResource TooltipText}"
-                        Text="Linia"/>
-                    <ComboBox
-                        MinHeight="30px"
-                        DisplayMemberPath="Name"
-                        IsEditable="true"
-                        IsReadOnly="false"
-                        IsTextSearchEnabled="false"
-                        ItemsSource="{Binding Path=FilterData.Lines}"
-                        SelectedItem="{Binding Path=FilterData.SelectedLine}"
-                        SelectedValuePath="Name"
-                        Style="{StaticResource ComboBoxMain}"
-                        Text="{Binding FilterData.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                </StackPanel>
-            </Border>
+            <StackPanel Orientation="Vertical"
+                        Grid.Column="0"
+                        Width="250px">
 
-            <Border>
-                <StackPanel>
-                    <TextBlock
-                        Margin="0,7,0,3"
-                        Style="{StaticResource TooltipText}"
-                        Text="Maszyna"/>
-                    <ComboBox
-                        MinHeight="30px"
-                        DisplayMemberPath="Name"
-                        IsEditable="true"
-                        IsReadOnly="false"
-                        IsTextSearchEnabled="false"
-                        ItemsSource="{Binding Path=FilterData.Machines}"
-                        SelectedItem="{Binding Path=FilterData.SelectedMachine}"
-                        SelectedValuePath="Name"
-                        Style="{StaticResource ComboBoxMain}"
-                        Text="{Binding FilterData.Machine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                </StackPanel>
-            </Border>
-        </StackPanel>
+                <TextBlock Style="{StaticResource TitleTextBlock}"
+                           Text="Filtry"/>
 
-        <ScrollViewer
-            x:Name="OuterScrollerViewer"
-            Grid.Row="2"
-            Margin="0,15,0,0">
-            <DataGrid
-                Margin="0,0,10,0"
-                AutoGenerateColumns="False"
-                CellStyle="{DynamicResource DataGridCellMain}"
-                ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
-                IsReadOnly="True"
-                ItemsSource="{Binding Path=Activities}"
-                SelectedItem="{Binding Path=Activity}"
-                SelectionMode="Single"
-                SelectionUnit="FullRow"
-                Style="{DynamicResource DataGridMain}"
-                RowStyle="{StaticResource DataGridRowMain}">
+                <Border>
+                    <StackPanel>
+                        <TextBlock
+                            Margin="0,7,0,3"
+                            Style="{StaticResource TooltipText}"
+                            Text="Linia"/>
+                        <ComboBox
+                            MinHeight="30px"
+                            DisplayMemberPath="Name"
+                            IsEditable="true"
+                            IsReadOnly="false"
+                            IsTextSearchEnabled="false"
+                            ItemsSource="{Binding Path=Lines}"
+                            SelectedItem="{Binding Path=SelectedLine}"
+                            SelectedValuePath="Name"
+                            Style="{StaticResource ComboBoxMain}"
+                            Text="{Binding FilterData.Line, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </Border>
 
-                <DataGrid.Columns>
+                <Border>
+                    <StackPanel>
+                        <TextBlock
+                            Margin="0,7,0,3"
+                            Style="{StaticResource TooltipText}"
+                            Text="Maszyna"/>
+                        <ComboBox
+                            MinHeight="30px"
+                            DisplayMemberPath="Name"
+                            IsEditable="true"
+                            IsReadOnly="false"
+                            IsTextSearchEnabled="false"
+                            ItemsSource="{Binding Path=Machines}"
+                            SelectedItem="{Binding Path=SelectedMachine}"
+                            SelectedValuePath="Name"
+                            Style="{StaticResource ComboBoxMain}"
+                            Text="{Binding FilterData.Machine, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
 
-                    <DataGridTextColumn
-                        Width="auto"
-                        Binding="{Binding Workshop.Name}"
-                        Header="Warsztat"/>
+            <ScrollViewer
+                x:Name="OuterScrollerViewer"
+                Grid.Column="1"
+                Width="auto"
+                MaxHeight="700px"
+                Margin="0,15,0,0"
+                PreviewMouseWheel="DataGrid_PreviewMouseWheel">
 
-                    <DataGridTextColumn
-                        Width="auto"
-                        Binding="{Binding Type.Name}"
-                        Header="Rodzaj"/>
+                <DataGrid
+                    Margin="0,0,10,0"
+                    AutoGenerateColumns="False"
+                    CellStyle="{DynamicResource DataGridCellMain}"
+                    ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding Path=Activities}"
+                    SelectedItem="{Binding Path=Activity}"
+                    SelectionMode="Single"
+                    SelectionUnit="FullRow"
+                    Style="{DynamicResource DataGridMain}"
+                    RowStyle="{StaticResource DataGridRowMain}"
+                    TargetUpdated="DataGrid_TargetUpdated">
 
-                    <DataGridTextColumn
-                        Width="*"
-                        Binding="{Binding Description, NotifyOnTargetUpdated=True}"
-                        Header="Opis"/>
+                    <DataGrid.Columns>
 
-                    <DataGridTextColumn
-                        Width="auto"
-                        Binding="{Binding Additionals}"
-                        Header="Specjalne"/>
+                        <DataGridTextColumn
+                            Width="auto"
+                            Binding="{Binding Machine.Line.Name}"
+                            Header="Warsztat"/>
 
-                    <DataGridTemplateColumn
-                        Width="auto"
-                        Header="Akcje"
-                        IsReadOnly="True">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
+                        <DataGridTextColumn
+                            Width="auto"
+                            Binding="{Binding Machine.Name}"
+                            Header="Warsztat"/>
 
-                                    <Button
-                                        Command="{Binding Path=DataContext.ChooseActionCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource gridConfirmButton}">
-                                        <TextBlock
-                                            FontFamily="Segoe MDL2 Assets"
-                                            Style="{StaticResource gridButtonIcon}"
-                                            Text="&#xE7B3;"/>
-                                    </Button>
+                        <DataGridTextColumn
+                            Width="auto"
+                            Binding="{Binding Workshop.Name}"
+                            Header="Warsztat"/>
 
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                        <DataGridTextColumn
+                            Width="auto"
+                            Binding="{Binding Type.Name}"
+                            Header="Rodzaj"/>
 
-                </DataGrid.Columns>
-            </DataGrid>
-        </ScrollViewer>
+                        <DataGridTextColumn
+                            Width="*"
+                            Binding="{Binding Description, NotifyOnTargetUpdated=True}"
+                            Header="Opis"/>
+
+                        <DataGridTextColumn
+                            Width="auto"
+                            Binding="{Binding Additionals}"
+                            Header="Specjalne"/>
+
+                        <DataGridTemplateColumn
+                            Width="auto"
+                            Header="Akcje"
+                            IsReadOnly="True">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+
+                                        <Button
+                                            Command="{Binding Path=DataContext.ChooseActionCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding}"
+                                            Style="{StaticResource gridConfirmButton}">
+                                            <TextBlock
+                                                FontFamily="Segoe MDL2 Assets"
+                                                Style="{StaticResource gridButtonIcon}"
+                                                Text="&#xE7B3;"/>
+                                        </Button>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+        </Grid>
 
     </Grid>
 </UserControl> 

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Shopfloor.Utilities;
 
 namespace Shopfloor.Features.Trainings.ActionTraining.SelectAction
 {
@@ -20,6 +21,15 @@ namespace Shopfloor.Features.Trainings.ActionTraining.SelectAction
         public SelectActionView()
         {
             this.InitializeComponent();
+        }
+        public void DataGrid_TargetUpdated(object sender, DataTransferEventArgs e) => DataGridWidthRefresh.RefreshWidth(sender, e, 4);
+        private void DataGrid_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (!e.Handled && sender is ScrollViewer scrollViewer)
+            {
+                scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - e.Delta);
+                e.Handled = true;
+            }
         }
     }
 }
