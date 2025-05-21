@@ -1,14 +1,18 @@
 using System.Collections.Generic;
+using Shopfloor.Models.Activities;
+using Shopfloor.Models.Lines;
+using Shopfloor.Models.Machines;
 using Shopfloor.Models.Persons;
-using Shopfloor.Models.Trainings;
 using Shopfloor.Shared;
 
 namespace Shopfloor.Contexts
 {
     internal class TrainingContext : ObservableObject
     {
-        public List<Training> Trainings { get; set; } = [];
-        public Training? Training { get; set; }
-        public List<Person> PeopleToTrain { get; set; } = [];
+        public List<Person> Students { get; } = [];
+        public Person? Trainer { get; set; }
+        public Line? Line { get; set; }
+        public Machine? Machine { get; set; }
+        public Activity? Activity { get; set; }
     }
 }

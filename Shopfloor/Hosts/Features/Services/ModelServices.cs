@@ -8,8 +8,6 @@ using Shopfloor.Models.Lines;
 using Shopfloor.Models.Machines;
 using Shopfloor.Models.MachinesResponsibles;
 using Shopfloor.Models.Persons;
-using Shopfloor.Models.Students;
-using Shopfloor.Models.Trainings;
 using Shopfloor.Models.Workshops;
 
 namespace Shopfloor.Hosts.Features.Services
@@ -44,8 +42,6 @@ namespace Shopfloor.Hosts.Features.Services
             Machines(services);
             Persons(services);
             Responsibles(services);
-            Students(services);
-            Trainings(services);
             Workshops(services);
         }
         public static void Instructions(IServiceCollection services)
@@ -78,23 +74,11 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddSingleton<IStore<MachineResponsible>, MachineResponsibleStore>();
             services.AddSingleton<IProvider<MachineResponsible, MachineResponsibleCreation>, MachineResponsibleProvider>();
         }
-        public static void Trainings(IServiceCollection services)
-        {
-            services.AddSingleton<IRepository<Training, TrainingCreation>, TrainingRepository>();
-            services.AddSingleton<IStore<Training>, TrainingStore>();
-            services.AddSingleton<IProvider<Training, TrainingCreation>, TrainingProvider>();
-        }
         public static void Workshops(IServiceCollection services)
         {
             services.AddSingleton<IRepository<Workshop, WorkshopCreation>, WorkshopRepository>();
             services.AddSingleton<IStore<Workshop>, WorkshopStore>();
             services.AddSingleton<IProvider<Workshop, WorkshopCreation>, WorkshopProvider>();
-        }
-        public static void Students(IServiceCollection services)
-        {
-            services.AddSingleton<IRepository<Student, StudentCreation>, StudentRepository>();
-            services.AddSingleton<IStore<Student>, StudentStore>();
-            services.AddSingleton<IProvider<Student, StudentCreation>, StudentProvider>();
         }
     }
 }

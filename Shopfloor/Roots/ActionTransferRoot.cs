@@ -8,7 +8,6 @@ using Shopfloor.Models.Activities;
 using Shopfloor.Models.Commons.Interfaces;
 using Shopfloor.Models.MachinesResponsibles;
 using Shopfloor.Models.Persons;
-using Shopfloor.Models.Trainings;
 using Shopfloor.Models.Workshops;
 using Shopfloor.Utilities.Collections;
 
@@ -63,43 +62,13 @@ namespace Shopfloor.Roots
 
             List<Task> tasks = [];
 
-            Task<IEnumerable<Training>> trainingTask = LoadTrainingsForActivity(_context.Activity.Id);
             Task<IEnumerable<MachineResponsible>> responsiblesTask = LoadResponsiblesForMachine(_context.Activity.MachineId);
             Task<List<Person>> loadPersons = LoadPersons();
 
             await Task.WhenAll(tasks);
 
-            IEnumerable<Training> trainings = await trainingTask;
             IEnumerable<MachineResponsible> responsibles = await responsiblesTask;
             List<Person> persons = await loadPersons;
-
-            FillTrainingList(trainings, responsibles, persons);
-        }
-        private void FillTrainingList(IEnumerable<Training> trainings, IEnumerable<MachineResponsible> responsibles, List<Person> persons)
-        {
-            TrainingList.Clear();
-
-            foreach (MachineResponsible item in responsibles)
-            {
-                Person? person = persons.Find(x => x.Id == item.PersonId);
-                if (person == null)
-                {
-                    continue;
-                }
-
-                IEnumerable<Training> personTrainings = trainings.Where(x => x.StundetIds.Contains(person.Id));
-
-                TrainingList.Add(new ResponsibleTraining()
-                {
-                    Responsible = person,
-                    TrainingStatus = TrainingStatusRetriever.GetTrainingStatus(personTrainings),
-                });
-            }
-        }
-        private async Task<IEnumerable<Training>> LoadTrainingsForActivity(int activityId)
-        {
-            IEnumerable<Training> data = await _data.GetTrainings();
-            return data.Where(x => x.ActivityId == activityId);
         }
         private async Task<IEnumerable<MachineResponsible>> LoadResponsiblesForMachine(int machineId)
         {

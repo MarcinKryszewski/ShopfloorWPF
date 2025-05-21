@@ -9,15 +9,11 @@ using Shopfloor.Features.Actions.TrainingsList;
 using Shopfloor.Features.Personal.PersonalTraining;
 using Shopfloor.Features.Responsibilities.MachineResponsibilities;
 using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit;
-using Shopfloor.Features.Trainings.ActionTraining;
-using Shopfloor.Features.Trainings.ActionTraining.SelectAction;
-using Shopfloor.Features.Trainings.ActionTraining.SelectPerson;
-using Shopfloor.Features.Trainings.PersonTraining;
+using Shopfloor.Features.Trainings.ListTrainee;
+using Shopfloor.Features.Trainings.ListTrainer;
 using Shopfloor.Features.Trainings.TrainingCreate;
-using Shopfloor.Features.Trainings.TrainingCreateForm;
 using Shopfloor.Features.Trainings.TrainingDetails;
 using Shopfloor.Features.Trainings.TrainingEdit;
-using Shopfloor.Features.Trainings.TrainingMain;
 
 namespace Shopfloor.Hosts.Features.Services
 {
@@ -38,18 +34,13 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddTransient<MachineResponsibilitiesViewModel>();
             services.AddTransient<MachineResponsibilityEditViewModel>();
 
-            services.AddSingleton<TrainingMainViewModel>();
-            services.AddTransient<ActionTrainingViewModel>();
-            services.AddTransient<PersonTrainingViewModel>();
-            services.AddTransient<TrainingCreateViewModel>();
-            services.AddTransient<TrainingCreateFormViewModel>();
-            services.AddTransient<TrainingDetailsViewModel>();
-            services.AddTransient<TrainingEditViewModel>();
-
             services.AddTransient<PersonalTrainingViewModel>();
 
-            services.AddTransient<SelectActionViewModel>();
-            services.AddTransient<SelectPersonViewModel>();
+            services.AddTransient<ListTraineeViewModel>();
+            services.AddTransient<ListTrainerViewModel>();
+            services.AddTransient<TrainingCreateViewModel>();
+            services.AddTransient<TrainingDetailsViewModel>();
+            services.AddTransient<TrainingEditViewModel>();
         }
     }
 }

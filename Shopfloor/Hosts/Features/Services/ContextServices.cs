@@ -1,6 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
 using Shopfloor.Contexts;
-using Shopfloor.Features.Trainings.ActionTraining.Contexts;
 
 namespace Shopfloor.Hosts.Features.Services
 {
@@ -11,7 +10,6 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddSingleton<ActivityContext>();
             services.AddSingleton<MachineContext>();
             services.AddSingleton<TrainingContext>();
-            services.AddSingleton<SelectedActionContext>();
         }
     }
 }

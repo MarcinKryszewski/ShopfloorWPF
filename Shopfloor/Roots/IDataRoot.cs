@@ -8,7 +8,6 @@ using Shopfloor.Models.Lines;
 using Shopfloor.Models.Machines;
 using Shopfloor.Models.MachinesResponsibles;
 using Shopfloor.Models.Persons;
-using Shopfloor.Models.Trainings;
 using Shopfloor.Models.Workshops;
 
 namespace Shopfloor.Roots
@@ -23,7 +22,6 @@ namespace Shopfloor.Roots
         public Task<IEnumerable<Machine>> GetMachines();
         public Task<IEnumerable<Person>> GetPersons();
         public Task<IEnumerable<MachineResponsible>> GetResponsibles();
-        public Task<IEnumerable<Training>> GetTrainings();
         public Task<IEnumerable<Workshop>> GetWorkshops();
     }
 }

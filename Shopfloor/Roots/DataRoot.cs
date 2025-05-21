@@ -10,7 +10,6 @@ using Shopfloor.Models.Lines;
 using Shopfloor.Models.Machines;
 using Shopfloor.Models.MachinesResponsibles;
 using Shopfloor.Models.Persons;
-using Shopfloor.Models.Trainings;
 using Shopfloor.Models.Workshops;
 
 namespace Shopfloor.Roots
@@ -25,7 +24,6 @@ namespace Shopfloor.Roots
         private readonly IRepository<Machine, MachineCreation> _machines;
         private readonly IRepository<Person, PersonCreation> _persons;
         private readonly IRepository<MachineResponsible, MachineResponsibleCreation> _responsibles;
-        private readonly IRepository<Training, TrainingCreation> _trainings;
         private readonly IRepository<Workshop, WorkshopCreation> _workshops;
         public DataRoot(
             IRepository<Activity, ActivityCreation> activities,
@@ -36,7 +34,6 @@ namespace Shopfloor.Roots
             IRepository<Machine, MachineCreation> machines,
             IRepository<Person, PersonCreation> persons,
             IRepository<MachineResponsible, MachineResponsibleCreation> responsibilitiesData,
-            IRepository<Training, TrainingCreation> trainings,
             IRepository<Workshop, WorkshopCreation> workshops)
         {
             _activities = activities;
@@ -47,7 +44,6 @@ namespace Shopfloor.Roots
             _machines = machines;
             _persons = persons;
             _responsibles = responsibilitiesData;
-            _trainings = trainings;
             _workshops = workshops;
         }
         public event EventHandler? DataChanged
@@ -63,7 +59,6 @@ namespace Shopfloor.Roots
         public async Task<IEnumerable<Machine>> GetMachines() => await _machines.GetDataAsync();
         public async Task<IEnumerable<Person>> GetPersons() => await _persons.GetDataAsync();
         public async Task<IEnumerable<MachineResponsible>> GetResponsibles() => await _responsibles.GetDataAsync();
-        public async Task<IEnumerable<Training>> GetTrainings() => await _trainings.GetDataAsync();
         public async Task<IEnumerable<Workshop>> GetWorkshops() => await _workshops.GetDataAsync();
     }
 }

@@ -9,7 +9,6 @@ namespace Shopfloor.Hosts.Features.Services
         {
             services.AddSingleton<ActivitiesRoot>();
             services.AddSingleton<IDataRoot, DataRoot>();
-            services.AddSingleton<TrainingsRoot>();
             services.AddSingleton<ActivitiesDataRoot>();
             services.AddSingleton<MachinesRoot>();
             services.AddTransient<ActionTransferRoot>();

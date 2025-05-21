@@ -10,12 +10,11 @@ using Shopfloor.Features.God;
 using Shopfloor.Features.Personal.PersonalTraining;
 using Shopfloor.Features.Responsibilities.MachineResponsibilities;
 using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit;
-using Shopfloor.Features.Trainings.ActionTraining;
-using Shopfloor.Features.Trainings.PersonTraining;
+using Shopfloor.Features.Trainings.ListTrainee;
+using Shopfloor.Features.Trainings.ListTrainer;
 using Shopfloor.Features.Trainings.TrainingCreate;
 using Shopfloor.Features.Trainings.TrainingDetails;
 using Shopfloor.Features.Trainings.TrainingEdit;
-using Shopfloor.Features.Trainings.TrainingMain;
 using Shopfloor.Features.WorkInProgressFeature;
 
 namespace Shopfloor.Layout.Content.Util
@@ -26,7 +25,6 @@ namespace Shopfloor.Layout.Content.Util
         public DataTemplate? ActionDetailsTemplate { get; set; }
         public DataTemplate? ActionEditTemplate { get; set; }
         public DataTemplate? ActionListTemplate { get; set; }
-        public DataTemplate? TrainingMainViewModelTemplate { get; set; }
         public DataTemplate? ActionTransferTemplate { get; set; }
         public DataTemplate? GodTemplate { get; set; }
         public DataTemplate? MachineResponsibilitiesTemplate { get; set; }
@@ -34,11 +32,10 @@ namespace Shopfloor.Layout.Content.Util
         public DataTemplate? PersonalTrainingTemplate { get; set; }
         public DataTemplate? TrainingCreateTemplate { get; set; }
         public DataTemplate? TrainingDetailsTemplate { get; set; }
-        public DataTemplate? TrainingsListTemplate { get; set; }
+        public DataTemplate? ListTraineeTemplate { get; set; }
+        public DataTemplate? ListTrainerTemplate { get; set; }
         public DataTemplate? TrainingEditTemplate { get; set; }
         public DataTemplate? WorkInProgressTemplate { get; set; }
-        public DataTemplate? ActionTrainingTemplate { get; set; }
-        public DataTemplate? PersonTrainingTemplate { get; set; }
         public override DataTemplate? SelectTemplate(object item, DependencyObject? container)
         {
             return item switch
@@ -50,16 +47,14 @@ namespace Shopfloor.Layout.Content.Util
                 ActionEditViewModel => ActionEditTemplate,
                 ActionsListViewModel => ActionListTemplate,
                 ActionTransferViewModel => ActionTransferTemplate,
-                TrainingsListViewModel => TrainingsListTemplate,
                 PersonalTrainingViewModel => PersonalTrainingTemplate,
                 MachineResponsibilitiesViewModel => MachineResponsibilitiesTemplate,
                 MachineResponsibilityEditViewModel => MachineResponsibilityEditemplate,
-                TrainingMainViewModel => TrainingMainViewModelTemplate,
                 TrainingCreateViewModel => TrainingCreateTemplate,
                 TrainingDetailsViewModel => TrainingDetailsTemplate,
+                ListTraineeViewModel => ListTraineeTemplate,
+                ListTrainerViewModel => ListTrainerTemplate,
                 TrainingEditViewModel => TrainingEditTemplate,
-                ActionTrainingView => ActionTrainingTemplate,
-                PersonTrainingView => PersonTrainingTemplate,
                 _ => WorkInProgressTemplate,
             };
         }

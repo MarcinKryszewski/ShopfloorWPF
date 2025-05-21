@@ -13,7 +13,6 @@ using Shopfloor.Features.Actions.ActionEdit;
 using Shopfloor.Features.Actions.ActionsList.Commands;
 using Shopfloor.Features.Actions.ActionsList.Utilities;
 using Shopfloor.Features.Actions.ActionTransfer;
-using Shopfloor.Features.Trainings.ActionTraining;
 using Shopfloor.Models.Activities;
 using Shopfloor.Roots;
 using Shopfloor.Services.NavigationServices;
@@ -44,7 +43,6 @@ namespace Shopfloor.Features.Actions.ActionsList
             EditCommand = new NavigationCommand<ActionEditViewModel>(NavigationService).Navigate();
             CreateActionCommand = new NavigationCommand<ActionCreateViewModel>(NavigationService).Navigate();
             CancelCommand = new CancelCommand(root);
-            TrainingsCommand = new NavigationCommand<ActionTrainingViewModel>(NavigationService).Navigate();
             TransferActionCommand = new NavigationCommand<ActionTransferViewModel>(NavigationService).Navigate();
 
             Task.Run(LoadDataAsync);

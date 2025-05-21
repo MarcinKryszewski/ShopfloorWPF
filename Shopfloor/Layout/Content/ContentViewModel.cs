@@ -5,17 +5,14 @@ using Shopfloor.Features.Actions.ActionDetails;
 using Shopfloor.Features.Actions.ActionEdit;
 using Shopfloor.Features.Actions.ActionsList;
 using Shopfloor.Features.Actions.ActionTransfer;
-using Shopfloor.Features.Actions.TrainingsList;
 using Shopfloor.Features.God;
-using Shopfloor.Features.Personal.PersonalTraining;
 using Shopfloor.Features.Responsibilities.MachineResponsibilities;
 using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit;
-using Shopfloor.Features.Trainings.ActionTraining;
-using Shopfloor.Features.Trainings.PersonTraining;
+using Shopfloor.Features.Trainings.ListTrainee;
+using Shopfloor.Features.Trainings.ListTrainer;
 using Shopfloor.Features.Trainings.TrainingCreate;
 using Shopfloor.Features.Trainings.TrainingDetails;
 using Shopfloor.Features.Trainings.TrainingEdit;
-using Shopfloor.Features.Trainings.TrainingMain;
 using Shopfloor.Features.WorkInProgressFeature;
 using Shopfloor.Layout.Content.Util;
 using Shopfloor.Layout.TopPanel;
@@ -44,16 +41,14 @@ namespace Shopfloor.Layout.Content
             ActionEditTemplate = GetDataTemplate<ActionEditView>(),
             ActionListTemplate = GetDataTemplate<ActionsListView>(),
             ActionTransferTemplate = GetDataTemplate<ActionTransferView>(),
-            TrainingsListTemplate = GetDataTemplate<TrainingsListView>(),
-            PersonalTrainingTemplate = GetDataTemplate<PersonalTrainingView>(),
             MachineResponsibilitiesTemplate = GetDataTemplate<MachineResponsibilitiesView>(),
             MachineResponsibilityEditemplate = GetDataTemplate<MachineResponsibilityEditView>(),
-            TrainingMainViewModelTemplate = GetDataTemplate<TrainingMainView>(),
+
+            ListTraineeTemplate = GetDataTemplate<ListTraineeView>(),
+            ListTrainerTemplate = GetDataTemplate<ListTrainerView>(),
             TrainingCreateTemplate = GetDataTemplate<TrainingCreateView>(),
             TrainingDetailsTemplate = GetDataTemplate<TrainingDetailsView>(),
             TrainingEditTemplate = GetDataTemplate<TrainingEditView>(),
-            ActionTrainingTemplate = GetDataTemplate<ActionTrainingView>(),
-            PersonTrainingTemplate = GetDataTemplate<PersonTrainingView>(),
         };
         public ViewModelBase? Content => _navigationStore.CurrentViewModel;
         public TopPanelViewModel TopPanelViewModel => _topPanelViewModel;
