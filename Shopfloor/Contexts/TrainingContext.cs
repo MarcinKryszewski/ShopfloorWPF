@@ -4,6 +4,7 @@ using Shopfloor.Models.Lines;
 using Shopfloor.Models.Machines;
 using Shopfloor.Models.Persons;
 using Shopfloor.Shared;
+using Shopfloor.Shared.ViewModels;
 
 namespace Shopfloor.Contexts
 {
@@ -14,5 +15,6 @@ namespace Shopfloor.Contexts
         public Line? Line { get; set; }
         public Machine? Machine { get; set; }
         public Activity? Activity { get; set; }
+        public ViewModelBase? TrainingList { get; set; }
     }
 }

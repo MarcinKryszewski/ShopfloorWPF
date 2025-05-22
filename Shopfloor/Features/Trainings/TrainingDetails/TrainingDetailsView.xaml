@@ -18,7 +18,16 @@
                         Value="3,0,0,3"/>
             </Style>
             <Style BasedOn="{StaticResource TextBoxMain}"
-                    TargetType="{x:Type TextBox}"/>
+                   TargetType="{x:Type TextBox}">
+                <Setter Property="MinHeight"
+                        Value="40px"/>
+                <Setter Property="Width"
+                        Value="310px"/>
+                <Setter Property="HorizontalAlignment"
+                        Value="Left"/>
+                <Setter Property="IsEnabled"
+                        Value="False"/>
+            </Style>
         </Grid.Resources>
 
         <Grid.RowDefinitions>
@@ -31,33 +40,40 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="1"
-                   Text="Line - Machine"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="2"
-                   Foreground="{StaticResource BrushPurple500}"
-                   FontWeight="SemiBold"
+                   Grid.Column="1"
                    Style="{StaticResource TitleTextBlock}"
-                   Text="Skill"/>
+                   Text="{Binding Title}"/>
 
-        <StackPanel Grid.Row="3">
+        <StackPanel Grid.Row="3"
+                    Grid.Column="1">
             <TextBlock Text="Trainer"/>
-            <TextBox/>
+            <TextBox Text="{Binding TrainerName}"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="4">
+        <StackPanel Grid.Row="4"
+                    Grid.Column="1">
             <TextBlock Text="Date"/>
-            <TextBox/>
+            <TextBox Text="{Binding TrainingDate}"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="5">
+        <StackPanel Grid.Row="5"
+                    Grid.Column="1">
             <TextBlock Text="Students"/>
             <ScrollViewer>
-                <DataGrid></DataGrid>
+                <DataGrid Width="600"></DataGrid>
             </ScrollViewer>
         </StackPanel>
 
-        <Grid Grid.Row="6">
+        <Grid Grid.Row="6"
+              Grid.Column="0"
+              Grid.ColumnSpan="3">
 
             <Grid.Resources>
                 <Style TargetType="Border">
@@ -90,7 +106,7 @@
                         Width="150"
                         Height="50"
                         Margin="10,0"
-                        Command="{Binding Path=EditCommand}"
+                        Command="{Binding Path=EditNavigateCommand}"
                         Content="EDYTUJ"
                         Style="{StaticResource ResourceKey=ButtonMain}"/>
 
@@ -98,7 +114,7 @@
                         Width="150"
                         Height="50"
                         Margin="10,0"
-                        Command="{Binding Path=ReturnCommand}"
+                        Command="{Binding Path=ReturnNavigateCommand}"
                         Content="WRÓĆ"
                         Style="{StaticResource ResourceKey=ButtonSide}"/>
                 </StackPanel>
