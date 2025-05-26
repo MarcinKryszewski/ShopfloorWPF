@@ -12,57 +12,69 @@
     <Grid>
 
         <Grid.Resources>
-            <Style BasedOn="{StaticResource ComboBoxMain}" TargetType="{x:Type ComboBox}" />
-            <Style BasedOn="{StaticResource TooltipText}" TargetType="{x:Type TextBlock}">
-                <Setter Property="Margin" Value="3,0,0,3" />
+            <Style BasedOn="{StaticResource ComboBoxMain}"
+                    TargetType="{x:Type ComboBox}"/>
+            <Style BasedOn="{StaticResource TooltipText}"
+                    TargetType="{x:Type TextBlock}">
+                <Setter Property="Margin"
+                        Value="3,0,0,3"/>
             </Style>
-            <Style BasedOn="{StaticResource TextBoxMain}" TargetType="{x:Type TextBox}">
-                <Setter Property="MinHeight" Value="40px" />
-                <Setter Property="Width" Value="310px" />
-                <Setter Property="HorizontalAlignment" Value="Left" />
-                <Setter Property="IsEnabled" Value="False" />
+            <Style BasedOn="{StaticResource TextBoxMain}"
+                    TargetType="{x:Type TextBox}">
+                <Setter Property="MinHeight"
+                        Value="40px"/>
+                <Setter Property="Width"
+                        Value="310px"/>
+                <Setter Property="HorizontalAlignment"
+                        Value="Left"/>
+                <Setter Property="IsEnabled"
+                        Value="False"/>
             </Style>
-            <Style BasedOn="{StaticResource {x:Type StackPanel}}" TargetType="{x:Type StackPanel}">
-                <Setter Property="Margin" Value="0,5" />
+            <Style TargetType="{x:Type StackPanel}">
+                <Setter Property="Margin"
+                        Value="0,5"/>
             </Style>
         </Grid.Resources>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="30" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock
             Grid.Row="2"
             Grid.Column="1"
             Style="{StaticResource TitleTextBlock}"
-            Text="{Binding Title}" />
+            Text="{Binding Title}"/>
 
-        <StackPanel Grid.Row="3" Grid.Column="1">
-            <TextBlock Text="Trener" />
-            <TextBox Text="{Binding TrainerName, Mode=OneWay}" />
+        <StackPanel Grid.Row="3"
+                Grid.Column="1">
+            <TextBlock Text="Trener"/>
+            <TextBox Text="{Binding TrainerName, Mode=OneWay}"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="4" Grid.Column="1">
-            <TextBlock Text="Data szkolenia" />
-            <TextBox Text="{Binding TrainingDate, Mode=OneWay, StringFormat=yyyy-MM-dd}" />
+        <StackPanel Grid.Row="4"
+                Grid.Column="1">
+            <TextBlock Text="Data szkolenia"/>
+            <TextBox Text="{Binding TrainingDate, Mode=OneWay, StringFormat=yyyy-MM-dd}"/>
         </StackPanel>
 
-        <StackPanel Grid.Row="5" Grid.Column="1">
-            <TextBlock Text="Biorący udział w szkoleniu" />
+        <StackPanel Grid.Row="5"
+                Grid.Column="1">
+            <TextBlock Text="Biorący udział w szkoleniu"/>
             <ScrollViewer>
-                <DataGrid Width="600" />
+                <DataGrid Width="600"/>
             </ScrollViewer>
         </StackPanel>
 
@@ -73,14 +85,15 @@
 
             <Grid.Resources>
                 <Style TargetType="Border">
-                    <Setter Property="Padding" Value="5,15,5,20" />
+                    <Setter Property="Padding"
+                            Value="5,15,5,20"/>
                 </Style>
             </Grid.Resources>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Border Grid.Column="1">
@@ -88,9 +101,12 @@
 
                     <StackPanel.Resources>
                         <Style TargetType="{x:Type Button}">
-                            <Setter Property="Margin" Value="10,0" />
-                            <Setter Property="Height" Value="50" />
-                            <Setter Property="Width" Value="150" />
+                            <Setter Property="Margin"
+                                    Value="10,0"/>
+                            <Setter Property="Height"
+                                    Value="50"/>
+                            <Setter Property="Width"
+                                    Value="150"/>
                         </Style>
                     </StackPanel.Resources>
 
@@ -100,7 +116,7 @@
                         Margin="10,0"
                         Command="{Binding Path=EditNavigateCommand}"
                         Content="EDYTUJ"
-                        Style="{StaticResource ResourceKey=ButtonMain}" />
+                        Style="{StaticResource ResourceKey=ButtonMain}"/>
 
                     <Button
                         Width="150"
@@ -108,7 +124,7 @@
                         Margin="10,0"
                         Command="{Binding Path=ReturnNavigateCommand}"
                         Content="WRÓĆ"
-                        Style="{StaticResource ResourceKey=ButtonSide}" />
+                        Style="{StaticResource ResourceKey=ButtonSide}"/>
                 </StackPanel>
             </Border>
         </Grid>
