@@ -1,0 +1,116 @@
+https://dbdiagram.io/d
+
+
+Table substances {
+	id integer [primary key]
+	producerName varchar
+	substanceName varchar
+	substanceType varchar
+	boilingPoint integer
+	active bool
+}
+
+Table safetySheets {
+	id integer [primary key]
+	filePath varchar
+	updateDate date
+}
+
+Table riskEvaluations {
+	id integer [primary key]
+	filePath varchar
+	updateDate date
+	corrections varchar
+}
+
+Table foodGrades {
+	id integer [primary key]
+	filePath integer
+}
+
+Table hPhrases {
+	code varchar [primary key]
+	description varchar
+}
+
+Table pPhrases {
+	code varchar [primary key]
+	description varchar
+}
+
+Table substanceHPhrases {
+	substanceId integer [primary key]
+	hPhraseId varchar [primary key]
+}
+
+Table substancePPhrases {
+	substanceId integer [primary key]
+	pPhrase varchar [primary key]
+}
+
+Table hazardousSubstance {
+	id integer [primary key]
+	hazardName varchar
+	nds integer
+	ndsch integer
+}
+
+Table substanceHazards {
+	substanceId integer [primary key]
+	hazard integer [primary key]
+}
+
+Table workshops {
+	id integer [primary key]
+	workshopName varchar
+}
+
+Table workshopSubstance {
+	workshopId integer [primary key]
+	substanceId integer [primary key]
+	occurance integer
+	amount integer
+	safetySheetId integer
+	riskEvaluationId integer
+	foodGradeId integer
+}
+
+Table hazardPictograms {
+	ghs integer [primary key]
+	description integer
+	image varchar
+}
+
+Table substancePictograms {
+	substanceId integer [primary key]
+	pictogramId integer [primary key]
+}
+
+
+
+Ref: "workshops"."id" < "workshopSubstance"."workshopId"
+
+Ref: "substances"."id" < "workshopSubstance"."substanceId"
+
+Ref: "substances"."id" < "substanceHPhrases"."substanceId"
+
+Ref: "substances"."id" < "substancePictograms"."substanceId"
+
+Ref: "substances"."id" < "substanceHazards"."substanceId"
+
+Ref: "substances"."id" < "substancePPhrases"."substanceId"
+
+Ref: "riskEvaluations"."id" < "workshopSubstance"."riskEvaluationId"
+
+Ref: "foodGrades"."id" < "workshopSubstance"."foodGradeId"
+
+Ref: "safetySheets"."id" < "workshopSubstance"."safetySheetId"
+
+Ref: "hazardPictograms"."ghs" < "substancePictograms"."pictogramId"
+
+Ref: "hazardousSubstance"."id" < "substanceHazards"."hazard"
+
+Ref: "pPhrases"."code" < "substancePPhrases"."pPhrase"
+
+Ref: "hPhrases"."code" < "substanceHPhrases"."hPhraseId"
+

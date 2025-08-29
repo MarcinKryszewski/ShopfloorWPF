@@ -167,7 +167,7 @@
             VerticalScrollBarVisibility="Auto">
             <StackPanel Margin="0,15,0,0"
                     Orientation="Vertical">
-                <!--#region Mechanik-->
+
                 <StackPanel>
                     <TextBlock Style="{StaticResource TitleTextBlock}"
                             Text="Mechanik"/>
@@ -244,7 +244,29 @@
                         </StackPanel>
                     </Button>
                 </StackPanel>
-                <!--#endregion-->
+
+                <StackPanel>
+                    <TextBlock Style="{StaticResource TitleTextBlock}"
+                            Text="BHP"/>
+
+                            <Button Command="{Binding Path=NavigateActionsList}">
+                        <StackPanel Background="Transparent"
+                                Style="{StaticResource ButtonStackPanel}">
+                            <Border
+                                Width="24"
+                                Height="24"
+                                Margin="0,0,9,0"
+                                Background="Transparent">
+                                <TextBlock Style="{StaticResource IconBlock}"
+                                        Text="&#xEC7A;"/>
+                            </Border>
+                            <TextBlock
+                                Background="Transparent"
+                                Style="{StaticResource ButtonTextBlock}"
+                                Text="Środki chemiczne"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
 
                 <Label
                     HorizontalAlignment="Center"
