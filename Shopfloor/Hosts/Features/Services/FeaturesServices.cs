@@ -6,6 +6,7 @@ using Shopfloor.Features.Actions.ActionsList;
 using Shopfloor.Features.Actions.ActionsList.Utilities;
 using Shopfloor.Features.Actions.ActionTransfer;
 using Shopfloor.Features.Actions.TrainingsList;
+using Shopfloor.Features.ChemicalSubstances.Dashboard;
 using Shopfloor.Features.Personal.PersonalTraining;
 using Shopfloor.Features.Responsibilities.MachineResponsibilities;
 using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit;
@@ -41,6 +42,8 @@ namespace Shopfloor.Hosts.Features.Services
             services.AddTransient<TrainingCreateViewModel>();
             services.AddTransient<TrainingDetailsViewModel>();
             services.AddTransient<TrainingEditViewModel>();
+
+            services.AddSingleton<ChemicalSubstancesDashboardViewModel>();
         }
     }
 }

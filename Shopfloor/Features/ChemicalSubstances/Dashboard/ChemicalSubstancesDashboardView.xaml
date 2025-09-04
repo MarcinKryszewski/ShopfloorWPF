@@ -1,0 +1,232 @@
+<UserControl x:Class="Shopfloor.Features.ChemicalSubstances.Dashboard.ChemicalSubstancesDashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Shopfloor.Features.ChemicalSubstances.Dashboard"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground"
+                    Value="White"/>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.Resources>
+            <Style TargetType="ScrollViewer">
+                <Setter Property="VerticalScrollBarVisibility"
+                        Value="Auto"/>
+            </Style>
+        </Grid.Resources>
+
+        <Grid Grid.Column="0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <ScrollViewer Grid.Row="0"
+                          Margin="0,0,10,0">
+                <StackPanel Width="250px"
+                            Margin="10,0,0,0">
+
+                    <TextBlock Style="{StaticResource TitleTextBlock}"
+                               Text="Filtry"/>
+
+                    <TextBlock
+                        Margin="0,7,0,3"
+                        Style="{StaticResource TooltipText}"
+                        Text="Nazwa"/>
+                    <TextBox Style="{StaticResource TextBoxMain}"
+                             MinHeight="30px"
+                             Text="{Binding FilterData.SubstanceName}"/>
+
+                    <TextBlock
+                        Margin="0,7,0,3"
+                        Style="{StaticResource TooltipText}"
+                        Text="Warsztat"/>
+                    <ComboBox
+                        MinHeight="30px"
+                        DisplayMemberPath="Name"
+                        IsEditable="true"
+                        IsReadOnly="false"
+                        IsTextSearchEnabled="false"
+                        ItemsSource="{Binding Path=FilterData.Workshops}"
+                        SelectedItem="{Binding Path=FilterData.SelectedWorkshop}"
+                        Style="{StaticResource ComboBoxMain}"
+                        Text="{Binding FilterData.Workshop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock
+                        Margin="0,7,0,3"
+                        Style="{StaticResource TooltipText}"
+                        Text="Producent"/>
+                    <ComboBox
+                        MinHeight="30px"
+                        DisplayMemberPath="Name"
+                        IsEditable="true"
+                        IsReadOnly="false"
+                        IsTextSearchEnabled="false"
+                        ItemsSource="{Binding Path=FilterData.Producents}"
+                        SelectedItem="{Binding Path=FilterData.SelecteProducer}"
+                        Style="{StaticResource ComboBoxMain}"
+                        Text="{Binding FilterData.Workshop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <Grid Margin="0,7,0,3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox
+                            Grid.Column="0"
+                            Margin="2,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            IsChecked="{Binding FilterData.IsFoodSafe}"
+                            IsThreeState="True"
+                            Style="{StaticResource CheckBoxStyle1}"/>
+                        <TextBlock
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            Style="{StaticResource TooltipText}"
+                            Text="H1"/>
+                    </Grid>
+
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <Button
+                Grid.Row="2"
+                Height="50"
+                Margin="10"
+                Command="{Binding Path=CreateActionCommand}"
+                Content="NOWY CILT"
+                Style="{StaticResource ResourceKey=ButtonMain}"/>
+        </Grid>
+
+        <ScrollViewer
+            x:Name="OuterScrollerViewer"
+            Grid.Column="1"
+            Margin="0,15,0,0"
+            PreviewMouseWheel="DataGrid_PreviewMouseWheel">
+            <DataGrid
+                Margin="0,0,10,0"
+                AutoGenerateColumns="False"
+                CellStyle="{DynamicResource DataGridCellMain}"
+                ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderMain}"
+                IsReadOnly="True"
+                ItemsSource="{Binding Path=Substances}"
+                SelectedItem="{Binding Path=Substance}"
+                SelectionMode="Single"
+                SelectionUnit="FullRow"
+                Style="{DynamicResource DataGridMain}"
+                TargetUpdated="DataGrid_TargetUpdated">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Width="auto"
+                        Binding="{Binding Id}"
+                        Header="#"/>
+
+                    <DataGridTextColumn
+                        Width="*"
+                        Binding="{Binding Name}"
+                        Header="Nazwa"/>
+
+                    <DataGridTextColumn
+                        Width="auto"
+                        Binding="{Binding ProducerName}"
+                        Header="Producent"/>
+
+                    <DataGridCheckBoxColumn
+                        Width="auto"
+                        Binding="{Binding IsFoodSafe}"
+                        Header="H1"/>
+
+                    <DataGridTextColumn
+                        Width="auto"
+                        Binding="{Binding UpdateDate}"
+                        Header="Aktualizacja"/>
+
+                    <DataGridTemplateColumn
+                        Width="auto"
+                        Header="Akcje"
+                        IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+
+                                    <Button
+                                        Command="{Binding Path=DataContext.DetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource gridConfirmButton}">
+                                        <TextBlock
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Style="{StaticResource gridButtonIcon}"
+                                            Text="&#xE7B3;"/>
+                                    </Button>
+
+                                    <Button
+                                        Margin="2,0,0,0"
+                                        Command="{Binding Path=DataContext.EditCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource gridEditButton}">
+                                        <TextBlock
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Style="{StaticResource gridButtonIcon}"
+                                            Text="&#xE70F;"/>
+                                    </Button>
+
+                                    <Button
+                                        Margin="2,0,0,0"
+                                        Command="{Binding Path=DataContext.CancelCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource gridRemoveButton}">
+                                        <TextBlock
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Style="{StaticResource gridButtonIcon}"
+                                            Text="&#xE74D;"/>
+                                    </Button>
+
+                                    <Button
+                                        Margin="2,0,0,0"
+                                        Command="{Binding Path=DataContext.TrainingsCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource gridInfoButton}">
+                                        <TextBlock
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Style="{StaticResource gridButtonIcon}"
+                                            Text="&#xE7BE;"/>
+                                    </Button>
+
+                                    <Button
+                                        Margin="2,0,0,0"
+                                        Command="{Binding Path=DataContext.TransferActionCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource gridOrangeButton}">
+                                        <TextBlock
+                                            FontFamily="Segoe MDL2 Assets"
+                                            Style="{StaticResource gridButtonIcon}"
+                                            Text="&#xE748;"/>
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+    </Grid>
+</UserControl> 

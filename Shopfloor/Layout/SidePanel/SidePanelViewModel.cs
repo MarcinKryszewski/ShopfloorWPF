@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using Shopfloor.Features.Actions.ActionsList;
+using Shopfloor.Features.ChemicalSubstances.Dashboard;
 using Shopfloor.Features.Responsibilities.MachineResponsibilities;
 using Shopfloor.Features.Trainings.ListTrainee;
 using Shopfloor.Features.Trainings.ListTrainer;
@@ -19,10 +20,13 @@ namespace Shopfloor.Layout.SidePanel
             NavigateListTrainee = new NavigationCommand<ListTraineeViewModel>(navigationService).Navigate();
             // NavigateListTrainer = new NavigationCommand<ListTrainerViewModel>(navigationService).Navigate();
             NavigateListTrainer = new NavigationCommand<TrainingDetailsViewModel>(navigationService).Navigate();
+
+            NavigateChemicalSubstancesDashboard = new NavigationCommand<ChemicalSubstancesDashboardViewModel>(navigationService).Navigate();
         }
         public ICommand NavigateActionsList { get; }
         public ICommand NavigateMachineResponsibilities { get; }
         public ICommand NavigateListTrainee { get; }
         public ICommand NavigateListTrainer { get; }
+        public ICommand NavigateChemicalSubstancesDashboard { get; }
     }
 }

@@ -249,7 +249,7 @@
                     <TextBlock Style="{StaticResource TitleTextBlock}"
                             Text="BHP"/>
 
-                            <Button Command="{Binding Path=NavigateActionsList}">
+                            <Button Command="{Binding Path=NavigateChemicalSubstancesDashboard}">
                         <StackPanel Background="Transparent"
                                 Style="{StaticResource ButtonStackPanel}">
                             <Border

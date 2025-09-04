@@ -5,6 +5,7 @@ using Shopfloor.Features.Actions.ActionDetails;
 using Shopfloor.Features.Actions.ActionEdit;
 using Shopfloor.Features.Actions.ActionsList;
 using Shopfloor.Features.Actions.ActionTransfer;
+using Shopfloor.Features.ChemicalSubstances.Dashboard;
 using Shopfloor.Features.God;
 using Shopfloor.Features.Responsibilities.MachineResponsibilities;
 using Shopfloor.Features.Responsibilities.MachineResponsibilityEdit;
@@ -49,6 +50,8 @@ namespace Shopfloor.Layout.Content
             TrainingCreateTemplate = GetDataTemplate<TrainingCreateView>(),
             TrainingDetailsTemplate = GetDataTemplate<TrainingDetailsView>(),
             TrainingEditTemplate = GetDataTemplate<TrainingEditView>(),
+
+            ChemicalSubstancesDashboardTemplate = GetDataTemplate<ChemicalSubstancesDashboardView>(),
         };
         public ViewModelBase? Content => _navigationStore.CurrentViewModel;
         public TopPanelViewModel TopPanelViewModel => _topPanelViewModel;

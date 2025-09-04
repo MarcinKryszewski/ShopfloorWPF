@@ -6,6 +6,7 @@ using Shopfloor.Features.Actions.ActionEdit;
 using Shopfloor.Features.Actions.ActionsList;
 using Shopfloor.Features.Actions.ActionTransfer;
 using Shopfloor.Features.Actions.TrainingsList;
+using Shopfloor.Features.ChemicalSubstances.Dashboard;
 using Shopfloor.Features.God;
 using Shopfloor.Features.Personal.PersonalTraining;
 using Shopfloor.Features.Responsibilities.MachineResponsibilities;
@@ -36,6 +37,7 @@ namespace Shopfloor.Layout.Content.Util
         public DataTemplate? ListTrainerTemplate { get; set; }
         public DataTemplate? TrainingEditTemplate { get; set; }
         public DataTemplate? WorkInProgressTemplate { get; set; }
+        public DataTemplate? ChemicalSubstancesDashboardTemplate { get; set; }
         public override DataTemplate? SelectTemplate(object item, DependencyObject? container)
         {
             return item switch
@@ -55,6 +57,7 @@ namespace Shopfloor.Layout.Content.Util
                 ListTraineeViewModel => ListTraineeTemplate,
                 ListTrainerViewModel => ListTrainerTemplate,
                 TrainingEditViewModel => TrainingEditTemplate,
+                ChemicalSubstancesDashboardViewModel => ChemicalSubstancesDashboardTemplate,
                 _ => WorkInProgressTemplate,
             };
         }
