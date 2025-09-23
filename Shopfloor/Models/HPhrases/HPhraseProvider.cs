@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Shopfloor.Models.HPhrases
 {
-    internal class HPhraseProvider
+    internal class HPhraseProvider : IProvider<HPhrase, HPhraseCreation>
     {
         
     }
