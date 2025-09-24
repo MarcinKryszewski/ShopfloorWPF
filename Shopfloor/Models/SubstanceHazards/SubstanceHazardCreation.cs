@@ -2,20 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Shopfloor.Models.Commons.BaseClasses;
 using Shopfloor.Models.Commons.Interfaces;
 
 namespace Shopfloor.Models.SubstanceHazards
 {
-    internal class SubstanceHazard : IModel
+    internal class SubstanceHazardCreation : ModelValidationBase, IModelCreationModel<SubstanceHazard>
     {
-        required public int Id { get; init; }
+        public int Id { get; init; }
         public int SubstanceId { get; init; }
         public int HazardId { get; init; }
         public string Name { get; set; } = string.Empty;
-        public void SetValues<T>(IModelCreationModel<T> data)
-        where T : IModel
+        public SubstanceHazard CreateModel(int id)
         {
-            throw new NotImplementedException();
+            return new SubstanceHazard()
+            {
+                Id = id,
+                Name = Name,
+            };
         }
     }
 }
